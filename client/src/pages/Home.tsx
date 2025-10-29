@@ -115,11 +115,11 @@ export default function Home() {
     },
   ];
 
-  const stats = [
-    { value: "10K+", label: "Artists" },
-    { value: "$50M+", label: "Revenue Managed" },
-    { value: "150+", label: "Countries" },
-    { value: "99.9%", label: "Uptime" },
+  const visionPoints = [
+    { title: "Built for Scale", description: "Enterprise-grade infrastructure ready for millions of creators" },
+    { title: "AI-Powered", description: "Advanced machine learning for career optimization and growth" },
+    { title: "All-in-One", description: "Distribution, commerce, finance, healthcare, and IP protection unified" },
+    { title: "Creator-First", description: "Designed by artists, for artists. Own your tone, own your future" },
   ];
 
   return (
@@ -201,16 +201,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Vision Section */}
       <section className="border-y bg-muted/30">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-primary">{stat.value}</div>
-                <div className="text-sm text-muted-foreground mt-2">{stat.label}</div>
-              </div>
-            ))}
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-5xl mx-auto">
+            <h3 className="text-2xl font-bold text-center mb-12">The Future of the Creator Economy</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {visionPoints.map((point, index) => (
+                <div key={index} className="text-center space-y-2">
+                  <div className="text-xl font-bold text-primary">{point.title}</div>
+                  <div className="text-sm text-muted-foreground">{point.description}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -254,15 +257,15 @@ export default function Home() {
               Start free, upgrade when you're ready to scale.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
-                className={`relative ${tier.highlighted ? "border-primary shadow-xl scale-105" : ""}`}
+                className={`relative flex flex-col h-full ${tier.highlighted ? "border-primary shadow-xl md:scale-105" : ""}`}
               >
                 {tier.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium whitespace-nowrap">
                       Most Popular
                     </span>
                   </div>
@@ -275,8 +278,8 @@ export default function Home() {
                   </div>
                   <CardDescription className="mt-2">{tier.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <ul className="space-y-3">
+                <CardContent className="flex flex-col flex-1 space-y-6">
+                  <ul className="space-y-3 flex-1">
                     {tier.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-2">
                         <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />

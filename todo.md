@@ -205,3 +205,8 @@
 - [x] Add sign-up flow with tier selection
 - [x] Create onboarding flow for new users
 - [ ] Show feature gates for free vs paid users
+
+## Landing Page Fixes
+- [x] Replace fake metrics with pre-market messaging
+- [x] Fix pricing card alignment issues
+- [x] Fix "Start Pro Trial" button wrapping
