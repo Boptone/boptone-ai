@@ -249,3 +249,6 @@
 - [x] Add Toney chatbot to Demo page
 - [x] Add Toney chatbot to Terms page
 - [x] Add Toney chatbot to Privacy page
+
+## Legal Updates
+- [x] Rewrite Terms of Service for present-day launch (remove "coming soon" language)
