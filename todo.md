@@ -252,3 +252,5 @@
 
 ## Legal Updates
 - [x] Rewrite Terms of Service for present-day launch (remove "coming soon" language)
+
+- [x] Rewrite Privacy Policy for present-day launch with ironclad legal standards
