@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getLoginUrl } from "@/const";
 import { StripeCheckout } from "@/components/StripeCheckout";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { useDemo } from "@/contexts/DemoContext";
 import { 
   Music, 
   TrendingUp, 
@@ -21,6 +22,7 @@ import { useLocation } from "wouter";
 
 export default function Home() {
   const [, setLocation] = useLocation();
+  const { setDemoMode } = useDemo();
 
   const features = [
     {
@@ -187,8 +189,16 @@ export default function Home() {
               Start Free
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6" onClick={() => setLocation("/signup")}>
-              Sign Up
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 py-6" 
+              onClick={() => {
+                setDemoMode(true);
+                setLocation("/dashboard");
+              }}
+            >
+              Try Demo
             </Button>
           </div>
           <div className="flex items-center justify-center gap-8 pt-8 text-sm text-muted-foreground">

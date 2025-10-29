@@ -275,3 +275,10 @@
 - [x] Add font selection options
 - [x] Preview mode for profile customization
 - [x] Save and publish customization changes
+
+## Demo Mode
+- [x] Create demo mode for all authenticated pages
+- [x] Add sample data for dashboard preview
+- [x] Make all features accessible without login in demo mode
+- [x] Add "Demo Mode" indicator banner
+- [x] Add "Sign Up to Save" prompts on demo pages

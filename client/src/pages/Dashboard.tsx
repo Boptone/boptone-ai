@@ -1,4 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
+import { DemoBanner } from "@/components/DemoBanner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
@@ -22,6 +24,7 @@ import { useEffect } from "react";
 
 export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
+  const { isDemoMode, demoUser, demoProfile } = useDemo();
   const [, setLocation] = useLocation();
   const { data: profile, isLoading: profileLoading } = trpc.artistProfile.getMyProfile.useQuery();
   const { data: notifications } = trpc.notifications.getAll.useQuery({ isRead: false });
@@ -29,12 +32,12 @@ export default function Dashboard() {
   const { data: opportunities } = trpc.opportunities.getAll.useQuery({ status: "new" });
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
+    if (!loading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [loading, isAuthenticated, setLocation]);
+  }, [loading, isAuthenticated, isDemoMode, setLocation]);
 
-  if (loading || profileLoading) {
+  if ((loading || profileLoading) && !isDemoMode) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -42,7 +45,9 @@ export default function Dashboard() {
     );
   }
 
-  if (!profile) {
+  const effectiveProfile = isDemoMode ? demoProfile : profile;
+  
+  if (!effectiveProfile && !isDemoMode) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
@@ -109,20 +114,22 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+    <>
+      <DemoBanner />
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Header */}
       <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container py-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold">
-                Welcome back, {profile.stageName}
+                Welcome back, {effectiveProfile!.stageName}
               </h1>
               <p className="text-muted-foreground mt-1">
-                Career Phase: <span className="font-semibold capitalize text-primary">{profile.careerPhase}</span>
-                {profile.priorityScore && (
+                Career Phase: <span className="font-semibold capitalize text-primary">{effectiveProfile!.careerPhase}</span>
+                {effectiveProfile!.priorityScore && (
                   <span className="ml-4">
-                    Priority Score: <span className="font-semibold text-primary">{profile.priorityScore}/10</span>
+                    Priority Score: <span className="font-semibold text-primary">{effectiveProfile!.priorityScore}/10</span>
                   </span>
                 )}
               </p>
@@ -297,6 +304,7 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
