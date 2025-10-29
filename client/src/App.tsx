@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { DemoProvider } from "./contexts/DemoContext";
 import Home from "./pages/Home";
 import ArtistProfile from "./pages/ArtistProfile";
+import DemoArtistProfile from "./pages/DemoArtistProfile";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import About from "./pages/About";
@@ -28,7 +29,8 @@ function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>      <Route path={"/"} component={Home} />
-      <Route path={"/@:username"} component={ArtistProfile} />
+        <Route path="/@:username" component={ArtistProfile} />
+      <Route path="/demo-profile" component={DemoArtistProfile} />
       <Route path={"/profile-settings"} component={ProfileSettings} />
       <Route path={"/404"} component={NotFound} />
       <Route path={"/privacy"} component={Privacy} />
