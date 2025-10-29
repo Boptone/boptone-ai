@@ -1,16 +1,32 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import NotFound from "./pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import AIAdvisor from "./pages/AIAdvisor";
+import Store from "./pages/Store";
+import Financials from "./pages/Financials";
+import IPProtection from "./pages/IPProtection";
+import Tours from "./pages/Tours";
+import Healthcare from "./pages/Healthcare";
+import Admin from "./pages/Admin";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/dashboard"} component={Dashboard} />
+      <Route path={"/ai-advisor"} component={AIAdvisor} />
+      <Route path={"/store"} component={Store} />
+      <Route path={"/financials"} component={Financials} />
+      <Route path={"/ip-protection"} component={IPProtection} />
+      <Route path={"/tours"} component={Tours} />
+      <Route path={"/healthcare"} component={Healthcare} />
+      <Route path={"/admin"} component={Admin} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
