@@ -14,7 +14,9 @@
 - [x] Real-time metrics dashboard
 - [x] Priority score display and tracking
 - [ ] Onboarding flow for new artists
-- [ ] Profile verification syst## AI Features (Using Manus Token Pool)
+- [ ] Profile verification system
+
+## AI Features (Using Manus Token Pool)
 - [ ] Artist Discovery Engine with priority scoring
 - [x] Conversational AI Career Advisor
 - [x] Automated content generation (social posts, bios, press releases)
@@ -178,3 +180,6 @@
 - [ ] PR campaign preparation
 - [ ] Partnership announcements
 - [ ] Launch event planning
+
+## Bug Fixes
+- [x] Fixed Vite HMR WebSocket connection error for development environment
