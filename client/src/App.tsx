@@ -13,6 +13,7 @@ import IPProtection from "./pages/IPProtection";
 import Tours from "./pages/Tours";
 import Healthcare from "./pages/Healthcare";
 import Admin from "./pages/Admin";
+import Signup from "./pages/Signup";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -27,6 +28,7 @@ function Router() {
       <Route path={"/tours"} component={Tours} />
       <Route path={"/healthcare"} component={Healthcare} />
       <Route path={"/admin"} component={Admin} />
+      <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

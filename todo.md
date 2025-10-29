@@ -183,3 +183,25 @@
 
 ## Bug Fixes
 - [x] Fixed Vite HMR WebSocket connection error for development environment
+
+## Branding & Messaging Updates
+- [x] Remove all references to tokens/tokenization
+- [x] Remove Costco/Bandcamp/Shopify comparisons
+- [x] Add "Own Your Tone" mantra throughout site
+- [x] Remove Boptone logo from top navigation
+- [x] Update userGuide.md to remove token references
+
+## Design & UX Improvements
+- [x] Center all content for investor presentation
+- [x] Optimize layout for mobile and desktop responsiveness
+- [x] Elevate visual design from "good" to "great"
+- [x] Improve landing page hero section
+- [ ] Add professional animations and transitions
+
+## Business Model & Monetization
+- [x] Create free tier with limited features
+- [x] Create paid tiers (Starter, Pro, Enterprise)
+- [x] Build pricing comparison page
+- [x] Add sign-up flow with tier selection
+- [x] Create onboarding flow for new users
+- [ ] Show feature gates for free vs paid users
