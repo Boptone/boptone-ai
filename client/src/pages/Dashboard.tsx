@@ -26,10 +26,18 @@ export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
   const { isDemoMode, demoUser, demoProfile } = useDemo();
   const [, setLocation] = useLocation();
-  const { data: profile, isLoading: profileLoading } = trpc.artistProfile.getMyProfile.useQuery();
-  const { data: notifications } = trpc.notifications.getAll.useQuery({ isRead: false });
-  const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({});
-  const { data: opportunities } = trpc.opportunities.getAll.useQuery({ status: "new" });
+  const { data: profile, isLoading: profileLoading } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
+    enabled: !isDemoMode
+  });
+  const { data: notifications } = trpc.notifications.getAll.useQuery({ isRead: false }, {
+    enabled: !isDemoMode
+  });
+  const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({}, {
+    enabled: !isDemoMode
+  });
+  const { data: opportunities } = trpc.opportunities.getAll.useQuery({ status: "new" }, {
+    enabled: !isDemoMode
+  });
 
   useEffect(() => {
     if (!loading && !isAuthenticated && !isDemoMode) {

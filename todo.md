@@ -282,3 +282,7 @@
 - [x] Make all features accessible without login in demo mode
 - [x] Add "Demo Mode" indicator banner
 - [x] Add "Sign Up to Save" prompts on demo pages
+
+## Demo Mode Bug Fixes
+- [x] Fix tRPC query errors in demo mode (disable API calls when isDemoMode is true)
+- [x] Ensure all pages work with sample data without backend calls
