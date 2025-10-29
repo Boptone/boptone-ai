@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
 import { StripeCheckout } from "@/components/StripeCheckout";
+import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { 
   Music, 
   TrendingUp, 
@@ -124,6 +125,7 @@ export default function Home() {
   ];
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       {/* Navigation */}
       <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -137,10 +139,14 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden md:flex items-center gap-4">
-              <Button variant="ghost" onClick={() => setLocation("/pricing")}>
+              <Button variant="ghost" onClick={() => {
+                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 Pricing
               </Button>
-              <Button variant="ghost" onClick={() => setLocation("/features")}>
+              <Button variant="ghost" onClick={() => {
+                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+              }}>
                 Features
               </Button>
               <Button variant="outline" asChild>
@@ -220,7 +226,7 @@ export default function Home() {
       </section>
 
       {/* Features Grid */}
-      <section className="container mx-auto px-4 py-20">
+      <section id="features" className="container mx-auto px-4 py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-4xl md:text-5xl font-bold">Everything You Need to Succeed</h2>
@@ -250,7 +256,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="container mx-auto px-4 py-20 bg-muted/30">
+      <section id="pricing" className="container mx-auto px-4 py-20 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-4xl md:text-5xl font-bold">Simple, Transparent Pricing</h2>
@@ -381,5 +387,7 @@ export default function Home() {
         </div>
       </footer>
     </div>
+    <ToneyChatbot />
+    </>
   );
 }

@@ -225,3 +225,8 @@
 - [x] Add payment status tracking to database
 - [x] Build subscription upgrade/downgrade flow
 - [ ] Add payment method management
+
+## Navigation & UX Fixes
+- [x] Fix top nav buttons to link to proper sections
+- [x] Add Toney AI chatbot to all pages
+- [x] Configure chatbot with Boptone context
