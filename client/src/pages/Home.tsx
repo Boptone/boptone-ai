@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
+import { StripeCheckout } from "@/components/StripeCheckout";
 import { 
   Music, 
   TrendingUp, 
@@ -287,13 +288,22 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
-                  <Button 
-                    className="w-full" 
-                    variant={tier.highlighted ? "default" : "outline"}
-                    onClick={() => setLocation("/signup")}
-                  >
-                    {tier.cta}
-                  </Button>
+                  {tier.name === "Pro" ? (
+                    <StripeCheckout 
+                      tier="pro"
+                      buttonText={tier.cta}
+                      buttonVariant={tier.highlighted ? "default" : "outline"}
+                      className="w-full"
+                    />
+                  ) : (
+                    <Button 
+                      className="w-full" 
+                      variant={tier.highlighted ? "default" : "outline"}
+                      onClick={() => setLocation("/signup")}
+                    >
+                      {tier.cta}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             ))}

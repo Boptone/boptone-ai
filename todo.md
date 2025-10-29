@@ -213,3 +213,15 @@
 
 ## Hero Section Updates
 - [x] Change "Watch Demo" button to "Sign Up"
+
+## Stripe Payment Integration
+- [x] Add Stripe API keys to environment secrets
+- [x] Install Stripe SDK dependencies
+- [x] Create Stripe checkout session for Pro subscriptions
+- [x] Build subscription management endpoints
+- [ ] Implement webhook handler for payment events
+- [ ] Add customer billing portal
+- [x] Integrate Stripe for merchandise payments
+- [x] Add payment status tracking to database
+- [x] Build subscription upgrade/downgrade flow
+- [ ] Add payment method management

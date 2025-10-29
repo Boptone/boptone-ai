@@ -15,6 +15,13 @@
       "when": 1761766009719,
       "tag": "0001_mushy_norman_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1761772067592,
+      "tag": "0002_fair_virginia_dare",
+      "breakpoints": true
     }
   ]
 }

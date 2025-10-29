@@ -392,3 +392,62 @@ export const analyticsSnapshots = mysqlTable("analytics_snapshots", {
 
 export type AnalyticsSnapshot = typeof analyticsSnapshots.$inferSelect;
 export type InsertAnalyticsSnapshot = typeof analyticsSnapshots.$inferInsert;
+
+// ============================================================================
+// SUBSCRIPTIONS & PAYMENTS (STRIPE INTEGRATION)
+// ============================================================================
+
+export const subscriptions = mysqlTable("subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  
+  // Stripe data
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
+  stripePriceId: varchar("stripePriceId", { length: 255 }),
+  
+  // Subscription details
+  tier: mysqlEnum("tier", ["free", "pro", "enterprise"]).notNull().default("free"),
+  status: mysqlEnum("status", ["active", "canceled", "past_due", "trialing", "incomplete"]).notNull().default("active"),
+  
+  // Billing
+  currentPeriodStart: timestamp("currentPeriodStart"),
+  currentPeriodEnd: timestamp("currentPeriodEnd"),
+  cancelAtPeriodEnd: boolean("cancelAtPeriodEnd").default(false).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  stripeCustomerIdx: index("stripe_customer_idx").on(table.stripeCustomerId),
+}));
+
+export type Subscription = typeof subscriptions.$inferSelect;
+export type InsertSubscription = typeof subscriptions.$inferInsert;
+
+export const payments = mysqlTable("payments", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  
+  // Stripe data
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  stripeChargeId: varchar("stripeChargeId", { length: 255 }),
+  
+  // Payment details
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  currency: varchar("currency", { length: 3 }).notNull().default("usd"),
+  status: mysqlEnum("status", ["succeeded", "pending", "failed", "refunded"]).notNull(),
+  
+  // Product info
+  productType: mysqlEnum("productType", ["subscription", "merchandise", "other"]).notNull(),
+  productId: int("productId"), // Reference to products table if merchandise
+  description: text("description"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  stripePaymentIntentIdx: index("stripe_payment_intent_idx").on(table.stripePaymentIntentId),
+}));
+
+export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = typeof payments.$inferInsert;
