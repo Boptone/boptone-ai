@@ -230,3 +230,8 @@
 - [x] Fix top nav buttons to link to proper sections
 - [x] Add Toney AI chatbot to all pages
 - [x] Configure chatbot with Boptone context
+
+## Legal Pages
+- [x] Create Terms of Service page
+- [x] Create Privacy Policy page
+- [x] Add footer links to Terms and Privacy

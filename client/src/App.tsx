@@ -1,10 +1,12 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "./pages/NotFound";
+import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import Dashboard from "./pages/Dashboard";
 import AIAdvisor from "./pages/AIAdvisor";
 import Store from "./pages/Store";
@@ -20,6 +22,8 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/terms"} component={Terms} />
+      <Route path={"/privacy"} component={Privacy} />
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/ai-advisor"} component={AIAdvisor} />
       <Route path={"/store"} component={Store} />

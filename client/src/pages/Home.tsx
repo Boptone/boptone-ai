@@ -376,8 +376,8 @@ export default function Home() {
               <h3 className="font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="/privacy" className="hover:text-foreground">Privacy</a></li>
-                <li><a href="/terms" className="hover:text-foreground">Terms</a></li>
-                <li><a href="/security" className="hover:text-foreground">Security</a></li>
+                <li><a href="/terms" className="hover:text-foreground">Terms of Service</a></li>
+                <li><a href="mailto:hello@boptone.com" className="hover:text-foreground">Contact</a></li>
               </ul>
             </div>
           </div>
