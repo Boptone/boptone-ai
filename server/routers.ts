@@ -56,6 +56,10 @@ const artistProfileRouter = router({
         spotify: z.string().optional(),
         website: z.string().optional(),
       }).optional(),
+      themeColor: z.string().optional(),
+      accentColor: z.string().optional(),
+      layoutStyle: z.enum(["default", "minimal", "grid"]).optional(),
+      fontFamily: z.string().optional(),
       onboardingCompleted: z.boolean().optional(),
     }))
     .mutation(async ({ ctx, input }) => {

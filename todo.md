@@ -267,3 +267,11 @@
 - [ ] Shareable analytics widgets
 - [ ] Custom themes and color schemes (using default Boptone blue)
 - [ ] Profile URL slug management (using stageName for now)
+
+## Profile Customization Features
+- [x] Add theme/color picker to artist dashboard
+- [x] Store custom theme colors in database
+- [x] Add layout options (single column, grid, minimal)
+- [x] Add font selection options
+- [x] Preview mode for profile customization
+- [x] Save and publish customization changes

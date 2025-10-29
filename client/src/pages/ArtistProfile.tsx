@@ -58,13 +58,20 @@ export default function ArtistProfile() {
     );
   }
 
-  const themeColor = "#0066ff"; // Default Boptone blue
+  // Apply custom theme colors from profile
+  const themeColor = profile.themeColor || "#0066ff";
+  const accentColor = profile.accentColor || "#00d4aa";
+  const fontFamily = profile.fontFamily || "Inter";
+
   const upcomingTours = tours?.filter(
     (tour: any) => new Date(tour.startDate) > new Date()
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div 
+      className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20"
+      style={{ fontFamily }}
+    >
       {/* Hero Section */}
       <div
         className="relative h-64 md:h-80"

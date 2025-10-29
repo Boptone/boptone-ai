@@ -48,6 +48,11 @@ export const artistProfiles = mysqlTable("artist_profiles", {
     spotify?: string;
     website?: string;
   }>(),
+  // Profile Customization
+  themeColor: varchar("themeColor", { length: 7 }).default("#0066ff"), // Hex color code
+  accentColor: varchar("accentColor", { length: 7 }).default("#00d4aa"),
+  layoutStyle: mysqlEnum("layoutStyle", ["default", "minimal", "grid"]).default("default"),
+  fontFamily: varchar("fontFamily", { length: 100 }).default("Inter"),
   onboardingCompleted: boolean("onboardingCompleted").default(false).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

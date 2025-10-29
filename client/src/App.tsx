@@ -21,12 +21,14 @@ import Tours from "./pages/Tours";
 import Healthcare from "./pages/Healthcare";
 import Admin from "./pages/Admin";
 import Signup from "./pages/Signup";
+import ProfileSettings from "./pages/ProfileSettings";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>      <Route path={"/"} component={Home} />
       <Route path={"/@:username"} component={ArtistProfile} />
+      <Route path={"/profile-settings"} component={ProfileSettings} />
       <Route path={"/404"} component={NotFound} />
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/about"} component={About} />
