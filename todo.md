@@ -210,3 +210,6 @@
 - [x] Replace fake metrics with pre-market messaging
 - [x] Fix pricing card alignment issues
 - [x] Fix "Start Pro Trial" button wrapping
+
+## Hero Section Updates
+- [x] Change "Watch Demo" button to "Sign Up"
