@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Music, Play, CheckCircle2 } from "lucide-react";
 import { useLocation } from "wouter";
+import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Demo() {
   const [, setLocation] = useLocation();
@@ -285,6 +286,7 @@ export default function Demo() {
           </div>
         </div>
       </footer>
+      <ToneyChatbot />
     </div>
   );
 }

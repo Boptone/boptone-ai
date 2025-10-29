@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { 
   Music, Brain, DollarSign, ShoppingBag, Shield, 
   Calendar, Heart, BarChart3, Globe, Zap,
@@ -351,6 +352,7 @@ export default function Features() {
           </div>
         </div>
       </footer>
+      <ToneyChatbot />
     </div>
   );
 }

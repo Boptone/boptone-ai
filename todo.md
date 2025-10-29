@@ -241,3 +241,11 @@
 - [x] Create detailed Features page
 - [x] Create Contact page with form sending to hello@boptone.com
 - [x] Create Demo page with platform walkthrough
+
+## Toney Chatbot Integration
+- [x] Add Toney chatbot to About page
+- [x] Add Toney chatbot to Contact page
+- [x] Add Toney chatbot to Features page
+- [x] Add Toney chatbot to Demo page
+- [x] Add Toney chatbot to Terms page
+- [x] Add Toney chatbot to Privacy page

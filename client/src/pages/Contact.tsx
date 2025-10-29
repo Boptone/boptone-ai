@@ -3,11 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Music, Mail, MapPin, Send } from "lucide-react";
+import { Music, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useLocation } from "wouter";
+import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
-import { trpc } from "@/lib/trpc";
+import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Contact() {
   const [, setLocation] = useLocation();
@@ -297,6 +298,7 @@ ${formData.message}
           </div>
         </div>
       </footer>
+      <ToneyChatbot />
     </div>
   );
 }
