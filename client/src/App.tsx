@@ -7,6 +7,10 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Features from "./pages/Features";
+import Demo from "./pages/Demo";
 import Dashboard from "./pages/Dashboard";
 import AIAdvisor from "./pages/AIAdvisor";
 import Store from "./pages/Store";
@@ -24,6 +28,10 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/terms"} component={Terms} />
       <Route path={"/privacy"} component={Privacy} />
+      <Route path={"/about"} component={About} />
+      <Route path={"/contact"} component={Contact} />
+      <Route path={"/features"} component={Features} />
+      <Route path={"/demo"} component={Demo} />
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/ai-advisor"} component={AIAdvisor} />
       <Route path={"/store"} component={Store} />

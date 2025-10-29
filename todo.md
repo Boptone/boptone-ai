@@ -235,3 +235,9 @@
 - [x] Create Terms of Service page
 - [x] Create Privacy Policy page
 - [x] Add footer links to Terms and Privacy
+
+## Additional Pages
+- [x] Create About page with company story and mission
+- [x] Create detailed Features page
+- [x] Create Contact page with form sending to hello@boptone.com
+- [x] Create Demo page with platform walkthrough

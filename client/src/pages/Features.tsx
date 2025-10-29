@@ -1,0 +1,356 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { 
+  Music, Brain, DollarSign, ShoppingBag, Shield, 
+  Calendar, Heart, BarChart3, Globe, Zap,
+  TrendingUp, Users, FileText, Bell, Lock
+} from "lucide-react";
+import { useLocation } from "wouter";
+
+export default function Features() {
+  const [, setLocation] = useLocation();
+
+  const features = [
+    {
+      icon: Brain,
+      title: "AI Career Advisor",
+      description: "Get personalized career guidance powered by advanced machine learning. Toney, your AI advisor, analyzes your data and provides actionable recommendations for releases, marketing, and growth strategies.",
+      benefits: [
+        "Real-time career optimization",
+        "Release timing recommendations",
+        "Content strategy suggestions",
+        "Trend forecasting and analysis"
+      ]
+    },
+    {
+      icon: DollarSign,
+      title: "Financial Management",
+      description: "Track revenue across all sources in one dashboard. Monitor royalties from streaming, sales, shows, and licensing with real-time analytics and forecasting.",
+      benefits: [
+        "Unified revenue tracking",
+        "Royalty analytics and reporting",
+        "Financial forecasting tools",
+        "Tax-ready documentation"
+      ]
+    },
+    {
+      icon: TrendingUp,
+      title: "Royalty-Backed Micro-Loans",
+      description: "Access capital based on your future royalties. Our AI-powered risk assessment provides fair, transparent lending with flexible repayment terms.",
+      benefits: [
+        "5% fixed interest rate",
+        "AI-powered risk assessment",
+        "Flexible 6-24 month terms",
+        "No traditional credit check"
+      ]
+    },
+    {
+      icon: ShoppingBag,
+      title: "Direct-to-Fan Commerce",
+      description: "Sell merchandise, digital products, and experiences directly to your fans. Built-in payment processing, inventory management, and fulfillment tracking.",
+      benefits: [
+        "Physical & digital products",
+        "Automated inventory tracking",
+        "Integrated payment processing",
+        "Experience sales (meet & greets, lessons)"
+      ]
+    },
+    {
+      icon: Globe,
+      title: "Global Distribution",
+      description: "Distribute your music to Spotify, Apple Music, YouTube Music, and 150+ platforms worldwide. Track performance across all channels in real-time.",
+      benefits: [
+        "150+ streaming platforms",
+        "UPC/ISRC code generation",
+        "Release scheduling",
+        "Performance analytics"
+      ]
+    },
+    {
+      icon: Shield,
+      title: "IP Protection",
+      description: "AI-powered copyright monitoring detects unauthorized use of your work across the internet. Automated DMCA takedowns protect your intellectual property 24/7.",
+      benefits: [
+        "99.9% accurate detection",
+        "Automated DMCA takedowns",
+        "Platform monitoring (YouTube, SoundCloud, etc.)",
+        "Complete audit trail"
+      ]
+    },
+    {
+      icon: BarChart3,
+      title: "Advanced Analytics",
+      description: "Comprehensive insights into your audience, engagement, and revenue. Track streaming metrics, social media growth, and fan demographics across all platforms.",
+      benefits: [
+        "Real-time streaming data",
+        "Social media analytics",
+        "Audience demographics",
+        "Growth trend analysis"
+      ]
+    },
+    {
+      icon: Calendar,
+      title: "Tour Management",
+      description: "Plan tours, manage venues, and track show revenue. Budget planning, route optimization, and profit margin calculations all in one place.",
+      benefits: [
+        "Tour planning and scheduling",
+        "Venue tracking",
+        "Budget management",
+        "Revenue vs. projections"
+      ]
+    },
+    {
+      icon: Heart,
+      title: "Healthcare & Wellness",
+      description: "Access affordable healthcare plans designed for artists. Mental health support, vocal care, performance injury treatment, and 24/7 medical concierge.",
+      benefits: [
+        "Three-tier healthcare plans",
+        "Mental health therapy",
+        "Vocal cord specialists",
+        "24/7 concierge service"
+      ]
+    },
+    {
+      icon: Users,
+      title: "Opportunity Matching",
+      description: "AI-powered matching connects you with playlist curators, collaborators, venues, and brand partnerships based on your style and career stage.",
+      benefits: [
+        "Playlist placement opportunities",
+        "Collaboration matching",
+        "Venue booking leads",
+        "Brand partnership discovery"
+      ]
+    },
+    {
+      icon: Bell,
+      title: "Smart Notifications",
+      description: "Stay informed with intelligent alerts for chart movements, viral content, revenue milestones, and career opportunities—never miss a breakthrough moment.",
+      benefits: [
+        "Real-time milestone alerts",
+        "Chart position updates",
+        "Viral content detection",
+        "Opportunity notifications"
+      ]
+    },
+    {
+      icon: Lock,
+      title: "Enterprise Security",
+      description: "Bank-level encryption, SOC 2 compliance, and GDPR-ready data protection. Your content, data, and revenue are secured with industry-leading standards.",
+      benefits: [
+        "AES-256 encryption",
+        "SOC 2 compliant",
+        "GDPR & CCPA ready",
+        "Regular security audits"
+      ]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      {/* Navigation */}
+      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
+              <Music className="h-8 w-8 text-primary" />
+              <div>
+                <h1 className="text-2xl font-bold">Boptone</h1>
+                <p className="text-xs text-muted-foreground">Own Your Tone</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <Button variant="ghost" onClick={() => setLocation("/")}>Home</Button>
+              <Button onClick={() => setLocation("/signup")}>Get Started</Button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <div className="container mx-auto px-4 py-16 text-center">
+        <Zap className="h-16 w-16 text-primary mx-auto mb-6" />
+        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          Everything You Need to Succeed
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          Mission control for your entire artist career. From AI-powered guidance to global distribution, financial management to IP protection—all in one platform.
+        </p>
+      </div>
+
+      {/* Features Grid */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <Card key={index} className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-8">
+                  <Icon className="h-12 w-12 text-primary mb-4" />
+                  <h3 className="text-2xl font-semibold mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground mb-6">{feature.description}</p>
+                  <div className="space-y-2">
+                    {feature.benefits.map((benefit, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                        <p className="text-sm text-muted-foreground">{benefit}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Integration Section */}
+      <div className="container mx-auto px-4 py-16">
+        <Card className="max-w-5xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+          <CardContent className="p-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4">Seamless Integrations</h2>
+              <p className="text-lg text-muted-foreground">
+                Boptone connects with the platforms you already use, bringing all your data into one unified dashboard.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Streaming Platforms</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Spotify</li>
+                  <li>• Apple Music</li>
+                  <li>• YouTube Music</li>
+                  <li>• Tidal</li>
+                  <li>• Amazon Music</li>
+                  <li>• 145+ more platforms</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Social Media</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Instagram</li>
+                  <li>• TikTok</li>
+                  <li>• Twitter/X</li>
+                  <li>• Facebook</li>
+                  <li>• YouTube</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Business Tools</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Stripe (payments)</li>
+                  <li>• Email marketing</li>
+                  <li>• Analytics platforms</li>
+                  <li>• Accounting software</li>
+                  <li>• CRM systems</li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Comparison Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12">Why Boptone?</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-destructive/50">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold mb-4 text-destructive">Without Boptone</h3>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li>• Juggling 10+ different platforms</li>
+                  <li>• Losing 30-50% to middlemen</li>
+                  <li>• Manual data entry and tracking</li>
+                  <li>• Fragmented revenue streams</li>
+                  <li>• No career guidance or optimization</li>
+                  <li>• Limited access to capital</li>
+                  <li>• Reactive copyright protection</li>
+                  <li>• No healthcare or benefits</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="border-primary/50 bg-primary/5">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold mb-4 text-primary">With Boptone</h3>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li>• One unified platform for everything</li>
+                  <li>• Keep 100% of your revenue</li>
+                  <li>• Automated tracking and analytics</li>
+                  <li>• Consolidated revenue dashboard</li>
+                  <li>• AI-powered career optimization</li>
+                  <li>• Royalty-backed micro-loans</li>
+                  <li>• Proactive AI copyright monitoring</li>
+                  <li>• Affordable healthcare plans</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="container mx-auto px-4 py-16">
+        <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+          <CardContent className="p-12 text-center">
+            <h2 className="text-3xl font-bold mb-4">Ready to Own Your Tone?</h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Join the platform that's redefining the creator economy. Start free, upgrade when you're ready.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Button size="lg" onClick={() => setLocation("/signup")}>
+                Start Free
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => setLocation("/demo")}>
+                Watch Demo
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t mt-16">
+        <div className="container mx-auto px-4 py-12">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Music className="h-6 w-6 text-primary" />
+                <span className="font-bold text-lg">Boptone</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                The autonomous operating system for creators. Own Your Tone™
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4">Product</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="/#features" className="hover:text-foreground">Features</a></li>
+                <li><a href="/#pricing" className="hover:text-foreground">Pricing</a></li>
+                <li><a href="/demo" className="hover:text-foreground">Demo</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="/about" className="hover:text-foreground">About</a></li>
+                <li><a href="/contact" className="hover:text-foreground">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="/privacy" className="hover:text-foreground">Privacy</a></li>
+                <li><a href="/terms" className="hover:text-foreground">Terms of Service</a></li>
+                <li><a href="mailto:hello@boptone.com" className="hover:text-foreground">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
+            <p>© 2025 Boptone. All rights reserved. Own Your Tone™</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
