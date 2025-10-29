@@ -254,3 +254,16 @@
 - [x] Rewrite Terms of Service for present-day launch (remove "coming soon" language)
 
 - [x] Rewrite Privacy Policy for present-day launch with ironclad legal standards
+
+## Public Artist Profile Pages
+- [x] Create public artist profile page (boptone.com/@username)
+- [x] Customizable artist portfolio/landing page builder
+- [x] Artist bio and branding customization
+- [x] Featured music/video embeds (Spotify)
+- [x] Social media links section
+- [x] Merchandise showcase
+- [x] Tour dates display
+- [x] Contact/booking form
+- [ ] Shareable analytics widgets
+- [ ] Custom themes and color schemes (using default Boptone blue)
+- [ ] Profile URL slug management (using stageName for now)

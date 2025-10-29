@@ -75,6 +75,17 @@ const artistProfileRouter = router({
     .query(async ({ input }) => {
       return await db.getAllArtistProfiles(input.limit, input.offset);
     }),
+
+  // Get artist profile by username (public)
+  getByUsername: publicProcedure
+    .input(z.object({
+      username: z.string(),
+    }))
+    .query(async ({ input }) => {
+      // For now, use stageName as username. Later we can add a dedicated username field
+      const profiles = await db.getAllArtistProfiles(1, 0);
+      return profiles.find(p => p.stageName?.toLowerCase() === input.username.toLowerCase());
+    }),
 });
 
 // ============================================================================
