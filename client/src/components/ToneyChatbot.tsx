@@ -31,7 +31,7 @@ Key platform features:
 - IP Protection: AI-powered infringement detection with automated DMCA takedowns
 - Healthcare & Wellness: Three-tier plans ($99-$349/month) with mental health, vocal care, and performance injury coverage
 - Tour Management: Planning, budgeting, and venue coordination
-- Global Distribution: Release music to Spotify, Apple Music, YouTube, and all major platforms
+- Global Distribution: Direct artist-to-fan music distribution via Boptone Audio Protocol with 90% revenue share
 - E-Commerce: Direct-to-fan merchandise store for physical, digital, and experience products
 - Analytics: Real-time tracking of streams, followers, revenue, and engagement
 

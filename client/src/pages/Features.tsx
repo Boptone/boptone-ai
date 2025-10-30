@@ -59,12 +59,12 @@ export default function Features() {
     {
       icon: Globe,
       title: "Global Distribution",
-      description: "Distribute your music to Spotify, Apple Music, YouTube Music, and 150+ platforms worldwide. Track performance across all channels in real-time.",
+      description: "As the artist, you distribute your music directly to your fans around the globe through Boptone's Audio Protocol. No middlemen, no platform fees—just you and your audience.",
       benefits: [
-        "150+ streaming platforms",
-        "UPC/ISRC code generation",
-        "Release scheduling",
-        "Performance analytics"
+        "Direct artist-to-fan streaming",
+        "90% revenue share to artists",
+        "Instant global reach",
+        "Full ownership & control"
       ]
     },
     {
@@ -214,18 +214,7 @@ export default function Features() {
                 Boptone connects with the platforms you already use, bringing all your data into one unified dashboard.
               </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Streaming Platforms</h3>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Spotify</li>
-                  <li>• Apple Music</li>
-                  <li>• YouTube Music</li>
-                  <li>• Tidal</li>
-                  <li>• Amazon Music</li>
-                  <li>• 145+ more platforms</li>
-                </ul>
-              </div>
+            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
               <div>
                 <h3 className="font-semibold text-lg mb-3">Social Media</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">

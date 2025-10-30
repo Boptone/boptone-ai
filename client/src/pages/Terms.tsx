@@ -97,7 +97,7 @@ export default function Terms() {
                 <ul className="list-disc pl-6 space-y-2 mb-4">
                   <li><strong>Autonomous Operating System:</strong> Tools to create, distribute, protect, and monetize creative works</li>
                   <li><strong>AI and Machine Learning:</strong> Career optimization, trend forecasting, contract analysis, marketing automation, and intelligent recommendations</li>
-                  <li><strong>Global Distribution:</strong> Music and video distribution to streaming platforms (Spotify, Apple Music, YouTube, etc.) and direct-to-fan channels</li>
+                  <li><strong>Global Distribution:</strong> Direct artist-to-fan music distribution via Boptone Audio Protocol with transparent revenue sharing</li>
                   <li><strong>Financial Management:</strong> Royalty tracking across all platforms, revenue analytics, financial forecasting, and budget management</li>
                   <li><strong>Royalty-Backed Micro-Loans:</strong> Access to capital based on projected royalty income, with AI-powered risk assessment</li>
                   <li><strong>Direct-to-Fan E-Commerce:</strong> Merchandise store for physical and digital products, payment processing, tax compliance, and inventory management</li>
@@ -110,7 +110,7 @@ export default function Terms() {
                   The specific features and functionality available to you depend on your Subscription tier (Free, Pro, or Enterprise). We reserve the right to modify, suspend, or discontinue any part of the Service at any time, with or without notice. We may also impose limits on certain features or restrict access to parts of the Service without notice or liability.
                 </p>
                 <p>
-                  Certain features may require integration with third-party services (such as Spotify, Instagram, Stripe, etc.). Your use of those third-party services is subject to their respective terms of service and privacy policies.
+                  Certain features may require integration with third-party services (such as Instagram, Stripe, payment processors, etc.). Your use of those third-party services is subject to their respective terms of service and privacy policies.
                 </p>
               </section>
 
@@ -263,13 +263,11 @@ export default function Terms() {
                   The Service integrates with and relies on various third-party services, including but not limited to:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li>Streaming platforms (Spotify, Apple Music, YouTube Music, Tidal, Amazon Music)</li>
                   <li>Social media platforms (Instagram, TikTok, Twitter/X, Facebook)</li>
                   <li>Payment processors (Stripe, PayPal)</li>
                   <li>Cloud storage and hosting providers</li>
                   <li>Analytics and data providers</li>
                   <li>Healthcare providers</li>
-                  <li>Distribution services</li>
                 </ul>
                 <p className="mb-4">
                   Your use of these third-party services through Boptone is subject to their respective terms of service, privacy policies, and other agreements. We are not responsible for the actions, content, or policies of third-party services. You acknowledge and agree that Acid Bird, Inc. is not liable for any damage or loss caused by your use of or reliance on any third-party service.

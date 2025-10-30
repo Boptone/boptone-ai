@@ -299,3 +299,51 @@
 - [ ] Add exportable reports (PDF/CSV) - placeholder added
 - [x] Add time-range filters (7d, 30d, 90d, 1y, all-time)
 - [x] Add interactive charts and visualizations
+
+## Remove Token References
+- [x] Remove "Powered by Manus 1T Token Pool" from AI Advisor page
+- [x] Replace with "Powered by Boptone" branding
+- [x] Search for any other token/token pool mentions across platform
+- [x] Update all AI-related copy to use Boptone branding
+- [x] Replace "Token Usage" section with "AI Guidance" section
+
+## Boptone Audio Protocol (BAP) - Phase 1
+- [x] Design database schema for BAP (tracks, albums, playlists, follows, likes, streams, payments)
+- [x] Create tracks table with metadata fields (title, artist, genre, BPM, key, duration, etc.)
+- [x] Create albums table for track collections
+- [x] Create playlists table for user-curated collections
+- [x] Create follows table for artist/user relationships
+- [x] Create likes table for track favorites
+- [x] Create streams table for play tracking and payment calculation
+- [x] Create bapPayments table for 90/10 revenue split tracking
+- [x] Create reposts table for social sharing
+- [x] Build backend API for track upload with S3 storage
+- [ ] Implement AI metadata extraction using LLM (title, artist, genre from audio analysis) - Phase 3
+- [x] Create streaming endpoints for HLS audio delivery
+- [x] Build payment processing with Stripe (90% artist, 10% platform)
+- [x] Create tRPC router for BAP with all endpoints
+- [x] Add social features API (follow, like, repost)
+- [x] Add discovery feeds API (trending, new releases, search)
+- [ ] Create drag-and-drop upload UI with progress tracking
+- [ ] Build audio player with HLS streaming support
+- [ ] Create discovery feeds (curated, trending, social)
+- [ ] Implement follow/like/repost social features
+- [ ] Build real-time earnings dashboard showing "$X earned today"
+- [ ] Create public artist profiles with @username handles
+- [ ] Add BAP navigation to main dashboard
+
+## Homepage Copy Updates for BAP
+- [x] Remove "Streaming Platforms" section (Spotify, Apple Music, YouTube Music, Tidal, Amazon Music)
+- [x] Update "Global Distribution" card to emphasize direct artist-to-fan distribution via BAP
+- [x] Update "Seamless Integrations" section to focus on social media and business tools only
+
+## Remove ALL Competitor Platform Mentions
+- [x] Search for and remove all mentions of Spotify
+- [x] Search for and remove all mentions of Apple Music
+- [x] Search for and remove all mentions of YouTube Music
+- [x] Search for and remove all mentions of Tidal
+- [x] Search for and remove all mentions of Amazon Music
+- [x] Search for and remove all mentions of Deezer, Pandora, SoundCloud
+- [x] Review Privacy Policy, Terms of Service, and all legal pages
+- [x] Review all feature descriptions and marketing copy
+- [x] Verify no competitor names remain anywhere in the codebase

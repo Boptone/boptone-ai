@@ -1,0 +1,22 @@
+{
+  "query": "SHOW TABLES LIKE 'bap%'",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SHOW TABLES LIKE 'bap%'",
+  "rows": [
+    {
+      "Tables_in_nTbKjjzazhRpeJn9kKuXdQ (bap%)": "bap_albums"
+    },
+    {
+      "Tables_in_nTbKjjzazhRpeJn9kKuXdQ (bap%)": "bap_follows"
+    },
+    {
+      "Tables_in_nTbKjjzazhRpeJn9kKuXdQ (bap%)": "bap_likes"
+    },
+    {
+      "Tables_in_nTbKjjzazhRpeJn9kKuXdQ (bap%)": "bap_payments"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_nTbKjjzazhRpeJn9kKuXdQ (bap%)\nbap_albums\nbap_follows\nbap_likes\nbap_payments\n",
+  "stderr": "",
+  "execution_time_ms": 76
+}

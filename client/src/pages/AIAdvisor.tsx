@@ -22,7 +22,7 @@ export default function AIAdvisor() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm your AI Career Advisor, powered by Manus' 1 trillion token pool. I can help you with:\n\n- **Release Strategy**: When and how to release your music\n- **Content Ideas**: Social media posts, marketing campaigns\n- **Career Planning**: Next steps to grow your audience\n- **Financial Advice**: Revenue optimization and budgeting\n- **Tour Planning**: Optimal routing and venue selection\n\nWhat would you like to discuss today?",
+      content: "Hi! I'm your AI Career Advisor, powered by Boptone. I can help you with:\n\n- **Release Strategy**: When and how to release your music\n- **Content Ideas**: Social media posts, marketing campaigns\n- **Career Planning**: Next steps to grow your audience\n- **Financial Advice**: Revenue optimization and budgeting\n- **Tour Planning**: Optimal routing and venue selection\n\nWhat would you like to discuss today?",
       timestamp: new Date().toISOString(),
     },
   ]);
@@ -134,7 +134,7 @@ export default function AIAdvisor() {
               </div>
               <div>
                 <h1 className="text-xl font-bold">AI Career Advisor</h1>
-                <p className="text-sm text-muted-foreground">Powered by Manus 1T Token Pool</p>
+                <p className="text-sm text-muted-foreground">Powered by Boptone</p>
               </div>
             </div>
           </div>
@@ -170,17 +170,17 @@ export default function AIAdvisor() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Token Usage</CardTitle>
+                <CardTitle className="text-base">AI Guidance</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">This session</span>
-                    <span className="font-medium">~2.5K</span>
+                    <span className="text-muted-foreground">Messages</span>
+                    <span className="font-medium">{messages.length}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Total available</span>
-                    <span className="font-medium text-primary">1 Trillion</span>
+                    <span className="text-muted-foreground">Availability</span>
+                    <span className="font-medium text-primary">Unlimited</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-3">
                     Unlimited AI-powered guidance for your career
@@ -299,15 +299,14 @@ async function generateAIResponse(userInput: string, profile: any): Promise<stri
 5. **Week 6**: Final push with countdown posts
 
 **Platform Priority:**
-1. Spotify (largest streaming audience)
-2. Apple Music (higher per-stream payout)
-3. YouTube Music (video content opportunity)
-4. TikTok (viral potential)
+1. Boptone (direct artist-to-fan with 90% revenue share)
+2. TikTok (viral potential for discovery)
+3. Instagram (visual storytelling)
 
 **Budget Allocation** (if you have $1,000):
-- 40% ($400): Social media ads (Instagram/TikTok)
-- 30% ($300): Playlist pitching services
-- 20% ($200): Press release distribution
+- 50% ($500): Social media ads (Instagram/TikTok)
+- 30% ($300): Content creation (music videos, behind-the-scenes)
+- 20% ($200): Influencer collaborations
 - 10% ($100): Cover art and promotional graphics
 
 Would you like me to create a detailed release checklist for you?`;

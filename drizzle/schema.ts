@@ -456,3 +456,236 @@ export const payments = mysqlTable("payments", {
 
 export type Payment = typeof payments.$inferSelect;
 export type InsertPayment = typeof payments.$inferInsert;
+
+// ============================================================================
+// BOPTONE AUDIO PROTOCOL (BAP) - MUSIC STREAMING PLATFORM
+// ============================================================================
+
+/**
+ * BAP Tracks - Core music content with metadata
+ * Artists keep 90% of streaming revenue
+ */
+export const bapTracks = mysqlTable("bap_tracks", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Core metadata
+  title: varchar("title", { length: 255 }).notNull(),
+  artist: varchar("artist", { length: 255 }).notNull(), // Can differ from profile name
+  albumId: int("albumId").references(() => bapAlbums.id),
+  
+  // Audio technical details
+  duration: int("duration").notNull(), // Duration in seconds
+  bpm: int("bpm"), // Beats per minute
+  musicalKey: varchar("musicalKey", { length: 10 }), // e.g., "C Major", "A Minor"
+  genre: varchar("genre", { length: 100 }),
+  mood: varchar("mood", { length: 100 }), // e.g., "energetic", "chill", "sad"
+  
+  // File storage
+  audioUrl: text("audioUrl").notNull(), // S3 URL to audio file
+  waveformUrl: text("waveformUrl"), // S3 URL to waveform image
+  artworkUrl: text("artworkUrl"), // Cover art
+  fileSize: int("fileSize"), // In bytes
+  audioFormat: varchar("audioFormat", { length: 20 }).default("mp3"), // mp3, wav, flac, etc.
+  
+  // BAP Protocol fields
+  did: varchar("did", { length: 255 }).unique(), // did:boptone:artistname:trackid
+  contentHash: varchar("contentHash", { length: 128 }), // SHA-256 hash for integrity
+  
+  // Engagement metrics
+  playCount: int("playCount").default(0).notNull(),
+  likeCount: int("likeCount").default(0).notNull(),
+  repostCount: int("repostCount").default(0).notNull(),
+  
+  // Revenue tracking
+  totalEarnings: int("totalEarnings").default(0).notNull(), // In cents
+  
+  // Status
+  status: mysqlEnum("status", ["draft", "processing", "live", "archived"]).default("draft").notNull(),
+  isExplicit: boolean("isExplicit").default(false).notNull(),
+  
+  // Timestamps
+  releasedAt: timestamp("releasedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  releasedAtIdx: index("released_at_idx").on(table.releasedAt),
+}));
+
+export type BapTrack = typeof bapTracks.$inferSelect;
+export type InsertBapTrack = typeof bapTracks.$inferInsert;
+
+/**
+ * BAP Albums - Collections of tracks
+ */
+export const bapAlbums = mysqlTable("bap_albums", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  artworkUrl: text("artworkUrl"),
+  
+  albumType: mysqlEnum("albumType", ["single", "ep", "album", "compilation"]).notNull(),
+  genre: varchar("genre", { length: 100 }),
+  
+  releaseDate: timestamp("releaseDate").notNull(),
+  trackCount: int("trackCount").default(0).notNull(),
+  totalDuration: int("totalDuration").default(0).notNull(), // Total seconds
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+}));
+
+export type BapAlbum = typeof bapAlbums.$inferSelect;
+export type InsertBapAlbum = typeof bapAlbums.$inferInsert;
+
+/**
+ * BAP Playlists - User-curated collections
+ */
+export const bapPlaylists = mysqlTable("bap_playlists", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  coverImageUrl: text("coverImageUrl"),
+  
+  isPublic: boolean("isPublic").default(true).notNull(),
+  isCurated: boolean("isCurated").default(false).notNull(), // Official Boptone curation
+  
+  trackIds: json("trackIds").$type<number[]>(), // Array of track IDs
+  trackCount: int("trackCount").default(0).notNull(),
+  
+  followerCount: int("followerCount").default(0).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  isCuratedIdx: index("is_curated_idx").on(table.isCurated),
+}));
+
+export type BapPlaylist = typeof bapPlaylists.$inferSelect;
+export type InsertBapPlaylist = typeof bapPlaylists.$inferInsert;
+
+/**
+ * BAP Follows - Artist/User following relationships
+ */
+export const bapFollows = mysqlTable("bap_follows", {
+  id: int("id").autoincrement().primaryKey(),
+  followerId: int("followerId").notNull().references(() => users.id),
+  followingId: int("followingId").notNull().references(() => users.id),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  followerIdx: index("follower_idx").on(table.followerId),
+  followingIdx: index("following_idx").on(table.followingId),
+  uniqueFollow: index("unique_follow").on(table.followerId, table.followingId),
+}));
+
+export type BapFollow = typeof bapFollows.$inferSelect;
+export type InsertBapFollow = typeof bapFollows.$inferInsert;
+
+/**
+ * BAP Likes - Track favorites
+ */
+export const bapLikes = mysqlTable("bap_likes", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  uniqueLike: index("unique_like").on(table.userId, table.trackId),
+}));
+
+export type BapLike = typeof bapLikes.$inferSelect;
+export type InsertBapLike = typeof bapLikes.$inferInsert;
+
+/**
+ * BAP Streams - Play tracking for payment calculation
+ * Each stream = $0.01 (90% to artist, 10% to platform)
+ */
+export const bapStreams = mysqlTable("bap_streams", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  userId: int("userId").references(() => users.id), // Null for anonymous listeners
+  
+  // Stream details
+  durationPlayed: int("durationPlayed").notNull(), // Seconds played (must be >30s to count)
+  completionRate: int("completionRate").notNull(), // Percentage (0-100)
+  
+  // Payment calculation
+  paymentAmount: int("paymentAmount").default(1).notNull(), // In cents (default $0.01)
+  artistShare: int("artistShare").default(0).notNull(), // 90% in cents
+  platformShare: int("platformShare").default(0).notNull(), // 10% in cents
+  
+  // Context
+  source: mysqlEnum("source", ["feed", "playlist", "artist_page", "search", "direct"]).notNull(),
+  deviceType: varchar("deviceType", { length: 50 }), // "mobile", "desktop", "tablet"
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type BapStream = typeof bapStreams.$inferSelect;
+export type InsertBapStream = typeof bapStreams.$inferInsert;
+
+/**
+ * BAP Payments - 90/10 revenue split tracking
+ */
+export const bapPayments = mysqlTable("bap_payments", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Payment details
+  amount: int("amount").notNull(), // Total artist earnings in cents
+  streamCount: int("streamCount").notNull(), // Number of streams in this payment
+  
+  // Stripe integration
+  stripePayoutId: varchar("stripePayoutId", { length: 255 }),
+  status: mysqlEnum("status", ["pending", "processing", "paid", "failed"]).default("pending").notNull(),
+  
+  // Period covered
+  periodStart: timestamp("periodStart").notNull(),
+  periodEnd: timestamp("periodEnd").notNull(),
+  
+  // Timestamps
+  paidAt: timestamp("paidAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type BapPayment = typeof bapPayments.$inferSelect;
+export type InsertBapPayment = typeof bapPayments.$inferInsert;
+
+/**
+ * BAP Reposts - Social sharing of tracks
+ */
+export const bapReposts = mysqlTable("bap_reposts", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  uniqueRepost: index("unique_repost").on(table.userId, table.trackId),
+}));
+
+export type BapRepost = typeof bapReposts.$inferSelect;
+export type InsertBapRepost = typeof bapReposts.$inferInsert;

@@ -1,0 +1,9 @@
+{
+  "query": "DROP TABLE IF EXISTS bap_reposts, bap_payments, bap_streams, bap_likes, bap_follows, bap_playlists, bap_tracks, bap_albums",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute DROP TABLE IF EXISTS bap_reposts, bap_payments, bap_streams, bap_likes, bap_follows, bap_playlists, bap_tracks, bap_albums",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1184
+}

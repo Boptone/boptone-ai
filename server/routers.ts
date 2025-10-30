@@ -5,6 +5,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
 import { stripeRouter } from "./routers/stripe";
+import { bapRouter } from "./routers/bap";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -598,6 +599,9 @@ export const appRouter = router({
   healthcare: healthcareRouter,
   opportunities: opportunitiesRouter,
   notifications: notificationsRouter,
+  
+  // Boptone Audio Protocol (BAP)
+  bap: bapRouter,
 });
 
 export type AppRouter = typeof appRouter;

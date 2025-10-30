@@ -184,12 +184,7 @@ export default function Analytics() {
   ];
 
   const platformLabels: Record<string, string> = {
-    spotify: "Spotify",
-    apple_music: "Apple Music",
-    youtube_music: "YouTube Music",
-    amazon_music: "Amazon Music",
-    tidal: "Tidal",
-    soundcloud: "SoundCloud",
+    boptone: "Boptone",
     instagram: "Instagram",
     tiktok: "TikTok",
     twitter: "Twitter",

@@ -78,7 +78,7 @@ export default function Privacy() {
                   <strong>Survey and Feedback Data:</strong> When you participate in surveys, provide feedback, or respond to questionnaires, we collect your responses, opinions, ratings, and any other information you provide.
                 </p>
                 <p className="mb-4">
-                  <strong>Third-Party Account Credentials:</strong> When you connect third-party services to your Boptone account (such as Spotify, Apple Music, Instagram, TikTok, YouTube, or other platforms), you authorize us to access and collect information from those accounts, including streaming statistics, playlist placements, follower counts, engagement metrics, content performance data, and other information made available through those platforms' APIs.
+                  <strong>Third-Party Account Credentials:</strong> When you connect third-party services to your Boptone account (such as Instagram, TikTok, or other social platforms), you authorize us to access and collect information from those accounts, including follower counts, engagement metrics, content performance data, and other information made available through those platforms' APIs.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">2.2 Information We Collect Automatically</h3>
@@ -106,13 +106,7 @@ export default function Privacy() {
                   We receive information about you from third-party sources, which we combine with information we collect directly from you. These third-party sources include:
                 </p>
                 <p className="mb-2">
-                  <strong>Streaming Platforms:</strong> Spotify, Apple Music, YouTube Music, Tidal, Amazon Music, Deezer, Pandora, and other digital service providers provide us with streaming statistics, play counts, skip rates, playlist placements, listener demographics, geographic distribution, save rates, and other performance metrics.
-                </p>
-                <p className="mb-2">
                   <strong>Social Media Platforms:</strong> Instagram, TikTok, Twitter/X, Facebook, YouTube, and other social networks provide us with follower counts, engagement rates, post performance, audience demographics, growth trends, and content analytics when you connect these accounts.
-                </p>
-                <p className="mb-2">
-                  <strong>Distribution Services:</strong> Music distribution partners provide release data, sales information, royalty reports, territory-specific performance, and revenue breakdowns.
                 </p>
                 <p className="mb-2">
                   <strong>Payment Processors:</strong> Stripe, PayPal, and other payment service providers share transaction data, payment status, refund information, chargeback data, and fraud detection signals.
@@ -213,7 +207,7 @@ export default function Privacy() {
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.2 Distribution and Integration Partners</h3>
                 <p className="mb-4">
-                  When you use our distribution features, we share your User Content and metadata with streaming platforms (Spotify, Apple Music, YouTube Music, Tidal, Amazon Music, etc.), social media platforms (Instagram, TikTok, Twitter/X, Facebook, YouTube) when you connect these accounts, music distribution services that deliver your content to digital service providers, royalty collection societies and performing rights organizations, and other platforms and services you choose to integrate with your account. These partners have their own privacy policies governing their use of your information.
+                  When you use our distribution features, we share your User Content and metadata with social media platforms (Instagram, TikTok, Twitter/X, Facebook, YouTube) when you connect these accounts, and other platforms and services you choose to integrate with your account. These partners have their own privacy policies governing their use of your information.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.3 Healthcare Providers</h3>

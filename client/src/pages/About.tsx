@@ -102,7 +102,7 @@ export default function About() {
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
               <p>
-                Boptone was born from a simple observation: the tools available to independent artists haven't kept pace with the creator economy boom. While platforms like Spotify and TikTok created new opportunities for discovery, they also created new complexities—fragmented revenue streams, opaque algorithms, and an overwhelming administrative burden.
+                Boptone was born from a simple observation: the tools available to independent artists haven't kept pace with the creator economy boom. While social platforms created new opportunities for discovery, they also created new complexities—fragmented revenue streams, opaque algorithms, and an overwhelming administrative burden.
               </p>
               <p>
                 Founded by Acid Bird, Inc. in Los Angeles, California, we set out to build the platform we wished existed when we were navigating the music industry ourselves. We assembled a team of technologists, artists, and industry veterans who shared a common vision: democratize access to the tools and resources that were once reserved for signed artists.

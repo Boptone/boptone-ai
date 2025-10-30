@@ -200,7 +200,7 @@ export default function Demo() {
               <CardContent className="p-6">
                 <h3 className="font-semibold text-lg mb-2">Do I need technical skills?</h3>
                 <p className="text-muted-foreground">
-                  Not at all. Boptone is designed for artists, not developers. If you can use Spotify or Instagram, you can use Boptone. Our interface is intuitive and our AI assistant (Toney) helps with any questions.
+                  Not at all. Boptone is designed for artists, not developers. If you can use Instagram or TikTok, you can use Boptone. Our interface is intuitive and our AI assistant (Toney) helps with any questions.
                 </p>
               </CardContent>
             </Card>
