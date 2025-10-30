@@ -24,6 +24,7 @@ import Healthcare from "./pages/Healthcare";
 import Admin from "./pages/Admin";
 import Signup from "./pages/Signup";
 import ProfileSettings from "./pages/ProfileSettings";
+import Analytics from "./pages/Analytics";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -45,6 +46,7 @@ function Router() {
       <Route path={"/ip-protection"} component={IPProtection} />
       <Route path={"/tours"} component={Tours} />
       <Route path={"/healthcare"} component={Healthcare} />
+      <Route path={"/analytics"} component={Analytics} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />
