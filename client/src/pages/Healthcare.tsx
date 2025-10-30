@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -13,10 +14,13 @@ import { toast } from "sonner";
 
 export default function Healthcare() {
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
   const [isEnrollDialogOpen, setIsEnrollDialogOpen] = useState(false);
   
-  const { data: plans, isLoading, refetch } = trpc.healthcare.getAll.useQuery({});
+  const { data: plans, isLoading, refetch } = trpc.healthcare.getAll.useQuery({}, {
+    enabled: !isDemoMode
+  });
   const enrollPlan = trpc.healthcare.enroll.useMutation({
     onSuccess: () => {
       toast.success("Successfully enrolled in healthcare plan!");
@@ -34,10 +38,10 @@ export default function Healthcare() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!authLoading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
 
   const handleEnroll = () => {
     const premiumInCents = Math.round(parseFloat(enrollment.monthlyPremium) * 100);

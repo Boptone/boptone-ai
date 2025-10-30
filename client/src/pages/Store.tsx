@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -14,10 +15,13 @@ import { toast } from "sonner";
 
 export default function Store() {
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   
-  const { data: products, isLoading, refetch } = trpc.products.getAll.useQuery({});
+  const { data: products, isLoading, refetch } = trpc.products.getAll.useQuery({}, {
+    enabled: !isDemoMode
+  });
   const createProduct = trpc.products.create.useMutation({
     onSuccess: () => {
       toast.success("Product created successfully!");
@@ -37,10 +41,10 @@ export default function Store() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!authLoading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
 
   const [newProduct, setNewProduct] = useState({
     name: "",

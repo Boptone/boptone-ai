@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -18,11 +19,12 @@ import { useLocation } from "wouter";
 
 export default function ProfileSettings() {
   const { user, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
 
   const { data: profile, isLoading } = trpc.artistProfile.getMyProfile.useQuery(
     undefined,
-    { enabled: !!user }
+    { enabled: !!user && !isDemoMode }
   );
 
   const [themeColor, setThemeColor] = useState(profile?.themeColor || "#0066ff");

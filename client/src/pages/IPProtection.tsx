@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
@@ -9,9 +10,12 @@ import { toast } from "sonner";
 
 export default function IPProtection() {
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
   
-  const { data: infringements, isLoading, refetch } = trpc.ipProtection.getAll.useQuery({});
+  const { data: infringements, isLoading, refetch } = trpc.ipProtection.getAll.useQuery({}, {
+    enabled: !isDemoMode
+  });
   const updateStatus = trpc.ipProtection.updateStatus.useMutation({
     onSuccess: () => {
       toast.success("Status updated successfully!");
@@ -20,10 +24,10 @@ export default function IPProtection() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!authLoading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
 
   const stats = [
     {

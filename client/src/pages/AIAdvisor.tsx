@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ type Message = {
 
 export default function AIAdvisor() {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -27,7 +29,9 @@ export default function AIAdvisor() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { data: profile } = trpc.artistProfile.getMyProfile.useQuery();
+  const { data: profile } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
+    enabled: !isDemoMode
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,10 +42,10 @@ export default function AIAdvisor() {
   }, [messages]);
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!authLoading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || isTyping) return;

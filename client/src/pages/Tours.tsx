@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -12,10 +13,13 @@ import { toast } from "sonner";
 
 export default function Tours() {
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   
-  const { data: tours, isLoading, refetch } = trpc.tours.getAll.useQuery({});
+  const { data: tours, isLoading, refetch } = trpc.tours.getAll.useQuery({}, {
+    enabled: !isDemoMode
+  });
   const createTour = trpc.tours.create.useMutation({
     onSuccess: () => {
       toast.success("Tour created successfully!");
@@ -36,10 +40,10 @@ export default function Tours() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!authLoading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
 
   const handleCreateTour = () => {
     const budgetInCents = newTour.budget ? Math.round(parseFloat(newTour.budget) * 100) : undefined;

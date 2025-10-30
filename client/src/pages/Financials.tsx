@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -13,12 +14,19 @@ import { toast } from "sonner";
 
 export default function Financials() {
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();
   const [isLoanDialogOpen, setIsLoanDialogOpen] = useState(false);
   
-  const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({});
-  const { data: revenueRecords, refetch: refetchRevenue } = trpc.revenue.getAll.useQuery({});
-  const { data: loans, refetch: refetchLoans } = trpc.loans.getAll.useQuery({});
+  const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({}, {
+    enabled: !isDemoMode
+  });
+  const { data: revenueRecords, refetch: refetchRevenue } = trpc.revenue.getAll.useQuery({}, {
+    enabled: !isDemoMode
+  });
+  const { data: loans, refetch: refetchLoans } = trpc.loans.getAll.useQuery({}, {
+    enabled: !isDemoMode
+  });
   
   const applyForLoan = trpc.loans.applyForLoan.useMutation({
     onSuccess: () => {
@@ -37,10 +45,10 @@ export default function Financials() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!authLoading && !isAuthenticated && !isDemoMode) {
       setLocation("/");
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
 
   const handleApplyForLoan = () => {
     const amountInCents = Math.round(parseFloat(loanApplication.amount) * 100);
