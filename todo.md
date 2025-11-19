@@ -418,3 +418,11 @@
 - [x] Add goal tracking widget to dashboard
 - [x] Add tips & recommendations section to dashboard
 - [x] Add earnings summary widget to dashboard (already exists in stats)
+
+## Global Navigation & Chatbot Fixes
+- [x] Create global navigation component with logo and menu links
+- [x] Add navigation links (Home, Features, BAP, Discover, About)
+- [x] Add auth buttons (Login/Signup or Dashboard/Profile)
+- [x] Add ToneyChatbot globally in App.tsx
+- [ ] Remove individual ToneyChatbot imports from pages (optional cleanup)
+- [x] Test navigation and chatbot across all pages

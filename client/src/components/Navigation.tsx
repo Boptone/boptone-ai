@@ -1,0 +1,144 @@
+import { useAuth } from "@/_core/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
+
+export function Navigation() {
+  const { isAuthenticated, user } = useAuth();
+  const [location] = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/features", label: "Features" },
+    { href: "/bap", label: "BAP Protocol" },
+    { href: "/discover", label: "Discover" },
+    { href: "/about", label: "About" },
+  ];
+
+  return (
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
+        <Link href="/">
+          <a className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            {APP_LOGO && (
+              <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-8" />
+            )}
+            <span className="font-bold text-xl">{APP_TITLE}</span>
+          </a>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              <a
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  location === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {link.label}
+              </a>
+            </Link>
+          ))}
+        </div>
+
+        {/* Auth Buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          {isAuthenticated ? (
+            <>
+              <Link href="/dashboard">
+                <Button variant="ghost">Dashboard</Button>
+              </Link>
+              <Link href="/profile-settings">
+                <Button variant="outline">Profile</Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <a href={getLoginUrl()}>Log In</a>
+              </Button>
+              <Button asChild>
+                <a href={getLoginUrl()}>Sign Up</a>
+              </Button>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t bg-background">
+          <div className="container py-4 space-y-3">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <a
+                  className={`block py-2 text-sm font-medium transition-colors hover:text-primary ${
+                    location === link.href
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              </Link>
+            ))}
+            <div className="pt-3 space-y-2">
+              {isAuthenticated ? (
+                <>
+                  <Link href="/dashboard">
+                    <Button
+                      variant="ghost"
+                      className="w-full"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Link href="/profile-settings">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Profile
+                    </Button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" className="w-full" asChild>
+                    <a href={getLoginUrl()}>Log In</a>
+                  </Button>
+                  <Button className="w-full" asChild>
+                    <a href={getLoginUrl()}>Sign Up</a>
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}

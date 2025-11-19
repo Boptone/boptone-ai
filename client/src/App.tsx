@@ -6,6 +6,8 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { DemoProvider } from "./contexts/DemoContext";
+import { Navigation } from "./components/Navigation";
+import { ToneyChatbot } from "./components/ToneyChatbot";
 import Home from "./pages/Home";
 import ArtistProfile from "./pages/ArtistProfile";
 import DemoArtistProfile from "./pages/DemoArtistProfile";
@@ -81,7 +83,9 @@ function App() {
         >
           <TooltipProvider>
             <Toaster />
+            <Navigation />
             <Router />
+            <ToneyChatbot />
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>
