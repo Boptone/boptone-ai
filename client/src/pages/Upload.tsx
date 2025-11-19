@@ -34,14 +34,14 @@ export default function Upload() {
     explicit: false,
   });
 
-  const uploadTrackMutation = trpc.bap.uploadTrack.useMutation({
+  const uploadTrackMutation = trpc.bap.tracks.upload.useMutation({
     onSuccess: () => {
       toast.success("Track published to BAP!", {
         description: "Your music is now live and available to fans worldwide."
       });
       setLocation("/discover");
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error("Upload failed", {
         description: error.message
       });
@@ -118,8 +118,8 @@ export default function Upload() {
       return;
     }
 
-    if (!metadata.title || !metadata.artist) {
-      toast.error("Please fill in title and artist");
+    if (!metadata.title) {
+      toast.error("Please fill in title");
       return;
     }
 
@@ -138,26 +138,39 @@ export default function Upload() {
     }, 500);
 
     try {
-      // In production, upload audio and artwork to S3 first
-      // For now, we'll simulate with placeholder URLs
-      const audioUrl = `https://storage.boptone.com/tracks/${Date.now()}.mp3`;
-      const artworkUrl = artworkFile 
-        ? `https://storage.boptone.com/artwork/${Date.now()}.jpg`
-        : `https://via.placeholder.com/500x500?text=${encodeURIComponent(metadata.title)}`;
+      // Convert audio file to base64
+      const audioBase64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          // Remove data:audio/mpeg;base64, prefix
+          resolve(result.split(',')[1]);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(audioFile);
+      });
+
+      // Convert artwork to base64 if exists
+      let artworkBase64: string | undefined;
+      if (artworkFile) {
+        artworkBase64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            resolve(result.split(',')[1]);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(artworkFile);
+        });
+      }
 
       await uploadTrackMutation.mutateAsync({
         title: metadata.title,
-        artist: metadata.artist,
-        album: metadata.album || null,
-        genre: metadata.genre || null,
-        releaseDate: metadata.releaseDate ? new Date(metadata.releaseDate) : new Date(),
-        duration: 180, // In production, extract from audio file
-        audioUrl,
-        artworkUrl,
-        bpm: metadata.bpm ? parseInt(metadata.bpm) : null,
-        musicalKey: metadata.musicalKey || null,
-        explicit: metadata.explicit,
-        description: metadata.description || null,
+        artist: metadata.artist || undefined,
+        genre: metadata.genre || undefined,
+        audioFile: audioBase64,
+        artworkFile: artworkBase64,
+        isExplicit: metadata.explicit,
       });
 
       clearInterval(progressInterval);

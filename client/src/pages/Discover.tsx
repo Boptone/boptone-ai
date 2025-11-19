@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -43,8 +43,10 @@ export default function Discover() {
   const [currentTrack, setCurrentTrack] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(75);
   const [copiedTrackId, setCopiedTrackId] = useState<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const getTrackUrl = (trackId: number) => {
     return `${window.location.origin}/track/${trackId}`;
@@ -92,6 +94,60 @@ export default function Discover() {
   );
 
   const likeTrackMutation = trpc.bap.likeTrack.useMutation();
+  const recordStreamMutation = trpc.bap.recordStream.useMutation();
+
+  // Audio player effects
+  useEffect(() => {
+    if (!audioRef.current) return;
+    
+    const audio = audioRef.current;
+    
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleLoadedMetadata = () => setDuration(audio.duration);
+    const handleEnded = () => setIsPlaying(false);
+    
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('ended', handleEnded);
+    
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, []);
+
+  // Handle play/pause
+  useEffect(() => {
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.play().catch(err => {
+        console.error('Failed to play audio:', err);
+        setIsPlaying(false);
+      });
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
+
+  // Load new track
+  useEffect(() => {
+    if (!audioRef.current || !currentTrack) return;
+    
+    audioRef.current.src = currentTrack.audioUrl;
+    audioRef.current.volume = volume / 100;
+    
+    if (isPlaying) {
+      audioRef.current.play();
+      // Record stream after 30 seconds of playback
+      const streamTimer = setTimeout(() => {
+        recordStreamMutation.mutate({ trackId: currentTrack.id });
+      }, 30000);
+      
+      return () => clearTimeout(streamTimer);
+    }
+  }, [currentTrack, volume]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -446,19 +502,28 @@ export default function Discover() {
                 <input
                   type="range"
                   min="0"
-                  max={currentTrack.duration}
+                  max={duration || currentTrack.duration}
                   value={currentTime}
-                  onChange={(e) => setCurrentTime(parseInt(e.target.value))}
+                  onChange={(e) => {
+                    const newTime = parseInt(e.target.value);
+                    setCurrentTime(newTime);
+                    if (audioRef.current) {
+                      audioRef.current.currentTime = newTime;
+                    }
+                  }}
                   className="w-full"
                 />
               </div>
               <span className="text-xs text-muted-foreground w-10">
-                {formatTime(currentTrack.duration)}
+                {formatTime(duration || currentTrack.duration)}
               </span>
             </div>
           </div>
         </div>
       )}
+      
+      {/* Hidden audio element */}
+      <audio ref={audioRef} />
     </div>
   );
 }

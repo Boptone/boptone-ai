@@ -76,6 +76,27 @@ export const bapRouter = router({
         const audioKey = `bap/tracks/${profile.id}/${Date.now()}-${input.title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.mp3`;
         const { url: audioUrl } = await storagePut(audioKey, audioBuffer, "audio/mpeg");
         
+        // Extract AI metadata if title/artist not provided
+        let finalTitle = input.title;
+        let finalArtist = input.artist || profile.stageName;
+        let finalGenre = input.genre;
+        
+        if (!input.artist || !input.genre) {
+          try {
+            const { extractAudioMetadata } = await import("../_core/audioMetadata");
+            const aiMetadata = await extractAudioMetadata({
+              filename: input.title,
+              fileSize: audioBuffer.length,
+            });
+            
+            if (!input.artist) finalArtist = aiMetadata.artist;
+            if (!input.genre) finalGenre = aiMetadata.genre;
+          } catch (error) {
+            console.error("[BAP] AI metadata extraction failed:", error);
+            // Continue with provided/default values
+          }
+        }
+        
         // Upload artwork if provided
         let artworkUrl: string | undefined;
         if (input.artworkFile) {
@@ -88,10 +109,10 @@ export const bapRouter = router({
         // Create track record
         const track = await createTrack({
           artistId: profile.id,
-          title: input.title,
-          artist: input.artist || profile.stageName,
+          title: finalTitle,
+          artist: finalArtist,
           albumId: input.albumId,
-          genre: input.genre,
+          genre: finalGenre,
           audioUrl,
           artworkUrl,
           isExplicit: input.isExplicit,
@@ -538,6 +559,91 @@ export const bapRouter = router({
         if (!profile) return [];
         
         return getArtistPayments(profile.id);
+      }),
+    
+    /**
+     * Get pending earnings (ready for payout)
+     */
+    getPending: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getArtistProfileByUserId } = await import("../db");
+        const { calculatePendingEarnings } = await import("../bap-payments");
+        
+        const profile = await getArtistProfileByUserId(ctx.user.id);
+        if (!profile) {
+          return {
+            totalEarnings: 0,
+            totalPaidOut: 0,
+            pendingAmount: 0,
+            streamCount: 0,
+            canPayout: false,
+            minimumThreshold: 1000,
+          };
+        }
+        
+        return calculatePendingEarnings(profile.id);
+      }),
+    
+    /**
+     * Request payout (admin only for now)
+     */
+    requestPayout: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        const { getArtistProfileByUserId } = await import("../db");
+        const { createArtistPayout } = await import("../bap-payments");
+        
+        const profile = await getArtistProfileByUserId(ctx.user.id);
+        if (!profile) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Artist profile not found",
+          });
+        }
+        
+        return createArtistPayout(profile.id);
+      }),
+    
+    /**
+     * Get Stripe Connect account status
+     */
+    getStripeStatus: protectedProcedure
+      .query(async ({ ctx }) => {
+        const { getArtistProfileByUserId } = await import("../db");
+        const { checkStripeAccountStatus } = await import("../bap-payments");
+        
+        const profile = await getArtistProfileByUserId(ctx.user.id);
+        if (!profile) {
+          return {
+            connected: false,
+            chargesEnabled: false,
+            payoutsEnabled: false,
+          };
+        }
+        
+        return checkStripeAccountStatus(profile.id);
+      }),
+    
+    /**
+     * Create Stripe Connect onboarding link
+     */
+    createStripeLink: protectedProcedure
+      .input(z.object({
+        refreshUrl: z.string(),
+        returnUrl: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { getArtistProfileByUserId } = await import("../db");
+        const { createStripeConnectAccountLink } = await import("../bap-payments");
+        
+        const profile = await getArtistProfileByUserId(ctx.user.id);
+        if (!profile) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Artist profile not found",
+          });
+        }
+        
+        return createStripeConnectAccountLink(profile.id, input.refreshUrl, input.returnUrl);
       }),
   }),
   

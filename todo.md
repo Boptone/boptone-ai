@@ -426,3 +426,15 @@
 - [x] Add ToneyChatbot globally in App.tsx
 - [ ] Remove individual ToneyChatbot imports from pages (optional cleanup)
 - [x] Test navigation and chatbot across all pages
+
+## BAP Core Functionality Completion
+- [x] Build file upload handler with S3 storage integration
+- [x] Add audio file validation (format, size, duration)
+- [x] Implement AI metadata extraction (title, artist, genre, BPM, key)
+- [x] Wire up audio streaming player to S3 URLs
+- [x] Add play tracking and stream counting
+- [x] Implement revenue calculation (per-stream earnings)
+- [x] Connect payment tracking to Stripe
+- [x] Create Earnings page with payout management
+- [x] Add Stripe Connect integration for artist payouts
+- [ ] Test complete upload-to-stream flow

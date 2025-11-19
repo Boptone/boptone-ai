@@ -54,6 +54,10 @@ export const artistProfiles = mysqlTable("artist_profiles", {
   layoutStyle: mysqlEnum("layoutStyle", ["default", "minimal", "grid"]).default("default"),
   fontFamily: varchar("fontFamily", { length: 100 }).default("Inter"),
   onboardingCompleted: boolean("onboardingCompleted").default(false).notNull(),
+  metadata: json("metadata").$type<{
+    stripeAccountId?: string;
+    [key: string]: any;
+  }>(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({

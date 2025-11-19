@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "04bc76ed-cc46-45f0-a45b-f3b142fdde8a",
-  "prevId": "6d12797a-5eb7-4997-9f14-f36c1f3f1965",
+  "id": "750d780b-429f-49d9-97e6-80984c1a3d61",
+  "prevId": "04bc76ed-cc46-45f0-a45b-f3b142fdde8a",
   "tables": {
     "ai_conversations": {
       "name": "ai_conversations",
@@ -343,6 +343,13 @@
           "notNull": true,
           "autoincrement": false,
           "default": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "createdAt": {
           "name": "createdAt",

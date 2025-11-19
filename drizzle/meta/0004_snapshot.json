@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "6d12797a-5eb7-4997-9f14-f36c1f3f1965",
-  "prevId": "0a5355af-76d5-4af6-8d45-7e5880f80906",
+  "id": "fc7ee1d4-db23-406c-bb4b-3d338f6ec005",
+  "prevId": "04bc76ed-cc46-45f0-a45b-f3b142fdde8a",
   "tables": {
     "ai_conversations": {
       "name": "ai_conversations",
@@ -343,6 +343,13 @@
           "notNull": true,
           "autoincrement": false,
           "default": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "createdAt": {
           "name": "createdAt",
@@ -903,8 +910,7 @@
           "type": "json",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "('[]')"
+          "autoincrement": false
         },
         "trackCount": {
           "name": "trackCount",
