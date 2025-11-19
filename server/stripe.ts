@@ -1,12 +1,20 @@
 import Stripe from 'stripe';
 
+// Get Stripe keys from environment variables
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
+const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY || '';
+
+if (!STRIPE_SECRET_KEY) {
+  console.warn('[Stripe] STRIPE_SECRET_KEY not configured. Stripe functionality will not work.');
+}
+
 // Initialize Stripe with secret key
-export const stripe = new Stripe('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', {
+export const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2025-09-30.clover',
 });
 
 // Stripe publishable key for frontend
-export const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SFhf6FFuByvgYTFdhBqzc3qDmdqj0kUXSqMrYFMQF54v4XbngCJMyoLstJwjTcUKt5qTCwe0AOGaocN2Sd4tOw600Gn5Vdap7';
+export { STRIPE_PUBLISHABLE_KEY };
 
 // Price IDs for subscription tiers (you'll need to create these in Stripe Dashboard)
 export const STRIPE_PRICES = {

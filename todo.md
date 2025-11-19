@@ -438,3 +438,13 @@
 - [x] Create Earnings page with payout management
 - [x] Add Stripe Connect integration for artist payouts
 - [ ] Test complete upload-to-stream flow
+
+## Stripe Security & Integration
+- [x] Remove hardcoded Stripe keys from server/stripe.ts
+- [x] Store Stripe keys as environment secrets
+- [x] Update stripe.ts to read from environment variables
+- [x] Implement Stripe webhook handler at /api/webhooks/stripe
+- [x] Add webhook signature verification
+- [x] Handle payment events (checkout.session.completed, transfer.paid, etc.)
+- [ ] Test Stripe Connect artist onboarding flow
+- [ ] Test payout flow end-to-end
