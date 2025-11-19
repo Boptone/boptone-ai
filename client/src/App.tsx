@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
+import Onboarding from "@/pages/Onboarding";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -25,11 +26,15 @@ import Admin from "./pages/Admin";
 import Signup from "./pages/Signup";
 import ProfileSettings from "./pages/ProfileSettings";
 import Analytics from "./pages/Analytics";
+import BAP from "./pages/BAP";
+import Upload from "./pages/Upload";
+import Discover from "./pages/Discover";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>      <Route path={"/"} component={Home} />
+      <Route path="/onboarding" component={Onboarding} />
         <Route path="/@:username" component={ArtistProfile} />
       <Route path="/demo-profile" component={DemoArtistProfile} />
       <Route path={"/profile-settings"} component={ProfileSettings} />
@@ -47,6 +52,11 @@ function Router() {
       <Route path={"/tours"} component={Tours} />
       <Route path={"/healthcare"} component={Healthcare} />
       <Route path={"/analytics"} component={Analytics} />
+      <Route path={"/bap"} component={BAP} />
+      <Route path={"/protocol"} component={BAP} />
+      <Route path={"/upload"} component={Upload} />
+      <Route path={"/discover"} component={Discover} />
+      <Route path={"/music"} component={Discover} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />

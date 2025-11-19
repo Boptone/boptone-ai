@@ -17,8 +17,12 @@ import {
   Sparkles,
   ArrowUpRight,
   ArrowDownRight,
-  Loader2
+  Loader2,
+  Target,
+  Lightbulb,
+  CheckCircle2
 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
 
@@ -115,10 +119,38 @@ export default function Dashboard() {
   ];
 
   const quickActions = [
-    { label: "Upload Music", icon: Music, href: "/releases/new", color: "bg-primary" },
-    { label: "Add Product", icon: ShoppingBag, href: "/store", color: "bg-chart-3" },
+    { label: "Upload Music", icon: Music, href: "/upload", color: "bg-primary" },
     { label: "View Analytics", icon: TrendingUp, href: "/analytics", color: "bg-chart-4" },
-    { label: "IP Protection", icon: Shield, href: "/ip-protection", color: "bg-destructive" },
+    { label: "Discover Music", icon: Music, href: "/discover", color: "bg-chart-3" },
+    { label: "Edit Profile", icon: Users, href: "/profile-settings", color: "bg-chart-2" },
+  ];
+
+  const goals = [
+    { title: "Reach 1,000 Streams", current: 1200, target: 1000, completed: true },
+    { title: "Get 100 Followers", current: 45, target: 100, completed: false },
+    { title: "Upload 5 Tracks", current: 3, target: 5, completed: false },
+    { title: "Earn $100", current: 67, target: 100, completed: false },
+  ];
+
+  const tips = [
+    {
+      title: "Upload consistently",
+      description: "Artists who upload monthly grow 3x faster",
+      action: "Upload Track",
+      href: "/upload",
+    },
+    {
+      title: "Complete your profile",
+      description: "Profiles with bios get 50% more followers",
+      action: "Edit Profile",
+      href: "/profile-settings",
+    },
+    {
+      title: "Share your music",
+      description: "Social sharing drives 40% of new listeners",
+      action: "View Tracks",
+      href: "/discover",
+    },
   ];
 
   return (
@@ -219,6 +251,73 @@ export default function Dashboard() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Goals & Tips Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Goal Tracking */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Target className="h-5 w-5" />
+                Your Goals
+              </CardTitle>
+              <CardDescription>Track your progress</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {goals.map((goal) => {
+                const progress = Math.min((goal.current / goal.target) * 100, 100);
+                return (
+                  <div key={goal.title} className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        {goal.completed && (
+                          <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        )}
+                        <span className={`text-sm font-medium ${goal.completed ? "line-through text-muted-foreground" : ""}`}>
+                          {goal.title}
+                        </span>
+                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        {goal.current}/{goal.target}
+                      </span>
+                    </div>
+                    <Progress value={progress} className="h-2" />
+                  </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+          {/* Tips & Recommendations */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Lightbulb className="h-5 w-5" />
+                Tips for Growth
+              </CardTitle>
+              <CardDescription>Recommended actions</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {tips.map((tip) => (
+                <div key={tip.title} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
+                  <Lightbulb className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">{tip.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{tip.description}</p>
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="h-auto p-0 mt-2 text-xs"
+                      onClick={() => setLocation(tip.href)}
+                    >
+                      {tip.action} →
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

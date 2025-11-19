@@ -69,14 +69,18 @@ export default function Home() {
 
   const tiers = [
     {
-      name: "Free",
+      name: "Creator",
       price: "$0",
-      description: "Perfect for emerging artists",
+      period: "/forever",
+      platformFee: "12%",
+      earningCap: "$1,000/month",
+      description: "Perfect for new artists and hobbyists",
       features: [
-        "Basic artist profile",
-        "Revenue tracking (up to $1K/month)",
-        "AI career advisor (10 questions/month)",
-        "Analytics dashboard",
+        "3-click upload with AI metadata",
+        "Basic profile + 10 tracks",
+        "Earning cap: $1,000/month",
+        "12% platform fee",
+        "Basic analytics",
         "Community support",
       ],
       cta: "Start Free",
@@ -84,35 +88,66 @@ export default function Home() {
     },
     {
       name: "Pro",
-      price: "$29",
+      price: "$9",
       period: "/month",
-      description: "For growing independent artists",
+      annualPrice: "$86",
+      annualSavings: "Save $22/year",
+      platformFee: "7%",
+      earningCap: "$10,000/month",
+      description: "For serious independent artists",
       features: [
-        "Everything in Free",
-        "Unlimited revenue tracking",
-        "Unlimited AI advisor access",
-        "Direct-to-fan store",
-        "IP protection monitoring",
-        "Healthcare enrollment",
-        "Tour management",
+        "Everything in Creator",
+        "Unlimited tracks & storage",
+        "Earning cap: $10,000/month",
+        "7% platform fee OR $9/month",
+        "Advanced analytics",
+        "Customizable profile",
         "Priority support",
+        "Merch & ticketing (5% fee)",
       ],
-      cta: "Start Pro Trial",
+      cta: "Start 14-Day Trial",
       highlighted: true,
     },
     {
-      name: "Enterprise",
-      price: "Custom",
-      description: "For labels and management companies",
+      name: "Label",
+      price: "$29",
+      period: "/month",
+      annualPrice: "$278",
+      annualSavings: "Save $70/year",
+      platformFee: "4%",
+      earningCap: "Unlimited",
+      description: "For professional artists and bands",
       features: [
         "Everything in Pro",
-        "Multi-artist management",
-        "White-label platform",
-        "Custom integrations",
-        "Dedicated account manager",
-        "Advanced reporting",
+        "Unlimited earnings",
+        "4% platform fee",
+        "Team accounts (3 seats)",
+        "White-label embeds",
         "API access",
-        "SLA guarantee",
+        "Dedicated account manager",
+        "1-hour support response",
+      ],
+      cta: "Start Label Plan",
+      highlighted: false,
+    },
+    {
+      name: "Enterprise",
+      price: "$99",
+      period: "/month",
+      annualPrice: "$950",
+      annualSavings: "Save $238/year",
+      platformFee: "2.5%",
+      earningCap: "Unlimited",
+      description: "For labels and management companies",
+      features: [
+        "Everything in Label",
+        "Unlimited earnings",
+        "2.5% platform fee",
+        "10 team seats",
+        "Custom contract terms",
+        "Onboarding assistance",
+        "24/7 phone support",
+        "Quarterly strategy sessions",
       ],
       cta: "Contact Sales",
       highlighted: false,
@@ -150,6 +185,9 @@ export default function Home() {
                 document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
               }}>
                 Features
+              </Button>
+              <Button variant="ghost" onClick={() => setLocation("/bap")}>
+                BAP Protocol
               </Button>
               <Button variant="outline" asChild>
                 <a href={getLoginUrl()}>Sign In</a>
@@ -269,12 +307,16 @@ export default function Home() {
       <section id="pricing" className="container mx-auto px-4 py-20 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold">Simple, Transparent Pricing</h2>
+            <h2 className="text-4xl md:text-5xl font-bold">We Only Win When You Win</h2>
             <p className="text-xl text-muted-foreground">
-              Start free, upgrade when you're ready to scale.
+              No upfront costs. Pay based on what you earn. Keep 90% of streaming revenue.
             </p>
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary text-sm font-medium mt-4">
+              <Check className="h-4 w-4" />
+              14-day Pro trial • No credit card required
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
@@ -287,13 +329,24 @@ export default function Home() {
                     </span>
                   </div>
                 )}
-                <CardHeader className="text-center pb-8">
+                <CardHeader className="text-center pb-6">
                   <CardTitle className="text-2xl">{tier.name}</CardTitle>
                   <div className="mt-4">
                     <span className="text-5xl font-bold">{tier.price}</span>
-                    {tier.period && <span className="text-muted-foreground">{tier.period}</span>}
+                    {tier.period && <span className="text-muted-foreground text-lg">{tier.period}</span>}
                   </div>
-                  <CardDescription className="mt-2">{tier.description}</CardDescription>
+                  {tier.annualPrice && (
+                    <p className="text-sm text-muted-foreground mt-2">
+                      or {tier.annualPrice}/year • {tier.annualSavings}
+                    </p>
+                  )}
+                  <CardDescription className="mt-3">{tier.description}</CardDescription>
+                  {tier.platformFee && (
+                    <div className="mt-4 p-3 bg-primary/5 rounded-lg">
+                      <p className="text-sm font-semibold text-primary">{tier.platformFee} platform fee</p>
+                      <p className="text-xs text-muted-foreground mt-1">Cap: {tier.earningCap}</p>
+                    </div>
+                  )}
                 </CardHeader>
                 <CardContent className="flex flex-col flex-1 space-y-6">
                   <ul className="space-y-3 flex-1">
@@ -363,6 +416,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><a href="/features" className="hover:text-foreground">Features</a></li>
                 <li><a href="/pricing" className="hover:text-foreground">Pricing</a></li>
+                <li><a href="/bap" className="hover:text-foreground">BAP Protocol</a></li>
                 <li><a href="/demo" className="hover:text-foreground">Demo</a></li>
               </ul>
             </div>
