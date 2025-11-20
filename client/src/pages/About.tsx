@@ -47,13 +47,16 @@ export default function About() {
               <h2 className="text-3xl font-bold">Our Mission</h2>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              The creator economy is broken. Artists are fragmented across dozens of platforms, losing 30-50% of their revenue to middlemen, and spending more time managing their business than creating art. We're changing that.
+              The music industry is splitting in two. Not between big and small. Not between retail and DTC. Between companies building <strong>platforms</strong> and companies still acting like <strong>brands</strong>.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              Boptone is mission control for artist careers—an all-in-one platform that combines AI-powered career optimization, global distribution, financial management, IP protection, and direct-to-fan commerce. We're building the infrastructure that lets creators focus on what they do best: creating.
+              For decades, the formula was simple: make product, run ads, fight for shelf space, repeat. That playbook doesn't work anymore. Consumers follow belief systems, not logos. Retailers want data, not catalogs. Creators want ownership, not sponsorships.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              The next category leaders won't win because of SKUs. They'll win because of <strong>ecosystems</strong>—where media, data, manufacturing, distribution, and storytelling operate as one engine. That's the new moat. That's the real consolidation play.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              By 2030, we envision a world where every artist has access to enterprise-grade tools, fair compensation, and complete ownership of their creative work. Own Your Tone isn't just our mantra—it's our promise.
+              Boptone is that platform. We're building the operating system for the creator economy—where artists don't just distribute music, they own and operate their careers as platforms. By 2030, we envision a world where every artist has access to enterprise-grade tools, fair compensation, and complete ownership. Own Your Tone isn't just our mantra—it's our promise.
             </p>
           </CardContent>
         </Card>

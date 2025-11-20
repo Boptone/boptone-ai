@@ -448,3 +448,11 @@
 - [x] Handle payment events (checkout.session.completed, transfer.paid, etc.)
 - [ ] Test Stripe Connect artist onboarding flow
 - [ ] Test payout flow end-to-end
+
+## Platform Philosophy Integration
+- [x] Update Toney chatbot context with platform vs brand philosophy
+- [x] Add ecosystem narrative to About page
+- [x] Create BOPTONE_KNOWLEDGE.md documentation
+- [ ] Update homepage hero/messaging to emphasize platform over brand
+- [ ] Integrate "belief systems over logos" into artist onboarding
+- [ ] Update AI Career Advisor to guide artists toward platform thinking
