@@ -828,3 +828,84 @@ export const investorRevenueShare = mysqlTable("investor_revenue_share", {
 
 export type InvestorRevenueShare = typeof investorRevenueShare.$inferSelect;
 export type InsertInvestorRevenueShare = typeof investorRevenueShare.$inferInsert;
+
+
+// ============================================================================
+// ARTIST MICRO-LOANS (FINTECH)
+// ============================================================================
+
+/**
+ * Artist Micro-Loans - Up to $750 advances repaid from royalties
+ * Use cases: Emergency funds, production costs, marketing, equipment
+ * Low risk for Boptone (automatic repayment), high trust for artists
+ */
+export const artistLoans = mysqlTable("artist_loans", {
+  id: int("id").autoincrement().primaryKey(),
+  artistProfileId: int("artistProfileId").notNull().references(() => artistProfiles.id),
+  userId: int("userId").notNull().references(() => users.id),
+  
+  // Loan details
+  requestedAmount: decimal("requestedAmount", { precision: 10, scale: 2 }).notNull(), // Max $750
+  approvedAmount: decimal("approvedAmount", { precision: 10, scale: 2 }),
+  purpose: mysqlEnum("purpose", ["emergency", "production", "marketing", "equipment", "other"]).notNull(),
+  purposeDescription: text("purposeDescription"),
+  
+  // Terms
+  originationFee: decimal("originationFee", { precision: 10, scale: 2 }).default("0.00"), // 3-5% fee
+  interestRate: decimal("interestRate", { precision: 5, scale: 4 }).default("0.0000"), // Annual rate if any
+  repaymentPercent: decimal("repaymentPercent", { precision: 5, scale: 2 }).default("15.00"), // % of royalties withheld
+  
+  // Status tracking
+  status: mysqlEnum("status", ["pending", "approved", "rejected", "active", "repaid", "defaulted"]).default("pending").notNull(),
+  
+  // Amounts
+  totalOwed: decimal("totalOwed", { precision: 10, scale: 2 }), // Principal + fees
+  totalRepaid: decimal("totalRepaid", { precision: 10, scale: 2 }).default("0.00"),
+  remainingBalance: decimal("remainingBalance", { precision: 10, scale: 2 }),
+  
+  // Eligibility snapshot at time of application
+  monthlyEarningsAvg: decimal("monthlyEarningsAvg", { precision: 10, scale: 2 }), // 3-month avg
+  accountAgeMonths: int("accountAgeMonths"),
+  riskScore: int("riskScore"), // 1-100, higher = lower risk
+  
+  // Dates
+  appliedAt: timestamp("appliedAt").defaultNow().notNull(),
+  approvedAt: timestamp("approvedAt"),
+  disbursedAt: timestamp("disbursedAt"),
+  expectedRepaymentDate: timestamp("expectedRepaymentDate"),
+  actualRepaidAt: timestamp("actualRepaidAt"),
+  
+  // Admin
+  reviewedBy: int("reviewedBy").references(() => users.id),
+  reviewNotes: text("reviewNotes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ArtistLoan = typeof artistLoans.$inferSelect;
+export type InsertArtistLoan = typeof artistLoans.$inferInsert;
+
+/**
+ * Loan Repayments - Track each automatic deduction from royalties
+ */
+export const loanRepayments = mysqlTable("loan_repayments", {
+  id: int("id").autoincrement().primaryKey(),
+  loanId: int("loanId").notNull().references(() => artistLoans.id),
+  artistProfileId: int("artistProfileId").notNull().references(() => artistProfiles.id),
+  
+  // Repayment details
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  source: mysqlEnum("source", ["bap_streams", "kick_in", "backing", "merch", "manual"]).notNull(),
+  sourceTransactionId: varchar("sourceTransactionId", { length: 255 }), // Reference to original transaction
+  
+  // Balance tracking
+  balanceBefore: decimal("balanceBefore", { precision: 10, scale: 2 }).notNull(),
+  balanceAfter: decimal("balanceAfter", { precision: 10, scale: 2 }).notNull(),
+  
+  processedAt: timestamp("processedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type LoanRepayment = typeof loanRepayments.$inferSelect;
+export type InsertLoanRepayment = typeof loanRepayments.$inferInsert;

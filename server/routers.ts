@@ -9,6 +9,7 @@ import { bapRouter } from "./routers/bap";
 import { toneRewardsRouter } from "./routers/tonerewards";
 import { kickinRouter } from "./routers/kickin";
 import { fanFunnelRouter } from "./routers/fanfunnel";
+import { microloansRouter } from "./routers/microloans";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -614,6 +615,9 @@ export const appRouter = router({
   
   // Fan Funnel Marketing
   fanFunnel: fanFunnelRouter,
+  
+  // Artist Micro-Loans
+  microloans: microloansRouter,
 });
 
 export type AppRouter = typeof appRouter;

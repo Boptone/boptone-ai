@@ -473,3 +473,25 @@
 - [ ] Update homepage pricing to show fan membership tiers
 - [ ] Update investor deck with Tone Rewards model
 - [ ] Export updated investor deck as PDF
+
+## Artist Micro-Loans Feature (Fintech)
+- [ ] Design database schema for loans and repayments
+- [ ] Build loan application and approval API
+- [ ] Implement automatic repayment from royalties
+- [ ] Create micro-loans dashboard UI for artists
+- [ ] Add eligibility checks based on earnings history
+- [ ] Add micro-loans slide to investor deck
+
+## Artist Micro-Loans Feature (Completed)
+- [x] Create database tables for loans and repayments
+- [x] Build loan eligibility calculation based on earnings history
+- [x] Create loan application API endpoints
+- [x] Build loan application frontend page
+- [x] Add micro-loans to dashboard sidebar navigation
+- [x] Implement 5% origination fee calculation
+- [x] Set up 15% automatic repayment from royalties
+- [x] Create loan history and stats tracking
+- [ ] Integrate automatic repayment deduction from BAP streams
+- [ ] Integrate automatic repayment deduction from Kick In tips
+- [ ] Add loan status notifications
+- [ ] Update investor deck with micro-loans feature

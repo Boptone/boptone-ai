@@ -33,6 +33,7 @@ import Upload from "./pages/Upload";
 import Discover from "./pages/Discover";
 import Earnings from "./pages/Earnings";
 import ToneRewards from "./pages/ToneRewards";
+import Microloans from "./pages/Microloans";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -63,6 +64,7 @@ function Router() {
       <Route path={"/music"} component={Discover} />
       <Route path="/earnings" component={Earnings} />
       <Route path="/tone-rewards" component={ToneRewards} />
+      <Route path="/microloans" component={Microloans} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />

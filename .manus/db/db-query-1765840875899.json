@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `loan_repayments` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `loanId` int NOT NULL,\n  `amount` decimal(10,2) NOT NULL,\n  `source` enum('bap_stream','kickin_tip','backer_payment','manual') NOT NULL,\n  `sourceReferenceId` varchar(255),\n  `balanceBefore` decimal(10,2) NOT NULL,\n  `balanceAfter` decimal(10,2) NOT NULL,\n  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `loan_repayments` (\n  `id` int AUTO_INCREMENT PRIMARY KEY,\n  `loanId` int NOT NULL,\n  `amount` decimal(10,2) NOT NULL,\n  `source` enum('bap_stream','kickin_tip','backer_payment','manual') NOT NULL,\n  `sourceReferenceId` varchar(255),\n  `balanceBefore` decimal(10,2) NOT NULL,\n  `balanceAfter` decimal(10,2) NOT NULL,\n  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 48
+}
