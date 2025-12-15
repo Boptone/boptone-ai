@@ -478,3 +478,6 @@
 - [x] Add Kick In button to artist profile pages
 - [x] Create artist dashboard section for payment method configuration
 - [x] Add tip history and tax reporting for artists
+
+## Dashboard Navigation
+- [x] Add Kick In to dashboard sidebar menu
