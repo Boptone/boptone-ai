@@ -19,10 +19,27 @@ import {
   Calendar
 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [, setLocation] = useLocation();
   const { setDemoMode } = useDemo();
+  
+  // Rotating hero text animation
+  const verbs = ["Create", "Automate", "Own"];
+  const [currentVerbIndex, setCurrentVerbIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentVerbIndex((prev) => (prev + 1) % verbs.length);
+        setIsAnimating(false);
+      }, 300);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const features = [
     {
@@ -215,7 +232,12 @@ export default function Home() {
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            Own Your Tone.
+            <span 
+              className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
+            >
+              {verbs[currentVerbIndex]}
+            </span>{" "}
+            <span style={{ color: '#4285F4' }}>Your Tone.</span>
             <br />
             <span className="text-primary">Own Your Career.</span>
           </h1>

@@ -4,14 +4,17 @@ import Stripe from 'stripe';
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY || '';
 const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY || '';
 
+// Flag to check if Stripe is configured
+export const isStripeConfigured = !!STRIPE_SECRET_KEY;
+
 if (!STRIPE_SECRET_KEY) {
   console.warn('[Stripe] STRIPE_SECRET_KEY not configured. Stripe functionality will not work.');
 }
 
-// Initialize Stripe with secret key
-export const stripe = new Stripe(STRIPE_SECRET_KEY, {
-  apiVersion: '2025-09-30.clover',
-});
+// Initialize Stripe with secret key (use placeholder if not configured to prevent crash)
+export const stripe = STRIPE_SECRET_KEY 
+  ? new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2025-09-30.clover' })
+  : null as unknown as Stripe; // Type assertion to allow code to compile
 
 // Stripe publishable key for frontend
 export { STRIPE_PUBLISHABLE_KEY };
@@ -23,6 +26,16 @@ export const STRIPE_PRICES = {
 };
 
 /**
+ * Helper to check if Stripe is available before making calls
+ */
+function requireStripe(): Stripe {
+  if (!stripe || !isStripeConfigured) {
+    throw new Error('Stripe is not configured. Please add STRIPE_SECRET_KEY to environment variables.');
+  }
+  return stripe;
+}
+
+/**
  * Create a Stripe Checkout Session for Pro subscription
  */
 export async function createCheckoutSession(params: {
@@ -32,7 +45,8 @@ export async function createCheckoutSession(params: {
   successUrl: string;
   cancelUrl: string;
 }) {
-  const session = await stripe.checkout.sessions.create({
+  const stripeClient = requireStripe();
+  const session = await stripeClient.checkout.sessions.create({
     mode: 'subscription',
     customer_email: params.userEmail,
     line_items: [
@@ -65,7 +79,8 @@ export async function createProductCheckoutSession(params: {
   successUrl: string;
   cancelUrl: string;
 }) {
-  const session = await stripe.checkout.sessions.create({
+  const stripeClient = requireStripe();
+  const session = await stripeClient.checkout.sessions.create({
     mode: 'payment',
     customer_email: params.userEmail,
     line_items: [
@@ -94,7 +109,8 @@ export async function createProductCheckoutSession(params: {
  * Create a Stripe Customer Portal session for managing subscriptions
  */
 export async function createCustomerPortalSession(customerId: string, returnUrl: string) {
-  const session = await stripe.billingPortal.sessions.create({
+  const stripeClient = requireStripe();
+  const session = await stripeClient.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
   });
@@ -106,7 +122,8 @@ export async function createCustomerPortalSession(customerId: string, returnUrl:
  * Cancel a subscription
  */
 export async function cancelSubscription(subscriptionId: string) {
-  const subscription = await stripe.subscriptions.cancel(subscriptionId);
+  const stripeClient = requireStripe();
+  const subscription = await stripeClient.subscriptions.cancel(subscriptionId);
   return subscription;
 }
 
@@ -114,7 +131,8 @@ export async function cancelSubscription(subscriptionId: string) {
  * Get subscription details
  */
 export async function getSubscription(subscriptionId: string) {
-  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const stripeClient = requireStripe();
+  const subscription = await stripeClient.subscriptions.retrieve(subscriptionId);
   return subscription;
 }
 
@@ -122,5 +140,6 @@ export async function getSubscription(subscriptionId: string) {
  * Verify webhook signature
  */
 export function constructWebhookEvent(payload: string | Buffer, signature: string, webhookSecret: string) {
-  return stripe.webhooks.constructEvent(payload, signature, webhookSecret);
+  const stripeClient = requireStripe();
+  return stripeClient.webhooks.constructEvent(payload, signature, webhookSecret);
 }

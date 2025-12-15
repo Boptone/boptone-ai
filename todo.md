@@ -456,3 +456,8 @@
 - [ ] Update homepage hero/messaging to emphasize platform over brand
 - [ ] Integrate "belief systems over logos" into artist onboarding
 - [ ] Update AI Career Advisor to guide artists toward platform thinking
+
+## Homepage Hero Update
+- [x] Implement revolving message: Create/Automate/Own Your Tone
+- [x] Style "Your Tone" in Google blue (#4285F4) as static text
+- [x] Add smooth animation for verb rotation
