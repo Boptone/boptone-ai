@@ -19,27 +19,10 @@ import {
   Calendar
 } from "lucide-react";
 import { useLocation } from "wouter";
-import { useState, useEffect } from "react";
 
 export default function Home() {
   const [, setLocation] = useLocation();
   const { setDemoMode } = useDemo();
-  
-  // Rotating hero text animation
-  const verbs = ["Create", "Automate", "Own"];
-  const [currentVerbIndex, setCurrentVerbIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentVerbIndex((prev) => (prev + 1) % verbs.length);
-        setIsAnimating(false);
-      }, 300);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   const features = [
     {
@@ -98,6 +81,7 @@ export default function Home() {
         "Earning cap: $1,000/month",
         "12% platform fee",
         "Basic analytics",
+        "Kick In tip jar",
         "Community support",
       ],
       cta: "Start Free",
@@ -115,14 +99,12 @@ export default function Home() {
       features: [
         "Everything in Creator",
         "Unlimited tracks & storage",
-        "Earning cap: $10,000/month",
-        "7% platform fee",
-        "Fan Funnel - track where fans discover you",
-        "Smart Links with source tracking",
-        "Advanced analytics & fan database",
-        "Customizable profile",
+        "Fan Funnel marketing tools",
+        "Smart links with source tracking",
+        "Fan data ownership & export",
+        "3% Tone Dividend bonus",
+        "Advanced analytics",
         "Priority support",
-        "Merch & ticketing (5% fee)",
       ],
       cta: "Start 14-Day Trial",
       highlighted: true,
@@ -160,7 +142,7 @@ export default function Home() {
         "Everything in Label",
         "Unlimited earnings",
         "2.5% platform fee",
-        "10 team seats",
+        "10+ team seats",
         "Custom contract terms",
         "Onboarding assistance",
         "24/7 phone support",
@@ -232,12 +214,9 @@ export default function Home() {
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span 
-              className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}
-            >
-              {verbs[currentVerbIndex]}
-            </span>{" "}
-            <span style={{ color: '#4285F4' }}>Your Tone.</span>
+            Own Your Tone.
+            <br />
+            <span className="text-primary">Own Your Career.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
             The all-in-one platform empowering musicians and creators with AI-powered tools, financial services, and career management from discovery to breakthrough success.

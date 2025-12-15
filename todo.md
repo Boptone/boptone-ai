@@ -457,42 +457,19 @@
 - [ ] Integrate "belief systems over logos" into artist onboarding
 - [ ] Update AI Career Advisor to guide artists toward platform thinking
 
-## Homepage Hero Update
-- [x] Implement revolving message: Create/Automate/Own Your Tone
-- [x] Style "Your Tone" in Google blue (#4285F4) as static text
-- [x] Add smooth animation for verb rotation
-
-## Hero & Pricing Updates
-- [x] Remove "Own Your Career" line from hero
-- [x] Update Pro plan price to $39/month
-- [x] Update Label plan price to $59/month
-- [x] Change Enterprise to "Contact Sales" (no public price)
-
-## Kick In - Tip Jar Feature
-- [x] Design database schema for tips and artist payment methods
-- [x] Create artistPaymentMethods table (PayPal, Venmo, Zelle, Cash App, Apple Cash)
-- [x] Create kickInTips table for tracking tips and tax compliance
-- [x] Build backend API for tip processing
-- [x] Implement tax compliance tracking by artist country
-- [x] Build Kick In UI component with payment method selector
-- [x] Add Kick In button to artist profile pages
-- [x] Create artist dashboard section for payment method configuration
-- [x] Add tip history and tax reporting for artists
-
-## Dashboard Navigation
-- [x] Add Kick In to dashboard sidebar menu
-
-## Dev Mode Auto-Login
-- [x] Add dev auto-login bypass for testing in any browser
-
-## Fan Data & Marketing Funnel Infrastructure (Pro Plan Feature)
-- [x] Research existing music marketing tools and gaps
-- [x] Design database schema for fan data collection
-- [x] Build fan data ingestion API with source tracking
-- [x] Create smart link system (track discovery source: Spotify, Apple Music, etc.)
-- [x] Build fan segmentation and cohort analysis
-- [x] Create funnel visualization dashboard
-- [x] Add conversion tracking (listener → follower → buyer → superfan)
-- [x] Add Fan Funnel to sidebar navigation
-- [x] Add Fan Funnel to Pro plan features on homepage
-- [ ] Create investor presentation deck
+## Tone Rewards Membership System (Game Changer)
+- [ ] Design database schema for fan memberships (Basic/Member/Executive)
+- [ ] Create fanMemberships table with tier, start date, renewal
+- [ ] Create artistBacking table for fan-to-artist support relationships
+- [ ] Create backingTransactions table for all spending tracked for cashback
+- [ ] Create cashbackRewards table for annual reward calculations
+- [ ] Create artistDividends table for artist loyalty rewards
+- [ ] Build membership signup and upgrade flow
+- [ ] Build artist backing system (fans choose which artists to support)
+- [ ] Build cashback calculation engine (2% for Executive)
+- [ ] Build artist Tone Dividends calculation (3% bonus)
+- [ ] Create fan rewards dashboard showing spending and cashback
+- [ ] Create artist dashboard showing backers and dividends
+- [ ] Update homepage pricing to show fan membership tiers
+- [ ] Update investor deck with Tone Rewards model
+- [ ] Export updated investor deck as PDF

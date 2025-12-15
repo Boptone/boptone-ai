@@ -1,8 +1,6 @@
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema";
 import { sdk } from "./sdk";
-import { ENV } from "./env";
-import { getUserByOpenId } from "../db";
 
 export type TrpcContext = {
   req: CreateExpressContextOptions["req"];
@@ -14,23 +12,6 @@ export async function createContext(
   opts: CreateExpressContextOptions
 ): Promise<TrpcContext> {
   let user: User | null = null;
-
-  // Dev mode auto-login: automatically authenticate as owner in development
-  if (!ENV.isProduction && ENV.ownerOpenId) {
-    try {
-      const ownerUser = await getUserByOpenId(ENV.ownerOpenId);
-      if (ownerUser) {
-        user = ownerUser;
-        return {
-          req: opts.req,
-          res: opts.res,
-          user,
-        };
-      }
-    } catch (error) {
-      console.warn("[Dev Auto-Login] Failed to get owner user:", error);
-    }
-  }
 
   try {
     user = await sdk.authenticateRequest(opts.req);

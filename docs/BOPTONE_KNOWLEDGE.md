@@ -1,50 +1,5 @@
 # Boptone Knowledge Base
 
-## Core Mission: Music Business 2.0
-
-**Boptone exists to reinvigorate the music business and prove that artists CAN build viable careers without labels.**
-
-Artists are not happy with the current state of the music business. They loathe streaming services and are ready to quit being musicians. The math doesn't work:
-- 1 million streams ≈ $3,000-4,000 (before splits)
-- Labels take 80-85% of masters
-- Publishers take 50%+ of publishing
-- DSPs control discovery algorithms
-- No direct fan relationships
-- No ownership of audience data
-
-### The Three Pillars of Artist Independence
-
-1. **Data Ownership** - Artists know who their fans are, where they are, what they engage with. Not locked in Spotify's black box.
-
-2. **Master Recording Ownership** - Artists keep their recordings. BAP ensures 90% revenue share from their own platform.
-
-3. **Music Publishing Ownership** - No forced publishing deals to get on playlists. Artists control their compositions.
-
-### Building Principle
-
-Every feature must pass this test:
-> "Does this give artists more ownership, more data, or more direct revenue - without requiring them to give something up?"
-
-### What Boptone Provides (That Labels Used To)
-
-- Direct fan monetization (no middlemen)
-- Career infrastructure (AI advisor, financial tools)
-- Healthcare access
-- IP protection
-- Tour support
-- All without ownership sacrifice
-
-### Target Audience
-
-Artists who:
-- Are ready to quit because the current system doesn't work
-- Want to build sustainable careers on their own terms
-- Value ownership over advances
-- Believe in direct fan relationships
-- Are the next generation who refuse to sacrifice to survive
-
----
-
 ## Core Philosophy: Platform vs. Brand
 
 ### The Industry Split

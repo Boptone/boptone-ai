@@ -41,39 +41,42 @@ export async function handleStripeWebhook(req: Request, res: Response) {
   console.log(`[Stripe Webhook] Received event: ${event.type}`);
 
   try {
-    // Handle different event types
+    // Handle different event types - use type assertion for event.data.object
+    const eventData = event.data.object as any;
+    
     switch (event.type) {
       case 'checkout.session.completed':
-        await handleCheckoutSessionCompleted(event.data.object);
+        await handleCheckoutSessionCompleted(eventData);
         break;
 
       case 'payment_intent.succeeded':
-        await handlePaymentIntentSucceeded(event.data.object);
+        await handlePaymentIntentSucceeded(eventData);
         break;
 
       case 'transfer.created':
-        await handleTransferCreated(event.data.object);
+        await handleTransferCreated(eventData);
         break;
 
       case 'transfer.paid':
-        await handleTransferPaid(event.data.object);
+        await handleTransferPaid(eventData);
         break;
 
-      case 'transfer.failed':
-        await handleTransferFailed(event.data.object);
+      case 'transfer.reversed':
+      case 'transfer.updated':
+        await handleTransferFailed(eventData);
         break;
 
       case 'account.updated':
-        await handleAccountUpdated(event.data.object);
+        await handleAccountUpdated(eventData);
         break;
 
       case 'customer.subscription.created':
       case 'customer.subscription.updated':
-        await handleSubscriptionUpdated(event.data.object);
+        await handleSubscriptionUpdated(eventData);
         break;
 
       case 'customer.subscription.deleted':
-        await handleSubscriptionDeleted(event.data.object);
+        await handleSubscriptionDeleted(eventData);
         break;
 
       default:
@@ -236,8 +239,7 @@ async function handleSubscriptionDeleted(subscription: any) {
   await db
     .update(subscriptions)
     .set({
-      status: 'cancelled',
-      cancelledAt: new Date(),
+      status: 'canceled',
     })
     .where(eq(subscriptions.stripeSubscriptionId, subscription.id));
 

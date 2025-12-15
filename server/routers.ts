@@ -6,8 +6,9 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
 import { stripeRouter } from "./routers/stripe";
 import { bapRouter } from "./routers/bap";
-import { kickInRouter } from "./routers/kickin";
-import { fanfunnelRouter } from "./routers/fanfunnel";
+import { toneRewardsRouter } from "./routers/tonerewards";
+import { kickinRouter } from "./routers/kickin";
+import { fanFunnelRouter } from "./routers/fanfunnel";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -605,11 +606,14 @@ export const appRouter = router({
   // Boptone Audio Protocol (BAP)
   bap: bapRouter,
   
-  // Kick In - Tip Jar
-  kickIn: kickInRouter,
+  // Tone Rewards Membership System
+  toneRewards: toneRewardsRouter,
   
-  // Fan Funnel - Marketing Infrastructure (Pro Plan)
-  fanFunnel: fanfunnelRouter,
+  // Kick In Tip Jar
+  kickin: kickinRouter,
+  
+  // Fan Funnel Marketing
+  fanFunnel: fanFunnelRouter,
 });
 
 export type AppRouter = typeof appRouter;
