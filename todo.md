@@ -481,3 +481,6 @@
 
 ## Dashboard Navigation
 - [x] Add Kick In to dashboard sidebar menu
+
+## Dev Mode Auto-Login
+- [x] Add dev auto-login bypass for testing in any browser
