@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Heart, DollarSign, Music, Upload, BarChart3, Settings } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Users, Heart, DollarSign, Music, Upload, BarChart3, Settings, Target } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -32,6 +32,7 @@ const menuItems = [
   { icon: Music, label: "My Music", path: "/bap" },
   { icon: Upload, label: "Upload", path: "/upload" },
   { icon: BarChart3, label: "Analytics", path: "/analytics" },
+  { icon: Target, label: "Fan Funnel", path: "/fan-funnel", badge: "PRO" },
   { icon: DollarSign, label: "Earnings", path: "/earnings" },
   { icon: Heart, label: "Kick In", path: "/kick-in" },
   { icon: Settings, label: "Profile Settings", path: "/profile-settings" },

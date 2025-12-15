@@ -799,3 +799,301 @@ export const artistTaxSettings = mysqlTable("artist_tax_settings", {
 
 export type ArtistTaxSettings = typeof artistTaxSettings.$inferSelect;
 export type InsertArtistTaxSettings = typeof artistTaxSettings.$inferInsert;
+
+
+// ============================================================================
+// FAN FUNNEL - MARKETING INFRASTRUCTURE (PRO PLAN)
+// ============================================================================
+
+/**
+ * Fans - Unified fan profiles across all touchpoints
+ * This is the core of the fan identity graph
+ */
+export const fans = mysqlTable("fans", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Core identity (at least one required)
+  email: varchar("email", { length: 320 }),
+  phone: varchar("phone", { length: 20 }),
+  
+  // Profile info
+  name: varchar("name", { length: 255 }),
+  location: varchar("location", { length: 255 }),
+  country: varchar("country", { length: 2 }), // ISO country code
+  city: varchar("city", { length: 100 }),
+  
+  // Discovery source - how they found the artist
+  discoverySource: mysqlEnum("discoverySource", [
+    "spotify_playlist", "spotify_algorithm", "spotify_search",
+    "apple_music_playlist", "apple_music_algorithm", "apple_music_search",
+    "youtube", "tiktok", "instagram", "twitter", "facebook",
+    "friend_recommendation", "live_show", "radio", "podcast",
+    "blog_press", "shazam", "bandcamp", "soundcloud", "other"
+  ]),
+  discoveryDetail: text("discoveryDetail"), // e.g., specific playlist name
+  
+  // Funnel stage
+  funnelStage: mysqlEnum("funnelStage", [
+    "discovered", "follower", "engaged", "customer", "superfan"
+  ]).default("discovered").notNull(),
+  
+  // Fan score (0-100)
+  fanScore: int("fanScore").default(0).notNull(),
+  
+  // Engagement metrics
+  totalInteractions: int("totalInteractions").default(0).notNull(),
+  lastInteractionAt: timestamp("lastInteractionAt"),
+  firstInteractionAt: timestamp("firstInteractionAt"),
+  
+  // Monetization
+  lifetimeValue: int("lifetimeValue").default(0).notNull(), // Total spent in cents
+  purchaseCount: int("purchaseCount").default(0).notNull(),
+  
+  // Connected accounts (OAuth)
+  spotifyId: varchar("spotifyId", { length: 255 }),
+  appleMusicId: varchar("appleMusicId", { length: 255 }),
+  
+  // Marketing preferences
+  emailOptIn: boolean("emailOptIn").default(false).notNull(),
+  smsOptIn: boolean("smsOptIn").default(false).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  emailIdx: index("email_idx").on(table.email),
+  funnelStageIdx: index("funnel_stage_idx").on(table.funnelStage),
+  fanScoreIdx: index("fan_score_idx").on(table.fanScore),
+  discoverySourceIdx: index("discovery_source_idx").on(table.discoverySource),
+}));
+
+export type Fan = typeof fans.$inferSelect;
+export type InsertFan = typeof fans.$inferInsert;
+
+/**
+ * Fan Events - All interactions/touchpoints with fans
+ * Used for funnel tracking and engagement scoring
+ */
+export const fanEvents = mysqlTable("fan_events", {
+  id: int("id").autoincrement().primaryKey(),
+  fanId: int("fanId").notNull().references(() => fans.id),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Event type
+  eventType: mysqlEnum("eventType", [
+    "link_click", "page_view", "email_signup", "email_open", "email_click",
+    "stream", "save", "follow", "share", "comment", "like",
+    "merch_view", "merch_purchase", "ticket_view", "ticket_purchase",
+    "tip", "referral"
+  ]).notNull(),
+  
+  // Event details
+  eventSource: varchar("eventSource", { length: 100 }), // Where the event came from
+  eventValue: int("eventValue"), // Monetary value in cents if applicable
+  metadata: json("metadata").$type<{
+    linkId?: number;
+    trackId?: number;
+    productId?: string;
+    referrer?: string;
+    device?: string;
+    browser?: string;
+    [key: string]: unknown;
+  }>(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  fanIdIdx: index("fan_id_idx").on(table.fanId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  eventTypeIdx: index("event_type_idx").on(table.eventType),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type FanEvent = typeof fanEvents.$inferSelect;
+export type InsertFanEvent = typeof fanEvents.$inferInsert;
+
+/**
+ * Smart Links - Trackable links with UTM support
+ * Core of the attribution system
+ */
+export const smartLinks = mysqlTable("smart_links", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Link details
+  slug: varchar("slug", { length: 100 }).notNull(), // Short URL slug
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  
+  // Link type
+  linkType: mysqlEnum("linkType", [
+    "release", "presave", "bio", "tour", "merch", "custom"
+  ]).notNull(),
+  
+  // Destinations
+  destinations: json("destinations").$type<{
+    spotify?: string;
+    appleMusic?: string;
+    youtube?: string;
+    soundcloud?: string;
+    bandcamp?: string;
+    tidal?: string;
+    amazonMusic?: string;
+    deezer?: string;
+    custom?: string;
+  }>(),
+  
+  // Default destination
+  defaultUrl: text("defaultUrl"),
+  
+  // Appearance
+  imageUrl: text("imageUrl"),
+  backgroundColor: varchar("backgroundColor", { length: 7 }), // Hex color
+  
+  // Settings
+  collectEmail: boolean("collectEmail").default(false).notNull(),
+  collectPhone: boolean("collectPhone").default(false).notNull(),
+  showDiscoverySurvey: boolean("showDiscoverySurvey").default(false).notNull(),
+  
+  // Analytics
+  totalClicks: int("totalClicks").default(0).notNull(),
+  uniqueVisitors: int("uniqueVisitors").default(0).notNull(),
+  
+  // Status
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  slugIdx: index("slug_idx").on(table.slug),
+  linkTypeIdx: index("link_type_idx").on(table.linkType),
+}));
+
+export type SmartLink = typeof smartLinks.$inferSelect;
+export type InsertSmartLink = typeof smartLinks.$inferInsert;
+
+/**
+ * Link Clicks - Individual click events on smart links
+ * Detailed attribution data
+ */
+export const linkClicks = mysqlTable("link_clicks", {
+  id: int("id").autoincrement().primaryKey(),
+  linkId: int("linkId").notNull().references(() => smartLinks.id),
+  fanId: int("fanId").references(() => fans.id), // May be null for anonymous clicks
+  
+  // Click destination
+  destination: varchar("destination", { length: 50 }), // spotify, appleMusic, etc.
+  
+  // Attribution
+  utmSource: varchar("utmSource", { length: 100 }),
+  utmMedium: varchar("utmMedium", { length: 100 }),
+  utmCampaign: varchar("utmCampaign", { length: 100 }),
+  utmContent: varchar("utmContent", { length: 100 }),
+  referrer: text("referrer"),
+  
+  // Device info
+  device: varchar("device", { length: 50 }), // mobile, desktop, tablet
+  browser: varchar("browser", { length: 50 }),
+  os: varchar("os", { length: 50 }),
+  
+  // Location
+  country: varchar("country", { length: 2 }),
+  city: varchar("city", { length: 100 }),
+  
+  // IP hash for deduplication (not storing actual IP for privacy)
+  ipHash: varchar("ipHash", { length: 64 }),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  linkIdIdx: index("link_id_idx").on(table.linkId),
+  fanIdIdx: index("fan_id_idx").on(table.fanId),
+  utmSourceIdx: index("utm_source_idx").on(table.utmSource),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type LinkClick = typeof linkClicks.$inferSelect;
+export type InsertLinkClick = typeof linkClicks.$inferInsert;
+
+/**
+ * Fan Segments - Custom audience segments for targeting
+ */
+export const fanSegments = mysqlTable("fan_segments", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Segment details
+  name: varchar("name", { length: 100 }).notNull(),
+  description: text("description"),
+  
+  // Segment rules (JSON filter criteria)
+  rules: json("rules").$type<{
+    funnelStages?: string[];
+    discoverySources?: string[];
+    minFanScore?: number;
+    maxFanScore?: number;
+    countries?: string[];
+    hasEmail?: boolean;
+    hasPhone?: boolean;
+    hasPurchased?: boolean;
+    minLifetimeValue?: number;
+    lastActiveWithinDays?: number;
+  }>(),
+  
+  // Computed count (updated periodically)
+  fanCount: int("fanCount").default(0).notNull(),
+  lastComputedAt: timestamp("lastComputedAt"),
+  
+  // Status
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+}));
+
+export type FanSegment = typeof fanSegments.$inferSelect;
+export type InsertFanSegment = typeof fanSegments.$inferInsert;
+
+/**
+ * Funnel Snapshots - Daily funnel metrics for historical tracking
+ */
+export const funnelSnapshots = mysqlTable("funnel_snapshots", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Snapshot date
+  snapshotDate: timestamp("snapshotDate").notNull(),
+  
+  // Funnel counts
+  discoveredCount: int("discoveredCount").default(0).notNull(),
+  followerCount: int("followerCount").default(0).notNull(),
+  engagedCount: int("engagedCount").default(0).notNull(),
+  customerCount: int("customerCount").default(0).notNull(),
+  superfanCount: int("superfanCount").default(0).notNull(),
+  
+  // Conversion rates (stored as percentages * 100 for precision)
+  discoveredToFollower: int("discoveredToFollower"), // e.g., 2500 = 25.00%
+  followerToEngaged: int("followerToEngaged"),
+  engagedToCustomer: int("engagedToCustomer"),
+  customerToSuperfan: int("customerToSuperfan"),
+  
+  // Discovery source breakdown
+  sourceBreakdown: json("sourceBreakdown").$type<{
+    [source: string]: number;
+  }>(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  artistDateIdx: index("artist_date_idx").on(table.artistId, table.snapshotDate),
+}));
+
+export type FunnelSnapshot = typeof funnelSnapshots.$inferSelect;
+export type InsertFunnelSnapshot = typeof funnelSnapshots.$inferInsert;

@@ -7,6 +7,7 @@ import * as db from "./db";
 import { stripeRouter } from "./routers/stripe";
 import { bapRouter } from "./routers/bap";
 import { kickInRouter } from "./routers/kickin";
+import { fanfunnelRouter } from "./routers/fanfunnel";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -606,6 +607,9 @@ export const appRouter = router({
   
   // Kick In - Tip Jar
   kickIn: kickInRouter,
+  
+  // Fan Funnel - Marketing Infrastructure (Pro Plan)
+  fanFunnel: fanfunnelRouter,
 });
 
 export type AppRouter = typeof appRouter;

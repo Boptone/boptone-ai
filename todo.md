@@ -484,3 +484,15 @@
 
 ## Dev Mode Auto-Login
 - [x] Add dev auto-login bypass for testing in any browser
+
+## Fan Data & Marketing Funnel Infrastructure (Pro Plan Feature)
+- [x] Research existing music marketing tools and gaps
+- [x] Design database schema for fan data collection
+- [x] Build fan data ingestion API with source tracking
+- [x] Create smart link system (track discovery source: Spotify, Apple Music, etc.)
+- [x] Build fan segmentation and cohort analysis
+- [x] Create funnel visualization dashboard
+- [x] Add conversion tracking (listener → follower → buyer → superfan)
+- [x] Add Fan Funnel to sidebar navigation
+- [x] Add Fan Funnel to Pro plan features on homepage
+- [ ] Create investor presentation deck
