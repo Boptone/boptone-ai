@@ -461,3 +461,9 @@
 - [x] Implement revolving message: Create/Automate/Own Your Tone
 - [x] Style "Your Tone" in Google blue (#4285F4) as static text
 - [x] Add smooth animation for verb rotation
+
+## Hero & Pricing Updates
+- [x] Remove "Own Your Career" line from hero
+- [x] Update Pro plan price to $39/month
+- [x] Update Label plan price to $59/month
+- [x] Change Enterprise to "Contact Sales" (no public price)

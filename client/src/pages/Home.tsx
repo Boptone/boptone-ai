@@ -105,10 +105,10 @@ export default function Home() {
     },
     {
       name: "Pro",
-      price: "$9",
+      price: "$39",
       period: "/month",
-      annualPrice: "$86",
-      annualSavings: "Save $22/year",
+      annualPrice: "$374",
+      annualSavings: "Save $94/year",
       platformFee: "7%",
       earningCap: "$10,000/month",
       description: "For serious independent artists",
@@ -116,7 +116,7 @@ export default function Home() {
         "Everything in Creator",
         "Unlimited tracks & storage",
         "Earning cap: $10,000/month",
-        "7% platform fee OR $9/month",
+        "7% platform fee",
         "Advanced analytics",
         "Customizable profile",
         "Priority support",
@@ -127,10 +127,10 @@ export default function Home() {
     },
     {
       name: "Label",
-      price: "$29",
+      price: "$59",
       period: "/month",
-      annualPrice: "$278",
-      annualSavings: "Save $70/year",
+      annualPrice: "$566",
+      annualSavings: "Save $142/year",
       platformFee: "4%",
       earningCap: "Unlimited",
       description: "For professional artists and bands",
@@ -149,10 +149,8 @@ export default function Home() {
     },
     {
       name: "Enterprise",
-      price: "$99",
-      period: "/month",
-      annualPrice: "$950",
-      annualSavings: "Save $238/year",
+      price: "Custom",
+      period: "",
       platformFee: "2.5%",
       earningCap: "Unlimited",
       description: "For labels and management companies",
@@ -238,8 +236,6 @@ export default function Home() {
               {verbs[currentVerbIndex]}
             </span>{" "}
             <span style={{ color: '#4285F4' }}>Your Tone.</span>
-            <br />
-            <span className="text-primary">Own Your Career.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
             The all-in-one platform empowering musicians and creators with AI-powered tools, financial services, and career management from discovery to breakthrough success.
