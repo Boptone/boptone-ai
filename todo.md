@@ -467,3 +467,14 @@
 - [x] Update Pro plan price to $39/month
 - [x] Update Label plan price to $59/month
 - [x] Change Enterprise to "Contact Sales" (no public price)
+
+## Kick In - Tip Jar Feature
+- [x] Design database schema for tips and artist payment methods
+- [x] Create artistPaymentMethods table (PayPal, Venmo, Zelle, Cash App, Apple Cash)
+- [x] Create kickInTips table for tracking tips and tax compliance
+- [x] Build backend API for tip processing
+- [x] Implement tax compliance tracking by artist country
+- [x] Build Kick In UI component with payment method selector
+- [x] Add Kick In button to artist profile pages
+- [x] Create artist dashboard section for payment method configuration
+- [x] Add tip history and tax reporting for artists

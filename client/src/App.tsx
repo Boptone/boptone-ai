@@ -32,6 +32,7 @@ import BAP from "./pages/BAP";
 import Upload from "./pages/Upload";
 import Discover from "./pages/Discover";
 import Earnings from "./pages/Earnings";
+import KickInSettings from "./pages/KickInSettings";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -61,6 +62,7 @@ function Router() {
       <Route path={"/discover"} component={Discover} />
       <Route path={"/music"} component={Discover} />
       <Route path={"/earnings"} component={Earnings} />
+      <Route path={"/kick-in"} component={KickInSettings} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />

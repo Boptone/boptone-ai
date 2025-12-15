@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { KickInModal } from "@/components/KickInModal";
 
 export default function ArtistProfile() {
   const [, params] = useRoute("/@:username");
@@ -218,6 +219,11 @@ export default function ArtistProfile() {
                         Website
                       </Button>
                     )}
+                    {/* Kick In Tip Jar */}
+                    <KickInModal 
+                      artistId={profile.id} 
+                      artistName={profile.stageName}
+                    />
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm">

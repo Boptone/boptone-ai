@@ -6,6 +6,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as db from "./db";
 import { stripeRouter } from "./routers/stripe";
 import { bapRouter } from "./routers/bap";
+import { kickInRouter } from "./routers/kickin";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -602,6 +603,9 @@ export const appRouter = router({
   
   // Boptone Audio Protocol (BAP)
   bap: bapRouter,
+  
+  // Kick In - Tip Jar
+  kickIn: kickInRouter,
 });
 
 export type AppRouter = typeof appRouter;

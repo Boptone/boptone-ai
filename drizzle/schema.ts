@@ -693,3 +693,109 @@ export const bapReposts = mysqlTable("bap_reposts", {
 
 export type BapRepost = typeof bapReposts.$inferSelect;
 export type InsertBapRepost = typeof bapReposts.$inferInsert;
+
+
+// ============================================================================
+// KICK IN - TIP JAR SYSTEM
+// ============================================================================
+
+/**
+ * Artist Payment Methods - External payment handles for receiving tips
+ */
+export const artistPaymentMethods = mysqlTable("artist_payment_methods", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Payment method type
+  method: mysqlEnum("method", ["paypal", "venmo", "zelle", "cashapp", "apple_cash"]).notNull(),
+  
+  // Handle/identifier for the payment method
+  handle: varchar("handle", { length: 255 }).notNull(), // e.g., @username, email, phone
+  displayName: varchar("displayName", { length: 100 }), // Optional custom display name
+  
+  // Status
+  isActive: boolean("isActive").default(true).notNull(),
+  isPrimary: boolean("isPrimary").default(false).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  methodIdx: index("method_idx").on(table.method),
+}));
+
+export type ArtistPaymentMethod = typeof artistPaymentMethods.$inferSelect;
+export type InsertArtistPaymentMethod = typeof artistPaymentMethods.$inferInsert;
+
+/**
+ * Kick In Tips - Record of tips received by artists
+ * Used for tax compliance and reporting
+ */
+export const kickInTips = mysqlTable("kick_in_tips", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Tip details
+  amount: int("amount").notNull(), // Amount in cents
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  paymentMethod: mysqlEnum("paymentMethod", ["paypal", "venmo", "zelle", "cashapp", "apple_cash"]).notNull(),
+  
+  // Fan info (optional, for thank-you messages)
+  fanName: varchar("fanName", { length: 255 }),
+  fanEmail: varchar("fanEmail", { length: 320 }),
+  message: text("message"), // Optional message from fan
+  
+  // Tax compliance
+  taxYear: int("taxYear").notNull(),
+  isReported: boolean("isReported").default(false).notNull(), // Whether included in tax report
+  
+  // Verification
+  isVerified: boolean("isVerified").default(false).notNull(), // Artist confirmed receipt
+  verifiedAt: timestamp("verifiedAt"),
+  
+  // Timestamps
+  tippedAt: timestamp("tippedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  taxYearIdx: index("tax_year_idx").on(table.taxYear),
+  tippedAtIdx: index("tipped_at_idx").on(table.tippedAt),
+}));
+
+export type KickInTip = typeof kickInTips.$inferSelect;
+export type InsertKickInTip = typeof kickInTips.$inferInsert;
+
+/**
+ * Artist Tax Settings - Country-specific tax compliance configuration
+ */
+export const artistTaxSettings = mysqlTable("artist_tax_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id).unique(),
+  
+  // Location
+  country: varchar("country", { length: 2 }).notNull(), // ISO 3166-1 alpha-2
+  state: varchar("state", { length: 100 }), // For US state-specific rules
+  
+  // Tax identifiers
+  taxId: varchar("taxId", { length: 50 }), // SSN, EIN, VAT number, etc.
+  taxIdType: mysqlEnum("taxIdType", ["ssn", "ein", "vat", "abn", "sin", "other"]),
+  
+  // Thresholds (in cents)
+  reportingThreshold: int("reportingThreshold"), // e.g., $600 for US 1099-K
+  currentYearTotal: int("currentYearTotal").default(0).notNull(), // Running total for current tax year
+  
+  // W-9/W-8 status (for US)
+  w9Submitted: boolean("w9Submitted").default(false).notNull(),
+  w9SubmittedAt: timestamp("w9SubmittedAt"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  countryIdx: index("country_idx").on(table.country),
+}));
+
+export type ArtistTaxSettings = typeof artistTaxSettings.$inferSelect;
+export type InsertArtistTaxSettings = typeof artistTaxSettings.$inferInsert;

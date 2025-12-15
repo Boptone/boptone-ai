@@ -1,1 +1,0 @@
-ALTER TABLE `artist_profiles` ADD `metadata` json;
