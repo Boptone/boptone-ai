@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
@@ -20,9 +21,24 @@ import {
 } from "lucide-react";
 import { useLocation } from "wouter";
 
+const rotatingVerbs = ["Create", "Automate", "Own"];
+
 export default function Home() {
   const [, setLocation] = useLocation();
   const { setDemoMode } = useDemo();
+  const [verbIndex, setVerbIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setVerbIndex((prev) => (prev + 1) % rotatingVerbs.length);
+        setIsAnimating(false);
+      }, 300);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const features = [
     {
@@ -163,47 +179,6 @@ export default function Home() {
   return (
     <>
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Navigation */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Music className="h-8 w-8 text-primary" />
-              <div>
-                <h1 className="text-2xl font-bold">Boptone</h1>
-                <p className="text-xs text-muted-foreground">Own Your Tone</p>
-              </div>
-            </div>
-            <div className="hidden md:flex items-center gap-4">
-              <Button variant="ghost" onClick={() => {
-                document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-              }}>
-                Pricing
-              </Button>
-              <Button variant="ghost" onClick={() => {
-                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
-              }}>
-                Features
-              </Button>
-              <Button variant="ghost" onClick={() => setLocation("/bap")}>
-                BAP Protocol
-              </Button>
-              <Button variant="outline" asChild>
-                <a href={getLoginUrl()}>Sign In</a>
-              </Button>
-              <Button onClick={() => setLocation("/signup")}>
-                Get Started
-              </Button>
-            </div>
-            <div className="md:hidden">
-              <Button onClick={() => setLocation("/signup")}>
-                Get Started
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32">
         <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -214,9 +189,12 @@ export default function Home() {
             </span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            Own Your Tone.
-            <br />
-            <span className="text-primary">Own Your Career.</span>
+            <span 
+              className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+            >
+              {rotatingVerbs[verbIndex]}
+            </span>{" "}
+            <span style={{ color: '#4285F4' }}>Your Tone.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
             The all-in-one platform empowering musicians and creators with AI-powered tools, financial services, and career management from discovery to breakthrough success.
