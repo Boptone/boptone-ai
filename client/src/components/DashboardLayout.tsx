@@ -21,22 +21,17 @@ import {
 } from "@/components/ui/sidebar";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, Users, Music, Upload, BarChart3, DollarSign, Heart, Crown, Settings, Megaphone, Wallet } from "lucide-react";
+import { Home, LogOut, PanelLeft, Music, DollarSign, Users, Settings } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-  { icon: Music, label: "My Music", path: "/discover" },
-  { icon: Upload, label: "Upload", path: "/upload" },
-  { icon: BarChart3, label: "Analytics", path: "/analytics" },
-  { icon: DollarSign, label: "Earnings", path: "/earnings" },
-  { icon: Wallet, label: "Micro-Loans", path: "/microloans" },
-  { icon: Crown, label: "Tone Rewards", path: "/tone-rewards" },
-  { icon: Heart, label: "Kick In", path: "/kick-in" },
-  { icon: Megaphone, label: "Fan Funnel", path: "/fan-funnel" },
+  { icon: Home, label: "Home", path: "/dashboard" },
+  { icon: Music, label: "My Music", path: "/my-music" },
+  { icon: DollarSign, label: "Money", path: "/money" },
+  { icon: Users, label: "Fans", path: "/fans" },
   { icon: Settings, label: "Settings", path: "/profile-settings" },
 ];
 

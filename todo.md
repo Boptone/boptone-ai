@@ -502,8 +502,10 @@
 - [x] Identify critical usability issues
 
 ### Phase 1: Emergency Simplification (Week 1)
-- [ ] Reduce sidebar navigation from 10 to 5 items (Home, My Music, Money, Fans, Settings)
-- [ ] Simplify upload form to 3 required fields (file, title, publish button)
+- [x] Reduce sidebar navigation from 10 to 5 items (Home, My Music, Money, Fans, Settings)
+- [x] Create consolidated Money page (Earnings + Micro-Loans + Tips)
+- [x] Create consolidated Fans page (Analytics + Growth + Rewards)
+- [x] Create My Music page with simple upload (file, title, publish)
 - [ ] Remove onboarding wizard, implement progressive prompts
 - [ ] Add "One Big Thing" hero section to dashboard
 

@@ -34,6 +34,9 @@ import Discover from "./pages/Discover";
 import Earnings from "./pages/Earnings";
 import ToneRewards from "./pages/ToneRewards";
 import Microloans from "./pages/Microloans";
+import Money from "./pages/Money";
+import Fans from "./pages/Fans";
+import MyMusic from "./pages/MyMusic";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -65,6 +68,9 @@ function Router() {
       <Route path="/earnings" component={Earnings} />
       <Route path="/tone-rewards" component={ToneRewards} />
       <Route path="/microloans" component={Microloans} />
+      <Route path="/money" component={Money} />
+      <Route path="/fans" component={Fans} />
+      <Route path="/my-music" component={MyMusic} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />
