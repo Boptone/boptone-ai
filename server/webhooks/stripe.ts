@@ -57,10 +57,6 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         await handleTransferCreated(eventData);
         break;
 
-      case 'transfer.paid':
-        await handleTransferPaid(eventData);
-        break;
-
       case 'transfer.reversed':
       case 'transfer.updated':
         await handleTransferFailed(eventData);

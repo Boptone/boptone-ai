@@ -23,12 +23,12 @@ export function Navigation() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <a className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
             {APP_LOGO && (
               <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-8" />
             )}
             <span className="font-bold text-xl">{APP_TITLE}</span>
-          </a>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}

@@ -543,3 +543,8 @@
 - [x] Create QUANTUM_BOPTONE_KNOWLEDGE_BASE.md
 - [ ] Create plain English glossary for all features
 - [ ] Update user guide with simplified language
+
+## Critical Bug Fixes (January 2026)
+- [x] Add missing BAP procedures: getTrendingTracks, getNewReleases, getRisingArtists
+- [x] Fix nested anchor tags in Navigation component
+- [x] Fix TypeScript errors in Discover.tsx, audioMetadata.ts, stripe webhooks

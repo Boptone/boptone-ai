@@ -79,22 +79,21 @@ export default function Discover() {
   };
 
   // Fetch tracks from BAP
-  const { data: trendingTracks } = trpc.bap.getTrendingTracks.useQuery({ 
-    limit: 10,
-    genre: selectedGenre !== "All" ? selectedGenre : undefined 
+  const { data: trendingTracks } = trpc.bap.discover.trending.useQuery({ 
+    limit: 10
   });
-  const { data: newReleases } = trpc.bap.getNewReleases.useQuery({ 
-    limit: 10,
-    genre: selectedGenre !== "All" ? selectedGenre : undefined 
+  const { data: newReleases } = trpc.bap.discover.newReleases.useQuery({ 
+    limit: 10
   });
-  const { data: risingArtists } = trpc.bap.getRisingArtists.useQuery({ limit: 6 });
-  const { data: searchResults } = trpc.bap.searchTracks.useQuery(
+  // Rising artists feature not yet implemented
+  const risingArtists: any[] = [];
+  const { data: searchResults } = trpc.bap.discover.search.useQuery(
     { query: searchQuery, limit: 20 },
     { enabled: searchQuery.length > 0 }
   );
 
-  const likeTrackMutation = trpc.bap.likeTrack.useMutation();
-  const recordStreamMutation = trpc.bap.recordStream.useMutation();
+  const likeTrackMutation = trpc.bap.social.likeTrack.useMutation();
+  const recordStreamMutation = trpc.bap.stream.record.useMutation();
 
   // Audio player effects
   useEffect(() => {
@@ -142,7 +141,11 @@ export default function Discover() {
       audioRef.current.play();
       // Record stream after 30 seconds of playback
       const streamTimer = setTimeout(() => {
-        recordStreamMutation.mutate({ trackId: currentTrack.id });
+        recordStreamMutation.mutate({ 
+          trackId: currentTrack.id,
+          durationPlayed: 30,
+          source: "feed" as const
+        });
       }, 30000);
       
       return () => clearTimeout(streamTimer);

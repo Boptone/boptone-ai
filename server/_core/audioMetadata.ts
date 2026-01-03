@@ -58,7 +58,9 @@ export async function extractAudioMetadata(params: {
       throw new Error("No response from LLM");
     }
 
-    const metadata = JSON.parse(content);
+    // Handle content as string (it's always a string with json_schema response format)
+    const contentStr = typeof content === 'string' ? content : JSON.stringify(content);
+    const metadata = JSON.parse(contentStr);
     
     return {
       title: metadata.title || "Untitled",

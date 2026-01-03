@@ -35,7 +35,7 @@ export default function ArtistProfile() {
 
   const handleShare = (platform: string) => {
     const profileUrl = `${window.location.origin}/@${username}`;
-    const text = `Check out ${profile?.displayName || username} on Boptone`;
+    const text = `Check out ${profile?.stageName || username} on Boptone`;
     
     let shareUrl = '';
     
