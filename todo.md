@@ -495,3 +495,51 @@
 - [ ] Integrate automatic repayment deduction from Kick In tips
 - [ ] Add loan status notifications
 - [ ] Update investor deck with micro-loans feature
+
+## Platform Complexity Audit & Simplification (January 2026)
+- [x] Complete comprehensive platform audit
+- [x] Document Quantum BOPTONE knowledge base
+- [x] Identify critical usability issues
+
+### Phase 1: Emergency Simplification (Week 1)
+- [ ] Reduce sidebar navigation from 10 to 5 items (Home, My Music, Money, Fans, Settings)
+- [ ] Simplify upload form to 3 required fields (file, title, publish button)
+- [ ] Remove onboarding wizard, implement progressive prompts
+- [ ] Add "One Big Thing" hero section to dashboard
+
+### Phase 2: Language Cleanup (Week 2-3)
+- [ ] Replace all jargon with plain English (BAP → Streaming, etc.)
+- [ ] Rename features for clarity (Kick In → Tips, Fan Funnel → Fan Growth)
+- [ ] Add tooltips for any remaining technical terms
+- [ ] Update all button labels and CTAs
+
+### Phase 3: Dashboard Redesign (Week 4-5)
+- [ ] Implement hero section with primary CTA
+- [ ] Reduce stat cards from many to 3 key numbers
+- [ ] Add sample data for new users
+- [ ] Implement inline profile editing
+- [ ] Consolidate quick actions
+
+### Phase 4: Mobile Optimization (Week 6-8)
+- [ ] Add bottom navigation bar for mobile (Instagram-style)
+- [ ] Optimize button placement for thumb zones
+- [ ] Add swipe gestures for common actions
+- [ ] Test on actual mobile devices
+
+### Navigation Consolidation
+- [ ] Create new /music route (combines Upload + Discover)
+- [ ] Create new /money route (combines Earnings + Micro-Loans + Kick In)
+- [ ] Create new /fans route (combines Analytics + Fan Funnel + Tone Rewards)
+- [ ] Update DashboardLayout.tsx with new 5-item menu
+
+### Upload Flow Improvements
+- [ ] Make album, genre, BPM, key, description optional
+- [ ] Add collapsible "Add more details" section
+- [ ] Improve AI metadata extraction
+- [ ] Add drag-and-drop artwork upload
+
+### Documentation
+- [x] Create PLATFORM_COMPLEXITY_AUDIT.md
+- [x] Create QUANTUM_BOPTONE_KNOWLEDGE_BASE.md
+- [ ] Create plain English glossary for all features
+- [ ] Update user guide with simplified language
