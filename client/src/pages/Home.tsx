@@ -199,21 +199,10 @@ export default function Home() {
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
             The all-in-one platform empowering musicians and creators with AI-powered tools, financial services, and career management from discovery to breakthrough success.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex items-center justify-center pt-4">
             <Button size="lg" className="text-lg px-8 py-6" onClick={() => setLocation("/signup")}>
               Start Free
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-lg px-8 py-6" 
-              onClick={() => {
-                setDemoMode(true);
-                setLocation("/dashboard");
-              }}
-            >
-              Try Demo
             </Button>
           </div>
           <div className="flex items-center justify-center gap-8 pt-8 text-sm text-muted-foreground">

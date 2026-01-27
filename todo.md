@@ -569,3 +569,7 @@
 - [x] Remove gradient CTA card section
 - [x] Add Google blue (#4285F4) "Start Free Today →" button under testimonials
 - [x] Move footer directly after button
+
+## Hero Section Simplification (January 2026)
+- [x] Remove "Try Demo" button from hero section
+- [x] Keep only "Start Free →" button for single conversion path
