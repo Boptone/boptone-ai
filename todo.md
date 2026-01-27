@@ -564,3 +564,8 @@
 - [x] Reduce white space before footer
 - [x] Add social proof testimonials section (4 artists: QOTSA, Geese, Public Enemy, Chappell Roan)
 - [x] Update all copyright dates to 2026 (footer, TOS, privacy policy, all pages)
+
+## Homepage CTA Simplification (January 2026)
+- [x] Remove gradient CTA card section
+- [x] Add Google blue (#4285F4) "Start Free Today →" button under testimonials
+- [x] Move footer directly after button

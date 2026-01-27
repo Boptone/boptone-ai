@@ -444,30 +444,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Button */}
       <section className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <Card className="bg-gradient-to-r from-primary to-chart-3 text-white border-0">
-            <CardContent className="p-12 text-center space-y-6">
-              <h2 className="text-4xl md:text-5xl font-bold">
-                Ready to Own Your Tone?
-              </h2>
-              <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                Join thousands of artists taking control of their careers with Boptone.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                <Button 
-                  size="lg" 
-                  variant="secondary" 
-                  className="text-lg px-8 py-6"
-                  onClick={() => setLocation("/signup")}
-                >
-                  Start Free Today
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="flex justify-center">
+          <Button 
+            size="lg" 
+            className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity"
+            style={{ backgroundColor: '#4285F4' }}
+            onClick={() => setLocation("/signup")}
+          >
+            Start Free Today
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
         </div>
       </section>
 
