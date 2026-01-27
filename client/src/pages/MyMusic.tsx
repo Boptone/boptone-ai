@@ -114,19 +114,19 @@ export default function MyMusic() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">My Music</h1>
-          <p className="text-muted-foreground">
-            Upload and manage your tracks
+        <div className="border-b-4 border-black pb-4">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight uppercase">MY MUSIC</h1>
+          <p className="text-lg font-bold mt-2">
+            UPLOAD AND MANAGE YOUR TRACKS
           </p>
         </div>
 
         {/* Upload Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Upload New Track</CardTitle>
-            <CardDescription>
-              Share your music with the world
+        <Card className="rounded-none border-4 border-black">
+          <CardHeader className="bg-black text-white">
+            <CardTitle className="text-2xl font-black uppercase">UPLOAD NEW TRACK</CardTitle>
+            <CardDescription className="text-white/80 font-bold">
+              SHARE YOUR MUSIC WITH THE WORLD
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -173,14 +173,15 @@ export default function MyMusic() {
             <Button 
               onClick={handleUpload}
               disabled={isUploading || !uploadFile || !title}
-              className="w-full"
+              className="w-full rounded-none font-black text-lg"
+              style={{ backgroundColor: '#4285F4' }}
             >
               {isUploading ? (
-                <>Uploading...</>
+                <>UPLOADING...</>
               ) : (
                 <>
                   <UploadIcon className="h-4 w-4 mr-2" />
-                  Publish Track
+                  PUBLISH TRACK
                 </>
               )}
             </Button>
@@ -188,41 +189,36 @@ export default function MyMusic() {
         </Card>
 
         {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {stat.title}
-                </CardTitle>
-                <stat.icon className={`h-4 w-4 ${stat.color}`} />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-              </CardContent>
-            </Card>
+        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border-4 border-black">
+          {stats.map((stat, idx) => (
+            <div key={stat.title} className={`p-6 bg-white ${idx < stats.length - 1 ? 'border-r-4 border-black' : ''} ${idx < 2 ? 'lg:border-b-0 border-b-4' : ''} md:border-b-0`}>
+              <div className="text-xs font-black uppercase tracking-wider mb-2">
+                {stat.title}
+              </div>
+              <div className="text-4xl font-black font-mono" style={{ color: '#4285F4' }}>{stat.value}</div>
+            </div>
           ))}
         </div>
 
         {/* My Tracks */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Your Tracks</CardTitle>
-            <CardDescription>
-              Manage your uploaded music
+        <Card className="rounded-none border-4 border-black">
+          <CardHeader className="bg-black text-white">
+            <CardTitle className="text-2xl font-black uppercase">YOUR TRACKS</CardTitle>
+            <CardDescription className="text-white/80 font-bold">
+              MANAGE YOUR UPLOADED MUSIC
             </CardDescription>
           </CardHeader>
           <CardContent>
             {myTracks && myTracks.length > 0 ? (
               <div className="space-y-2">
                 {myTracks.map((track: any) => (
-                  <div key={track.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                  <div key={track.id} className="flex items-center justify-between p-4 border-2 border-black hover:bg-gray-100 transition-colors">
                     <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded bg-primary/10 flex items-center justify-center">
-                        <Music className="h-6 w-6 text-primary" />
+                      <div className="h-12 w-12 bg-black flex items-center justify-center">
+                        <Music className="h-6 w-6 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold">{track.title}</h3>
+                        <h3 className="font-black uppercase">{track.title}</h3>
                         <div className="flex items-center gap-3 text-sm text-muted-foreground">
                           {track.genre && <span className="capitalize">{track.genre}</span>}
                           <span>•</span>

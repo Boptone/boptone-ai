@@ -58,46 +58,41 @@ export default function Fans() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Fans</h1>
-          <p className="text-muted-foreground">
-            Grow your audience, track engagement, and reward your supporters
+        <div className="border-b-4 border-black pb-4">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight uppercase">FANS</h1>
+          <p className="text-lg font-bold mt-2">
+            GROW YOUR AUDIENCE, TRACK ENGAGEMENT, AND REWARD YOUR SUPPORTERS
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {stat.title}
-                </CardTitle>
-                <stat.icon className={`h-4 w-4 ${stat.color}`} />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-              </CardContent>
-            </Card>
+        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border-4 border-black">
+          {stats.map((stat, idx) => (
+            <div key={stat.title} className={`p-6 bg-white ${idx < stats.length - 1 ? 'border-r-4 border-black' : ''} ${idx < 2 ? 'lg:border-b-0 border-b-4' : ''} md:border-b-0`}>
+              <div className="text-xs font-black uppercase tracking-wider mb-2">
+                {stat.title}
+              </div>
+              <div className="text-4xl font-black font-mono" style={{ color: '#4285F4' }}>{stat.value}</div>
+            </div>
           ))}
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="analytics" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="growth">Fan Growth</TabsTrigger>
-            <TabsTrigger value="rewards">Rewards</TabsTrigger>
+          <TabsList className="rounded-none border-2 border-black bg-white">
+            <TabsTrigger value="analytics" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">ANALYTICS</TabsTrigger>
+            <TabsTrigger value="growth" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">FAN GROWTH</TabsTrigger>
+            <TabsTrigger value="rewards" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">REWARDS</TabsTrigger>
           </TabsList>
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Stream Performance</CardTitle>
-                  <CardDescription>
-                    Your most popular tracks
+              <Card className="rounded-none border-4 border-black">
+                <CardHeader className="bg-black text-white">
+                  <CardTitle className="text-xl font-black uppercase">STREAM PERFORMANCE</CardTitle>
+                  <CardDescription className="text-white/80 font-bold">
+                    YOUR MOST POPULAR TRACKS
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -109,11 +104,11 @@ export default function Fans() {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Audience Demographics</CardTitle>
-                  <CardDescription>
-                    Where your fans are listening from
+              <Card className="rounded-none border-4 border-black">
+                <CardHeader className="bg-black text-white">
+                  <CardTitle className="text-xl font-black uppercase">AUDIENCE DEMOGRAPHICS</CardTitle>
+                  <CardDescription className="text-white/80 font-bold">
+                    WHERE YOUR FANS ARE LISTENING FROM
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -126,11 +121,11 @@ export default function Fans() {
               </Card>
             </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Engagement Trends</CardTitle>
-                <CardDescription>
-                  Likes, shares, and playlist adds over time
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-xl font-black uppercase">ENGAGEMENT TRENDS</CardTitle>
+                <CardDescription className="text-white/80 font-bold">
+                  LIKES, SHARES, AND PLAYLIST ADDS OVER TIME
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -145,9 +140,9 @@ export default function Fans() {
 
           {/* Fan Growth Tab */}
           <TabsContent value="growth" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Growth Strategies</CardTitle>
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-xl font-black uppercase">GROWTH STRATEGIES</CardTitle>
                 <CardDescription>
                   Tools to help you reach more fans
                 </CardDescription>

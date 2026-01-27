@@ -102,45 +102,40 @@ export default function Money() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Money</h1>
-          <p className="text-muted-foreground">
-            Track your earnings, manage loans, and view fan support
+        <div className="border-b-4 border-black pb-4">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight uppercase">MONEY</h1>
+          <p className="text-lg font-bold mt-2">
+            TRACK YOUR EARNINGS, MANAGE LOANS, AND VIEW FAN SUPPORT
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {stat.title}
-                </CardTitle>
-                <stat.icon className={`h-4 w-4 ${stat.color}`} />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-              </CardContent>
-            </Card>
+        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border-4 border-black">
+          {stats.map((stat, idx) => (
+            <div key={stat.title} className={`p-6 bg-white ${idx < stats.length - 1 ? 'border-r-4 border-black' : ''} ${idx < 2 ? 'lg:border-b-0 border-b-4' : ''} md:border-b-0`}>
+              <div className="text-xs font-black uppercase tracking-wider mb-2">
+                {stat.title}
+              </div>
+              <div className="text-4xl font-black font-mono" style={{ color: '#4285F4' }}>{stat.value}</div>
+            </div>
           ))}
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="earnings" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="earnings">Earnings</TabsTrigger>
-            <TabsTrigger value="loans">Micro-Loans</TabsTrigger>
-            <TabsTrigger value="tips">Tips</TabsTrigger>
+          <TabsList className="rounded-none border-2 border-black bg-white">
+            <TabsTrigger value="earnings" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">EARNINGS</TabsTrigger>
+            <TabsTrigger value="loans" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">MICRO-LOANS</TabsTrigger>
+            <TabsTrigger value="tips" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">TIPS</TabsTrigger>
           </TabsList>
 
           {/* Earnings Tab */}
           <TabsContent value="earnings" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Revenue Breakdown</CardTitle>
-                <CardDescription>
-                  Your earnings across all revenue streams
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-2xl font-black uppercase">REVENUE BREAKDOWN</CardTitle>
+                <CardDescription className="text-white/80 font-bold">
+                  YOUR EARNINGS ACROSS ALL REVENUE STREAMS
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -172,11 +167,11 @@ export default function Money() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Payout History</CardTitle>
-                <CardDescription>
-                  Your recent payouts and pending payments
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-2xl font-black uppercase">PAYOUT HISTORY</CardTitle>
+                <CardDescription className="text-white/80 font-bold">
+                  YOUR RECENT PAYOUTS AND PENDING PAYMENTS
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -192,11 +187,11 @@ export default function Money() {
           {/* Micro-Loans Tab */}
           <TabsContent value="loans" className="space-y-4">
             {/* Eligibility Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Loan Eligibility</CardTitle>
-                <CardDescription>
-                  Get funding based on your royalty earnings
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-2xl font-black uppercase">LOAN ELIGIBILITY</CardTitle>
+                <CardDescription className="text-white/80 font-bold">
+                  GET FUNDING BASED ON YOUR ROYALTY EARNINGS
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -221,8 +216,10 @@ export default function Money() {
                         <Button 
                           onClick={handleApplyForLoan}
                           disabled={applyForLoanMutation.isPending}
+                          className="rounded-none font-black"
+                          style={{ backgroundColor: '#4285F4' }}
                         >
-                          {applyForLoanMutation.isPending ? "Applying..." : "Apply"}
+                          {applyForLoanMutation.isPending ? "APPLYING..." : "APPLY"}
                         </Button>
                       </div>
                       <p className="text-sm text-muted-foreground">
@@ -243,13 +240,13 @@ export default function Money() {
 
             {/* Active Loans */}
             {activeLoans && activeLoans.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Active Loans</CardTitle>
+              <Card className="rounded-none border-4 border-black">
+                <CardHeader className="bg-black text-white">
+                  <CardTitle className="text-2xl font-black uppercase">ACTIVE LOANS</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {activeLoans.map((loan) => (
-                    <div key={loan.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div key={loan.id} className="flex items-center justify-between p-4 border-2 border-black">
                       <div>
                         <p className="font-medium">{formatCurrency(parseInt(loan.approvedAmount || "0"))}</p>
                         <p className="text-sm text-muted-foreground">
@@ -266,15 +263,15 @@ export default function Money() {
             )}
 
             {/* Loan History */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Loan History</CardTitle>
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-2xl font-black uppercase">LOAN HISTORY</CardTitle>
               </CardHeader>
               <CardContent>
                 {loanHistory && loanHistory.length > 0 ? (
                   <div className="space-y-2">
                     {loanHistory.map((loan) => (
-                      <div key={loan.id} className="flex items-center justify-between p-3 border rounded">
+                      <div key={loan.id} className="flex items-center justify-between p-3 border-2 border-black">
                         <div className="flex items-center gap-3">
                           <Wallet className="h-4 w-4 text-muted-foreground" />
                           <div>

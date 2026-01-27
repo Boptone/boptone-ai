@@ -182,4 +182,47 @@
       max-width: 1280px; /* Standard content width */
     }
   }
+
+  /* Brutalist responsive typography */
+  .brutalist-heading {
+    @apply font-black uppercase tracking-tight;
+  }
+
+  @media (max-width: 768px) {
+    .brutalist-heading {
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+  }
+
+  /* Brutalist stats grid - mobile stacking */
+  .brutalist-stats-grid {
+    @apply grid gap-0 border-4 border-black;
+  }
+
+  @media (min-width: 768px) {
+    .brutalist-stats-grid {
+      @apply grid-cols-2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .brutalist-stats-grid {
+      @apply grid-cols-4;
+    }
+  }
+
+  /* Brutalist card borders - responsive */
+  .brutalist-card {
+    @apply rounded-none border-4 border-black;
+  }
+
+  .brutalist-card-header {
+    @apply bg-black text-white p-4;
+  }
+
+  @media (min-width: 768px) {
+    .brutalist-card-header {
+      @apply p-6;
+    }
+  }
 }
