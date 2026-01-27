@@ -558,3 +558,9 @@
 - [ ] Implement error logging (Sentry) - NEXT SESSION
 - [ ] Add input sanitization (DOMPurify) - NEXT SESSION
 - [ ] Set up uptime monitoring - NEXT SESSION
+
+## Homepage Improvements (January 2026)
+- [x] Add BOPTONE logo to navigation in Helvetica all caps
+- [x] Reduce white space before footer
+- [x] Add social proof testimonials section (4 artists: QOTSA, Geese, Public Enemy, Chappell Roan)
+- [x] Update all copyright dates to 2026 (footer, TOS, privacy policy, all pages)

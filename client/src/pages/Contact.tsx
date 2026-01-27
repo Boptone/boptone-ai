@@ -294,7 +294,7 @@ ${formData.message}
             </div>
           </div>
           <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2025 Boptone. All rights reserved. Own Your Tone™</p>
+            <p>© 2026 Boptone. All rights reserved. Own Your Tone™</p>
           </div>
         </div>
       </footer>

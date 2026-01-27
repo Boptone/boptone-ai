@@ -393,7 +393,7 @@ export default function BAP() {
             </div>
           </div>
           <div className="text-center text-sm text-muted-foreground pt-8 border-t">
-            © 2025 Boptone. All rights reserved. Own Your Tone™
+            © 2026 Boptone. All rights reserved. Own Your Tone™
           </div>
         </div>
       </footer>

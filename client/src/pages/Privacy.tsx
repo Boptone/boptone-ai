@@ -33,7 +33,7 @@ export default function Privacy() {
         <Card>
           <CardContent className="p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Effective Date: October 29, 2025</p>
+            <p className="text-muted-foreground mb-8">Effective Date: January 1, 2026</p>
 
             <div className="prose prose-slate dark:prose-invert max-w-none">
               <section className="mb-8">
@@ -506,7 +506,7 @@ export default function Privacy() {
                   By using Boptone, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy.
                 </p>
                 <p className="text-sm text-muted-foreground text-center mt-4">
-                  © 2025 Acid Bird, Inc. All rights reserved.
+                  © 2026 Acid Bird, Inc. All rights reserved.
                 </p>
               </div>
             </div>

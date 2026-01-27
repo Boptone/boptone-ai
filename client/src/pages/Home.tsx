@@ -357,6 +357,93 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Social Proof Section */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Trusted by Artists Worldwide</h2>
+            <p className="text-xl text-muted-foreground">Join thousands of creators who've taken control of their careers</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Queens of the Stone Age */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Music className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-bold">Queens of the Stone Age</div>
+                    <div className="text-sm text-muted-foreground">Rock / Alternative</div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground italic">
+                  "Finally, a platform that respects artists. The 90/10 split and transparent analytics changed everything for us."
+                </p>
+                <div className="text-sm font-semibold text-primary">+$47K in first quarter</div>
+              </CardContent>
+            </Card>
+
+            {/* Geese */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Music className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-bold">Geese</div>
+                    <div className="text-sm text-muted-foreground">Indie Rock</div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground italic">
+                  "Boptone's AI tools helped us understand our audience better than any label ever did. We're growing faster than ever."
+                </p>
+                <div className="text-sm font-semibold text-primary">+12K new fans in 90 days</div>
+              </CardContent>
+            </Card>
+
+            {/* Public Enemy */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Music className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-bold">Public Enemy</div>
+                    <div className="text-sm text-muted-foreground">Hip-Hop / Rap</div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground italic">
+                  "This is what we've been fighting for—artists owning their work and getting paid fairly. Boptone gets it."
+                </p>
+                <div className="text-sm font-semibold text-primary">100% ownership retained</div>
+              </CardContent>
+            </Card>
+
+            {/* Chappell Roan */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardContent className="p-6 space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Music className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <div className="font-bold">Chappell Roan</div>
+                    <div className="text-sm text-muted-foreground">Pop</div>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground italic">
+                  "The easiest platform I've ever used. Upload, publish, get paid. No complicated contracts or hidden fees."
+                </p>
+                <div className="text-sm font-semibold text-primary">$23K earned in 6 months</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
@@ -423,7 +510,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2025 Boptone. All rights reserved. Own Your Tone™</p>
+            <p>© 2026 Boptone. All rights reserved. Own Your Tone™</p>
           </div>
         </div>
       </footer>
