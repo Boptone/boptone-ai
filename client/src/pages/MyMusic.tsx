@@ -115,8 +115,8 @@ export default function MyMusic() {
       <div className="space-y-6">
         {/* Header */}
         <div className="border-b-4 border-black pb-4">
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight uppercase">MY MUSIC</h1>
-          <p className="text-lg font-bold mt-2">
+          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">MY MUSIC</h1>
+          <p className="text-xl font-bold mt-3">
             UPLOAD AND MANAGE YOUR TRACKS
           </p>
         </div>

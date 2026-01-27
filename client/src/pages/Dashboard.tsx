@@ -162,7 +162,7 @@ export default function Dashboard() {
         <div className="container py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-4xl md:text-5xl font-black tracking-tighter">
                 Welcome back, {effectiveProfile!.stageName}
               </h1>
               <p className="text-muted-foreground mt-1">

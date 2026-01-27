@@ -180,7 +180,7 @@ export default function Home() {
     <>
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
+      <section className="container mx-auto px-4 py-24 md:py-40">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <div className="inline-block">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
@@ -188,7 +188,7 @@ export default function Home() {
               The Autonomous Creator OS
             </span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter">
             <span 
               className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
             >
@@ -240,9 +240,9 @@ export default function Home() {
       </section>
 
       {/* Features List - Brutalist */}
-      <section id="features" className="container mx-auto px-4 py-20">
+      <section id="features" className="container mx-auto px-4 py-24">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-black mb-4">FEATURES</h2>
+          <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-4">FEATURES</h2>
           <div className="border-t-4 border-black mb-12"></div>
           <div className="space-y-8">
             {features.map((feature, index) => (
@@ -261,10 +261,10 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="container mx-auto px-4 py-20 bg-muted/30">
+      <section id="pricing" className="container mx-auto px-4 py-24 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold">We Only Win When You Win</h2>
+            <h2 className="text-5xl md:text-6xl font-black tracking-tighter">We Only Win When You Win</h2>
             <p className="text-xl text-muted-foreground">
               No upfront costs. Pay based on what you earn. Keep 90% of streaming revenue.
             </p>
@@ -338,9 +338,9 @@ export default function Home() {
       </section>
 
       {/* Social Proof Section - Brutalist */}
-      <section className="container mx-auto px-4 py-16 bg-black text-white">
+      <section className="container mx-auto px-4 py-24 bg-black text-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-black mb-12">ARTISTS USE BOPTONE</h2>
+          <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-16">ARTISTS USE BOPTONE</h2>
           <div className="space-y-12">
             {/* Queens of the Stone Age */}
             <div className="border-l-4 border-white pl-6">
