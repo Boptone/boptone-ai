@@ -239,32 +239,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Grid */}
+      {/* Features List - Brutalist */}
       <section id="features" className="container mx-auto px-4 py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold">Everything You Need to Succeed</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Mission control for your entire artist career, all in one platform.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>{feature.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              );
-            })}
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-5xl md:text-6xl font-black mb-4">FEATURES</h2>
+          <div className="border-t-4 border-black mb-12"></div>
+          <div className="space-y-8">
+            {features.map((feature, index) => (
+              <div key={index} className="flex gap-6 items-start border-b border-black pb-6">
+                <div className="font-mono text-2xl font-bold min-w-[60px]">
+                  {String(index + 1).padStart(2, '0')}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-lg">{feature.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -346,89 +337,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Trusted by Artists Worldwide</h2>
-            <p className="text-xl text-muted-foreground">Join thousands of creators who've taken control of their careers</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Social Proof Section - Brutalist */}
+      <section className="container mx-auto px-4 py-16 bg-black text-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-5xl md:text-6xl font-black mb-12">ARTISTS USE BOPTONE</h2>
+          <div className="space-y-12">
             {/* Queens of the Stone Age */}
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Music className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-bold">Queens of the Stone Age</div>
-                    <div className="text-sm text-muted-foreground">Rock / Alternative</div>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground italic">
-                  "Finally, a platform that respects artists. The 90/10 split and transparent analytics changed everything for us."
-                </p>
-                <div className="text-sm font-semibold text-primary">+$47K in first quarter</div>
-              </CardContent>
-            </Card>
+            <div className="border-l-4 border-white pl-6">
+              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
+                "Finally, a platform that respects artists."
+              </blockquote>
+              <div className="text-xl font-bold">— QUEENS OF THE STONE AGE</div>
+              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>+$47K IN FIRST QUARTER</div>
+            </div>
 
             {/* Geese */}
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Music className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-bold">Geese</div>
-                    <div className="text-sm text-muted-foreground">Indie Rock</div>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground italic">
-                  "Boptone's AI tools helped us understand our audience better than any label ever did. We're growing faster than ever."
-                </p>
-                <div className="text-sm font-semibold text-primary">+12K new fans in 90 days</div>
-              </CardContent>
-            </Card>
+            <div className="border-l-4 border-white pl-6">
+              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
+                "We're growing faster than ever."
+              </blockquote>
+              <div className="text-xl font-bold">— GEESE</div>
+              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>+12K NEW FANS IN 90 DAYS</div>
+            </div>
 
             {/* Public Enemy */}
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Music className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-bold">Public Enemy</div>
-                    <div className="text-sm text-muted-foreground">Hip-Hop / Rap</div>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground italic">
-                  "This is what we've been fighting for—artists owning their work and getting paid fairly. Boptone gets it."
-                </p>
-                <div className="text-sm font-semibold text-primary">100% ownership retained</div>
-              </CardContent>
-            </Card>
+            <div className="border-l-4 border-white pl-6">
+              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
+                "This is what we've been fighting for."
+              </blockquote>
+              <div className="text-xl font-bold">— PUBLIC ENEMY</div>
+              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>100% OWNERSHIP RETAINED</div>
+            </div>
 
             {/* Chappell Roan */}
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Music className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-bold">Chappell Roan</div>
-                    <div className="text-sm text-muted-foreground">Pop</div>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground italic">
-                  "The easiest platform I've ever used. Upload, publish, get paid. No complicated contracts or hidden fees."
-                </p>
-                <div className="text-sm font-semibold text-primary">$23K earned in 6 months</div>
-              </CardContent>
-            </Card>
+            <div className="border-l-4 border-white pl-6">
+              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
+                "The easiest platform I've ever used."
+              </blockquote>
+              <div className="text-xl font-bold">— CHAPPELL ROAN</div>
+              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>$23K EARNED IN 6 MONTHS</div>
+            </div>
           </div>
         </div>
       </section>
@@ -438,11 +386,11 @@ export default function Home() {
         <div className="flex justify-center">
           <Button 
             size="lg" 
-            className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity"
+            className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity rounded-none font-bold"
             style={{ backgroundColor: '#4285F4' }}
             onClick={() => setLocation("/signup")}
           >
-            Start Free Today
+            START FREE TODAY
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>

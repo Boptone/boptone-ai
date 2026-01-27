@@ -573,3 +573,13 @@
 ## Hero Section Simplification (January 2026)
 - [x] Remove "Try Demo" button from hero section
 - [x] Keep only "Start Free →" button for single conversion path
+
+## Phase 1 Brutalist Redesign (January 2026)
+- [ ] Update global CSS for high contrast (pure black/white + bold blue)
+- [ ] Remove all border-radius (sharp 90° corners)
+- [ ] Increase font weights (bolder headlines)
+- [ ] Remove shadows (flat design)
+- [ ] Redesign feature section as dense numbered list
+- [ ] Redesign testimonials with bold artist names and stark quotes
+- [ ] Add monospace font for stats/data
+- [ ] Preserve animated hero verb rotation
