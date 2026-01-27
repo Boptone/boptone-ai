@@ -358,7 +358,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
+      <section className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <Card className="bg-gradient-to-r from-primary to-chart-3 text-white border-0">
             <CardContent className="p-12 text-center space-y-6">

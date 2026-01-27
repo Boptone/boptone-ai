@@ -23,11 +23,8 @@ export function Navigation() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/">
-          <div className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-            {APP_LOGO && (
-              <img src={APP_LOGO} alt={APP_TITLE} className="h-8 w-8" />
-            )}
-            <span className="font-bold text-xl">{APP_TITLE}</span>
+          <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
+            <span className="font-bold text-2xl tracking-tight" style={{ fontFamily: 'Helvetica, Arial, sans-serif', letterSpacing: '0.05em' }}>BOPTONE</span>
           </div>
         </Link>
 
