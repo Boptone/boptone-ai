@@ -321,25 +321,7 @@ export async function createProduct(product: InsertProduct) {
   return result;
 }
 
-export async function getProducts(artistId: number, isActive?: boolean) {
-  const db = await getDb();
-  if (!db) return [];
-  
-  let conditions = [eq(products.artistId, artistId)];
-  
-  if (isActive !== undefined) {
-    conditions.push(eq(products.isActive, isActive));
-  }
-  
-  return await db.select().from(products).where(and(...conditions)).orderBy(desc(products.createdAt));
-}
-
-export async function updateProduct(id: number, updates: Partial<InsertProduct>) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-  
-  await db.update(products).set(updates).where(eq(products.id, id));
-}
+// Product functions moved to ecommerceDb.ts
 
 // ============================================================================
 // RELEASES / DISTRIBUTION

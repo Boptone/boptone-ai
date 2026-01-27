@@ -161,32 +161,324 @@ export type MicroLoan = typeof microLoans.$inferSelect;
 export type InsertMicroLoan = typeof microLoans.$inferInsert;
 
 // ============================================================================
-// MERCHANDISE / E-COMMERCE
+// E-COMMERCE SYSTEM (Shopify-level)
 // ============================================================================
 
+// Products - Main product catalog
 export const products = mysqlTable("products", {
   id: int("id").autoincrement().primaryKey(),
   artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  type: mysqlEnum("type", ["physical", "digital", "experience"]).notNull(),
   name: varchar("name", { length: 255 }).notNull(),
   description: text("description"),
   price: int("price").notNull(), // In cents
-  inventoryCount: int("inventoryCount").default(0).notNull(),
-  images: json("images").$type<string[]>(), // Array of image URLs
-  variants: json("variants").$type<{
-    size?: string[];
-    color?: string[];
-    [key: string]: string[] | undefined;
+  compareAtPrice: int("compareAtPrice"), // Original price for discounts, in cents
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  
+  // Inventory
+  sku: varchar("sku", { length: 100 }),
+  inventoryQuantity: int("inventoryQuantity").default(0).notNull(),
+  trackInventory: boolean("trackInventory").default(true).notNull(),
+  allowBackorder: boolean("allowBackorder").default(false).notNull(),
+  
+  // Digital product fields
+  digitalFileUrl: varchar("digitalFileUrl", { length: 500 }),
+  digitalFileSize: int("digitalFileSize"), // Bytes
+  downloadLimit: int("downloadLimit"), // null = unlimited
+  
+  // Experience/ticket fields
+  eventDate: timestamp("eventDate"),
+  eventLocation: varchar("eventLocation", { length: 255 }),
+  maxAttendees: int("maxAttendees"),
+  
+  // Media
+  images: json("images").$type<Array<{url: string; alt?: string; position: number}>>(),
+  primaryImageUrl: varchar("primaryImageUrl", { length: 500 }),
+  
+  // SEO & Discovery
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  tags: json("tags").$type<string[]>(), // ["t-shirt", "black", "cotton"]
+  category: varchar("category", { length: 100 }),
+  
+  // Shipping
+  requiresShipping: boolean("requiresShipping").default(false).notNull(),
+  weight: decimal("weight", { precision: 8, scale: 2 }), // Pounds
+  weightUnit: varchar("weightUnit", { length: 10 }).default("lb"),
+  
+  // Status
+  status: mysqlEnum("status", ["draft", "active", "archived"]).default("draft").notNull(),
+  featured: boolean("featured").default(false).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  typeIdx: index("type_idx").on(table.type),
+  slugIdx: index("slug_idx").on(table.slug),
+}));
+
+export type Product = typeof products.$inferSelect;
+export type InsertProduct = typeof products.$inferInsert;
+
+// Product Variants - For products with multiple options (sizes, colors, etc.)
+export const productVariants = mysqlTable("product_variants", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull().references(() => products.id),
+  name: varchar("name", { length: 255 }).notNull(), // e.g., "Small / Black"
+  sku: varchar("sku", { length: 100 }),
+  price: int("price"), // Override product price if different, in cents
+  compareAtPrice: int("compareAtPrice"),
+  
+  // Options
+  option1: varchar("option1", { length: 100 }), // e.g., "Small"
+  option2: varchar("option2", { length: 100 }), // e.g., "Black"
+  option3: varchar("option3", { length: 100 }),
+  
+  // Inventory
+  inventoryQuantity: int("inventoryQuantity").default(0).notNull(),
+  
+  // Media
+  imageUrl: varchar("imageUrl", { length: 500 }),
+  
+  // Status
+  available: boolean("available").default(true).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  productIdIdx: index("product_id_idx").on(table.productId),
+}));
+
+export type ProductVariant = typeof productVariants.$inferSelect;
+export type InsertProductVariant = typeof productVariants.$inferInsert;
+
+// Shopping Cart Items
+export const cartItems = mysqlTable("cart_items", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  productId: int("productId").notNull().references(() => products.id),
+  variantId: int("variantId").references(() => productVariants.id),
+  quantity: int("quantity").default(1).notNull(),
+  priceAtAdd: int("priceAtAdd").notNull(), // Price when added, in cents
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+}));
+
+export type CartItem = typeof cartItems.$inferSelect;
+export type InsertCartItem = typeof cartItems.$inferInsert;
+
+// Orders
+export const orders = mysqlTable("orders", {
+  id: int("id").autoincrement().primaryKey(),
+  orderNumber: varchar("orderNumber", { length: 50 }).notNull().unique(),
+  
+  // Parties
+  customerId: int("customerId").notNull().references(() => users.id),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Pricing (all in cents)
+  subtotal: int("subtotal").notNull(),
+  taxAmount: int("taxAmount").default(0).notNull(),
+  shippingAmount: int("shippingAmount").default(0).notNull(),
+  discountAmount: int("discountAmount").default(0).notNull(),
+  total: int("total").notNull(),
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  
+  // Payment
+  paymentStatus: mysqlEnum("paymentStatus", ["pending", "paid", "failed", "refunded", "partially_refunded"]).default("pending").notNull(),
+  paymentMethod: varchar("paymentMethod", { length: 50 }), // 'stripe', 'paypal', 'venmo'
+  paymentIntentId: varchar("paymentIntentId", { length: 255 }),
+  paidAt: timestamp("paidAt"),
+  
+  // Fulfillment
+  fulfillmentStatus: mysqlEnum("fulfillmentStatus", ["unfulfilled", "partial", "fulfilled", "cancelled"]).default("unfulfilled").notNull(),
+  shippingMethod: varchar("shippingMethod", { length: 100 }),
+  trackingNumber: varchar("trackingNumber", { length: 255 }),
+  trackingUrl: varchar("trackingUrl", { length: 500 }),
+  shippedAt: timestamp("shippedAt"),
+  deliveredAt: timestamp("deliveredAt"),
+  
+  // Addresses
+  shippingAddress: json("shippingAddress").$type<{
+    name: string;
+    line1: string;
+    line2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+    phone?: string;
   }>(),
+  billingAddress: json("billingAddress").$type<{
+    name: string;
+    line1: string;
+    line2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  }>(),
+  
+  // Customer info
+  customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
+  customerPhone: varchar("customerPhone", { length: 50 }),
+  
+  // Notes
+  customerNote: text("customerNote"),
+  internalNote: text("internalNote"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  cancelledAt: timestamp("cancelledAt"),
+  cancellationReason: text("cancellationReason"),
+}, (table) => ({
+  customerIdIdx: index("customer_id_idx").on(table.customerId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  orderNumberIdx: index("order_number_idx").on(table.orderNumber),
+  paymentStatusIdx: index("payment_status_idx").on(table.paymentStatus),
+  fulfillmentStatusIdx: index("fulfillment_status_idx").on(table.fulfillmentStatus),
+}));
+
+export type Order = typeof orders.$inferSelect;
+export type InsertOrder = typeof orders.$inferInsert;
+
+// Order Items
+export const orderItems = mysqlTable("order_items", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull().references(() => orders.id),
+  productId: int("productId").notNull().references(() => products.id),
+  variantId: int("variantId").references(() => productVariants.id),
+  
+  // Snapshot data (preserve even if product deleted/changed)
+  productName: varchar("productName", { length: 255 }).notNull(),
+  variantName: varchar("variantName", { length: 255 }),
   productType: mysqlEnum("productType", ["physical", "digital", "experience"]).notNull(),
-  isActive: boolean("isActive").default(true).notNull(),
+  sku: varchar("sku", { length: 100 }),
+  
+  // Pricing (in cents)
+  quantity: int("quantity").notNull(),
+  pricePerUnit: int("pricePerUnit").notNull(),
+  subtotal: int("subtotal").notNull(),
+  taxAmount: int("taxAmount").default(0).notNull(),
+  total: int("total").notNull(),
+  
+  // Digital delivery
+  digitalFileUrl: varchar("digitalFileUrl", { length: 500 }),
+  downloadCount: int("downloadCount").default(0).notNull(),
+  downloadLimit: int("downloadLimit"),
+  
+  // Fulfillment
+  fulfillmentStatus: mysqlEnum("fulfillmentStatus", ["unfulfilled", "fulfilled", "cancelled"]).default("unfulfilled").notNull(),
+  fulfilledAt: timestamp("fulfilledAt"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+}));
+
+export type OrderItem = typeof orderItems.$inferSelect;
+export type InsertOrderItem = typeof orderItems.$inferInsert;
+
+// Shipping Rates
+export const shippingRates = mysqlTable("shipping_rates", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  name: varchar("name", { length: 100 }).notNull(),
+  description: text("description"),
+  
+  // Pricing (in cents)
+  price: int("price").notNull(),
+  freeShippingThreshold: int("freeShippingThreshold"), // Free shipping over $X
+  
+  // Conditions
+  minOrderAmount: int("minOrderAmount"),
+  maxOrderAmount: int("maxOrderAmount"),
+  
+  // Geography
+  countries: json("countries").$type<string[]>(), // ['US', 'CA', 'UK']
+  
+  // Delivery estimate
+  minDeliveryDays: int("minDeliveryDays"),
+  maxDeliveryDays: int("maxDeliveryDays"),
+  
+  // Status
+  active: boolean("active").default(true).notNull(),
+  
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   artistIdIdx: index("artist_id_idx").on(table.artistId),
 }));
 
-export type Product = typeof products.$inferSelect;
-export type InsertProduct = typeof products.$inferInsert;
+export type ShippingRate = typeof shippingRates.$inferSelect;
+export type InsertShippingRate = typeof shippingRates.$inferInsert;
+
+// Discount Codes
+export const discountCodes = mysqlTable("discount_codes", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  code: varchar("code", { length: 50 }).notNull().unique(),
+  
+  // Discount type
+  type: mysqlEnum("type", ["percentage", "fixed_amount", "free_shipping"]).notNull(),
+  value: int("value").notNull(), // 20 for 20% off, or 1000 for $10 off (cents)
+  
+  // Conditions
+  minPurchaseAmount: int("minPurchaseAmount"), // In cents
+  maxUses: int("maxUses"), // null = unlimited
+  maxUsesPerCustomer: int("maxUsesPerCustomer").default(1).notNull(),
+  usageCount: int("usageCount").default(0).notNull(),
+  
+  // Validity
+  startsAt: timestamp("startsAt"),
+  expiresAt: timestamp("expiresAt"),
+  active: boolean("active").default(true).notNull(),
+  
+  // Applicable products
+  appliesToAllProducts: boolean("appliesToAllProducts").default(true).notNull(),
+  productIds: json("productIds").$type<number[]>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  codeIdx: index("code_idx").on(table.code),
+}));
+
+export type DiscountCode = typeof discountCodes.$inferSelect;
+export type InsertDiscountCode = typeof discountCodes.$inferInsert;
+
+// Product Reviews
+export const productReviews = mysqlTable("product_reviews", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull().references(() => products.id),
+  userId: int("userId").notNull().references(() => users.id),
+  orderId: int("orderId").references(() => orders.id), // Verified purchase
+  
+  rating: int("rating").notNull(), // 1-5 stars
+  title: varchar("title", { length: 255 }),
+  content: text("content"),
+  
+  // Moderation
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  
+  // Helpful votes
+  helpfulCount: int("helpfulCount").default(0).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  productIdIdx: index("product_id_idx").on(table.productId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+}));
+
+export type ProductReview = typeof productReviews.$inferSelect;
+export type InsertProductReview = typeof productReviews.$inferInsert;
 
 // ============================================================================
 // DISTRIBUTION RELEASES

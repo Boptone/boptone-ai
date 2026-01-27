@@ -10,6 +10,7 @@ import { toneRewardsRouter } from "./routers/tonerewards";
 import { kickinRouter } from "./routers/kickin";
 import { fanFunnelRouter } from "./routers/fanfunnel";
 import { microloansRouter } from "./routers/microloans";
+import { ecommerceRouter } from "./ecommerceRouter";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -274,59 +275,7 @@ const loansRouter = router({
 // PRODUCTS / MERCHANDISE ROUTER
 // ============================================================================
 
-const productsRouter = router({
-  // Create product
-  create: protectedProcedure
-    .input(z.object({
-      name: z.string().min(1).max(255),
-      description: z.string().optional(),
-      price: z.number().int(), // in cents
-      inventoryCount: z.number().int().default(0),
-      images: z.array(z.string()).optional(),
-      variants: z.object({
-        size: z.array(z.string()).optional(),
-        color: z.array(z.string()).optional(),
-      }).optional(),
-      productType: z.enum(["physical", "digital", "experience"]),
-    }))
-    .mutation(async ({ ctx, input }) => {
-      const profile = await db.getArtistProfileByUserId(ctx.user.id);
-      if (!profile) throw new Error("Artist profile not found");
-      
-      return await db.createProduct({
-        artistId: profile.id,
-        ...input,
-      });
-    }),
-
-  // Get products
-  getAll: protectedProcedure
-    .input(z.object({
-      isActive: z.boolean().optional(),
-    }))
-    .query(async ({ ctx, input }) => {
-      const profile = await db.getArtistProfileByUserId(ctx.user.id);
-      if (!profile) return [];
-      
-      return await db.getProducts(profile.id, input.isActive);
-    }),
-
-  // Update product
-  update: protectedProcedure
-    .input(z.object({
-      id: z.number().int(),
-      name: z.string().optional(),
-      description: z.string().optional(),
-      price: z.number().int().optional(),
-      inventoryCount: z.number().int().optional(),
-      isActive: z.boolean().optional(),
-    }))
-    .mutation(async ({ input }) => {
-      const { id, ...updates } = input;
-      await db.updateProduct(id, updates);
-      return { success: true };
-    }),
-});
+// Products router moved to ecommerceRouter below
 
 // ============================================================================
 // RELEASES / DISTRIBUTION ROUTER
@@ -595,7 +544,8 @@ export const appRouter = router({
   metrics: metricsRouter,
   revenue: revenueRouter,
   loans: loansRouter,
-  products: productsRouter,
+  // products: productsRouter, // Replaced by ecommerce router
+  ecommerce: ecommerceRouter,
   releases: releasesRouter,
   stripe: stripeRouter,
   ipProtection: ipProtectionRouter,

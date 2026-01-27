@@ -600,3 +600,25 @@
 - [x] Apply polish to homepage hero section
 - [x] Apply polish to internal page headers (Dashboard, My Music, Money, Fans)
 - [x] Test all pages for visual consistency
+
+## Phase 4: E-Commerce System (January 2026)
+- [x] Design comprehensive Shopify-level database schema (8 tables)
+- [x] Create products table with full e-commerce fields
+- [x] Create product_variants table for size/color options
+- [x] Create cart_items table
+- [x] Create orders table with payment and fulfillment tracking
+- [x] Create order_items table
+- [x] Create shipping_rates table
+- [x] Create discount_codes table
+- [x] Create product_reviews table
+- [x] Build comprehensive ecommerceDb.ts with all database helpers
+- [x] Build complete ecommerceRouter.ts with all tRPC procedures
+- [ ] Create Shop page with product catalog and filtering
+- [ ] Build product detail page
+- [ ] Build shopping cart UI
+- [ ] Build checkout flow with Stripe integration
+- [ ] Create My Store page for artists to manage products
+- [ ] Create Orders page for artists to manage fulfillment
+- [ ] Build order tracking for customers
+- [ ] Add tax calculation placeholder (TaxJar/Avalara integration later)
+- [ ] Test complete e-commerce flow end-to-end
