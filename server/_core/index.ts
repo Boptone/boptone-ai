@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
+import { rateLimit } from "express-rate-limit";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
@@ -30,6 +31,31 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  
+  // Trust proxy for accurate IP detection behind load balancers
+  app.set('trust proxy', 1);
+  
+  // Rate limiting for API endpoints
+  const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later.',
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  
+  // Stricter rate limiting for authentication endpoints
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // Only 10 auth requests per 15 minutes
+    message: 'Too many authentication attempts, please try again later.',
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  
+  // Apply rate limiting
+  app.use('/api/trpc', apiLimiter);
+  app.use('/api/oauth', authLimiter);
   
   // Stripe webhook needs raw body for signature verification
   app.post(

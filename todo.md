@@ -550,3 +550,11 @@
 - [x] Add missing BAP procedures: getTrendingTracks, getNewReleases, getRisingArtists
 - [x] Fix nested anchor tags in Navigation component
 - [x] Fix TypeScript errors in Discover.tsx, audioMetadata.ts, stripe webhooks
+
+## Week 1 Security Enhancements (January 2026)
+- [x] Add rate limiting middleware (express-rate-limit)
+  - API endpoints: 100 requests per 15 minutes per IP
+  - Auth endpoints: 10 requests per 15 minutes per IP
+- [ ] Implement error logging (Sentry) - NEXT SESSION
+- [ ] Add input sanitization (DOMPurify) - NEXT SESSION
+- [ ] Set up uptime monitoring - NEXT SESSION
