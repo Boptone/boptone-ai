@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Play, CheckCircle2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import { Navigation } from "@/components/Navigation";
 
 export default function Demo() {
   const [, setLocation] = useLocation();
@@ -53,24 +52,6 @@ export default function Demo() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Navigation */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
-              <Music className="h-8 w-8 text-primary" />
-              <div>
-                <h1 className="text-2xl font-bold">Boptone</h1>
-                <p className="text-xs text-muted-foreground">Own Your Tone</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button variant="ghost" onClick={() => setLocation("/")}>Home</Button>
-              <Button onClick={() => setLocation("/signup")}>Get Started</Button>
-            </div>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero */}
       <div className="container mx-auto px-4 py-16 text-center">

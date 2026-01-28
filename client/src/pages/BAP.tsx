@@ -1,42 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Check, Music, Users, DollarSign, Shield, Zap, Globe } from "lucide-react";
+import { ArrowRight, Check, Users, DollarSign, Shield, Zap, Globe } from "lucide-react";
 import { Link } from "wouter";
 
 export default function BAP() {
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto flex h-16 items-center justify-between">
-          <Link href="/">
-            <button className="flex items-center gap-2 font-bold text-xl">
-              <Music className="h-6 w-6" />
-              Boptone
-            </button>
-          </Link>
-          <nav className="flex items-center gap-6">
-            <Link href="/">
-              <button className="text-sm font-medium hover:text-primary transition-colors">
-                Home
-              </button>
-            </Link>
-            <Link href="/features">
-              <button className="text-sm font-medium hover:text-primary transition-colors">
-                Features
-              </button>
-            </Link>
-            <Link href="/pricing">
-              <button className="text-sm font-medium hover:text-primary transition-colors">
-                Pricing
-              </button>
-            </Link>
-            <Link href="/sign-in">
-              <Button variant="default">Get Started</Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+      
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-primary/5 to-background">

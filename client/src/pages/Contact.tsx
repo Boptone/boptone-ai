@@ -9,7 +9,6 @@ import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import { Navigation } from "@/components/Navigation";
 
 export default function Contact() {
   const [, setLocation] = useLocation();
@@ -57,7 +56,7 @@ ${formData.message}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <Navigation />
+      
 
       {/* Hero */}
       <div className="container mx-auto px-4 py-16 text-center">

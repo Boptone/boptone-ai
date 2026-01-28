@@ -3,14 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import { Navigation } from "@/components/Navigation";
 
 export default function Terms() {
   const [, setLocation] = useLocation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <Navigation />
+      
 
       {/* Content */}
       <div className="container mx-auto px-4 py-12 max-w-4xl">

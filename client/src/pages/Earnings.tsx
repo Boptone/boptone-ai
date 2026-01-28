@@ -6,7 +6,6 @@ import { Loader2, DollarSign, TrendingUp, Calendar, CheckCircle, XCircle, Clock,
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Navigation } from "@/components/Navigation";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Earnings() {
@@ -95,7 +94,7 @@ export default function Earnings() {
   if (authLoading || earningsLoading || pendingLoading || stripeLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <Navigation />
+        
         <div className="flex items-center justify-center min-h-[60vh]">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
@@ -107,7 +106,7 @@ export default function Earnings() {
   if (!user) {
     return (
       <div className="min-h-screen bg-background">
-        <Navigation />
+        
         <div className="container py-20 text-center">
           <h1 className="text-3xl font-bold mb-4">Sign in to view earnings</h1>
           <p className="text-muted-foreground mb-8">You need to be signed in to access your earnings dashboard.</p>
@@ -122,7 +121,7 @@ export default function Earnings() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      
       
       <div className="container py-8 max-w-6xl">
         <div className="mb-8">

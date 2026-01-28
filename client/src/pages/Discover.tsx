@@ -256,25 +256,7 @@ export default function Discover() {
 
   return (
     <div className="min-h-screen pb-32">
-      {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/">
-            <button className="flex items-center gap-2 font-bold text-xl">
-              <Music className="h-6 w-6" />
-              Boptone
-            </button>
-          </Link>
-          <nav className="flex items-center gap-6">
-            <Link href="/upload">
-              <Button variant="outline">Upload Music</Button>
-            </Link>
-            <Link href="/dashboard">
-              <Button>Dashboard</Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
+      
 
       {/* Search Bar */}
       <div className="container mx-auto px-4 py-6">

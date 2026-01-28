@@ -10,7 +10,6 @@ import { Check, Music, ArrowRight, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import { Navigation } from "@/components/Navigation";
 
 export default function Signup() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
@@ -120,23 +119,6 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Header */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
-              <Music className="h-8 w-8 text-primary" />
-              <div>
-                <h1 className="text-2xl font-bold">Boptone</h1>
-                <p className="text-xs text-muted-foreground">Own Your Tone</p>
-              </div>
-            </div>
-            <Button variant="ghost" asChild>
-              <a href={getLoginUrl()}>Already have an account?</a>
-            </Button>
-          </div>
-        </div>
-      </nav>
 
       <div className="container mx-auto px-4 py-12">
         {step === "tier" ? (
