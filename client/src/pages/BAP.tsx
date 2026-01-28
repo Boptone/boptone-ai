@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Check, Users, DollarSign, Shield, Zap, Globe } from "lucide-react";
+import { ArrowRight, Check, Users, DollarSign, Shield, Zap, Globe, Upload } from "lucide-react";
 import { Link } from "wouter";
 
 export default function BAP() {
@@ -61,7 +61,7 @@ export default function BAP() {
             <Card>
               <CardContent className="p-8">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Music className="h-6 w-6 text-primary" />
+                  <Upload className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">1. Upload Your Music</h3>
                 <p className="text-muted-foreground">
@@ -239,7 +239,7 @@ export default function BAP() {
             <Card>
               <CardContent className="p-6 text-center">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Music className="h-8 w-8 text-primary" />
+                  <Zap className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Discover New Music</h3>
                 <p className="text-muted-foreground text-sm">
