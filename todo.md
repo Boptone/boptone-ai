@@ -622,3 +622,10 @@
 - [ ] Build order tracking for customers
 - [ ] Add tax calculation placeholder (TaxJar/Avalara integration later)
 - [ ] Test complete e-commerce flow end-to-end
+
+## Branding Consistency Fixes (January 2026)
+- [x] Remove music note icon from all logo instances
+- [x] Use uppercase "BOPTONE" consistently across all pages
+- [x] Remove duplicate/stacked navigation bars from internal pages
+- [x] Ensure single top navigation bar across entire platform
+- [x] Test branding consistency on all pages

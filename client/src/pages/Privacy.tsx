@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Music, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { Navigation } from "@/components/Navigation";
 
 export default function Privacy() {
   const [, setLocation] = useLocation();

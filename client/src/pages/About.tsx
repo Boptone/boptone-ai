@@ -1,32 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Music, Target, Users, Zap, Heart, Globe } from "lucide-react";
+import { Target, Users, Zap, Heart, Globe } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { Navigation } from "@/components/Navigation";
 
 export default function About() {
   const [, setLocation] = useLocation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Navigation */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
-              <Music className="h-8 w-8 text-primary" />
-              <div>
-                <h1 className="text-2xl font-bold">Boptone</h1>
-                <p className="text-xs text-muted-foreground">Own Your Tone</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Button variant="ghost" onClick={() => setLocation("/")}>Home</Button>
-              <Button onClick={() => setLocation("/signup")}>Get Started</Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       {/* Hero */}
       <div className="container mx-auto px-4 py-16 text-center">
@@ -183,8 +167,8 @@ export default function About() {
         <div className="container mx-auto px-4 py-12">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Music className="h-6 w-6 text-primary" />
+              <div className="mb-4">
+                
                 <span className="font-bold text-lg">Boptone</span>
               </div>
               <p className="text-sm text-muted-foreground">

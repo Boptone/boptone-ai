@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Music, Play, CheckCircle2 } from "lucide-react";
+import { Play, CheckCircle2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { Navigation } from "@/components/Navigation";
 
 export default function Demo() {
   const [, setLocation] = useLocation();
@@ -249,8 +250,8 @@ export default function Demo() {
         <div className="container mx-auto px-4 py-12">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Music className="h-6 w-6 text-primary" />
+              <div className="mb-4">
+                
                 <span className="font-bold text-lg">Boptone</span>
               </div>
               <p className="text-sm text-muted-foreground">

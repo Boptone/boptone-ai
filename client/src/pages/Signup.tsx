@@ -10,6 +10,7 @@ import { Check, Music, ArrowRight, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+import { Navigation } from "@/components/Navigation";
 
 export default function Signup() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();

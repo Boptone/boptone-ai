@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { Navigation } from "@/components/Navigation";
 import { 
   Music, Brain, DollarSign, ShoppingBag, Shield, 
   Calendar, Heart, BarChart3, Globe, Zap,
@@ -304,8 +305,8 @@ export default function Features() {
         <div className="container mx-auto px-4 py-12">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Music className="h-6 w-6 text-primary" />
+              <div className="mb-4">
+                
                 <span className="font-bold text-lg">Boptone</span>
               </div>
               <p className="text-sm text-muted-foreground">
