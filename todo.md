@@ -747,3 +747,29 @@
 - [x] Add My Store to DashboardLayout sidebar navigation
 - [ ] Test complete My Store workflow
 - [ ] Save checkpoint
+
+## Printful POD Integration (January 2026)
+- [x] Move POD strategy documents to permanent knowledge location
+- [x] Add POD database tables (providers, artist_pod_accounts, pod_product_mappings, pod_order_fulfillments)
+- [x] Run database migration with pnpm db:push
+- [x] Create Printful API client wrapper (server/integrations/printful.ts)
+- [x] Create POD database helpers (server/db/pod.ts)
+- [x] Create multi-vendor POD architecture documentation
+- [ ] Build Printful OAuth connection flow
+- [ ] Add "Connect Printful" button to My Store dashboard
+- [ ] Build POD product catalog browser UI
+- [ ] Implement product import from Printful catalog
+- [ ] Add design file upload for POD products
+- [ ] Integrate Printful Mockup Generator API
+- [ ] Build pricing calculator with margin split display
+- [ ] Implement automatic order submission to Printful on purchase
+- [ ] Create webhook endpoint for Printful status updates
+- [ ] Add POD order tracking to My Store Orders page
+- [ ] Test complete POD flow (connect → import → sell → fulfill)
+- [ ] Save checkpoint with Printful integration complete
+
+## Revenue Model Documentation (January 2026)
+- [ ] Commit tiered subscription + margin split model to knowledge base
+- [ ] Document payment processing absorption strategy
+- [ ] Create investor-ready revenue projection spreadsheet
+- [ ] Update pricing page with tiered POD fee structure

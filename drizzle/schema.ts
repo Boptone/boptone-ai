@@ -1337,3 +1337,205 @@ export const forumPosts = mysqlTable("forum_posts", {
 
 export type ForumPost = typeof forumPosts.$inferSelect;
 export type InsertForumPost = typeof forumPosts.$inferInsert;
+
+// ============================================================================
+// PRINT-ON-DEMAND (POD) INTEGRATION
+// ============================================================================
+
+// POD Providers (Printful, Printify)
+export const podProviders = mysqlTable("pod_providers", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 50 }).notNull().unique(), // 'printful', 'printify'
+  displayName: varchar("displayName", { length: 100 }).notNull(), // 'Printful', 'Printify'
+  apiBaseUrl: varchar("apiBaseUrl", { length: 255 }).notNull(),
+  webhookSecret: varchar("webhookSecret", { length: 255 }),
+  status: mysqlEnum("status", ["active", "inactive"]).default("active").notNull(),
+  metadata: json("metadata").$type<{
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    [key: string]: any;
+  }>(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type PodProvider = typeof podProviders.$inferSelect;
+export type InsertPodProvider = typeof podProviders.$inferInsert;
+
+// Artist POD Account Connections
+export const artistPodAccounts = mysqlTable("artist_pod_accounts", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  providerId: int("providerId").notNull().references(() => podProviders.id),
+  
+  // Authentication
+  apiToken: text("apiToken").notNull(), // Encrypted Printful/Printify API token
+  refreshToken: text("refreshToken"), // For OAuth refresh
+  tokenExpiresAt: timestamp("tokenExpiresAt"),
+  
+  // Provider-specific IDs
+  providerStoreId: varchar("providerStoreId", { length: 100 }), // Printful store ID
+  providerAccountId: varchar("providerAccountId", { length: 100 }), // Printify account ID
+  
+  // Status
+  status: mysqlEnum("status", ["active", "disconnected", "expired", "error"]).default("active").notNull(),
+  lastSyncedAt: timestamp("lastSyncedAt"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    storeUrl?: string;
+    email?: string;
+    [key: string]: any;
+  }>(),
+  
+  connectedAt: timestamp("connectedAt").defaultNow().notNull(),
+  disconnectedAt: timestamp("disconnectedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistProviderIdx: index("artist_provider_idx").on(table.artistId, table.providerId),
+}));
+
+export type ArtistPodAccount = typeof artistPodAccounts.$inferSelect;
+export type InsertArtistPodAccount = typeof artistPodAccounts.$inferInsert;
+
+// POD Product Mappings (links Boptone products to POD provider products)
+export const podProductMappings = mysqlTable("pod_product_mappings", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull().references(() => products.id),
+  providerId: int("providerId").notNull().references(() => podProviders.id),
+  artistPodAccountId: int("artistPodAccountId").notNull().references(() => artistPodAccounts.id),
+  
+  // Provider product identifiers
+  providerProductId: varchar("providerProductId", { length: 100 }).notNull(), // Printful product ID (e.g., "71" for t-shirt)
+  providerVariantId: varchar("providerVariantId", { length: 100 }).notNull(), // Printful variant ID (e.g., "4018" for size M)
+  providerSku: varchar("providerSku", { length: 100 }),
+  
+  // Pricing (in cents)
+  wholesaleCost: int("wholesaleCost").notNull(), // Provider's cost (e.g., $12.50 = 1250)
+  shippingCost: int("shippingCost").default(0).notNull(), // Estimated shipping cost
+  
+  // Design files
+  designFileUrl: varchar("designFileUrl", { length: 500 }), // Artist's uploaded design
+  designPlacement: varchar("designPlacement", { length: 50 }), // 'front', 'back', 'sleeve', etc.
+  mockupUrls: json("mockupUrls").$type<string[]>(), // Generated mockup images
+  
+  // Sync settings
+  syncEnabled: boolean("syncEnabled").default(true).notNull(),
+  autoFulfill: boolean("autoFulfill").default(true).notNull(), // Auto-submit orders to provider
+  
+  // Provider metadata
+  providerMetadata: json("providerMetadata").$type<{
+    productName?: string;
+    variantName?: string;
+    color?: string;
+    size?: string;
+    [key: string]: any;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  productIdIdx: index("product_id_idx").on(table.productId),
+  providerProductIdx: index("provider_product_idx").on(table.providerId, table.providerProductId),
+}));
+
+export type PodProductMapping = typeof podProductMappings.$inferSelect;
+export type InsertPodProductMapping = typeof podProductMappings.$inferInsert;
+
+// POD Order Fulfillments (tracks POD orders sent to providers)
+export const podOrderFulfillments = mysqlTable("pod_order_fulfillments", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull().references(() => orders.id),
+  orderItemId: int("orderItemId").notNull().references(() => orderItems.id),
+  providerId: int("providerId").notNull().references(() => podProviders.id),
+  artistPodAccountId: int("artistPodAccountId").notNull().references(() => artistPodAccounts.id),
+  
+  // Provider order identifiers
+  providerOrderId: varchar("providerOrderId", { length: 100 }).notNull(), // Printful order ID
+  providerOrderNumber: varchar("providerOrderNumber", { length: 100 }), // Human-readable order number
+  
+  // Fulfillment status
+  status: mysqlEnum("status", [
+    "pending",      // Order created in Boptone, not yet submitted
+    "submitted",    // Submitted to provider
+    "confirmed",    // Provider confirmed receipt
+    "printing",     // Provider is printing
+    "shipped",      // Provider shipped
+    "delivered",    // Delivered to customer
+    "cancelled",    // Order cancelled
+    "failed"        // Submission or fulfillment failed
+  ]).default("pending").notNull(),
+  
+  // Tracking
+  trackingNumber: varchar("trackingNumber", { length: 100 }),
+  trackingUrl: varchar("trackingUrl", { length: 500 }),
+  carrier: varchar("carrier", { length: 50 }), // 'USPS', 'UPS', 'FedEx', etc.
+  
+  // Costs (in cents)
+  providerCost: int("providerCost").notNull(), // What provider charged
+  shippingCost: int("shippingCost").default(0).notNull(),
+  taxAmount: int("taxAmount").default(0).notNull(),
+  totalCost: int("totalCost").notNull(),
+  
+  // Timestamps
+  submittedAt: timestamp("submittedAt"),
+  confirmedAt: timestamp("confirmedAt"),
+  printingStartedAt: timestamp("printingStartedAt"),
+  shippedAt: timestamp("shippedAt"),
+  deliveredAt: timestamp("deliveredAt"),
+  cancelledAt: timestamp("cancelledAt"),
+  
+  // Error handling
+  errorMessage: text("errorMessage"),
+  retryCount: int("retryCount").default(0).notNull(),
+  lastRetryAt: timestamp("lastRetryAt"),
+  
+  // Provider response
+  providerResponse: json("providerResponse").$type<{
+    [key: string]: any;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  providerOrderIdx: index("provider_order_idx").on(table.providerId, table.providerOrderId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type PodOrderFulfillment = typeof podOrderFulfillments.$inferSelect;
+export type InsertPodOrderFulfillment = typeof podOrderFulfillments.$inferInsert;
+
+// POD Webhook Events (log all webhook events from providers)
+export const podWebhookEvents = mysqlTable("pod_webhook_events", {
+  id: int("id").autoincrement().primaryKey(),
+  providerId: int("providerId").notNull().references(() => podProviders.id),
+  
+  // Event details
+  eventType: varchar("eventType", { length: 100 }).notNull(), // 'order.created', 'order.updated', 'order.shipped', etc.
+  providerOrderId: varchar("providerOrderId", { length: 100 }),
+  
+  // Payload
+  payload: json("payload").$type<{
+    [key: string]: any;
+  }>().notNull(),
+  
+  // Processing status
+  processed: boolean("processed").default(false).notNull(),
+  processedAt: timestamp("processedAt"),
+  processingError: text("processingError"),
+  
+  // Request metadata
+  requestId: varchar("requestId", { length: 100 }),
+  signature: varchar("signature", { length: 255 }), // Webhook signature for verification
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  eventTypeIdx: index("event_type_idx").on(table.eventType),
+  providerOrderIdx: index("provider_order_idx").on(table.providerOrderId),
+  processedIdx: index("processed_idx").on(table.processed),
+}));
+
+export type PodWebhookEvent = typeof podWebhookEvents.$inferSelect;
+export type InsertPodWebhookEvent = typeof podWebhookEvents.$inferInsert;
