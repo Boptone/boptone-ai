@@ -80,7 +80,7 @@ export default function ProductDetail() {
           <h1 className="text-4xl font-black mb-4">PRODUCT NOT FOUND</h1>
           <Button onClick={() => setLocation("/shop")} className="rounded-none border-4 border-black font-black">
             <ArrowLeft className="mr-2" />
-            BACK TO SHOP
+            BACK TO BOPSHOP
           </Button>
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function ProductDetail() {
             className="rounded-none border-2 border-black font-black uppercase"
           >
             <ArrowLeft className="mr-2" />
-            Back to Shop
+            Back to BopShop
           </Button>
         </div>
       </div>

@@ -14,6 +14,7 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/features", label: "Features" },
     { href: "/bap", label: "BAP Protocol" },
+    { href: "/shop", label: "BopShop" },
     { href: "/discover", label: "Discover" },
     { href: "/about", label: "About" },
   ];

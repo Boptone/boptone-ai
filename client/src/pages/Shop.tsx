@@ -39,7 +39,7 @@ export default function Shop() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">
-                SHOP
+                BOPSHOP
               </h1>
               <p className="text-xl font-bold mt-3">
                 SUPPORT ARTISTS DIRECTLY. 90% GOES TO CREATORS.
@@ -166,8 +166,7 @@ export default function Shop() {
         ) : (
           <div className="text-center py-24 border-4 border-black">
             <ShoppingCart className="h-24 w-24 mx-auto mb-6 text-gray-300" />
-            <h2 className="text-3xl font-black uppercase mb-4">No Products Yet</h2>
-            <p className="text-lg text-gray-600 mb-8">
+            <h2 className="text-3xl font-black uppercase mb-4">No Products Yet</h2>            <p className="text-lg text-gray-600 mb-8">
               Check back soon for exclusive artist merchandise and digital content.
             </p>
           </div>

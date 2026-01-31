@@ -726,3 +726,10 @@
 - [ ] Add routes to App.tsx for all e-commerce pages
 - [ ] Test complete e-commerce flow end-to-end
 - [ ] Save checkpoint
+
+## BopShop Rebrand (January 2026)
+- [x] Update Shop.tsx with BopShop branding (headlines, copy)
+- [x] Update ProductDetail.tsx with BopShop branding
+- [x] Add BopShop link to Navigation component
+- [x] Test BopShop branding across all pages
+- [x] Save checkpoint
