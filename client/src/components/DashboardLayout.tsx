@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sidebar";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { Home, LogOut, PanelLeft, Music, DollarSign, Users, Settings } from "lucide-react";
+import { Home, LogOut, PanelLeft, Music, DollarSign, Users, Settings, Store } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
@@ -30,6 +30,7 @@ import { Button } from "./ui/button";
 const menuItems = [
   { icon: Home, label: "Home", path: "/dashboard" },
   { icon: Music, label: "My Music", path: "/my-music" },
+  { icon: Store, label: "My Store", path: "/my-store" },
   { icon: DollarSign, label: "Money", path: "/money" },
   { icon: Users, label: "Fans", path: "/fans" },
   { icon: Settings, label: "Settings", path: "/profile-settings" },

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { notifyOwner } from "./notification";
-import { adminProcedure, publicProcedure, router } from "./trpc";
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "./trpc";
+import { storagePut } from "../storage";
 
 export const systemRouter = router({
   health: publicProcedure
@@ -25,5 +26,23 @@ export const systemRouter = router({
       return {
         success: delivered,
       } as const;
+    }),
+
+  uploadFile: protectedProcedure
+    .input(
+      z.object({
+        fileKey: z.string(),
+        data: z.string(), // base64
+        contentType: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      // Convert base64 to buffer
+      const buffer = Buffer.from(input.data, 'base64');
+      
+      // Upload to S3
+      const result = await storagePut(input.fileKey, buffer, input.contentType);
+      
+      return result;
     }),
 });

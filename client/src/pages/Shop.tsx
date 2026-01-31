@@ -23,7 +23,7 @@ export default function Shop() {
     enabled: !!user,
   });
 
-  const cartItemCount = cart?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+  const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
   const productTypes = [
     { value: "physical", label: "Physical Merch" },
@@ -103,7 +103,7 @@ export default function Shop() {
           </div>
         ) : products && products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-0 border-4 border-black">
-            {products.map((product, idx) => {
+            {products.map((product: any, idx: number) => {
               const isLastInRow = (idx + 1) % 4 === 0;
               const isLastRow = idx >= products.length - 4;
               

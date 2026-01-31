@@ -19,21 +19,21 @@ export default function Store() {
   const [, setLocation] = useLocation();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   
-  const { data: products, isLoading, refetch } = trpc.products.getAll.useQuery({}, {
+  const { data: products, isLoading, refetch } = trpc.ecommerce.products.getAllActive.useQuery({ limit: 100 }, {
     enabled: !isDemoMode
   });
-  const createProduct = trpc.products.create.useMutation({
+  const createProduct = trpc.ecommerce.products.create.useMutation({
     onSuccess: () => {
       toast.success("Product created successfully!");
       setIsCreateDialogOpen(false);
       refetch();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error.message || "Failed to create product");
     },
   });
 
-  const updateProduct = trpc.products.update.useMutation({
+  const updateProduct = trpc.ecommerce.products.update.useMutation({
     onSuccess: () => {
       toast.success("Product updated successfully!");
       refetch();
@@ -59,18 +59,20 @@ export default function Store() {
     const inventory = parseInt(newProduct.inventoryCount) || 0;
 
     createProduct.mutate({
+      type: newProduct.productType,
       name: newProduct.name,
       description: newProduct.description,
       price: priceInCents,
-      inventoryCount: inventory,
-      productType: newProduct.productType,
+      inventoryQuantity: inventory,
+      slug: newProduct.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      status: "active",
     });
   };
 
-  const toggleProductStatus = (productId: number, currentStatus: boolean) => {
+  const toggleProductStatus = (productId: number, currentStatus: "draft" | "active" | "archived") => {
     updateProduct.mutate({
       id: productId,
-      isActive: !currentStatus,
+      status: currentStatus === "active" ? "archived" : "active",
     });
   };
 
@@ -84,21 +86,21 @@ export default function Store() {
     },
     {
       title: "Active Listings",
-      value: products?.filter((p) => p.isActive).length || 0,
+      value: products?.filter((p: any) => p.status === "active").length || 0,
       icon: Eye,
       color: "text-green-600",
       bgColor: "bg-green-50",
     },
     {
       title: "Total Inventory",
-      value: products?.reduce((sum, p) => sum + (p.inventoryCount || 0), 0) || 0,
+      value: products?.reduce((sum: number, p: any) => sum + (p.inventoryCount || 0), 0) || 0,
       icon: ShoppingBag,
       color: "text-purple-600",
       bgColor: "bg-purple-50",
     },
     {
       title: "Est. Value",
-      value: `$${((products?.reduce((sum, p) => sum + p.price * (p.inventoryCount || 0), 0) || 0) / 100).toLocaleString()}`,
+      value: `$${((products?.reduce((sum: number, p: any) => sum + p.price * (p.inventoryCount || 0), 0) || 0) / 100).toLocaleString()}`,
       icon: DollarSign,
       color: "text-orange-600",
       bgColor: "bg-orange-50",
@@ -254,7 +256,7 @@ export default function Store() {
           <CardContent>
             {products && products.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.map((product) => (
+                {products.map((product: any) => (
                   <Card key={product.id} className="overflow-hidden">
                     <div className="aspect-square bg-muted flex items-center justify-center">
                       <ShoppingBag className="h-16 w-16 text-muted-foreground" />

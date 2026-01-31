@@ -39,6 +39,8 @@ import Fans from "./pages/Fans";
 import MyMusic from "./pages/MyMusic";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
+import MyStore from "./pages/MyStore";
+import MyStoreOrders from "./pages/MyStoreOrders";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -48,6 +50,8 @@ function Router() {
       <Route path={"/@:username"} component={ArtistProfile} />
       <Route path="/shop" component={Shop} />
       <Route path="/product/:productId" component={ProductDetail} />
+      <Route path="/my-store" component={MyStore} />
+      <Route path="/my-store/orders" component={MyStoreOrders} />
       <Route path="/demo-profile" component={DemoArtistProfile} />
       <Route path={"/profile-settings"} component={ProfileSettings} />
       <Route path={"/404"} component={NotFound} />
