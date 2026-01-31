@@ -64,9 +64,9 @@ export default function Dashboard() {
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader>
-            <CardTitle>Complete Your Profile</CardTitle>
+            <CardTitle>Claim Your Profile</CardTitle>
             <CardDescription>
-              Set up your artist profile to start using Boptone
+              Create your artist profile to take control of your career
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -81,7 +81,7 @@ export default function Dashboard() {
 
   const stats = [
     {
-      title: "Total Revenue",
+      title: "Your Revenue",
       value: totalRevenue ? `$${(totalRevenue / 100).toLocaleString()}` : "$0",
       change: "+12.5%",
       trend: "up",
@@ -90,7 +90,7 @@ export default function Dashboard() {
       bgColor: "bg-green-50",
     },
     {
-      title: "Total Streams",
+      title: "Your Streams",
       value: "1.2M",
       change: "+8.2%",
       trend: "up",
@@ -99,7 +99,7 @@ export default function Dashboard() {
       bgColor: "bg-blue-50",
     },
     {
-      title: "Followers",
+      title: "Your Followers",
       value: "45.2K",
       change: "+15.3%",
       trend: "up",
@@ -108,7 +108,7 @@ export default function Dashboard() {
       bgColor: "bg-purple-50",
     },
     {
-      title: "New Opportunities",
+      title: "Your Opportunities",
       value: opportunities?.length || 0,
       change: "This week",
       trend: "neutral",
