@@ -85,25 +85,25 @@ export default function MyMusic() {
 
   const stats = [
     {
-      title: "Total Tracks",
+      title: "Your Tracks",
       value: myTracks?.length || 0,
       icon: Music,
       color: "text-blue-600"
     },
     {
-      title: "Total Streams",
+      title: "Your Streams",
       value: "0", // TODO: Calculate total streams
       icon: Play,
       color: "text-green-600"
     },
     {
-      title: "Total Views",
+      title: "Your Views",
       value: "0", // TODO: Calculate total views
       icon: Eye,
       color: "text-purple-600"
     },
     {
-      title: "Avg. Engagement",
+      title: "Your Engagement",
       value: "0%", // TODO: Calculate engagement
       icon: TrendingUp,
       color: "text-orange-600"
@@ -115,7 +115,7 @@ export default function MyMusic() {
       <div className="space-y-6">
         {/* Header */}
         <div className="border-b-4 border-black pb-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">MY MUSIC</h1>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR MUSIC</h1>
           <p className="text-xl font-bold mt-3">
             UPLOAD AND MANAGE YOUR TRACKS
           </p>
@@ -260,7 +260,7 @@ export default function MyMusic() {
                 <Music className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-50" />
                 <h3 className="text-lg font-semibold mb-2">No tracks yet</h3>
                 <p className="text-muted-foreground mb-4">
-                  Upload your first track to get started
+                  Upload your first track to claim your profile
                 </p>
                 <Button variant="outline" onClick={() => document.getElementById('audio-file')?.click()}>
                   <UploadIcon className="h-4 w-4 mr-2" />

@@ -109,7 +109,7 @@ export default function Onboarding() {
               <Sparkles className="h-4 w-4" />
               Welcome to Boptone
             </div>
-            <CardTitle className="text-3xl">Set Up Your Artist Profile</CardTitle>
+            <CardTitle className="text-3xl">Claim Your Artist Profile</CardTitle>
             <CardDescription>
               Let's get you started in just a few steps
             </CardDescription>

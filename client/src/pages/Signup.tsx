@@ -182,9 +182,9 @@ export default function Signup() {
           <div className="max-w-2xl mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle className="text-3xl">Complete Your Profile</CardTitle>
+                <CardTitle className="text-3xl">Claim Your Profile</CardTitle>
                 <CardDescription>
-                  Tell us about yourself to get started with Boptone
+                  Tell us about yourself to claim your profile with Boptone
                 </CardDescription>
               </CardHeader>
               <CardContent>

@@ -69,28 +69,28 @@ export default function Money() {
 
   const stats = [
     {
-      title: "Total Earnings",
+      title: "Your Earnings",
       value: totalRevenue ? formatCurrency(totalRevenue) : "$0.00",
       icon: DollarSign,
       color: "text-green-600",
       bgColor: "bg-green-50"
     },
     {
-      title: "This Month",
+      title: "This Month's Earnings",
       value: "$0.00", // TODO: Add monthly revenue query
       icon: TrendingUp,
       color: "text-blue-600",
       bgColor: "bg-blue-50"
     },
     {
-      title: "Active Loans",
+      title: "Your Active Loans",
       value: activeLoans?.length || 0,
       icon: Wallet,
       color: "text-orange-600",
       bgColor: "bg-orange-50"
     },
     {
-      title: "Tips Received",
+      title: "Your Tips",
       value: tips?.length || 0,
       icon: Heart,
       color: "text-pink-600",
@@ -103,7 +103,7 @@ export default function Money() {
       <div className="space-y-6">
         {/* Header */}
         <div className="border-b-4 border-black pb-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">MONEY</h1>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR MONEY</h1>
           <p className="text-xl font-bold mt-3">
             TRACK YOUR EARNINGS, MANAGE LOANS, AND VIEW FAN SUPPORT
           </p>

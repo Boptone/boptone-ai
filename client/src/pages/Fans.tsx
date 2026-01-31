@@ -25,28 +25,28 @@ export default function Fans() {
   
   const stats = [
     {
-      title: "Total Followers",
+      title: "Your Followers",
       value: "0", // TODO: Add followers count
       icon: Users,
       color: "text-blue-600",
       bgColor: "bg-blue-50"
     },
     {
-      title: "Total Streams",
+      title: "Your Streams",
       value: "0", // TODO: Add streams count
       icon: TrendingUp,
       color: "text-green-600",
       bgColor: "bg-green-50"
     },
     {
-      title: "Engagement Rate",
+      title: "Your Engagement",
       value: "0%", // TODO: Calculate engagement
       icon: Heart,
       color: "text-pink-600",
       bgColor: "bg-pink-50"
     },
     {
-      title: "Reward Points",
+      title: "Your Rewards",
       value: "0", // TODO: Add rewards points
       icon: Award,
       color: "text-purple-600",
@@ -59,7 +59,7 @@ export default function Fans() {
       <div className="space-y-6">
         {/* Header */}
         <div className="border-b-4 border-black pb-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">FANS</h1>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR FANS</h1>
           <p className="text-xl font-bold mt-3">
             GROW YOUR AUDIENCE, TRACK ENGAGEMENT, AND REWARD YOUR SUPPORTERS
           </p>
