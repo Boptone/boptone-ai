@@ -1201,3 +1201,139 @@ export const loanRepayments = mysqlTable("loan_repayments", {
 
 export type LoanRepayment = typeof loanRepayments.$inferSelect;
 export type InsertLoanRepayment = typeof loanRepayments.$inferInsert;
+
+/**
+ * AI Recommendations - Log all AI recommendations for transparency (Nvidia Pillar)
+ * Enables "Why?" button on every AI recommendation showing reasoning, confidence, data sources
+ */
+export const aiRecommendations = mysqlTable("ai_recommendations", {
+  id: int("id").autoincrement().primaryKey(),
+  artistProfileId: int("artistProfileId").notNull().references(() => artistProfiles.id),
+  
+  // Recommendation details
+  type: mysqlEnum("type", ["release_timing", "marketing_strategy", "pricing", "collaboration", "content", "career_move", "other"]).notNull(),
+  title: varchar("title", { length: 255 }).notNull(), // e.g., "Release your next single on Friday"
+  description: text("description").notNull(), // Full recommendation text
+  
+  // Transparency fields (Glass Box AI)
+  reasoning: text("reasoning").notNull(), // Why this recommendation was made
+  confidenceScore: int("confidenceScore").notNull(), // 0-100
+  dataSources: json("dataSources").$type<string[]>().notNull(), // ["Your analytics", "Industry benchmarks", "Platform trends"]
+  
+  // Artist interaction
+  status: mysqlEnum("status", ["pending", "accepted", "overridden", "dismissed"]).default("pending").notNull(),
+  artistResponse: text("artistResponse"), // Artist's explanation if overridden
+  respondedAt: timestamp("respondedAt"),
+  
+  // Metadata
+  priority: int("priority").default(5).notNull(), // 1-10, higher = more important
+  expiresAt: timestamp("expiresAt"), // Some recommendations are time-sensitive
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type AIRecommendation = typeof aiRecommendations.$inferSelect;
+export type InsertAIRecommendation = typeof aiRecommendations.$inferInsert;
+
+/**
+ * Artist Values - Store ethical boundaries and non-negotiables (Shadow #4 mitigation)
+ * Enables artists to define hard-coded AI boundaries: "No brand deals with alcohol", "Only eco-friendly merch"
+ */
+export const artistValues = mysqlTable("artist_values", {
+  id: int("id").autoincrement().primaryKey(),
+  artistProfileId: int("artistProfileId").notNull().references(() => artistProfiles.id),
+  
+  // Core values
+  mission: text("mission"), // Artist's stated mission/purpose
+  nonNegotiables: json("nonNegotiables").$type<string[]>(), // ["No explicit content", "No alcohol sponsors", "Eco-friendly only"]
+  
+  // Content boundaries
+  explicitContentAllowed: boolean("explicitContentAllowed").default(true),
+  politicalContentAllowed: boolean("politicalContentAllowed").default(true),
+  brandDealsAllowed: boolean("brandDealsAllowed").default(true),
+  brandDealCategories: json("brandDealCategories").$type<string[]>(), // ["alcohol", "tobacco", "gambling"] = blocked categories
+  
+  // Collaboration preferences
+  collaborationOpenness: mysqlEnum("collaborationOpenness", ["closed", "selective", "open"]).default("selective"),
+  preferredGenres: json("preferredGenres").$type<string[]>(),
+  
+  // AI behavior boundaries
+  aiAutomationLevel: mysqlEnum("aiAutomationLevel", ["manual", "assisted", "automated"]).default("assisted"),
+  requireApprovalFor: json("requireApprovalFor").$type<string[]>(), // ["pricing_changes", "content_posting", "brand_deals"]
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ArtistValues = typeof artistValues.$inferSelect;
+export type InsertArtistValues = typeof artistValues.$inferInsert;
+
+/**
+ * Communities - Enable "Sovereign Swarm" network effects (Meta Pillar)
+ * Artists can create/join communities for collaboration, support, knowledge sharing
+ */
+export const communities = mysqlTable("communities", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Community details
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(), // URL-friendly name
+  description: text("description"),
+  imageUrl: text("imageUrl"),
+  
+  // Community type
+  type: mysqlEnum("type", ["genre", "location", "career_phase", "interest", "private"]).notNull(),
+  visibility: mysqlEnum("visibility", ["public", "private", "invite_only"]).default("public").notNull(),
+  
+  // Ownership
+  createdBy: int("createdBy").notNull().references(() => artistProfiles.id),
+  moderators: json("moderators").$type<number[]>(), // Array of artistProfileIds
+  
+  // Stats
+  memberCount: int("memberCount").default(0).notNull(),
+  postCount: int("postCount").default(0).notNull(),
+  
+  // Settings
+  allowPosts: boolean("allowPosts").default(true),
+  requireApproval: boolean("requireApproval").default(false), // Approve new members?
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Community = typeof communities.$inferSelect;
+export type InsertCommunity = typeof communities.$inferInsert;
+
+/**
+ * Forum Posts - Community discussions and knowledge sharing (Meta Pillar)
+ */
+export const forumPosts = mysqlTable("forum_posts", {
+  id: int("id").autoincrement().primaryKey(),
+  communityId: int("communityId").notNull().references(() => communities.id),
+  authorId: int("authorId").notNull().references(() => artistProfiles.id),
+  
+  // Post content
+  title: varchar("title", { length: 255 }),
+  content: text("content").notNull(),
+  type: mysqlEnum("type", ["discussion", "question", "resource", "announcement"]).default("discussion").notNull(),
+  
+  // Engagement
+  likeCount: int("likeCount").default(0).notNull(),
+  replyCount: int("replyCount").default(0).notNull(),
+  viewCount: int("viewCount").default(0).notNull(),
+  
+  // Moderation
+  isPinned: boolean("isPinned").default(false),
+  isLocked: boolean("isLocked").default(false),
+  isDeleted: boolean("isDeleted").default(false),
+  
+  // Threading
+  parentPostId: int("parentPostId"), // For replies - self-reference
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ForumPost = typeof forumPosts.$inferSelect;
+export type InsertForumPost = typeof forumPosts.$inferInsert;
