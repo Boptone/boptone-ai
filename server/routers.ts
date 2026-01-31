@@ -11,6 +11,7 @@ import { kickinRouter } from "./routers/kickin";
 import { fanFunnelRouter } from "./routers/fanfunnel";
 import { microloansRouter } from "./routers/microloans";
 import { ecommerceRouter } from "./ecommerceRouter";
+import { podRouter } from "./routers/pod";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -546,6 +547,7 @@ export const appRouter = router({
   loans: loansRouter,
   // products: productsRouter, // Replaced by ecommerce router
   ecommerce: ecommerceRouter,
+  pod: podRouter,
   releases: releasesRouter,
   stripe: stripeRouter,
   ipProtection: ipProtectionRouter,

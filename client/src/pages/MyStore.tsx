@@ -6,6 +6,8 @@ import { Loader2, Plus, Edit, Trash2, Package } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import { ProductForm } from "@/components/ProductForm";
+import { ConnectPrintfulDialog } from "@/components/ConnectPrintfulDialog";
+import { Badge } from "@/components/ui/badge";
 
 /**
  * My Store - Artist Storefront Management Dashboard
@@ -15,6 +17,15 @@ import { ProductForm } from "@/components/ProductForm";
 export default function MyStore() {
   const { user, loading: authLoading } = useAuth();
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showConnectPrintful, setShowConnectPrintful] = useState(false);
+
+  // Fetch POD connections
+  const { data: podAccounts, refetch: refetchPodAccounts } = trpc.pod.getConnectedAccounts.useQuery(
+    undefined,
+    { enabled: !!user }
+  );
+
+  const printfulAccount = podAccounts?.find((acc) => acc.provider?.name === "printful");
 
   // Fetch artist's products
   const { data: products, isLoading: productsLoading } = trpc.ecommerce.products.getMy.useQuery(
@@ -57,6 +68,39 @@ export default function MyStore() {
           Manage your products, inventory, and orders. You keep 90% of every sale.
         </p>
       </div>
+
+      {/* POD Connection Status */}
+      <Card className="p-6 border-2 border-black mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-lg font-black mb-2">PRINT-ON-DEMAND</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Connect Printful to sell merchandise with zero inventory. We handle fulfillment, you keep 90% of profit.
+            </p>
+            {printfulAccount ? (
+              <div className="flex items-center gap-2">
+                <Badge variant="default" className="bg-green-600">
+                  Connected
+                </Badge>
+                <span className="text-sm text-muted-foreground">
+                  {printfulAccount.metadata && typeof printfulAccount.metadata === 'object' && 'email' in printfulAccount.metadata
+                    ? (printfulAccount.metadata as { email?: string }).email
+                    : 'Connected'}
+                </span>
+              </div>
+            ) : (
+              <Badge variant="outline">Not Connected</Badge>
+            )}
+          </div>
+          <Button
+            onClick={() => setShowConnectPrintful(true)}
+            variant={printfulAccount ? "outline" : "default"}
+            size="lg"
+          >
+            {printfulAccount ? "Reconnect" : "Connect Printful"}
+          </Button>
+        </div>
+      </Card>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -201,13 +245,20 @@ export default function MyStore() {
         )}
       </div>
 
-      {/* Add Product Modal */}
+      {/* Add Produ      {/* Product Form Dialog */}
       {showAddProduct && (
         <ProductForm
+          open={showAddProduct}
           onClose={() => setShowAddProduct(false)}
-          onSuccess={() => setShowAddProduct(false)}
         />
       )}
+
+      {/* Connect Printful Dialog */}
+      <ConnectPrintfulDialog
+        open={showConnectPrintful}
+        onOpenChange={setShowConnectPrintful}
+        onSuccess={() => refetchPodAccounts()}
+      />
     </div>
   );
 }

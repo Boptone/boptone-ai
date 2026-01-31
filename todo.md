@@ -773,3 +773,11 @@
 - [ ] Document payment processing absorption strategy
 - [ ] Create investor-ready revenue projection spreadsheet
 - [ ] Update pricing page with tiered POD fee structure
+
+## Printful Connection UI (January 2026)
+- [x] Create POD tRPC router with connection procedures
+- [x] Build ConnectPrintfulDialog component with API token input
+- [x] Add connection status indicator to My Store dashboard
+- [x] Add "Connect Printful" button to My Store
+- [x] Test complete connection flow
+- [ ] Save checkpoint
