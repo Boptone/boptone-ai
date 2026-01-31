@@ -37,13 +37,17 @@ import Microloans from "./pages/Microloans";
 import Money from "./pages/Money";
 import Fans from "./pages/Fans";
 import MyMusic from "./pages/MyMusic";
+import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>      <Route path={"/"} component={Home} />
       <Route path="/onboarding" component={Onboarding} />
-        <Route path="/@:username" component={ArtistProfile} />
+      <Route path={"/@:username"} component={ArtistProfile} />
+      <Route path="/shop" component={Shop} />
+      <Route path="/product/:productId" component={ProductDetail} />
       <Route path="/demo-profile" component={DemoArtistProfile} />
       <Route path={"/profile-settings"} component={ProfileSettings} />
       <Route path={"/404"} component={NotFound} />

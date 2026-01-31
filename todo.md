@@ -715,3 +715,14 @@
 - [x] Replace "Set Up" language with "Claim" language across all pages
 - [x] Test all pages for consistent ownership messaging
 - [x] Save checkpoint
+
+## E-Commerce Frontend Implementation (January 2026)
+- [x] Build Shop page with product catalog and filtering (physical/digital/experiences)
+- [x] Build product detail page with variants, add-to-cart, and reviews
+- [ ] Build shopping cart UI with quantity updates and remove items
+- [ ] Build checkout flow with Stripe payment integration
+- [ ] Build artist storefront management page (My Store) for product CRUD
+- [ ] Build order management page for fulfillment tracking
+- [ ] Add routes to App.tsx for all e-commerce pages
+- [ ] Test complete e-commerce flow end-to-end
+- [ ] Save checkpoint
