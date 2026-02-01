@@ -797,3 +797,8 @@
 - [x] Update all protected pages to allow dev mode access without sign-in
 - [x] Test complete site navigation without auth roadblocks
 - [ ] Save checkpoint with dev mode enabled
+
+## BOPTONE Logo Font Weight Update (February 2026)
+- [x] Update navigation logo font weight to 900 (black/ultra-bold) to match BopShop reference
+- [x] Test logo appearance across all pages
+- [ ] Save checkpoint with updated logo styling

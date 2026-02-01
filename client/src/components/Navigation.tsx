@@ -25,7 +25,7 @@ export function Navigation() {
         {/* Logo */}
         <Link href="/">
           <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
-            <span className="font-bold text-2xl tracking-tight" style={{ fontFamily: 'Helvetica, Arial, sans-serif', letterSpacing: '0.05em' }}>BOPTONE</span>
+            <span className="text-2xl tracking-tight" style={{ fontFamily: 'Helvetica, Arial, sans-serif', fontWeight: 900, letterSpacing: '0.05em' }}>BOPTONE</span>
           </div>
         </Link>
 
