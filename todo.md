@@ -808,4 +808,6 @@
 - [x] Switch font from Helvetica to Arial Black to match BOPSHOP thick font style
 - [x] Save checkpoint with Arial Black font
 - [x] Reduce letter spacing to tuck letters closer together like BOPSHOP
-- [ ] Save checkpoint with tighter letter spacing
+- [x] Save checkpoint with tighter letter spacing
+- [x] Further reduce letter spacing to -0.05em or -0.06em to match BOPSHOP exactly
+- [ ] Save checkpoint with super-tight letter spacing
