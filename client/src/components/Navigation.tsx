@@ -21,16 +21,16 @@ export function Navigation() {
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-20 items-center justify-between">
-        {/* Logo */}
+      <div className="flex h-20 items-center justify-between px-6">
+        {/* Logo - Flush Left */}
         <Link href="/">
           <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
             <span className="text-6xl font-black" style={{ fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif', letterSpacing: '-0.05em' }}>BOPTONE</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Desktop Navigation - Adjacent to Logo */}
+        <div className="hidden md:flex items-center gap-6 ml-12">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href}>
               <a
@@ -86,7 +86,7 @@ export function Navigation() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t bg-background">
-          <div className="container py-4 space-y-3">
+          <div className="px-6 py-4 space-y-3">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 <a
