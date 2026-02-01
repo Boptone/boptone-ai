@@ -810,4 +810,7 @@
 - [x] Reduce letter spacing to tuck letters closer together like BOPSHOP
 - [x] Save checkpoint with tighter letter spacing
 - [x] Further reduce letter spacing to -0.05em or -0.06em to match BOPSHOP exactly
-- [ ] Save checkpoint with super-tight letter spacing
+- [x] Save checkpoint with super-tight letter spacing
+- [x] Increase logo font size from text-4xl to text-5xl or text-6xl to match BOPSHOP height
+- [x] Expand navigation bar height from h-16 to h-20 or h-24 to accommodate taller logo
+- [ ] Save checkpoint with taller logo and expanded nav
