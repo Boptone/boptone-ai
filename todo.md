@@ -806,4 +806,6 @@
 - [x] Ensure font-weight 900 applies correctly with font-black class
 - [x] Save checkpoint with bigger, bolder logo
 - [x] Switch font from Helvetica to Arial Black to match BOPSHOP thick font style
-- [ ] Save checkpoint with Arial Black font
+- [x] Save checkpoint with Arial Black font
+- [x] Reduce letter spacing to tuck letters closer together like BOPSHOP
+- [ ] Save checkpoint with tighter letter spacing
