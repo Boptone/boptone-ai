@@ -804,4 +804,6 @@
 - [x] Save checkpoint with updated logo styling
 - [x] Increase logo font size to 3xl-4xl to match BOPSHOP massive size
 - [x] Ensure font-weight 900 applies correctly with font-black class
-- [ ] Save checkpoint with bigger, bolder logo
+- [x] Save checkpoint with bigger, bolder logo
+- [x] Switch font from Helvetica to Arial Black to match BOPSHOP thick font style
+- [ ] Save checkpoint with Arial Black font
