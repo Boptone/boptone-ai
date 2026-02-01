@@ -801,4 +801,7 @@
 ## BOPTONE Logo Font Weight Update (February 2026)
 - [x] Update navigation logo font weight to 900 (black/ultra-bold) to match BopShop reference
 - [x] Test logo appearance across all pages
-- [ ] Save checkpoint with updated logo styling
+- [x] Save checkpoint with updated logo styling
+- [x] Increase logo font size to 3xl-4xl to match BOPSHOP massive size
+- [x] Ensure font-weight 900 applies correctly with font-black class
+- [ ] Save checkpoint with bigger, bolder logo
