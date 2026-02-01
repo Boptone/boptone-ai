@@ -781,3 +781,12 @@
 - [x] Add "Connect Printful" button to My Store
 - [x] Test complete connection flow
 - [ ] Save checkpoint
+
+## Navigation Rebrand: Remove "My" Prefix (January 2026)
+- [x] Create HQ/Mothership emotional attachment strategy document
+- [x] Update DashboardLayout navigation from "My X" to Option 4 naming
+- [x] Update App.tsx routes to match new navigation naming
+- [x] Update all page headers to use "YOUR" prefix (YOUR STORE, YOUR RELEASES, etc.)
+- [x] Update all internal links and references to new navigation names
+- [x] Test all navigation links work correctly
+- [ ] Save checkpoint with navigation rebrand

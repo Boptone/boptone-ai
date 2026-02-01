@@ -29,10 +29,10 @@ import { Button } from "./ui/button";
 
 const menuItems = [
   { icon: Home, label: "Home", path: "/dashboard" },
-  { icon: Music, label: "My Music", path: "/my-music" },
-  { icon: Store, label: "My Store", path: "/my-store" },
-  { icon: DollarSign, label: "Money", path: "/money" },
-  { icon: Users, label: "Fans", path: "/fans" },
+  { icon: Music, label: "Releases", path: "/releases" },
+  { icon: Store, label: "Store", path: "/store" },
+  { icon: DollarSign, label: "Revenue", path: "/revenue" },
+  { icon: Users, label: "Audience", path: "/audience" },
   { icon: Settings, label: "Settings", path: "/profile-settings" },
 ];
 

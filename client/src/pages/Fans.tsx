@@ -59,7 +59,7 @@ export default function Fans() {
       <div className="space-y-6">
         {/* Header */}
         <div className="border-b-4 border-black pb-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR FANS</h1>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR AUDIENCE</h1>
           <p className="text-xl font-bold mt-3">
             GROW YOUR AUDIENCE, TRACK ENGAGEMENT, AND REWARD YOUR SUPPORTERS
           </p>

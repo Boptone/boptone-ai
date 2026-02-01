@@ -103,7 +103,7 @@ export default function Money() {
       <div className="space-y-6">
         {/* Header */}
         <div className="border-b-4 border-black pb-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR MONEY</h1>
+          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR REVENUE</h1>
           <p className="text-xl font-bold mt-3">
             TRACK YOUR EARNINGS, MANAGE LOANS, AND VIEW FAN SUPPORT
           </p>

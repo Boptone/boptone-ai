@@ -50,8 +50,8 @@ function Router() {
       <Route path={"/@:username"} component={ArtistProfile} />
       <Route path="/shop" component={Shop} />
       <Route path="/product/:productId" component={ProductDetail} />
-      <Route path="/my-store" component={MyStore} />
-      <Route path="/my-store/orders" component={MyStoreOrders} />
+      <Route path="/store" component={MyStore} />
+      <Route path="/store/orders" component={MyStoreOrders} />
       <Route path="/demo-profile" component={DemoArtistProfile} />
       <Route path={"/profile-settings"} component={ProfileSettings} />
       <Route path={"/404"} component={NotFound} />
@@ -76,9 +76,9 @@ function Router() {
       <Route path="/earnings" component={Earnings} />
       <Route path="/tone-rewards" component={ToneRewards} />
       <Route path="/microloans" component={Microloans} />
-      <Route path="/money" component={Money} />
-      <Route path="/fans" component={Fans} />
-      <Route path="/my-music" component={MyMusic} />
+      <Route path="/revenue" component={Money} />
+      <Route path="/audience" component={Fans} />
+      <Route path="/releases" component={MyMusic} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />
