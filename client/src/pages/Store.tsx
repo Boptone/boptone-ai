@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,7 +21,7 @@ export default function Store() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   
   const { data: products, isLoading, refetch } = trpc.ecommerce.products.getAllActive.useQuery({ limit: 100 }, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const createProduct = trpc.ecommerce.products.create.useMutation({
     onSuccess: () => {
@@ -41,7 +42,7 @@ export default function Store() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated && !isDemoMode) {
+    if (!authLoading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [authLoading, isAuthenticated, isDemoMode, setLocation]);

@@ -790,3 +790,10 @@
 - [x] Update all internal links and references to new navigation names
 - [x] Test all navigation links work correctly
 - [ ] Save checkpoint with navigation rebrand
+
+## Development Mode: Remove Auth Roadblocks (February 2026)
+- [x] Add DEV_MODE environment variable to bypass authentication
+- [x] Update DashboardLayout to skip auth checks in dev mode
+- [x] Update all protected pages to allow dev mode access without sign-in
+- [x] Test complete site navigation without auth roadblocks
+- [ ] Save checkpoint with dev mode enabled

@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,13 +20,13 @@ export default function Financials() {
   const [isLoanDialogOpen, setIsLoanDialogOpen] = useState(false);
   
   const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const { data: revenueRecords, refetch: refetchRevenue } = trpc.revenue.getAll.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const { data: loans, refetch: refetchLoans } = trpc.loans.getAll.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   
   const applyForLoan = trpc.loans.applyForLoan.useMutation({
@@ -45,7 +46,7 @@ export default function Financials() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated && !isDemoMode) {
+    if (!authLoading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [authLoading, isAuthenticated, isDemoMode, setLocation]);

@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,7 +48,7 @@ export default function MyStoreOrders() {
     );
   }
 
-  if (!user) {
+  if (!user && !DEV_MODE) {
     return (
       <div className="container py-24">
         <h1 className="text-4xl font-black tracking-tighter mb-4">YOUR ORDERS</h1>

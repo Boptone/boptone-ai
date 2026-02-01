@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +31,7 @@ export default function AIAdvisor() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { data: profile } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
 
   const scrollToBottom = () => {
@@ -42,7 +43,7 @@ export default function AIAdvisor() {
   }, [messages]);
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated && !isDemoMode) {
+    if (!authLoading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [authLoading, isAuthenticated, isDemoMode, setLocation]);

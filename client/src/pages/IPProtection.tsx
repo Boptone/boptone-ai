@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +15,7 @@ export default function IPProtection() {
   const [, setLocation] = useLocation();
   
   const { data: infringements, isLoading, refetch } = trpc.ipProtection.getAll.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const updateStatus = trpc.ipProtection.updateStatus.useMutation({
     onSuccess: () => {
@@ -24,7 +25,7 @@ export default function IPProtection() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated && !isDemoMode) {
+    if (!authLoading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [authLoading, isAuthenticated, isDemoMode, setLocation]);

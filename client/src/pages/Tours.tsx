@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,7 +19,7 @@ export default function Tours() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   
   const { data: tours, isLoading, refetch } = trpc.tours.getAll.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const createTour = trpc.tours.create.useMutation({
     onSuccess: () => {
@@ -40,7 +41,7 @@ export default function Tours() {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated && !isDemoMode) {
+    if (!authLoading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [authLoading, isAuthenticated, isDemoMode, setLocation]);

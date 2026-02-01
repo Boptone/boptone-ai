@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { DemoBanner } from "@/components/DemoBanner";
 import { Button } from "@/components/ui/button";
@@ -31,25 +32,25 @@ export default function Dashboard() {
   const { isDemoMode, demoUser, demoProfile } = useDemo();
   const [, setLocation] = useLocation();
   const { data: profile, isLoading: profileLoading } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const { data: notifications } = trpc.notifications.getAll.useQuery({ isRead: false }, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
   const { data: opportunities } = trpc.opportunities.getAll.useQuery({ status: "new" }, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
 
   useEffect(() => {
-    if (!loading && !isAuthenticated && !isDemoMode) {
+    if (!loading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [loading, isAuthenticated, isDemoMode, setLocation]);
 
-  if ((loading || profileLoading) && !isDemoMode) {
+  if ((loading || profileLoading) && !isDemoMode && !DEV_MODE) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -59,7 +60,7 @@ export default function Dashboard() {
 
   const effectiveProfile = isDemoMode ? demoProfile : profile;
   
-  if (!effectiveProfile && !isDemoMode) {
+  if (!effectiveProfile && !isDemoMode && !DEV_MODE) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-md w-full">

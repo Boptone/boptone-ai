@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -60,26 +61,26 @@ export default function Analytics() {
     startDate: dateRange.startDate,
     endDate: dateRange.endDate,
   }, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
 
   const { data: socialMetrics } = trpc.metrics.getSocial.useQuery({
     startDate: dateRange.startDate,
     endDate: dateRange.endDate,
   }, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
 
   const { data: revenueRecords } = trpc.revenue.getAll.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
 
   const { data: totalRevenue } = trpc.revenue.getTotal.useQuery({}, {
-    enabled: !isDemoMode
+    enabled: !isDemoMode && !DEV_MODE
   });
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated && !isDemoMode) {
+    if (!authLoading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
       setLocation("/");
     }
   }, [authLoading, isAuthenticated, isDemoMode, setLocation]);
