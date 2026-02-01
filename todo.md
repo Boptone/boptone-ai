@@ -817,3 +817,10 @@
 - [x] Reposition BOPTONE logo to far left edge following Brex layout pattern
 - [x] Remove container padding on left, position logo flush left
 - [ ] Save checkpoint with repositioned logo
+
+## Blue CTA Button for Sign Up (February 2026)
+- [x] Update Sign Up button to blue background (#4A90E2 or similar)
+- [x] Change button text from "Sign Up" to "START FREE"
+- [x] Add arrow icon (→) to button
+- [x] Keep Log In as ghost/text button for secondary action
+- [ ] Test button appearance and save checkpoint
