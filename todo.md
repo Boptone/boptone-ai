@@ -829,3 +829,16 @@
 - [x] Apply same blue background (#4A90E2) to hero START FREE button
 - [x] Ensure consistent styling with navigation CTA button
 - [ ] Test button appearance and save checkpoint
+
+## Toney Chatbot Visual Enhancement (February 2026)
+- [x] Add blue colored ring around Toney chatbot bubble
+- [x] Inner circle: #4A90E2 (matching START FREE buttons)
+- [x] Outer ring: Lighter blue (#7AB8F5) to purple gradient
+- [x] Ensure chatbot stands out against white background
+
+## Footer Enhancement (February 2026)
+- [x] Transform footer to black background with white text
+- [x] Organize links into columns (Product, Platform, Company, Resources)
+- [x] Match Brex-style clean layout
+- [x] Add social media icons at bottom (Twitter, Instagram, Facebook)
+- [ ] Test footer appearance and save checkpoint

@@ -51,13 +51,25 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   if (!isOpen) {
     return (
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg z-50"
-        size="icon"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Outer ring - lighter blue */}
+        <div className="absolute inset-0 rounded-full" style={{ 
+          background: 'linear-gradient(135deg, #7AB8F5 0%, #9B87E8 100%)',
+          padding: '4px',
+          width: '64px',
+          height: '64px'
+        }}>
+          {/* Inner button - primary blue */}
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="h-14 w-14 rounded-full shadow-lg"
+            style={{ backgroundColor: '#4A90E2', color: 'white' }}
+            size="icon"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </Button>
+        </div>
+      </div>
     );
   }
 
