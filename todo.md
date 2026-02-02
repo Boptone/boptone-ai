@@ -963,3 +963,8 @@
 
 ## Toney Chatbot Positioning Fix
 - [x] Fix Toney chatbot positioning - increase bottom spacing so he's fully visible and floating above footer
+
+## Toney Chatbot Size Enhancement
+- [x] Increase Toney chatbot button size to match Brex-style prominence (larger button, more visible)
+- [x] Make gradient ring more prominent and eye-catching
+- [x] Ensure visibility across all pages and scroll positions
