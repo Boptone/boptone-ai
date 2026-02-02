@@ -913,3 +913,9 @@
 - [x] Update background to oklch(0.15 0 0), foreground to oklch(0.98 0 0)
 - [ ] Test theme switching functionality
 - [ ] Save checkpoint
+
+## Hero Section Spacing Adjustment (February 2026)
+- [x] Remove "The Autonomous Creator OS" tagline from hero section
+- [x] Reduce top padding from py-24/py-40 to pt-16/pt-20
+- [x] Ensure no excessive white space after tagline removal
+- [ ] Test visual balance and save checkpoint

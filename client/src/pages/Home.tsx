@@ -257,14 +257,8 @@ export default function Home() {
     <>
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-24 md:py-40">
+      <section className="container mx-auto px-4 pt-16 pb-24 md:pt-20 md:pb-40">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          <div className="inline-block">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-              <Sparkles className="h-4 w-4" />
-              The Autonomous Creator OS
-            </span>
-          </div>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter">
             <span 
               className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
