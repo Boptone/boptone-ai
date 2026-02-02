@@ -890,3 +890,9 @@
 - [x] Ensure StripeCheckout component respects inline style prop
 - [x] Match blue color (#4A90E2) with other tier buttons
 - [ ] Test button appearance and save checkpoint
+
+## Pricing Card Spacing Fix (February 2026)
+- [x] Add vertical spacing between pricing tier cards (gap-6 to gap-8)
+- [x] Ensure proper gap between feature list and next card (32px gap)
+- [ ] Test spacing on all screen sizes
+- [ ] Save checkpoint
