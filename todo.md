@@ -905,3 +905,11 @@
 - [x] Enable switchable prop in ThemeProvider
 - [x] Style dropdown with shadcn DropdownMenu component
 - [ ] Test theme persistence and save checkpoint
+
+## Theme Switcher Icon & Dark Mode Fix (February 2026)
+- [x] Change theme switcher icon from Circle to MoonStar (half-moon)
+- [x] Configure dark mode colors in index.css (darker bg, lighter text)
+- [x] Enhance dark mode contrast for better visibility
+- [x] Update background to oklch(0.15 0 0), foreground to oklch(0.98 0 0)
+- [ ] Test theme switching functionality
+- [ ] Save checkpoint

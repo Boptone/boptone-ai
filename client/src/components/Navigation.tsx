@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { Menu, X, Sun, Moon, Circle } from "lucide-react";
+import { Menu, X, Sun, Moon, Circle, MoonStar } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -60,7 +60,7 @@ export function Navigation() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="h-9 w-9">
-                <Circle className="h-5 w-5" />
+                <MoonStar className="h-5 w-5" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </DropdownMenuTrigger>
