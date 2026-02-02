@@ -862,3 +862,12 @@
 - [x] Add more whitespace and breathing room (p-8 padding)
 - [x] Match Brex-style professional aesthetic (white cards, rounded corners)
 - [ ] Test pricing section and save checkpoint
+
+## Annual/Monthly Pricing Toggle (February 2026)
+- [x] Add toggle switch component above pricing cards
+- [x] Implement state management for annual/monthly view (isAnnual state)
+- [x] Update pricing display based on toggle state
+- [x] Show annual savings when annual is selected (blue highlight)
+- [x] Style toggle to match site branding (blue #4A90E2 accent)
+- [x] Add "Save up to 20%" badge next to Annual label
+- [ ] Test toggle functionality and save checkpoint

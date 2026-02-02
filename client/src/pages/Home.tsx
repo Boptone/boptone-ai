@@ -28,6 +28,7 @@ export default function Home() {
   const { setDemoMode } = useDemo();
   const [verbIndex, setVerbIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -277,6 +278,31 @@ export default function Home() {
               <Check className="h-4 w-4" />
               14-day Pro trial • No credit card required
             </div>
+            
+            {/* Pricing Toggle */}
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <span className={`text-sm font-medium transition-colors ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
+                Monthly
+              </span>
+              <button
+                onClick={() => setIsAnnual(!isAnnual)}
+                className="relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                style={{ backgroundColor: isAnnual ? '#4A90E2' : '#d1d5db' }}
+                role="switch"
+                aria-checked={isAnnual}
+              >
+                <span
+                  className="inline-block h-6 w-6 transform rounded-full bg-white transition-transform"
+                  style={{ transform: isAnnual ? 'translateX(32px)' : 'translateX(4px)' }}
+                />
+              </button>
+              <span className={`text-sm font-medium transition-colors ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
+                Annual
+                <span className="ml-2 inline-block px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#4A90E2', color: 'white' }}>
+                  Save up to 20%
+                </span>
+              </span>
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {tiers.map((tier, index) => (
@@ -301,10 +327,19 @@ export default function Home() {
                   {/* Pricing */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-bold">{tier.price}</span>
-                      {tier.period && <span className="text-gray-600">{tier.period}</span>}
+                      <span className="text-4xl font-bold">
+                        {isAnnual && tier.annualPrice ? tier.annualPrice : tier.price}
+                      </span>
+                      <span className="text-gray-600">
+                        {isAnnual && tier.annualPrice ? '/year' : tier.period}
+                      </span>
                     </div>
-                    {tier.annualPrice && (
+                    {isAnnual && tier.annualPrice && tier.annualSavings && (
+                      <p className="text-sm font-semibold mt-1" style={{ color: '#4A90E2' }}>
+                        {tier.annualSavings}
+                      </p>
+                    )}
+                    {!isAnnual && tier.annualPrice && (
                       <p className="text-sm text-gray-500 mt-1">
                         or {tier.annualPrice}/year • {tier.annualSavings}
                       </p>
