@@ -9,6 +9,7 @@ interface StripeCheckoutProps {
   buttonText?: string;
   buttonVariant?: "default" | "outline";
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export function StripeCheckout({ 
@@ -16,6 +17,7 @@ export function StripeCheckout({
   buttonText = "Subscribe Now", 
   buttonVariant = "default",
   className = "",
+  style,
 }: StripeCheckoutProps) {
   const [isLoading, setIsLoading] = useState(false);
   
@@ -45,6 +47,7 @@ export function StripeCheckout({
       variant={buttonVariant}
       onClick={handleCheckout}
       disabled={isLoading}
+      style={style}
     >
       {isLoading ? (
         <>

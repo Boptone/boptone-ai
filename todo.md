@@ -883,3 +883,10 @@
 - [x] Add CTA buttons in header row for each tier
 - [x] Position below pricing cards section (mt-20)
 - [ ] Test accordion functionality and save checkpoint
+
+## Pro Tier CTA Button Styling Fix (February 2026)
+- [x] Update Pro tier button in pricing cards to show blue background
+- [x] Update Pro tier button in comparison table header to show blue background
+- [x] Ensure StripeCheckout component respects inline style prop
+- [x] Match blue color (#4A90E2) with other tier buttons
+- [ ] Test button appearance and save checkpoint
