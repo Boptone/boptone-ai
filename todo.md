@@ -960,3 +960,6 @@
 - [ ] Test pricing cards on various mobile screen sizes
 - [ ] Optimize comparison table for mobile view
 - [ ] Save checkpoint
+
+## Toney Chatbot Positioning Fix
+- [x] Fix Toney chatbot positioning - increase bottom spacing so he's fully visible and floating above footer
