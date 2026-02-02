@@ -387,12 +387,12 @@ export default function Home() {
                 )}
                 
                 {/* Card */}
-                <div className="bg-white border border-gray-200 rounded-lg p-8 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
+                <div className="bg-card border border-border rounded-lg p-8 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
                   {/* Tier Name */}
-                  <h3 className="text-3xl font-bold mb-2">{tier.name}</h3>
+                  <h3 className="text-3xl font-bold mb-2 text-card-foreground">{tier.name}</h3>
                   
                   {/* Description */}
-                  <p className="text-gray-600 text-sm mb-6">{tier.description}</p>
+                  <p className="text-muted-foreground text-sm mb-6">{tier.description}</p>
                   
                   {/* Pricing */}
                   <div className="mb-6">
@@ -400,7 +400,7 @@ export default function Home() {
                       <span className="text-4xl font-bold">
                         {isAnnual && tier.annualPrice ? tier.annualPrice : tier.price}
                       </span>
-                      <span className="text-gray-600">
+                      <span className="text-muted-foreground">
                         {isAnnual && tier.annualPrice ? '/year' : tier.period}
                       </span>
                     </div>
@@ -410,7 +410,7 @@ export default function Home() {
                       </p>
                     )}
                     {!isAnnual && tier.annualPrice && (
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-sm text-muted-foreground mt-1">
                         or {tier.annualPrice}/year • {tier.annualSavings}
                       </p>
                     )}
@@ -437,9 +437,9 @@ export default function Home() {
                   
                   {/* Platform Fee Badge */}
                   {tier.platformFee && (
-                    <div className="mb-6 pb-6 border-b border-gray-200">
-                      <p className="text-lg font-bold mb-1">{tier.platformFee} platform fee</p>
-                      <p className="text-sm text-gray-600">Cap: {tier.earningCap}</p>
+                    <div className="mb-6 pb-6 border-b border-border">
+                      <p className="text-lg font-bold mb-1 text-card-foreground">{tier.platformFee} platform fee</p>
+                      <p className="text-sm text-muted-foreground">Cap: {tier.earningCap}</p>
                     </div>
                   )}
                   
@@ -447,8 +447,8 @@ export default function Home() {
                   <ul className="space-y-3 flex-1">
                     {tier.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-700">{feature}</span>
+                        <Check className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-card-foreground">{feature}</span>
                       </li>
                     ))}
                   </ul>

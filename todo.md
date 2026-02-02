@@ -974,3 +974,6 @@
 
 ## Toney Chatbot Positioning - Match Brex Example
 - [x] Adjust Toney spacing to match Brex example (more generous bottom/right spacing for full visibility)
+
+## Dark Mode Text Color Fix
+- [x] Fix gray text in pricing cards to be properly visible in dark mode (should be dark text on light cards)
