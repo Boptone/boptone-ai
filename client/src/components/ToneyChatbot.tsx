@@ -55,18 +55,18 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
         {/* Outer ring - lighter blue */}
         <div className="absolute inset-0 rounded-full" style={{ 
           background: 'linear-gradient(135deg, #7AB8F5 0%, #9B87E8 100%)',
-          padding: '5px',
-          width: '80px',
-          height: '80px'
+          padding: '4px',
+          width: '64px',
+          height: '64px'
         }}>
           {/* Inner button - primary blue */}
           <Button
             onClick={() => setIsOpen(true)}
-            className="h-[70px] w-[70px] rounded-full shadow-2xl hover:shadow-3xl transition-shadow"
+            className="h-14 w-14 rounded-full shadow-lg"
             style={{ backgroundColor: '#4A90E2', color: 'white' }}
             size="icon"
           >
-            <MessageCircle className="h-8 w-8" />
+            <MessageCircle className="h-6 w-6" />
           </Button>
         </div>
       </div>

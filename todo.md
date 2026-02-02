@@ -968,3 +968,6 @@
 - [x] Increase Toney chatbot button size to match Brex-style prominence (larger button, more visible)
 - [x] Make gradient ring more prominent and eye-catching
 - [x] Ensure visibility across all pages and scroll positions
+
+## Toney Chatbot Size Revert
+- [x] Revert Toney button to original size (56px button, 64px ring) for full visibility
