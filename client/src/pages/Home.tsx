@@ -374,7 +374,7 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-stretch">
             {tiers.map((tier, index) => (
               <div key={index} className="relative">
                 {/* Most Popular Badge */}
@@ -458,7 +458,8 @@ export default function Home() {
           </div>
 
           {/* Feature Comparison Table */}
-          <div className="mt-20 bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="mt-20 bg-white dark:bg-background rounded-lg border border-gray-200 dark:border-border overflow-x-auto">
+            <div className="min-w-[800px]">
             {/* Header Row */}
             <div className="grid grid-cols-5 gap-4 p-6 border-b border-gray-200 bg-gray-50">
               <div className="text-lg font-bold">Features</div>
@@ -554,6 +555,7 @@ export default function Home() {
                 </div>
               );
             })}
+            </div>
           </div>
         </div>
       </section>

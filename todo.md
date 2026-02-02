@@ -951,3 +951,12 @@
 - [x] Show hamburger menu only on mobile (md:block hidden)
 - [x] Add theme selection highlighting (bg-muted for active theme)
 - [ ] Test responsive behavior and save checkpoint
+
+## Mobile Pricing Card Optimization (February 2026)
+- [ ] Update pricing card grid from grid-cols-4 to responsive layout
+- [ ] Implement single-column stacked layout on mobile (grid-cols-1)
+- [ ] Adjust card spacing for mobile readability
+- [ ] Ensure "Most Popular" badge remains visible on mobile
+- [ ] Test pricing cards on various mobile screen sizes
+- [ ] Optimize comparison table for mobile view
+- [ ] Save checkpoint
