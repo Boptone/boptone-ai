@@ -51,7 +51,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-12 right-12 z-[9999]">
+      <div className="fixed bottom-6 right-6 z-[9999]">
         {/* Outer ring - lighter blue */}
         <div className="absolute inset-0 rounded-full" style={{ 
           background: 'linear-gradient(135deg, #7AB8F5 0%, #9B87E8 100%)',

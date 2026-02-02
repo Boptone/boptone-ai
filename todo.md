@@ -971,3 +971,6 @@
 
 ## Toney Chatbot Size Revert
 - [x] Revert Toney button to original size (56px button, 64px ring) for full visibility
+
+## Toney Chatbot Positioning - Match Brex Example
+- [x] Adjust Toney spacing to match Brex example (more generous bottom/right spacing for full visibility)
