@@ -510,18 +510,18 @@ export default function Home() {
               const isExpanded = expandedCategories.includes(category.id);
               
               return (
-                <div key={category.id} className="border-b border-gray-200 last:border-b-0">
+                <div key={category.id} className="border-b border-border last:border-b-0">
                   {/* Category Header */}
                   <button
                     onClick={() => toggleCategory(category.id)}
-                    className="w-full flex items-center justify-between p-6 hover:bg-gray-50 transition-colors text-left"
+                    className="w-full flex items-center justify-between p-6 hover:bg-muted transition-colors text-left"
                   >
                     <div className="flex items-center gap-3">
-                      <Icon className="h-5 w-5 text-gray-600" />
-                      <span className="text-lg font-semibold">{category.name}</span>
+                      <Icon className="h-5 w-5 text-foreground" />
+                      <span className="text-lg font-semibold text-foreground">{category.name}</span>
                     </div>
                     <ChevronDown 
-                      className={`h-5 w-5 text-gray-600 transition-transform ${
+                      className={`h-5 w-5 text-foreground transition-transform ${
                         isExpanded ? 'transform rotate-180' : ''
                       }`}
                     />

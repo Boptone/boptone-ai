@@ -930,3 +930,12 @@
 - [x] Update ThemeContext to support light/dark/system themes
 - [x] Increase Toney chatbot z-index to z-[9999] for visibility
 - [ ] Test all pages and save checkpoint
+
+## Dark Mode Accordion Visibility Fix (February 2026)
+- [x] Fix feature comparison accordion text colors for dark mode
+- [x] Ensure category titles are visible in both light and dark themes
+- [x] Update text-gray-600 to text-foreground for theme compatibility
+- [x] Update border-gray-200 to border-border for theme compatibility
+- [x] Update hover:bg-gray-50 to hover:bg-muted for theme compatibility
+- [ ] Test accordion visibility in both themes
+- [ ] Save checkpoint
