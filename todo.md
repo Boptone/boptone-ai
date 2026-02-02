@@ -851,3 +851,14 @@
 - [x] Add "Own Your Tone™" tagline below wordmark
 - [x] Use WHITE text on black background for visibility
 - [ ] Test footer appearance and save checkpoint
+
+## Pricing Card Redesign (February 2026)
+- [x] Simplify card borders (thin gray outline, subtle shadows)
+- [x] Add "Most Popular" label above Pro tier
+- [x] Improve typography hierarchy (text-3xl tier names, text-4xl pricing)
+- [x] Add descriptive subtitle below each tier name
+- [x] Implement full-width CTA buttons with blue color (#4A90E2)
+- [x] Clean up feature list with gray checkmarks
+- [x] Add more whitespace and breathing room (p-8 padding)
+- [x] Match Brex-style professional aesthetic (white cards, rounded corners)
+- [ ] Test pricing section and save checkpoint

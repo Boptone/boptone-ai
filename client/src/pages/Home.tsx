@@ -278,65 +278,77 @@ export default function Home() {
               14-day Pro trial • No credit card required
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {tiers.map((tier, index) => (
-              <Card 
-                key={index} 
-                className={`relative flex flex-col h-full ${tier.highlighted ? "border-primary shadow-xl md:scale-105" : ""}`}
-              >
+              <div key={index} className="relative">
+                {/* Most Popular Badge */}
                 {tier.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                    <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium whitespace-nowrap">
+                  <div className="text-center mb-2">
+                    <span className="inline-block bg-black text-white px-4 py-1 text-sm font-semibold">
                       Most Popular
                     </span>
                   </div>
                 )}
-                <CardHeader className="text-center pb-6">
-                  <CardTitle className="text-2xl">{tier.name}</CardTitle>
-                  <div className="mt-4">
-                    <span className="text-5xl font-bold">{tier.price}</span>
-                    {tier.period && <span className="text-muted-foreground text-lg">{tier.period}</span>}
-                  </div>
-                  {tier.annualPrice && (
-                    <p className="text-sm text-muted-foreground mt-2">
-                      or {tier.annualPrice}/year • {tier.annualSavings}
-                    </p>
-                  )}
-                  <CardDescription className="mt-3">{tier.description}</CardDescription>
-                  {tier.platformFee && (
-                    <div className="mt-4 p-3 bg-primary/5 rounded-lg">
-                      <p className="text-sm font-semibold text-primary">{tier.platformFee} platform fee</p>
-                      <p className="text-xs text-muted-foreground mt-1">Cap: {tier.earningCap}</p>
+                
+                {/* Card */}
+                <div className="bg-white border border-gray-200 rounded-lg p-8 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
+                  {/* Tier Name */}
+                  <h3 className="text-3xl font-bold mb-2">{tier.name}</h3>
+                  
+                  {/* Description */}
+                  <p className="text-gray-600 text-sm mb-6">{tier.description}</p>
+                  
+                  {/* Pricing */}
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-bold">{tier.price}</span>
+                      {tier.period && <span className="text-gray-600">{tier.period}</span>}
                     </div>
-                  )}
-                </CardHeader>
-                <CardContent className="flex flex-col flex-1 space-y-6">
-                  <ul className="space-y-3 flex-1">
-                    {tier.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    {tier.annualPrice && (
+                      <p className="text-sm text-gray-500 mt-1">
+                        or {tier.annualPrice}/year • {tier.annualSavings}
+                      </p>
+                    )}
+                  </div>
+                  
+                  {/* CTA Button */}
                   {tier.name === "Pro" ? (
                     <StripeCheckout 
                       tier="pro"
                       buttonText={tier.cta}
-                      buttonVariant={tier.highlighted ? "default" : "outline"}
-                      className="w-full"
+                      buttonVariant="default"
+                      className="w-full mb-8"
+                      style={{ backgroundColor: '#4A90E2', color: 'white', padding: '12px 24px', borderRadius: '8px', fontWeight: 600 }}
                     />
                   ) : (
                     <Button 
-                      className="w-full" 
-                      variant={tier.highlighted ? "default" : "outline"}
+                      className="w-full mb-8" 
+                      style={{ backgroundColor: '#4A90E2', color: 'white', padding: '24px', borderRadius: '8px', fontWeight: 600 }}
                       onClick={() => setLocation("/signup")}
                     >
                       {tier.cta}
                     </Button>
                   )}
-                </CardContent>
-              </Card>
+                  
+                  {/* Platform Fee Badge */}
+                  {tier.platformFee && (
+                    <div className="mb-6 pb-6 border-b border-gray-200">
+                      <p className="text-lg font-bold mb-1">{tier.platformFee} platform fee</p>
+                      <p className="text-sm text-gray-600">Cap: {tier.earningCap}</p>
+                    </div>
+                  )}
+                  
+                  {/* Features List */}
+                  <ul className="space-y-3 flex-1">
+                    {tier.features.map((feature, fIndex) => (
+                      <li key={fIndex} className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             ))}
           </div>
         </div>
