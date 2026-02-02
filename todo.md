@@ -871,3 +871,15 @@
 - [x] Style toggle to match site branding (blue #4A90E2 accent)
 - [x] Add "Save up to 20%" badge next to Annual label
 - [ ] Test toggle functionality and save checkpoint
+
+## Feature Comparison Table with Accordion (February 2026)
+- [x] Create feature comparison data structure organized by category
+- [x] Implement accordion component for expandable sections
+- [x] Add table layout with tier columns (Creator, Pro, Label, Enterprise)
+- [x] Add green checkmark icons (#10b981) for included features
+- [x] Style to match Brex reference (light gray background, clean rows)
+- [x] Implement expand/collapse functionality with chevron icons
+- [x] Add category icons (Music, TrendingUp, DollarSign, Heart, Sparkles)
+- [x] Add CTA buttons in header row for each tier
+- [x] Position below pricing cards section (mt-20)
+- [ ] Test accordion functionality and save checkpoint

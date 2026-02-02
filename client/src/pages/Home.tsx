@@ -17,7 +17,8 @@ import {
   Globe,
   BarChart3,
   ShoppingBag,
-  Calendar
+  Calendar,
+  ChevronDown
 } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -29,6 +30,7 @@ export default function Home() {
   const [verbIndex, setVerbIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -176,6 +178,80 @@ export default function Home() {
     { title: "All-in-One", description: "Distribution, commerce, finance, healthcare, and IP protection unified" },
     { title: "Creator-First", description: "Designed by artists, for artists. Own your tone, own your future" },
   ];
+
+  const featureCategories = [
+    {
+      id: "distribution",
+      name: "Distribution & Upload",
+      icon: Music,
+      features: [
+        { name: "3-click upload with AI metadata", tiers: [true, true, true, true] },
+        { name: "Basic profile + 10 tracks", tiers: [true, false, false, false] },
+        { name: "Unlimited tracks & storage", tiers: [false, true, true, true] },
+        { name: "Global distribution to all platforms", tiers: [true, true, true, true] },
+        { name: "Instant release scheduling", tiers: [true, true, true, true] },
+      ]
+    },
+    {
+      id: "marketing",
+      name: "Marketing & Growth",
+      icon: TrendingUp,
+      features: [
+        { name: "Basic analytics", tiers: [true, false, false, false] },
+        { name: "Advanced analytics & insights", tiers: [false, true, true, true] },
+        { name: "Fan Funnel marketing tools", tiers: [false, true, true, true] },
+        { name: "Smart links with source tracking", tiers: [false, true, true, true] },
+        { name: "Fan data ownership & export", tiers: [false, true, true, true] },
+        { name: "White-label embeds", tiers: [false, false, true, true] },
+      ]
+    },
+    {
+      id: "financial",
+      name: "Financial Services",
+      icon: DollarSign,
+      features: [
+        { name: "12% platform fee (Cap: $1,000/month)", tiers: [true, false, false, false] },
+        { name: "7% platform fee (Cap: $10,000/month)", tiers: [false, true, false, false] },
+        { name: "4% platform fee (Unlimited earnings)", tiers: [false, false, true, false] },
+        { name: "2.5% platform fee (Unlimited earnings)", tiers: [false, false, false, true] },
+        { name: "3% Tone Dividend bonus", tiers: [false, true, true, true] },
+        { name: "Kick In tip jar", tiers: [true, true, true, true] },
+      ]
+    },
+    {
+      id: "support",
+      name: "Support & Collaboration",
+      icon: Heart,
+      features: [
+        { name: "Community support", tiers: [true, false, false, false] },
+        { name: "Priority support", tiers: [false, true, false, false] },
+        { name: "1-hour support response", tiers: [false, false, true, false] },
+        { name: "24/7 phone support", tiers: [false, false, false, true] },
+        { name: "Team accounts (3 seats)", tiers: [false, false, true, false] },
+        { name: "10+ team seats", tiers: [false, false, false, true] },
+      ]
+    },
+    {
+      id: "advanced",
+      name: "Advanced Features",
+      icon: Sparkles,
+      features: [
+        { name: "API access", tiers: [false, false, true, true] },
+        { name: "Dedicated account manager", tiers: [false, false, true, true] },
+        { name: "Custom contract terms", tiers: [false, false, false, true] },
+        { name: "Onboarding assistance", tiers: [false, false, false, true] },
+        { name: "Quarterly strategy sessions", tiers: [false, false, false, true] },
+      ]
+    },
+  ];
+
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories(prev => 
+      prev.includes(categoryId) 
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
 
   return (
     <>
@@ -385,6 +461,105 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Feature Comparison Table */}
+          <div className="mt-20 bg-white rounded-lg border border-gray-200 overflow-hidden">
+            {/* Header Row */}
+            <div className="grid grid-cols-5 gap-4 p-6 border-b border-gray-200 bg-gray-50">
+              <div className="text-lg font-bold">Features</div>
+              <div className="text-center">
+                <div className="text-lg font-bold">Creator</div>
+                <Button 
+                  className="mt-2 w-full" 
+                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
+                  onClick={() => setLocation("/signup")}
+                >
+                  Start Free
+                </Button>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold">Pro</div>
+                <StripeCheckout 
+                  tier="pro"
+                  buttonText="Start Trial"
+                  buttonVariant="default"
+                  className="mt-2 w-full"
+                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
+                />
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold">Label</div>
+                <Button 
+                  className="mt-2 w-full" 
+                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
+                  onClick={() => setLocation("/signup")}
+                >
+                  Get Started
+                </Button>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-bold">Enterprise</div>
+                <Button 
+                  className="mt-2 w-full" 
+                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
+                  onClick={() => setLocation("/contact")}
+                >
+                  Contact Sales
+                </Button>
+              </div>
+            </div>
+
+            {/* Feature Categories */}
+            {featureCategories.map((category) => {
+              const Icon = category.icon;
+              const isExpanded = expandedCategories.includes(category.id);
+              
+              return (
+                <div key={category.id} className="border-b border-gray-200 last:border-b-0">
+                  {/* Category Header */}
+                  <button
+                    onClick={() => toggleCategory(category.id)}
+                    className="w-full flex items-center justify-between p-6 hover:bg-gray-50 transition-colors text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 text-gray-600" />
+                      <span className="text-lg font-semibold">{category.name}</span>
+                    </div>
+                    <ChevronDown 
+                      className={`h-5 w-5 text-gray-600 transition-transform ${
+                        isExpanded ? 'transform rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {/* Feature Rows */}
+                  {isExpanded && (
+                    <div className="bg-gray-50">
+                      {category.features.map((feature, idx) => (
+                        <div 
+                          key={idx} 
+                          className="grid grid-cols-5 gap-4 p-4 border-t border-gray-200 items-center"
+                        >
+                          <div className="text-sm text-gray-700">{feature.name}</div>
+                          {feature.tiers.map((included, tierIdx) => (
+                            <div key={tierIdx} className="flex justify-center">
+                              {included ? (
+                                <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#10b981' }}>
+                                  <Check className="h-4 w-4 text-white" />
+                                </div>
+                              ) : (
+                                <div className="w-6 h-6" />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
