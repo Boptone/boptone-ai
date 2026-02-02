@@ -404,6 +404,21 @@ export default function Home() {
       {/* Footer - Black background with white text */}
       <footer className="bg-black text-white">
         <div className="container mx-auto px-6 py-16">
+          {/* BOPTONE Wordmark Logo */}
+          <div className="mb-12">
+            <h2 
+              className="text-5xl font-black text-white"
+              style={{
+                fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif',
+                letterSpacing: '-0.05em',
+                fontWeight: 900
+              }}
+            >
+              BOPTONE
+            </h2>
+            <p className="text-gray-400 text-sm mt-2">Own Your Tone™</p>
+          </div>
+          
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
             <div>
               <h3 className="font-semibold mb-4 text-white">Product</h3>

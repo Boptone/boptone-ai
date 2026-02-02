@@ -842,3 +842,12 @@
 - [x] Match Brex-style clean layout
 - [x] Add social media icons at bottom (Twitter, Instagram, Facebook)
 - [ ] Test footer appearance and save checkpoint
+
+## BOPTONE Wordmark in Footer (February 2026)
+- [x] Add BOPTONE wordmark logo to top of footer
+- [x] Use Arial Black font matching navigation logo
+- [x] Large size (text-5xl) for brand impact
+- [x] Apply same styling (font-black, -0.05em letter spacing)
+- [x] Add "Own Your Tone™" tagline below wordmark
+- [x] Use WHITE text on black background for visibility
+- [ ] Test footer appearance and save checkpoint
