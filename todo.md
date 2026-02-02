@@ -824,3 +824,8 @@
 - [x] Add arrow icon (→) to button
 - [x] Keep Log In as ghost/text button for secondary action
 - [ ] Test button appearance and save checkpoint
+
+## Hero Section Blue CTA Button (February 2026)
+- [x] Apply same blue background (#4A90E2) to hero START FREE button
+- [x] Ensure consistent styling with navigation CTA button
+- [ ] Test button appearance and save checkpoint

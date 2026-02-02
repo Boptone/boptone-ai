@@ -200,8 +200,13 @@ export default function Home() {
             The all-in-one platform empowering musicians and creators with AI-powered tools, financial services, and career management from discovery to breakthrough success.
           </p>
           <div className="flex items-center justify-center pt-4">
-            <Button size="lg" className="text-lg px-8 py-6" onClick={() => setLocation("/signup")}>
-              Start Free
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6" 
+              style={{ backgroundColor: '#4A90E2', color: 'white' }}
+              onClick={() => setLocation("/signup")}
+            >
+              START FREE
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
