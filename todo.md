@@ -896,3 +896,12 @@
 - [x] Ensure proper gap between feature list and next card (32px gap)
 - [ ] Test spacing on all screen sizes
 - [ ] Save checkpoint
+
+## Theme Switcher Dropdown (February 2026)
+- [x] Add theme switcher icon button in top right navigation
+- [x] Implement dropdown menu with Light/Dark/Default options
+- [x] Add sun/moon/circle icons for each theme option
+- [x] Enable theme switching functionality (useTheme hook)
+- [x] Enable switchable prop in ThemeProvider
+- [x] Style dropdown with shadcn DropdownMenu component
+- [ ] Test theme persistence and save checkpoint

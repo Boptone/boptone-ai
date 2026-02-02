@@ -99,7 +99,7 @@ function App() {
       <DemoProvider>
         <ThemeProvider
           defaultTheme="light"
-          // switchable
+          switchable
         >
           <TooltipProvider>
             <Toaster />
