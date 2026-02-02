@@ -9,6 +9,7 @@ import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import Footer from "@/components/Footer";
 
 export default function Contact() {
   const [, setLocation] = useLocation();
@@ -239,48 +240,7 @@ ${formData.message}
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t mt-16">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="mb-4">
-                
-                <span className="font-bold text-lg">Boptone</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                The autonomous operating system for creators. Own Your Tone™
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Product</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="/#features" className="hover:text-foreground">Features</a></li>
-                <li><a href="/#pricing" className="hover:text-foreground">Pricing</a></li>
-                <li><a href="/demo" className="hover:text-foreground">Demo</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="/about" className="hover:text-foreground">About</a></li>
-                <li><a href="/contact" className="hover:text-foreground">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="/privacy" className="hover:text-foreground">Privacy</a></li>
-                <li><a href="/terms" className="hover:text-foreground">Terms of Service</a></li>
-                <li><a href="mailto:hello@boptone.com" className="hover:text-foreground">Contact</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2026 Boptone. All rights reserved. Own Your Tone™</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
       <ToneyChatbot />
     </div>
   );

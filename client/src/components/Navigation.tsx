@@ -65,15 +65,15 @@ export function Navigation() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuItem onClick={() => setTheme("light")} className="cursor-pointer">
+              <DropdownMenuItem onClick={() => setTheme?.("light")} className="cursor-pointer">
                 <Sun className="mr-2 h-4 w-4" />
                 <span>Light</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")} className="cursor-pointer">
+              <DropdownMenuItem onClick={() => setTheme?.("dark")} className="cursor-pointer">
                 <Moon className="mr-2 h-4 w-4" />
                 <span>Dark</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")} className="cursor-pointer">
+              <DropdownMenuItem onClick={() => setTheme?.("system")} className="cursor-pointer">
                 <Circle className="mr-2 h-4 w-4" />
                 <span>Default</span>
               </DropdownMenuItem>

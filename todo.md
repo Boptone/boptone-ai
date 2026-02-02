@@ -919,3 +919,14 @@
 - [x] Reduce top padding from py-24/py-40 to pt-16/pt-20
 - [x] Ensure no excessive white space after tagline removal
 - [ ] Test visual balance and save checkpoint
+
+## Sitewide Brand Audit & Consistency (February 2026)
+- [x] Audit all pages for branding consistency
+- [x] Create shared Footer component with black background/white text
+- [x] Ensure all pages use BOPTONE wordmark in Arial Black
+- [x] Verify consistent typography across all pages
+- [x] Apply black footer to all pages (Home, Features, About, Contact, Demo)
+- [x] Fix dark mode toggle functionality (added system theme support)
+- [x] Update ThemeContext to support light/dark/system themes
+- [x] Increase Toney chatbot z-index to z-[9999] for visibility
+- [ ] Test all pages and save checkpoint
