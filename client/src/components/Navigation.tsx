@@ -136,7 +136,42 @@ export function Navigation() {
                 </a>
               </Link>
             ))}
-            <div className="pt-3 space-y-2">
+            
+            {/* Theme Switcher */}
+            <div className="pt-3 pb-3 border-t border-border">
+              <div className="text-sm font-medium text-muted-foreground mb-2">Theme</div>
+              <div className="space-y-1">
+                <button
+                  onClick={() => setTheme?.("light")}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+                    theme === "light" ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  <Sun className="h-4 w-4" />
+                  <span>Light</span>
+                </button>
+                <button
+                  onClick={() => setTheme?.("dark")}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+                    theme === "dark" ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  <Moon className="h-4 w-4" />
+                  <span>Dark</span>
+                </button>
+                <button
+                  onClick={() => setTheme?.("system")}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+                    theme === "system" ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  <Circle className="h-4 w-4" />
+                  <span>Default</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="pt-3 space-y-2 border-t border-border">
               {isAuthenticated ? (
                 <>
                   <Link href="/dashboard">
