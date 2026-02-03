@@ -1069,3 +1069,7 @@
 - [x] About page: Condense "Our Story" to 2-3 sentences
 - [x] About page: Simplify "The Future We're Building" section
 - [x] Test all 3 fixed pages pass 80-year-old artist test
+
+## Homepage Design Updates
+- [x] Update FAQ section to cleaner design (centered heading, full-width borders, no cards)
+- [x] Replace weak light green checkmarks in Compare Plans with green circular bubbles containing white checkmarks
