@@ -1044,3 +1044,28 @@
 - [x] Use plain language for all labels
 - [x] Ensure 80-year-old artist can understand without help
 - [x] Match the clean, minimal aesthetic of existing pricing cards
+
+## Site-Wide Simplicity Audit (80-Year-Old Artist Test)
+- [x] Map all pages and routes in the application (34 pages total)
+- [x] Audit Home page for simplicity issues
+- [x] Audit Features page for simplicity issues (NEEDS FIX)
+- [x] Audit BAP Protocol page for simplicity issues (NEEDS FIX)
+- [x] Audit BopShop page for simplicity issues (PASS)
+- [x] Audit Discover page for simplicity issues (PASS)
+- [x] Audit About page for simplicity issues (NEEDS FIX)
+- [ ] Audit Dashboard for simplicity issues
+- [ ] Audit Profile page for simplicity issues
+- [ ] Audit remaining pages
+
+## Fix Priority Pages (Features, BAP, About)
+- [x] Features page: Reduce from 12 to 6 core feature cards
+- [x] Features page: Simplify comparison section
+- [x] Features page: Remove "Seamless Integrations" or simplify
+- [x] BAP Protocol page: Replace "protocol" jargon with plain language
+- [x] BAP Protocol page: Reduce comparison bullets from 7 to 4
+- [x] BAP Protocol page: Move "Why Fans Love BAP" to separate page or remove
+- [x] BAP Protocol page: Condense FAQ to 3 questions
+- [x] About page: Rewrite "Our Mission" without business jargon
+- [x] About page: Condense "Our Story" to 2-3 sentences
+- [x] About page: Simplify "The Future We're Building" section
+- [x] Test all 3 fixed pages pass 80-year-old artist test

@@ -4,145 +4,79 @@ import { ToneyChatbot } from "@/components/ToneyChatbot";
 import Footer from "@/components/Footer";
 import { 
   Music, Brain, DollarSign, ShoppingBag, Shield, 
-  Calendar, Heart, BarChart3, Globe, Zap,
-  TrendingUp, Users, FileText, Bell, Lock
+  BarChart3, Globe, Zap
 } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Features() {
   const [, setLocation] = useLocation();
 
+  // Reduced from 12 to 6 CORE features for extreme simplicity
   const features = [
     {
-      icon: Brain,
-      title: "AI Career Advisor",
-      description: "Get personalized career guidance powered by advanced machine learning. Toney, your AI advisor, analyzes your data and provides actionable recommendations for releases, marketing, and growth strategies.",
+      icon: Globe,
+      title: "Upload & Distribute Music",
+      description: "Upload your music and reach fans worldwide. Keep 90% of what you earn—no middlemen, no platform fees.",
       benefits: [
-        "Real-time career optimization",
-        "Release timing recommendations",
-        "Content strategy suggestions",
-        "Trend forecasting and analysis"
+        "Upload in minutes",
+        "Keep 90% of revenue",
+        "Reach fans globally",
+        "You own everything"
       ]
     },
     {
       icon: DollarSign,
-      title: "Financial Management",
-      description: "Track revenue across all sources in one dashboard. Monitor royalties from streaming, sales, shows, and licensing with real-time analytics and forecasting.",
+      title: "Track Your Money",
+      description: "See all your earnings in one place. Track streaming, sales, and shows with simple, clear reports.",
       benefits: [
-        "Unified revenue tracking",
-        "Royalty analytics and reporting",
-        "Financial forecasting tools",
-        "Tax-ready documentation"
-      ]
-    },
-    {
-      icon: TrendingUp,
-      title: "Royalty-Backed Micro-Loans",
-      description: "Access capital based on your future royalties. Our AI-powered risk assessment provides fair, transparent lending with flexible repayment terms.",
-      benefits: [
-        "5% fixed interest rate",
-        "AI-powered risk assessment",
-        "Flexible 6-24 month terms",
-        "No traditional credit check"
+        "All revenue in one dashboard",
+        "Easy-to-read reports",
+        "Monthly payouts",
+        "Tax documents included"
       ]
     },
     {
       icon: ShoppingBag,
-      title: "Direct-to-Fan Commerce",
-      description: "Sell merchandise, digital products, and experiences directly to your fans. Built-in payment processing, inventory management, and fulfillment tracking.",
+      title: "Sell Your Merch",
+      description: "Sell t-shirts, albums, and experiences directly to fans. We handle payments and tracking for you.",
       benefits: [
-        "Physical & digital products",
-        "Automated inventory tracking",
-        "Integrated payment processing",
-        "Experience sales (meet & greets, lessons)"
+        "Sell physical & digital products",
+        "Built-in payment processing",
+        "Automatic inventory tracking",
+        "Sell meet & greets and lessons"
       ]
     },
     {
-      icon: Globe,
-      title: "Global Distribution",
-      description: "As the artist, you distribute your music directly to your fans around the globe through Boptone's Audio Protocol. No middlemen, no platform fees—just you and your audience.",
+      icon: Brain,
+      title: "Get Career Advice",
+      description: "Toney, your AI advisor, gives you personalized tips on when to release music, how to grow, and what to do next.",
       benefits: [
-        "Direct artist-to-fan streaming",
-        "90% revenue share to artists",
-        "Instant global reach",
-        "Full ownership & control"
+        "Release timing suggestions",
+        "Growth recommendations",
+        "Marketing ideas",
+        "Trend insights"
       ]
     },
     {
       icon: Shield,
-      title: "IP Protection",
-      description: "AI-powered copyright monitoring detects unauthorized use of your work across the internet. Automated DMCA takedowns protect your intellectual property 24/7.",
+      title: "Protect Your Music",
+      description: "We automatically find and remove unauthorized copies of your music from the internet. Your work stays yours.",
       benefits: [
-        "99.9% accurate detection",
-        "Automated DMCA takedowns",
-        "Platform monitoring (YouTube, SoundCloud, etc.)",
-        "Complete audit trail"
+        "Automatic copyright monitoring",
+        "Instant takedown requests",
+        "Monitors YouTube, SoundCloud, etc.",
+        "Complete protection history"
       ]
     },
     {
       icon: BarChart3,
-      title: "Advanced Analytics",
-      description: "Comprehensive insights into your audience, engagement, and revenue. Track streaming metrics, social media growth, and fan demographics across all platforms.",
+      title: "See Your Stats",
+      description: "Simple charts show who's listening, where they're from, and how you're growing. No confusing data.",
       benefits: [
-        "Real-time streaming data",
-        "Social media analytics",
-        "Audience demographics",
-        "Growth trend analysis"
-      ]
-    },
-    {
-      icon: Calendar,
-      title: "Tour Management",
-      description: "Plan tours, manage venues, and track show revenue. Budget planning, route optimization, and profit margin calculations all in one place.",
-      benefits: [
-        "Tour planning and scheduling",
-        "Venue tracking",
-        "Budget management",
-        "Revenue vs. projections"
-      ]
-    },
-    {
-      icon: Heart,
-      title: "Healthcare & Wellness",
-      description: "Access affordable healthcare plans designed for artists. Mental health support, vocal care, performance injury treatment, and 24/7 medical concierge.",
-      benefits: [
-        "Three-tier healthcare plans",
-        "Mental health therapy",
-        "Vocal cord specialists",
-        "24/7 concierge service"
-      ]
-    },
-    {
-      icon: Users,
-      title: "Opportunity Matching",
-      description: "AI-powered matching connects you with playlist curators, collaborators, venues, and brand partnerships based on your style and career stage.",
-      benefits: [
-        "Playlist placement opportunities",
-        "Collaboration matching",
-        "Venue booking leads",
-        "Brand partnership discovery"
-      ]
-    },
-    {
-      icon: Bell,
-      title: "Smart Notifications",
-      description: "Stay informed with intelligent alerts for chart movements, viral content, revenue milestones, and career opportunities—never miss a breakthrough moment.",
-      benefits: [
-        "Real-time milestone alerts",
-        "Chart position updates",
-        "Viral content detection",
-        "Opportunity notifications"
-      ]
-    },
-    {
-      icon: Lock,
-      title: "Enterprise Security",
-      description: "Bank-level encryption, SOC 2 compliance, and GDPR-ready data protection. Your content, data, and revenue are secured with industry-leading standards.",
-      benefits: [
-        "AES-256 encryption",
-        "SOC 2 compliant",
-        "GDPR & CCPA ready",
-        "Regular security audits"
+        "Real-time listener stats",
+        "Fan location maps",
+        "Growth charts",
+        "Social media tracking"
       ]
     }
   ];
@@ -158,11 +92,11 @@ export default function Features() {
           Everything You Need to Succeed
         </h1>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Mission control for your entire artist career. From AI-powered guidance to global distribution, financial management to IP protection—all in one platform.
+          Upload music, get paid, sell merch, and grow your career—all in one simple platform.
         </p>
       </div>
 
-      {/* Features Grid */}
+      {/* Features Grid - Now only 6 cards */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {features.map((feature, index) => {
@@ -188,43 +122,7 @@ export default function Features() {
         </div>
       </div>
 
-      {/* Integration Section */}
-      <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-5xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-          <CardContent className="p-12">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">Seamless Integrations</h2>
-              <p className="text-lg text-muted-foreground">
-                Boptone connects with the platforms you already use, bringing all your data into one unified dashboard.
-              </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Social Media</h3>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Instagram</li>
-                  <li>• TikTok</li>
-                  <li>• Twitter/X</li>
-                  <li>• Facebook</li>
-                  <li>• YouTube</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-3">Business Tools</h3>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Stripe (payments)</li>
-                  <li>• Email marketing</li>
-                  <li>• Analytics platforms</li>
-                  <li>• Accounting software</li>
-                  <li>• CRM systems</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Comparison Section */}
+      {/* Simplified Comparison Section - reduced from 8 bullets to 4 */}
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">Why Boptone?</h2>
@@ -233,14 +131,10 @@ export default function Features() {
               <CardContent className="p-8">
                 <h3 className="text-2xl font-semibold mb-4 text-destructive">Without Boptone</h3>
                 <ul className="space-y-3 text-muted-foreground">
-                  <li>• Juggling 10+ different platforms</li>
+                  <li>• Using 10+ different websites</li>
                   <li>• Losing 30-50% to middlemen</li>
-                  <li>• Manual data entry and tracking</li>
-                  <li>• Fragmented revenue streams</li>
-                  <li>• No career guidance or optimization</li>
-                  <li>• Limited access to capital</li>
-                  <li>• Reactive copyright protection</li>
-                  <li>• No healthcare or benefits</li>
+                  <li>• Tracking everything manually</li>
+                  <li>• No help or guidance</li>
                 </ul>
               </CardContent>
             </Card>
@@ -248,14 +142,10 @@ export default function Features() {
               <CardContent className="p-8">
                 <h3 className="text-2xl font-semibold mb-4 text-primary">With Boptone</h3>
                 <ul className="space-y-3 text-muted-foreground">
-                  <li>• One unified platform for everything</li>
-                  <li>• Keep 100% of your revenue</li>
-                  <li>• Automated tracking and analytics</li>
-                  <li>• Consolidated revenue dashboard</li>
-                  <li>• AI-powered career optimization</li>
-                  <li>• Royalty-backed micro-loans</li>
-                  <li>• Proactive AI copyright monitoring</li>
-                  <li>• Affordable healthcare plans</li>
+                  <li>• Everything in one place</li>
+                  <li>• Keep 90% of your money</li>
+                  <li>• Automatic tracking</li>
+                  <li>• AI advisor helps you grow</li>
                 </ul>
               </CardContent>
             </Card>
@@ -267,9 +157,9 @@ export default function Features() {
       <div className="container mx-auto px-4 py-16">
         <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
           <CardContent className="p-12 text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Own Your Tone?</h2>
+            <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Join the platform that's redefining the creator economy. Start free, upgrade when you're ready.
+              Start free today. Upgrade when you're ready.
             </p>
             <div className="flex gap-4 justify-center">
               <Button size="lg" onClick={() => setLocation("/signup")}>
