@@ -1034,3 +1034,13 @@
 - [x] Add "Clear History" button in chat interface for users to reset conversation
 - [x] Test conversation persistence across page refreshes and browser sessions
 - [x] Ensure proactive greeting doesn't override saved conversation history
+
+## Feature Comparison Table Redesign V2 (Extreme Simplicity - 80-Year-Old Artist Test)
+- [x] Remove ALL accordion/hidden content - show everything upfront
+- [x] Remove gradient icon boxes and visual noise
+- [x] Create simple, clean table layout like pricing cards
+- [x] Use simple checkmarks (✓) instead of fancy gradients
+- [x] Show all features visible without clicking
+- [x] Use plain language for all labels
+- [x] Ensure 80-year-old artist can understand without help
+- [x] Match the clean, minimal aesthetic of existing pricing cards

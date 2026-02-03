@@ -487,140 +487,141 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Feature Comparison Table */}
-          <div className="mt-20 bg-white dark:bg-background rounded-lg border border-gray-200 dark:border-border overflow-x-auto">
-            <div className="min-w-[800px]">
-            {/* Header Row */}
-            <div className="grid grid-cols-5 gap-4 p-6 border-b border-gray-200 bg-gray-50">
-              <div className="text-lg font-bold">Features</div>
-              <div className="text-center">
-                <div className="text-lg font-bold">Creator</div>
-                <Button 
-                  className="mt-2 w-full" 
-                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                  onClick={() => {
-                    setLoadingButton('creator');
-                    setTimeout(() => setLocation("/signup"), 300);
-                  }}
-                  disabled={loadingButton === 'creator'}
-                >
-                  {loadingButton === 'creator' ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Loading...
-                    </span>
-                  ) : 'Start Free'}
-                </Button>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold">Pro</div>
-                <StripeCheckout 
-                  tier="pro"
-                  buttonText="Start Trial"
-                  buttonVariant="default"
-                  className="mt-2 w-full"
-                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                />
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold">Label</div>
-                <Button 
-                  className="mt-2 w-full" 
-                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                  onClick={() => {
-                    setLoadingButton('label');
-                    setTimeout(() => setLocation("/signup"), 300);
-                  }}
-                  disabled={loadingButton === 'label'}
-                >
-                  {loadingButton === 'label' ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Loading...
-                    </span>
-                  ) : 'Get Started'}
-                </Button>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold">Enterprise</div>
-                <Button 
-                  className="mt-2 w-full" 
-                  style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                  onClick={() => {
-                    setLoadingButton('enterprise');
-                    setTimeout(() => setLocation("/contact"), 300);
-                  }}
-                  disabled={loadingButton === 'enterprise'}
-                >
-                  {loadingButton === 'enterprise' ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Loading...
-                    </span>
-                  ) : 'Contact Sales'}
-                </Button>
-              </div>
+          {/* Feature Comparison Table - Extreme Simplicity */}
+          <div className="mt-20">
+            <div className="text-center mb-8">
+              <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Compare Plans</h3>
+              <p className="text-lg text-muted-foreground">Everything you get with each plan</p>
             </div>
+            
+            {/* Simple Table - All Features Visible */}
+            <div className="bg-card border border-border rounded-lg overflow-hidden">
+              {/* Header Row */}
+              <div className="grid grid-cols-5 gap-4 p-4 bg-muted/20 border-b border-border">
+                <div className="text-sm font-bold text-card-foreground">Features</div>
+                <div className="text-center">
+                  <div className="text-sm font-bold text-card-foreground">Creator</div>
+                  <div className="text-xs text-muted-foreground mt-1">Free</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-sm font-bold text-card-foreground">Pro</div>
+                  <div className="text-xs text-muted-foreground mt-1">$39/mo</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-sm font-bold text-card-foreground">Label</div>
+                  <div className="text-xs text-muted-foreground mt-1">$59/mo</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-sm font-bold text-card-foreground">Enterprise</div>
+                  <div className="text-xs text-muted-foreground mt-1">Custom</div>
+                </div>
+              </div>
 
-            {/* Feature Categories */}
-            {featureCategories.map((category) => {
-              const Icon = category.icon;
-              const isExpanded = expandedCategories.includes(category.id);
-              
-              return (
-                <div key={category.id} className="border-b border-border last:border-b-0">
+              {/* All Features - No Accordions */}
+              {featureCategories.map((category) => (
+                <div key={category.id}>
                   {/* Category Header */}
-                  <button
-                    onClick={() => toggleCategory(category.id)}
-                    className="w-full flex items-center justify-between p-6 hover:bg-muted transition-colors text-left"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className="h-5 w-5 text-foreground" />
-                      <span className="text-lg font-semibold text-foreground">{category.name}</span>
-                    </div>
-                    <ChevronDown 
-                      className={`h-5 w-5 text-foreground transition-transform ${
-                        isExpanded ? 'transform rotate-180' : ''
-                      }`}
-                    />
-                  </button>
-
-                  {/* Feature Rows */}
-                  {isExpanded && (
-                    <div className="bg-gray-50">
-                      {category.features.map((feature, idx) => (
-                        <div 
-                          key={idx} 
-                          className="grid grid-cols-5 gap-4 p-4 border-t border-gray-200 items-center"
-                        >
-                          <div className="text-sm text-gray-700">{feature.name}</div>
-                          {feature.tiers.map((included, tierIdx) => (
-                            <div key={tierIdx} className="flex justify-center">
-                              {included ? (
-                                <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#10b981' }}>
-                                  <Check className="h-4 w-4 text-white" />
-                                </div>
-                              ) : (
-                                <div className="w-6 h-6" />
-                              )}
-                            </div>
-                          ))}
+                  <div className="px-4 py-3 bg-muted/10 border-b border-border">
+                    <div className="text-sm font-bold text-card-foreground">{category.name}</div>
+                  </div>
+                  
+                  {/* Category Features */}
+                  {category.features.map((feature, idx) => (
+                    <div 
+                      key={idx} 
+                      className="grid grid-cols-5 gap-4 p-3 border-b border-border items-center"
+                    >
+                      <div className="text-sm text-card-foreground">{feature.name}</div>
+                      {feature.tiers.map((included, tierIdx) => (
+                        <div key={tierIdx} className="flex justify-center">
+                          {included ? (
+                            <Check className="h-5 w-5 text-green-600" />
+                          ) : (
+                            <span className="text-muted-foreground text-sm">—</span>
+                          )}
                         </div>
                       ))}
                     </div>
-                  )}
+                  ))}
                 </div>
-              );
-            })}
+              ))}
+
+              {/* CTA Row at Bottom */}
+              <div className="grid grid-cols-5 gap-4 p-4 bg-muted/10 border-t border-border">
+                <div></div>
+                <div className="flex justify-center">
+                  <Button 
+                    className="w-full" 
+                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
+                    onClick={() => {
+                      setLoadingButton('creator');
+                      setTimeout(() => setLocation("/signup"), 300);
+                    }}
+                    disabled={loadingButton === 'creator'}
+                  >
+                    {loadingButton === 'creator' ? (
+                      <span className="flex items-center justify-center">
+                        <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading...
+                      </span>
+                    ) : 'Start Free'}
+                  </Button>
+                </div>
+                <div className="flex justify-center">
+                  <StripeCheckout 
+                    tier="pro"
+                    buttonText="Start Trial"
+                    buttonVariant="default"
+                    className="w-full"
+                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <Button 
+                    className="w-full" 
+                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
+                    onClick={() => {
+                      setLoadingButton('label');
+                      setTimeout(() => setLocation("/signup"), 300);
+                    }}
+                    disabled={loadingButton === 'label'}
+                  >
+                    {loadingButton === 'label' ? (
+                      <span className="flex items-center justify-center">
+                        <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading...
+                      </span>
+                    ) : 'Get Started'}
+                  </Button>
+                </div>
+                <div className="flex justify-center">
+                  <Button 
+                    className="w-full" 
+                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
+                    onClick={() => {
+                      setLoadingButton('enterprise');
+                      setTimeout(() => setLocation("/contact"), 300);
+                    }}
+                    disabled={loadingButton === 'enterprise'}
+                  >
+                    {loadingButton === 'enterprise' ? (
+                      <span className="flex items-center justify-center">
+                        <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 718-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading...
+                      </span>
+                    ) : 'Contact Sales'}
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
