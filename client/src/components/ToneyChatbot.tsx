@@ -1,21 +1,49 @@
 import { AIChatBox, Message } from "@/components/AIChatBox";
 import { MessageCircle, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
+import { useLocation } from "wouter";
 
 /**
  * Toney - Boptone's AI Assistant
  * Helps artists with career guidance, platform navigation, and creative advice
  */
 export function ToneyChatbot() {
+  const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content: "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
     }
   ]);
+
+  // Proactive greeting: auto-open after 15 seconds on key pages
+  useEffect(() => {
+    // Only auto-open on homepage (pricing section) or features page
+    const isKeyPage = location === '/' || location === '/features';
+    
+    if (isKeyPage && !hasAutoOpened && !isOpen) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasAutoOpened(true);
+        
+        // Add contextual greeting based on page
+        const contextualGreeting = location === '/features' 
+          ? "I noticed you're checking out our features! I can help explain how any of these tools can accelerate your career. What interests you most?"
+          : "I see you're exploring Boptone! I can help you understand our pricing, features, or answer any questions about building your music career. What would you like to know?";
+        
+        setMessages([{
+          role: "assistant",
+          content: contextualGreeting
+        }]);
+      }, 15000); // 15 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [location, hasAutoOpened, isOpen]);
 
   const systemPrompt = `You are Toney, Boptone's friendly AI assistant. Boptone is not just a service - it's a PLATFORM for artists who want to own their careers.
 
@@ -51,7 +79,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-[9999]">
+      <div className="fixed bottom-6 right-6 z-[99999]">
         {/* Outer ring - lighter blue */}
         <div className="absolute inset-0 rounded-full" style={{ 
           background: 'linear-gradient(135deg, #7AB8F5 0%, #9B87E8 100%)',

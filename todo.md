@@ -1014,3 +1014,11 @@
 - [x] Add loading states to "Start Trial" CTA buttons in pricing section
 - [x] Add loading states to "Contact Sales" CTA buttons in pricing section
 - [x] Add loading states to hero "START FREE" button
+
+## Toney Chatbot Visibility & Proactive Greeting
+- [x] Fix Toney visibility issue - ensure chatbot is visible on all pages
+- [x] Verify Toney positioning is correct (bottom-6 right-6, z-index high enough)
+- [x] Implement proactive greeting feature - auto-open after 15 seconds on homepage
+- [x] Add contextual greeting messages for pricing section
+- [x] Add contextual greeting messages for features page
+- [x] Test Toney visibility and auto-greeting on all key pages
