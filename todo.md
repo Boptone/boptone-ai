@@ -977,3 +977,13 @@
 
 ## Dark Mode Text Color Fix
 - [x] Fix gray text in pricing cards to be properly visible in dark mode (should be dark text on light cards)
+
+## D2F Strategic Positioning Implementation
+- [x] Update homepage hero with "orbit" model messaging (bring fans into your world)
+- [x] Add anti-overwhelm positioning (all-in-one vs juggling 10 platforms)
+- [x] Refine Starter tier description to emphasize foundation-building for new artists
+- [x] Refine Pro tier description to focus on superfan identification and community
+- [x] Refine Label tier description for multi-artist management and scale
+- [x] Emphasize AI differentiation (Toney as unique competitive advantage)
+- [x] Emphasize financial services differentiation (no other D2F platform offers this)
+- [x] Add "integration not replacement" messaging (works WITH Spotify/Instagram/TikTok)

@@ -93,7 +93,7 @@ export default function Home() {
       period: "/forever",
       platformFee: "12%",
       earningCap: "$1,000/month",
-      description: "Perfect for new artists and hobbyists",
+      description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
         "3-click upload with AI metadata",
         "Basic profile + 10 tracks",
@@ -114,7 +114,7 @@ export default function Home() {
       annualSavings: "Save $94/year",
       platformFee: "7%",
       earningCap: "$10,000/month",
-      description: "For serious independent artists",
+      description: "Identify your superfans and build your world around them",
       features: [
         "Everything in Creator",
         "Unlimited tracks & storage",
@@ -136,7 +136,7 @@ export default function Home() {
       annualSavings: "Save $142/year",
       platformFee: "4%",
       earningCap: "Unlimited",
-      description: "For professional artists and bands",
+      description: "Scale operations and manage multiple artists with team tools",
       features: [
         "Everything in Pro",
         "Unlimited earnings",
@@ -156,7 +156,7 @@ export default function Home() {
       period: "",
       platformFee: "2.5%",
       earningCap: "Unlimited",
-      description: "For labels and management companies",
+      description: "Custom solutions for labels managing multiple artist rosters",
       features: [
         "Everything in Label",
         "Unlimited earnings",
@@ -268,7 +268,7 @@ export default function Home() {
             <span style={{ color: '#4285F4' }}>Your Tone.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            The all-in-one platform empowering musicians and creators with AI-powered tools, financial services, and career management from discovery to breakthrough success.
+            Stop juggling 10 platforms. Boptone is your all-in-one Creator OS—bringing fans into your orbit with AI-powered tools, financial services, and career management that works with Spotify, Instagram, and TikTok.
           </p>
           <div className="flex items-center justify-center pt-4">
             <Button 
@@ -293,6 +293,35 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Check className="h-4 w-4 text-green-600" />
               Cancel anytime
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Unique Differentiators Section */}
+      <section className="border-y bg-card">
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-5xl mx-auto">
+            <h3 className="text-3xl font-bold text-center mb-4 text-card-foreground">Why Boptone Is Different</h3>
+            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+              No other platform combines AI intelligence, financial services, and all-in-one consolidation. We're not just another tool—we're your complete Creator OS.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
+                <Sparkles className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
+                <div className="text-xl font-bold text-card-foreground">AI-Powered Intelligence</div>
+                <div className="text-sm text-muted-foreground">Toney, your AI career advisor, helps you identify superfans, optimize pricing, and automate workflows—no other D2F platform has this.</div>
+              </div>
+              <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
+                <DollarSign className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
+                <div className="text-xl font-bold text-card-foreground">Financial Services Built-In</div>
+                <div className="text-sm text-muted-foreground">Royalty-backed micro-loans, healthcare, IP protection—we're not just a sales platform, we're your financial partner.</div>
+              </div>
+              <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
+                <ShoppingBag className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
+                <div className="text-xl font-bold text-card-foreground">All-in-One Consolidation</div>
+                <div className="text-sm text-muted-foreground">Stop paying for Bandcamp + Patreon + Laylo + Printful + Discord. Boptone replaces 10+ platforms with one unified OS.</div>
+              </div>
             </div>
           </div>
         </div>
