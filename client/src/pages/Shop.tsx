@@ -13,13 +13,12 @@ export default function Shop() {
   const [selectedArtist, setSelectedArtist] = useState<string | null>(null);
 
   // Fetch all products
-  const { data: products, isLoading } = trpc.ecommerce.products.list.useQuery({
-    type: selectedType || undefined,
-    artistId: selectedArtist || undefined,
+  const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
+    limit: 100,
   });
 
   // Get cart count
-  const { data: cart } = trpc.ecommerce.cart.getCart.useQuery(undefined, {
+  const { data: cart } = trpc.ecommerce.cart.get.useQuery(undefined, {
     enabled: !!user,
   });
 

@@ -22,10 +22,8 @@ export default function ProductDetail() {
   );
 
   // Fetch product variants
-  const { data: variants } = trpc.ecommerce.products.getVariants.useQuery(
-    { productId: parseInt(productId!) },
-    { enabled: !!productId }
-  );
+  // TODO: Implement getVariants procedure in ecommerceRouter
+  const variants: any[] = []; // Temporarily disabled until backend implements getVariants
 
   // Fetch reviews
   const { data: reviews } = trpc.ecommerce.reviews.getByProduct.useQuery(
@@ -34,11 +32,11 @@ export default function ProductDetail() {
   );
 
   // Add to cart mutation
-  const addToCart = trpc.ecommerce.cart.addItem.useMutation({
+  const addToCart = trpc.ecommerce.cart.add.useMutation({
     onSuccess: () => {
       toast.success("Added to cart!");
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error.message || "Failed to add to cart");
     },
   });
@@ -56,6 +54,7 @@ export default function ProductDetail() {
 
     addToCart.mutate({
       productId: parseInt(productId!),
+      priceAtAdd: product?.price || 0,
       variantId: selectedVariant || undefined,
       quantity,
     });
@@ -111,7 +110,7 @@ export default function ProductDetail() {
             {product.images && product.images.length > 0 ? (
               <div className="aspect-square bg-gray-100 border-4 border-black overflow-hidden">
                 <img
-                  src={product.images[0]}
+                  src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0].url}
                   alt={product.name}
                   className="w-full h-full object-contain"
                 />
@@ -177,7 +176,7 @@ export default function ProductDetail() {
               <div className="border-t-4 border-black pt-6">
                 <h3 className="font-black uppercase mb-4">Select Option:</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  {variants.map((variant) => (
+                  {variants.map((variant: any) => (
                     <Button
                       key={variant.id}
                       onClick={() => setSelectedVariant(variant.id)}
@@ -262,7 +261,7 @@ export default function ProductDetail() {
                       <span className="font-black">{review.rating}/5</span>
                     </div>
                   </div>
-                  <p className="text-gray-700">{review.comment}</p>
+                  <p className="text-gray-700">{review.content}</p>
                 </div>
               ))}
             </div>

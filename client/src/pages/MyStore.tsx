@@ -58,7 +58,7 @@ export default function MyStore() {
   }
 
   const pendingOrders = orders?.filter((o) => o.fulfillmentStatus === "unfulfilled") ?? [];
-  const totalRevenue = orders?.reduce((sum, o) => sum + parseFloat(o.total), 0) ?? 0;
+  const totalRevenue = orders?.reduce((sum, o) => sum + (o.total / 100), 0) ?? 0; // Convert cents to dollars
 
   return (
     <div className="container py-12">
@@ -153,7 +153,7 @@ export default function MyStore() {
               <Card key={product.id} className="border-2 border-black overflow-hidden">
                 {product.images && product.images.length > 0 ? (
                   <img
-                    src={product.images[0]}
+                    src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0].url}
                     alt={product.name}
                     className="w-full h-48 object-cover"
                   />
@@ -173,7 +173,7 @@ export default function MyStore() {
                   <div className="grid grid-cols-2 gap-2 mb-4 text-sm font-mono">
                     <div>
                       <div className="text-muted-foreground">Stock</div>
-                      <div className="font-bold">{product.inventory ?? "∞"}</div>
+                      <div className="font-bold">{product.inventoryQuantity ?? "∞"}</div>
                     </div>
                     <div>
                       <div className="text-muted-foreground">Status</div>
@@ -249,8 +249,11 @@ export default function MyStore() {
       {/* Add Produ      {/* Product Form Dialog */}
       {showAddProduct && (
         <ProductForm
-          open={showAddProduct}
           onClose={() => setShowAddProduct(false)}
+          onSuccess={() => {
+            setShowAddProduct(false);
+            // Refresh products list
+          }}
         />
       )}
 

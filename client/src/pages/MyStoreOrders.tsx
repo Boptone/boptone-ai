@@ -152,7 +152,7 @@ export default function MyStoreOrders() {
                   </div>
                   <div className="text-right">
                     <div className="text-3xl font-black font-mono mb-2">
-                      ${(parseInt(order.total) / 100).toFixed(2)}
+                      ${(order.total / 100).toFixed(2)}
                     </div>
                     <div
                       className={`inline-flex items-center gap-2 px-3 py-1 font-bold text-sm uppercase ${getStatusColor(
@@ -174,19 +174,21 @@ export default function MyStoreOrders() {
                       {order.customerPhone && <div>{order.customerPhone}</div>}
                     </div>
                   </div>
-                  <div>
-                    <div className="font-bold mb-2">SHIPPING ADDRESS</div>
-                    <div className="text-sm">
-                      <div>{order.shippingAddress.name}</div>
-                      <div>{order.shippingAddress.line1}</div>
-                      {order.shippingAddress.line2 && <div>{order.shippingAddress.line2}</div>}
-                      <div>
-                        {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
-                        {order.shippingAddress.zip}
+                  {order.shippingAddress && (
+                    <div>
+                      <div className="font-bold mb-2">SHIPPING ADDRESS</div>
+                      <div className="text-sm">
+                        <div>{order.shippingAddress.name}</div>
+                        <div>{order.shippingAddress.line1}</div>
+                        {order.shippingAddress.line2 && <div>{order.shippingAddress.line2}</div>}
+                        <div>
+                          {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
+                          {order.shippingAddress.zip}
+                        </div>
+                        <div>{order.shippingAddress.country}</div>
                       </div>
-                      <div>{order.shippingAddress.country}</div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 {/* Tracking Info */}

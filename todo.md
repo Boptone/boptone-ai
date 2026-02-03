@@ -994,3 +994,10 @@
 - [x] Remove competitor platform names (Bandcamp, Patreon, Laylo, Printful, Discord) from differentiator section
 - [x] Reframe hero to focus on what Boptone IS (standalone platform) not what it replaces
 - [x] Ensure messaging is elegant, confident, and positions Boptone as primary platform
+
+## TypeScript Error Fixes (February 2026)
+- [ ] Fix ProductDetail.tsx line 180: Add type annotation for 'variant' parameter
+- [ ] Fix ProductDetail.tsx line 265: Fix 'comment' property access on review object
+- [ ] Fix Shop.tsx line 16: Fix 'list' property access on products router
+- [ ] Fix Shop.tsx line 22: Fix 'getCart' property access on cart router
+- [ ] Verify all TypeScript errors are resolved and build is clean
