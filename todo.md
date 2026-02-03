@@ -1022,3 +1022,8 @@
 - [x] Add contextual greeting messages for pricing section
 - [x] Add contextual greeting messages for features page
 - [x] Test Toney visibility and auto-greeting on all key pages
+
+## Toney Chatbot Full Visibility Fix
+- [x] Increase Toney bottom spacing to ensure entire bubble is visible (not cut off at bottom edge)
+- [x] Increase Toney right spacing to ensure entire bubble is visible (not cut off at right edge)
+- [x] Test on actual viewport to confirm full gradient ring visibility
