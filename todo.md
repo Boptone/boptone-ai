@@ -1073,3 +1073,13 @@
 ## Homepage Design Updates
 - [x] Update FAQ section to cleaner design (centered heading, full-width borders, no cards)
 - [x] Replace weak light green checkmarks in Compare Plans with green circular bubbles containing white checkmarks
+
+## Pricing Cards Redesign (Square Style)
+- [x] Redesign pricing cards to match Square's clean layout
+- [x] Add huge pricing typography ($0/forever, $39/month, etc.)
+- [x] Add horizontal divider line after description
+- [x] Add "BEST VALUE" badge to Pro tier
+- [x] Redesign platform fee section (like Square's "Processing fees")
+- [x] Redesign feature list with icon + text in light gray pill backgrounds
+- [x] Update CTA buttons (outline for free, solid for paid)
+- [x] Ensure generous padding and clean typography hierarchy

@@ -410,46 +410,40 @@ export default function Home() {
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {tiers.map((tier, index) => (
               <div key={index} className="relative">
-                {/* Most Popular Badge */}
-                {tier.highlighted && (
-                  <div className="text-center mb-2">
-                    <span className="inline-block bg-black text-white px-4 py-1 text-sm font-semibold">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                
                 {/* Card */}
-                <div className="bg-card border border-border rounded-lg p-8 h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
-                  {/* Tier Name */}
-                  <h3 className="text-3xl font-bold mb-2 text-card-foreground">{tier.name}</h3>
+                <div className="bg-white dark:bg-card border border-border rounded-2xl p-8 h-full flex flex-col shadow-sm">
+                  {/* Header */}
+                  <div className="mb-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-2xl font-bold text-card-foreground">{tier.name}</h3>
+                      {tier.highlighted && (
+                        <span className="inline-block bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-xs font-bold tracking-wide">
+                          BEST VALUE
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
+                  </div>
                   
-                  {/* Description */}
-                  <p className="text-muted-foreground text-sm mb-6">{tier.description}</p>
+                  {/* Divider */}
+                  <div className="border-t border-border mb-6"></div>
                   
-                  {/* Pricing */}
+                  {/* Huge Pricing */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-bold">
+                      <span className="text-5xl md:text-6xl font-bold text-card-foreground">
                         {isAnnual && tier.annualPrice ? tier.annualPrice : tier.price}
                       </span>
-                      <span className="text-muted-foreground">
+                      <span className="text-2xl text-card-foreground">
                         {isAnnual && tier.annualPrice ? '/year' : tier.period}
                       </span>
                     </div>
-                    {isAnnual && tier.annualPrice && tier.annualSavings && (
-                      <p className="text-sm font-semibold mt-1" style={{ color: '#4A90E2' }}>
-                        {tier.annualSavings}
-                      </p>
-                    )}
-                    {!isAnnual && tier.annualPrice && (
-                      <p className="text-sm text-muted-foreground mt-1">
-                        or {tier.annualPrice}/year • {tier.annualSavings}
-                      </p>
-                    )}
+                    <p className="text-sm text-muted-foreground mt-2">
+                      {tier.earningCap !== "Unlimited" ? `Cap: ${tier.earningCap}` : "Unlimited earnings"}
+                    </p>
                   </div>
                   
                   {/* CTA Button */}
@@ -459,35 +453,69 @@ export default function Home() {
                       buttonText={tier.cta}
                       buttonVariant="default"
                       className="w-full mb-8"
-                      style={{ backgroundColor: '#4A90E2', color: 'white', padding: '12px 24px', borderRadius: '8px', fontWeight: 600 }}
+                      style={{
+                        backgroundColor: '#4A90E2',
+                        color: 'white',
+                        padding: '14px 24px',
+                        borderRadius: '999px',
+                        fontWeight: 600,
+                        fontSize: '15px'
+                      }}
                     />
                   ) : (
                     <Button 
-                      className="w-full mb-8" 
-                      style={{ backgroundColor: '#4A90E2', color: 'white', padding: '24px', borderRadius: '8px', fontWeight: 600 }}
-                      onClick={() => setLocation("/signup")}
+                      className="w-full mb-8"
+                      variant={tier.name === "Creator" ? "outline" : "default"}
+                      style={tier.name === "Creator" ? {
+                        borderColor: '#4A90E2',
+                        color: '#4A90E2',
+                        padding: '14px 24px',
+                        borderRadius: '999px',
+                        fontWeight: 600,
+                        fontSize: '15px'
+                      } : {
+                        backgroundColor: '#4A90E2',
+                        color: 'white',
+                        padding: '14px 24px',
+                        borderRadius: '999px',
+                        fontWeight: 600,
+                        fontSize: '15px'
+                      }}
+                      onClick={() => tier.name === "Enterprise" ? window.location.href = "mailto:hello@boptone.com" : setLocation("/signup")}
                     >
                       {tier.cta}
                     </Button>
                   )}
                   
-                  {/* Platform Fee Badge */}
+                  {/* Platform Fee Section */}
                   {tier.platformFee && (
-                    <div className="mb-6 pb-6 border-b border-border">
-                      <p className="text-lg font-bold mb-1 text-card-foreground">{tier.platformFee} platform fee</p>
-                      <p className="text-sm text-muted-foreground">Cap: {tier.earningCap}</p>
+                    <div className="mb-6">
+                      <h4 className="text-sm font-bold mb-3 text-card-foreground">Processing fees</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">Platform fee</span>
+                          <span className="font-semibold text-card-foreground">{tier.platformFee}</span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-muted-foreground">Earning cap</span>
+                          <span className="font-semibold text-card-foreground">{tier.earningCap}</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                   
-                  {/* Features List */}
-                  <ul className="space-y-3 flex-1">
-                    {tier.features.map((feature, fIndex) => (
-                      <li key={fIndex} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-card-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Features Section */}
+                  <div className="flex-1">
+                    <h4 className="text-sm font-bold mb-3 text-card-foreground">What you get</h4>
+                    <div className="space-y-2">
+                      {tier.features.map((feature, fIndex) => (
+                        <div key={fIndex} className="flex items-center gap-3 bg-muted/30 rounded-lg px-3 py-2.5">
+                          <Check className="h-4 w-4 text-card-foreground flex-shrink-0" />
+                          <span className="text-sm text-card-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
