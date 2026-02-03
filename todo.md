@@ -1001,3 +1001,9 @@
 - [ ] Fix Shop.tsx line 16: Fix 'list' property access on products router
 - [ ] Fix Shop.tsx line 22: Fix 'getCart' property access on cart router
 - [ ] Verify all TypeScript errors are resolved and build is clean
+
+## FAQ Section Implementation
+- [x] Add FAQ accordion component below pricing section
+- [x] Pull answers from Boptone knowledge base for each FAQ question
+- [x] Implement accordion UI with native HTML details/summary elements
+- [x] Ensure FAQ content aligns with strategic positioning (quiet power, transparency, artist sovereignty)

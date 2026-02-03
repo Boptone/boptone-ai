@@ -648,6 +648,112 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-24 bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-center">Frequently Asked Questions</h2>
+            <p className="text-lg text-muted-foreground text-center mb-12">Everything you need to know about Boptone</p>
+            
+            <div className="space-y-4">
+              {/* Trial & Cancellation */}
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>What happens after my 14-day Pro trial ends?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Your 14-day Pro trial gives you full access to all Pro tier features with no credit card required. When the trial ends, you can choose to subscribe to any paid tier (Pro or Label) or continue using the free Starter tier. Your data and content remain intact—you simply lose access to premium features until you subscribe.</p>
+                </div>
+              </details>
+
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>Can I cancel my subscription anytime?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Yes. You can cancel your subscription at any time with no penalties or fees. You'll retain access to your paid tier features until the end of your current billing period. After cancellation, you'll automatically move to the free Starter tier and keep all your content, data, and fan connections.</p>
+                </div>
+              </details>
+
+              {/* Platform Fees & Revenue */}
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>Do you take a cut of my earnings?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Boptone takes a transparent 10% platform fee on all sales (music, merch, experiences, tips). This means <strong>you keep 90% of every dollar</strong> your fans spend. Unlike traditional platforms that take 30-50%, we believe artists deserve the majority of their revenue. Your subscription fee covers platform access—the 10% fee only applies when you actually make money.</p>
+                </div>
+              </details>
+
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>How and when do I get paid?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Payouts are processed automatically on a rolling 7-day basis. Once a fan purchase clears (typically 2-3 business days), funds become available in your Boptone wallet after 7 days. You can transfer funds to your bank account anytime with no minimum threshold. Pro and Label tiers get priority payout processing with 5-day and 3-day windows respectively.</p>
+                </div>
+              </details>
+
+              {/* Platform Philosophy */}
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>How is Boptone different from other platforms?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Boptone is built on three core principles: <strong>AI-powered intelligence</strong> (Toney, your AI career advisor), <strong>financial services</strong> (micro-loans, healthcare, IP protection—no other platform offers this), and <strong>all-in-one consolidation</strong> (replace 10+ fragmented tools with one system). We're designed for artist sovereignty and transparency, not platform extraction. You own your data, your fan relationships, and your revenue.</p>
+                </div>
+              </details>
+
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>Do I own my content and fan data?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Yes, completely. You retain 100% ownership of all content you upload (music, videos, images, writing). Your fan data (emails, purchase history, engagement metrics) belongs to you and is exportable at any time. Boptone is infrastructure, not a gatekeeper. If you ever leave, you take everything with you—no lock-in, no hostage data.</p>
+                </div>
+              </details>
+
+              {/* Features & Support */}
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>What's included in the Starter (free) tier?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>The Starter tier is free forever and includes: unlimited music uploads, basic artist profile, fan email collection, direct messaging with fans, basic analytics, and access to the BopShop marketplace. It's designed for new artists building their foundation. You'll pay the standard 10% platform fee on sales, but there's no monthly subscription cost.</p>
+                </div>
+              </details>
+
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>Is there a mobile app?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Not yet. We're currently focused on building the most powerful web platform for artists. A mobile app is planned for a later phase of the roadmap. The web platform is fully responsive and works seamlessly on mobile browsers, so you can manage your career from any device today.</p>
+                </div>
+              </details>
+
+              <details className="group bg-card border-2 border-border">
+                <summary className="flex justify-between items-center cursor-pointer p-6 font-bold text-lg hover:bg-accent/5 transition-colors">
+                  <span>Who is Boptone built for?</span>
+                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="px-6 pb-6 text-muted-foreground">
+                  <p>Boptone is built for <strong>artists who choose themselves</strong>. Whether you're a new artist building your first fanbase, a serious independent artist scaling your career, a professional artist managing a full business, or a label managing multiple artists—Boptone provides the infrastructure for sovereignty. We're designed for creators who want ownership, transparency, and control over their entire ecosystem.</p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer - Black background with white text */}
       <footer className="bg-black text-white">
         <div className="container mx-auto px-6 py-16">
