@@ -1007,3 +1007,10 @@
 - [x] Pull answers from Boptone knowledge base for each FAQ question
 - [x] Implement accordion UI with native HTML details/summary elements
 - [x] Ensure FAQ content aligns with strategic positioning (quiet power, transparency, artist sovereignty)
+
+## UX Improvements - Smooth Scroll & Loading States
+- [x] Add smooth scroll behavior to global CSS for navigation links
+- [x] Add loading states to "Start Free" CTA buttons in pricing section
+- [x] Add loading states to "Start Trial" CTA buttons in pricing section
+- [x] Add loading states to "Contact Sales" CTA buttons in pricing section
+- [x] Add loading states to hero "START FREE" button

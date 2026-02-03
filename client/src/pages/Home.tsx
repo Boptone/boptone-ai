@@ -31,6 +31,7 @@ export default function Home() {
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const [loadingButton, setLoadingButton] = useState<string | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -497,9 +498,21 @@ export default function Home() {
                 <Button 
                   className="mt-2 w-full" 
                   style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                  onClick={() => setLocation("/signup")}
+                  onClick={() => {
+                    setLoadingButton('creator');
+                    setTimeout(() => setLocation("/signup"), 300);
+                  }}
+                  disabled={loadingButton === 'creator'}
                 >
-                  Start Free
+                  {loadingButton === 'creator' ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Loading...
+                    </span>
+                  ) : 'Start Free'}
                 </Button>
               </div>
               <div className="text-center">
@@ -517,9 +530,21 @@ export default function Home() {
                 <Button 
                   className="mt-2 w-full" 
                   style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                  onClick={() => setLocation("/signup")}
+                  onClick={() => {
+                    setLoadingButton('label');
+                    setTimeout(() => setLocation("/signup"), 300);
+                  }}
+                  disabled={loadingButton === 'label'}
                 >
-                  Get Started
+                  {loadingButton === 'label' ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Loading...
+                    </span>
+                  ) : 'Get Started'}
                 </Button>
               </div>
               <div className="text-center">
@@ -527,9 +552,21 @@ export default function Home() {
                 <Button 
                   className="mt-2 w-full" 
                   style={{ backgroundColor: '#4A90E2', color: 'white', padding: '8px 16px', borderRadius: '6px', fontSize: '14px' }}
-                  onClick={() => setLocation("/contact")}
+                  onClick={() => {
+                    setLoadingButton('enterprise');
+                    setTimeout(() => setLocation("/contact"), 300);
+                  }}
+                  disabled={loadingButton === 'enterprise'}
                 >
-                  Contact Sales
+                  {loadingButton === 'enterprise' ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Loading...
+                    </span>
+                  ) : 'Contact Sales'}
                 </Button>
               </div>
             </div>
@@ -640,10 +677,26 @@ export default function Home() {
             size="lg" 
             className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity rounded-none font-bold"
             style={{ backgroundColor: '#4285F4' }}
-            onClick={() => setLocation("/signup")}
+            onClick={() => {
+              setLoadingButton('hero');
+              setTimeout(() => setLocation("/signup"), 300);
+            }}
+            disabled={loadingButton === 'hero'}
           >
-            START FREE TODAY
-            <ArrowRight className="ml-2 h-5 w-5" />
+            {loadingButton === 'hero' ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                LOADING...
+              </span>
+            ) : (
+              <>
+                START FREE TODAY
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </>
+            )}
           </Button>
         </div>
       </section>
