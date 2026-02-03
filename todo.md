@@ -987,3 +987,10 @@
 - [x] Emphasize AI differentiation (Toney as unique competitive advantage)
 - [x] Emphasize financial services differentiation (no other D2F platform offers this)
 - [x] Add "integration not replacement" messaging (works WITH Spotify/Instagram/TikTok)
+
+## Messaging Refinement - Remove Sale-sy Language
+- [x] Remove "Stop juggling 10 platforms" infomercial language from hero
+- [x] Remove mentions of Spotify, Instagram, TikTok, Meta from all copy
+- [x] Remove competitor platform names (Bandcamp, Patreon, Laylo, Printful, Discord) from differentiator section
+- [x] Reframe hero to focus on what Boptone IS (standalone platform) not what it replaces
+- [x] Ensure messaging is elegant, confident, and positions Boptone as primary platform

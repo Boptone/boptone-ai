@@ -268,7 +268,7 @@ export default function Home() {
             <span style={{ color: '#4285F4' }}>Your Tone.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Stop juggling 10 platforms. Boptone is your all-in-one Creator OS—bringing fans into your orbit with AI-powered tools, financial services, and career management that works with Spotify, Instagram, and TikTok.
+            Your complete Creator OS. AI-powered tools, financial services, and career management—bringing fans into your orbit from discovery to breakthrough success.
           </p>
           <div className="flex items-center justify-center pt-4">
             <Button 
@@ -304,23 +304,23 @@ export default function Home() {
           <div className="max-w-5xl mx-auto">
             <h3 className="text-3xl font-bold text-center mb-4 text-card-foreground">Why Boptone Is Different</h3>
             <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              No other platform combines AI intelligence, financial services, and all-in-one consolidation. We're not just another tool—we're your complete Creator OS.
+              The only platform that combines AI intelligence, financial services, and complete career management in one unified system.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
                 <Sparkles className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
                 <div className="text-xl font-bold text-card-foreground">AI-Powered Intelligence</div>
-                <div className="text-sm text-muted-foreground">Toney, your AI career advisor, helps you identify superfans, optimize pricing, and automate workflows—no other D2F platform has this.</div>
+                <div className="text-sm text-muted-foreground">Toney, your AI career advisor, helps you identify superfans, optimize pricing, and automate workflows.</div>
               </div>
               <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
                 <DollarSign className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
                 <div className="text-xl font-bold text-card-foreground">Financial Services Built-In</div>
-                <div className="text-sm text-muted-foreground">Royalty-backed micro-loans, healthcare, IP protection—we're not just a sales platform, we're your financial partner.</div>
+                <div className="text-sm text-muted-foreground">Royalty-backed micro-loans, healthcare, and IP protection—comprehensive financial support for your creative career.</div>
               </div>
               <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
                 <ShoppingBag className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
                 <div className="text-xl font-bold text-card-foreground">All-in-One Consolidation</div>
-                <div className="text-sm text-muted-foreground">Stop paying for Bandcamp + Patreon + Laylo + Printful + Discord. Boptone replaces 10+ platforms with one unified OS.</div>
+                <div className="text-sm text-muted-foreground">Everything you need to build, manage, and scale your creative business in one unified platform.</div>
               </div>
             </div>
           </div>
