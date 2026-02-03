@@ -1027,3 +1027,10 @@
 - [x] Increase Toney bottom spacing to ensure entire bubble is visible (not cut off at bottom edge)
 - [x] Increase Toney right spacing to ensure entire bubble is visible (not cut off at right edge)
 - [x] Test on actual viewport to confirm full gradient ring visibility
+
+## Toney Conversation History Persistence
+- [x] Implement localStorage save for chat messages on every message update
+- [x] Implement localStorage load on component mount to restore previous conversations
+- [x] Add "Clear History" button in chat interface for users to reset conversation
+- [x] Test conversation persistence across page refreshes and browser sessions
+- [x] Ensure proactive greeting doesn't override saved conversation history

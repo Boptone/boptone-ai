@@ -9,23 +9,62 @@ import { useLocation } from "wouter";
  * Toney - Boptone's AI Assistant
  * Helps artists with career guidance, platform navigation, and creative advice
  */
+const STORAGE_KEY = 'toney-chat-history';
+const AUTO_OPENED_KEY = 'toney-auto-opened';
+
 export function ToneyChatbot() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [hasAutoOpened, setHasAutoOpened] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
+  const [hasAutoOpened, setHasAutoOpened] = useState(() => {
+    // Check if we've already auto-opened in this session
+    return localStorage.getItem(AUTO_OPENED_KEY) === 'true';
+  });
+  const [messages, setMessages] = useState<Message[]>(() => {
+    // Load chat history from localStorage on mount
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load chat history:', error);
+    }
+    // Default welcome message if no history
+    return [{
       role: "assistant",
       content: "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
-    }
-  ]);
+    }];
+  });
 
-  // Proactive greeting: auto-open after 15 seconds on key pages
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } catch (error) {
+      console.error('Failed to save chat history:', error);
+    }
+  }, [messages]);
+
+  // Save auto-opened state
+  useEffect(() => {
+    if (hasAutoOpened) {
+      localStorage.setItem(AUTO_OPENED_KEY, 'true');
+    }
+  }, [hasAutoOpened]);
+
+  // Proactive greeting: auto-open after 15 seconds on key pages (only if no chat history)
   useEffect(() => {
     // Only auto-open on homepage (pricing section) or features page
     const isKeyPage = location === '/' || location === '/features';
     
-    if (isKeyPage && !hasAutoOpened && !isOpen) {
+    // Only show proactive greeting if user has no chat history (first visit)
+    const hasHistory = messages.length > 1 || 
+      (messages.length === 1 && messages[0].content !== "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?");
+    
+    if (isKeyPage && !hasAutoOpened && !isOpen && !hasHistory) {
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasAutoOpened(true);
@@ -43,7 +82,7 @@ export function ToneyChatbot() {
 
       return () => clearTimeout(timer);
     }
-  }, [location, hasAutoOpened, isOpen]);
+  }, [location, hasAutoOpened, isOpen, messages]);
 
   const systemPrompt = `You are Toney, Boptone's friendly AI assistant. Boptone is not just a service - it's a PLATFORM for artists who want to own their careers.
 
@@ -112,14 +151,34 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
               <p className="text-xs opacity-90">Your AI Career Assistant</p>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsOpen(false)}
-            className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
-          >
-            <X className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                if (confirm('Are you sure you want to clear your conversation history with Toney?')) {
+                  localStorage.removeItem(STORAGE_KEY);
+                  localStorage.removeItem(AUTO_OPENED_KEY);
+                  setMessages([{
+                    role: "assistant",
+                    content: "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
+                  }]);
+                  setHasAutoOpened(false);
+                }
+              }}
+              className="text-xs text-primary-foreground hover:bg-primary-foreground/20"
+            >
+              Clear History
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(false)}
+              className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
         <div className="flex-1 overflow-hidden">
           <AIChatBox
