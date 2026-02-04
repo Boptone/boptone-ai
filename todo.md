@@ -1083,3 +1083,9 @@
 - [x] Redesign feature list with icon + text in light gray pill backgrounds
 - [x] Update CTA buttons (outline for free, solid for paid)
 - [x] Ensure generous padding and clean typography hierarchy
+
+## Pricing Typography Fix
+- [x] Reduce pricing font size to fit inside card boundaries (text-4xl md:text-5xl)
+- [x] Ensure pricing fits for both monthly and annual views
+- [x] Test that "$374/year" and other annual prices don't overflow
+- [x] Maintain visual hierarchy while fitting text properly

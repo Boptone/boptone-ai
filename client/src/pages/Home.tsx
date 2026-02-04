@@ -434,10 +434,10 @@ export default function Home() {
                   {/* Huge Pricing */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-5xl md:text-6xl font-bold text-card-foreground">
+                      <span className="text-4xl md:text-5xl font-bold text-card-foreground">
                         {isAnnual && tier.annualPrice ? tier.annualPrice : tier.price}
                       </span>
-                      <span className="text-2xl text-card-foreground">
+                      <span className="text-xl text-card-foreground">
                         {isAnnual && tier.annualPrice ? '/year' : tier.period}
                       </span>
                     </div>
