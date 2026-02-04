@@ -44,30 +44,38 @@ export default function Signup() {
   const tiers = [
     {
       id: "free" as const,
-      name: "Free",
+      name: "Creator",
       price: "$0",
-      description: "Perfect for emerging artists",
+      period: "/forever",
+      platformFee: "12%",
+      earningCap: "$1,000/month",
+      description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
-        "Basic artist profile",
-        "Revenue tracking (up to $1K/month)",
-        "AI career advisor (10 questions/month)",
-        "Analytics dashboard",
+        "3-click upload with AI metadata",
+        "Basic profile + 10 tracks",
+        "Earning cap: $1,000/month",
+        "12% platform fee",
+        "Basic analytics",
+        "Kick In tip jar",
         "Community support",
       ],
     },
     {
       id: "pro" as const,
       name: "Pro",
-      price: "$29/mo",
-      description: "For growing independent artists",
+      price: "$39",
+      period: "/month",
+      platformFee: "7%",
+      earningCap: "$10,000/month",
+      description: "Identify your superfans and build your world around them",
       features: [
-        "Everything in Free",
-        "Unlimited revenue tracking",
-        "Unlimited AI advisor",
-        "Direct-to-fan store",
-        "IP protection",
-        "Healthcare enrollment",
-        "Tour management",
+        "Everything in Creator",
+        "Unlimited tracks & storage",
+        "Fan Funnel marketing tools",
+        "Smart links with source tracking",
+        "Fan data ownership & export",
+        "3% Tone Dividend bonus",
+        "Advanced analytics",
         "Priority support",
       ],
       popular: true,
@@ -76,14 +84,19 @@ export default function Signup() {
       id: "enterprise" as const,
       name: "Enterprise",
       price: "Custom",
-      description: "For labels & management",
+      period: "",
+      platformFee: "2.5%",
+      earningCap: "Unlimited",
+      description: "Custom solutions for labels managing multiple artist rosters",
       features: [
-        "Everything in Pro",
-        "Multi-artist management",
-        "White-label platform",
-        "Custom integrations",
-        "Dedicated account manager",
-        "API access",
+        "Everything in Label",
+        "Unlimited earnings",
+        "2.5% platform fee",
+        "10+ team seats",
+        "Custom contract terms",
+        "Onboarding assistance",
+        "24/7 phone support",
+        "Quarterly strategy sessions",
       ],
     },
   ];
@@ -184,6 +197,23 @@ export default function Signup() {
                       {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
+                    
+                    {/* Platform Fee Section */}
+                    {tier.platformFee && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-bold mb-3 text-card-foreground">Processing fees</h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center text-sm">
+                            <span className="text-muted-foreground">Platform fee</span>
+                            <span className="font-semibold text-card-foreground">{tier.platformFee}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-sm">
+                            <span className="text-muted-foreground">Earning cap</span>
+                            <span className="font-semibold text-card-foreground">{tier.earningCap}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     
                     {/* What you get Section */}
                     <div className="flex-1">

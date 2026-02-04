@@ -1098,3 +1098,10 @@
 - [x] Add "What you get" section with light gray pill backgrounds
 - [x] Update CTA buttons to match homepage (outline for free, solid for paid)
 - [x] Test signup page pricing cards in browser (verified via code review - design matches homepage exactly)
+
+## Add Processing Fees Section to Signup Page
+- [x] Add "Processing fees" section between CTA button and "What you get" section
+- [x] Include Platform fee row (12% / 7% / 4% / 2.5%)
+- [x] Include Earning cap row ($1,000/month / $10,000/month / Unlimited / Unlimited)
+- [x] Match exact styling from homepage
+- [x] Update tier data to match homepage (Creator/Pro/Enterprise names, descriptions, features)
