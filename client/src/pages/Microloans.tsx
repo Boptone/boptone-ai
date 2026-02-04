@@ -300,9 +300,7 @@ export default function Microloans() {
                         </p>
                       </div>
 
-                      <Button 
-                        onClick={handleApply} 
-                        className="w-full"
+                      <Button className="rounded-full w-full" onClick={handleApply}
                         disabled={applyMutation.isPending || !purpose}
                       >
                         {applyMutation.isPending ? (
@@ -478,7 +476,7 @@ export default function Microloans() {
                   <p className="text-muted-foreground text-center mt-2">
                     You don't have any active loans. Apply for one to get started!
                   </p>
-                  <Button className="mt-4" onClick={() => setActiveTab("apply")}>
+                  <Button className="rounded-full mt-4" onClick={() => setActiveTab("apply")}>
                     Apply for a Loan
                   </Button>
                 </CardContent>

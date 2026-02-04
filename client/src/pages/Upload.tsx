@@ -196,7 +196,7 @@ export default function Upload() {
   if (!user && !DEV_MODE) {
     return (
       <DashboardLayout>
-        <Card>
+        <Card className="rounded-xl">
           <CardHeader>
             <CardTitle>Sign In Required</CardTitle>
             <CardDescription>Please sign in to upload music to BAP</CardDescription>
@@ -217,7 +217,7 @@ export default function Upload() {
         </div>
 
         {/* Audio Upload */}
-        <Card>
+        <Card className="rounded-xl">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Music className="h-5 w-5" />
@@ -252,7 +252,7 @@ export default function Upload() {
                   id="audio-upload"
                 />
                 <Label htmlFor="audio-upload">
-                  <Button variant="outline" asChild>
+                  <Button variant="outline" asChild className="rounded-full">
                     <span>Choose File</span>
                   </Button>
                 </Label>
@@ -278,6 +278,7 @@ export default function Upload() {
                 </div>
                 <Button
                   variant="ghost"
+                  className="rounded-full"
                   size="sm"
                   onClick={() => {
                     setAudioFile(null);
@@ -304,7 +305,7 @@ export default function Upload() {
         {/* Metadata Form */}
         {audioFile && !extractingMetadata && (
           <>
-            <Card>
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle>Track Information</CardTitle>
                 <CardDescription>
@@ -410,7 +411,7 @@ export default function Upload() {
             </Card>
 
             {/* Artwork Upload */}
-            <Card>
+            <Card className="rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <ImageIcon className="h-5 w-5" />
@@ -435,7 +436,7 @@ export default function Upload() {
                         id="artwork-upload"
                       />
                       <Label htmlFor="artwork-upload">
-                        <Button variant="outline" asChild>
+                        <Button variant="outline" asChild className="rounded-full">
                           <span>Upload Artwork</span>
                         </Button>
                       </Label>
@@ -470,7 +471,7 @@ export default function Upload() {
             </Card>
 
             {/* Publish Button */}
-            <Card>
+            <Card className="rounded-xl">
               <CardContent className="pt-6">
                 {isUploading && (
                   <div className="mb-4">
@@ -488,8 +489,8 @@ export default function Upload() {
                 )}
                 <Button
                   onClick={handlePublish}
+                  className="w-full rounded-full"
                   disabled={isUploading}
-                  className="w-full"
                   size="lg"
                 >
                   {isUploading ? (

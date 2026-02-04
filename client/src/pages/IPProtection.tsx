@@ -87,7 +87,7 @@ export default function IPProtection() {
       <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container py-4">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+            <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
@@ -104,7 +104,7 @@ export default function IPProtection() {
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title}>
+              <Card className="rounded-xl" key={stat.title}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>
@@ -122,7 +122,7 @@ export default function IPProtection() {
         </div>
 
         {/* How It Works */}
-        <Card className="bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
+        <Card className="rounded-xl bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-primary" />
@@ -229,16 +229,14 @@ export default function IPProtection() {
                           Detected: {new Date(infringement.detectedAt).toLocaleDateString()}
                         </p>
                         {infringement.status === "detected" && (
-                          <Button
-                            size="sm"
+                          <Button className="rounded-full" size="sm"
                             onClick={() => handleStatusUpdate(infringement.id, "dmca_sent")}
                           >
                             Send DMCA Takedown
                           </Button>
                         )}
                         {infringement.status === "dmca_sent" && (
-                          <Button
-                            size="sm"
+                          <Button className="rounded-full" size="sm"
                             variant="outline"
                             onClick={() => handleStatusUpdate(infringement.id, "resolved")}
                           >
@@ -246,8 +244,7 @@ export default function IPProtection() {
                           </Button>
                         )}
                         {infringement.status === "detected" && (
-                          <Button
-                            size="sm"
+                          <Button className="rounded-full" size="sm"
                             variant="ghost"
                             onClick={() => handleStatusUpdate(infringement.id, "false_positive")}
                           >

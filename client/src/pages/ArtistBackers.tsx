@@ -126,7 +126,7 @@ export default function ArtistBackers() {
         </div>
 
         {/* Tone Dividend Explanation */}
-        <Card className="bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200">
+        <Card className="rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
               <div className="p-3 rounded-full bg-amber-200">
@@ -155,7 +155,7 @@ export default function ArtistBackers() {
                 const tierColor = getTierColor(backing.tier);
                 
                 return (
-                  <Card key={backing.id}>
+                  <Card className="rounded-xl" key={backing.id}>
                     <CardContent className="pt-4 pb-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">

@@ -122,9 +122,7 @@ ${formData.message}
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full" 
+                <Button className="rounded-full w-full" type="submit" 
                   size="lg"
                   disabled={sendMessage.isPending}
                 >
@@ -179,7 +177,7 @@ ${formData.message}
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
+            <Card className="rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
               <CardContent className="p-8">
                 <h3 className="font-semibold text-lg mb-3">Looking for Support?</h3>
                 <p className="text-muted-foreground mb-4">

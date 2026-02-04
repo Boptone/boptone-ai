@@ -193,8 +193,7 @@ export default function Signup() {
                     </div>
                     
                     {/* CTA Button */}
-                    <Button 
-                      className="w-full mb-8"
+                    <Button className="rounded-full w-full mb-8"
                       variant={tier.id === "free" ? "outline" : "default"}
                       style={tier.id === "free" ? {
                         borderColor: '#4A90E2',
@@ -334,9 +333,7 @@ export default function Signup() {
                     </p>
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+                  <Button className="rounded-full w-full" type="submit" 
                     size="lg"
                     disabled={createProfile.isPending}
                   >

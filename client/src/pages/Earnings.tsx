@@ -111,7 +111,7 @@ export default function Earnings() {
         <div className="container py-20 text-center">
           <h1 className="text-3xl font-bold mb-4">Sign in to view earnings</h1>
           <p className="text-muted-foreground mb-8">You need to be signed in to access your earnings dashboard.</p>
-          <Button asChild>
+          <Button className="rounded-full" asChild>
             <a href="/api/oauth/login">Sign In</a>
           </Button>
         </div>
@@ -132,7 +132,7 @@ export default function Earnings() {
 
         {/* Stripe Connection Status */}
         {!stripeStatus?.payoutsEnabled && (
-          <Card className="mb-6 border-yellow-500/50 bg-yellow-500/5">
+          <Card className="rounded-xl mb-6 border-yellow-500/50 bg-yellow-500/5">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <DollarSign className="h-5 w-5" />
@@ -143,7 +143,7 @@ export default function Earnings() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={handleConnectStripe} disabled={isConnecting}>
+              <Button className="rounded-full" onClick={handleConnectStripe} disabled={isConnecting}>
                 {isConnecting ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -204,7 +204,7 @@ export default function Earnings() {
 
         {/* Request Payout Button */}
         {stripeStatus?.payoutsEnabled && (
-          <Card className="mb-8">
+          <Card className="rounded-xl mb-8">
             <CardHeader>
               <CardTitle>Request Payout</CardTitle>
               <CardDescription>
@@ -214,8 +214,7 @@ export default function Earnings() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button
-                onClick={handleRequestPayout}
+              <Button className="rounded-full" onClick={handleRequestPayout}
                 disabled={!pending?.canPayout || requestPayoutMutation.isPending}
               >
                 {requestPayoutMutation.isPending ? (
@@ -283,7 +282,7 @@ export default function Earnings() {
                 <p className="text-muted-foreground mb-4">
                   Start uploading music and earning from streams!
                 </p>
-                <Button asChild variant="outline">
+                <Button className="rounded-full" asChild variant="outline">
                   <a href="/upload">Upload Music</a>
                 </Button>
               </div>
@@ -292,7 +291,7 @@ export default function Earnings() {
         </Card>
 
         {/* Revenue Info */}
-        <Card className="mt-6">
+        <Card className="rounded-xl mt-6">
           <CardHeader>
             <CardTitle>How BAP Revenue Works</CardTitle>
           </CardHeader>

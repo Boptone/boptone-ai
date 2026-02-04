@@ -24,7 +24,7 @@ export default function About() {
 
       {/* Mission - Simplified, no business jargon */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-4xl mx-auto">
+        <Card className="rounded-xl max-w-4xl mx-auto">
           <CardContent className="p-12">
             <div className="flex items-center gap-3 mb-6">
               <Target className="h-8 w-8 text-primary" />
@@ -78,7 +78,7 @@ export default function About() {
 
       {/* Story - Condensed from 4 paragraphs to 2 sentences */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-4xl mx-auto">
+        <Card className="rounded-xl max-w-4xl mx-auto">
           <CardContent className="p-12">
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -114,17 +114,17 @@ export default function About() {
 
       {/* CTA */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+        <Card className="rounded-xl max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
           <CardContent className="p-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Join Us</h2>
             <p className="text-lg text-muted-foreground mb-8">
               We're launching in 2026. Be one of the first to try Boptone.
             </p>
             <div className="flex gap-4 justify-center">
-              <Button size="lg" onClick={() => setLocation("/signup")}>
+              <Button className="rounded-full" size="lg" onClick={() => setLocation("/signup")}>
                 Get Early Access
               </Button>
-              <Button size="lg" variant="outline" onClick={() => setLocation("/contact")}>
+              <Button className="rounded-full" size="lg" variant="outline" onClick={() => setLocation("/contact")}>
                 Contact Us
               </Button>
             </div>

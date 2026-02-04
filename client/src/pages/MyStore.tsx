@@ -51,7 +51,7 @@ export default function MyStore() {
   if (!user && !DEV_MODE) {
     return (
       <div className="container py-24">
-        <h1 className="text-4xl font-black tracking-tighter mb-4">YOUR STORE</h1>
+        <h1 className="text-4xl font-semibold tracking-tight mb-4">YOUR STORE</h1>
         <p className="text-lg">Please log in to manage your store.</p>
       </div>
     );
@@ -64,17 +64,17 @@ export default function MyStore() {
     <div className="container py-12">
       {/* Header */}
       <div className="mb-12">
-        <h1 className="text-5xl md:text-6xl font-black tracking-tighter mb-4">YOUR STORE</h1>
+        <h1 className="text-5xl md:text-6xl font-semibold tracking-tight mb-4">YOUR STORE</h1>
         <p className="text-lg text-muted-foreground">
           Manage your products, inventory, and orders. You keep 90% of every sale.
         </p>
       </div>
 
       {/* POD Connection Status */}
-      <Card className="p-6 border-2 border-black mb-8">
+      <Card className="rounded-xl p-6 border-2 border-black mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-black mb-2">PRINT-ON-DEMAND</h3>
+            <h3 className="text-lg font-semibold mb-2">PRINT-ON-DEMAND</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Connect Printful to sell merchandise with zero inventory. We handle fulfillment, you keep 90% of profit.
             </p>
@@ -93,8 +93,7 @@ export default function MyStore() {
               <Badge variant="outline">Not Connected</Badge>
             )}
           </div>
-          <Button
-            onClick={() => setShowConnectPrintful(true)}
+          <Button className="rounded-full" onClick={() => setShowConnectPrintful(true)}
             variant={printfulAccount ? "outline" : "default"}
             size="lg"
           >
@@ -105,26 +104,25 @@ export default function MyStore() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <Card className="p-6 border-2 border-black">
+        <Card className="rounded-xl p-6 border-2 border-black">
           <div className="text-sm font-bold mb-2">YOUR PRODUCTS</div>
-          <div className="text-4xl font-black font-mono">{products?.length ?? 0}</div>
+          <div className="text-4xl font-semibold font-mono">{products?.length ?? 0}</div>
         </Card>
-        <Card className="p-6 border-2 border-black">
+        <Card className="rounded-xl p-6 border-2 border-black">
           <div className="text-sm font-bold mb-2">PENDING ORDERS</div>
-          <div className="text-4xl font-black font-mono">{pendingOrders.length}</div>
+          <div className="text-4xl font-semibold font-mono">{pendingOrders.length}</div>
         </Card>
-        <Card className="p-6 border-2 border-black">
+        <Card className="rounded-xl p-6 border-2 border-black">
           <div className="text-sm font-bold mb-2">YOUR REVENUE</div>
-          <div className="text-4xl font-black font-mono">${totalRevenue.toFixed(2)}</div>
+          <div className="text-4xl font-semibold font-mono">${totalRevenue.toFixed(2)}</div>
         </Card>
       </div>
 
       {/* Products Section */}
       <div className="mb-12">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-black tracking-tighter">YOUR PRODUCTS</h2>
-          <Button
-            onClick={() => setShowAddProduct(true)}
+          <h2 className="text-3xl font-semibold tracking-tighter">YOUR PRODUCTS</h2>
+          <Button className="rounded-full" onClick={() => setShowAddProduct(true)}
             className="bg-black text-white hover:bg-gray-800 font-bold"
           >
             <Plus className="w-4 h-4 mr-2" />
@@ -133,14 +131,13 @@ export default function MyStore() {
         </div>
 
         {!products || products.length === 0 ? (
-          <Card className="p-12 border-2 border-black text-center">
+          <Card className="rounded-xl p-12 border-2 border-black text-center">
             <Package className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
             <h3 className="text-xl font-bold mb-2">No products yet</h3>
             <p className="text-muted-foreground mb-6">
               Start selling by adding your first product
             </p>
-            <Button
-              onClick={() => setShowAddProduct(true)}
+            <Button className="rounded-full" onClick={() => setShowAddProduct(true)}
               className="bg-black text-white hover:bg-gray-800 font-bold"
             >
               <Plus className="w-4 h-4 mr-2" />
@@ -150,7 +147,7 @@ export default function MyStore() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product) => (
-              <Card key={product.id} className="border-2 border-black overflow-hidden">
+              <Card className="rounded-xl border-2 border-black overflow-hidden" key={product.id}>
                 {product.images && product.images.length > 0 ? (
                   <img
                     src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0].url}
@@ -165,7 +162,7 @@ export default function MyStore() {
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-2">{product.name}</h3>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-black font-mono">${product.price}</span>
+                    <span className="text-2xl font-semibold font-mono">${product.price}</span>
                     <span className="text-sm text-muted-foreground uppercase">
                       {product.type}
                     </span>
@@ -181,18 +178,14 @@ export default function MyStore() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full flex-1 border-2 border-black font-bold" variant="outline"
                       size="sm"
-                      className="flex-1 border-2 border-black font-bold"
                     >
                       <Edit className="w-4 h-4 mr-1" />
                       EDIT
                     </Button>
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full border-2 border-black font-bold" variant="outline"
                       size="sm"
-                      className="border-2 border-black font-bold"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -207,16 +200,16 @@ export default function MyStore() {
       {/* Orders Section */}
       <div>
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-black tracking-tighter">RECENT ORDERS</h2>
+          <h2 className="text-3xl font-semibold tracking-tighter">RECENT ORDERS</h2>
           <Link href="/my-store/orders">
-            <Button variant="outline" className="border-2 border-black font-bold">
+            <Button variant="outline" className="rounded-full border-2 border-black font-bold">
               VIEW ALL ORDERS
             </Button>
           </Link>
         </div>
 
         {!orders || orders.length === 0 ? (
-          <Card className="p-12 border-2 border-black text-center">
+          <Card className="rounded-xl p-12 border-2 border-black text-center">
             <h3 className="text-xl font-bold mb-2">No orders yet</h3>
             <p className="text-muted-foreground">
               Orders will appear here when customers purchase your products
@@ -225,7 +218,7 @@ export default function MyStore() {
         ) : (
           <div className="space-y-4">
             {orders.slice(0, 5).map((order) => (
-              <Card key={order.id} className="p-4 border-2 border-black">
+              <Card className="rounded-xl p-4 border-2 border-black" key={order.id}>
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="font-bold font-mono">Order #{order.orderNumber}</div>
@@ -234,7 +227,7 @@ export default function MyStore() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-black font-mono">${order.total}</div>
+                    <div className="text-2xl font-semibold font-mono">${order.total}</div>
                     <div className="text-sm font-bold uppercase">
                       {order.fulfillmentStatus.replace('_', ' ')}
                     </div>

@@ -319,10 +319,10 @@ export default function Terms() {
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">13. Disclaimer of Warranties</h2>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR COURSE OF PERFORMANCE.
                 </p>
-                <p className="mb-2 uppercase font-semibold">
+                <p className="mb-2  font-semibold">
                   ACID BIRD, INC., ITS SUBSIDIARIES, AFFILIATES, DIRECTORS, EMPLOYEES, PARTNERS, AGENTS, SUPPLIERS, AND LICENSORS (COLLECTIVELY, "BOPTONE PARTIES") MAKE NO WARRANTY THAT:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
@@ -334,23 +334,23 @@ export default function Terms() {
                   <li>THE SERVICE IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS</li>
                   <li>DATA TRANSMISSION WILL BE SECURE OR NOT INTERCEPTED</li>
                 </ul>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   BOPTONE PARTIES DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD PARTY THROUGH THE SERVICE, AND BOPTONE PARTIES WILL NOT BE A PARTY TO OR IN ANY WAY MONITOR ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS.
                 </p>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM BOPTONE OR THROUGH THE SERVICE WILL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THESE TERMS.
                 </p>
-                <p className="uppercase font-semibold">
+                <p className=" font-semibold">
                   SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO SOME OF THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. YOU MAY ALSO HAVE OTHER LEGAL RIGHTS THAT VARY BY JURISDICTION.
                 </p>
               </section>
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">14. Limitation of Liability</h2>
-                <p className="mb-2 uppercase font-semibold">
+                <p className="mb-2  font-semibold">
                   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL BOPTONE PARTIES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO:
                 </p>
-                <ul className="list-disc pl-6 space-y-2 mb-4 uppercase font-semibold">
+                <ul className="list-disc pl-6 space-y-2 mb-4  font-semibold">
                   <li>LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES</li>
                   <li>DAMAGES RESULTING FROM YOUR ACCESS TO OR USE OF OR INABILITY TO ACCESS OR USE THE SERVICE</li>
                   <li>DAMAGES RESULTING FROM ANY CONDUCT OR CONTENT OF ANY THIRD PARTY ON THE SERVICE</li>
@@ -360,13 +360,13 @@ export default function Terms() {
                   <li>DAMAGES RESULTING FROM RELIANCE ON AI-GENERATED RECOMMENDATIONS OR ADVICE</li>
                   <li>DAMAGES RESULTING FROM THIRD-PARTY INTEGRATIONS OR SERVICES</li>
                 </ul>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), PRODUCT LIABILITY, STRICT LIABILITY, OR ANY OTHER LEGAL THEORY, WHETHER OR NOT BOPTONE PARTIES HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGE, AND EVEN IF A REMEDY SET FORTH HEREIN IS FOUND TO HAVE FAILED OF ITS ESSENTIAL PURPOSE.
                 </p>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE TOTAL LIABILITY OF BOPTONE PARTIES FOR ANY CLAIMS ARISING OUT OF OR RELATING TO THESE TERMS OR THE SERVICE SHALL NOT EXCEED THE GREATER OF (A) THE AMOUNT YOU HAVE PAID TO BOPTONE IN THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO LIABILITY, OR (B) ONE HUNDRED DOLLARS ($100.00 USD).
                 </p>
-                <p className="uppercase font-semibold">
+                <p className=" font-semibold">
                   SOME JURISDICTIONS DO NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
                 </p>
               </section>
@@ -393,7 +393,7 @@ export default function Terms() {
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">16. Dispute Resolution and Arbitration</h2>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   PLEASE READ THIS SECTION CAREFULLY AS IT AFFECTS YOUR RIGHTS AND REQUIRES BINDING ARBITRATION OF DISPUTES.
                 </p>
 
@@ -411,7 +411,7 @@ export default function Terms() {
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">16.3 Class Action Waiver</h3>
-                <p className="mb-4 uppercase font-semibold">
+                <p className="mb-4  font-semibold">
                   YOU AND BOPTONE AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE PROCEEDING. UNLESS BOTH YOU AND BOPTONE AGREE, NO ARBITRATOR OR JUDGE MAY CONSOLIDATE MORE THAN ONE PERSON'S CLAIMS OR OTHERWISE PRESIDE OVER ANY FORM OF A REPRESENTATIVE OR CLASS PROCEEDING.
                 </p>
 

@@ -177,7 +177,7 @@ export default function Discover() {
   };
 
   const TrackCard = ({ track }: { track: any }) => (
-    <Card className="group hover:bg-muted/50 transition-colors cursor-pointer">
+    <Card className="rounded-xl group hover:bg-muted/50 transition-colors cursor-pointer">
       <CardContent className="p-4">
           <div className="flex items-center gap-2">
           <div className="relative flex-shrink-0">
@@ -186,10 +186,8 @@ export default function Discover() {
               alt={track.title}
               className="w-20 h-20 rounded-lg object-cover"
             />
-            <Button
-              size="icon"
+            <Button className="rounded-full absolute inset-0 m-auto opacity-0 group-hover:opacity-100 transition-opacity" size="icon"
               variant="secondary"
-              className="absolute inset-0 m-auto opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={() => handlePlayTrack(track)}
             >
               {currentTrack?.id === track.id && isPlaying ? (
@@ -213,8 +211,7 @@ export default function Discover() {
               )}
             </div>
           </div>
-              <Button
-                size="icon"
+              <Button className="rounded-full" size="icon"
                 variant="ghost"
                 onClick={() => handleLikeTrack(track.id)}
               >
@@ -222,7 +219,7 @@ export default function Discover() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button size="icon" variant="ghost">
+                  <Button className="rounded-full" size="icon" variant="ghost">
                     <Share2 className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -334,7 +331,7 @@ export default function Discover() {
                     <Music className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No trending tracks yet. Be the first to upload!</p>
                     <Link href="/upload">
-                      <Button className="mt-4">Upload Your Music</Button>
+                      <Button className="rounded-full mt-4">Upload Your Music</Button>
                     </Link>
                   </CardContent>
                 </Card>
@@ -351,7 +348,7 @@ export default function Discover() {
                     <Music className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No new releases yet. Upload your music to BAP!</p>
                     <Link href="/upload">
-                      <Button className="mt-4">Upload Your Music</Button>
+                      <Button className="rounded-full mt-4">Upload Your Music</Button>
                     </Link>
                   </CardContent>
                 </Card>
@@ -363,7 +360,7 @@ export default function Discover() {
               {risingArtists && risingArtists.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {risingArtists.map((artist: any) => (
-                    <Card key={artist.id} className="hover:shadow-lg transition-shadow">
+                    <Card className="rounded-xl hover:shadow-lg transition-shadow" key={artist.id}>
                       <CardContent className="p-6 text-center">
                         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 mx-auto mb-4 flex items-center justify-center">
                           <Music className="h-12 w-12 text-primary" />
@@ -373,7 +370,7 @@ export default function Discover() {
                           {artist.followerCount?.toLocaleString() || 0} followers
                         </p>
                         <Link href={`/@${artist.username}`}>
-                          <Button variant="outline" size="sm" className="w-full">
+                          <Button variant="outline" size="sm" className="rounded-full w-full">
                             View Profile
                           </Button>
                         </Link>
@@ -387,7 +384,7 @@ export default function Discover() {
                     <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>No rising artists yet. Start uploading to grow your audience!</p>
                     <Link href="/upload">
-                      <Button className="mt-4">Upload Your Music</Button>
+                      <Button className="rounded-full mt-4">Upload Your Music</Button>
                     </Link>
                   </CardContent>
                 </Card>
@@ -413,25 +410,24 @@ export default function Discover() {
                 <p className="text-sm text-muted-foreground truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost">
+                <Button className="rounded-full" size="icon" variant="ghost">
                   <Shuffle className="h-4 w-4" />
                 </Button>
-                <Button size="icon" variant="ghost">
+                <Button className="rounded-full" size="icon" variant="ghost">
                   <SkipBack className="h-5 w-5" />
                 </Button>
-                <Button size="icon" onClick={() => setIsPlaying(!isPlaying)}>
+                <Button className="rounded-full" size="icon" onClick={() => setIsPlaying(!isPlaying)}>
                   {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                 </Button>
-                <Button size="icon" variant="ghost">
+                <Button className="rounded-full" size="icon" variant="ghost">
                   <SkipForward className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost">
+                <Button className="rounded-full" size="icon" variant="ghost">
                   <Repeat className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex items-center gap-2">
-                <Button
-                  size="icon"
+                <Button className="rounded-full" size="icon"
                   variant="ghost"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
@@ -439,7 +435,7 @@ export default function Discover() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button size="icon" variant="ghost">
+                    <Button className="rounded-full" size="icon" variant="ghost">
                       <Share2 className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>

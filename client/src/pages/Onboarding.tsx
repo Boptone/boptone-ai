@@ -98,7 +98,7 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl">
+      <Card className="rounded-xl w-full max-w-2xl">
         <CardHeader className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Music className="h-8 w-8 text-primary" />
@@ -265,8 +265,7 @@ export default function Onboarding() {
 
           {/* Navigation Buttons */}
           <div className="flex items-center justify-between pt-4">
-            <Button
-              variant="ghost"
+            <Button className="rounded-full" variant="ghost"
               onClick={handleBack}
               disabled={step === 1}
             >
@@ -274,8 +273,7 @@ export default function Onboarding() {
               Back
             </Button>
 
-            <Button
-              onClick={handleNext}
+            <Button className="rounded-full" onClick={handleNext}
               disabled={updateProfile.isPending}
             >
               {step === totalSteps ? (
@@ -294,9 +292,7 @@ export default function Onboarding() {
 
           {/* Skip Option */}
           <div className="text-center">
-            <Button
-              variant="link"
-              className="text-muted-foreground"
+            <Button className="rounded-full text-muted-foreground" variant="link"
               onClick={() => setLocation("/dashboard")}
             >
               Skip for now

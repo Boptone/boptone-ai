@@ -163,20 +163,20 @@ export default function Dashboard() {
         <div className="container py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tighter">
-                Welcome back, {effectiveProfile!.stageName}
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+                Welcome back, {effectiveProfile?.stageName || 'Artist'}
               </h1>
               <p className="text-muted-foreground mt-1">
-                Career Phase: <span className="font-semibold capitalize text-primary">{effectiveProfile!.careerPhase}</span>
-                {effectiveProfile!.priorityScore && (
+                Career Phase: <span className="font-semibold capitalize text-primary">{effectiveProfile?.careerPhase || 'Getting Started'}</span>
+                {effectiveProfile?.priorityScore && (
                   <span className="ml-4">
-                    Priority Score: <span className="font-semibold text-primary">{effectiveProfile!.priorityScore}/10</span>
+                    Priority Score: <span className="font-semibold text-primary">{effectiveProfile?.priorityScore}/10</span>
                   </span>
                 )}
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="icon" className="relative">
+              <Button variant="outline" size="icon" className="relative rounded-full">
                 <Bell className="h-5 w-5" />
                 {notifications && notifications.length > 0 && (
                   <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs flex items-center justify-center">
@@ -184,7 +184,7 @@ export default function Dashboard() {
                   </span>
                 )}
               </Button>
-              <Button onClick={() => setLocation("/ai-advisor")}>
+              <Button onClick={() => setLocation("/ai-advisor")} className="rounded-full">
                 <Sparkles className="h-4 w-4 mr-2" />
                 AI Advisor
               </Button>
@@ -199,7 +199,7 @@ export default function Dashboard() {
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title} className="hover:shadow-lg transition-shadow">
+              <Card key={stat.title} className="rounded-xl hover:shadow-lg transition-all duration-200 border-gray-100">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>
@@ -239,7 +239,7 @@ export default function Dashboard() {
                   <Button
                     key={action.label}
                     variant="outline"
-                    className="h-24 flex-col gap-2 hover:border-primary"
+                    className="h-24 flex-col gap-2 hover:border-primary rounded-full transition-all duration-200 hover:shadow-md"
                     onClick={() => setLocation(action.href)}
                   >
                     <div className={`p-3 rounded-lg ${action.color} text-white`}>

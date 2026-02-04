@@ -77,12 +77,12 @@ export default function ProfileSettings() {
   if (!profile) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Card className="max-w-md">
+        <Card className="rounded-xl max-w-md">
           <CardContent className="p-8 text-center">
             <p className="text-muted-foreground mb-6">
               You need to create an artist profile first.
             </p>
-            <Button onClick={() => setLocation("/signup")}>
+            <Button className="rounded-full" onClick={() => setLocation("/signup")}>
               Create Profile
             </Button>
           </CardContent>
@@ -179,10 +179,10 @@ export default function ProfileSettings() {
                   This is how your profile will look with the selected colors.
                 </p>
                 <div className="flex gap-3">
-                  <Button style={{ backgroundColor: themeColor }}>
+                  <Button className="rounded-full" style={{ backgroundColor: themeColor }}>
                     Primary Button
                   </Button>
-                  <Button variant="outline" style={{ borderColor: accentColor, color: accentColor }}>
+                  <Button className="rounded-full" variant="outline" style={{ borderColor: accentColor, color: accentColor }}>
                     Accent Button
                   </Button>
                 </div>
@@ -238,11 +238,9 @@ export default function ProfileSettings() {
 
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button
-              size="lg"
+            <Button className="rounded-full flex-1" size="lg"
               onClick={handleSave}
               disabled={updateProfile.isPending}
-              className="flex-1"
             >
               {updateProfile.isPending ? (
                 <>
@@ -256,11 +254,9 @@ export default function ProfileSettings() {
                 </>
               )}
             </Button>
-            <Button
-              size="lg"
+            <Button className="rounded-full flex-1" size="lg"
               variant="outline"
               onClick={handlePreview}
-              className="flex-1"
             >
               <Eye className="h-5 w-5 mr-2" />
               Preview Profile

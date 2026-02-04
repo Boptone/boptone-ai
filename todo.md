@@ -1120,3 +1120,58 @@
 - [x] Increase padding and whitespace (gap-4 instead of gap-0)
 - [x] Use softer color palette (blue gradients instead of black, primary colors)
 - [x] Test the softened design (verified in browser - all improvements visible)
+
+## Site-Wide Design System Audit & Implementation
+- [x] Document Boptone Design System from homepage (typography, cards, buttons, colors, spacing)
+- [ ] Audit all 34 pages for design inconsistencies
+- [ ] Create design system checklist for each page
+- [ ] Fix typography site-wide (no font-black, use font-semibold/font-bold)
+- [ ] Fix all cards site-wide (rounded-xl, shadow-sm, no harsh borders)
+- [ ] Fix all buttons site-wide (pill-shaped rounded-full for CTAs)
+- [ ] Fix colors site-wide (gentle gradients, no harsh black backgrounds)
+- [ ] Fix spacing site-wide (generous whitespace, consistent gaps)
+- [ ] Test page-to-page consistency (same visual world)
+- [ ] Verify 80-year-old artist test passes on all pages
+
+## Site-Wide Design System Implementation (Modern 2026 Design)
+- [x] Document Boptone Design System from homepage
+- [x] Create sample fix on Dashboard page (approved by user)
+- [x] Apply design system to all pages (32 files updated via Python script):
+  - [x] Dashboard
+  - [x] Upload
+  - [x] MyMusic (Releases)
+  - [x] Store/MyStore
+  - [x] Profile Settings
+  - [x] Analytics
+  - [x] Earnings
+  - [x] Fans
+  - [x] Money
+  - [x] Tours
+  - [x] Healthcare
+  - [x] Microloans
+  - [x] IPProtection
+  - [x] ToneRewards
+  - [x] ArtistBackers
+  - [x] AIAdvisor
+  - [x] Financials
+  - [x] ArtistProfile
+  - [x] ProductDetail
+  - [x] Onboarding
+  - [x] Admin
+  - [x] Contact
+  - [x] Privacy
+  - [x] Terms
+  - [x] ComponentShowcase
+  - [x] MyStoreOrders
+  - [x] DemoArtistProfile
+- [ ] Test consistency across all pages
+- [ ] Save final checkpoint
+
+Design System Rules:
+- Hero headlines (H1): font-bold ✅
+- Subheadings/body: font-semibold or font-medium
+- All CTA buttons: rounded-full (pill shape)
+- All cards: rounded-xl with subtle shadows
+- No ALL CAPS except intentional styling
+- Smooth transitions: transition-all duration-200
+- Soft borders: border border-gray-100/200 (not border-4 border-black)

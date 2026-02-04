@@ -110,7 +110,7 @@ export default function Healthcare() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+              <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
@@ -179,11 +179,10 @@ export default function Healthcare() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setIsEnrollDialogOpen(false)}>
+                    <Button className="rounded-full" variant="outline" onClick={() => setIsEnrollDialogOpen(false)}>
                       Cancel
                     </Button>
-                    <Button
-                      onClick={handleEnroll}
+                    <Button className="rounded-full" onClick={handleEnroll}
                       disabled={enrollPlan.isPending}
                     >
                       {enrollPlan.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
@@ -240,7 +239,7 @@ export default function Healthcare() {
             </CardContent>
           </Card>
         ) : (
-          <Card className="bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
+          <Card className="rounded-xl bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertCircle className="h-5 w-5 text-primary" />
@@ -251,7 +250,7 @@ export default function Healthcare() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button onClick={() => setIsEnrollDialogOpen(true)}>
+              <Button className="rounded-full" onClick={() => setIsEnrollDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Explore Healthcare Plans
               </Button>
@@ -262,7 +261,7 @@ export default function Healthcare() {
         {/* Available Plans */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {Object.entries(planDetails).map(([key, plan]) => (
-            <Card key={key} className="relative overflow-hidden">
+            <Card className="rounded-xl relative overflow-hidden" key={key}>
               <div className={`h-2 bg-gradient-to-r ${plan.color}`} />
               <CardHeader>
                 <CardTitle>{plan.name}</CardTitle>
@@ -281,8 +280,7 @@ export default function Healthcare() {
                   ))}
                 </ul>
                 {!activePlan && (
-                  <Button
-                    className="w-full"
+                  <Button className="rounded-full w-full"
                     variant={key === "premium" ? "default" : "outline"}
                     onClick={() => {
                       setEnrollment({
@@ -346,7 +344,7 @@ export default function Healthcare() {
         </Card>
 
         {/* Wellness Resources */}
-        <Card className="bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
+        <Card className="rounded-xl bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
           <CardHeader>
             <CardTitle>Free Wellness Resources</CardTitle>
             <CardDescription>Available to all Boptone artists</CardDescription>

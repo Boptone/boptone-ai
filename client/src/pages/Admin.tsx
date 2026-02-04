@@ -119,7 +119,7 @@ export default function Admin() {
       <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container py-4">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+            <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
@@ -136,7 +136,7 @@ export default function Admin() {
           {platformStats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title}>
+              <Card className="rounded-xl" key={stat.title}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>
@@ -159,7 +159,7 @@ export default function Admin() {
           {systemMetrics.map((metric) => {
             const Icon = metric.icon;
             return (
-              <Card key={metric.category}>
+              <Card className="rounded-xl" key={metric.category}>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Icon className="h-5 w-5 text-primary" />
@@ -183,7 +183,7 @@ export default function Admin() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Recent Activity */}
-          <Card className="lg:col-span-2">
+          <Card className="rounded-xl lg:col-span-2">
             <CardHeader>
               <CardTitle>Recent Platform Activity</CardTitle>
               <CardDescription>Real-time updates across all systems</CardDescription>
@@ -210,27 +210,27 @@ export default function Admin() {
               <CardTitle>Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button className="w-full justify-start" variant="outline">
+              <Button className="rounded-full w-full justify-start" variant="outline">
                 <Users className="h-4 w-4 mr-2" />
                 Manage Artists
               </Button>
-              <Button className="w-full justify-start" variant="outline">
+              <Button className="rounded-full w-full justify-start" variant="outline">
                 <Shield className="h-4 w-4 mr-2" />
                 Review IP Cases
               </Button>
-              <Button className="w-full justify-start" variant="outline">
+              <Button className="rounded-full w-full justify-start" variant="outline">
                 <DollarSign className="h-4 w-4 mr-2" />
                 Loan Approvals
               </Button>
-              <Button className="w-full justify-start" variant="outline">
+              <Button className="rounded-full w-full justify-start" variant="outline">
                 <Package className="h-4 w-4 mr-2" />
                 Product Moderation
               </Button>
-              <Button className="w-full justify-start" variant="outline">
+              <Button className="rounded-full w-full justify-start" variant="outline">
                 <Heart className="h-4 w-4 mr-2" />
                 Healthcare Claims
               </Button>
-              <Button className="w-full justify-start" variant="outline">
+              <Button className="rounded-full w-full justify-start" variant="outline">
                 <Activity className="h-4 w-4 mr-2" />
                 System Health
               </Button>
@@ -239,7 +239,7 @@ export default function Admin() {
         </div>
 
         {/* Platform Health */}
-        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/10 border-green-500/20">
+        <Card className="rounded-xl bg-gradient-to-br from-green-500/10 to-green-600/10 border-green-500/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Activity className="h-5 w-5 text-green-600" />

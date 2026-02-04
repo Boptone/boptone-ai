@@ -123,7 +123,7 @@ export default function Store() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+              <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
@@ -206,11 +206,10 @@ export default function Store() {
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                  <Button className="rounded-full" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button
-                    onClick={handleCreateProduct}
+                  <Button className="rounded-full" onClick={handleCreateProduct}
                     disabled={!newProduct.name || !newProduct.price || createProduct.isPending}
                   >
                     {createProduct.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
@@ -229,7 +228,7 @@ export default function Store() {
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title}>
+              <Card className="rounded-xl" key={stat.title}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>
@@ -258,7 +257,7 @@ export default function Store() {
             {products && products.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product: any) => (
-                  <Card key={product.id} className="overflow-hidden">
+                  <Card className="rounded-xl overflow-hidden" key={product.id}>
                     <div className="aspect-square bg-muted flex items-center justify-center">
                       <ShoppingBag className="h-16 w-16 text-muted-foreground" />
                     </div>
@@ -271,10 +270,8 @@ export default function Store() {
                           </p>
                         </div>
                         <div className="flex items-center gap-1 ml-2">
-                          <Button
-                            variant="ghost"
+                          <Button className="rounded-full h-8 w-8" variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
                             onClick={() => toggleProductStatus(product.id, product.isActive)}
                           >
                             {product.isActive ? (
@@ -319,7 +316,7 @@ export default function Store() {
                 <p className="text-muted-foreground mb-4">
                   Start selling by adding your first product
                 </p>
-                <Button onClick={() => setIsCreateDialogOpen(true)}>
+                <Button className="rounded-full" onClick={() => setIsCreateDialogOpen(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Add Your First Product
                 </Button>
@@ -329,7 +326,7 @@ export default function Store() {
         </Card>
 
         {/* Commerce Tips */}
-        <Card className="bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
+        <Card className="rounded-xl bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-primary" />

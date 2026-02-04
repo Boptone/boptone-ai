@@ -107,7 +107,7 @@ export default function ToneRewards() {
         </div>
 
         {/* Current Membership Status */}
-        <Card className="border-2 border-primary/20">
+        <Card className="rounded-xl border-2 border-primary/20">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -164,8 +164,7 @@ export default function ToneRewards() {
               );
               
               return (
-                <Card 
-                  key={key} 
+                <Card className="rounded-xl" key={key} 
                   className={`relative ${isCurrent ? "border-2 border-primary" : ""}`}
                 >
                   {isCurrent && (
@@ -204,8 +203,7 @@ export default function ToneRewards() {
                     </ul>
                     
                     {canUpgrade && (
-                      <Button 
-                        className="w-full" 
+                      <Button className="rounded-full w-full" 
                         variant={key === "executive" ? "default" : "outline"}
                         onClick={() => handleUpgrade(key as "member" | "executive")}
                         disabled={upgradeMutation.isPending}
@@ -222,7 +220,7 @@ export default function ToneRewards() {
                     )}
                     
                     {isCurrent && (
-                      <Button className="w-full" variant="secondary" disabled>
+                      <Button className="rounded-full w-full" variant="secondary" disabled>
                         Current Plan
                       </Button>
                     )}
@@ -239,7 +237,7 @@ export default function ToneRewards() {
             <h2 className="text-xl font-semibold mb-4">Artists You're Backing</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {myBackings.map(({ backing, artist }) => (
-                <Card key={backing.id}>
+                <Card className="rounded-xl" key={backing.id}>
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-4">
                       <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
@@ -312,7 +310,7 @@ export default function ToneRewards() {
         </Card>
 
         {/* The Costco Comparison */}
-        <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+        <Card className="rounded-xl bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
               <div className="p-3 rounded-full bg-primary/20">

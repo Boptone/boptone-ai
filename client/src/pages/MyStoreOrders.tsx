@@ -51,7 +51,7 @@ export default function MyStoreOrders() {
   if (!user && !DEV_MODE) {
     return (
       <div className="container py-24">
-        <h1 className="text-4xl font-black tracking-tighter mb-4">YOUR ORDERS</h1>
+        <h1 className="text-4xl font-semibold tracking-tight mb-4">YOUR ORDERS</h1>
         <p className="text-lg">Please log in to view your orders.</p>
       </div>
     );
@@ -115,11 +115,11 @@ export default function MyStoreOrders() {
       {/* Header */}
       <div className="mb-12">
         <Link href="/my-store">
-          <Button variant="outline" className="mb-4 border-2 border-black font-bold">
+          <Button variant="outline" className="rounded-full mb-4 border-2 border-black font-bold">
             ← BACK TO MY STORE
           </Button>
         </Link>
-        <h1 className="text-5xl md:text-6xl font-black tracking-tighter mb-4">YOUR ORDERS</h1>
+        <h1 className="text-5xl md:text-6xl font-semibold tracking-tight mb-4">YOUR ORDERS</h1>
         <p className="text-lg text-muted-foreground">
           Manage orders, update fulfillment status, and add tracking information
         </p>
@@ -127,7 +127,7 @@ export default function MyStoreOrders() {
 
       {/* Orders List */}
       {!orders || orders.length === 0 ? (
-        <Card className="p-12 border-2 border-black text-center">
+        <Card className="rounded-xl p-12 border-2 border-black text-center">
           <Package className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
           <h3 className="text-xl font-bold mb-2">No orders yet</h3>
           <p className="text-muted-foreground">
@@ -137,12 +137,12 @@ export default function MyStoreOrders() {
       ) : (
         <div className="space-y-6">
           {orders.map((order) => (
-            <Card key={order.id} className="border-2 border-black overflow-hidden">
+            <Card className="rounded-xl border-2 border-black overflow-hidden" key={order.id}>
               <div className="p-6">
                 {/* Order Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <div className="text-2xl font-black font-mono mb-1">
+                    <div className="text-2xl font-semibold font-mono mb-1">
                       Order #{order.orderNumber}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -151,7 +151,7 @@ export default function MyStoreOrders() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-black font-mono mb-2">
+                    <div className="text-3xl font-semibold font-mono mb-2">
                       ${(order.total / 100).toFixed(2)}
                     </div>
                     <div
@@ -239,8 +239,7 @@ export default function MyStoreOrders() {
                           />
                         </div>
                         <div className="flex gap-3">
-                          <Button
-                            onClick={() => handleMarkShipped(order.id)}
+                          <Button className="rounded-full" onClick={() => handleMarkShipped(order.id)}
                             disabled={updateOrder.isPending}
                             className="bg-black text-white hover:bg-gray-800 font-bold"
                           >
@@ -256,8 +255,7 @@ export default function MyStoreOrders() {
                               </>
                             )}
                           </Button>
-                          <Button
-                            variant="outline"
+                          <Button className="rounded-full" variant="outline"
                             onClick={() => setSelectedOrder(null)}
                             className="border-2 border-black font-bold"
                           >
@@ -267,15 +265,13 @@ export default function MyStoreOrders() {
                       </div>
                     ) : (
                       <div className="flex gap-3">
-                        <Button
-                          onClick={() => setSelectedOrder(order.id)}
+                        <Button className="rounded-full" onClick={() => setSelectedOrder(order.id)}
                           className="bg-black text-white hover:bg-gray-800 font-bold"
                         >
                           <Truck className="w-4 h-4 mr-2" />
                           MARK AS SHIPPED
                         </Button>
-                        <Button
-                          variant="outline"
+                        <Button className="rounded-full" variant="outline"
                           onClick={() => handleCancelOrder(order.id)}
                           className="border-2 border-black font-bold text-red-600"
                         >

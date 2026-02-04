@@ -79,14 +79,14 @@ export default function ArtistProfile() {
   if (!profile) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/20">
-        <Card className="max-w-md">
+        <Card className="rounded-xl max-w-md">
           <CardContent className="p-8 text-center">
             <Music className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
             <h1 className="text-2xl font-bold mb-2">Artist Not Found</h1>
             <p className="text-muted-foreground mb-6">
               The artist profile you're looking for doesn't exist.
             </p>
-            <Button onClick={() => (window.location.href = "/")}>
+            <Button className="rounded-full" onClick={() => (window.location.href = "/")}>
               Go to Homepage
             </Button>
           </CardContent>
@@ -123,7 +123,7 @@ export default function ArtistProfile() {
       <div className="container mx-auto px-4 -mt-32 relative z-10 pb-16">
         <div className="max-w-4xl mx-auto">
           {/* Profile Header */}
-          <Card className="mb-8">
+          <Card className="rounded-xl mb-8">
             <CardContent className="p-8">
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Profile Image */}
@@ -167,8 +167,7 @@ export default function ArtistProfile() {
                   {/* Social Links */}
                   <div className="flex flex-wrap gap-3">
                     {profile.socialLinks?.instagram && (
-                      <Button
-                        variant="outline"
+                      <Button className="rounded-full" variant="outline"
                         size="sm"
                         onClick={() =>
                           window.open(
@@ -182,8 +181,7 @@ export default function ArtistProfile() {
                       </Button>
                     )}
                     {profile.socialLinks?.twitter && (
-                      <Button
-                        variant="outline"
+                      <Button className="rounded-full" variant="outline"
                         size="sm"
                         onClick={() =>
                           window.open(
@@ -197,8 +195,7 @@ export default function ArtistProfile() {
                       </Button>
                     )}
                     {profile.socialLinks?.youtube && (
-                      <Button
-                        variant="outline"
+                      <Button className="rounded-full" variant="outline"
                         size="sm"
                         onClick={() =>
                           window.open(profile.socialLinks!.youtube!, "_blank")
@@ -209,8 +206,7 @@ export default function ArtistProfile() {
                       </Button>
                     )}
                     {profile.socialLinks?.website && (
-                      <Button
-                        variant="outline"
+                      <Button className="rounded-full" variant="outline"
                         size="sm"
                         onClick={() => window.open(profile.socialLinks!.website!, "_blank")}
                       >
@@ -220,7 +216,7 @@ export default function ArtistProfile() {
                     )}
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm">
+                        <Button className="rounded-full" variant="outline" size="sm">
                           <Share2 className="h-4 w-4 mr-2" />
                           Share Profile
                         </Button>
@@ -254,7 +250,7 @@ export default function ArtistProfile() {
 
           {/* Featured Music Section */}
           {profile.socialLinks?.spotify && (
-            <Card className="mb-8">
+            <Card className="rounded-xl mb-8">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                   <Music className="h-6 w-6" style={{ color: themeColor }} />
@@ -277,7 +273,7 @@ export default function ArtistProfile() {
 
           {/* Merchandise Section */}
           {products && products.length > 0 && (
-            <Card className="mb-8">
+            <Card className="rounded-xl mb-8">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                   <ShoppingBag className="h-6 w-6" style={{ color: themeColor }} />
@@ -285,7 +281,7 @@ export default function ArtistProfile() {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.slice(0, 6).map((product: any) => (
-                    <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                    <Card className="rounded-xl overflow-hidden hover:shadow-lg transition-shadow" key={product.id}>
                       <div className="aspect-square bg-muted relative">
                         {product.imageUrl ? (
                           <img
@@ -304,7 +300,7 @@ export default function ArtistProfile() {
                         <p className="text-2xl font-bold" style={{ color: themeColor }}>
                           ${product.price}
                         </p>
-                        <Button className="w-full mt-4" style={{ backgroundColor: themeColor }}>
+                        <Button className="rounded-full w-full mt-4" style={{ backgroundColor: themeColor }}>
                           Buy Now
                         </Button>
                       </CardContent>
@@ -317,7 +313,7 @@ export default function ArtistProfile() {
 
           {/* Tour Dates Section */}
           {upcomingTours && upcomingTours.length > 0 && (
-            <Card className="mb-8">
+            <Card className="rounded-xl mb-8">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                   <Calendar className="h-6 w-6" style={{ color: themeColor }} />
@@ -336,7 +332,7 @@ export default function ArtistProfile() {
                           {new Date(tour.endDate).toLocaleDateString()}
                         </p>
                       </div>
-                      <Button variant="outline" style={{ borderColor: themeColor, color: themeColor }}>
+                      <Button className="rounded-full" variant="outline" style={{ borderColor: themeColor, color: themeColor }}>
                         Get Tickets
                       </Button>
                     </div>
@@ -356,7 +352,7 @@ export default function ArtistProfile() {
               <p className="text-muted-foreground mb-6">
                 Interested in booking, collaborations, or just want to say hi? Drop a message!
               </p>
-              <Button size="lg" style={{ backgroundColor: themeColor }}>
+              <Button className="rounded-full" size="lg" style={{ backgroundColor: themeColor }}>
                 <Mail className="h-5 w-5 mr-2" />
                 Contact {profile.stageName}
               </Button>

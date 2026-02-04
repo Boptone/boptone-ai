@@ -211,7 +211,7 @@ export default function Analytics() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+              <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
@@ -233,7 +233,7 @@ export default function Analytics() {
                   <SelectItem value="all">All time</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline" onClick={handleExportReport}>
+              <Button className="rounded-full" variant="outline" onClick={handleExportReport}>
                 <Download className="h-4 w-4 mr-2" />
                 Export Report
               </Button>
@@ -248,7 +248,7 @@ export default function Analytics() {
           {overviewStats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title}>
+              <Card className="rounded-xl" key={stat.title}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>

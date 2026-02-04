@@ -85,21 +85,21 @@ export default function DemoArtistProfile() {
               <div className="flex items-center justify-center md:justify-start gap-4 mt-4">
                 {artist.instagramUrl && (
                   <a href={artist.instagramUrl} target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
+                    <Button className="rounded-full" variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
                       <Instagram className="h-5 w-5" style={{ color: artist.accentColor }} />
                     </Button>
                   </a>
                 )}
                 {artist.twitterUrl && (
                   <a href={artist.twitterUrl} target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
+                    <Button className="rounded-full" variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
                       <Twitter className="h-5 w-5" style={{ color: artist.accentColor }} />
                     </Button>
                   </a>
                 )}
                 {artist.youtubeUrl && (
                   <a href={artist.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
+                    <Button className="rounded-full" variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
                       <Youtube className="h-5 w-5" style={{ color: artist.accentColor }} />
                     </Button>
                   </a>
@@ -161,7 +161,7 @@ export default function DemoArtistProfile() {
                     </div>
                   ))}
                 </div>
-                <Button className="w-full mt-4" style={{ backgroundColor: artist.themeColor }}>
+                <Button className="rounded-full w-full mt-4" style={{ backgroundColor: artist.themeColor }}>
                   View All Products
                 </Button>
               </CardContent>
@@ -185,7 +185,7 @@ export default function DemoArtistProfile() {
                         <p className="text-sm font-medium" style={{ color: artist.accentColor }}>
                           {show.date}
                         </p>
-                        <Button size="sm" variant="outline" className="mt-1">
+                        <Button size="sm" variant="outline" className="rounded-full mt-1">
                           Tickets
                         </Button>
                       </div>
@@ -221,7 +221,7 @@ export default function DemoArtistProfile() {
                     rows={4}
                     className="w-full px-4 py-2 rounded-lg border border-input bg-background resize-none"
                   />
-                  <Button className="w-full" style={{ backgroundColor: artist.themeColor }}>
+                  <Button className="rounded-full w-full" style={{ backgroundColor: artist.themeColor }}>
                     Send Message
                   </Button>
                 </div>
@@ -230,7 +230,7 @@ export default function DemoArtistProfile() {
           </div>
 
           {/* Customization Info Banner */}
-          <Card className="mb-8 border-2" style={{ borderColor: artist.accentColor }}>
+          <Card className="rounded-xl mb-8 border-2" style={{ borderColor: artist.accentColor }}>
             <CardContent className="p-6">
               <h3 className="text-xl font-bold mb-2" style={{ color: artist.themeColor }}>
                 🎨 Profile Customization Demo
@@ -248,8 +248,7 @@ export default function DemoArtistProfile() {
                   <p><strong>Layout:</strong> {artist.layoutStyle}</p>
                 </div>
               </div>
-              <Button 
-                className="mt-4" 
+              <Button className="rounded-full mt-4" 
                 variant="outline"
                 onClick={() => window.location.href = "/profile-settings"}
               >

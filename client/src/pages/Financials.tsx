@@ -123,7 +123,7 @@ export default function Financials() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+              <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
@@ -215,11 +215,10 @@ export default function Financials() {
                   )}
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsLoanDialogOpen(false)}>
+                  <Button className="rounded-full" variant="outline" onClick={() => setIsLoanDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button
-                    onClick={handleApplyForLoan}
+                  <Button className="rounded-full" onClick={handleApplyForLoan}
                     disabled={!loanApplication.amount || applyForLoan.isPending}
                   >
                     {applyForLoan.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
@@ -238,7 +237,7 @@ export default function Financials() {
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title}>
+              <Card className="rounded-xl" key={stat.title}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>
@@ -350,7 +349,7 @@ export default function Financials() {
                   <div className="text-center py-8">
                     <CreditCard className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
                     <p className="text-sm text-muted-foreground mb-4">No active loans</p>
-                    <Button variant="outline" size="sm" onClick={() => setIsLoanDialogOpen(true)}>
+                    <Button className="rounded-full" variant="outline" size="sm" onClick={() => setIsLoanDialogOpen(true)}>
                       Apply for Financing
                     </Button>
                   </div>

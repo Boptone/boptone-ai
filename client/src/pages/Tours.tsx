@@ -113,7 +113,7 @@ export default function Tours() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+              <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
                 <ArrowLeft className="h-5 w-5" />
               </Button>
               <div>
@@ -191,11 +191,10 @@ export default function Tours() {
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                  <Button className="rounded-full" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button
-                    onClick={handleCreateTour}
+                  <Button className="rounded-full" onClick={handleCreateTour}
                     disabled={!newTour.tourName || !newTour.startDate || !newTour.endDate || createTour.isPending}
                   >
                     {createTour.isPending && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
@@ -214,7 +213,7 @@ export default function Tours() {
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title}>
+              <Card className="rounded-xl" key={stat.title}>
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${stat.bgColor}`}>
@@ -329,7 +328,7 @@ export default function Tours() {
                 <p className="text-muted-foreground mb-4">
                   Start planning your first tour to connect with fans live
                 </p>
-                <Button onClick={() => setIsCreateDialogOpen(true)}>
+                <Button className="rounded-full" onClick={() => setIsCreateDialogOpen(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Plan Your First Tour
                 </Button>
@@ -339,7 +338,7 @@ export default function Tours() {
         </Card>
 
         {/* Tour Planning Tips */}
-        <Card className="bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
+        <Card className="rounded-xl bg-gradient-to-br from-primary/5 to-chart-3/5 border-primary/20">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-primary" />

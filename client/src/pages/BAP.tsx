@@ -29,11 +29,11 @@ export default function BAP() {
           </p>
           <div className="flex items-center justify-center gap-4">
             <Link href="/sign-in">
-              <Button size="lg" className="gap-2">
+              <Button size="lg" className="rounded-full gap-2">
                 Start Uploading <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline">
+            <Button className="rounded-full" size="lg" variant="outline">
               Learn More
             </Button>
           </div>
@@ -133,7 +133,7 @@ export default function BAP() {
                 description: "Your music is available everywhere, from day one."
               }
             ].map((benefit, index) => (
-              <Card key={index}>
+              <Card className="rounded-xl" key={index}>
                 <CardContent className="p-6 flex gap-4">
                   <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <benefit.icon className="h-6 w-6 text-primary" />
@@ -160,7 +160,7 @@ export default function BAP() {
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-6">
-              <Card className="border-destructive/50">
+              <Card className="rounded-xl border-destructive/50">
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-bold mb-6 text-destructive">Other Platforms</h3>
                   <ul className="space-y-4">
@@ -180,7 +180,7 @@ export default function BAP() {
                   </ul>
                 </CardContent>
               </Card>
-              <Card className="border-primary/50 bg-primary/5">
+              <Card className="rounded-xl border-primary/50 bg-primary/5">
                 <CardContent className="p-8">
                   <h3 className="text-2xl font-bold mb-6 text-primary">Boptone</h3>
                   <ul className="space-y-4">
@@ -245,7 +245,7 @@ export default function BAP() {
       {/* CTA */}
       <section className="py-20">
         <div className="container mx-auto">
-          <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+          <Card className="rounded-xl max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
             <CardContent className="p-12 text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
               <p className="text-lg text-muted-foreground mb-8">
@@ -253,10 +253,10 @@ export default function BAP() {
               </p>
               <div className="flex gap-4 justify-center">
                 <Link href="/sign-in">
-                  <Button size="lg">Start Free</Button>
+                  <Button className="rounded-full" size="lg">Start Free</Button>
                 </Link>
                 <Link href="/demo">
-                  <Button size="lg" variant="outline">Try Demo</Button>
+                  <Button className="rounded-full" size="lg" variant="outline">Try Demo</Button>
                 </Link>
               </div>
             </CardContent>

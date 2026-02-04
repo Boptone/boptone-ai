@@ -126,7 +126,7 @@ export default function AIAdvisor() {
       <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container py-4">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
+            <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex items-center gap-3">
@@ -155,10 +155,8 @@ export default function AIAdvisor() {
                 {quickPrompts.map((prompt) => {
                   const Icon = prompt.icon;
                   return (
-                    <Button
-                      key={prompt.label}
+                    <Button className="rounded-full w-full justify-start text-left h-auto py-3" key={prompt.label}
                       variant="outline"
-                      className="w-full justify-start text-left h-auto py-3"
                       onClick={() => handleQuickPrompt(prompt.prompt)}
                     >
                       <Icon className="h-4 w-4 mr-2 flex-shrink-0" />
@@ -193,7 +191,7 @@ export default function AIAdvisor() {
 
           {/* Chat Interface */}
           <div className="lg:col-span-3">
-            <Card className="h-[calc(100vh-12rem)] flex flex-col">
+            <Card className="rounded-xl h-[calc(100vh-12rem)] flex flex-col">
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 {messages.map((message, index) => (
@@ -256,8 +254,7 @@ export default function AIAdvisor() {
                     className="flex-1"
                     disabled={isTyping}
                   />
-                  <Button
-                    onClick={handleSendMessage}
+                  <Button className="rounded-full" onClick={handleSendMessage}
                     disabled={!input.trim() || isTyping}
                     size="icon"
                   >

@@ -233,7 +233,7 @@ export default function ComponentsShowcase() {
           <h2 className="text-3xl font-bold tracking-tight mb-6">
             Shadcn/ui Component Library
           </h2>
-          <Button variant="outline" size="icon" onClick={toggleTheme}>
+          <Button className="rounded-full" variant="outline" size="icon" onClick={toggleTheme}>
             {theme === "light" ? (
               <Moon className="h-5 w-5" />
             ) : (
@@ -388,14 +388,14 @@ export default function ComponentsShowcase() {
               <CardContent className="pt-6">
                 <div className="flex flex-wrap gap-4">
                   <Button>Default</Button>
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="destructive">Destructive</Button>
-                  <Button variant="outline">Outline</Button>
-                  <Button variant="ghost">Ghost</Button>
-                  <Button variant="link">Link</Button>
-                  <Button size="sm">Small</Button>
-                  <Button size="lg">Large</Button>
-                  <Button size="icon">
+                  <Button className="rounded-full" variant="secondary">Secondary</Button>
+                  <Button className="rounded-full" variant="destructive">Destructive</Button>
+                  <Button className="rounded-full" variant="outline">Outline</Button>
+                  <Button className="rounded-full" variant="ghost">Ghost</Button>
+                  <Button className="rounded-full" variant="link">Link</Button>
+                  <Button className="rounded-full" size="sm">Small</Button>
+                  <Button className="rounded-full" size="lg">Large</Button>
+                  <Button className="rounded-full" size="icon">
                     <Check className="h-4 w-4" />
                   </Button>
                 </div>
@@ -474,8 +474,7 @@ export default function ComponentsShowcase() {
                   <Label>Date Time Picker</Label>
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
+                      <Button className="rounded-full" variant="outline"
                         className={`w-full justify-start text-left font-normal ${
                           !datePickerDate && "text-muted-foreground"
                         }`}
@@ -537,11 +536,9 @@ export default function ComponentsShowcase() {
                   <Label>Searchable Dropdown</Label>
                   <Popover open={openCombobox} onOpenChange={setOpenCombobox}>
                     <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
+                      <Button className="rounded-full w-full justify-between" variant="outline"
                         role="combobox"
                         aria-expanded={openCombobox}
-                        className="w-full justify-between"
                       >
                         {selectedFramework
                           ? [
@@ -709,14 +706,12 @@ export default function ComponentsShowcase() {
                   <Label>Progress</Label>
                   <Progress value={progress} />
                   <div className="flex gap-2">
-                    <Button
-                      size="sm"
+                    <Button className="rounded-full" size="sm"
                       onClick={() => setProgress(Math.max(0, progress - 10))}
                     >
                       -10
                     </Button>
-                    <Button
-                      size="sm"
+                    <Button className="rounded-full" size="sm"
                       onClick={() => setProgress(Math.min(100, progress + 10))}
                     >
                       +10
@@ -990,7 +985,7 @@ export default function ComponentsShowcase() {
               <Card>
                 <CardHeader>
                   <CollapsibleTrigger asChild>
-                    <Button variant="ghost" className="w-full justify-between">
+                    <Button variant="ghost" className="rounded-full w-full justify-between">
                       <CardTitle>@peduarte starred 3 repositories</CardTitle>
                     </Button>
                   </CollapsibleTrigger>
@@ -1022,7 +1017,7 @@ export default function ComponentsShowcase() {
                 <div className="flex flex-wrap gap-4">
                   <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                     <DialogTrigger asChild>
-                      <Button variant="outline">Open Dialog</Button>
+                      <Button className="rounded-full" variant="outline">Open Dialog</Button>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
@@ -1045,20 +1040,19 @@ export default function ComponentsShowcase() {
                         </div>
                       </div>
                       <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
+                        <Button className="rounded-full" variant="outline"
                           onClick={() => setDialogOpen(false)}
                         >
                           Cancel
                         </Button>
-                        <Button onClick={handleDialogSubmit}>Submit</Button>
+                        <Button className="rounded-full" onClick={handleDialogSubmit}>Submit</Button>
                       </div>
                     </DialogContent>
                   </Dialog>
 
                   <Sheet>
                     <SheetTrigger asChild>
-                      <Button variant="outline">Open Sheet</Button>
+                      <Button className="rounded-full" variant="outline">Open Sheet</Button>
                     </SheetTrigger>
                     <SheetContent>
                       <SheetHeader>
@@ -1073,7 +1067,7 @@ export default function ComponentsShowcase() {
 
                   <Drawer>
                     <DrawerTrigger asChild>
-                      <Button variant="outline">Open Drawer</Button>
+                      <Button className="rounded-full" variant="outline">Open Drawer</Button>
                     </DrawerTrigger>
                     <DrawerContent>
                       <DrawerHeader>
@@ -1085,7 +1079,7 @@ export default function ComponentsShowcase() {
                       <DrawerFooter>
                         <Button>Submit</Button>
                         <DrawerClose asChild>
-                          <Button variant="outline">Cancel</Button>
+                          <Button className="rounded-full" variant="outline">Cancel</Button>
                         </DrawerClose>
                       </DrawerFooter>
                     </DrawerContent>
@@ -1093,7 +1087,7 @@ export default function ComponentsShowcase() {
 
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline">Open Popover</Button>
+                      <Button className="rounded-full" variant="outline">Open Popover</Button>
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="space-y-2">
@@ -1107,7 +1101,7 @@ export default function ComponentsShowcase() {
 
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="outline">Hover me</Button>
+                      <Button className="rounded-full" variant="outline">Hover me</Button>
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Add to library</p>
@@ -1126,7 +1120,7 @@ export default function ComponentsShowcase() {
                 <div className="flex flex-wrap gap-4">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline">Dropdown Menu</Button>
+                      <Button className="rounded-full" variant="outline">Dropdown Menu</Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -1140,7 +1134,7 @@ export default function ComponentsShowcase() {
 
                   <ContextMenu>
                     <ContextMenuTrigger asChild>
-                      <Button variant="outline">Right Click Me</Button>
+                      <Button className="rounded-full" variant="outline">Right Click Me</Button>
                     </ContextMenuTrigger>
                     <ContextMenuContent>
                       <ContextMenuItem>Profile</ContextMenuItem>
@@ -1152,7 +1146,7 @@ export default function ComponentsShowcase() {
 
                   <HoverCard>
                     <HoverCardTrigger asChild>
-                      <Button variant="outline">Hover Card</Button>
+                      <Button className="rounded-full" variant="outline">Hover Card</Button>
                     </HoverCardTrigger>
                     <HoverCardContent>
                       <div className="space-y-2">
@@ -1318,8 +1312,7 @@ export default function ComponentsShowcase() {
                 <div className="space-y-2">
                   <Label>Sonner Toast</Label>
                   <div className="flex flex-wrap gap-2">
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full" variant="outline"
                       onClick={() => {
                         sonnerToast.success("Operation successful", {
                           description: "Your changes have been saved",
@@ -1328,8 +1321,7 @@ export default function ComponentsShowcase() {
                     >
                       Success
                     </Button>
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full" variant="outline"
                       onClick={() => {
                         sonnerToast.error("Operation failed", {
                           description:
@@ -1339,8 +1331,7 @@ export default function ComponentsShowcase() {
                     >
                       Error
                     </Button>
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full" variant="outline"
                       onClick={() => {
                         sonnerToast.info("Information", {
                           description: "This is an information message",
@@ -1349,8 +1340,7 @@ export default function ComponentsShowcase() {
                     >
                       Info
                     </Button>
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full" variant="outline"
                       onClick={() => {
                         sonnerToast.warning("Warning", {
                           description:
@@ -1360,8 +1350,7 @@ export default function ComponentsShowcase() {
                     >
                       Warning
                     </Button>
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full" variant="outline"
                       onClick={() => {
                         sonnerToast.loading("Loading", {
                           description: "Please wait",
@@ -1370,8 +1359,7 @@ export default function ComponentsShowcase() {
                     >
                       Loading
                     </Button>
-                    <Button
-                      variant="outline"
+                    <Button className="rounded-full" variant="outline"
                       onClick={() => {
                         const promise = new Promise(resolve =>
                           setTimeout(resolve, 2000)

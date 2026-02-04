@@ -58,39 +58,39 @@ export default function Fans() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="border-b-4 border-black pb-4">
-          <h1 className="text-5xl md:text-6xl font-black tracking-tighter uppercase">YOUR AUDIENCE</h1>
+        <div className="border-b border-gray-200 pb-4">
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-tight uppercase">YOUR AUDIENCE</h1>
           <p className="text-xl font-bold mt-3">
             GROW YOUR AUDIENCE, TRACK ENGAGEMENT, AND REWARD YOUR SUPPORTERS
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border-4 border-black">
+        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border border-gray-200">
           {stats.map((stat, idx) => (
             <div key={stat.title} className={`p-6 bg-white ${idx < stats.length - 1 ? 'border-r-4 border-black' : ''} ${idx < 2 ? 'lg:border-b-0 border-b-4' : ''} md:border-b-0`}>
-              <div className="text-xs font-black uppercase tracking-wider mb-2">
+              <div className="text-xs font-semibold  tracking-wider mb-2">
                 {stat.title}
               </div>
-              <div className="text-4xl font-black font-mono" style={{ color: '#4285F4' }}>{stat.value}</div>
+              <div className="text-4xl font-semibold font-mono" style={{ color: '#4285F4' }}>{stat.value}</div>
             </div>
           ))}
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="analytics" className="space-y-4">
-          <TabsList className="rounded-none border-2 border-black bg-white">
-            <TabsTrigger value="analytics" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">ANALYTICS</TabsTrigger>
-            <TabsTrigger value="growth" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">FAN GROWTH</TabsTrigger>
-            <TabsTrigger value="rewards" className="rounded-none font-black uppercase data-[state=active]:bg-black data-[state=active]:text-white">REWARDS</TabsTrigger>
+          <TabsList className="rounded-xl border-2 border-black bg-white">
+            <TabsTrigger value="analytics" className="rounded-xl font-semibold  data-[state=active]:bg-black data-[state=active]:text-white">ANALYTICS</TabsTrigger>
+            <TabsTrigger value="growth" className="rounded-xl font-semibold  data-[state=active]:bg-black data-[state=active]:text-white">FAN GROWTH</TabsTrigger>
+            <TabsTrigger value="rewards" className="rounded-xl font-semibold  data-[state=active]:bg-black data-[state=active]:text-white">REWARDS</TabsTrigger>
           </TabsList>
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <Card className="rounded-none border-4 border-black">
+              <Card className="rounded-xl border border-gray-200">
                 <CardHeader className="bg-black text-white">
-                  <CardTitle className="text-xl font-black uppercase">STREAM PERFORMANCE</CardTitle>
+                  <CardTitle className="text-xl font-semibold uppercase">STREAM PERFORMANCE</CardTitle>
                   <CardDescription className="text-white/80 font-bold">
                     YOUR MOST POPULAR TRACKS
                   </CardDescription>
@@ -104,9 +104,9 @@ export default function Fans() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-none border-4 border-black">
+              <Card className="rounded-xl border border-gray-200">
                 <CardHeader className="bg-black text-white">
-                  <CardTitle className="text-xl font-black uppercase">AUDIENCE DEMOGRAPHICS</CardTitle>
+                  <CardTitle className="text-xl font-semibold uppercase">AUDIENCE DEMOGRAPHICS</CardTitle>
                   <CardDescription className="text-white/80 font-bold">
                     WHERE YOUR FANS ARE LISTENING FROM
                   </CardDescription>
@@ -121,9 +121,9 @@ export default function Fans() {
               </Card>
             </div>
 
-            <Card className="rounded-none border-4 border-black">
+            <Card className="rounded-xl border border-gray-200">
               <CardHeader className="bg-black text-white">
-                <CardTitle className="text-xl font-black uppercase">ENGAGEMENT TRENDS</CardTitle>
+                <CardTitle className="text-xl font-semibold uppercase">ENGAGEMENT TRENDS</CardTitle>
                 <CardDescription className="text-white/80 font-bold">
                   LIKES, SHARES, AND PLAYLIST ADDS OVER TIME
                 </CardDescription>
@@ -140,9 +140,9 @@ export default function Fans() {
 
           {/* Fan Growth Tab */}
           <TabsContent value="growth" className="space-y-4">
-            <Card className="rounded-none border-4 border-black">
+            <Card className="rounded-xl border border-gray-200">
               <CardHeader className="bg-black text-white">
-                <CardTitle className="text-xl font-black uppercase">GROWTH STRATEGIES</CardTitle>
+                <CardTitle className="text-xl font-semibold uppercase">GROWTH STRATEGIES</CardTitle>
                 <CardDescription>
                   Tools to help you reach more fans
                 </CardDescription>
@@ -157,7 +157,7 @@ export default function Fans() {
                     <p className="text-sm text-muted-foreground mb-3">
                       Get your unique artist link to share on social media
                     </p>
-                    <Button variant="outline" size="sm">
+                    <Button className="rounded-full" variant="outline" size="sm">
                       Copy Profile Link
                     </Button>
                   </div>

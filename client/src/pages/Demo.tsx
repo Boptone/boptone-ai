@@ -66,7 +66,7 @@ export default function Demo() {
 
       {/* Video Placeholder */}
       <div className="container mx-auto px-4 py-8 mb-16">
-        <Card className="max-w-5xl mx-auto">
+        <Card className="rounded-xl max-w-5xl mx-auto">
           <CardContent className="p-0">
             <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
               <div className="text-center">
@@ -89,7 +89,7 @@ export default function Demo() {
         <h2 className="text-4xl font-bold text-center mb-12">What You'll Learn</h2>
         <div className="max-w-4xl mx-auto space-y-6">
           {demoSections.map((section, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
+            <Card className="rounded-xl hover:shadow-lg transition-shadow" key={index}>
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 rounded-full p-2 mt-1">
@@ -113,7 +113,7 @@ export default function Demo() {
 
       {/* Key Takeaways */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-5xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+        <Card className="rounded-xl max-w-5xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
           <CardContent className="p-12">
             <h2 className="text-3xl font-bold text-center mb-8">Key Takeaways</h2>
             <div className="grid md:grid-cols-2 gap-6">
@@ -209,17 +209,17 @@ export default function Demo() {
 
       {/* CTA */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+        <Card className="rounded-xl max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
           <CardContent className="p-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Take Control?</h2>
             <p className="text-lg text-muted-foreground mb-8">
               Join the platform that's empowering the next generation of creators. Start free, upgrade when you're ready to scale.
             </p>
             <div className="flex gap-4 justify-center">
-              <Button size="lg" onClick={() => setLocation("/signup")}>
+              <Button className="rounded-full" size="lg" onClick={() => setLocation("/signup")}>
                 Start Free
               </Button>
-              <Button size="lg" variant="outline" onClick={() => setLocation("/contact")}>
+              <Button className="rounded-full" size="lg" variant="outline" onClick={() => setLocation("/contact")}>
                 Contact Sales
               </Button>
             </div>

@@ -102,7 +102,7 @@ export default function Features() {
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
+              <Card className="rounded-xl hover:shadow-lg transition-shadow" key={index}>
                 <CardContent className="p-8">
                   <Icon className="h-12 w-12 text-primary mb-4" />
                   <h3 className="text-2xl font-semibold mb-3">{feature.title}</h3>
@@ -127,7 +127,7 @@ export default function Features() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">Why Boptone?</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="border-destructive/50">
+            <Card className="rounded-xl border-destructive/50">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-semibold mb-4 text-destructive">Without Boptone</h3>
                 <ul className="space-y-3 text-muted-foreground">
@@ -138,7 +138,7 @@ export default function Features() {
                 </ul>
               </CardContent>
             </Card>
-            <Card className="border-primary/50 bg-primary/5">
+            <Card className="rounded-xl border-primary/50 bg-primary/5">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-semibold mb-4 text-primary">With Boptone</h3>
                 <ul className="space-y-3 text-muted-foreground">
@@ -155,17 +155,17 @@ export default function Features() {
 
       {/* CTA */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+        <Card className="rounded-xl max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
           <CardContent className="p-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-lg text-muted-foreground mb-8">
               Start free today. Upgrade when you're ready.
             </p>
             <div className="flex gap-4 justify-center">
-              <Button size="lg" onClick={() => setLocation("/signup")}>
+              <Button className="rounded-full" size="lg" onClick={() => setLocation("/signup")}>
                 Start Free
               </Button>
-              <Button size="lg" variant="outline" onClick={() => setLocation("/demo")}>
+              <Button className="rounded-full" size="lg" variant="outline" onClick={() => setLocation("/demo")}>
                 Watch Demo
               </Button>
             </div>
