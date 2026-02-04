@@ -1111,3 +1111,12 @@
 - [x] Include 4% platform fee and unlimited earnings
 - [x] Match exact description and features from homepage
 - [x] Update tier selection logic to handle "label" option
+
+## Soften /Releases Page Brutalist Design
+- [x] Review current /releases page design to identify harsh elements (black headers, thick borders, sharp corners, high contrast)
+- [x] Add rounded corners to cards and containers (rounded-xl)
+- [x] Soften borders (reduced from border-4 to border, lighter colors)
+- [x] Add subtle shadows instead of hard borders (shadow-sm)
+- [x] Increase padding and whitespace (gap-4 instead of gap-0)
+- [x] Use softer color palette (blue gradients instead of black, primary colors)
+- [x] Test the softened design (verified in browser - all improvements visible)
