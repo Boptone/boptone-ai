@@ -1164,8 +1164,8 @@
   - [x] ComponentShowcase
   - [x] MyStoreOrders
   - [x] DemoArtistProfile
-- [ ] Test consistency across all pages
-- [ ] Save final checkpoint
+- [x] Test consistency across all pages (tested Dashboard, Analytics, Store)
+- [x] Save final checkpoint (e9ba4e87)
 
 Design System Rules:
 - Hero headlines (H1): font-bold ✅
@@ -1175,3 +1175,10 @@ Design System Rules:
 - No ALL CAPS except intentional styling
 - Smooth transitions: transition-all duration-200
 - Soft borders: border border-gray-100/200 (not border-4 border-black)
+
+## Fix Homepage Buttons to Pill Design (User Reported Issue)
+- [x] Fix header "START FREE" button to rounded-full
+- [x] Fix hero section "START FREE" button to rounded-full
+- [x] Fix comparison table CTAs (Start Free, Start Trial, Get Started, Contact Sales) to rounded-full
+- [x] Test all buttons visually (verified in browser)
+- [ ] Save checkpoint

@@ -274,7 +274,7 @@ export default function Home() {
           <div className="flex items-center justify-center pt-4">
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6" 
+              className="text-lg px-8 py-6 rounded-full" 
               style={{ backgroundColor: '#4A90E2', color: 'white' }}
               onClick={() => setLocation("/signup")}
             >
@@ -587,7 +587,7 @@ export default function Home() {
                 <div></div>
                 <div className="flex justify-center">
                   <Button 
-                    className="w-full" 
+                    className="w-full rounded-full" 
                     style={{ backgroundColor: '#4A90E2', color: 'white' }}
                     onClick={() => {
                       setLoadingButton('creator');
@@ -617,7 +617,7 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                   <Button 
-                    className="w-full" 
+                    className="w-full rounded-full" 
                     style={{ backgroundColor: '#4A90E2', color: 'white' }}
                     onClick={() => {
                       setLoadingButton('label');
@@ -638,7 +638,7 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                   <Button 
-                    className="w-full" 
+                    className="w-full rounded-full" 
                     style={{ backgroundColor: '#4A90E2', color: 'white' }}
                     onClick={() => {
                       setLoadingButton('enterprise');
@@ -712,7 +712,7 @@ export default function Home() {
         <div className="flex justify-center">
           <Button 
             size="lg" 
-            className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity rounded-none font-bold"
+            className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity rounded-full font-bold"
             style={{ backgroundColor: '#4285F4' }}
             onClick={() => {
               setLoadingButton('hero');

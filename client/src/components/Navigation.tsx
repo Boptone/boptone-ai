@@ -94,7 +94,7 @@ export function Navigation() {
               <Button variant="ghost" asChild>
                 <a href={getLoginUrl()}>Log In</a>
               </Button>
-              <Button asChild className="bg-[#4A90E2] hover:bg-[#3A7BC8] text-white font-semibold px-6">
+              <Button asChild className="bg-[#4A90E2] hover:bg-[#3A7BC8] text-white font-semibold px-6 rounded-full">
                 <a href={getLoginUrl()} className="flex items-center gap-2">
                   START FREE
                   <span className="text-lg">→</span>
@@ -198,7 +198,7 @@ export function Navigation() {
                   <Button variant="ghost" className="w-full" asChild>
                     <a href={getLoginUrl()}>Log In</a>
                   </Button>
-                  <Button className="w-full bg-[#4A90E2] hover:bg-[#3A7BC8] text-white font-semibold" asChild>
+                  <Button className="w-full bg-[#4A90E2] hover:bg-[#3A7BC8] text-white font-semibold rounded-full" asChild>
                     <a href={getLoginUrl()} className="flex items-center justify-center gap-2">
                       START FREE
                       <span className="text-lg">→</span>
