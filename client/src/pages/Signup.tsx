@@ -15,7 +15,7 @@ export default function Signup() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
   const [, setLocation] = useLocation();
   const [step, setStep] = useState<"tier" | "profile">("tier");
-  const [selectedTier, setSelectedTier] = useState<"free" | "pro" | "enterprise">("free");
+  const [selectedTier, setSelectedTier] = useState<"free" | "pro" | "label" | "enterprise">("free");
   
   const createProfile = trpc.artistProfile.create.useMutation({
     onSuccess: () => {
@@ -81,6 +81,25 @@ export default function Signup() {
       popular: true,
     },
     {
+      id: "label" as const,
+      name: "Label",
+      price: "$59",
+      period: "/month",
+      platformFee: "4%",
+      earningCap: "Unlimited",
+      description: "Scale operations and manage multiple artists with team tools",
+      features: [
+        "Everything in Pro",
+        "Unlimited earnings",
+        "4% platform fee",
+        "Team accounts (3 seats)",
+        "White-label embeds",
+        "API access",
+        "Dedicated account manager",
+        "1-hour support response",
+      ],
+    },
+    {
       id: "enterprise" as const,
       name: "Enterprise",
       price: "Custom",
@@ -101,7 +120,7 @@ export default function Signup() {
     },
   ];
 
-  const handleTierSelection = (tier: "free" | "pro" | "enterprise") => {
+  const handleTierSelection = (tier: "free" | "pro" | "label" | "enterprise") => {
     setSelectedTier(tier);
     if (tier === "enterprise") {
       // Redirect to contact sales

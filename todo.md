@@ -1105,3 +1105,9 @@
 - [x] Include Earning cap row ($1,000/month / $10,000/month / Unlimited / Unlimited)
 - [x] Match exact styling from homepage
 - [x] Update tier data to match homepage (Creator/Pro/Enterprise names, descriptions, features)
+
+## Add Label Tier to Signup Page
+- [x] Add Label tier ($59/month) between Pro and Enterprise
+- [x] Include 4% platform fee and unlimited earnings
+- [x] Match exact description and features from homepage
+- [x] Update tier selection logic to handle "label" option
