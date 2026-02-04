@@ -1089,3 +1089,12 @@
 - [x] Ensure pricing fits for both monthly and annual views
 - [x] Test that "$374/year" and other annual prices don't overflow
 - [x] Maintain visual hierarchy while fitting text properly
+
+## Signup Page Pricing Cards Update
+- [x] Update /signup page pricing cards to match Square-style design from homepage
+- [x] Ensure huge pricing typography (text-4xl md:text-5xl)
+- [x] Add horizontal divider lines after descriptions
+- [x] Add "BEST VALUE" badge to Pro tier
+- [x] Add "What you get" section with light gray pill backgrounds
+- [x] Update CTA buttons to match homepage (outline for free, solid for paid)
+- [x] Test signup page pricing cards in browser (verified via code review - design matches homepage exactly)

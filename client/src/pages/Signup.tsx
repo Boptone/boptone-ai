@@ -132,43 +132,73 @@ export default function Signup() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {tiers.map((tier) => (
-                <Card 
-                  key={tier.id}
-                  className={`relative ${tier.popular ? "border-primary shadow-xl scale-105" : ""}`}
-                >
-                  {tier.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                      <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
-                        Most Popular
-                      </span>
+                <div key={tier.id} className="relative">
+                  {/* Square-Style Card */}
+                  <div className="bg-white dark:bg-card border border-border rounded-2xl p-8 h-full flex flex-col shadow-sm">
+                    {/* Header */}
+                    <div className="mb-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-2xl font-bold text-card-foreground">{tier.name}</h3>
+                        {tier.popular && (
+                          <span className="inline-block bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-xs font-bold tracking-wide">
+                            BEST VALUE
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-muted-foreground text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
                     </div>
-                  )}
-                  <CardHeader className="text-center pb-8">
-                    <CardTitle className="text-2xl">{tier.name}</CardTitle>
-                    <div className="mt-4">
-                      <span className="text-5xl font-bold">{tier.price}</span>
+                    
+                    {/* Divider */}
+                    <div className="border-t border-border mb-6"></div>
+                    
+                    {/* Huge Pricing */}
+                    <div className="mb-6">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl md:text-5xl font-bold text-card-foreground">
+                          {tier.price}
+                        </span>
+                      </div>
                     </div>
-                    <CardDescription className="mt-2">{tier.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <ul className="space-y-3 min-h-[280px]">
-                      {tier.features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    
+                    {/* CTA Button */}
                     <Button 
-                      className="w-full" 
-                      variant={tier.popular ? "default" : "outline"}
+                      className="w-full mb-8"
+                      variant={tier.id === "free" ? "outline" : "default"}
+                      style={tier.id === "free" ? {
+                        borderColor: '#4A90E2',
+                        color: '#4A90E2',
+                        padding: '14px 24px',
+                        borderRadius: '999px',
+                        fontWeight: 600,
+                        fontSize: '15px'
+                      } : {
+                        backgroundColor: '#4A90E2',
+                        color: 'white',
+                        padding: '14px 24px',
+                        borderRadius: '999px',
+                        fontWeight: 600,
+                        fontSize: '15px'
+                      }}
                       onClick={() => handleTierSelection(tier.id)}
                     >
                       {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </CardContent>
-                </Card>
+                    
+                    {/* What you get Section */}
+                    <div className="flex-1">
+                      <h4 className="text-sm font-bold mb-3 text-card-foreground">What you get</h4>
+                      <div className="space-y-2">
+                        {tier.features.map((feature, index) => (
+                          <div key={index} className="flex items-center gap-3 bg-muted/30 rounded-lg px-3 py-2.5">
+                            <Check className="h-4 w-4 text-card-foreground flex-shrink-0" />
+                            <span className="text-sm text-card-foreground">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
 
