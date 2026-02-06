@@ -1194,4 +1194,16 @@ Design System Rules:
 - [x] Add CTA section for artists to join BAP
 - [x] Update route from /bap to /bap-protocol
 - [x] Test page across devices
+- [x] Save checkpoint (5611cc83)
+
+## Remove False Claim and Add Transparency Messaging
+- [x] Remove "The World's First Decentralized Streaming Platform" badge from BAP page
+- [x] Add "No hidden fees or locked-in contracts. Cancel or switch plans anytime." to BAP page CTA section
+- [x] Find all pricing pages site-wide (Home, Signup, Features, etc.)
+- [x] Add transparency messaging to Home page pricing section
+- [x] Add transparency messaging to Signup page pricing section
+- [x] Test BAP page (false claim removed, transparency messaging added)
+- [x] Test Home page (transparency messaging added)
+- [x] Test Signup page (transparency messaging added in code)
 - [ ] Save checkpoint
+- [ ] Push to GitHub
