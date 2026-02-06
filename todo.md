@@ -1364,3 +1364,8 @@ Design System Rules:
 - [x] Test ProfileSettings page redesign - VERIFIED: Looks revolutionary, matches Dashboard/Homepage aesthetic perfectly (fixed infinite re-render bug with useEffect)
 - [ ] Save checkpoint after Dashboard + Profile pages complete
 - [ ] Continue to remaining dashboard pages (Analytics, Upload Music, etc.)
+
+## BopShop & Discover Pages Revolutionary Redesign (Re-applied after sandbox reset)
+- [x] Re-apply Shop page (BopShop) revolutionary redesign (asymmetric hero with massive 7xl typography, gradient pill badge, orange stats card, 4 category filter cards with color-coded borders, product grid)
+- [x] Re-apply Discover page revolutionary redesign (asymmetric hero with massive 7xl typography, gradient pill badge, indigo stats card, search bar card, genre pills, tab design, track cards, music player)
+- [ ] Save checkpoint after BopShop + Discover pages complete
