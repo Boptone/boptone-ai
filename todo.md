@@ -1231,3 +1231,13 @@ Design System Rules:
 - [x] Ensure design matches education screen aesthetics (pill buttons, clean layout) - VERIFIED
 - [x] Test onboarding page loads with new branding - WORKING
 - [ ] Save checkpoint after Phase 3 complete
+
+## Redesign /how-it-works Education Screens (User Feedback: Generic & Boring)
+- [x] Replace centered card layout with asymmetric, modern design (grid md:grid-cols-2)
+- [x] Add bold, massive typography for headlines (text-6xl/7xl font-black)
+- [x] Create visual diagrams instead of simple icons (rounded-3xl cards with thick borders)
+- [x] Add gradient backgrounds and depth (bg-gradient-to-br, shadow-2xl, animated pulse)
+- [x] Implement smooth transitions between screens (animate-in fade-in duration-500)
+- [x] Add more personality and visual interest (hover transforms, bouncing arrows, color themes per screen)
+- [x] Test redesigned flow for visual impact - VERIFIED: Looks revolutionary, not generic
+- [ ] Save checkpoint
