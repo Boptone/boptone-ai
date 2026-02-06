@@ -16,7 +16,10 @@ export default function BAP() {
       {/* Hero Section - The Revolution */}
       <section className="py-24 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto text-center">
-
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
+            <Zap className="h-4 w-4" />
+            The World's First Decentralized Streaming Platform
+          </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             Fans Pay Artists <span className="text-primary">Directly</span>
           </h1>
@@ -425,7 +428,7 @@ export default function BAP() {
                   <Button className="rounded-full text-lg px-8 py-6" size="lg" variant="outline">Try Demo</Button>
                 </Link>
               </div>
-              <div className="mt-8 flex items-center justify-center gap-8 text-sm text-muted-foreground flex-wrap">
+              <div className="mt-8 flex items-center justify-center gap-8 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-primary" />
                   <span>No credit card required</span>
@@ -438,9 +441,6 @@ export default function BAP() {
                   <Check className="h-4 w-4 text-primary" />
                   <span>Cancel anytime</span>
                 </div>
-              </div>
-              <div className="mt-4 text-sm text-muted-foreground">
-                No hidden fees or locked-in contracts. Cancel or switch plans anytime.
               </div>
             </CardContent>
           </Card>

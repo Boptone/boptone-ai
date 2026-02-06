@@ -250,12 +250,9 @@ export default function Signup() {
               ))}
             </div>
 
-            <div className="text-center mt-12 space-y-2">
+            <div className="text-center mt-12 space-y-4">
               <p className="text-sm text-muted-foreground">
                 All plans include 14-day Pro trial • Cancel anytime • No credit card required
-              </p>
-              <p className="text-sm text-muted-foreground">
-                No hidden fees or locked-in contracts. Cancel or switch plans anytime.
               </p>
             </div>
           </div>

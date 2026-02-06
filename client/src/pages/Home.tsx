@@ -296,14 +296,11 @@ export default function Home() {
               14-day Pro trial
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
+              <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
                 <Check className="h-3 w-3 text-white" />
               </div>
               Cancel anytime
             </div>
-          </div>
-          <div className="mt-4 text-sm text-white/70">
-            No hidden fees or locked-in contracts. Cancel or switch plans anytime.
           </div>
         </div>
       </section>
