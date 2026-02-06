@@ -1320,8 +1320,13 @@ Design System Rules:
 
 
 ## Fix Homepage Missing Components (User Reported)
-- [x] Add footer back to Homepage (black background, white text, "Music • Culture • News • Whatever")
+- [x] Add footer back to Homepage (black background, white text, BOPTONE branding)
 - [x] Add ToneyChatbot component back to Homepage
-- [x] Add "Music • Culture • News • Whatever" text to Footer component
+- [x] Remove "Music • Culture • News • Whatever" (different project, not Boptone)
 - [x] Test Homepage to verify footer and chatbot are working - VERIFIED
+- [x] Save checkpoint (632d28bf)
+
+## Fix Homepage Hero Period Color (User Request)
+- [x] Change period after "Your Tone" from blue (#4285F4) to black (#000000)
+- [ ] Test change
 - [ ] Save checkpoint

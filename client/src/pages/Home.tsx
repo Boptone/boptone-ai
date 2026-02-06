@@ -290,7 +290,7 @@ export default function Home() {
                 {rotatingVerbs[verbIndex]}
               </span>
               <br />
-              <span style={{ color: '#4285F4' }}>Your Tone.</span>
+              <span style={{ color: '#4285F4' }}>Your Tone</span><span style={{ color: '#000000' }}>.</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
               AI-powered tools, financial services, and career management—bringing fans into your orbit from discovery to breakthrough success.
