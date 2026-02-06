@@ -21,7 +21,6 @@ export default function Footer() {
             BOPTONE
           </h2>
           <p className="text-gray-400 text-sm mt-2">Own Your Tone™</p>
-          <p className="text-gray-500 text-xs mt-1">Music • Culture • News • Whatever</p>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
