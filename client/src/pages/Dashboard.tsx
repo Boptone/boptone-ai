@@ -21,7 +21,10 @@ import {
   Loader2,
   Target,
   Lightbulb,
-  CheckCircle2
+  CheckCircle2,
+  Upload,
+  BarChart3,
+  Zap
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useLocation } from "wouter";
@@ -82,48 +85,52 @@ export default function Dashboard() {
 
   const stats = [
     {
-      title: "Your Revenue",
+      title: "Revenue",
       value: totalRevenue ? `$${(totalRevenue / 100).toLocaleString()}` : "$0",
       change: "+12.5%",
       trend: "up",
       icon: DollarSign,
       color: "text-green-600",
-      bgColor: "bg-green-50",
+      bgColor: "bg-gradient-to-br from-green-400 to-emerald-500",
+      borderColor: "border-green-500",
     },
     {
-      title: "Your Streams",
+      title: "Streams",
       value: "1.2M",
       change: "+8.2%",
       trend: "up",
       icon: TrendingUp,
       color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      bgColor: "bg-gradient-to-br from-blue-400 to-blue-600",
+      borderColor: "border-blue-500",
     },
     {
-      title: "Your Followers",
+      title: "Followers",
       value: "45.2K",
       change: "+15.3%",
       trend: "up",
       icon: Users,
       color: "text-purple-600",
-      bgColor: "bg-purple-50",
+      bgColor: "bg-gradient-to-br from-purple-400 to-purple-600",
+      borderColor: "border-purple-500",
     },
     {
-      title: "Your Opportunities",
+      title: "Opportunities",
       value: opportunities?.length || 0,
       change: "This week",
       trend: "neutral",
       icon: Sparkles,
       color: "text-orange-600",
-      bgColor: "bg-orange-50",
+      bgColor: "bg-gradient-to-br from-orange-400 to-orange-600",
+      borderColor: "border-orange-500",
     },
   ];
 
   const quickActions = [
-    { label: "Upload Music", icon: Music, href: "/upload", color: "bg-primary" },
-    { label: "View Analytics", icon: TrendingUp, href: "/analytics", color: "bg-chart-4" },
-    { label: "Discover Music", icon: Music, href: "/discover", color: "bg-chart-3" },
-    { label: "Edit Profile", icon: Users, href: "/profile-settings", color: "bg-chart-2" },
+    { label: "Upload Music", icon: Upload, href: "/upload", color: "bg-gradient-to-br from-blue-600 to-indigo-600", borderColor: "border-blue-500" },
+    { label: "View Analytics", icon: BarChart3, href: "/analytics", color: "bg-gradient-to-br from-purple-600 to-pink-600", borderColor: "border-purple-500" },
+    { label: "Discover Music", icon: Music, href: "/discover", color: "bg-gradient-to-br from-green-600 to-teal-600", borderColor: "border-green-500" },
+    { label: "Edit Profile", icon: Users, href: "/profile-settings", color: "bg-gradient-to-br from-orange-600 to-red-600", borderColor: "border-orange-500" },
   ];
 
   const goals = [
@@ -157,35 +164,47 @@ export default function Dashboard() {
   return (
     <>
       <DemoBanner />
-      <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
-      {/* Header */}
-      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container py-6">
-          <div className="flex items-center justify-between">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      {/* Revolutionary Header with Asymmetric Layout */}
+      <div className="border-b-4 border-black bg-white sticky top-0 z-10 shadow-xl">
+        <div className="container py-8">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Left: Massive Typography */}
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-                Welcome back, {effectiveProfile?.stageName || 'Artist'}
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-bold mb-6 shadow-lg">
+                <Zap className="h-5 w-5" />
+                Command Center
+              </div>
+              <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none mb-4">
+                Welcome back,
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+                  {effectiveProfile?.stageName || 'Artist'}
+                </span>
+                <span className="text-black">.</span>
               </h1>
-              <p className="text-muted-foreground mt-1">
-                Career Phase: <span className="font-semibold capitalize text-primary">{effectiveProfile?.careerPhase || 'Getting Started'}</span>
+              <p className="text-xl text-gray-700 font-medium">
+                Career Phase: <span className="font-black capitalize text-purple-600">{effectiveProfile?.careerPhase || 'Getting Started'}</span>
                 {effectiveProfile?.priorityScore && (
                   <span className="ml-4">
-                    Priority Score: <span className="font-semibold text-primary">{effectiveProfile?.priorityScore}/10</span>
+                    • Priority Score: <span className="font-black text-blue-600">{effectiveProfile?.priorityScore}/10</span>
                   </span>
                 )}
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="icon" className="relative rounded-full">
-                <Bell className="h-5 w-5" />
+
+            {/* Right: Action Buttons */}
+            <div className="flex items-center justify-end gap-4">
+              <Button variant="outline" size="lg" className="relative rounded-full border-4 border-black hover:bg-black hover:text-white transition-all hover:scale-105 shadow-xl">
+                <Bell className="h-6 w-6" />
                 {notifications && notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 h-7 w-7 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-black border-2 border-white">
                     {notifications.length}
                   </span>
                 )}
               </Button>
-              <Button onClick={() => setLocation("/ai-advisor")} className="rounded-full">
-                <Sparkles className="h-4 w-4 mr-2" />
+              <Button onClick={() => setLocation("/ai-advisor")} size="lg" className="rounded-full gap-2 text-lg px-8 py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-105">
+                <Sparkles className="h-5 w-5" />
                 AI Advisor
               </Button>
             </div>
@@ -193,60 +212,59 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="container py-8 space-y-8">
-        {/* Stats Grid */}
+      <div className="container py-12 space-y-12">
+        {/* Stats Grid - Revolutionary Color-Coded Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.title} className="rounded-xl hover:shadow-lg transition-all duration-200 border-gray-100">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                      <Icon className={`h-6 w-6 ${stat.color}`} />
+              <Card key={stat.title} className={`rounded-3xl border-4 ${stat.borderColor} shadow-2xl hover:scale-105 transition-transform bg-white`}>
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className={`w-16 h-16 rounded-2xl ${stat.bgColor} flex items-center justify-center shadow-lg`}>
+                      <Icon className="h-8 w-8 text-white" />
                     </div>
                     {stat.trend === "up" && (
-                      <ArrowUpRight className="h-5 w-5 text-green-600" />
+                      <ArrowUpRight className="h-7 w-7 text-green-600 font-black" />
                     )}
                     {stat.trend === "down" && (
-                      <ArrowDownRight className="h-5 w-5 text-red-600" />
+                      <ArrowDownRight className="h-7 w-7 text-red-600 font-black" />
                     )}
                   </div>
-                  <div className="mt-4">
-                    <p className="text-sm text-muted-foreground">{stat.title}</p>
-                    <p className="text-2xl font-bold mt-1">{stat.value}</p>
-                    <p className={`text-sm mt-1 ${stat.trend === "up" ? "text-green-600" : stat.trend === "down" ? "text-red-600" : "text-muted-foreground"}`}>
-                      {stat.change}
-                    </p>
-                  </div>
+                  <p className="text-sm text-gray-600 font-bold uppercase tracking-wide">{stat.title}</p>
+                  <p className="text-4xl font-black mt-2">{stat.value}</p>
+                  <p className={`text-sm mt-2 font-bold ${stat.trend === "up" ? "text-green-600" : stat.trend === "down" ? "text-red-600" : "text-gray-600"}`}>
+                    {stat.change}
+                  </p>
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        {/* Quick Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Common tasks to manage your career</CardDescription>
+        {/* Quick Actions - Bold Color-Coded Cards */}
+        <Card className="rounded-3xl border-4 border-black shadow-2xl bg-white">
+          <CardHeader className="pb-8">
+            <CardTitle className="text-4xl font-black">Quick Actions</CardTitle>
+            <CardDescription className="text-lg font-medium">Common tasks to manage your career</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {quickActions.map((action) => {
                 const Icon = action.icon;
                 return (
-                  <Button
+                  <Card
                     key={action.label}
-                    variant="outline"
-                    className="h-24 flex-col gap-2 hover:border-primary rounded-full transition-all duration-200 hover:shadow-md"
+                    className={`rounded-3xl border-4 ${action.borderColor} shadow-xl hover:scale-105 transition-all cursor-pointer bg-white`}
                     onClick={() => setLocation(action.href)}
                   >
-                    <div className={`p-3 rounded-lg ${action.color} text-white`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <span className="text-sm font-medium">{action.label}</span>
-                  </Button>
+                    <CardContent className="p-8 flex flex-col items-center text-center gap-4">
+                      <div className={`w-16 h-16 rounded-2xl ${action.color} flex items-center justify-center shadow-lg`}>
+                        <Icon className="h-8 w-8 text-white" />
+                      </div>
+                      <span className="text-lg font-black">{action.label}</span>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </div>
@@ -254,61 +272,65 @@ export default function Dashboard() {
         </Card>
 
         {/* Goals & Tips Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Goal Tracking */}
-          <Card>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Goal Tracking - Green Card */}
+          <Card className="rounded-3xl border-4 border-green-500 shadow-2xl bg-gradient-to-br from-green-50 to-emerald-50">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5" />
-                Your Goals
+              <CardTitle className="flex items-center gap-3 text-3xl font-black">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg">
+                  <Target className="h-6 w-6 text-white" />
+                </div>
+                Goals
               </CardTitle>
-              <CardDescription>Track your progress</CardDescription>
+              <CardDescription className="text-lg font-medium">Track your progress</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               {goals.map((goal) => {
                 const progress = Math.min((goal.current / goal.target) * 100, 100);
                 return (
-                  <div key={goal.title} className="space-y-2">
+                  <div key={goal.title} className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-3">
                         {goal.completed && (
-                          <CheckCircle2 className="h-4 w-4 text-green-600" />
+                          <CheckCircle2 className="h-6 w-6 text-green-600 font-black" />
                         )}
-                        <span className={`text-sm font-medium ${goal.completed ? "line-through text-muted-foreground" : ""}`}>
+                        <span className={`text-lg font-bold ${goal.completed ? "line-through text-gray-500" : "text-gray-900"}`}>
                           {goal.title}
                         </span>
                       </div>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-lg font-black text-gray-700">
                         {goal.current}/{goal.target}
                       </span>
                     </div>
-                    <Progress value={progress} className="h-2" />
+                    <Progress value={progress} className="h-3 rounded-full" />
                   </div>
                 );
               })}
             </CardContent>
           </Card>
 
-          {/* Tips & Recommendations */}
-          <Card>
+          {/* Tips & Recommendations - Purple Card */}
+          <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-pink-50">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Lightbulb className="h-5 w-5" />
-                Tips for Growth
+              <CardTitle className="flex items-center gap-3 text-3xl font-black">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
+                  <Lightbulb className="h-6 w-6 text-white" />
+                </div>
+                Growth Tips
               </CardTitle>
-              <CardDescription>Recommended actions</CardDescription>
+              <CardDescription className="text-lg font-medium">Recommended actions</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {tips.map((tip) => (
-                <div key={tip.title} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
-                  <Lightbulb className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div key={tip.title} className="flex items-start gap-4 p-6 rounded-2xl bg-white border-2 border-purple-200 hover:border-purple-400 transition-all hover:shadow-lg">
+                  <Lightbulb className="h-6 w-6 text-purple-600 mt-1 flex-shrink-0 font-black" />
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm">{tip.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{tip.description}</p>
+                    <p className="font-black text-lg text-gray-900">{tip.title}</p>
+                    <p className="text-sm text-gray-600 mt-2 font-medium">{tip.description}</p>
                     <Button
                       variant="link"
                       size="sm"
-                      className="h-auto p-0 mt-2 text-xs"
+                      className="h-auto p-0 mt-3 text-sm font-black text-purple-600 hover:text-purple-700"
                       onClick={() => setLocation(tip.href)}
                     >
                       {tip.action} →
@@ -321,12 +343,12 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Recent Activity */}
-          <Card className="lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Recent Activity - Blue Card */}
+          <Card className="lg:col-span-2 rounded-3xl border-4 border-blue-500 shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50">
             <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Your latest platform updates</CardDescription>
+              <CardTitle className="text-3xl font-black">Recent Activity</CardTitle>
+              <CardDescription className="text-lg font-medium">Your latest platform updates</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -335,75 +357,79 @@ export default function Dashboard() {
                   title="New release performing well"
                   description="Your single 'Summer Vibes' reached 50K streams"
                   time="2 hours ago"
-                  color="bg-blue-100 text-blue-600"
+                  color="bg-gradient-to-br from-blue-400 to-blue-600"
                 />
                 <ActivityItem
                   icon={Users}
                   title="Follower milestone reached"
                   description="You gained 1,000 new Instagram followers this week"
                   time="1 day ago"
-                  color="bg-purple-100 text-purple-600"
+                  color="bg-gradient-to-br from-purple-400 to-purple-600"
                 />
                 <ActivityItem
                   icon={DollarSign}
                   title="Payment received"
                   description="Streaming royalties deposited: $247.50"
                   time="2 days ago"
-                  color="bg-green-100 text-green-600"
+                  color="bg-gradient-to-br from-green-400 to-emerald-500"
                 />
                 <ActivityItem
                   icon={Sparkles}
                   title="New opportunity detected"
                   description="Playlist curator interested in your latest track"
                   time="3 days ago"
-                  color="bg-orange-100 text-orange-600"
+                  color="bg-gradient-to-br from-orange-400 to-orange-600"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Upcoming Events */}
-            <Card>
+          <div className="space-y-8">
+            {/* Upcoming Events - Orange Card */}
+            <Card className="rounded-3xl border-4 border-orange-500 shadow-2xl bg-gradient-to-br from-orange-50 to-red-50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-2xl font-black">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg">
+                    <Calendar className="h-5 w-5 text-white" />
+                  </div>
                   Upcoming
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
                 <EventItem
                   title="Release: New Single"
                   date="Oct 31, 2025"
-                  color="bg-primary"
+                  color="bg-gradient-to-r from-blue-500 to-indigo-500"
                 />
                 <EventItem
                   title="Tour: LA Show"
                   date="Nov 5, 2025"
-                  color="bg-chart-3"
+                  color="bg-gradient-to-r from-green-500 to-teal-500"
                 />
                 <EventItem
                   title="Loan Payment Due"
                   date="Nov 10, 2025"
-                  color="bg-chart-4"
+                  color="bg-gradient-to-r from-purple-500 to-pink-500"
                 />
               </CardContent>
             </Card>
 
-            {/* Health & Wellness */}
-            <Card>
+            {/* Health & Wellness - Pink Card */}
+            <Card className="rounded-3xl border-4 border-pink-500 shadow-2xl bg-gradient-to-br from-pink-50 to-purple-50">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Heart className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-2xl font-black">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center shadow-lg">
+                    <Heart className="h-5 w-5 text-white" />
+                  </div>
                   Health & Wellness
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground mb-3">
+                <p className="text-base text-gray-700 mb-4 font-medium">
                   Your health coverage is active
                 </p>
-                <Button variant="outline" size="sm" className="w-full">
+                <Button variant="outline" size="lg" className="w-full rounded-full border-4 border-pink-500 hover:bg-pink-500 hover:text-white transition-all hover:scale-105 shadow-lg font-black">
                   View Benefits
                 </Button>
               </CardContent>
@@ -430,14 +456,14 @@ function ActivityItem({
   color: string;
 }) {
   return (
-    <div className="flex items-start gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-      <div className={`p-2 rounded-lg ${color}`}>
-        <Icon className="h-5 w-5" />
+    <div className="flex items-start gap-4 p-6 rounded-2xl bg-white border-2 border-blue-200 hover:border-blue-400 transition-all hover:shadow-lg">
+      <div className={`w-12 h-12 rounded-2xl ${color} flex items-center justify-center shadow-lg flex-shrink-0`}>
+        <Icon className="h-6 w-6 text-white" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-medium text-sm">{title}</p>
-        <p className="text-sm text-muted-foreground mt-0.5">{description}</p>
-        <p className="text-xs text-muted-foreground mt-1">{time}</p>
+        <p className="font-black text-lg text-gray-900">{title}</p>
+        <p className="text-sm text-gray-600 mt-1 font-medium">{description}</p>
+        <p className="text-xs text-gray-500 mt-2 font-medium">{time}</p>
       </div>
     </div>
   );
@@ -453,11 +479,11 @@ function EventItem({
   color: string;
 }) {
   return (
-    <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
-      <div className={`w-2 h-2 rounded-full ${color}`} />
+    <div className="flex items-center gap-4 p-4 rounded-2xl bg-white border-2 border-orange-200 hover:border-orange-400 transition-all hover:shadow-lg">
+      <div className={`w-4 h-4 rounded-full ${color} flex-shrink-0 shadow-md`} />
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-xs text-muted-foreground">{date}</p>
+        <p className="text-base font-black text-gray-900">{title}</p>
+        <p className="text-sm text-gray-600 font-medium">{date}</p>
       </div>
     </div>
   );
