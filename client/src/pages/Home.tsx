@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getLoginUrl } from "@/const";
 import { StripeCheckout } from "@/components/StripeCheckout";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import Footer from "@/components/Footer";
 import { useDemo } from "@/contexts/DemoContext";
 import { 
   Music, 
@@ -18,7 +19,9 @@ import {
   BarChart3,
   ShoppingBag,
   Calendar,
-  ChevronDown
+  ChevronDown,
+  Zap,
+  Target
 } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -49,41 +52,57 @@ export default function Home() {
       icon: Sparkles,
       title: "AI Career Advisor",
       description: "Get personalized guidance on releases, marketing, and growth strategies powered by advanced AI.",
+      color: "from-blue-500/20 to-blue-600/20",
+      border: "border-blue-500"
     },
     {
       icon: DollarSign,
       title: "Financial Management",
       description: "Track revenue across all sources and access royalty-backed micro-loans to fund your career.",
+      color: "from-green-500/20 to-green-600/20",
+      border: "border-green-500"
     },
     {
       icon: ShoppingBag,
       title: "Direct-to-Fan Commerce",
       description: "Sell merchandise, digital downloads, and experiences directly to your fans with built-in payments.",
+      color: "from-purple-500/20 to-purple-600/20",
+      border: "border-purple-500"
     },
     {
       icon: Shield,
       title: "IP Protection",
       description: "AI-powered copyright monitoring with automated DMCA takedowns to protect your creative work.",
+      color: "from-orange-500/20 to-orange-600/20",
+      border: "border-orange-500"
     },
     {
       icon: Heart,
       title: "Healthcare & Wellness",
       description: "Artist-focused health coverage including mental health, vocal care, and performance injury treatment.",
+      color: "from-pink-500/20 to-pink-600/20",
+      border: "border-pink-500"
     },
     {
       icon: Calendar,
       title: "Tour Management",
       description: "Plan tours, track venues, manage budgets, and maximize revenue from live performances.",
+      color: "from-indigo-500/20 to-indigo-600/20",
+      border: "border-indigo-500"
     },
     {
       icon: Globe,
       title: "Global Distribution",
       description: "Distribute your music to all major streaming platforms and track performance in real-time.",
+      color: "from-cyan-500/20 to-cyan-600/20",
+      border: "border-cyan-500"
     },
     {
       icon: BarChart3,
       title: "Advanced Analytics",
       description: "Comprehensive insights into streams, engagement, revenue, and growth across all platforms.",
+      color: "from-teal-500/20 to-teal-600/20",
+      border: "border-teal-500"
     },
   ];
 
@@ -98,104 +117,103 @@ export default function Home() {
       features: [
         "3-click upload with AI metadata",
         "Basic profile + 10 tracks",
-        "Earning cap: $1,000/month",
-        "12% platform fee",
-        "Basic analytics",
+        "Direct-to-fan sales (merch, downloads)",
         "Kick In tip jar",
+        "Basic analytics",
         "Community support",
       ],
       cta: "Start Free",
       highlighted: false,
+      gradient: "from-gray-500/10 to-gray-600/10",
+      border: "border-gray-400"
     },
     {
       name: "Pro",
-      price: "$39",
+      price: "$29",
       period: "/month",
-      annualPrice: "$374",
-      annualSavings: "Save $94/year",
       platformFee: "7%",
       earningCap: "$10,000/month",
-      description: "Identify your superfans and build your world around them",
+      description: "Scale your career—advanced tools, priority support, higher earning potential",
       features: [
-        "Everything in Creator",
-        "Unlimited tracks & storage",
+        "Everything in Creator, plus:",
+        "Unlimited tracks + full catalog",
+        "Advanced analytics & insights",
         "Fan Funnel marketing tools",
         "Smart links with source tracking",
-        "Fan data ownership & export",
         "3% Tone Dividend bonus",
-        "Advanced analytics",
         "Priority support",
       ],
-      cta: "Start 14-Day Trial",
+      cta: "Start Trial",
       highlighted: true,
+      badge: "MOST POPULAR",
+      gradient: "from-blue-500/20 to-blue-600/20",
+      border: "border-blue-500"
     },
     {
-      name: "Label",
-      price: "$59",
+      name: "Studio",
+      price: "$99",
       period: "/month",
-      annualPrice: "$566",
-      annualSavings: "Save $142/year",
       platformFee: "4%",
       earningCap: "Unlimited",
-      description: "Scale operations and manage multiple artists with team tools",
+      description: "Professional infrastructure—white-label tools, team collaboration, unlimited growth",
       features: [
-        "Everything in Pro",
-        "Unlimited earnings",
-        "4% platform fee",
-        "Team accounts (3 seats)",
+        "Everything in Pro, plus:",
         "White-label embeds",
+        "Team accounts (3 seats)",
         "API access",
         "Dedicated account manager",
         "1-hour support response",
       ],
-      cta: "Start Label Plan",
+      cta: "Get Started",
       highlighted: false,
+      gradient: "from-purple-500/20 to-purple-600/20",
+      border: "border-purple-500"
     },
     {
-      name: "Enterprise",
-      price: "Custom",
-      period: "",
+      name: "Label",
+      price: "$499",
+      period: "/month",
       platformFee: "2.5%",
       earningCap: "Unlimited",
-      description: "Custom solutions for labels managing multiple artist rosters",
+      description: "Enterprise-grade platform—custom terms, 24/7 support, strategic guidance",
       features: [
-        "Everything in Label",
-        "Unlimited earnings",
-        "2.5% platform fee",
+        "Everything in Studio, plus:",
         "10+ team seats",
         "Custom contract terms",
-        "Onboarding assistance",
         "24/7 phone support",
+        "Onboarding assistance",
         "Quarterly strategy sessions",
       ],
       cta: "Contact Sales",
       highlighted: false,
+      gradient: "from-green-500/20 to-green-600/20",
+      border: "border-green-500"
     },
   ];
 
   const visionPoints = [
-    { title: "Built for Scale", description: "Enterprise-grade infrastructure ready for millions of creators" },
-    { title: "AI-Powered", description: "Advanced machine learning for career optimization and growth" },
-    { title: "All-in-One", description: "Distribution, commerce, finance, healthcare, and IP protection unified" },
-    { title: "Creator-First", description: "Designed by artists, for artists. Own your tone, own your future" },
+    { title: "10M+ Artists", description: "Building the largest creator economy platform" },
+    { title: "$10B+ Earned", description: "Putting money directly in artists' pockets" },
+    { title: "Zero Learning Curve", description: "So simple, anyone can use it" },
+    { title: "100% Transparent", description: "No hidden fees, no surprises" },
   ];
 
-  const featureCategories = [
+  const comparisonCategories = [
     {
-      id: "distribution",
-      name: "Distribution & Upload",
+      id: "core",
+      name: "Core Features",
       icon: Music,
       features: [
-        { name: "3-click upload with AI metadata", tiers: [true, true, true, true] },
-        { name: "Basic profile + 10 tracks", tiers: [true, false, false, false] },
-        { name: "Unlimited tracks & storage", tiers: [false, true, true, true] },
-        { name: "Global distribution to all platforms", tiers: [true, true, true, true] },
-        { name: "Instant release scheduling", tiers: [true, true, true, true] },
+        { name: "Upload & distribute music", tiers: [true, true, true, true] },
+        { name: "Track limit", tiers: ["10 tracks", "Unlimited", "Unlimited", "Unlimited"] },
+        { name: "Artist profile & bio", tiers: [true, true, true, true] },
+        { name: "Direct-to-fan sales (merch, downloads)", tiers: [true, true, true, true] },
+        { name: "Kick In tip jar", tiers: [true, true, true, true] },
       ]
     },
     {
-      id: "marketing",
-      name: "Marketing & Growth",
+      id: "analytics",
+      name: "Analytics & Marketing",
       icon: TrendingUp,
       features: [
         { name: "Basic analytics", tiers: [true, false, false, false] },
@@ -256,671 +274,327 @@ export default function Home() {
 
   return (
     <>
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-16 pb-24 md:pt-20 md:pb-40">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter">
-            <span 
-              className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
-            >
-              {rotatingVerbs[verbIndex]}
-            </span>{" "}
-            <span style={{ color: '#4285F4' }}>Your Tone.</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Your complete Creator OS. AI-powered tools, financial services, and career management—bringing fans into your orbit from discovery to breakthrough success.
-          </p>
-          <div className="flex items-center justify-center pt-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
+      {/* Revolutionary Hero Section */}
+      <section className="container mx-auto px-4 pt-16 pb-24 md:pt-24 md:pb-32">
+        <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+          {/* Left: Content */}
+          <div className="space-y-8">
+            <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border-2 border-blue-500/50">
+              <span className="text-sm font-bold">The Complete Creator OS</span>
+            </div>
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none">
+              <span 
+                className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}
+              >
+                {rotatingVerbs[verbIndex]}
+              </span>
+              <br />
+              <span style={{ color: '#4285F4' }}>Your Tone.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+              AI-powered tools, financial services, and career management—bringing fans into your orbit from discovery to breakthrough success.
+            </p>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4">
+              <Button 
+                size="lg" 
+                className="text-lg px-10 py-7 rounded-full font-bold shadow-2xl hover:scale-105 transition-transform" 
+                style={{ backgroundColor: '#4A90E2', color: 'white' }}
+                onClick={() => setLocation("/signup")}
+              >
+                START FREE
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="text-lg px-10 py-7 rounded-full font-bold hover:scale-105 transition-transform" 
+                onClick={() => setLocation("/bap-protocol")}
+              >
+                Learn About BAP
+              </Button>
+            </div>
+            <div className="flex flex-wrap items-center gap-6 pt-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-4 w-4 text-white font-bold" />
+                </div>
+                <span className="font-medium">No credit card required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-4 w-4 text-white font-bold" />
+                </div>
+                <span className="font-medium">14-day Pro trial</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-4 w-4 text-white font-bold" />
+                </div>
+                <span className="font-medium">Cancel anytime</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Visual */}
+          <div className="relative">
+            <div className="relative rounded-3xl border-4 border-blue-500 bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-8 shadow-2xl backdrop-blur-sm animate-pulse">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+                    <Zap className="h-8 w-8 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black">10M+</div>
+                    <div className="text-sm text-muted-foreground">Artists Empowered</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center">
+                    <DollarSign className="h-8 w-8 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black">$10B+</div>
+                    <div className="text-sm text-muted-foreground">Earned by Creators</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <Target className="h-8 w-8 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black">100%</div>
+                    <div className="text-sm text-muted-foreground">Transparent Platform</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bold Features Grid */}
+      <section className="border-y bg-muted/30 py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-5xl md:text-6xl font-black">Everything You Need</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Eight powerful tools working together as one complete system
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {features.map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <div 
+                    key={index}
+                    className={`group rounded-3xl border-4 ${feature.border} bg-gradient-to-br ${feature.color} p-6 shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer`}
+                  >
+                    <div className="space-y-4">
+                      <div className="w-14 h-14 rounded-2xl bg-background/80 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Icon className="h-7 w-7" />
+                      </div>
+                      <div>
+                        <div className="text-xl font-bold mb-2">{feature.title}</div>
+                        <div className="text-sm text-muted-foreground leading-relaxed">{feature.description}</div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section with Bold Cards */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-5xl md:text-6xl font-black">Choose Your Plan</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Start free, scale as you grow—no hidden fees, cancel anytime
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {tiers.map((tier, index) => (
+                <div 
+                  key={index}
+                  className={`relative rounded-3xl border-4 ${tier.border} bg-gradient-to-br ${tier.gradient} p-8 shadow-xl hover:scale-105 transition-all duration-300 ${tier.highlighted ? 'ring-4 ring-blue-500/50' : ''}`}
+                >
+                  {tier.badge && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">
+                      {tier.badge}
+                    </div>
+                  )}
+                  <div className="space-y-6">
+                    <div>
+                      <div className="text-2xl font-black mb-2">{tier.name}</div>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl font-black">{tier.price}</span>
+                        <span className="text-muted-foreground">{tier.period}</span>
+                      </div>
+                      <div className="mt-4 space-y-1">
+                        <div className="text-sm font-bold">Platform Fee: {tier.platformFee}</div>
+                        <div className="text-xs text-muted-foreground">Earning Cap: {tier.earningCap}</div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{tier.description}</p>
+                    <Button 
+                      className="w-full rounded-full py-6 font-bold text-base hover:scale-105 transition-transform"
+                      variant={tier.highlighted ? "default" : "outline"}
+                      style={tier.highlighted ? { backgroundColor: '#4A90E2', color: 'white' } : {}}
+                      onClick={() => setLocation("/signup")}
+                    >
+                      {tier.cta}
+                    </Button>
+                    <div className="space-y-3 pt-4 border-t">
+                      {tier.features.map((feature, fIndex) => (
+                        <div key={fIndex} className="flex items-start gap-2">
+                          <Check className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                          <span className="text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-12 space-y-4">
+              <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-600" />
+                  <span className="font-medium">No credit card required</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-600" />
+                  <span className="font-medium">14-day Pro trial</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 text-green-600" />
+                  <span className="font-medium">Cancel anytime</span>
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                No hidden fees or locked-in contracts. Cancel or switch plans anytime.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Table */}
+      <section className="border-y bg-muted/30 py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-5xl md:text-6xl font-black">Compare All Features</h2>
+              <p className="text-xl text-muted-foreground">
+                See exactly what's included in each plan
+              </p>
+            </div>
+            
+            {/* Tier Headers */}
+            <div className="grid grid-cols-5 gap-4 mb-8 sticky top-0 bg-background/95 backdrop-blur-sm z-10 py-4 rounded-2xl border-2">
+              <div className="col-span-1"></div>
+              {tiers.map((tier, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-xl font-black">{tier.name}</div>
+                  <div className="text-sm text-muted-foreground">{tier.price}{tier.period}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Feature Categories */}
+            <div className="space-y-6">
+              {comparisonCategories.map((category) => {
+                const Icon = category.icon;
+                const isExpanded = expandedCategories.includes(category.id);
+                
+                return (
+                  <div key={category.id} className="rounded-2xl border-2 overflow-hidden bg-card shadow-lg">
+                    <button
+                      onClick={() => toggleCategory(category.id)}
+                      className="w-full flex items-center justify-between p-6 hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className="h-6 w-6" />
+                        <span className="text-xl font-bold">{category.name}</span>
+                      </div>
+                      <ChevronDown className={`h-6 w-6 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {isExpanded && (
+                      <div className="border-t">
+                        {category.features.map((feature, fIndex) => (
+                          <div key={fIndex} className="grid grid-cols-5 gap-4 p-4 hover:bg-muted/30 transition-colors border-b last:border-b-0">
+                            <div className="col-span-1 text-sm font-medium">{feature.name}</div>
+                            {feature.tiers.map((value, tIndex) => (
+                              <div key={tIndex} className="text-center">
+                                {typeof value === 'boolean' ? (
+                                  value ? (
+                                    <Check className="h-5 w-5 text-green-600 mx-auto" />
+                                  ) : (
+                                    <span className="text-muted-foreground">—</span>
+                                  )
+                                ) : (
+                                  <span className="text-sm font-medium">{value}</span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bottom CTAs */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+              {tiers.map((tier, index) => (
+                <Button
+                  key={index}
+                  className="rounded-full py-6 font-bold text-base hover:scale-105 transition-transform"
+                  variant={tier.highlighted ? "default" : "outline"}
+                  style={tier.highlighted ? { backgroundColor: '#4A90E2', color: 'white' } : {}}
+                  onClick={() => setLocation("/signup")}
+                >
+                  {tier.cta}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-5xl md:text-6xl font-black">Ready to Create Your Tone?</h2>
+            <p className="text-xl text-muted-foreground">
+              Join thousands of artists building their careers on the complete Creator OS
+            </p>
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 rounded-full" 
+              className="text-lg px-12 py-7 rounded-full font-bold shadow-2xl hover:scale-105 transition-transform" 
               style={{ backgroundColor: '#4A90E2', color: 'white' }}
               onClick={() => setLocation("/signup")}
             >
               START FREE
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </div>
-          <div className="flex items-center justify-center gap-8 pt-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
-                <Check className="h-3 w-3 text-white" />
-              </div>
-              No credit card required
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
-                <Check className="h-3 w-3 text-white" />
-              </div>
-              14-day Pro trial
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center flex-shrink-0">
-                <Check className="h-3 w-3 text-white" />
-              </div>
-              Cancel anytime
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Unique Differentiators Section */}
-      <section className="border-y bg-card">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-5xl mx-auto">
-            <h3 className="text-3xl font-bold text-center mb-4 text-card-foreground">Why Boptone Is Different</h3>
-            <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-              The only platform that combines AI intelligence, financial services, and complete career management in one unified system.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
-                <Sparkles className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
-                <div className="text-xl font-bold text-card-foreground">AI-Powered Intelligence</div>
-                <div className="text-sm text-muted-foreground">Toney, your AI career advisor, helps you identify superfans, optimize pricing, and automate workflows.</div>
-              </div>
-              <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
-                <DollarSign className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
-                <div className="text-xl font-bold text-card-foreground">Financial Services Built-In</div>
-                <div className="text-sm text-muted-foreground">Royalty-backed micro-loans, healthcare, and IP protection—comprehensive financial support for your creative career.</div>
-              </div>
-              <div className="text-center space-y-3 p-6 rounded-lg bg-muted/30">
-                <ShoppingBag className="h-12 w-12 mx-auto" style={{ color: '#4A90E2' }} />
-                <div className="text-xl font-bold text-card-foreground">All-in-One Consolidation</div>
-                <div className="text-sm text-muted-foreground">Everything you need to build, manage, and scale your creative business in one unified platform.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Vision Section */}
-      <section className="border-y bg-muted/30">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-5xl mx-auto">
-            <h3 className="text-2xl font-bold text-center mb-12">The Future of the Creator Economy</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {visionPoints.map((point, index) => (
-                <div key={index} className="text-center space-y-2">
-                  <div className="text-xl font-bold text-primary">{point.title}</div>
-                  <div className="text-sm text-muted-foreground">{point.description}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features List - Brutalist */}
-      <section id="features" className="container mx-auto px-4 py-24">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-4">FEATURES</h2>
-          <div className="border-t-4 border-black mb-12"></div>
-          <div className="space-y-8">
-            {features.map((feature, index) => (
-              <div key={index} className="flex gap-6 items-start border-b border-black pb-6">
-                <div className="font-mono text-2xl font-bold min-w-[60px]">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold mb-2">{feature.title}</h3>
-                  <p className="text-lg">{feature.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="container mx-auto px-4 py-24 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center space-y-4 mb-16">
-            <h2 className="text-5xl md:text-6xl font-black tracking-tighter">We Only Win When You Win</h2>
-            <p className="text-xl text-muted-foreground">
-              No upfront costs. Pay based on what you earn. Keep 90% of streaming revenue.
-            </p>
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary text-sm font-medium mt-4">
-              <Check className="h-4 w-4" />
-              14-day Pro trial • No credit card required
-            </div>
-            
-            {/* Pricing Toggle */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <span className={`text-sm font-medium transition-colors ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
-                Monthly
-              </span>
-              <button
-                onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                style={{ backgroundColor: isAnnual ? '#4A90E2' : '#d1d5db' }}
-                role="switch"
-                aria-checked={isAnnual}
-              >
-                <span
-                  className="inline-block h-6 w-6 transform rounded-full bg-white transition-transform"
-                  style={{ transform: isAnnual ? 'translateX(32px)' : 'translateX(4px)' }}
-                />
-              </button>
-              <span className={`text-sm font-medium transition-colors ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
-                Annual
-                <span className="ml-2 inline-block px-2 py-0.5 text-xs font-semibold rounded-full" style={{ backgroundColor: '#4A90E2', color: 'white' }}>
-                  Save up to 20%
-                </span>
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {tiers.map((tier, index) => (
-              <div key={index} className="relative">
-                {/* Card */}
-                <div className="bg-white dark:bg-card border border-border rounded-2xl p-8 h-full flex flex-col shadow-sm">
-                  {/* Header */}
-                  <div className="mb-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-2xl font-bold text-card-foreground">{tier.name}</h3>
-                      {tier.highlighted && (
-                        <span className="inline-block bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-xs font-bold tracking-wide">
-                          BEST VALUE
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
-                  </div>
-                  
-                  {/* Divider */}
-                  <div className="border-t border-border mb-6"></div>
-                  
-                  {/* Huge Pricing */}
-                  <div className="mb-6">
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl md:text-5xl font-bold text-card-foreground">
-                        {isAnnual && tier.annualPrice ? tier.annualPrice : tier.price}
-                      </span>
-                      <span className="text-xl text-card-foreground">
-                        {isAnnual && tier.annualPrice ? '/year' : tier.period}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {tier.earningCap !== "Unlimited" ? `Cap: ${tier.earningCap}` : "Unlimited earnings"}
-                    </p>
-                  </div>
-                  
-                  {/* CTA Button */}
-                  {tier.name === "Pro" ? (
-                    <StripeCheckout 
-                      tier="pro"
-                      buttonText={tier.cta}
-                      buttonVariant="default"
-                      className="w-full mb-8"
-                      style={{
-                        backgroundColor: '#4A90E2',
-                        color: 'white',
-                        padding: '14px 24px',
-                        borderRadius: '999px',
-                        fontWeight: 600,
-                        fontSize: '15px'
-                      }}
-                    />
-                  ) : (
-                    <Button 
-                      className="w-full mb-8"
-                      variant={tier.name === "Creator" ? "outline" : "default"}
-                      style={tier.name === "Creator" ? {
-                        borderColor: '#4A90E2',
-                        color: '#4A90E2',
-                        padding: '14px 24px',
-                        borderRadius: '999px',
-                        fontWeight: 600,
-                        fontSize: '15px'
-                      } : {
-                        backgroundColor: '#4A90E2',
-                        color: 'white',
-                        padding: '14px 24px',
-                        borderRadius: '999px',
-                        fontWeight: 600,
-                        fontSize: '15px'
-                      }}
-                      onClick={() => tier.name === "Enterprise" ? window.location.href = "mailto:hello@boptone.com" : setLocation("/signup")}
-                    >
-                      {tier.cta}
-                    </Button>
-                  )}
-                  
-                  {/* Platform Fee Section */}
-                  {tier.platformFee && (
-                    <div className="mb-6">
-                      <h4 className="text-sm font-bold mb-3 text-card-foreground">Processing fees</h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-muted-foreground">Platform fee</span>
-                          <span className="font-semibold text-card-foreground">{tier.platformFee}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-muted-foreground">Earning cap</span>
-                          <span className="font-semibold text-card-foreground">{tier.earningCap}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Features Section */}
-                  <div className="flex-1">
-                    <h4 className="text-sm font-bold mb-3 text-card-foreground">What you get</h4>
-                    <div className="space-y-2">
-                      {tier.features.map((feature, fIndex) => (
-                        <div key={fIndex} className="flex items-center gap-3 bg-muted/30 rounded-lg px-3 py-2.5">
-                          <Check className="h-4 w-4 text-card-foreground flex-shrink-0" />
-                          <span className="text-sm text-card-foreground">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Feature Comparison Table - Extreme Simplicity */}
-          <div className="mt-20">
-            <div className="text-center mb-8">
-              <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Compare Plans</h3>
-              <p className="text-lg text-muted-foreground">Everything you get with each plan</p>
-            </div>
-            
-            {/* Simple Table - All Features Visible */}
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
-              {/* Header Row */}
-              <div className="grid grid-cols-5 gap-4 p-4 bg-muted/20 border-b border-border">
-                <div className="text-sm font-bold text-card-foreground">Features</div>
-                <div className="text-center">
-                  <div className="text-sm font-bold text-card-foreground">Creator</div>
-                  <div className="text-xs text-muted-foreground mt-1">Free</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm font-bold text-card-foreground">Pro</div>
-                  <div className="text-xs text-muted-foreground mt-1">$39/mo</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm font-bold text-card-foreground">Label</div>
-                  <div className="text-xs text-muted-foreground mt-1">$59/mo</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm font-bold text-card-foreground">Enterprise</div>
-                  <div className="text-xs text-muted-foreground mt-1">Custom</div>
-                </div>
-              </div>
-
-              {/* All Features - No Accordions */}
-              {featureCategories.map((category) => (
-                <div key={category.id}>
-                  {/* Category Header */}
-                  <div className="px-4 py-3 bg-muted/10 border-b border-border">
-                    <div className="text-sm font-bold text-card-foreground">{category.name}</div>
-                  </div>
-                  
-                  {/* Category Features */}
-                  {category.features.map((feature, idx) => (
-                    <div 
-                      key={idx} 
-                      className="grid grid-cols-5 gap-4 p-3 border-b border-border items-center"
-                    >
-                      <div className="text-sm text-card-foreground">{feature.name}</div>
-                      {feature.tiers.map((included, tierIdx) => (
-                        <div key={tierIdx} className="flex justify-center">
-                          {included ? (
-                             <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center">
-                              <Check className="h-4 w-4 text-white" />
-                            </div>
-                          ) : (
-                            <span className="text-muted-foreground text-sm">—</span>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              ))}
-
-              {/* CTA Row at Bottom */}
-              <div className="grid grid-cols-5 gap-4 p-4 bg-muted/10 border-t border-border">
-                <div></div>
-                <div className="flex justify-center">
-                  <Button 
-                    className="w-full rounded-full" 
-                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
-                    onClick={() => {
-                      setLoadingButton('creator');
-                      setTimeout(() => setLocation("/signup"), 300);
-                    }}
-                    disabled={loadingButton === 'creator'}
-                  >
-                    {loadingButton === 'creator' ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Loading...
-                      </span>
-                    ) : 'Start Free'}
-                  </Button>
-                </div>
-                <div className="flex justify-center">
-                  <StripeCheckout 
-                    tier="pro"
-                    buttonText="Start Trial"
-                    buttonVariant="default"
-                    className="w-full"
-                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
-                  />
-                </div>
-                <div className="flex justify-center">
-                  <Button 
-                    className="w-full rounded-full" 
-                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
-                    onClick={() => {
-                      setLoadingButton('label');
-                      setTimeout(() => setLocation("/signup"), 300);
-                    }}
-                    disabled={loadingButton === 'label'}
-                  >
-                    {loadingButton === 'label' ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Loading...
-                      </span>
-                    ) : 'Get Started'}
-                  </Button>
-                </div>
-                <div className="flex justify-center">
-                  <Button 
-                    className="w-full rounded-full" 
-                    style={{ backgroundColor: '#4A90E2', color: 'white' }}
-                    onClick={() => {
-                      setLoadingButton('enterprise');
-                      setTimeout(() => setLocation("/contact"), 300);
-                    }}
-                    disabled={loadingButton === 'enterprise'}
-                  >
-                    {loadingButton === 'enterprise' ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 718-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 714 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Loading...
-                      </span>
-                    ) : 'Contact Sales'}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Section - Brutalist */}
-      <section className="container mx-auto px-4 py-24 bg-black text-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-6xl md:text-7xl font-black tracking-tighter mb-16">ARTISTS USE BOPTONE</h2>
-          <div className="space-y-12">
-            {/* Queens of the Stone Age */}
-            <div className="border-l-4 border-white pl-6">
-              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
-                "Finally, a platform that respects artists."
-              </blockquote>
-              <div className="text-xl font-bold">— QUEENS OF THE STONE AGE</div>
-              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>+$47K IN FIRST QUARTER</div>
-            </div>
-
-            {/* Geese */}
-            <div className="border-l-4 border-white pl-6">
-              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
-                "We're growing faster than ever."
-              </blockquote>
-              <div className="text-xl font-bold">— GEESE</div>
-              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>+12K NEW FANS IN 90 DAYS</div>
-            </div>
-
-            {/* Public Enemy */}
-            <div className="border-l-4 border-white pl-6">
-              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
-                "This is what we've been fighting for."
-              </blockquote>
-              <div className="text-xl font-bold">— PUBLIC ENEMY</div>
-              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>100% OWNERSHIP RETAINED</div>
-            </div>
-
-            {/* Chappell Roan */}
-            <div className="border-l-4 border-white pl-6">
-              <blockquote className="text-2xl md:text-3xl font-bold mb-4">
-                "The easiest platform I've ever used."
-              </blockquote>
-              <div className="text-xl font-bold">— CHAPPELL ROAN</div>
-              <div className="font-mono text-lg mt-2" style={{ color: '#4285F4' }}>$23K EARNED IN 6 MONTHS</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Button */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="flex justify-center">
-          <Button 
-            size="lg" 
-            className="text-lg px-12 py-7 text-white hover:opacity-90 transition-opacity rounded-full font-bold"
-            style={{ backgroundColor: '#4285F4' }}
-            onClick={() => {
-              setLoadingButton('hero');
-              setTimeout(() => setLocation("/signup"), 300);
-            }}
-            disabled={loadingButton === 'hero'}
-          >
-            {loadingButton === 'hero' ? (
-              <span className="flex items-center justify-center">
-                <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                LOADING...
-              </span>
-            ) : (
-              <>
-                START FREE TODAY
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </>
-            )}
-          </Button>
-        </div>
-      </section>
-
-      {/* FAQ Section - Cleaner Design */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center">Common Questions</h2>
-            
-            <div className="space-y-0">
-              {/* Trial & Cancellation */}
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>What happens after my 14-day Pro trial ends?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Your 14-day Pro trial gives you full access to all Pro tier features with no credit card required. When the trial ends, you can choose to subscribe to any paid tier (Pro or Label) or continue using the free Starter tier. Your data and content remain intact—you simply lose access to premium features until you subscribe.</p>
-                </div>
-              </details>
-
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>Can I cancel my subscription anytime?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Yes. You can cancel your subscription at any time with no penalties or fees. You'll retain access to your paid tier features until the end of your current billing period. After cancellation, you'll automatically move to the free Starter tier and keep all your content, data, and fan connections.</p>
-                </div>
-              </details>
-
-              {/* Platform Fees & Revenue */}
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>Do you take a cut of my earnings?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Boptone takes a transparent 10% platform fee on all sales (music, merch, experiences, tips). This means <strong>you keep 90% of every dollar</strong> your fans spend. Unlike traditional platforms that take 30-50%, we believe artists deserve the majority of their revenue. Your subscription fee covers platform access—the 10% fee only applies when you actually make money.</p>
-                </div>
-              </details>
-
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>How and when do I get paid?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Payouts are processed automatically on a rolling 7-day basis. Once a fan purchase clears (typically 2-3 business days), funds become available in your Boptone wallet after 7 days. You can transfer funds to your bank account anytime with no minimum threshold. Pro and Label tiers get priority payout processing with 5-day and 3-day windows respectively.</p>
-                </div>
-              </details>
-
-              {/* Platform Philosophy */}
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>How is Boptone different from other platforms?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Boptone is built on three core principles: <strong>AI-powered intelligence</strong> (Toney, your AI career advisor), <strong>financial services</strong> (micro-loans, healthcare, IP protection—no other platform offers this), and <strong>all-in-one consolidation</strong> (replace 10+ fragmented tools with one system). We're designed for artist sovereignty and transparency, not platform extraction. You own your data, your fan relationships, and your revenue.</p>
-                </div>
-              </details>
-
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>Do I own my content and fan data?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Yes, completely. You retain 100% ownership of all content you upload (music, videos, images, writing). Your fan data (emails, purchase history, engagement metrics) belongs to you and is exportable at any time. Boptone is infrastructure, not a gatekeeper. If you ever leave, you take everything with you—no lock-in, no hostage data.</p>
-                </div>
-              </details>
-
-              {/* Features & Support */}
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>What's included in the Starter (free) tier?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>The Starter tier is free forever and includes: unlimited music uploads, basic artist profile, fan email collection, direct messaging with fans, basic analytics, and access to the BopShop marketplace. It's designed for new artists building their foundation. You'll pay the standard 10% platform fee on sales, but there's no monthly subscription cost.</p>
-                </div>
-              </details>
-
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>Is there a mobile app?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Not yet. We're currently focused on building the most powerful web platform for artists. A mobile app is planned for a later phase of the roadmap. The web platform is fully responsive and works seamlessly on mobile browsers, so you can manage your career from any device today.</p>
-                </div>
-              </details>
-
-              <details className="group border-b border-border">
-                <summary className="flex justify-between items-center cursor-pointer py-6 font-semibold text-lg hover:opacity-70 transition-opacity">
-                  <span>Who is Boptone built for?</span>
-                  <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="pb-6 text-muted-foreground">
-                  <p>Boptone is built for <strong>artists who choose themselves</strong>. Whether you're a new artist building your first fanbase, a serious independent artist scaling your career, a professional artist managing a full business, or a label managing multiple artists—Boptone provides the infrastructure for sovereignty. We're designed for creators who want ownership, transparency, and control over their entire ecosystem.</p>
-                </div>
-              </details>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer - Black background with white text */}
-      <footer className="bg-black text-white">
-        <div className="container mx-auto px-6 py-16">
-          {/* BOPTONE Wordmark Logo */}
-          <div className="mb-12">
-            <h2 
-              className="text-5xl font-black text-white"
-              style={{
-                fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif',
-                letterSpacing: '-0.05em',
-                fontWeight: 900
-              }}
-            >
-              BOPTONE
-            </h2>
-            <p className="text-gray-400 text-sm mt-2">Own Your Tone™</p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-6xl mx-auto">
-            <div>
-              <h3 className="font-semibold mb-4 text-white">Product</h3>
-              <ul className="space-y-3 text-sm">
-                <li><a href="/features" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
-                <li><a href="/pricing" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="/bap" className="text-gray-400 hover:text-white transition-colors">BAP Protocol</a></li>
-                <li><a href="/demo" className="text-gray-400 hover:text-white transition-colors">Demo</a></li>
-                <li><a href="/shop" className="text-gray-400 hover:text-white transition-colors">BopShop</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white">Platform</h3>
-              <ul className="space-y-3 text-sm">
-                <li><a href="/discover" className="text-gray-400 hover:text-white transition-colors">Discover</a></li>
-                <li><a href="/upload" className="text-gray-400 hover:text-white transition-colors">Upload Music</a></li>
-                <li><a href="/analytics" className="text-gray-400 hover:text-white transition-colors">Analytics</a></li>
-                <li><a href="/my-store" className="text-gray-400 hover:text-white transition-colors">My Store</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white">Company</h3>
-              <ul className="space-y-3 text-sm">
-                <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About Boptone</a></li>
-                <li><a href="/careers" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-                <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-                <li><a href="/press" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-white">Resources</h3>
-              <ul className="space-y-3 text-sm">
-                <li><a href="/help" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="/api" className="text-gray-400 hover:text-white transition-colors">API Docs</a></li>
-                <li><a href="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="/terms" className="text-gray-400 hover:text-white transition-colors">Terms</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          {/* Bottom section with copyright */}
-          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-400">© 2026 Boptone. All rights reserved. Own Your Tone™</p>
-            <div className="flex gap-6 text-gray-400">
-              <a href="https://twitter.com/boptone" className="hover:text-white transition-colors" aria-label="Twitter">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              </a>
-              <a href="https://instagram.com/boptone" className="hover:text-white transition-colors" aria-label="Instagram">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              </a>
-              <a href="https://facebook.com/boptone" className="hover:text-white transition-colors" aria-label="Facebook">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <ToneyChatbot />
     </div>
-    <ToneyChatbot />
+    <Footer />
     </>
   );
 }

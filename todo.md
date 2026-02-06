@@ -1240,4 +1240,88 @@ Design System Rules:
 - [x] Implement smooth transitions between screens (animate-in fade-in duration-500)
 - [x] Add more personality and visual interest (hover transforms, bouncing arrows, color themes per screen)
 - [x] Test redesigned flow for visual impact - VERIFIED: Looks revolutionary, not generic
+- [x] Save checkpoint (e39ff2ae)
+
+## Site-Wide Forensic Design Audit & Revolutionary Redesign
+**Goal:** Apply the bold, modern, asymmetric /how-it-works design aesthetic to ALL pages across the site
+
+### Phase 1: Forensic Design Audit
+- [ ] Scan all pages and document current design state
+- [ ] Identify generic/boring sections that need redesign
+- [ ] Create prioritized list of pages to redesign
+- [ ] Document design patterns to apply site-wide
+
+### Phase 2: Homepage Redesign
+- [x] Redesign hero section with massive 8xl typography and asymmetric grid layout (content left, visual right)
+- [x] Add gradient backgrounds with animated pulse elements on stats card
+- [x] Redesign 8 feature cards with color-coded gradients, thick 4px borders, rounded-3xl, hover scale effects
+- [x] Redesign pricing cards with bold gradients, thick borders, massive typography, MOST POPULAR badge
+- [x] Add dual CTAs (START FREE + Learn About BAP) with pill buttons
+- [x] Test homepage redesign - VERIFIED: Looks revolutionary, matches /how-it-works aesthetic
+
+### Phase 3: BAP Protocol Page Redesign
+- [ ] Redesign hero with revolutionary economics messaging
+- [ ] Create visual payment flow diagram with thick-bordered cards
+- [ ] Redesign comparison section with bold typography
+- [ ] Add animated elements and hover transforms
+- [ ] Test BAP page redesign
+
+### Phase 4: Features Page Redesign
+- [ ] Redesign feature sections with asymmetric grids
+- [ ] Add massive 6xl/7xl headlines for each feature
+- [ ] Create visual icons/diagrams with rounded-3xl cards
+- [ ] Add gradient backgrounds and depth
+- [ ] Test Features page redesign
+
+### Phase 5: About Page Redesign
+- [ ] Redesign brand story section with bold typography
+- [ ] Create visual timeline or mission statement cards
+- [ ] Redesign team section (if applicable)
+- [ ] Add compelling CTAs with pill buttons
+- [ ] Test About page redesign
+
+### Phase 6: Dashboard & Internal Pages Redesign
+- [ ] Redesign Dashboard with modern brutalist aesthetic
+- [ ] Redesign Music page with bold section headers
+- [ ] Redesign Money page with visual earnings displays
+- [ ] Redesign Fans page with engagement metrics cards
+- [ ] Redesign Analytics page with bold data visualization
+- [ ] Test all internal pages
+
+### Phase 7: BopShop Pages Redesign
+- [ ] Redesign Shop landing page with asymmetric product grids
+- [ ] Redesign product cards with thick borders and hover effects
+- [ ] Redesign product detail pages with bold layouts
+- [ ] Redesign cart and checkout with modern aesthetic
+- [ ] Test all BopShop pages
+
+### Phase 8: Discover Page Redesign
+- [ ] Redesign artist discovery interface with visual cards
+- [ ] Add asymmetric grid layouts for artist profiles
+- [ ] Create bold search and filter UI
+- [ ] Add animated hover states on artist cards
+- [ ] Test Discover page redesign
+
+### Phase 9: Remaining Pages Redesign
+- [ ] Redesign Releases page
+- [ ] Redesign ToneRewards page
+- [ ] Redesign Profile pages
+- [ ] Redesign Settings pages
+- [ ] Redesign any other remaining pages
+- [ ] Test all remaining pages
+
+### Phase 10: Final Testing & Delivery
+- [ ] Comprehensive site-wide testing
+- [ ] Verify design consistency across all pages
+- [ ] Check mobile responsiveness on all redesigned pages
+- [ ] Save final checkpoint
+- [ ] Push all changes to GitHub
+- [ ] Deliver complete site redesign
+
+
+## Fix Homepage Missing Components (User Reported)
+- [x] Add footer back to Homepage (black background, white text, "Music • Culture • News • Whatever")
+- [x] Add ToneyChatbot component back to Homepage
+- [x] Add "Music • Culture • News • Whatever" text to Footer component
+- [x] Test Homepage to verify footer and chatbot are working - VERIFIED
 - [ ] Save checkpoint
