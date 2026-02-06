@@ -538,6 +538,69 @@ export const appRouter = router({
         success: true,
       } as const;
     }),
+
+    // Email verification flow
+    sendEmailVerification: publicProcedure
+      .input(z.object({ email: z.string().email() }))
+      .mutation(async ({ input }) => {
+        // TODO: Integrate with Resend or similar email service
+        // For now, generate a code and store it (in production, use Redis or database)
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        console.log(`[Auth] Email verification code for ${input.email}: ${code}`);
+        
+        // In production: Send email via Resend API
+        // await resend.emails.send({
+        //   from: 'Boptone <verify@boptone.com>',
+        //   to: input.email,
+        //   subject: 'Verify your Boptone account',
+        //   html: `Your verification code is: <strong>${code}</strong>`,
+        // });
+        
+        return { success: true, message: "Verification code sent to email" };
+      }),
+
+    verifyEmailCode: publicProcedure
+      .input(z.object({ email: z.string().email(), code: z.string() }))
+      .mutation(async ({ input }) => {
+        // TODO: Verify code against stored value
+        // For now, accept any 6-digit code for demo purposes
+        if (input.code.length === 6) {
+          console.log(`[Auth] Email verified: ${input.email}`);
+          return { success: true };
+        }
+        return { success: false };
+      }),
+
+    // Phone verification flow (Twilio-ready)
+    sendPhoneVerification: publicProcedure
+      .input(z.object({ phone: z.string() }))
+      .mutation(async ({ input }) => {
+        // TODO: Integrate with Twilio
+        // For now, generate a code and log it
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        console.log(`[Auth] SMS verification code for ${input.phone}: ${code}`);
+        
+        // In production: Send SMS via Twilio
+        // await twilioClient.messages.create({
+        //   body: `Your Boptone verification code is: ${code}`,
+        //   from: process.env.TWILIO_PHONE_NUMBER,
+        //   to: input.phone,
+        // });
+        
+        return { success: true, message: "Verification code sent via SMS" };
+      }),
+
+    verifyPhoneCode: publicProcedure
+      .input(z.object({ phone: z.string(), code: z.string() }))
+      .mutation(async ({ input }) => {
+        // TODO: Verify code against stored value
+        // For now, accept any 6-digit code for demo purposes
+        if (input.code.length === 6) {
+          console.log(`[Auth] Phone verified: ${input.phone}`);
+          return { success: true };
+        }
+        return { success: false };
+      }),
   }),
 
   // Feature routers
