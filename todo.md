@@ -1206,4 +1206,16 @@ Design System Rules:
 - [x] Backend: Phone verification procedures (Twilio-ready)
 - [x] Test complete email signup flow (verified redirect to /onboarding)
 - [x] Test complete phone signup flow (verified redirect to /onboarding)
-- [ ] Save checkpoint after Phase 1 complete
+- [x] Save checkpoint after Phase 1 complete (ab90b49a)
+
+## Onboarding Flow - Phase 2: "How Boptone Works" Education Screens
+- [x] Design Screen 1: "Fans Pay You Directly" (1 headline, 1 sentence, simple visual) - TESTED & WORKING
+- [x] Design Screen 2: "Get Paid Instantly" (1 headline, 1 sentence, simple visual) - TESTED & WORKING
+- [x] Design Screen 3: "You Control Your Earnings" (1 headline, 1 sentence, simple visual) - TESTED & WORKING
+- [x] Build education flow component with progress dots
+- [x] Add "Next" and "Skip" buttons (pill-shaped)
+- [x] Create route /how-it-works for education flow
+- [x] Update AuthSignup to redirect to /how-it-works instead of /onboarding
+- [x] Test education flow for clarity (30 seconds total read time) - VERIFIED
+- [x] Test complete flow: Auth → Education → Onboarding - WORKING PERFECTLY
+- [ ] Save checkpoint after Phase 2 complete

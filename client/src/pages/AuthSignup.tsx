@@ -82,9 +82,9 @@ export default function AuthSignup() {
     try {
       const result = await verifyEmailCode.mutateAsync({ email, code: verificationCode });
       if (result.success) {
-        toast.success("Email verified! Redirecting to onboarding...");
-        // Redirect to onboarding flow
-        window.location.href = "/onboarding";
+        toast.success("Email verified! Redirecting...");
+        // Redirect to education flow
+        window.location.href = "/how-it-works";
       } else {
         toast.error("Invalid verification code");
       }
@@ -106,9 +106,9 @@ export default function AuthSignup() {
     try {
       const result = await verifyPhoneCode.mutateAsync({ phone, code: verificationCode });
       if (result.success) {
-        toast.success("Phone verified! Redirecting to onboarding...");
-        // Redirect to onboarding flow
-        window.location.href = "/onboarding";
+        toast.success("Phone verified! Redirecting...");
+        // Redirect to education flow
+        window.location.href = "/how-it-works";
       } else {
         toast.error("Invalid verification code");
       }

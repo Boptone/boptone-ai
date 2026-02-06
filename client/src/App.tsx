@@ -42,13 +42,15 @@ import ProductDetail from "./pages/ProductDetail";
 import MyStore from "./pages/MyStore";
 import MyStoreOrders from "./pages/MyStoreOrders";
 import AuthSignup from "./pages/AuthSignup";
+import HowItWorks from "./pages/HowItWorks";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-      <Route path="/auth-signup" component={AuthSignup} />
+      <Route path={"/auth-signup"} component={AuthSignup} />
+      <Route path={"/how-it-works"} component={HowItWorks} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path={"/@:username"} component={ArtistProfile} />
       <Route path="/shop" component={Shop} />
