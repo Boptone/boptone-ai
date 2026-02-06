@@ -1195,3 +1195,11 @@ Design System Rules:
 - [x] Update route from /bap to /bap-protocol
 - [x] Test page across devices
 - [ ] Save checkpoint
+
+## Onboarding Flow - Phase 1: Multi-Auth Signup (Incremental Build)
+- [x] Increment 1: Create basic signup page structure (card layout, branding) - TESTED & WORKING
+- [ ] Increment 2: Add email signup option with validation
+- [ ] Increment 3: Add phone signup option with SMS flow
+- [ ] Increment 4: Add Google and Apple OAuth integration
+- [ ] Increment 5: Complete verification code flow end-to-end
+- [ ] Save checkpoint after Phase 1 complete
