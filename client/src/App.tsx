@@ -70,6 +70,7 @@ function Router() {
       <Route path={"/analytics"} component={Analytics} />
       <Route path={"/bap"} component={BAP} />
       <Route path={"/protocol"} component={BAP} />
+      <Route path={"/bap-protocol"} component={BAP} />
       <Route path={"/upload"} component={Upload} />
       <Route path={"/discover"} component={Discover} />
       <Route path={"/music"} component={Discover} />
