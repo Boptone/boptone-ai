@@ -1182,3 +1182,28 @@ Design System Rules:
 - [x] Fix comparison table CTAs (Start Free, Start Trial, Get Started, Contact Sales) to rounded-full
 - [x] Test all buttons visually (verified in browser)
 - [ ] Save checkpoint
+
+## Rebuild BAP Protocol Page (Revolutionary Decentralized Streaming)
+- [x] Design hero section explaining "Fans Pay Artists Directly" concept
+- [x] Create visual payment flow diagram (Fan Wallet → Artist Wallet)
+- [x] Build economic comparison section (BAP vs Spotify earnings with real math)
+- [x] Add fan-controlled stream value explanation ($0.01 to $1.00+)
+- [x] Create transparent wallet system section
+- [x] Add "The Economic Inversion" explainer section
+- [x] Build FAQ section addressing common questions
+- [x] Add CTA section for artists to join BAP
+- [x] Update route from /bap to /bap-protocol
+- [x] Test page across devices
+- [x] Save checkpoint (5611cc83)
+
+## Remove False Claim and Add Transparency Messaging
+- [x] Remove "The World's First Decentralized Streaming Platform" badge from BAP page
+- [x] Add "No hidden fees or locked-in contracts. Cancel or switch plans anytime." to BAP page CTA section
+- [x] Find all pricing pages site-wide (Home, Signup, Features, etc.)
+- [x] Add transparency messaging to Home page pricing section
+- [x] Add transparency messaging to Signup page pricing section
+- [x] Test BAP page (false claim removed, transparency messaging added)
+- [x] Test Home page (transparency messaging added)
+- [x] Test Signup page (transparency messaging added in code)
+- [x] Save checkpoint (fb3e55b3)
+- [ ] Push to GitHub
