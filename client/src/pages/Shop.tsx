@@ -45,8 +45,8 @@ export default function Shop() {
               </p>
             </div>
             {user && (
-              <Button className="rounded-full" onClick={() => setLocation("/cart")}
-                className="relative rounded-xl border border-gray-200 bg-white text-black hover:bg-black hover:text-white font-semibold uppercase"
+              <Button onClick={() => setLocation("/cart")}
+                className="rounded-full relative rounded-xl border border-gray-200 bg-white text-black hover:bg-black hover:text-white font-semibold uppercase"
                 size="lg"
               >
                 <ShoppingCart className="mr-2" />
@@ -72,17 +72,17 @@ export default function Shop() {
               <Filter className="h-5 w-5" />
               <span className="font-semibold  text-sm">Filter:</span>
             </div>
-            <Button className="rounded-full" onClick={() => setSelectedType(null)}
+            <Button onClick={() => setSelectedType(null)}
               variant={selectedType === null ? "default" : "outline"}
-              className="rounded-xl border-2 border-black font-semibold uppercase"
+              className="rounded-full rounded-xl border-2 border-black font-semibold uppercase"
             >
               All
             </Button>
             {productTypes.map((type) => (
-              <Button className="rounded-full" key={type.value}
+              <Button key={type.value}
                 onClick={() => setSelectedType(type.value)}
                 variant={selectedType === type.value ? "default" : "outline"}
-                className="rounded-xl border-2 border-black font-semibold uppercase"
+                className="rounded-full rounded-xl border-2 border-black font-semibold uppercase"
               >
                 {type.label}
               </Button>

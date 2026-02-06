@@ -1218,4 +1218,16 @@ Design System Rules:
 - [x] Update AuthSignup to redirect to /how-it-works instead of /onboarding
 - [x] Test education flow for clarity (30 seconds total read time) - VERIFIED
 - [x] Test complete flow: Auth → Education → Onboarding - WORKING PERFECTLY
-- [ ] Save checkpoint after Phase 2 complete
+- [x] Save checkpoint after Phase 2 complete (95b1054d)
+
+## Onboarding Flow - Phase 3: Redesign Profile Setup with "Create Your Tone" Branding
+- [x] Update onboarding headline from "Claim Your Artist Profile" to "Build Your Artist Profile"
+- [x] Update welcome badge to "Create Your Tone" with sparkles icon
+- [x] Add profile photo upload component with file picker
+- [x] Add profile photo preview with circular crop and remove button
+- [x] Implement backend tRPC procedure (artistProfile.uploadPhoto) for S3 upload
+- [x] Photo upload is optional - users can skip and add later
+- [x] Add profilePhotoUrl field to artistProfile.update input schema
+- [x] Ensure design matches education screen aesthetics (pill buttons, clean layout) - VERIFIED
+- [x] Test onboarding page loads with new branding - WORKING
+- [ ] Save checkpoint after Phase 3 complete

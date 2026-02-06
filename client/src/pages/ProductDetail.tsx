@@ -91,9 +91,9 @@ export default function ProductDetail() {
       {/* Header */}
       <div className="border-b border-gray-200">
         <div className="container mx-auto px-4 py-6">
-          <Button className="rounded-full" onClick={() => setLocation("/shop")}
+          <Button onClick={() => setLocation("/shop")}
             variant="outline"
-            className="rounded-xl border-2 border-black font-semibold uppercase"
+            className="rounded-full rounded-xl border-2 border-black font-semibold uppercase"
           >
             <ArrowLeft className="mr-2" />
             Back to BopShop
@@ -176,10 +176,10 @@ export default function ProductDetail() {
                 <h3 className="font-semibold  mb-4">Select Option:</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {variants.map((variant: any) => (
-                    <Button className="rounded-full" key={variant.id}
+                    <Button key={variant.id}
                       onClick={() => setSelectedVariant(variant.id)}
                       variant={selectedVariant === variant.id ? "default" : "outline"}
-                      className="rounded-xl border border-gray-200 font-semibold  h-auto py-4"
+                      className="rounded-full rounded-xl border border-gray-200 font-semibold  h-auto py-4"
                       disabled={variant.stock === 0}
                     >
                       <div className="text-left w-full">
@@ -198,18 +198,18 @@ export default function ProductDetail() {
             <div className="border-t-4 border-black pt-6">
               <h3 className="font-semibold  mb-4">Quantity:</h3>
               <div className="flex items-center gap-4">
-                <Button className="rounded-full" onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                <Button onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   variant="outline"
-                  className="rounded-xl border border-gray-200 font-semibold text-2xl w-12 h-12"
+                  className="rounded-full rounded-xl border border-gray-200 font-semibold text-2xl w-12 h-12"
                 >
                   -
                 </Button>
                 <span className="text-2xl font-semibold font-mono w-12 text-center">
                   {quantity}
                 </span>
-                <Button className="rounded-full" onClick={() => setQuantity(quantity + 1)}
+                <Button onClick={() => setQuantity(quantity + 1)}
                   variant="outline"
-                  className="rounded-xl border border-gray-200 font-semibold text-2xl w-12 h-12"
+                  className="rounded-full rounded-xl border border-gray-200 font-semibold text-2xl w-12 h-12"
                 >
                   +
                 </Button>

@@ -164,8 +164,8 @@ export default function ToneRewards() {
               );
               
               return (
-                <Card className="rounded-xl" key={key} 
-                  className={`relative ${isCurrent ? "border-2 border-primary" : ""}`}
+                <Card key={key} 
+                  className={`rounded-xl relative ${isCurrent ? "border-2 border-primary" : ""}`}
                 >
                   {isCurrent && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">

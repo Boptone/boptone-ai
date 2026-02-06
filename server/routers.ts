@@ -54,6 +54,7 @@ const artistProfileRouter = router({
       genres: z.array(z.string()).optional(),
       location: z.string().optional(),
       avatarUrl: z.string().optional(),
+      profilePhotoUrl: z.string().optional(),
       coverImageUrl: z.string().optional(),
       socialLinks: z.object({
         instagram: z.string().optional(),
@@ -96,6 +97,32 @@ const artistProfileRouter = router({
       // For now, use stageName as username. Later we can add a dedicated username field
       const profiles = await db.getAllArtistProfiles(1, 0);
       return profiles.find(p => p.stageName?.toLowerCase() === input.username.toLowerCase());
+    }),
+
+  // Upload profile photo to S3
+  uploadPhoto: protectedProcedure
+    .input(z.object({
+      fileName: z.string(),
+      fileData: z.string(), // base64 encoded image
+      mimeType: z.string(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { storagePut } = await import("./storage");
+      
+      // Convert base64 to buffer
+      const base64Data = input.fileData.replace(/^data:image\/\w+;base64,/, "");
+      const buffer = Buffer.from(base64Data, "base64");
+      
+      // Generate unique filename
+      const timestamp = Date.now();
+      const randomSuffix = Math.random().toString(36).substring(2, 8);
+      const fileExtension = input.fileName.split(".").pop() || "jpg";
+      const fileKey = `profile-photos/${ctx.user.id}/${timestamp}-${randomSuffix}.${fileExtension}`;
+      
+      // Upload to S3
+      const result = await storagePut(fileKey, buffer, input.mimeType);
+      
+      return { url: result.url, key: result.key };
     }),
 });
 

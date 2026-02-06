@@ -239,9 +239,9 @@ export default function MyStoreOrders() {
                           />
                         </div>
                         <div className="flex gap-3">
-                          <Button className="rounded-full" onClick={() => handleMarkShipped(order.id)}
+                          <Button onClick={() => handleMarkShipped(order.id)}
                             disabled={updateOrder.isPending}
-                            className="bg-black text-white hover:bg-gray-800 font-bold"
+                            className="rounded-full bg-black text-white hover:bg-gray-800 font-bold"
                           >
                             {updateOrder.isPending ? (
                               <>
@@ -255,9 +255,9 @@ export default function MyStoreOrders() {
                               </>
                             )}
                           </Button>
-                          <Button className="rounded-full" variant="outline"
+                          <Button variant="outline"
                             onClick={() => setSelectedOrder(null)}
-                            className="border-2 border-black font-bold"
+                            className="rounded-full border-2 border-black font-bold"
                           >
                             CANCEL
                           </Button>
@@ -265,15 +265,15 @@ export default function MyStoreOrders() {
                       </div>
                     ) : (
                       <div className="flex gap-3">
-                        <Button className="rounded-full" onClick={() => setSelectedOrder(order.id)}
-                          className="bg-black text-white hover:bg-gray-800 font-bold"
+                        <Button onClick={() => setSelectedOrder(order.id)}
+                          className="rounded-full bg-black text-white hover:bg-gray-800 font-bold"
                         >
                           <Truck className="w-4 h-4 mr-2" />
                           MARK AS SHIPPED
                         </Button>
-                        <Button className="rounded-full" variant="outline"
+                        <Button variant="outline"
                           onClick={() => handleCancelOrder(order.id)}
-                          className="border-2 border-black font-bold text-red-600"
+                          className="rounded-full border-2 border-black font-bold text-red-600"
                         >
                           <XCircle className="w-4 h-4 mr-2" />
                           CANCEL ORDER

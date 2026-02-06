@@ -122,8 +122,8 @@ export default function MyStore() {
       <div className="mb-12">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl font-semibold tracking-tighter">YOUR PRODUCTS</h2>
-          <Button className="rounded-full" onClick={() => setShowAddProduct(true)}
-            className="bg-black text-white hover:bg-gray-800 font-bold"
+          <Button onClick={() => setShowAddProduct(true)}
+            className="rounded-full bg-black text-white hover:bg-gray-800 font-bold"
           >
             <Plus className="w-4 h-4 mr-2" />
             ADD PRODUCT
@@ -137,8 +137,8 @@ export default function MyStore() {
             <p className="text-muted-foreground mb-6">
               Start selling by adding your first product
             </p>
-            <Button className="rounded-full" onClick={() => setShowAddProduct(true)}
-              className="bg-black text-white hover:bg-gray-800 font-bold"
+            <Button onClick={() => setShowAddProduct(true)}
+              className="rounded-full bg-black text-white hover:bg-gray-800 font-bold"
             >
               <Plus className="w-4 h-4 mr-2" />
               ADD YOUR FIRST PRODUCT
