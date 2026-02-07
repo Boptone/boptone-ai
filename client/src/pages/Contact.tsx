@@ -9,7 +9,6 @@ import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import Footer from "@/components/Footer";
 
 export default function Contact() {
   const [, setLocation] = useLocation();
@@ -238,7 +237,6 @@ ${formData.message}
         </div>
       </div>
 
-      <Footer />
       <ToneyChatbot />
     </div>
   );

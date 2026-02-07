@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import Footer from "@/components/Footer";
 import { 
   Music, Brain, DollarSign, ShoppingBag, Shield, 
   BarChart3, Globe, Zap, ArrowRight
@@ -323,7 +322,6 @@ export default function Features() {
         </div>
       </div>
 
-      <Footer />
       <ToneyChatbot />
     </div>
   );

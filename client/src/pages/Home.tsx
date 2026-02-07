@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getLoginUrl } from "@/const";
 import { StripeCheckout } from "@/components/StripeCheckout";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import Footer from "@/components/Footer";
 import { useDemo } from "@/contexts/DemoContext";
 import { 
   Music, 
@@ -594,7 +593,6 @@ export default function Home() {
 
       <ToneyChatbot />
     </div>
-    <Footer />
     </>
   );
 }

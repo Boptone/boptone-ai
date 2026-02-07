@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Play, CheckCircle2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import Footer from "@/components/Footer";
 
 export default function Demo() {
   const [, setLocation] = useLocation();
@@ -227,7 +226,6 @@ export default function Demo() {
         </Card>
       </div>
 
-      <Footer />
       <ToneyChatbot />
     </div>
   );

@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Target, Users, Zap, Heart, ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import Footer from "@/components/Footer";
 
 export default function About() {
   const [, setLocation] = useLocation();
@@ -225,7 +224,6 @@ export default function About() {
         </div>
       </section>
 
-      <Footer />
       <ToneyChatbot />
     </div>
   );
