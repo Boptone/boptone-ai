@@ -8,6 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { DemoProvider } from "./contexts/DemoContext";
 import { Navigation } from "./components/Navigation";
 import { ToneyChatbot } from "./components/ToneyChatbot";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import ArtistProfile from "./pages/ArtistProfile";
 import DemoArtistProfile from "./pages/DemoArtistProfile";
@@ -111,6 +112,7 @@ function App() {
             <Toaster />
             <Navigation />
             <Router />
+            <Footer />
             <ToneyChatbot />
           </TooltipProvider>
         </ThemeProvider>
