@@ -1416,4 +1416,30 @@ Design System Rules:
   * ProfileSettings.tsx - "Profile Customization"
 - [x] Remove pill badges from all 9 pages (Home, Features, BAP, About, Dashboard, Shop, Discover, MyMusic, ProfileSettings) - COMPLETE
 - [x] Test multiple pages to verify pills removed and hero sections moved up closer to navigation - VERIFIED: Homepage, Features, Dashboard all confirmed with pill badges removed and hero sections positioned closer to nav
-- [ ] Save checkpoint after completing pill removal site-wide
+- [x] Save checkpoint after completing pill removal site-wide (e1946296)
+
+## Wallet Creation Flow & Kick In Tip Jar (User Request)
+- [x] Design wallet system architecture (support Visa, Mastercard, Apple Pay, Venmo, Zelle, Cryptocurrency)
+- [x] Create wallet database tables (wallets, payment_methods, transactions, tips) - Added 4 tables: wallets, paymentMethods, transactions, tips with 0% platform fee for tips
+- [ ] Create tRPC procedures for wallet CRUD operations
+- [ ] Build WalletSetup UI component with payment method selection
+- [ ] Implement Kick In tip jar feature with 0% platform fees
+- [ ] Integrate wallet setup into onboarding flow
+- [ ] Add wallet management to profile settings
+- [ ] Test wallet creation and tip jar functionality
+- [ ] Save checkpoint after wallet system complete
+
+## Wallet System Design Document (Option A - Design Phase)
+- [x] Create comprehensive wallet system design document covering:
+  * System architecture (3-tier: presentation, application, data layers)
+  * Database schema (4 tables: wallets, payment_methods, transactions, tips)
+  * Payment method support (Visa, Mastercard, Apple Pay, Venmo, Zelle, Cryptocurrency)
+  * Payment flows (wallet creation, tip jar, withdrawals)
+  * Kick In tip jar with 0% platform fees
+  * Security & compliance (PCI DSS, KYC, AML, tax reporting)
+  * UI/UX design principles (revolutionary aesthetic alignment)
+  * Integration points (Stripe, Venmo, Zelle, Coinbase, Plaid)
+  * 14-week implementation roadmap (7 phases)
+  * Future enhancements (subscriptions, DeFi, NFTs, decentralization)
+- [ ] Review design document with stakeholders
+- [ ] Build UI mockups for wallet dashboard and tip jar (Phase 1 of implementation)

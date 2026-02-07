@@ -1539,3 +1539,203 @@ export const podWebhookEvents = mysqlTable("pod_webhook_events", {
 
 export type PodWebhookEvent = typeof podWebhookEvents.$inferSelect;
 export type InsertPodWebhookEvent = typeof podWebhookEvents.$inferInsert;
+
+// ============================================================================
+// WALLET SYSTEM (Payment Methods & Transactions)
+// ============================================================================
+
+// Artist Wallets - One wallet per artist
+export const wallets = mysqlTable("wallets", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id).unique(),
+  
+  // Balance tracking (in cents)
+  balance: int("balance").default(0).notNull(), // Current balance
+  pendingBalance: int("pendingBalance").default(0).notNull(), // Pending/processing balance
+  lifetimeEarnings: int("lifetimeEarnings").default(0).notNull(), // Total all-time earnings
+  
+  // Wallet status
+  status: mysqlEnum("status", ["active", "suspended", "closed"]).default("active").notNull(),
+  verificationStatus: mysqlEnum("verificationStatus", ["unverified", "pending", "verified", "rejected"]).default("unverified").notNull(),
+  
+  // Metadata
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  metadata: json("metadata").$type<{
+    stripeCustomerId?: string;
+    cryptoAddresses?: {
+      bitcoin?: string;
+      ethereum?: string;
+      [key: string]: string | undefined;
+    };
+    [key: string]: any;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+}));
+
+export type Wallet = typeof wallets.$inferSelect;
+export type InsertWallet = typeof wallets.$inferInsert;
+
+// Payment Methods - Multiple payment methods per wallet
+export const paymentMethods = mysqlTable("payment_methods", {
+  id: int("id").autoincrement().primaryKey(),
+  walletId: int("walletId").notNull().references(() => wallets.id),
+  
+  // Payment method type
+  type: mysqlEnum("type", ["credit_card", "debit_card", "apple_pay", "venmo", "zelle", "cryptocurrency", "bank_account"]).notNull(),
+  provider: varchar("provider", { length: 50 }), // "visa", "mastercard", "bitcoin", "ethereum", etc.
+  
+  // Card/Account details (encrypted or tokenized)
+  last4: varchar("last4", { length: 4 }), // Last 4 digits of card/account
+  expiryMonth: int("expiryMonth"), // For cards
+  expiryYear: int("expiryYear"), // For cards
+  brand: varchar("brand", { length: 50 }), // "Visa", "Mastercard", etc.
+  
+  // Crypto wallet addresses
+  cryptoAddress: varchar("cryptoAddress", { length: 255 }), // For cryptocurrency
+  cryptoNetwork: varchar("cryptoNetwork", { length: 50 }), // "Bitcoin", "Ethereum", etc.
+  
+  // Venmo/Zelle identifiers
+  accountIdentifier: varchar("accountIdentifier", { length: 255 }), // Email/phone for Venmo/Zelle
+  
+  // Status
+  status: mysqlEnum("status", ["active", "inactive", "expired", "failed_verification"]).default("active").notNull(),
+  isDefault: boolean("isDefault").default(false).notNull(),
+  verified: boolean("verified").default(false).notNull(),
+  
+  // External provider IDs (Stripe, etc.)
+  externalId: varchar("externalId", { length: 255 }), // Stripe payment method ID
+  externalCustomerId: varchar("externalCustomerId", { length: 255 }), // Stripe customer ID
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    nickname?: string; // User-friendly name like "My Visa Card"
+    billingAddress?: {
+      line1?: string;
+      city?: string;
+      state?: string;
+      postalCode?: string;
+      country?: string;
+    };
+    [key: string]: any;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  walletIdIdx: index("wallet_id_idx").on(table.walletId),
+  typeIdx: index("type_idx").on(table.type),
+}));
+
+export type PaymentMethod = typeof paymentMethods.$inferSelect;
+export type InsertPaymentMethod = typeof paymentMethods.$inferInsert;
+
+// Transactions - All wallet transactions (payments, tips, withdrawals)
+export const transactions = mysqlTable("transactions", {
+  id: int("id").autoincrement().primaryKey(),
+  walletId: int("walletId").notNull().references(() => wallets.id),
+  
+  // Transaction details
+  type: mysqlEnum("type", ["payment", "tip", "withdrawal", "refund", "payout", "fee", "adjustment"]).notNull(),
+  amount: int("amount").notNull(), // In cents
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  
+  // Transaction status
+  status: mysqlEnum("status", ["pending", "processing", "completed", "failed", "cancelled", "refunded"]).default("pending").notNull(),
+  
+  // Payment method used
+  paymentMethodId: int("paymentMethodId").references(() => paymentMethods.id),
+  
+  // Related entities
+  fromUserId: int("fromUserId").references(() => users.id), // Who sent the money (for tips)
+  toUserId: int("toUserId").references(() => users.id), // Who received the money
+  orderId: int("orderId").references(() => orders.id), // Related order (if applicable)
+  
+  // Fees (in cents)
+  platformFee: int("platformFee").default(0).notNull(), // Boptone platform fee (0% for tips)
+  processingFee: int("processingFee").default(0).notNull(), // Payment processor fee
+  netAmount: int("netAmount").notNull(), // Amount after fees
+  
+  // Description
+  description: text("description"),
+  internalNotes: text("internalNotes"), // Admin notes
+  
+  // External provider IDs
+  externalId: varchar("externalId", { length: 255 }), // Stripe payment intent ID, etc.
+  externalStatus: varchar("externalStatus", { length: 50 }), // External provider status
+  
+  // Timestamps
+  processedAt: timestamp("processedAt"),
+  completedAt: timestamp("completedAt"),
+  failedAt: timestamp("failedAt"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    tipMessage?: string; // Message from tipper
+    refundReason?: string;
+    failureReason?: string;
+    [key: string]: any;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  walletIdIdx: index("wallet_id_idx").on(table.walletId),
+  typeIdx: index("type_idx").on(table.type),
+  statusIdx: index("status_idx").on(table.status),
+  fromUserIdx: index("from_user_idx").on(table.fromUserId),
+  toUserIdx: index("to_user_idx").on(table.toUserId),
+}));
+
+export type Transaction = typeof transactions.$inferSelect;
+export type InsertTransaction = typeof transactions.$inferInsert;
+
+// Tips (Kick In) - Dedicated tip jar transactions with 0% platform fees
+export const tips = mysqlTable("tips", {
+  id: int("id").autoincrement().primaryKey(),
+  transactionId: int("transactionId").notNull().references(() => transactions.id).unique(),
+  
+  // Tip details
+  fromUserId: int("fromUserId").notNull().references(() => users.id), // Tipper
+  toArtistId: int("toArtistId").notNull().references(() => artistProfiles.id), // Artist receiving tip
+  amount: int("amount").notNull(), // In cents
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  
+  // Tip message
+  message: text("message"), // Optional message from tipper
+  isAnonymous: boolean("isAnonymous").default(false).notNull(),
+  
+  // Payment method used
+  paymentMethodId: int("paymentMethodId").references(() => paymentMethods.id),
+  paymentType: varchar("paymentType", { length: 50 }).notNull(), // "credit_card", "apple_pay", "crypto", etc.
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "completed", "failed", "refunded"]).default("pending").notNull(),
+  
+  // IMPORTANT: 0% platform fee for tips
+  platformFee: int("platformFee").default(0).notNull(), // Always 0 for tips
+  processingFee: int("processingFee").default(0).notNull(), // Payment processor fee (unavoidable)
+  netAmount: int("netAmount").notNull(), // Amount artist receives (amount - processingFee)
+  
+  // Timestamps
+  completedAt: timestamp("completedAt"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    tipSource?: string; // "profile_page", "track_page", "dashboard", etc.
+    [key: string]: any;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  fromUserIdx: index("from_user_idx").on(table.fromUserId),
+  toArtistIdx: index("to_artist_idx").on(table.toArtistId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type Tip = typeof tips.$inferSelect;
+export type InsertTip = typeof tips.$inferInsert;
