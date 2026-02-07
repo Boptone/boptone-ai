@@ -104,11 +104,6 @@ export default function Features() {
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Left: Content */}
           <div className="space-y-8">
-            <div className="inline-block">
-              <div className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-500/30">
-                <span className="text-sm font-semibold">The Complete Creator OS</span>
-              </div>
-            </div>
             <h1 className="text-7xl md:text-8xl font-black leading-tight">
               Everything
               <br />

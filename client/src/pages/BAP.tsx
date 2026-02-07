@@ -23,10 +23,7 @@ export default function BAP() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: Massive Typography */}
             <div>
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-bold mb-8 shadow-lg">
-                <Zap className="h-5 w-5" />
-                The BAP Protocol
-              </div>
+
               <h1 className="text-7xl lg:text-8xl font-black mb-8 leading-none">
                 Fans Pay
                 <br />

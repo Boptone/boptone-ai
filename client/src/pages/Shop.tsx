@@ -42,10 +42,6 @@ export default function Shop() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Content */}
           <div>
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-sm font-bold mb-6 shadow-lg">
-              <Sparkles className="h-5 w-5" />
-              BopShop Marketplace
-            </div>
             <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6">
               Support
               <br />

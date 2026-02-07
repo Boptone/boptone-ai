@@ -20,10 +20,7 @@ export default function About() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: Massive Typography */}
             <div>
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-bold mb-8 shadow-lg">
-                <Heart className="h-5 w-5" />
-                About Boptone
-              </div>
+
               <h1 className="text-7xl lg:text-8xl font-black mb-8 leading-none">
                 Built for
                 <br />

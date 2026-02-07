@@ -126,10 +126,6 @@ export default function MyMusic() {
       <div className="space-y-12">
         {/* Revolutionary Header */}
         <div>
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-bold mb-6 shadow-lg">
-            <Sparkles className="h-5 w-5" />
-            Music Management
-          </div>
           <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none mb-4">
             Your
             <br />

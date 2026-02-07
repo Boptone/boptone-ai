@@ -279,9 +279,6 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Left: Content */}
           <div className="space-y-8">
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border-2 border-blue-500/50">
-              <span className="text-sm font-bold">The Complete Creator OS</span>
-            </div>
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none">
               <span 
                 className={`inline-block transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}

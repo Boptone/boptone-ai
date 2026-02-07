@@ -106,10 +106,6 @@ export default function ProfileSettings() {
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Revolutionary Header with Asymmetric Layout */}
         <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-bold mb-6 shadow-lg">
-            <Sparkles className="h-5 w-5" />
-            Profile Customization
-          </div>
           <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none mb-4">
             Make It
             <br />

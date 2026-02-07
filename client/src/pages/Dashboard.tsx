@@ -171,10 +171,6 @@ export default function Dashboard() {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Left: Massive Typography */}
             <div>
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white text-sm font-bold mb-6 shadow-lg">
-                <Zap className="h-5 w-5" />
-                Command Center
-              </div>
               <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none mb-4">
                 Welcome back,
                 <br />
