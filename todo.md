@@ -1510,5 +1510,10 @@ Design System Rules:
 - [x] Add routes to App.tsx for all writer payment pages
 - [x] Fix TypeScript errors to match backend API structure
 - [ ] Implement tax compliance (W-9/W-8BEN collection) - DEFERRED (can be added later as separate feature)
-- [x] Test end-to-end and save final checkpoint
+- [x] Test end-to-end and save final checkpoint (version ab13a3ca)
 - [x] Save checkpoint after writer profile setup page complete (version 55890565)
+
+## Pricing Page Enhancement (User Request)
+- [x] Add Annual/Monthly toggle switch to pricing section
+- [x] Update pricing display logic to show annual vs monthly prices (with 20% discount and savings display)
+- [x] Test toggle functionality and save checkpoint

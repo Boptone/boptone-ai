@@ -108,6 +108,8 @@ export default function Home() {
   const tiers = [
     {
       name: "Creator",
+      monthlyPrice: 0,
+      annualPrice: 0,
       price: "$0",
       period: "/forever",
       platformFee: "12%",
@@ -128,6 +130,8 @@ export default function Home() {
     },
     {
       name: "Pro",
+      monthlyPrice: 29,
+      annualPrice: 279, // $29 * 12 * 0.8 = $278.40 rounded to $279
       price: "$29",
       period: "/month",
       platformFee: "7%",
@@ -150,6 +154,8 @@ export default function Home() {
     },
     {
       name: "Studio",
+      monthlyPrice: 99,
+      annualPrice: 950, // $99 * 12 * 0.8 = $950.40 rounded to $950
       price: "$99",
       period: "/month",
       platformFee: "4%",
@@ -170,6 +176,8 @@ export default function Home() {
     },
     {
       name: "Label",
+      monthlyPrice: 499,
+      annualPrice: 4790, // $499 * 12 * 0.8 = $4790.40 rounded to $4790
       price: "$499",
       period: "/month",
       platformFee: "2.5%",
@@ -413,6 +421,30 @@ export default function Home() {
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Start free, scale as you grow—no hidden fees, cancel anytime
               </p>
+              
+              {/* Annual/Monthly Toggle */}
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <span className={`text-lg font-semibold transition-colors ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Monthly
+                </span>
+                <button
+                  onClick={() => setIsAnnual(!isAnnual)}
+                  className={`relative w-16 h-8 rounded-full transition-colors ${
+                    isAnnual ? 'bg-blue-500' : 'bg-gray-300'
+                  }`}
+                  aria-label="Toggle annual pricing"
+                >
+                  <div
+                    className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform ${
+                      isAnnual ? 'translate-x-8' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+                <span className={`text-lg font-semibold transition-colors ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Annual
+                  <span className="ml-2 text-sm bg-green-500 text-white px-2 py-0.5 rounded-full">Save 20%</span>
+                </span>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {tiers.map((tier, index) => (
@@ -429,9 +461,28 @@ export default function Home() {
                     <div>
                       <div className="text-2xl font-black mb-2">{tier.name}</div>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-5xl font-black">{tier.price}</span>
-                        <span className="text-muted-foreground">{tier.period}</span>
+                        <span className="text-5xl font-black">
+                          {tier.name === "Creator" 
+                            ? "$0" 
+                            : isAnnual 
+                              ? `$${tier.annualPrice}` 
+                              : `$${tier.monthlyPrice}`
+                          }
+                        </span>
+                        <span className="text-muted-foreground">
+                          {tier.name === "Creator" 
+                            ? "/forever" 
+                            : isAnnual 
+                              ? "/year" 
+                              : "/month"
+                          }
+                        </span>
                       </div>
+                      {isAnnual && tier.name !== "Creator" && (
+                        <div className="text-sm text-green-600 font-semibold mt-1">
+                          Save ${(tier.monthlyPrice * 12) - tier.annualPrice}/year
+                        </div>
+                      )}
                       <div className="mt-4 space-y-1">
                         <div className="text-sm font-bold">Platform Fee: {tier.platformFee}</div>
                         <div className="text-xs text-muted-foreground">Earning Cap: {tier.earningCap}</div>
