@@ -44,6 +44,9 @@ import MyStore from "./pages/MyStore";
 import MyStoreOrders from "./pages/MyStoreOrders";
 import AuthSignup from "./pages/AuthSignup";
 import HowItWorks from "./pages/HowItWorks";
+import WriterInvite from "./pages/WriterInvite";
+import WriterProfile from "./pages/WriterProfile";
+import WriterEarnings from "./pages/WriterEarnings";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -52,6 +55,9 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/auth-signup"} component={AuthSignup} />
       <Route path={"/how-it-works"} component={HowItWorks} />
+      <Route path={"/writer-invite"} component={WriterInvite} />
+      <Route path={"/writer-profile"} component={WriterProfile} />
+      <Route path={"/writer-earnings"} component={WriterEarnings} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path={"/@:username"} component={ArtistProfile} />
       <Route path="/shop" component={Shop} />

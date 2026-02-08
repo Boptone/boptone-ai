@@ -1504,9 +1504,11 @@ Design System Rules:
 - [x] Update BAP upload mutation to send writer invitations
 - [x] Fix Upload.tsx songwriter splits UI (syntax error resolved)
 - [x] Create writer profile setup page with payment methods (WriterProfile.tsx)
-- [ ] Create writer invitation acceptance page
-- [ ] Implement tax compliance (W-9/W-8BEN collection)
-- [ ] Build automatic split payment distribution system
-- [ ] Create writer earnings dashboard
-- [ ] Test end-to-end and save checkpoint
-- [ ] Save checkpoint after writer profile setup page complete
+- [x] Create writer invitation acceptance page (WriterInvite.tsx with 2-step flow)
+- [x] Build automatic split payment distribution system (backend helpers in writerPayments.ts)
+- [x] Create writer earnings dashboard (WriterEarnings.tsx with track breakdown and payout history)
+- [x] Add routes to App.tsx for all writer payment pages
+- [x] Fix TypeScript errors to match backend API structure
+- [ ] Implement tax compliance (W-9/W-8BEN collection) - DEFERRED (can be added later as separate feature)
+- [x] Test end-to-end and save final checkpoint
+- [x] Save checkpoint after writer profile setup page complete (version 55890565)
