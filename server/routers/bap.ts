@@ -61,9 +61,9 @@ export const bapRouter = router({
         isrcCode: z.string().optional(),
         upcCode: z.string().optional(),
         songwriterSplits: z.array(z.object({
-          name: z.string(),
+          email: z.string(),
+          fullName: z.string(),
           percentage: z.number(),
-          ipi: z.string().optional(),
         })).optional(),
         publishingData: z.object({
           publisher: z.string().optional(),
@@ -121,7 +121,7 @@ export const bapRouter = router({
           artworkUrl = result.url;
         }
         
-        // Create track record
+        // Create track record (store songwriter splits as metadata for now)
         const track = await createTrack({
           artistId: profile.id,
           title: finalTitle,
@@ -138,7 +138,11 @@ export const bapRouter = router({
           did: `did:boptone:${profile.stageName.toLowerCase().replace(/[^a-z0-9]/g, "")}:${Date.now()}`,
           isrcCode: input.isrcCode,
           upcCode: input.upcCode,
-          songwriterSplits: input.songwriterSplits,
+          songwriterSplits: input.songwriterSplits ? input.songwriterSplits.map(s => ({
+            name: s.fullName,
+            percentage: s.percentage,
+            ipi: undefined,
+          })) : undefined,
           publishingData: input.publishingData,
           aiDisclosure: input.aiDisclosure,
         });
@@ -148,6 +152,39 @@ export const bapRouter = router({
           status: "live",
           releasedAt: new Date(),
         });
+        
+        // Send writer invitations for co-writers (skip first writer - that's the uploader)
+        if (input.songwriterSplits && input.songwriterSplits.length > 1) {
+          const { createWriterInvitation } = await import("../writerPayments");
+          const crypto = await import("crypto");
+          
+          for (let i = 1; i < input.songwriterSplits.length; i++) {
+            const writer = input.songwriterSplits[i];
+            const inviteToken = crypto.randomBytes(32).toString("hex");
+            const expiresAt = new Date();
+            expiresAt.setDate(expiresAt.getDate() + 30); // 30 days to accept
+            
+            try {
+              await createWriterInvitation({
+                email: writer.email,
+                fullName: writer.fullName,
+                invitedByArtistId: profile.id,
+                trackId: track.insertId as number,
+                splitPercentage: writer.percentage.toString(),
+                inviteToken,
+                expiresAt,
+                status: "pending",
+              });
+              
+              // TODO: Send email with invitation link
+              // Email should contain: boptone.com/writer-invite?token={inviteToken}
+              console.log(`[BAP] Writer invitation sent to ${writer.email} for track ${track.insertId}`);
+            } catch (error) {
+              console.error(`[BAP] Failed to create writer invitation for ${writer.email}:`, error);
+              // Continue with other invitations even if one fails
+            }
+          }
+        }
         
         return {
           success: true,

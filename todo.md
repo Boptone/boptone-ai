@@ -1455,4 +1455,58 @@ Design System Rules:
 - [x] Implement AI disclosure toggle in Upload flow (checkbox with type selection: lyrics/production/mastering/vocals/artwork, purple highlight section)
 - [x] Implement compliance score widget on Dashboard (0-100% gamified score with 5 metadata categories, visual progress indicators, Improve Score button)
 - [x] Test all 3 compliance features end-to-end (dev server running, features implemented and functional)
-- [ ] Save checkpoint after compliance enhancements complete
+- [x] Save checkpoint after compliance enhancements complete (version 7a5e3f21)
+
+## Writer Payment System (User Request - Seamless Split Payouts)
+- [ ] Design database schema for writer profiles and payment info
+  * writerProfiles table (name, email, ipi, userId link)
+  * writerPaymentMethods table (bank account, PayPal, Venmo, Zelle, crypto)
+  * writerTaxInfo table (W-9/W-8BEN forms, tax ID, country)
+  * writerInvitations table (pending invites with token)
+  * writerEarnings table (track earnings split by writer)
+- [ ] Create writer profile management system
+  * Writer profile creation/editing page
+  * Payment method selection (bank, PayPal, Venmo, Zelle, crypto)
+  * Bank account form (routing, account number, account type)
+  * PayPal/Venmo handle input
+  * Payment method verification
+- [ ] Build invite writers flow in upload process
+  * Replace manual name input with email-based invite system
+  * Send email invitation to writers with secure token
+  * Writer accepts invite and completes payment profile
+  * Link writer profile to track splits
+  * Show pending/completed status for each writer
+- [ ] Implement tax compliance system
+  * W-9 form for US writers (name, TIN, address, signature)
+  * W-8BEN form for international writers
+  * Tax form upload/storage
+  * 1099 generation at year-end
+  * Tax threshold tracking ($600 minimum)
+- [ ] Build automatic split payment distribution
+  * Calculate earnings per track per writer based on %
+  * Automatic payout triggers (weekly, monthly, or threshold-based)
+  * Payment processing via Stripe Connect or similar
+  * Transaction history for each writer
+  * Email notifications for payments sent
+- [ ] Create writer earnings dashboard
+  * Show all tracks writer contributed to
+  * Earnings breakdown by track
+  * Payment history
+  * Pending payments
+  * Tax documents download
+- [ ] Test writer payment system end-to-end
+- [ ] Save checkpoint after writer payment system complete
+
+## Writer Payment System (User Request - Full Implementation)
+- [x] Design database schema for writer profiles and payment info (5 tables: writer_profiles, writer_payment_methods, writer_invitations, writer_earnings, writer_payouts)
+- [x] Create backend database helpers in server/writerPayments.ts
+- [x] Create tRPC router for writer payment system (server/routers/writerPayments.ts)
+- [x] Update BAP upload mutation to send writer invitations
+- [x] Fix Upload.tsx songwriter splits UI (syntax error resolved)
+- [x] Create writer profile setup page with payment methods (WriterProfile.tsx)
+- [ ] Create writer invitation acceptance page
+- [ ] Implement tax compliance (W-9/W-8BEN collection)
+- [ ] Build automatic split payment distribution system
+- [ ] Create writer earnings dashboard
+- [ ] Test end-to-end and save checkpoint
+- [ ] Save checkpoint after writer profile setup page complete

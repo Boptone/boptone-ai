@@ -27,7 +27,7 @@ const validateUPC = (upc: string): boolean => {
   return /^\d{12}$/.test(upc);
 };
 
-const validateSongwriterSplits = (splits: Array<{name: string; percentage: number}>): boolean => {
+const validateSongwriterSplits = (splits: Array<{email: string; fullName: string; percentage: number}>): boolean => {
   if (splits.length === 0) return false;
   const total = splits.reduce((sum, split) => sum + split.percentage, 0);
   return Math.abs(total - 100) < 0.01; // Allow for floating point precision
@@ -72,8 +72,8 @@ export default function Upload() {
     aiTypes: [] as Array<'lyrics' | 'production' | 'mastering' | 'vocals' | 'artwork'>,
   });
 
-  const [songwriterSplits, setSongwriterSplits] = useState<Array<{name: string; percentage: number; ipi?: string}>>([
-    { name: user?.name || "", percentage: 100, ipi: "" }
+  const [songwriterSplits, setSongwriterSplits] = useState<Array<{email: string; fullName: string; percentage: number}>>([
+    { email: user?.email || "", fullName: user?.name || "", percentage: 100 }
   ]);
 
   // Validation state
@@ -121,7 +121,7 @@ export default function Upload() {
     }
   };
 
-  const handleSongwriterSplitsChange = (newSplits: Array<{name: string; percentage: number; ipi?: string}>) => {
+  const handleSongwriterSplitsChange = (newSplits: Array<{email: string; fullName: string; percentage: number}>) => {
     setSongwriterSplits(newSplits);
     if (newSplits.length === 0) {
       setValidation(prev => ({ ...prev, songwriterSplits: 'empty' }));
@@ -142,7 +142,7 @@ export default function Upload() {
   };
 
   const addSongwriter = () => {
-    const newSplits = [...songwriterSplits, { name: "", percentage: 0, ipi: "" }];
+    const newSplits = [...songwriterSplits, { email: "", fullName: "", percentage: 0 }];
     handleSongwriterSplitsChange(newSplits);
   };
 
@@ -151,7 +151,7 @@ export default function Upload() {
     handleSongwriterSplitsChange(newSplits);
   };
 
-  const updateSongwriter = (index: number, field: 'name' | 'percentage' | 'ipi', value: string | number) => {
+  const updateSongwriter = (index: number, field: 'email' | 'fullName' | 'percentage', value: string | number) => {
     const newSplits = [...songwriterSplits];
     newSplits[index] = { ...newSplits[index], [field]: value };
     handleSongwriterSplitsChange(newSplits);
@@ -674,39 +674,45 @@ export default function Upload() {
                     Songwriter Splits
                     {showValidation && <ValidationIcon status={validation.songwriterSplits} />}
                   </Label>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {songwriterSplits.map((split, index) => (
-                      <div key={index} className="flex items-center gap-2">
+                      <div key={index} className="space-y-2 p-3 bg-muted/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Input
+                            value={split.fullName}
+                            onChange={(e) => updateSongwriter(index, 'fullName', e.target.value)}
+                            placeholder="Full name"
+                            className="flex-1"
+                          />
+                          <Input
+                            type="number"
+                            value={split.percentage}
+                            onChange={(e) => updateSongwriter(index, 'percentage', parseFloat(e.target.value) || 0)}
+                            placeholder="%"
+                            className="w-24"
+                          />
+                          {songwriterSplits.length > 1 && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeSongwriter(index)}
+                              className="flex-shrink-0"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
                         <Input
-                          value={split.name}
-                          onChange={(e) => updateSongwriter(index, 'name', e.target.value)}
-                          placeholder="Songwriter name"
-                          className="flex-1"
+                          type="email"
+                          value={split.email}
+                          onChange={(e) => updateSongwriter(index, 'email', e.target.value)}
+                          placeholder="Email address (for payment invitations)"
+                          className="w-full"
                         />
-                        <Input
-                          type="number"
-                          value={split.percentage}
-                          onChange={(e) => updateSongwriter(index, 'percentage', parseFloat(e.target.value) || 0)}
-                          placeholder="%"
-                          className="w-20"
-                          min="0"
-                          max="100"
-                          step="0.01"
-                        />
-                        <Input
-                          value={split.ipi || ''}
-                          onChange={(e) => updateSongwriter(index, 'ipi', e.target.value)}
-                          placeholder="IPI (optional)"
-                          className="w-32"
-                        />
-                        {songwriterSplits.length > 1 && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => removeSongwriter(index)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                        {index > 0 && (
+                          <p className="text-xs text-muted-foreground">
+                            We'll send an invitation to set up payment details
+                          </p>
                         )}
                       </div>
                     ))}

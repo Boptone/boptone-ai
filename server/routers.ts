@@ -12,6 +12,7 @@ import { fanFunnelRouter } from "./routers/fanfunnel";
 import { microloansRouter } from "./routers/microloans";
 import { ecommerceRouter } from "./ecommerceRouter";
 import { podRouter } from "./routers/pod";
+import { writerPaymentsRouter } from "./routers/writerPayments";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -660,6 +661,9 @@ export const appRouter = router({
   
   // Artist Micro-Loans
   microloans: microloansRouter,
+  
+  // Writer Payment System (Songwriter Splits)
+  writerPayments: writerPaymentsRouter,
 });
 
 export type AppRouter = typeof appRouter;

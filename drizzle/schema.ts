@@ -1746,3 +1746,222 @@ export const tips = mysqlTable("tips", {
 
 export type Tip = typeof tips.$inferSelect;
 export type InsertTip = typeof tips.$inferInsert;
+
+// ============================================================================
+// WRITER PAYMENT SYSTEM (SONGWRITER SPLITS & PAYOUTS)
+// ============================================================================
+
+/**
+ * Writer Profiles - Songwriters/producers who receive split payments
+ * Separate from artist profiles to allow non-artists to receive payments
+ */
+export const writerProfiles = mysqlTable("writer_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id), // Optional - writer may not have Boptone account yet
+  
+  // Identity
+  fullName: varchar("fullName", { length: 255 }).notNull(),
+  email: varchar("email", { length: 320 }).notNull().unique(),
+  ipiNumber: varchar("ipiNumber", { length: 20 }), // International Performer Identifier
+  proAffiliation: varchar("proAffiliation", { length: 100 }), // ASCAP, BMI, SESAC, etc.
+  
+  // Tax info
+  taxCountry: varchar("taxCountry", { length: 2 }), // ISO country code
+  taxId: varchar("taxId", { length: 50 }), // SSN/EIN (US) or equivalent
+  taxFormType: mysqlEnum("taxFormType", ["w9", "w8ben", "none"]).default("none"),
+  taxFormUrl: text("taxFormUrl"), // S3 URL to uploaded tax form
+  taxFormSubmittedAt: timestamp("taxFormSubmittedAt"),
+  
+  // Profile status
+  status: mysqlEnum("status", ["invited", "pending_verification", "active", "suspended"]).default("invited").notNull(),
+  verifiedAt: timestamp("verifiedAt"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    invitedBy?: number; // Artist ID who invited this writer
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  emailIdx: index("email_idx").on(table.email),
+  userIdIdx: index("user_id_idx").on(table.userId),
+}));
+
+export type WriterProfile = typeof writerProfiles.$inferSelect;
+export type InsertWriterProfile = typeof writerProfiles.$inferInsert;
+
+/**
+ * Writer Payment Methods - How writers receive their split payments
+ */
+export const writerPaymentMethods = mysqlTable("writer_payment_methods", {
+  id: int("id").autoincrement().primaryKey(),
+  writerProfileId: int("writerProfileId").notNull().references(() => writerProfiles.id),
+  
+  // Payment method type
+  type: mysqlEnum("type", ["bank_account", "paypal", "venmo", "zelle", "crypto"]).notNull(),
+  
+  // Bank account details (encrypted)
+  bankName: varchar("bankName", { length: 255 }),
+  bankAccountType: mysqlEnum("bankAccountType", ["checking", "savings"]),
+  bankRoutingNumber: varchar("bankRoutingNumber", { length: 20 }), // Encrypted
+  bankAccountNumber: varchar("bankAccountNumber", { length: 50 }), // Encrypted
+  
+  // PayPal/Venmo/Zelle
+  paypalEmail: varchar("paypalEmail", { length: 320 }),
+  venmoHandle: varchar("venmoHandle", { length: 100 }),
+  zelleEmail: varchar("zelleEmail", { length: 320 }),
+  
+  // Cryptocurrency
+  cryptoWalletAddress: varchar("cryptoWalletAddress", { length: 255 }),
+  cryptoCurrency: varchar("cryptoCurrency", { length: 20 }), // BTC, ETH, USDC, etc.
+  
+  // Verification
+  isVerified: boolean("isVerified").default(false).notNull(),
+  verifiedAt: timestamp("verifiedAt"),
+  
+  // Default payment method
+  isDefault: boolean("isDefault").default(false).notNull(),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "active", "failed", "disabled"]).default("pending").notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  writerProfileIdx: index("writer_profile_idx").on(table.writerProfileId),
+}));
+
+export type WriterPaymentMethod = typeof writerPaymentMethods.$inferSelect;
+export type InsertWriterPaymentMethod = typeof writerPaymentMethods.$inferInsert;
+
+/**
+ * Writer Invitations - Pending invites sent to writers during track upload
+ */
+export const writerInvitations = mysqlTable("writer_invitations", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Invitation details
+  email: varchar("email", { length: 320 }).notNull(),
+  fullName: varchar("fullName", { length: 255 }).notNull(),
+  invitedByArtistId: int("invitedByArtistId").notNull().references(() => artistProfiles.id),
+  
+  // Track association
+  trackId: int("trackId").references(() => bapTracks.id),
+  splitPercentage: decimal("splitPercentage", { precision: 5, scale: 2 }).notNull(), // e.g., 25.00 for 25%
+  
+  // Invitation token
+  inviteToken: varchar("inviteToken", { length: 64 }).notNull().unique(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "accepted", "expired", "cancelled"]).default("pending").notNull(),
+  acceptedAt: timestamp("acceptedAt"),
+  writerProfileId: int("writerProfileId").references(() => writerProfiles.id), // Set when accepted
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  emailIdx: index("email_idx").on(table.email),
+  inviteTokenIdx: index("invite_token_idx").on(table.inviteToken),
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+}));
+
+export type WriterInvitation = typeof writerInvitations.$inferSelect;
+export type InsertWriterInvitation = typeof writerInvitations.$inferInsert;
+
+/**
+ * Writer Earnings - Track earnings split by writer for automatic payouts
+ */
+export const writerEarnings = mysqlTable("writer_earnings", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Writer and track
+  writerProfileId: int("writerProfileId").notNull().references(() => writerProfiles.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  
+  // Split details
+  splitPercentage: decimal("splitPercentage", { precision: 5, scale: 2 }).notNull(), // e.g., 25.00 for 25%
+  
+  // Earnings tracking
+  totalEarned: int("totalEarned").default(0).notNull(), // In cents - lifetime earnings for this writer on this track
+  pendingPayout: int("pendingPayout").default(0).notNull(), // In cents - not yet paid out
+  totalPaidOut: int("totalPaidOut").default(0).notNull(), // In cents - already paid
+  
+  // Last payout
+  lastPayoutAt: timestamp("lastPayoutAt"),
+  lastPayoutAmount: int("lastPayoutAmount"), // In cents
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    payoutHistory?: Array<{
+      amount: number;
+      date: string;
+      transactionId: string;
+    }>;
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  writerTrackIdx: index("writer_track_idx").on(table.writerProfileId, table.trackId),
+  writerProfileIdx: index("writer_profile_idx").on(table.writerProfileId),
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+}));
+
+export type WriterEarning = typeof writerEarnings.$inferSelect;
+export type InsertWriterEarning = typeof writerEarnings.$inferInsert;
+
+/**
+ * Writer Payouts - Individual payout transactions to writers
+ */
+export const writerPayouts = mysqlTable("writer_payouts", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Writer and payment method
+  writerProfileId: int("writerProfileId").notNull().references(() => writerProfiles.id),
+  paymentMethodId: int("paymentMethodId").notNull().references(() => writerPaymentMethods.id),
+  
+  // Payout details
+  amount: int("amount").notNull(), // In cents
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  
+  // Tracks included in this payout
+  trackIds: json("trackIds").$type<number[]>(), // Array of track IDs
+  
+  // Payment processing
+  status: mysqlEnum("status", ["pending", "processing", "completed", "failed", "cancelled"]).default("pending").notNull(),
+  paymentProcessor: varchar("paymentProcessor", { length: 50 }), // "stripe", "paypal", etc.
+  externalPaymentId: varchar("externalPaymentId", { length: 255 }), // Stripe transfer ID, PayPal transaction ID, etc.
+  
+  // Failure handling
+  failureReason: text("failureReason"),
+  retryCount: int("retryCount").default(0).notNull(),
+  
+  // Timestamps
+  scheduledFor: timestamp("scheduledFor"),
+  processedAt: timestamp("processedAt"),
+  completedAt: timestamp("completedAt"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    earningsBreakdown?: Array<{
+      trackId: number;
+      trackTitle: string;
+      amount: number;
+    }>;
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  writerProfileIdx: index("writer_profile_idx").on(table.writerProfileId),
+  statusIdx: index("status_idx").on(table.status),
+  scheduledForIdx: index("scheduled_for_idx").on(table.scheduledFor),
+}));
+
+export type WriterPayout = typeof writerPayouts.$inferSelect;
+export type InsertWriterPayout = typeof writerPayouts.$inferInsert;
