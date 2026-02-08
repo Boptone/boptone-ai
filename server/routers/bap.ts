@@ -58,6 +58,21 @@ export const bapRouter = router({
         artworkFile: z.string().optional(), // Base64 encoded image
         albumId: z.number().optional(),
         isExplicit: z.boolean().default(false),
+        isrcCode: z.string().optional(),
+        upcCode: z.string().optional(),
+        songwriterSplits: z.array(z.object({
+          name: z.string(),
+          percentage: z.number(),
+          ipi: z.string().optional(),
+        })).optional(),
+        publishingData: z.object({
+          publisher: z.string().optional(),
+          pro: z.string().optional(),
+        }).optional(),
+        aiDisclosure: z.object({
+          used: z.boolean(),
+          types: z.array(z.enum(['lyrics', 'production', 'mastering', 'vocals', 'artwork'])).optional(),
+        }).optional(),
       }))
       .mutation(async ({ input, ctx }) => {
         // Get artist profile
@@ -116,11 +131,16 @@ export const bapRouter = router({
           audioUrl,
           artworkUrl,
           isExplicit: input.isExplicit,
-          status: "processing", // Will be set to "live" after processing
-          duration: 0, // TODO: Extract from audio file
+          status: "processing",
+          duration: 0,
           fileSize: audioBuffer.length,
           audioFormat: "mp3",
           did: `did:boptone:${profile.stageName.toLowerCase().replace(/[^a-z0-9]/g, "")}:${Date.now()}`,
+          isrcCode: input.isrcCode,
+          upcCode: input.upcCode,
+          songwriterSplits: input.songwriterSplits,
+          publishingData: input.publishingData,
+          aiDisclosure: input.aiDisclosure,
         });
         
         // Auto-publish for now (in Phase 3, this will wait for AI processing)

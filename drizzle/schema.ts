@@ -788,6 +788,13 @@ export const bapTracks = mysqlTable("bap_tracks", {
   did: varchar("did", { length: 255 }).unique(), // did:boptone:artistname:trackid
   contentHash: varchar("contentHash", { length: 128 }), // SHA-256 hash for integrity
   
+  // Compliance & Metadata fields
+  isrcCode: varchar("isrcCode", { length: 12 }), // International Standard Recording Code (CC-XXX-YY-NNNNN)
+  upcCode: varchar("upcCode", { length: 12 }), // Universal Product Code (12 digits)
+  songwriterSplits: json("songwriterSplits").$type<Array<{name: string; percentage: number; ipi?: string}>>(), // Must add to 100%
+  publishingData: json("publishingData").$type<{publisher?: string; pro?: string; [key: string]: unknown}>(), // PRO = Performance Rights Organization
+  aiDisclosure: json("aiDisclosure").$type<{used: boolean; types?: Array<'lyrics' | 'production' | 'mastering' | 'vocals' | 'artwork'>}>(), // AI usage disclosure
+  
   // Engagement metrics
   playCount: int("playCount").default(0).notNull(),
   likeCount: int("likeCount").default(0).notNull(),

@@ -7,11 +7,41 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Upload as UploadIcon, Music, Image as ImageIcon, Loader2, Check, Sparkles } from "lucide-react";
+import { Upload as UploadIcon, Music, Image as ImageIcon, Loader2, Check, Sparkles, AlertCircle, CheckCircle2, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import DashboardLayout from "@/components/DashboardLayout";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+
+// Validation helper functions
+const validateISRC = (isrc: string): boolean => {
+  // ISRC format: CC-XXX-YY-NNNNN (12 characters without hyphens)
+  const cleanISRC = isrc.replace(/-/g, '');
+  return /^[A-Z]{2}[A-Z0-9]{3}\d{7}$/.test(cleanISRC);
+};
+
+const validateUPC = (upc: string): boolean => {
+  // UPC format: 12 digits
+  return /^\d{12}$/.test(upc);
+};
+
+const validateSongwriterSplits = (splits: Array<{name: string; percentage: number}>): boolean => {
+  if (splits.length === 0) return false;
+  const total = splits.reduce((sum, split) => sum + split.percentage, 0);
+  return Math.abs(total - 100) < 0.01; // Allow for floating point precision
+};
+
+type ValidationStatus = 'valid' | 'invalid' | 'empty';
+
+interface ValidationState {
+  isrc: ValidationStatus;
+  upc: ValidationStatus;
+  songwriterSplits: ValidationStatus;
+  publishingData: ValidationStatus;
+  aiDisclosure: ValidationStatus;
+}
 
 export default function Upload() {
   const { user, loading: authLoading } = useAuth();
@@ -33,7 +63,29 @@ export default function Upload() {
     bpm: "",
     musicalKey: "",
     explicit: false,
+    // Compliance fields
+    isrcCode: "",
+    upcCode: "",
+    publisher: "",
+    pro: "", // Performance Rights Organization
+    aiUsed: false,
+    aiTypes: [] as Array<'lyrics' | 'production' | 'mastering' | 'vocals' | 'artwork'>,
   });
+
+  const [songwriterSplits, setSongwriterSplits] = useState<Array<{name: string; percentage: number; ipi?: string}>>([
+    { name: user?.name || "", percentage: 100, ipi: "" }
+  ]);
+
+  // Validation state
+  const [validation, setValidation] = useState<ValidationState>({
+    isrc: 'empty',
+    upc: 'empty',
+    songwriterSplits: 'valid', // Start valid with 100% to current user
+    publishingData: 'empty',
+    aiDisclosure: 'valid', // Start valid (not required)
+  });
+
+  const [showValidation, setShowValidation] = useState(false);
 
   const uploadTrackMutation = trpc.bap.tracks.upload.useMutation({
     onSuccess: () => {
@@ -49,6 +101,61 @@ export default function Upload() {
       setIsUploading(false);
     }
   });
+
+  // Validate fields on change
+  const handleISRCChange = (value: string) => {
+    setMetadata(prev => ({ ...prev, isrcCode: value }));
+    if (value === '') {
+      setValidation(prev => ({ ...prev, isrc: 'empty' }));
+    } else {
+      setValidation(prev => ({ ...prev, isrc: validateISRC(value) ? 'valid' : 'invalid' }));
+    }
+  };
+
+  const handleUPCChange = (value: string) => {
+    setMetadata(prev => ({ ...prev, upcCode: value }));
+    if (value === '') {
+      setValidation(prev => ({ ...prev, upc: 'empty' }));
+    } else {
+      setValidation(prev => ({ ...prev, upc: validateUPC(value) ? 'valid' : 'invalid' }));
+    }
+  };
+
+  const handleSongwriterSplitsChange = (newSplits: Array<{name: string; percentage: number; ipi?: string}>) => {
+    setSongwriterSplits(newSplits);
+    if (newSplits.length === 0) {
+      setValidation(prev => ({ ...prev, songwriterSplits: 'empty' }));
+    } else {
+      setValidation(prev => ({ ...prev, songwriterSplits: validateSongwriterSplits(newSplits) ? 'valid' : 'invalid' }));
+    }
+  };
+
+  const handlePublishingDataChange = (field: 'publisher' | 'pro', value: string) => {
+    setMetadata(prev => ({ ...prev, [field]: value }));
+    const hasData = (field === 'publisher' ? value : metadata.publisher) || (field === 'pro' ? value : metadata.pro);
+    setValidation(prev => ({ ...prev, publishingData: hasData ? 'valid' : 'empty' }));
+  };
+
+  const handleAIDisclosureChange = (used: boolean) => {
+    setMetadata(prev => ({ ...prev, aiUsed: used, aiTypes: used ? prev.aiTypes : [] }));
+    setValidation(prev => ({ ...prev, aiDisclosure: 'valid' })); // Always valid
+  };
+
+  const addSongwriter = () => {
+    const newSplits = [...songwriterSplits, { name: "", percentage: 0, ipi: "" }];
+    handleSongwriterSplitsChange(newSplits);
+  };
+
+  const removeSongwriter = (index: number) => {
+    const newSplits = songwriterSplits.filter((_, i) => i !== index);
+    handleSongwriterSplitsChange(newSplits);
+  };
+
+  const updateSongwriter = (index: number, field: 'name' | 'percentage' | 'ipi', value: string | number) => {
+    const newSplits = [...songwriterSplits];
+    newSplits[index] = { ...newSplits[index], [field]: value };
+    handleSongwriterSplitsChange(newSplits);
+  };
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -113,7 +220,27 @@ export default function Upload() {
     }
   };
 
+  const canPublish = () => {
+    // Must have audio file and title
+    if (!audioFile || !metadata.title) return false;
+    
+    // All validation fields must be either valid or empty (not invalid)
+    return Object.values(validation).every(status => status !== 'invalid');
+  };
+
+  const getComplianceScore = (): number => {
+    let score = 0;
+    if (validation.isrc === 'valid') score += 20;
+    if (validation.upc === 'valid') score += 20;
+    if (validation.songwriterSplits === 'valid') score += 20;
+    if (validation.publishingData === 'valid') score += 20;
+    if (validation.aiDisclosure === 'valid' && metadata.aiUsed) score += 20;
+    return score;
+  };
+
   const handlePublish = async () => {
+    setShowValidation(true);
+    
     if (!audioFile) {
       toast.error("Please upload an audio file");
       return;
@@ -121,6 +248,11 @@ export default function Upload() {
 
     if (!metadata.title) {
       toast.error("Please fill in title");
+      return;
+    }
+
+    if (!canPublish()) {
+      toast.error("Please fix validation errors before publishing");
       return;
     }
 
@@ -172,6 +304,18 @@ export default function Upload() {
         audioFile: audioBase64,
         artworkFile: artworkBase64,
         isExplicit: metadata.explicit,
+        // Compliance data
+        isrcCode: metadata.isrcCode || undefined,
+        upcCode: metadata.upcCode || undefined,
+        songwriterSplits: songwriterSplits.length > 0 ? songwriterSplits : undefined,
+        publishingData: (metadata.publisher || metadata.pro) ? {
+          publisher: metadata.publisher || undefined,
+          pro: metadata.pro || undefined,
+        } : undefined,
+        aiDisclosure: {
+          used: metadata.aiUsed,
+          types: metadata.aiUsed ? metadata.aiTypes : undefined,
+        },
       });
 
       clearInterval(progressInterval);
@@ -181,6 +325,12 @@ export default function Upload() {
       setIsUploading(false);
       setUploadProgress(0);
     }
+  };
+
+  const ValidationIcon = ({ status }: { status: ValidationStatus }) => {
+    if (status === 'valid') return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+    if (status === 'invalid') return <AlertCircle className="h-4 w-4 text-red-500" />;
+    return null;
   };
 
   if (authLoading) {
@@ -206,6 +356,8 @@ export default function Upload() {
     );
   }
 
+  const complianceScore = getComplianceScore();
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -215,6 +367,39 @@ export default function Upload() {
             Share your music with the world. Your track will be live in minutes.
           </p>
         </div>
+
+        {/* Compliance Score Banner */}
+        {audioFile && (
+          <Alert className={`border-2 ${
+            complianceScore >= 90 ? 'border-green-500 bg-green-50 dark:bg-green-950' :
+            complianceScore >= 60 ? 'border-yellow-500 bg-yellow-50 dark:bg-yellow-950' :
+            'border-red-500 bg-red-50 dark:bg-red-950'
+          }`}>
+            <Sparkles className="h-5 w-5" />
+            <AlertDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-semibold">Compliance Score: {complianceScore}%</p>
+                  <p className="text-sm text-muted-foreground">
+                    {complianceScore >= 90 ? 'Excellent! Your metadata meets all industry standards.' :
+                     complianceScore >= 60 ? 'Good start. Add more metadata to improve compliance.' :
+                     'Add metadata below to meet platform requirements.'}
+                  </p>
+                </div>
+                <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className={`h-full transition-all duration-500 ${
+                      complianceScore >= 90 ? 'bg-green-500' :
+                      complianceScore >= 60 ? 'bg-yellow-500' :
+                      'bg-red-500'
+                    }`}
+                    style={{ width: `${complianceScore}%` }}
+                  />
+                </div>
+              </div>
+            </AlertDescription>
+          </Alert>
+        )}
 
         {/* Audio Upload */}
         <Card className="rounded-xl">
@@ -292,6 +477,12 @@ export default function Upload() {
                       bpm: "",
                       musicalKey: "",
                       explicit: false,
+                      isrcCode: "",
+                      upcCode: "",
+                      publisher: "",
+                      pro: "",
+                      aiUsed: false,
+                      aiTypes: [],
                     });
                   }}
                 >
@@ -407,6 +598,207 @@ export default function Upload() {
                     rows={3}
                   />
                 </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="explicit"
+                    checked={metadata.explicit}
+                    onCheckedChange={(checked) => setMetadata(prev => ({ ...prev, explicit: checked as boolean }))}
+                  />
+                  <Label htmlFor="explicit" className="cursor-pointer">
+                    Explicit Content
+                  </Label>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Compliance & Metadata Section */}
+            <Card className="rounded-xl border-2 border-blue-500">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-blue-500" />
+                  Compliance & Metadata
+                </CardTitle>
+                <CardDescription>
+                  Industry-standard metadata for distribution and royalty tracking. Optional but highly recommended.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* ISRC Code */}
+                <div className="space-y-2">
+                  <Label htmlFor="isrc" className="flex items-center gap-2">
+                    ISRC Code
+                    {showValidation && <ValidationIcon status={validation.isrc} />}
+                  </Label>
+                  <Input
+                    id="isrc"
+                    value={metadata.isrcCode}
+                    onChange={(e) => handleISRCChange(e.target.value)}
+                    placeholder="CC-XXX-YY-NNNNN (e.g., USRC11234567)"
+                    maxLength={15}
+                    className={showValidation && validation.isrc === 'invalid' ? 'border-red-500' : ''}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    International Standard Recording Code - unique identifier for this recording
+                  </p>
+                  {showValidation && validation.isrc === 'invalid' && (
+                    <p className="text-xs text-red-500">Invalid ISRC format. Should be 12 characters: CC-XXX-YY-NNNNN</p>
+                  )}
+                </div>
+
+                {/* UPC Code */}
+                <div className="space-y-2">
+                  <Label htmlFor="upc" className="flex items-center gap-2">
+                    UPC Code
+                    {showValidation && <ValidationIcon status={validation.upc} />}
+                  </Label>
+                  <Input
+                    id="upc"
+                    value={metadata.upcCode}
+                    onChange={(e) => handleUPCChange(e.target.value)}
+                    placeholder="123456789012 (12 digits)"
+                    maxLength={12}
+                    className={showValidation && validation.upc === 'invalid' ? 'border-red-500' : ''}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Universal Product Code - barcode identifier for commercial release
+                  </p>
+                  {showValidation && validation.upc === 'invalid' && (
+                    <p className="text-xs text-red-500">Invalid UPC format. Must be exactly 12 digits</p>
+                  )}
+                </div>
+
+                {/* Songwriter Splits */}
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    Songwriter Splits
+                    {showValidation && <ValidationIcon status={validation.songwriterSplits} />}
+                  </Label>
+                  <div className="space-y-2">
+                    {songwriterSplits.map((split, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={split.name}
+                          onChange={(e) => updateSongwriter(index, 'name', e.target.value)}
+                          placeholder="Songwriter name"
+                          className="flex-1"
+                        />
+                        <Input
+                          type="number"
+                          value={split.percentage}
+                          onChange={(e) => updateSongwriter(index, 'percentage', parseFloat(e.target.value) || 0)}
+                          placeholder="%"
+                          className="w-20"
+                          min="0"
+                          max="100"
+                          step="0.01"
+                        />
+                        <Input
+                          value={split.ipi || ''}
+                          onChange={(e) => updateSongwriter(index, 'ipi', e.target.value)}
+                          placeholder="IPI (optional)"
+                          className="w-32"
+                        />
+                        {songwriterSplits.length > 1 && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeSongwriter(index)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={addSongwriter}
+                    className="w-full"
+                  >
+                    + Add Songwriter
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Total: {songwriterSplits.reduce((sum, s) => sum + s.percentage, 0).toFixed(2)}% (must equal 100%)
+                  </p>
+                  {showValidation && validation.songwriterSplits === 'invalid' && (
+                    <p className="text-xs text-red-500">Songwriter splits must add up to 100%</p>
+                  )}
+                </div>
+
+                {/* Publishing Data */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="publisher" className="flex items-center gap-2">
+                      Publisher
+                      {showValidation && validation.publishingData !== 'empty' && <ValidationIcon status={validation.publishingData} />}
+                    </Label>
+                    <Input
+                      id="publisher"
+                      value={metadata.publisher}
+                      onChange={(e) => handlePublishingDataChange('publisher', e.target.value)}
+                      placeholder="Publishing company"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="pro">PRO (Performance Rights Org)</Label>
+                    <Select value={metadata.pro} onValueChange={(value) => handlePublishingDataChange('pro', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select PRO" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ascap">ASCAP</SelectItem>
+                        <SelectItem value="bmi">BMI</SelectItem>
+                        <SelectItem value="sesac">SESAC</SelectItem>
+                        <SelectItem value="socan">SOCAN</SelectItem>
+                        <SelectItem value="prs">PRS</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* AI Disclosure */}
+                <div className="space-y-3 p-4 bg-purple-50 dark:bg-purple-950 rounded-lg border-2 border-purple-500">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="aiUsed"
+                      checked={metadata.aiUsed}
+                      onCheckedChange={(checked) => handleAIDisclosureChange(checked as boolean)}
+                    />
+                    <Label htmlFor="aiUsed" className="cursor-pointer font-semibold flex items-center gap-2">
+                      AI was used in creating this track
+                      <ValidationIcon status={validation.aiDisclosure} />
+                    </Label>
+                  </div>
+                  {metadata.aiUsed && (
+                    <div className="ml-6 space-y-2">
+                      <p className="text-sm text-muted-foreground mb-2">Select all that apply:</p>
+                      {(['lyrics', 'production', 'mastering', 'vocals', 'artwork'] as const).map((type) => (
+                        <div key={type} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`ai-${type}`}
+                            checked={metadata.aiTypes.includes(type)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                setMetadata(prev => ({ ...prev, aiTypes: [...prev.aiTypes, type] }));
+                              } else {
+                                setMetadata(prev => ({ ...prev, aiTypes: prev.aiTypes.filter(t => t !== type) }));
+                              }
+                            }}
+                          />
+                          <Label htmlFor={`ai-${type}`} className="cursor-pointer capitalize">
+                            {type}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <p className="text-xs text-muted-foreground">
+                    Future-proof your release: Major platforms are beginning to require AI disclosure
+                  </p>
+                </div>
               </CardContent>
             </Card>
 
@@ -490,7 +882,7 @@ export default function Upload() {
                 <Button
                   onClick={handlePublish}
                   className="w-full rounded-full"
-                  disabled={isUploading}
+                  disabled={isUploading || !canPublish()}
                   size="lg"
                 >
                   {isUploading ? (
@@ -505,9 +897,11 @@ export default function Upload() {
                     </>
                   )}
                 </Button>
-                <p className="text-sm text-muted-foreground text-center mt-3">
-                  Your track will be live and available to fans worldwide in minutes
-                </p>
+                {!canPublish() && audioFile && metadata.title && (
+                  <p className="text-sm text-center text-muted-foreground mt-2">
+                    Fix validation errors above to publish
+                  </p>
+                )}
               </CardContent>
             </Card>
           </>

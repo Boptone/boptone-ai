@@ -267,6 +267,84 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
+        {/* Compliance Score Widget - New Feature */}
+        <Card className="rounded-3xl border-4 border-blue-500 shadow-2xl bg-gradient-to-br from-blue-50 to-cyan-50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-3xl font-black">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center shadow-lg">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+              Compliance Score
+            </CardTitle>
+            <CardDescription className="text-lg font-medium">Industry-standard metadata quality</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-6xl font-black text-gray-900">85%</p>
+                <p className="text-lg font-bold text-gray-600 mt-2">Good compliance level</p>
+              </div>
+              <div className="w-32 h-32 rounded-full border-8 border-blue-500 flex items-center justify-center bg-white shadow-xl">
+                <Sparkles className="h-12 w-12 text-blue-600" />
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-white border-2 border-green-200">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600" />
+                  <span className="font-bold text-gray-900">ISRC Codes</span>
+                </div>
+                <span className="text-sm font-black text-green-600">+20%</span>
+              </div>
+              
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-white border-2 border-green-200">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600" />
+                  <span className="font-bold text-gray-900">UPC Codes</span>
+                </div>
+                <span className="text-sm font-black text-green-600">+20%</span>
+              </div>
+              
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-white border-2 border-green-200">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600" />
+                  <span className="font-bold text-gray-900">Songwriter Splits</span>
+                </div>
+                <span className="text-sm font-black text-green-600">+20%</span>
+              </div>
+              
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-white border-2 border-green-200">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-green-600" />
+                  <span className="font-bold text-gray-900">Publishing Data</span>
+                </div>
+                <span className="text-sm font-black text-green-600">+20%</span>
+              </div>
+              
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 border-2 border-gray-200">
+                <div className="flex items-center gap-3">
+                  <div className="h-6 w-6 rounded-full border-2 border-gray-400" />
+                  <span className="font-bold text-gray-500">AI Disclosure</span>
+                </div>
+                <span className="text-sm font-black text-gray-400">+0%</span>
+              </div>
+            </div>
+            
+            <Button 
+              onClick={() => setLocation("/upload")} 
+              className="w-full rounded-full text-lg py-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-xl"
+            >
+              <Upload className="h-5 w-5 mr-2" />
+              Improve Score
+            </Button>
+            
+            <p className="text-sm text-gray-600 text-center font-medium">
+              Add metadata during upload to meet platform requirements and avoid rejections
+            </p>
+          </CardContent>
+        </Card>
+
         {/* Goals & Tips Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Goal Tracking - Green Card */}

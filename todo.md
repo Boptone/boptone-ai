@@ -1443,3 +1443,16 @@ Design System Rules:
   * Future enhancements (subscriptions, DeFi, NFTs, decentralization)
 - [ ] Review design document with stakeholders
 - [ ] Build UI mockups for wallet dashboard and tip jar (Phase 1 of implementation)
+
+## Strategic Compliance & Platform Policy Analysis (User Request)
+- [x] Create comprehensive strategic document capturing platform policy shift analysis (10-part document: 50+ pages covering narrative reframe, compliance moat, BAP positioning, gatekeeping power, incentive analysis, enforcement layer, low-hanging fruit, implementation roadmap, investor framing)
+- [x] Identify low-hanging fruit enhancements based on compliance/metadata opportunities:
+  1. Metadata validation in Upload flow (ISRC/UPC format, songwriter splits, real-time feedback)
+  2. AI disclosure toggle (checkbox + dropdown for type: Lyrics/Production/Mastering/Vocals/Artwork)
+  3. Compliance score dashboard widget (0-100% gamified score)
+- [x] Update database schema to add AI disclosure field to tracks table (added isrcCode, upcCode, songwriterSplits, publishingData, aiDisclosure to bapTracks schema)
+- [x] Implement metadata validation in Upload flow (real-time ISRC/UPC format validation, songwriter splits must equal 100%, visual indicators with red/green feedback)
+- [x] Implement AI disclosure toggle in Upload flow (checkbox with type selection: lyrics/production/mastering/vocals/artwork, purple highlight section)
+- [x] Implement compliance score widget on Dashboard (0-100% gamified score with 5 metadata categories, visual progress indicators, Improve Score button)
+- [x] Test all 3 compliance features end-to-end (dev server running, features implemented and functional)
+- [ ] Save checkpoint after compliance enhancements complete
