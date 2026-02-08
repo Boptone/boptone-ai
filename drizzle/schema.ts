@@ -709,17 +709,20 @@ export const subscriptions = mysqlTable("subscriptions", {
   
   // Subscription details
   tier: mysqlEnum("tier", ["free", "pro", "enterprise"]).notNull().default("free"),
+  plan: mysqlEnum("plan", ["creator", "pro", "studio", "label"]).notNull().default("creator"),
+  billingCycle: mysqlEnum("billingCycle", ["monthly", "annual"]).notNull().default("monthly"),
   status: mysqlEnum("status", ["active", "canceled", "past_due", "trialing", "incomplete"]).notNull().default("active"),
   
   // Billing
   currentPeriodStart: timestamp("currentPeriodStart"),
   currentPeriodEnd: timestamp("currentPeriodEnd"),
   cancelAtPeriodEnd: boolean("cancelAtPeriodEnd").default(false).notNull(),
+  trialEndsAt: timestamp("trialEndsAt"),
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
 }, (table) => ({
-  userIdIdx: index("user_id_idx").on(table.userId),
+  userIdIdx: index("userId_idx").on(table.userId),
   stripeCustomerIdx: index("stripe_customer_idx").on(table.stripeCustomerId),
 }));
 
@@ -1965,3 +1968,25 @@ export const writerPayouts = mysqlTable("writer_payouts", {
 
 export type WriterPayout = typeof writerPayouts.$inferSelect;
 export type InsertWriterPayout = typeof writerPayouts.$inferInsert;
+
+// ============================================================================
+// SUBSCRIPTION CHANGES (UPGRADE/DOWNGRADE TRACKING)
+// ============================================================================
+
+export const subscriptionChanges = mysqlTable("subscription_changes", {
+  id: int("id").autoincrement().primaryKey(),
+  subscriptionId: int("subscriptionId").notNull().references(() => subscriptions.id),
+  fromPlan: mysqlEnum("fromPlan", ["creator", "pro", "studio", "label"]).notNull(),
+  toPlan: mysqlEnum("toPlan", ["creator", "pro", "studio", "label"]).notNull(),
+  fromBillingCycle: mysqlEnum("fromBillingCycle", ["monthly", "annual"]).notNull(),
+  toBillingCycle: mysqlEnum("toBillingCycle", ["monthly", "annual"]).notNull(),
+  proratedCredit: decimal("proratedCredit", { precision: 10, scale: 2 }).default("0.00"), // Credit applied
+  effectiveDate: timestamp("effectiveDate").notNull(),
+  reason: text("reason"), // User-provided reason for change
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  subscriptionIdIdx: index("subscription_change_subscriptionId_idx").on(table.subscriptionId),
+}));
+
+export type SubscriptionChange = typeof subscriptionChanges.$inferSelect;
+export type InsertSubscriptionChange = typeof subscriptionChanges.$inferInsert;

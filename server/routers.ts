@@ -13,6 +13,7 @@ import { microloansRouter } from "./routers/microloans";
 import { ecommerceRouter } from "./ecommerceRouter";
 import { podRouter } from "./routers/pod";
 import { writerPaymentsRouter } from "./routers/writerPayments";
+import { subscriptionsRouter } from "./routers/subscriptions";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -664,6 +665,9 @@ export const appRouter = router({
   
   // Writer Payment System (Songwriter Splits)
   writerPayments: writerPaymentsRouter,
+
+  // Subscription Management (Upgrade/Downgrade)
+  subscriptions: subscriptionsRouter,
 });
 
 export type AppRouter = typeof appRouter;

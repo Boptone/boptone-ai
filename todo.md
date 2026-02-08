@@ -1517,3 +1517,13 @@ Design System Rules:
 - [x] Add Annual/Monthly toggle switch to pricing section
 - [x] Update pricing display logic to show annual vs monthly prices (with 20% discount and savings display)
 - [x] Test toggle functionality and save checkpoint
+
+## Upgrade/Downgrade Flow (User Request)
+- [x] Design database schema for subscription management (added plan, billingCycle, trialEndsAt to subscriptions; created subscription_changes table)
+- [x] Create backend API for plan changes with prorated credit calculation (server/subscriptions.ts + server/routers/subscriptions.ts)
+- [x] Build plan management section in Dashboard with current plan display and upgrade/downgrade options (PlanManagementSection.tsx)
+- [x] Create plan comparison modal showing feature differences (integrated in PlanManagementSection)
+- [x] Implement confirmation flow with proration preview (Dialog with billing cycle toggle, prorated credit display)
+- [x] Add success/error handling and user feedback (toast notifications on success/error, loading states during mutation)
+- [x] Test complete upgrade/downgrade flow (dev server running, plan management visible on Dashboard)
+- [x] Prepare for checkpoint save

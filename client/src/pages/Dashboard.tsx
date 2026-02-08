@@ -29,6 +29,7 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
+import { PlanManagementSection } from "@/components/PlanManagementSection";
 
 export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
@@ -344,6 +345,9 @@ export default function Dashboard() {
             </p>
           </CardContent>
         </Card>
+
+        {/* Plan Management - Subscription Upgrade/Downgrade */}
+        <PlanManagementSection />
 
         {/* Goals & Tips Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
