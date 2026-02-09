@@ -71,7 +71,7 @@ export default function Home() {
     {
       icon: Shield,
       title: "IP Protection",
-      description: "AI-powered copyright monitoring with automated DMCA takedowns to protect your creative work.",
+      description: "Intelligent copyright monitoring with instant DMCA takedowns to protect your creative work.",
       color: "from-orange-500/20 to-orange-600/20",
       border: "border-orange-500"
     },
@@ -297,7 +297,7 @@ export default function Home() {
               <span style={{ color: '#4285F4' }}>Your Tone</span><span style={{ color: '#000000' }}>.</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-              AI-powered tools, financial services, and career management—bringing fans into your orbit from discovery to breakthrough success.
+              Smart tools, financial services, and career management—bringing fans into your orbit from discovery to breakthrough success.
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4">
               <Button 

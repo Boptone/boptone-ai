@@ -152,7 +152,7 @@ export default function Financials() {
                       <div className="text-sm text-blue-900">
                         <p className="font-medium">How it works:</p>
                         <ul className="list-disc list-inside mt-1 space-y-1">
-                          <li>AI-powered risk assessment</li>
+                          <li>Smart risk assessment based on your earnings history</li>
                           <li>5% fixed interest rate</li>
                           <li>Repayment from future royalties</li>
                           <li>No credit check required</li>

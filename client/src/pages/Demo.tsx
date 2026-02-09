@@ -148,7 +148,7 @@ export default function Demo() {
                 <ul className="space-y-2 text-muted-foreground">
                   <li>• No revenue sharing (keep 100%)</li>
                   <li>• Bank-level security (SOC 2, GDPR)</li>
-                  <li>• 24/7 AI-powered support</li>
+                  <li>• 24/7 expert support</li>
                   <li>• Continuous feature updates</li>
                 </ul>
               </div>

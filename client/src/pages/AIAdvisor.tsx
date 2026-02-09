@@ -182,7 +182,7 @@ export default function AIAdvisor() {
                     <span className="font-medium text-primary">Unlimited</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-3">
-                    Unlimited AI-powered guidance for your career
+                    Unlimited expert guidance for your career
                   </p>
                 </div>
               </CardContent>
@@ -324,7 +324,7 @@ Would you like me to create a detailed release checklist for you?`;
 - Respond to ALL comments within first hour
 - Use 20-30 relevant hashtags (mix of popular and niche)
 - Post Reels 3x per week (Instagram prioritizes video)
-- Go live weekly to boost algorithm favor
+- Go live weekly to increase visibility
 - Collaborate with artists in your genre (cross-promotion)
 
 **Best Posting Times:**

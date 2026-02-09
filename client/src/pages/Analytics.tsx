@@ -515,7 +515,7 @@ export default function Analytics() {
             <Card>
               <CardHeader>
                 <CardTitle>Predicted Growth</CardTitle>
-                <CardDescription>AI-powered forecasts for the next 90 days</CardDescription>
+                <CardDescription>Smart forecasts for the next 90 days based on your data</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">

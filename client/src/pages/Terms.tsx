@@ -36,7 +36,7 @@ export default function Terms() {
                 <h2 className="text-2xl font-semibold mb-4">2. Definitions</h2>
                 <p className="mb-2">Throughout these Terms, the following definitions apply:</p>
                 <ul className="list-disc pl-6 space-y-2">
-                  <li><strong>"Service"</strong> refers to the Boptone platform, website, mobile applications, software, products, and all services provided by Acid Bird, Inc., including but not limited to AI-powered career tools, distribution services, financial management, e-commerce, IP protection, healthcare integration, and tour management.</li>
+                  <li><strong>"Service"</strong> refers to the Boptone platform, website, mobile applications, software, products, and all services provided by Acid Bird, Inc., including but not limited to intelligent career tools, distribution services, financial management, e-commerce, IP protection, healthcare integration, and tour management.</li>
                   <li><strong>"User," "you," or "your"</strong> refers to any individual or entity who accesses or uses the Service, including artists, creators, managers, labels, and administrators.</li>
                   <li><strong>"Content"</strong> refers to any information, text, graphics, photos, music, software, audio, video, works of authorship, intellectual property, or materials uploaded, downloaded, created, distributed, or appearing on the Service.</li>
                   <li><strong>"Platform"</strong> refers to Boptone's autonomous operating system for artists that enables creation, distribution, protection, and monetization of creative works.</li>
@@ -79,12 +79,12 @@ export default function Terms() {
                 <p className="mb-2">Boptone provides a comprehensive platform for artists and creators that includes the following services:</p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
                   <li><strong>Autonomous Operating System:</strong> Tools to create, distribute, protect, and monetize creative works</li>
-                  <li><strong>AI and Machine Learning:</strong> Career optimization, trend forecasting, contract analysis, marketing automation, and intelligent recommendations</li>
+                  <li><strong>Smart Career Tools:</strong> Career optimization, trend forecasting, contract analysis, marketing tools, and personalized recommendations</li>
                   <li><strong>Global Distribution:</strong> Direct artist-to-fan music distribution via Boptone Audio Protocol with transparent revenue sharing</li>
                   <li><strong>Financial Management:</strong> Royalty tracking across all platforms, revenue analytics, financial forecasting, and budget management</li>
-                  <li><strong>Royalty-Backed Micro-Loans:</strong> Access to capital based on projected royalty income, with AI-powered risk assessment</li>
+                  <li><strong>Royalty-Backed Micro-Loans:</strong> Access to capital based on projected royalty income, with data-driven risk assessment</li>
                   <li><strong>Direct-to-Fan E-Commerce:</strong> Merchandise store for physical and digital products, payment processing, tax compliance, and inventory management</li>
-                  <li><strong>IP Protection:</strong> AI-driven copyright infringement detection, automated DMCA takedowns, and intellectual property monitoring</li>
+                  <li><strong>IP Protection:</strong> Intelligent copyright infringement detection, instant DMCA takedowns, and intellectual property monitoring</li>
                   <li><strong>Healthcare Integration:</strong> Access to artist-specific healthcare plans, mental health services, and wellness resources</li>
                   <li><strong>Tour Management:</strong> Tour planning, venue booking, budget management, and logistics coordination</li>
                   <li><strong>Creator Analytics:</strong> Comprehensive analytics dashboard tracking streaming, social media, revenue, and career growth metrics</li>
@@ -143,7 +143,7 @@ export default function Terms() {
                   <li>Using the Service for any illegal purpose or to facilitate illegal activity</li>
                   <li>Uploading or distributing viruses, malware, or other malicious code</li>
                   <li>Attempting to interfere with, compromise, or breach the security of the Service</li>
-                  <li>Using any robot, spider, crawler, scraper, or automated means to access the Service without our express written permission</li>
+                  <li>Using any robot, spider, crawler, scraper, or unauthorized automated tools to access the Service without our express written permission</li>
                   <li>Bypassing any measures we use to prevent or restrict access to the Service</li>
                   <li>Collecting or harvesting any personally identifiable information from other users</li>
                   <li>Impersonating another person or entity, or falsely stating or misrepresenting your affiliation with any person or entity</li>
@@ -185,7 +185,7 @@ export default function Terms() {
                   <li>Operating, providing, and improving the Service</li>
                   <li>Distributing your Content to streaming platforms and distribution partners as requested by you</li>
                   <li>Displaying your Content in your artist profile and public-facing pages</li>
-                  <li>Analyzing your Content for AI-powered recommendations and career optimization</li>
+                  <li>Analyzing your Content for personalized recommendations and career optimization</li>
                   <li>Detecting copyright infringement and protecting your intellectual property</li>
                   <li>Marketing and promoting the Service (with your explicit consent)</li>
                 </ul>

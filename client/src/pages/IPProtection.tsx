@@ -92,7 +92,7 @@ export default function IPProtection() {
             </Button>
             <div>
               <h1 className="text-2xl font-bold">IP Protection</h1>
-              <p className="text-sm text-muted-foreground">AI-powered infringement detection and DMCA management</p>
+              <p className="text-sm text-muted-foreground">Intelligent infringement detection and DMCA management</p>
             </div>
           </div>
         </div>
