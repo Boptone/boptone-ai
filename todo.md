@@ -1738,11 +1738,14 @@ Findings:
 - [x] Save checkpoint after dark mode removal
 - [x] Push to GitHub
 
-## Redesign Auth-Signup Page (User Request)
+## Redesign Auth-Signup Page to Match Brex Exactly (User Request)
 - [x] Find auth-signup page file (AuthSignup.tsx)
 - [x] Analyze current structure and identify gradients/colorful elements
-- [x] Redesign with Brex aesthetic (90% grayscale + 10% turquoise)
-- [x] Apply consistent typography (font-bold already applied)
-- [x] Test signup page design (clean white background with gray-200 border card)
+- [x] Initial redesign with Brex aesthetic
+- [x] Redesign to EXACTLY match Brex signup flow (ultra-minimal, centered card, clean inputs)
+- [x] Remove all unnecessary elements (removed Music icon, simplified header)
+- [x] Simplify headline to match Brex style ("Let's start with the basics")
+- [x] Update card styling (border border-gray-200, shadow-none, max-w-lg)
+- [ ] Test redesigned signup page
 - [ ] Save checkpoint after redesign
 - [ ] Push to GitHub

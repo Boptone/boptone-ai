@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Music, Mail, Phone, ArrowRight, Check } from "lucide-react";
+import { Mail, Phone, ArrowRight, Check } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -131,27 +131,16 @@ export default function AuthSignup() {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="rounded-xl w-full max-w-md border-2 border-gray-200 shadow-sm">
-        <CardHeader className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-2">
-            <Music className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold">{APP_TITLE}</h1>
-          </div>
+      <Card className="rounded-xl w-full max-w-lg border border-gray-200 shadow-none">
+        <CardHeader className="space-y-6 pt-12">
           <div className="space-y-2">
-            <CardTitle className="text-3xl">
-              {authMethod === "select" && "Create Your Account"}
-              {authMethod === "email" && "Sign Up with Email"}
-              {authMethod === "phone" && "Sign Up with Phone"}
-              {authMethod === "verify-email" && "Verify Your Email"}
-              {authMethod === "verify-phone" && "Verify Your Phone"}
-            </CardTitle>
-            <CardDescription>
-              {authMethod === "select" && "Join the most powerful infrastructure platform for artists"}
-              {authMethod === "email" && "We'll send a verification code to your inbox"}
-              {authMethod === "phone" && "We'll send a verification code via SMS"}
-              {authMethod === "verify-email" && "Enter the 6-digit code sent to your email"}
-              {authMethod === "verify-phone" && "Enter the 6-digit code sent to your phone"}
-            </CardDescription>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {authMethod === "select" && "Let's start with the basics"}
+              {authMethod === "email" && "Sign up with email"}
+              {authMethod === "phone" && "Sign up with phone"}
+              {authMethod === "verify-email" && "Verify your email"}
+              {authMethod === "verify-phone" && "Verify your phone"}
+            </h1>
           </div>
         </CardHeader>
 
