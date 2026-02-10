@@ -150,14 +150,14 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-white">
 
       <div className="container mx-auto px-4 py-12">
         {step === "tier" ? (
           <div className="max-w-6xl mx-auto">
             <div className="text-center space-y-4 mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold">Choose Your Plan</h1>
-              <p className="text-xl text-muted-foreground">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900">Choose Your Plan</h1>
+              <p className="text-xl text-gray-600">
                 Start free, upgrade anytime. No credit card required.
               </p>
             </div>
@@ -166,50 +166,35 @@ export default function Signup() {
               {tiers.map((tier) => (
                 <div key={tier.id} className="relative">
                   {/* Square-Style Card */}
-                  <div className="bg-white dark:bg-card border border-border rounded-2xl p-8 h-full flex flex-col shadow-sm">
+                  <div className="bg-white border-2 border-gray-200 rounded-xl p-8 h-full flex flex-col shadow-sm">
                     {/* Header */}
                     <div className="mb-6">
                       <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-2xl font-bold text-card-foreground">{tier.name}</h3>
+                        <h3 className="text-2xl font-bold text-gray-900">{tier.name}</h3>
                         {tier.popular && (
-                          <span className="inline-block bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-xs font-bold tracking-wide">
+                          <span className="inline-block bg-gray-900 text-white px-3 py-1 text-xs font-bold tracking-wide">
                             BEST VALUE
                           </span>
                         )}
                       </div>
-                      <p className="text-muted-foreground text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
+                      <p className="text-gray-600 text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
                     </div>
                     
                     {/* Divider */}
-                    <div className="border-t border-border mb-6"></div>
+                    <div className="border-t border-gray-200 mb-6"></div>
                     
                     {/* Huge Pricing */}
                     <div className="mb-6">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-4xl md:text-5xl font-bold text-card-foreground">
+                        <span className="text-4xl md:text-5xl font-bold text-gray-900">
                           {tier.price}
                         </span>
                       </div>
                     </div>
                     
                     {/* CTA Button */}
-                    <Button className="rounded-full w-full mb-8"
+                    <Button className="rounded-full w-full mb-8 font-bold"
                       variant={tier.id === "free" ? "outline" : "default"}
-                      style={tier.id === "free" ? {
-                        borderColor: '#4A90E2',
-                        color: '#4A90E2',
-                        padding: '14px 24px',
-                        borderRadius: '999px',
-                        fontWeight: 600,
-                        fontSize: '15px'
-                      } : {
-                        backgroundColor: '#4A90E2',
-                        color: 'white',
-                        padding: '14px 24px',
-                        borderRadius: '999px',
-                        fontWeight: 600,
-                        fontSize: '15px'
-                      }}
                       onClick={() => handleTierSelection(tier.id)}
                     >
                       {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
@@ -219,15 +204,15 @@ export default function Signup() {
                     {/* Platform Fee Section */}
                     {tier.platformFee && (
                       <div className="mb-6">
-                        <h4 className="text-sm font-bold mb-3 text-card-foreground">Processing fees</h4>
+                        <h4 className="text-sm font-bold mb-3 text-gray-900">Processing fees</h4>
                         <div className="space-y-2">
                           <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">Platform fee</span>
-                            <span className="font-semibold text-card-foreground">{tier.platformFee}</span>
+                            <span className="text-gray-600">Platform fee</span>
+                            <span className="font-bold text-gray-900">{tier.platformFee}</span>
                           </div>
                           <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">Earning cap</span>
-                            <span className="font-semibold text-card-foreground">{tier.earningCap}</span>
+                            <span className="text-gray-600">Earning cap</span>
+                            <span className="font-bold text-gray-900">{tier.earningCap}</span>
                           </div>
                         </div>
                       </div>
@@ -235,12 +220,12 @@ export default function Signup() {
                     
                     {/* What you get Section */}
                     <div className="flex-1">
-                      <h4 className="text-sm font-bold mb-3 text-card-foreground">What you get</h4>
+                      <h4 className="text-sm font-bold mb-3 text-gray-900">What you get</h4>
                       <div className="space-y-2">
                         {tier.features.map((feature, index) => (
-                          <div key={index} className="flex items-center gap-3 bg-muted/30 rounded-lg px-3 py-2.5">
-                            <Check className="h-4 w-4 text-card-foreground flex-shrink-0" />
-                            <span className="text-sm text-card-foreground">{feature}</span>
+                          <div key={index} className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2.5">
+                            <Check className="h-4 w-4 text-gray-900 flex-shrink-0" />
+                            <span className="text-sm text-gray-900">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -251,17 +236,17 @@ export default function Signup() {
             </div>
 
             <div className="text-center mt-12 space-y-4">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 All plans include 14-day Pro trial • Cancel anytime • No credit card required
               </p>
             </div>
           </div>
         ) : (
           <div className="max-w-2xl mx-auto">
-            <Card>
+            <Card className="border-2 border-gray-200 shadow-sm">
               <CardHeader>
-                <CardTitle className="text-3xl">Claim Your Profile</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-3xl font-bold text-gray-900">Claim Your Profile</CardTitle>
+                <CardDescription className="text-gray-600">
                   Tell us about yourself to claim your profile with Boptone
                 </CardDescription>
               </CardHeader>
@@ -324,16 +309,16 @@ export default function Signup() {
                     />
                   </div>
 
-                  <div className="bg-muted rounded-lg p-4">
-                    <h4 className="font-semibold mb-2">Selected Plan: {selectedTier === "free" ? "Free" : "Pro (14-day trial)"}</h4>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="font-bold mb-2 text-gray-900">Selected Plan: {selectedTier === "free" ? "Free" : "Pro (14-day trial)"}</h4>
+                    <p className="text-sm text-gray-600">
                       {selectedTier === "free" 
                         ? "You can upgrade to Pro anytime from your dashboard."
                         : "Your 14-day Pro trial starts today. No credit card required."}
                     </p>
                   </div>
 
-                  <Button className="rounded-full w-full" type="submit" 
+                  <Button className="rounded-full w-full font-bold" type="submit" 
                     size="lg"
                     disabled={createProfile.isPending}
                   >

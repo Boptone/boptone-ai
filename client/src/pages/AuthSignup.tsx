@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { APP_TITLE } from "@/const";
+import { APP_TITLE, getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
@@ -26,6 +26,9 @@ export default function AuthSignup() {
   const [phone, setPhone] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [codeError, setCodeError] = useState("");
 
   // tRPC mutations for email/phone signup
   const sendEmailCode = trpc.auth.sendEmailVerification.useMutation();
@@ -35,8 +38,17 @@ export default function AuthSignup() {
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailError("");
+    
     if (!email) {
-      toast.error("Please enter your email address");
+      setEmailError("Email address is required");
+      return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
       return;
     }
 
@@ -54,8 +66,17 @@ export default function AuthSignup() {
 
   const handlePhoneSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setPhoneError("");
+    
     if (!phone) {
-      toast.error("Please enter your phone number");
+      setPhoneError("Phone number is required");
+      return;
+    }
+    
+    // Basic phone validation (must start with + and have at least 10 digits)
+    const phoneRegex = /^\+\d{10,}$/;
+    if (!phoneRegex.test(phone.replace(/[\s()-]/g, ''))) {
+      setPhoneError("Please enter a valid phone number with country code (e.g., +1 555 123 4567)");
       return;
     }
 
@@ -73,8 +94,15 @@ export default function AuthSignup() {
 
   const handleVerifyEmail = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCodeError("");
+    
     if (!verificationCode) {
-      toast.error("Please enter the verification code");
+      setCodeError("Verification code is required");
+      return;
+    }
+    
+    if (verificationCode.length !== 6) {
+      setCodeError("Verification code must be 6 digits");
       return;
     }
 
@@ -97,8 +125,15 @@ export default function AuthSignup() {
 
   const handleVerifyPhone = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCodeError("");
+    
     if (!verificationCode) {
-      toast.error("Please enter the verification code");
+      setCodeError("Verification code is required");
+      return;
+    }
+    
+    if (verificationCode.length !== 6) {
+      setCodeError("Verification code must be 6 digits");
       return;
     }
 
@@ -130,9 +165,28 @@ export default function AuthSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 relative">
+      {/* Top-right Sign In link */}
+      <div className="absolute top-8 right-8 flex items-center gap-4">
+        <span className="text-sm text-gray-600">Have an account?</span>
+        <a href={getLoginUrl()} className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
+          Sign in
+        </a>
+      </div>
       <Card className="rounded-xl w-full max-w-lg border border-gray-200 shadow-none">
         <CardHeader className="space-y-6 pt-12">
+          {/* Progress Indicator */}
+          {(authMethod === "email" || authMethod === "phone" || authMethod === "verify-email" || authMethod === "verify-phone") && (
+            <div className="flex items-center gap-2 mb-4">
+              <div className={`h-1 flex-1 rounded-full ${
+                authMethod === "email" || authMethod === "phone" ? "bg-gray-900" : "bg-gray-900"
+              }`} />
+              <div className={`h-1 flex-1 rounded-full ${
+                authMethod === "verify-email" || authMethod === "verify-phone" ? "bg-gray-900" : "bg-gray-200"
+              }`} />
+            </div>
+          )}
+          
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">
               {authMethod === "select" && "Let's start with the basics"}
@@ -232,10 +286,18 @@ export default function AuthSignup() {
                   type="email"
                   placeholder="you@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-full"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setEmailError("");
+                  }}
+                  className={`rounded-full ${
+                    emailError ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
                   required
                 />
+                {emailError && (
+                  <p className="text-sm text-red-600">{emailError}</p>
+                )}
               </div>
 
               <Button
@@ -268,13 +330,22 @@ export default function AuthSignup() {
                   type="tel"
                   placeholder="+1 (555) 123-4567"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="rounded-full"
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    setPhoneError("");
+                  }}
+                  className={`rounded-full ${
+                    phoneError ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
                   required
                 />
-                <p className="text-xs text-muted-foreground">
-                  Include country code (e.g., +1 for US)
-                </p>
+                {phoneError ? (
+                  <p className="text-sm text-red-600">{phoneError}</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    Include country code (e.g., +1 for US)
+                  </p>
+                )}
               </div>
 
               <Button
@@ -307,14 +378,23 @@ export default function AuthSignup() {
                   type="text"
                   placeholder="123456"
                   value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  className="rounded-full text-center text-2xl tracking-widest"
+                  onChange={(e) => {
+                    setVerificationCode(e.target.value);
+                    setCodeError("");
+                  }}
+                  className={`rounded-full text-center text-2xl tracking-widest ${
+                    codeError ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
                   maxLength={6}
                   required
                 />
-                <p className="text-xs text-muted-foreground text-center">
-                  Sent to {email}
-                </p>
+                {codeError ? (
+                  <p className="text-sm text-red-600 text-center">{codeError}</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Sent to {email}
+                  </p>
+                )}
               </div>
 
               <Button
@@ -350,14 +430,23 @@ export default function AuthSignup() {
                   type="text"
                   placeholder="123456"
                   value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  className="rounded-full text-center text-2xl tracking-widest"
+                  onChange={(e) => {
+                    setVerificationCode(e.target.value);
+                    setCodeError("");
+                  }}
+                  className={`rounded-full text-center text-2xl tracking-widest ${
+                    codeError ? "border-red-500 focus-visible:ring-red-500" : ""
+                  }`}
                   maxLength={6}
                   required
                 />
-                <p className="text-xs text-muted-foreground text-center">
-                  Sent to {phone}
-                </p>
+                {codeError ? (
+                  <p className="text-sm text-red-600 text-center">{codeError}</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Sent to {phone}
+                  </p>
+                )}
               </div>
 
               <Button
