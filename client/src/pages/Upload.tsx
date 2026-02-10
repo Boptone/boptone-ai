@@ -362,7 +362,7 @@ export default function Upload() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-6xl font-bold mb-4 text-foreground">Upload to BAP</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground">Upload to BAP</h1>
           <p className="text-xl text-gray-600">
             Share your music with the world. Your track will be live in minutes.
           </p>

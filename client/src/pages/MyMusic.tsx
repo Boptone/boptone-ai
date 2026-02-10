@@ -114,7 +114,7 @@ export default function MyMusic() {
       <div className="space-y-12">
         {/* Revolutionary Header */}
         <div>
-          <h1 className="text-6xl font-bold tracking-tight leading-none mb-4 text-foreground">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-none mb-4 text-foreground">
             Your
             <br />
             Releases.

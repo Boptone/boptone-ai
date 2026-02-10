@@ -117,7 +117,7 @@ export default function HowItWorks() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white rounded-3xl shadow-2xl p-12 border-4 border-green-500 transform hover:scale-105 transition-transform">
                   <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-6xl font-bold text-green-600">$47.50</span>
+                    <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-green-600">$47.50</span>
                     <Zap className="w-8 h-8 text-yellow-500 animate-pulse" />
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">

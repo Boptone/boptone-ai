@@ -221,28 +221,28 @@ export default function BAP() {
           <div className="grid md:grid-cols-4 gap-6 max-w-7xl mx-auto mb-16">
             <Card className="rounded-3xl border-4 border-gray-300 shadow-xl hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-bold text-gray-600 mb-4">$0.01</div>
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-600 mb-4">$0.01</div>
                 <div className="text-xl font-bold mb-3">Budget Listener</div>
                 <div className="text-lg text-gray-600 font-medium">1,000 streams = $10</div>
               </CardContent>
             </Card>
             <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-gradient-to-br from-blue-50 to-blue-100 hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-bold text-gray-900 mb-4">$0.05</div>
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">$0.05</div>
                 <div className="text-xl font-bold mb-3">Average Fan</div>
                 <div className="text-lg text-gray-700 font-medium">1,000 streams = $50</div>
               </CardContent>
             </Card>
             <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-purple-100 hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-bold text-gray-900 mb-4">$0.25</div>
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">$0.25</div>
                 <div className="text-xl font-bold mb-3">Superfan</div>
                 <div className="text-lg text-gray-700 font-medium">1,000 streams = $250</div>
               </CardContent>
             </Card>
             <Card className="rounded-3xl border-4 border-orange-500 shadow-2xl bg-gradient-to-br from-orange-50 to-orange-100 hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-bold text-orange-600 mb-4">$1.00+</div>
+                <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-orange-600 mb-4">$1.00+</div>
                 <div className="text-xl font-bold mb-3">Patron</div>
                 <div className="text-lg text-gray-700 font-medium">100 streams = $100+</div>
               </CardContent>
@@ -508,7 +508,7 @@ export default function BAP() {
         <div className="container mx-auto">
           <Card className="rounded-3xl max-w-5xl mx-auto bg-white border-4 border-white shadow-2xl">
             <CardContent className="p-16 text-center">
-              <h2 className="text-5xl lg:text-6xl font-bold mb-8">
+              <h2 className="text-5xl lg:text-4xl md:text-5xl lg:text-6xl font-bold mb-8">
                 Ready to Earn
                 <br />
                 <span className="bg-primary">

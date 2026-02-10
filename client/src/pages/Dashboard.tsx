@@ -158,7 +158,7 @@ export default function Dashboard() {
             <div className="flex items-start justify-between">
               {/* Left: Massive Typography */}
               <div className="flex-1">
-                <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
+                <h1 className="text-6xl lg:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
                   Welcome back,
                   <br />
                   {effectiveProfile?.stageName || 'Artist'}.
@@ -263,7 +263,7 @@ export default function Dashboard() {
             <CardContent className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-7xl font-bold text-gray-900">85%</p>
+                  <p className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900">85%</p>
                   <p className="text-lg text-gray-600 mt-2">Good compliance level</p>
                 </div>
                 <div className="w-24 h-24 rounded-full border-4 border-primary flex items-center justify-center bg-gray-50">
