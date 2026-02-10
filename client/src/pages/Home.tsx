@@ -264,8 +264,8 @@ export default function Home() {
               </span>
               <button
                 onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                style={{ backgroundColor: isAnnual ? 'hsl(var(--primary))' : undefined }}
+                className="relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                style={{ backgroundColor: 'hsl(var(--primary))' }}
               >
                 <span
                   className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${

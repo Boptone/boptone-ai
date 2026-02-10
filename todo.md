@@ -1612,4 +1612,10 @@ Design System Rules:
 - [ ] Redesign My Music page (deferred)
 - [ ] Redesign Profile Settings page (deferred)
 - [x] Test Dashboard and Analytics redesigns
-- [ ] Save checkpoint with Dashboard + Analytics redesigns
+- [x] Save checkpoint with Dashboard + Analytics redesigns
+
+## Fix Toggle Switch Turquoise Color (User Report)
+- [x] Locate toggle switch component (monthly/annual billing toggle)
+- [x] Fix toggle to show turquoise color in BOTH monthly and annual states
+- [x] Test toggle in both positions to ensure turquoise is always visible
+- [ ] Save checkpoint after fix
