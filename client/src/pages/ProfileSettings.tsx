@@ -92,7 +92,7 @@ export default function ProfileSettings() {
             <p className="text-gray-700 mb-6 text-lg font-medium">
               You need to create an artist profile first.
             </p>
-            <Button className="rounded-full text-lg px-8 py-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-xl" onClick={() => setLocation("/signup")}>
+            <Button className="rounded-full text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-xl" onClick={() => setLocation("/signup")}>
               Create Profile
             </Button>
           </CardContent>
@@ -102,14 +102,14 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-12">
+    <div className="min-h-screen bg-white py-12">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Revolutionary Header with Asymmetric Layout */}
         <div className="mb-12">
           <h1 className="text-5xl lg:text-6xl font-bold tracking-tight leading-none mb-4">
             Make It
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+            <span className="bg-primary">
               Your Own
             </span>
             <span className="text-black">.</span>
@@ -121,10 +121,10 @@ export default function ProfileSettings() {
 
         <div className="grid gap-8">
           {/* Color Customization - Purple Card */}
-          <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-pink-50">
+          <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white">
             <CardHeader className="pb-8">
               <CardTitle className="flex items-center gap-3 text-3xl font-bold">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg">
                   <Palette className="h-6 w-6 text-white" />
                 </div>
                 Colors & Theme
@@ -143,7 +143,7 @@ export default function ProfileSettings() {
                       type="color"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-2xl border-4 border-purple-300 shadow-lg"
+                      className="w-24 h-16 cursor-pointer rounded-2xl border-2 border-gray-200 shadow-lg"
                     />
                     <Input
                       type="text"
@@ -166,7 +166,7 @@ export default function ProfileSettings() {
                       type="color"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-2xl border-4 border-purple-300 shadow-lg"
+                      className="w-24 h-16 cursor-pointer rounded-2xl border-2 border-gray-200 shadow-lg"
                     />
                     <Input
                       type="text"
@@ -203,10 +203,10 @@ export default function ProfileSettings() {
           </Card>
 
           {/* Layout Options - Blue Card */}
-          <Card className="rounded-3xl border-4 border-blue-500 shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50">
+          <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white">
             <CardHeader className="pb-8">
               <CardTitle className="flex items-center gap-3 text-3xl font-bold">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
                 Layout Style
@@ -222,7 +222,7 @@ export default function ProfileSettings() {
                   <SelectTrigger id="layoutStyle" className="rounded-2xl border-2 border-blue-300 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-2xl border-4 border-blue-300">
+                  <SelectContent className="rounded-2xl border-2 border-gray-200">
                     <SelectItem value="default" className="text-lg font-medium">Default (Single Column)</SelectItem>
                     <SelectItem value="grid" className="text-lg font-medium">Grid Layout</SelectItem>
                     <SelectItem value="minimal" className="text-lg font-medium">Minimal</SelectItem>
@@ -241,7 +241,7 @@ export default function ProfileSettings() {
                   <SelectTrigger id="fontFamily" className="rounded-2xl border-2 border-blue-300 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-2xl border-4 border-blue-300">
+                  <SelectContent className="rounded-2xl border-2 border-gray-200">
                     <SelectItem value="Inter" className="text-lg font-medium">Inter (Modern Sans-Serif)</SelectItem>
                     <SelectItem value="Playfair Display" className="text-lg font-medium">Playfair Display (Elegant Serif)</SelectItem>
                     <SelectItem value="Roboto" className="text-lg font-medium">Roboto (Clean Sans-Serif)</SelectItem>
@@ -256,11 +256,11 @@ export default function ProfileSettings() {
           {/* Action Buttons - Bold Gradient Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card 
-              className="rounded-3xl border-4 border-green-500 shadow-2xl bg-gradient-to-br from-green-50 to-emerald-50 cursor-pointer hover:scale-105 transition-transform"
+              className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white cursor-pointer hover:scale-105 transition-transform"
               onClick={handleSave}
             >
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg mx-auto mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg mx-auto mb-6">
                   {updateProfile.isPending ? (
                     <Loader2 className="h-8 w-8 animate-spin text-white" />
                   ) : (
@@ -277,11 +277,11 @@ export default function ProfileSettings() {
             </Card>
 
             <Card 
-              className="rounded-3xl border-4 border-orange-500 shadow-2xl bg-gradient-to-br from-orange-50 to-red-50 cursor-pointer hover:scale-105 transition-transform"
+              className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white cursor-pointer hover:scale-105 transition-transform"
               onClick={handlePreview}
             >
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg mx-auto mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg mx-auto mb-6">
                   <Eye className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
