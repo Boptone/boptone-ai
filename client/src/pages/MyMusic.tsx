@@ -90,34 +90,22 @@ export default function MyMusic() {
     {
       title: "Total Tracks",
       value: myTracks?.length || 0,
-      icon: Music,
-      borderColor: "border-blue-500",
-      bgGradient: "from-blue-50 to-indigo-50",
-      iconBg: "from-blue-400 to-indigo-500"
+      icon: Music
     },
     {
       title: "Total Streams",
       value: "0", // TODO: Calculate total streams
-      icon: Headphones,
-      borderColor: "border-green-500",
-      bgGradient: "from-green-50 to-emerald-50",
-      iconBg: "from-green-400 to-emerald-500"
+      icon: Headphones
     },
     {
       title: "Total Views",
       value: "0", // TODO: Calculate total views
-      icon: Eye,
-      borderColor: "border-purple-500",
-      bgGradient: "from-purple-50 to-pink-50",
-      iconBg: "from-purple-400 to-pink-500"
+      icon: Eye
     },
     {
       title: "Engagement",
       value: "0%", // TODO: Calculate engagement
-      icon: Heart,
-      borderColor: "border-orange-500",
-      bgGradient: "from-orange-50 to-red-50",
-      iconBg: "from-orange-400 to-red-500"
+      icon: Heart
     }
   ];
 
@@ -126,15 +114,12 @@ export default function MyMusic() {
       <div className="space-y-12">
         {/* Revolutionary Header */}
         <div>
-          <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none mb-4">
+          <h1 className="text-6xl font-black tracking-tight leading-none mb-4 text-foreground">
             Your
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              Releases
-            </span>
-            <span className="text-black">.</span>
+            Releases.
           </h1>
-          <p className="text-2xl text-gray-700 font-bold">
+          <p className="text-2xl text-gray-600">
             Upload and manage your tracks on BAP
           </p>
         </div>
@@ -146,16 +131,16 @@ export default function MyMusic() {
             return (
               <Card 
                 key={stat.title}
-                className={`rounded-3xl border-4 ${stat.borderColor} shadow-xl bg-gradient-to-br ${stat.bgGradient} hover:scale-105 transition-transform`}
+                className="border-2 border-gray-200 bg-white"
               >
                 <CardContent className="p-8">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${stat.iconBg} flex items-center justify-center shadow-lg mb-4`}>
-                    <Icon className="h-7 w-7 text-white" />
+                  <div className="w-14 h-14 bg-gray-100 flex items-center justify-center mb-4">
+                    <Icon className="h-7 w-7 text-gray-700" />
                   </div>
-                  <div className="text-lg text-gray-600 font-bold mb-2">
+                  <div className="text-lg text-gray-600 mb-2">
                     {stat.title}
                   </div>
-                  <div className="text-4xl font-black text-gray-900">{stat.value}</div>
+                  <div className="text-4xl font-bold text-gray-900">{stat.value}</div>
                 </CardContent>
               </Card>
             );
@@ -163,11 +148,11 @@ export default function MyMusic() {
         </div>
 
         {/* Upload Card - Blue Theme */}
-        <Card className="rounded-3xl border-4 border-blue-500 shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50">
+        <Card className="border-2 border-gray-200 bg-white">
           <CardContent className="p-10">
             <div className="mb-8">
-              <h2 className="text-4xl font-black text-gray-900 mb-3">
-                Upload New <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Track</span>
+              <h2 className="text-4xl font-bold text-gray-900 mb-3">
+                Upload New Track
               </h2>
               <p className="text-xl text-gray-600 font-bold">
                 Share your music with the world through BAP
@@ -183,10 +168,10 @@ export default function MyMusic() {
                     type="file"
                     accept="audio/*"
                     onChange={handleFileChange}
-                    className="flex-1 h-14 text-lg font-bold border-4 border-gray-300 rounded-2xl focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-blue-500"
+                    className="flex-1 h-14 text-lg border-2 border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary"
                   />
                   {uploadFile && (
-                    <Badge className="rounded-full border-2 border-green-500 bg-green-50 text-green-600 font-black text-sm px-4 py-2">
+                    <Badge className="rounded-full border-2 border-primary bg-primary/10 text-primary font-semibold text-sm px-4 py-2">
                       {uploadFile.name}
                     </Badge>
                   )}
@@ -203,7 +188,7 @@ export default function MyMusic() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Enter track title"
-                  className="h-14 text-lg font-bold border-4 border-gray-300 rounded-2xl focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-blue-500"
+                  className="h-14 text-lg border-2 border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary"
                 />
               </div>
 
@@ -215,14 +200,14 @@ export default function MyMusic() {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Tell us about your track..."
                   rows={4}
-                  className="text-lg font-medium border-4 border-gray-300 rounded-2xl focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-blue-500"
+                  className="text-lg border-2 border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary"
                 />
               </div>
 
               <Button 
                 onClick={handleUpload}
                 disabled={isUploading || !uploadFile || !title}
-                className="w-full h-16 text-xl font-black rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-2xl"
+                className="w-full h-16 text-xl font-bold bg-primary hover:bg-primary/90"
               >
                 {isUploading ? (
                   <>UPLOADING...</>
@@ -238,11 +223,11 @@ export default function MyMusic() {
         </Card>
 
         {/* Track List - Purple Theme */}
-        <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-pink-50">
+        <Card className="border-2 border-gray-200 bg-white">
           <CardContent className="p-10">
             <div className="mb-8">
-              <h2 className="text-4xl font-black text-gray-900 mb-3">
-                Track <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Library</span>
+              <h2 className="text-4xl font-bold text-gray-900 mb-3">
+                Track Library
               </h2>
               <p className="text-xl text-gray-600 font-bold">
                 Manage your uploaded music

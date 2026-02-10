@@ -328,8 +328,8 @@ export default function Upload() {
   };
 
   const ValidationIcon = ({ status }: { status: ValidationStatus }) => {
-    if (status === 'valid') return <CheckCircle2 className="h-4 w-4 text-green-500" />;
-    if (status === 'invalid') return <AlertCircle className="h-4 w-4 text-red-500" />;
+    if (status === 'valid') return <CheckCircle2 className="h-4 w-4 text-primary" />;
+    if (status === 'invalid') return <AlertCircle className="h-4 w-4 text-gray-500" />;
     return null;
   };
 
@@ -362,37 +362,29 @@ export default function Upload() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Upload to BAP</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-6xl font-bold mb-4 text-foreground">Upload to BAP</h1>
+          <p className="text-xl text-gray-600">
             Share your music with the world. Your track will be live in minutes.
           </p>
         </div>
 
         {/* Compliance Score Banner */}
         {audioFile && (
-          <Alert className={`border-2 ${
-            complianceScore >= 90 ? 'border-green-500 bg-green-50 dark:bg-green-950' :
-            complianceScore >= 60 ? 'border-yellow-500 bg-yellow-50 dark:bg-yellow-950' :
-            'border-red-500 bg-red-50 dark:bg-red-950'
-          }`}>
-            <Sparkles className="h-5 w-5" />
+          <Alert className="border-2 border-gray-200 bg-white">
+            <Sparkles className="h-5 w-5 text-gray-700" />
             <AlertDescription>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-semibold">Compliance Score: {complianceScore}%</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="font-semibold text-gray-900">Compliance Score: {complianceScore}%</p>
+                  <p className="text-sm text-gray-600">
                     {complianceScore >= 90 ? 'Excellent! Your metadata meets all industry standards.' :
                      complianceScore >= 60 ? 'Good start. Add more metadata to improve compliance.' :
                      'Add metadata below to meet platform requirements.'}
                   </p>
                 </div>
-                <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+                <div className="w-32 h-2 bg-gray-100 rounded-full overflow-hidden">
                   <div
-                    className={`h-full transition-all duration-500 ${
-                      complianceScore >= 90 ? 'bg-green-500' :
-                      complianceScore >= 60 ? 'bg-yellow-500' :
-                      'bg-red-500'
-                    }`}
+                    className="h-full transition-all duration-500 bg-primary"
                     style={{ width: `${complianceScore}%` }}
                   />
                 </div>
@@ -447,7 +439,7 @@ export default function Upload() {
                 {extractingMetadata ? (
                   <Loader2 className="h-10 w-10 animate-spin text-primary flex-shrink-0" />
                 ) : (
-                  <Check className="h-10 w-10 text-green-500 flex-shrink-0" />
+                  <Check className="h-10 w-10 text-primary flex-shrink-0" />
                 )}
                 <div className="flex-1">
                   <p className="font-medium">{audioFile.name}</p>
@@ -613,10 +605,10 @@ export default function Upload() {
             </Card>
 
             {/* Compliance & Metadata Section */}
-            <Card className="rounded-xl border-2 border-blue-500">
+            <Card className="rounded-xl border-2 border-gray-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-blue-500" />
+                  <Sparkles className="h-5 w-5 text-gray-700" />
                   Compliance & Metadata
                 </CardTitle>
                 <CardDescription>
@@ -636,13 +628,13 @@ export default function Upload() {
                     onChange={(e) => handleISRCChange(e.target.value)}
                     placeholder="CC-XXX-YY-NNNNN (e.g., USRC11234567)"
                     maxLength={15}
-                    className={showValidation && validation.isrc === 'invalid' ? 'border-red-500' : ''}
+                    className={showValidation && validation.isrc === 'invalid' ? 'border-gray-400' : ''}
                   />
                   <p className="text-xs text-muted-foreground">
                     International Standard Recording Code - unique identifier for this recording
                   </p>
                   {showValidation && validation.isrc === 'invalid' && (
-                    <p className="text-xs text-red-500">Invalid ISRC format. Should be 12 characters: CC-XXX-YY-NNNNN</p>
+                    <p className="text-xs text-gray-600">Invalid ISRC format. Should be 12 characters: CC-XXX-YY-NNNNN</p>
                   )}
                 </div>
 
@@ -658,13 +650,13 @@ export default function Upload() {
                     onChange={(e) => handleUPCChange(e.target.value)}
                     placeholder="123456789012 (12 digits)"
                     maxLength={12}
-                    className={showValidation && validation.upc === 'invalid' ? 'border-red-500' : ''}
+                    className={showValidation && validation.upc === 'invalid' ? 'border-gray-400' : ''}
                   />
                   <p className="text-xs text-muted-foreground">
                     Universal Product Code - barcode identifier for commercial release
                   </p>
                   {showValidation && validation.upc === 'invalid' && (
-                    <p className="text-xs text-red-500">Invalid UPC format. Must be exactly 12 digits</p>
+                    <p className="text-xs text-gray-600">Invalid UPC format. Must be exactly 12 digits</p>
                   )}
                 </div>
 
@@ -729,7 +721,7 @@ export default function Upload() {
                     Total: {songwriterSplits.reduce((sum, s) => sum + s.percentage, 0).toFixed(2)}% (must equal 100%)
                   </p>
                   {showValidation && validation.songwriterSplits === 'invalid' && (
-                    <p className="text-xs text-red-500">Songwriter splits must add up to 100%</p>
+                    <p className="text-xs text-gray-600">Songwriter splits must add up to 100%</p>
                   )}
                 </div>
 

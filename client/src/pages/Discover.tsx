@@ -205,7 +205,7 @@ export default function Discover() {
             <p className="text-lg text-gray-600 font-bold truncate">{track.artist}</p>
             <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 font-medium">
               {track.genre && (
-                <Badge className="rounded-full border-2 border-purple-500 bg-purple-50 text-purple-600 font-black text-xs px-3 py-1">
+                <Badge className="rounded-full border-2 border-gray-200 bg-gray-100 text-gray-700 font-semibold text-xs px-3 py-1">
                   {track.genre}
                 </Badge>
               )}
@@ -247,7 +247,7 @@ export default function Discover() {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleShare(track, 'copy')}>
                 {copiedTrackId === track.id ? (
-                  <Check className="h-4 w-4 mr-2 text-green-500" />
+                  <Check className="h-4 w-4 mr-2 text-primary" />
                 ) : (
                   <Copy className="h-4 w-4 mr-2" />
                 )}
@@ -261,54 +261,51 @@ export default function Discover() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 pb-32">
+    <div className="min-h-screen bg-white pb-32">
       {/* Revolutionary Header with Asymmetric Layout */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Content */}
           <div>
-            <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6">
+            <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6 text-foreground">
               Discover
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
-                New Music
-              </span>
-              <span className="text-black">.</span>
+              New Music.
             </h1>
-            <p className="text-2xl text-gray-700 font-bold mb-8">
+            <p className="text-2xl text-gray-600 mb-8">
               Stream directly from artists. Every play supports creators through BAP.
             </p>
           </div>
 
           {/* Right: Stats Card */}
-          <Card className="rounded-3xl border-4 border-indigo-500 shadow-2xl bg-gradient-to-br from-indigo-50 to-purple-50">
+          <Card className="border-2 border-gray-200 bg-white">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg">
-                    <Music className="h-8 w-8 text-white" />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center">
+                    <Music className="h-8 w-8 text-gray-700" />
                   </div>
                   <div>
-                    <div className="text-3xl font-black text-gray-900">Direct Streams</div>
-                    <div className="text-lg text-gray-600 font-medium">Artist to Fan</div>
+                    <div className="text-3xl font-bold text-gray-900">Direct Streams</div>
+                    <div className="text-lg text-gray-600">Artist to Fan</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
-                    <TrendingUp className="h-8 w-8 text-white" />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center">
+                    <TrendingUp className="h-8 w-8 text-gray-700" />
                   </div>
                   <div>
-                    <div className="text-3xl font-black text-gray-900">Trending</div>
-                    <div className="text-lg text-gray-600 font-medium">Fresh Releases</div>
+                    <div className="text-3xl font-bold text-gray-900">Trending</div>
+                    <div className="text-lg text-gray-600">Fresh Releases</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
-                    <Radio className="h-8 w-8 text-white" />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center">
+                    <Radio className="h-8 w-8 text-gray-700" />
                   </div>
                   <div>
-                    <div className="text-3xl font-black text-gray-900">Live Feed</div>
-                    <div className="text-lg text-gray-600 font-medium">Real-Time Updates</div>
+                    <div className="text-3xl font-bold text-gray-900">Live Feed</div>
+                    <div className="text-lg text-gray-600">Real-Time Updates</div>
                   </div>
                 </div>
               </div>
@@ -317,7 +314,7 @@ export default function Discover() {
         </div>
 
         {/* Search Bar - Revolutionary Design */}
-        <Card className="rounded-3xl border-4 border-gray-300 shadow-2xl bg-white mb-12">
+        <Card className="border-2 border-gray-200 bg-white mb-12">
           <CardContent className="p-8">
             <div className="relative">
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-7 w-7 text-gray-400" />
@@ -341,10 +338,10 @@ export default function Discover() {
               return (
                 <Badge
                   key={genre}
-                  className={`cursor-pointer whitespace-nowrap px-6 py-3 text-base font-black rounded-full border-4 transition-all hover:scale-105 ${
+                  className={`cursor-pointer whitespace-nowrap px-6 py-3 text-base font-semibold rounded-full border-2 transition-all ${
                     isSelected 
-                      ? 'border-indigo-500 bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl' 
-                      : 'border-gray-300 bg-white text-gray-900 hover:border-indigo-400'
+                      ? 'border-primary bg-primary text-white' 
+                      : 'border-gray-200 bg-white text-gray-900 hover:border-gray-300'
                   }`}
                   onClick={() => setSelectedGenre(genre)}
                 >
@@ -572,7 +569,7 @@ export default function Discover() {
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleShare(currentTrack, 'copy')}>
                       {copiedTrackId === currentTrack.id ? (
-                        <Check className="h-4 w-4 mr-2 text-green-500" />
+                        <Check className="h-4 w-4 mr-2 text-primary" />
                       ) : (
                         <Copy className="h-4 w-4 mr-2" />
                       )}

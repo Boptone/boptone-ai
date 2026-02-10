@@ -1618,4 +1618,16 @@ Design System Rules:
 - [x] Locate toggle switch component (monthly/annual billing toggle)
 - [x] Fix toggle to show turquoise color in BOTH monthly and annual states
 - [x] Test toggle in both positions to ensure turquoise is always visible
-- [ ] Save checkpoint after fix
+- [x] Save checkpoint after fix
+
+## Step 1: Methodically Redesign Upload, Discover, My Music Pages (User Request)
+- [x] Read and analyze Upload page current structure and features
+- [x] Redesign Upload page with Brex aesthetic (90% grayscale + 10% turquoise)
+- [x] Test Upload page functionality after redesign
+- [x] Read and analyze Discover page current structure and features
+- [x] Redesign Discover page with Brex aesthetic
+- [x] Test Discover page functionality after redesign
+- [x] Read and analyze My Music page current structure and features
+- [x] Redesign My Music page with Brex aesthetic
+- [x] Test My Music page functionality after redesign
+- [ ] Save checkpoint with all three pages redesigned
