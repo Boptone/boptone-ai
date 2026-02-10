@@ -1582,3 +1582,8 @@ Design System Rules:
 - [ ] Refine dark mode color palette for easy-on-eyes experience
 - [ ] Test complete redesign across all pages
 - [ ] Save checkpoint after complete redesign
+
+## Restore Original Hero Text (User Request)
+- [x] Restore rotating hero text: "Automate Your Tone / Create Your Tone / Own Your Tone"
+- [x] Implement text rotation animation (3-second intervals with fade effect)
+- [ ] Save checkpoint after restoration

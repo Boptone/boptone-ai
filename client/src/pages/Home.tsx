@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { useLocation } from "wouter";
 
-const rotatingVerbs = ["Create", "Distribute", "Monetize"];
+const rotatingPhrases = ["Automate Your Tone", "Create Your Tone", "Own Your Tone"];
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -36,7 +36,7 @@ export default function Home() {
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
-        setVerbIndex((prev) => (prev + 1) % rotatingVerbs.length);
+        setVerbIndex((prev) => (prev + 1) % rotatingPhrases.length);
         setIsAnimating(false);
       }, 3000);
     }, 3000);
@@ -182,9 +182,8 @@ export default function Home() {
           <div className="max-w-4xl">
             <h1 className="hero-headline mb-6">
               <span className={`inline-block transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-                {rotatingVerbs[verbIndex]}
+                {rotatingPhrases[verbIndex]}
               </span>
-              {" "}Your Music Career
             </h1>
             <p className="body-text text-xl md:text-2xl mb-8 max-w-2xl">
               The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.
