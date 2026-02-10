@@ -104,7 +104,7 @@ export default function Features() {
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Left: Content */}
           <div className="space-y-8">
-            <h1 className="text-7xl md:text-8xl font-black leading-tight">
+            <h1 className="text-7xl md:text-8xl font-bold leading-tight">
               Everything
               <br />
               <span style={{ color: '#4285F4' }}>You Need</span><span className="text-black">.</span>
@@ -140,7 +140,7 @@ export default function Features() {
                     <Music className="h-10 w-10 text-white" />
                   </div>
                   <div>
-                    <div className="text-4xl font-black">6 Tools</div>
+                    <div className="text-4xl font-bold">6 Tools</div>
                     <div className="text-muted-foreground font-medium">One Platform</div>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function Features() {
                     <DollarSign className="h-10 w-10 text-white" />
                   </div>
                   <div>
-                    <div className="text-4xl font-black">90%</div>
+                    <div className="text-4xl font-bold">90%</div>
                     <div className="text-muted-foreground font-medium">You Keep</div>
                   </div>
                 </div>
@@ -158,7 +158,7 @@ export default function Features() {
                     <Zap className="h-10 w-10 text-white" />
                   </div>
                   <div>
-                    <div className="text-4xl font-black">100%</div>
+                    <div className="text-4xl font-bold">100%</div>
                     <div className="text-muted-foreground font-medium">Simple</div>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ export default function Features() {
       {/* Features Grid - Bold color-coded cards */}
       <div className="container mx-auto px-4 py-24">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-black text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-bold text-center mb-16">
             Six Powerful Tools<span className="text-black">.</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -185,7 +185,7 @@ export default function Features() {
                   <div className={`h-16 w-16 rounded-2xl ${feature.iconBg} flex items-center justify-center mb-6 hover:scale-110 transition-transform`}>
                     <Icon className="h-8 w-8" />
                   </div>
-                  <h3 className="text-2xl font-black mb-4">{feature.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
                   <p className="text-muted-foreground mb-6 leading-relaxed">{feature.description}</p>
                   <div className="space-y-3">
                     {feature.benefits.map((benefit, i) => (
@@ -208,7 +208,7 @@ export default function Features() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left: Massive headline */}
             <div>
-              <h2 className="text-6xl md:text-7xl font-black leading-tight mb-8">
+              <h2 className="text-6xl md:text-7xl font-bold leading-tight mb-8">
                 Why
                 <br />
                 <span style={{ color: '#4285F4' }}>Boptone</span><span className="text-black">?</span>
@@ -222,7 +222,7 @@ export default function Features() {
             <div className="space-y-6">
               {/* Without Boptone */}
               <div className="rounded-3xl border-4 border-red-500 bg-gradient-to-br from-red-500/10 to-orange-500/10 p-8 shadow-xl">
-                <h3 className="text-2xl font-black mb-6 text-red-600">Without Boptone</h3>
+                <h3 className="text-2xl font-bold mb-6 text-red-600">Without Boptone</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
                     <span className="text-red-500 font-bold text-xl">✗</span>
@@ -245,7 +245,7 @@ export default function Features() {
 
               {/* With Boptone */}
               <div className="rounded-3xl border-4 border-green-500 bg-gradient-to-br from-green-500/10 to-emerald-500/10 p-8 shadow-xl">
-                <h3 className="text-2xl font-black mb-6 text-green-600">With Boptone</h3>
+                <h3 className="text-2xl font-bold mb-6 text-green-600">With Boptone</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
                     <span className="text-green-500 font-bold text-xl">✓</span>
@@ -273,7 +273,7 @@ export default function Features() {
       {/* CTA Section - Bold and centered */}
       <div className="container mx-auto px-4 py-24">
         <div className="max-w-5xl mx-auto text-center space-y-8">
-          <h2 className="text-6xl md:text-7xl font-black">
+          <h2 className="text-6xl md:text-7xl font-bold">
             Ready to Create
             <br />
             <span style={{ color: '#4285F4' }}>Your Tone</span><span className="text-black">?</span>

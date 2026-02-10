@@ -21,7 +21,7 @@ export default function About() {
             {/* Left: Massive Typography */}
             <div>
 
-              <h1 className="text-7xl lg:text-8xl font-black mb-8 leading-none">
+              <h1 className="text-7xl lg:text-8xl font-bold mb-8 leading-none">
                 Built for
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
@@ -50,7 +50,7 @@ export default function About() {
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
                       <Target className="h-8 w-8 text-white" />
                     </div>
-                    <h2 className="text-4xl font-black">Our Mission</h2>
+                    <h2 className="text-4xl font-bold">Our Mission</h2>
                   </div>
                   <p className="text-xl text-gray-700 leading-relaxed mb-6 font-medium">
                     For too long, artists have been stuck using complicated tools that take too much of their money. We're changing that.
@@ -69,7 +69,7 @@ export default function About() {
       <section className="py-32 bg-gradient-to-br from-white to-gray-50">
         <div className="container mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl lg:text-7xl font-black mb-4">
+            <h2 className="text-6xl lg:text-7xl font-bold mb-4">
               Our
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
@@ -85,7 +85,7 @@ export default function About() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
                   <Users className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-black mb-4">Artists First</h3>
+                <h3 className="text-3xl font-bold mb-4">Artists First</h3>
                 <p className="text-gray-700 text-lg font-medium leading-relaxed">
                   Every decision we make starts with one question: Does this help artists? We build for you, not for anyone else.
                 </p>
@@ -98,7 +98,7 @@ export default function About() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
                   <Zap className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-black mb-4">Simple & Powerful</h3>
+                <h3 className="text-3xl font-bold mb-4">Simple & Powerful</h3>
                 <p className="text-gray-700 text-lg font-medium leading-relaxed">
                   We use the latest technology to give you powerful tools that are easy to use. No technical knowledge required.
                 </p>
@@ -111,7 +111,7 @@ export default function About() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
                   <Heart className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-black mb-4">100% Transparent</h3>
+                <h3 className="text-3xl font-bold mb-4">100% Transparent</h3>
                 <p className="text-gray-700 text-lg font-medium leading-relaxed">
                   No hidden fees, no confusing contracts. You own your music, your data, and your money—100%.
                 </p>
@@ -126,7 +126,7 @@ export default function About() {
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
             <div>
-              <h2 className="text-6xl lg:text-7xl font-black mb-8 leading-tight">
+              <h2 className="text-6xl lg:text-7xl font-bold mb-8 leading-tight">
                 Our
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">
@@ -144,7 +144,7 @@ export default function About() {
                   We wanted to create a platform that's simple, fair, and puts artists in control.
                 </p>
                 <div className="mt-8 p-6 bg-gradient-to-r from-orange-100 to-red-100 rounded-2xl border-4 border-orange-200">
-                  <p className="text-lg font-black text-orange-600">That's why Boptone exists.</p>
+                  <p className="text-lg font-bold text-orange-600">That's why Boptone exists.</p>
                 </div>
               </CardContent>
             </Card>
@@ -156,7 +156,7 @@ export default function About() {
       <section className="py-32 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl lg:text-7xl font-black mb-8">
+            <h2 className="text-6xl lg:text-7xl font-bold mb-8">
               What We're
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
@@ -172,7 +172,7 @@ export default function About() {
             {/* Indigo Card - New Artists */}
             <Card className="rounded-3xl border-4 border-indigo-500 shadow-2xl bg-gradient-to-br from-indigo-50 to-indigo-100 hover:scale-105 transition-transform">
               <CardContent className="p-12">
-                <h3 className="text-4xl font-black mb-6 text-indigo-600">For New Artists</h3>
+                <h3 className="text-4xl font-bold mb-6 text-indigo-600">For New Artists</h3>
                 <p className="text-xl text-gray-700 leading-relaxed font-medium">
                   Get help from our AI advisor, upload your music, and start earning money from day one.
                 </p>
@@ -182,7 +182,7 @@ export default function About() {
             {/* Purple Card - Established Artists */}
             <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-purple-100 hover:scale-105 transition-transform">
               <CardContent className="p-12">
-                <h3 className="text-4xl font-black mb-6 text-purple-600">For Established Artists</h3>
+                <h3 className="text-4xl font-bold mb-6 text-purple-600">For Established Artists</h3>
                 <p className="text-xl text-gray-700 leading-relaxed font-medium">
                   Advanced tools to grow your career, protect your music, and keep more of what you earn.
                 </p>
@@ -197,7 +197,7 @@ export default function About() {
         <div className="container mx-auto">
           <Card className="rounded-3xl max-w-5xl mx-auto bg-white border-4 border-white shadow-2xl">
             <CardContent className="p-16 text-center">
-              <h2 className="text-5xl lg:text-6xl font-black mb-8">
+              <h2 className="text-5xl lg:text-6xl font-bold mb-8">
                 Join the
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">

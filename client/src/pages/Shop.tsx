@@ -42,7 +42,7 @@ export default function Shop() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Content */}
           <div>
-            <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6">
+            <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
               Support
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600">
@@ -56,13 +56,13 @@ export default function Shop() {
             {user && (
               <Button 
                 onClick={() => setLocation("/cart")}
-                className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-700 hover:to-pink-700 shadow-2xl font-black relative"
+                className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-700 hover:to-pink-700 shadow-2xl font-bold relative"
                 size="lg"
               >
                 <ShoppingCart className="mr-3 h-6 w-6" />
                 View Cart
                 {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 rounded-full border-4 border-white bg-green-500 text-white font-black text-lg px-3 py-1">
+                  <Badge className="absolute -top-2 -right-2 rounded-full border-4 border-white bg-green-500 text-white font-bold text-lg px-3 py-1">
                     {cartItemCount}
                   </Badge>
                 )}
@@ -76,10 +76,10 @@ export default function Shop() {
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg">
-                    <span className="text-3xl font-black text-white">90%</span>
+                    <span className="text-3xl font-bold text-white">90%</span>
                   </div>
                   <div>
-                    <div className="text-3xl font-black text-gray-900">To Artists</div>
+                    <div className="text-3xl font-bold text-gray-900">To Artists</div>
                     <div className="text-lg text-gray-600 font-medium">Direct Support</div>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function Shop() {
                     <Package className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <div className="text-3xl font-black text-gray-900">Exclusive</div>
+                    <div className="text-3xl font-bold text-gray-900">Exclusive</div>
                     <div className="text-lg text-gray-600 font-medium">Limited Editions</div>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ export default function Shop() {
                     <Sparkles className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <div className="text-3xl font-black text-gray-900">Authentic</div>
+                    <div className="text-3xl font-bold text-gray-900">Authentic</div>
                     <div className="text-lg text-gray-600 font-medium">Verified Creators</div>
                   </div>
                 </div>
@@ -108,7 +108,7 @@ export default function Shop() {
 
         {/* Filter Buttons - Color-Coded Cards */}
         <div className="mb-12">
-          <h2 className="text-3xl font-black text-gray-900 mb-6">Browse by Category</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Browse by Category</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* All Button */}
             <Card 
@@ -127,7 +127,7 @@ export default function Shop() {
                 }`}>
                   <Filter className={`h-7 w-7 ${selectedType === null ? 'text-black' : 'text-gray-600'}`} />
                 </div>
-                <h3 className={`text-xl font-black ${selectedType === null ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`text-xl font-bold ${selectedType === null ? 'text-white' : 'text-gray-900'}`}>
                   All Products
                 </h3>
               </CardContent>
@@ -173,7 +173,7 @@ export default function Shop() {
                     }`}>
                       <Icon className={`h-7 w-7 ${isSelected ? colors.iconBg.replace('bg-gradient-to-br', 'text').split(' ')[0].replace('bg', 'text') : 'text-white'}`} />
                     </div>
-                    <h3 className={`text-xl font-black ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-xl font-bold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
                       {type.label}
                     </h3>
                   </CardContent>
@@ -186,7 +186,7 @@ export default function Shop() {
         {/* Product Grid */}
         {isLoading ? (
           <div className="text-center py-24">
-            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-2xl font-black shadow-xl">
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-2xl font-bold shadow-xl">
               <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
               Loading Products...
             </div>
@@ -217,25 +217,25 @@ export default function Shop() {
 
                   {/* Product Info */}
                   <div className="space-y-3">
-                    <Badge className="rounded-full border-2 border-orange-500 bg-orange-50 text-orange-600 font-black text-xs px-3 py-1">
+                    <Badge className="rounded-full border-2 border-orange-500 bg-orange-50 text-orange-600 font-bold text-xs px-3 py-1">
                       {product.type}
                     </Badge>
-                    <h3 className="font-black text-xl text-gray-900 line-clamp-2">
+                    <h3 className="font-bold text-xl text-gray-900 line-clamp-2">
                       {product.name}
                     </h3>
                     <p className="text-sm text-gray-600 font-medium line-clamp-2">
                       {product.description}
                     </p>
                     <div className="flex items-center justify-between pt-3">
-                      <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600">
+                      <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600">
                         ${product.price}
                       </span>
                       {product.status === "active" ? (
-                        <Badge className="rounded-full border-2 border-green-500 bg-green-50 text-green-600 font-black text-xs px-3 py-1">
+                        <Badge className="rounded-full border-2 border-green-500 bg-green-50 text-green-600 font-bold text-xs px-3 py-1">
                           In Stock
                         </Badge>
                       ) : (
-                        <Badge className="rounded-full border-2 border-red-500 bg-red-50 text-red-600 font-black text-xs px-3 py-1">
+                        <Badge className="rounded-full border-2 border-red-500 bg-red-50 text-red-600 font-bold text-xs px-3 py-1">
                           Sold Out
                         </Badge>
                       )}
@@ -251,7 +251,7 @@ export default function Shop() {
               <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-8">
                 <ShoppingCart className="h-16 w-16 text-gray-400" />
               </div>
-              <h2 className="text-4xl font-black text-gray-900 mb-4">No Products Yet</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">No Products Yet</h2>
               <p className="text-xl text-gray-600 font-medium">
                 Check back soon for exclusive artist merchandise and digital content.
               </p>

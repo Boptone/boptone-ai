@@ -1630,4 +1630,18 @@ Design System Rules:
 - [x] Read and analyze My Music page current structure and features
 - [x] Redesign My Music page with Brex aesthetic
 - [x] Test My Music page functionality after redesign
-- [ ] Save checkpoint with all three pages redesigned
+- [x] Save checkpoint with all three pages redesigned
+
+## Typography Consistency and Grayscale Depth (User Feedback)
+- [x] Audit all fonts across site (family, weights, sizes) to identify inconsistencies
+- [x] Establish consistent typography system in index.css (font families, weights, sizes for h1-h6, body, etc.)
+- [x] Apply consistent typography to all pages (replaced all font-black with font-bold)
+- [x] Add grayscale depth to Home page (gray-50/100 backgrounds for sections)
+- [x] Add grayscale depth to Dashboard page (cards already have white bg on page bg)
+- [x] Add grayscale depth to Analytics page (cards already have appropriate backgrounds)
+- [x] Add grayscale depth to Upload page (cards already have white bg)
+- [x] Add grayscale depth to Discover page (cards already have white bg)
+- [x] Add grayscale depth to My Music page (cards already have white bg)
+- [x] Remove all remaining gradients from Discover page (tabs and buttons)
+- [x] Test all pages for visual consistency
+- [ ] Save checkpoint after typography and grayscale fixes

@@ -24,7 +24,7 @@ export default function NotFound() {
 
           {/* 404 Message */}
           <div className="mb-8">
-            <h1 className="text-8xl md:text-9xl font-black text-gray-200 mb-4">
+            <h1 className="text-8xl md:text-9xl font-bold text-gray-200 mb-4">
               404
             </h1>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

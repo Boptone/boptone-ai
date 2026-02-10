@@ -225,7 +225,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="section-spacing">
+      <section className="section-spacing bg-gray-50">
         <div className="container">
           <div className="max-w-3xl mb-16">
             <h2 className="section-headline mb-6">
@@ -240,7 +240,7 @@ export default function Home() {
             {features.map((feature, index) => (
               <Card key={index} className="future-card p-8 hover:shadow-md transition-shadow">
                 <feature.icon className="h-12 w-12 text-primary mb-4" strokeWidth={1.5} />
-                <h3 className="text-xl font-semibold mb-3 text-foreground">{feature.title}</h3>
+                <h4 className="mb-3">{feature.title}</h4>
                 <p className="body-text text-base">{feature.description}</p>
               </Card>
             ))}
@@ -338,7 +338,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-spacing">
+      <section className="section-spacing bg-gray-50">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="section-headline mb-6">

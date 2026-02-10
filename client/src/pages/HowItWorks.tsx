@@ -52,7 +52,7 @@ export default function HowItWorks() {
               <div className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold uppercase tracking-wide">
                 Step 1 of 3
               </div>
-              <h1 className="text-6xl md:text-7xl font-black leading-none tracking-tight">
+              <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
                 Fans Pay
                 <br />
                 <span className="text-blue-600">You Directly</span>
@@ -117,7 +117,7 @@ export default function HowItWorks() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white rounded-3xl shadow-2xl p-12 border-4 border-green-500 transform hover:scale-105 transition-transform">
                   <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-6xl font-black text-green-600">$47.50</span>
+                    <span className="text-6xl font-bold text-green-600">$47.50</span>
                     <Zap className="w-8 h-8 text-yellow-500 animate-pulse" />
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
@@ -136,7 +136,7 @@ export default function HowItWorks() {
               <div className="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold uppercase tracking-wide">
                 Step 2 of 3
               </div>
-              <h1 className="text-6xl md:text-7xl font-black leading-none tracking-tight">
+              <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
                 Get Paid
                 <br />
                 <span className="text-green-600">Instantly</span>
@@ -173,7 +173,7 @@ export default function HowItWorks() {
               <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold uppercase tracking-wide">
                 Step 3 of 3
               </div>
-              <h1 className="text-6xl md:text-7xl font-black leading-none tracking-tight">
+              <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
                 You Control
                 <br />
                 <span className="text-purple-600">Your Earnings</span>
@@ -206,20 +206,20 @@ export default function HowItWorks() {
                 <div className="bg-white rounded-3xl shadow-2xl p-8 border-4 border-purple-600 w-full max-w-md transform hover:scale-105 transition-transform">
                   <div className="flex items-center gap-3 mb-6">
                     <TrendingUp className="w-8 h-8 text-purple-600" />
-                    <h3 className="text-2xl font-black text-gray-800">Your Earnings</h3>
+                    <h3 className="text-2xl font-bold text-gray-800">Your Earnings</h3>
                   </div>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-4 bg-blue-50 rounded-2xl">
                       <span className="text-sm font-semibold text-gray-600 uppercase">Today</span>
-                      <span className="text-2xl font-black text-blue-600">$127.80</span>
+                      <span className="text-2xl font-bold text-blue-600">$127.80</span>
                     </div>
                     <div className="flex justify-between items-center p-4 bg-green-50 rounded-2xl">
                       <span className="text-sm font-semibold text-gray-600 uppercase">This Week</span>
-                      <span className="text-2xl font-black text-green-600">$892.40</span>
+                      <span className="text-2xl font-bold text-green-600">$892.40</span>
                     </div>
                     <div className="flex justify-between items-center p-4 bg-purple-50 rounded-2xl">
                       <span className="text-sm font-semibold text-gray-600 uppercase">This Month</span>
-                      <span className="text-2xl font-black text-purple-600">$3,456.20</span>
+                      <span className="text-2xl font-bold text-purple-600">$3,456.20</span>
                     </div>
                   </div>
                 </div>

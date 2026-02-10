@@ -201,7 +201,7 @@ export default function Discover() {
             </Button>
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-black text-xl text-gray-900 truncate">{track.title}</h3>
+            <h3 className="font-bold text-xl text-gray-900 truncate">{track.title}</h3>
             <p className="text-lg text-gray-600 font-bold truncate">{track.artist}</p>
             <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 font-medium">
               {track.genre && (
@@ -267,7 +267,7 @@ export default function Discover() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Content */}
           <div>
-            <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6 text-foreground">
+            <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6 text-foreground">
               Discover
               <br />
               New Music.
@@ -331,7 +331,7 @@ export default function Discover() {
 
         {/* Genre Filters - Color-Coded Pills */}
         <div className="mb-12">
-          <h2 className="text-3xl font-black text-gray-900 mb-6">Browse by Genre</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">Browse by Genre</h2>
           <div className="flex items-center gap-3 flex-wrap">
             {GENRES.map((genre) => {
               const isSelected = selectedGenre === genre;
@@ -355,7 +355,7 @@ export default function Discover() {
         {/* Search Results */}
         {searchQuery && searchResults && (
           <div className="mb-12">
-            <h2 className="text-4xl font-black text-gray-900 mb-6">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Search <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Results</span>
             </h2>
             <div className="space-y-4">
@@ -367,7 +367,7 @@ export default function Discover() {
                     <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
                       <Search className="h-12 w-12 text-gray-400" />
                     </div>
-                    <h3 className="text-3xl font-black text-gray-900 mb-2">No Results Found</h3>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-2">No Results Found</h3>
                     <p className="text-xl text-gray-600 font-medium">
                       No tracks found for "{searchQuery}"
                     </p>
@@ -384,21 +384,21 @@ export default function Discover() {
             <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-3xl border-4 border-gray-300 shadow-2xl">
               <TabsTrigger 
                 value="trending" 
-                className="flex items-center gap-2 text-lg font-black py-4 rounded-2xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+                className="flex items-center gap-2 text-lg font-bold py-4 rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
               >
                 <TrendingUp className="h-5 w-5" />
                 Trending
               </TabsTrigger>
               <TabsTrigger 
                 value="new" 
-                className="flex items-center gap-2 text-lg font-black py-4 rounded-2xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+                className="flex items-center gap-2 text-lg font-bold py-4 rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
               >
                 <Clock className="h-5 w-5" />
                 New This Week
               </TabsTrigger>
               <TabsTrigger 
                 value="rising" 
-                className="flex items-center gap-2 text-lg font-black py-4 rounded-2xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white"
+                className="flex items-center gap-2 text-lg font-bold py-4 rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
               >
                 <Users className="h-5 w-5" />
                 Rising Artists
@@ -406,7 +406,7 @@ export default function Discover() {
             </TabsList>
 
             <TabsContent value="trending" className="space-y-4">
-              <h2 className="text-4xl font-black text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 Trending on <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">BAP</span>
               </h2>
               {trendingTracks && trendingTracks.length > 0 ? (
@@ -417,12 +417,12 @@ export default function Discover() {
                     <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
                       <Music className="h-12 w-12 text-gray-400" />
                     </div>
-                    <h3 className="text-3xl font-black text-gray-900 mb-4">No Trending Tracks Yet</h3>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-4">No Trending Tracks Yet</h3>
                     <p className="text-xl text-gray-600 font-medium mb-8">
                       Be the first to upload and start trending!
                     </p>
                     <Link href="/upload">
-                      <Button className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-2xl font-black">
+                      <Button className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 font-bold">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -432,7 +432,7 @@ export default function Discover() {
             </TabsContent>
 
             <TabsContent value="new" className="space-y-4">
-              <h2 className="text-4xl font-black text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 New This <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Week</span>
               </h2>
               {newReleases && newReleases.length > 0 ? (
@@ -443,12 +443,12 @@ export default function Discover() {
                     <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
                       <Music className="h-12 w-12 text-gray-400" />
                     </div>
-                    <h3 className="text-3xl font-black text-gray-900 mb-4">No New Releases Yet</h3>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-4">No New Releases Yet</h3>
                     <p className="text-xl text-gray-600 font-medium mb-8">
                       Upload your music to BAP and be featured here!
                     </p>
                     <Link href="/upload">
-                      <Button className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-2xl font-black">
+                      <Button className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 font-bold">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -458,7 +458,7 @@ export default function Discover() {
             </TabsContent>
 
             <TabsContent value="rising" className="space-y-6">
-              <h2 className="text-4xl font-black text-gray-900 mb-6">
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 Rising <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Artists</span>
               </h2>
               {risingArtists && risingArtists.length > 0 ? (
@@ -469,12 +469,12 @@ export default function Discover() {
                         <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-indigo-100 to-purple-100 mx-auto mb-6 flex items-center justify-center shadow-lg">
                           <Music className="h-16 w-16 text-indigo-600" />
                         </div>
-                        <h3 className="font-black text-2xl text-gray-900 mb-2">{artist.name}</h3>
+                        <h3 className="font-bold text-2xl text-gray-900 mb-2">{artist.name}</h3>
                         <p className="text-lg text-gray-600 font-bold mb-6">
                           {artist.followerCount?.toLocaleString() || 0} followers
                         </p>
                         <Link href={`/@${artist.username}`}>
-                          <Button className="rounded-full w-full text-lg px-6 py-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl font-black">
+                          <Button className="rounded-full w-full text-lg px-6 py-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl font-bold">
                             View Profile
                           </Button>
                         </Link>
@@ -488,12 +488,12 @@ export default function Discover() {
                     <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
                       <Users className="h-12 w-12 text-gray-400" />
                     </div>
-                    <h3 className="text-3xl font-black text-gray-900 mb-4">No Rising Artists Yet</h3>
+                    <h3 className="text-3xl font-bold text-gray-900 mb-4">No Rising Artists Yet</h3>
                     <p className="text-xl text-gray-600 font-medium mb-8">
                       Start uploading to grow your audience and get featured!
                     </p>
                     <Link href="/upload">
-                      <Button className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-2xl font-black">
+                      <Button className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 font-bold">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -517,7 +517,7 @@ export default function Discover() {
                 className="w-20 h-20 rounded-2xl object-cover flex-shrink-0 border-2 border-gray-300 shadow-lg"
               />
               <div className="flex-1 min-w-0">
-                <h4 className="font-black text-xl text-gray-900 truncate">{currentTrack.title}</h4>
+                <h4 className="font-bold text-xl text-gray-900 truncate">{currentTrack.title}</h4>
                 <p className="text-lg text-gray-600 font-bold truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-3">

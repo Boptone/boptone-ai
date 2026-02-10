@@ -24,7 +24,7 @@ export default function BAP() {
             {/* Left: Massive Typography */}
             <div>
 
-              <h1 className="text-7xl lg:text-8xl font-black mb-8 leading-none">
+              <h1 className="text-7xl lg:text-8xl font-bold mb-8 leading-none">
                 Fans Pay
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
@@ -57,7 +57,7 @@ export default function BAP() {
                         <DollarSign className="h-10 w-10 text-white" />
                       </div>
                       <div>
-                        <div className="text-5xl font-black text-green-600">10-100x</div>
+                        <div className="text-5xl font-bold text-green-600">10-100x</div>
                         <div className="text-lg text-gray-600 font-semibold">Higher Earnings</div>
                       </div>
                     </div>
@@ -66,7 +66,7 @@ export default function BAP() {
                         <Zap className="h-10 w-10 text-white" />
                       </div>
                       <div>
-                        <div className="text-5xl font-black text-purple-600">Instant</div>
+                        <div className="text-5xl font-bold text-purple-600">Instant</div>
                         <div className="text-lg text-gray-600 font-semibold">Payment Transfer</div>
                       </div>
                     </div>
@@ -75,7 +75,7 @@ export default function BAP() {
                         <Shield className="h-10 w-10 text-white" />
                       </div>
                       <div>
-                        <div className="text-5xl font-black text-blue-600">100%</div>
+                        <div className="text-5xl font-bold text-blue-600">100%</div>
                         <div className="text-lg text-gray-600 font-semibold">Transparent System</div>
                       </div>
                     </div>
@@ -92,7 +92,7 @@ export default function BAP() {
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
             <div>
-              <h2 className="text-6xl lg:text-7xl font-black mb-8 leading-tight">
+              <h2 className="text-6xl lg:text-7xl font-bold mb-8 leading-tight">
                 The Economic
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600">
@@ -114,42 +114,42 @@ export default function BAP() {
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center shadow-lg">
                     <span className="text-4xl">❌</span>
                   </div>
-                  <h3 className="text-3xl font-black text-red-600">Traditional Streaming</h3>
+                  <h3 className="text-3xl font-bold text-red-600">Traditional Streaming</h3>
                 </div>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-red-600">1</span>
+                      <span className="text-lg font-bold text-red-600">1</span>
                     </div>
                     <p className="text-lg text-gray-700 font-medium">Fan pays $10/month to <strong className="text-red-600">platform</strong></p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-red-600">2</span>
+                      <span className="text-lg font-bold text-red-600">2</span>
                     </div>
                     <p className="text-lg text-gray-700 font-medium">Platform pools all subscription revenue</p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-red-600">3</span>
+                      <span className="text-lg font-bold text-red-600">3</span>
                     </div>
                     <p className="text-lg text-gray-700 font-medium">Platform pays artist <strong className="text-red-600">$0.003-0.005 per stream</strong></p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-red-600">4</span>
+                      <span className="text-lg font-bold text-red-600">4</span>
                     </div>
                     <p className="text-lg text-gray-700 font-medium">Artist waits <strong className="text-red-600">90 days</strong> for payment</p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-red-600">5</span>
+                      <span className="text-lg font-bold text-red-600">5</span>
                     </div>
                     <p className="text-lg text-gray-700 font-medium">Artist has <strong className="text-red-600">no idea</strong> who streamed or how much</p>
                   </div>
                 </div>
                 <div className="mt-8 p-6 bg-gradient-to-r from-red-50 to-red-100 rounded-2xl border-4 border-red-200">
-                  <p className="text-xl font-black text-red-600">Result: 1,000 streams = $3-5</p>
+                  <p className="text-xl font-bold text-red-600">Result: 1,000 streams = $3-5</p>
                 </div>
               </CardContent>
             </Card>
@@ -161,42 +161,42 @@ export default function BAP() {
                   <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center shadow-lg">
                     <Wallet className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-3xl font-black text-green-600">BAP Streaming</h3>
+                  <h3 className="text-3xl font-bold text-green-600">BAP Streaming</h3>
                 </div>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-green-600">1</span>
+                      <span className="text-lg font-bold text-green-600">1</span>
                     </div>
                     <p className="text-lg text-gray-800 font-bold">Fan loads <strong className="text-green-600">their BAP wallet</strong> with funds ($10, $50, $100—their choice)</p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-green-600">2</span>
+                      <span className="text-lg font-bold text-green-600">2</span>
                     </div>
                     <p className="text-lg text-gray-800 font-bold">When fan streams a song, <strong className="text-green-600">their wallet pays you directly</strong></p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-green-600">3</span>
+                      <span className="text-lg font-bold text-green-600">3</span>
                     </div>
                     <p className="text-lg text-gray-800 font-bold">You receive payment <strong className="text-green-600">immediately</strong> (not 90 days later)</p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-green-600">4</span>
+                      <span className="text-lg font-bold text-green-600">4</span>
                     </div>
                     <p className="text-lg text-gray-800 font-bold">You know <strong className="text-green-600">exactly which fan</strong> streamed and <strong className="text-green-600">exactly how much</strong> they paid</p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-lg font-black text-green-600">5</span>
+                      <span className="text-lg font-bold text-green-600">5</span>
                     </div>
                     <p className="text-lg text-gray-800 font-bold">Boptone takes a <strong className="text-green-600">small platform fee</strong> (7% on Pro tier, 4% on Label tier)</p>
                   </div>
                 </div>
                 <div className="mt-8 p-6 bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl border-4 border-green-300">
-                  <p className="text-xl font-black text-green-600">Result: 1,000 streams = $50-250+ (10-100x more)</p>
+                  <p className="text-xl font-bold text-green-600">Result: 1,000 streams = $50-250+ (10-100x more)</p>
                 </div>
               </CardContent>
             </Card>
@@ -208,7 +208,7 @@ export default function BAP() {
       <section className="py-32 bg-gradient-to-br from-purple-50 via-white to-blue-50">
         <div className="container mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl lg:text-7xl font-black mb-8">
+            <h2 className="text-6xl lg:text-7xl font-bold mb-8">
               Fans Control
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
@@ -224,28 +224,28 @@ export default function BAP() {
           <div className="grid md:grid-cols-4 gap-6 max-w-7xl mx-auto mb-16">
             <Card className="rounded-3xl border-4 border-gray-300 shadow-xl hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-black text-gray-600 mb-4">$0.01</div>
+                <div className="text-6xl font-bold text-gray-600 mb-4">$0.01</div>
                 <div className="text-xl font-bold mb-3">Budget Listener</div>
                 <div className="text-lg text-gray-600 font-medium">1,000 streams = $10</div>
               </CardContent>
             </Card>
             <Card className="rounded-3xl border-4 border-blue-500 shadow-2xl bg-gradient-to-br from-blue-50 to-blue-100 hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-black text-blue-600 mb-4">$0.05</div>
+                <div className="text-6xl font-bold text-blue-600 mb-4">$0.05</div>
                 <div className="text-xl font-bold mb-3">Average Fan</div>
                 <div className="text-lg text-gray-700 font-medium">1,000 streams = $50</div>
               </CardContent>
             </Card>
             <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-purple-100 hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-black text-purple-600 mb-4">$0.25</div>
+                <div className="text-6xl font-bold text-purple-600 mb-4">$0.25</div>
                 <div className="text-xl font-bold mb-3">Superfan</div>
                 <div className="text-lg text-gray-700 font-medium">1,000 streams = $250</div>
               </CardContent>
             </Card>
             <Card className="rounded-3xl border-4 border-orange-500 shadow-2xl bg-gradient-to-br from-orange-50 to-orange-100 hover:scale-105 transition-transform">
               <CardContent className="p-8 text-center">
-                <div className="text-6xl font-black text-orange-600 mb-4">$1.00+</div>
+                <div className="text-6xl font-bold text-orange-600 mb-4">$1.00+</div>
                 <div className="text-xl font-bold mb-3">Patron</div>
                 <div className="text-lg text-gray-700 font-medium">100 streams = $100+</div>
               </CardContent>
@@ -260,11 +260,11 @@ export default function BAP() {
                     <TrendingUp className="h-8 w-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-3xl font-black mb-6">Real Earnings Comparison</h3>
+                    <h3 className="text-3xl font-bold mb-6">Real Earnings Comparison</h3>
                     <div className="space-y-4 text-xl">
-                      <p className="font-medium"><strong className="text-gray-900">Traditional Streaming:</strong> 10,000 streams × $0.004 = <span className="text-red-600 font-black text-2xl">$40</span></p>
-                      <p className="font-medium"><strong className="text-gray-900">BAP (Average Fan):</strong> 10,000 streams × $0.05 = <span className="text-green-600 font-black text-2xl">$500</span></p>
-                      <p className="font-medium"><strong className="text-gray-900">BAP (Superfan Mix):</strong> 5,000 × $0.05 + 5,000 × $0.25 = <span className="text-green-600 font-black text-2xl">$1,500</span></p>
+                      <p className="font-medium"><strong className="text-gray-900">Traditional Streaming:</strong> 10,000 streams × $0.004 = <span className="text-red-600 font-bold text-2xl">$40</span></p>
+                      <p className="font-medium"><strong className="text-gray-900">BAP (Average Fan):</strong> 10,000 streams × $0.05 = <span className="text-green-600 font-bold text-2xl">$500</span></p>
+                      <p className="font-medium"><strong className="text-gray-900">BAP (Superfan Mix):</strong> 5,000 × $0.05 + 5,000 × $0.25 = <span className="text-green-600 font-bold text-2xl">$1,500</span></p>
                     </div>
                   </div>
                 </div>
@@ -278,7 +278,7 @@ export default function BAP() {
       <section className="py-32 bg-gradient-to-br from-gray-900 to-black text-white">
         <div className="container mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl lg:text-7xl font-black mb-8">
+            <h2 className="text-6xl lg:text-7xl font-bold mb-8">
               Transparent
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
@@ -297,7 +297,7 @@ export default function BAP() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 shadow-lg">
                   <Wallet className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-black mb-4 text-white">Fan Wallet</h3>
+                <h3 className="text-3xl font-bold mb-4 text-white">Fan Wallet</h3>
                 <p className="text-gray-300 mb-6 text-lg font-medium leading-relaxed">
                   Fans load their wallet once, stream unlimited music. Set your own stream value. Top up anytime.
                 </p>
@@ -314,7 +314,7 @@ export default function BAP() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-6 shadow-lg">
                   <ArrowDownUp className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-black mb-4 text-white">Instant Transfer</h3>
+                <h3 className="text-3xl font-bold mb-4 text-white">Instant Transfer</h3>
                 <p className="text-gray-300 mb-6 text-lg font-medium leading-relaxed">
                   When a fan streams your song, payment transfers instantly from their wallet to yours. No delays.
                 </p>
@@ -331,7 +331,7 @@ export default function BAP() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center mb-6 shadow-lg">
                   <DollarSign className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-3xl font-black mb-4 text-white">Artist Wallet</h3>
+                <h3 className="text-3xl font-bold mb-4 text-white">Artist Wallet</h3>
                 <p className="text-gray-300 mb-6 text-lg font-medium leading-relaxed">
                   Receive payments instantly. Withdraw anytime. See exactly which fans paid and how much.
                 </p>
@@ -350,7 +350,7 @@ export default function BAP() {
       <section className="py-32 bg-gradient-to-br from-white to-gray-50">
         <div className="container mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl lg:text-7xl font-black mb-8">
+            <h2 className="text-6xl lg:text-7xl font-bold mb-8">
               Why BAP
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">
@@ -413,7 +413,7 @@ export default function BAP() {
                   <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${benefit.gradient} flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform`}>
                     <benefit.icon className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="font-black text-2xl mb-4">{benefit.title}</h3>
+                  <h3 className="font-bold text-2xl mb-4">{benefit.title}</h3>
                   <p className="text-gray-700 text-lg font-medium leading-relaxed">{benefit.description}</p>
                 </CardContent>
               </Card>
@@ -426,7 +426,7 @@ export default function BAP() {
       <section className="py-32 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl lg:text-7xl font-black mb-4">
+            <h2 className="text-6xl lg:text-7xl font-bold mb-4">
               Common
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
@@ -511,7 +511,7 @@ export default function BAP() {
         <div className="container mx-auto">
           <Card className="rounded-3xl max-w-5xl mx-auto bg-white border-4 border-white shadow-2xl">
             <CardContent className="p-16 text-center">
-              <h2 className="text-5xl lg:text-6xl font-black mb-8">
+              <h2 className="text-5xl lg:text-6xl font-bold mb-8">
                 Ready to Earn
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">

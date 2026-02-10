@@ -114,7 +114,7 @@ export default function MyMusic() {
       <div className="space-y-12">
         {/* Revolutionary Header */}
         <div>
-          <h1 className="text-6xl font-black tracking-tight leading-none mb-4 text-foreground">
+          <h1 className="text-6xl font-bold tracking-tight leading-none mb-4 text-foreground">
             Your
             <br />
             Releases.
@@ -161,7 +161,7 @@ export default function MyMusic() {
 
             <div className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="audio-file" className="text-lg font-black text-gray-900">Audio File</Label>
+                <Label htmlFor="audio-file" className="text-lg font-bold text-gray-900">Audio File</Label>
                 <div className="flex items-center gap-3">
                   <Input
                     id="audio-file"
@@ -182,7 +182,7 @@ export default function MyMusic() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="title" className="text-lg font-black text-gray-900">Title</Label>
+                <Label htmlFor="title" className="text-lg font-bold text-gray-900">Title</Label>
                 <Input
                   id="title"
                   value={title}
@@ -193,7 +193,7 @@ export default function MyMusic() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="description" className="text-lg font-black text-gray-900">Description (Optional)</Label>
+                <Label htmlFor="description" className="text-lg font-bold text-gray-900">Description (Optional)</Label>
                 <Textarea
                   id="description"
                   value={description}
@@ -248,10 +248,10 @@ export default function MyMusic() {
                             <Music className="h-8 w-8 text-white" />
                           </div>
                           <div>
-                            <h3 className="text-2xl font-black text-gray-900">{track.title}</h3>
+                            <h3 className="text-2xl font-bold text-gray-900">{track.title}</h3>
                             <div className="flex items-center gap-4 text-lg text-gray-600 font-bold mt-1">
                               {track.genre && (
-                                <Badge className="rounded-full border-2 border-purple-500 bg-purple-50 text-purple-600 font-black text-xs px-3 py-1 capitalize">
+                                <Badge className="rounded-full border-2 border-purple-500 bg-purple-50 text-purple-600 font-bold text-xs px-3 py-1 capitalize">
                                   {track.genre}
                                 </Badge>
                               )}
@@ -260,7 +260,7 @@ export default function MyMusic() {
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <Badge className="rounded-full border-2 border-green-500 bg-green-50 text-green-600 font-black text-sm px-4 py-2 capitalize">
+                          <Badge className="rounded-full border-2 border-green-500 bg-green-50 text-green-600 font-bold text-sm px-4 py-2 capitalize">
                             {track.status}
                           </Badge>
                           <DropdownMenu>
@@ -296,12 +296,12 @@ export default function MyMusic() {
                   <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
                     <Music className="h-12 w-12 text-gray-400" />
                   </div>
-                  <h3 className="text-3xl font-black text-gray-900 mb-4">No Tracks Yet</h3>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-4">No Tracks Yet</h3>
                   <p className="text-xl text-gray-600 font-medium mb-8">
                     Upload your first track to claim your profile
                   </p>
                   <Button 
-                    className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-2xl font-black"
+                    className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-2xl font-bold"
                     onClick={() => document.getElementById('audio-file')?.click()}
                   >
                     <UploadIcon className="h-6 w-6 mr-3" />
@@ -321,7 +321,7 @@ export default function MyMusic() {
                 <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg mx-auto mb-6">
                   <Music className="h-10 w-10 text-white" />
                 </div>
-                <h3 className="text-3xl font-black text-gray-900 mb-3">Discover Music</h3>
+                <h3 className="text-3xl font-bold text-gray-900 mb-3">Discover Music</h3>
                 <p className="text-lg text-gray-600 font-bold">
                   Explore trending tracks on BAP
                 </p>
@@ -337,7 +337,7 @@ export default function MyMusic() {
               <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center shadow-lg mx-auto mb-6">
                 <TrendingUp className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-3xl font-black text-gray-900 mb-3">View Analytics</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-3">View Analytics</h3>
               <p className="text-lg text-gray-600 font-bold">
                 Track your performance metrics
               </p>

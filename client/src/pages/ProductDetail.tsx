@@ -67,7 +67,7 @@ export default function ProductDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-2xl font-black">LOADING...</div>
+        <div className="text-2xl font-bold">LOADING...</div>
       </div>
     );
   }
@@ -77,7 +77,7 @@ export default function ProductDetail() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-semibold mb-4">PRODUCT NOT FOUND</h1>
-          <Button onClick={() => setLocation("/shop")} className="rounded-xl border border-gray-200 font-black">
+          <Button onClick={() => setLocation("/shop")} className="rounded-xl border border-gray-200 font-bold">
             <ArrowLeft className="mr-2" />
             BACK TO BOPSHOP
           </Button>
@@ -252,7 +252,7 @@ export default function ProductDetail() {
                           />
                         ))}
                       </div>
-                      <span className="font-black">{review.rating}/5</span>
+                      <span className="font-bold">{review.rating}/5</span>
                     </div>
                   </div>
                   <p className="text-gray-700">{review.content}</p>

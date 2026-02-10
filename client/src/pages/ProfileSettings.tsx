@@ -106,7 +106,7 @@ export default function ProfileSettings() {
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Revolutionary Header with Asymmetric Layout */}
         <div className="mb-12">
-          <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none mb-4">
+          <h1 className="text-5xl lg:text-6xl font-bold tracking-tight leading-none mb-4">
             Make It
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
@@ -123,7 +123,7 @@ export default function ProfileSettings() {
           {/* Color Customization - Purple Card */}
           <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-pink-50">
             <CardHeader className="pb-8">
-              <CardTitle className="flex items-center gap-3 text-3xl font-black">
+              <CardTitle className="flex items-center gap-3 text-3xl font-bold">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
                   <Palette className="h-6 w-6 text-white" />
                 </div>
@@ -136,7 +136,7 @@ export default function ProfileSettings() {
             <CardContent className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
-                  <Label htmlFor="themeColor" className="text-lg font-black text-gray-900">Primary Color</Label>
+                  <Label htmlFor="themeColor" className="text-lg font-bold text-gray-900">Primary Color</Label>
                   <div className="flex gap-4 items-center">
                     <Input
                       id="themeColor"
@@ -159,7 +159,7 @@ export default function ProfileSettings() {
                 </div>
 
                 <div className="space-y-4">
-                  <Label htmlFor="accentColor" className="text-lg font-black text-gray-900">Accent Color</Label>
+                  <Label htmlFor="accentColor" className="text-lg font-bold text-gray-900">Accent Color</Label>
                   <div className="flex gap-4 items-center">
                     <Input
                       id="accentColor"
@@ -184,17 +184,17 @@ export default function ProfileSettings() {
 
               {/* Color Preview - Bold Card */}
               <div className="p-8 rounded-3xl border-4 border-white bg-white shadow-xl" style={{ backgroundColor: `${themeColor}10` }}>
-                <h3 className="text-3xl font-black mb-3" style={{ color: themeColor }}>
+                <h3 className="text-3xl font-bold mb-3" style={{ color: themeColor }}>
                   Preview Heading
                 </h3>
                 <p className="text-gray-600 mb-6 font-medium text-lg">
                   This is how your profile will look with the selected colors.
                 </p>
                 <div className="flex gap-4">
-                  <Button className="rounded-full text-lg px-8 py-6 shadow-xl font-black" style={{ backgroundColor: themeColor }}>
+                  <Button className="rounded-full text-lg px-8 py-6 shadow-xl font-bold" style={{ backgroundColor: themeColor }}>
                     Primary Button
                   </Button>
-                  <Button className="rounded-full text-lg px-8 py-6 border-4 shadow-xl font-black" variant="outline" style={{ borderColor: accentColor, color: accentColor }}>
+                  <Button className="rounded-full text-lg px-8 py-6 border-4 shadow-xl font-bold" variant="outline" style={{ borderColor: accentColor, color: accentColor }}>
                     Accent Button
                   </Button>
                 </div>
@@ -205,7 +205,7 @@ export default function ProfileSettings() {
           {/* Layout Options - Blue Card */}
           <Card className="rounded-3xl border-4 border-blue-500 shadow-2xl bg-gradient-to-br from-blue-50 to-indigo-50">
             <CardHeader className="pb-8">
-              <CardTitle className="flex items-center gap-3 text-3xl font-black">
+              <CardTitle className="flex items-center gap-3 text-3xl font-bold">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
@@ -217,7 +217,7 @@ export default function ProfileSettings() {
             </CardHeader>
             <CardContent className="space-y-8">
               <div className="space-y-4">
-                <Label htmlFor="layoutStyle" className="text-lg font-black text-gray-900">Layout</Label>
+                <Label htmlFor="layoutStyle" className="text-lg font-bold text-gray-900">Layout</Label>
                 <Select value={layoutStyle} onValueChange={(value) => setLayoutStyle(value as "default" | "minimal" | "grid")}>
                   <SelectTrigger id="layoutStyle" className="rounded-2xl border-2 border-blue-300 text-lg font-medium h-14">
                     <SelectValue />
@@ -236,7 +236,7 @@ export default function ProfileSettings() {
               </div>
 
               <div className="space-y-4">
-                <Label htmlFor="fontFamily" className="text-lg font-black text-gray-900">Font Family</Label>
+                <Label htmlFor="fontFamily" className="text-lg font-bold text-gray-900">Font Family</Label>
                 <Select value={fontFamily} onValueChange={setFontFamily}>
                   <SelectTrigger id="fontFamily" className="rounded-2xl border-2 border-blue-300 text-lg font-medium h-14">
                     <SelectValue />
@@ -267,7 +267,7 @@ export default function ProfileSettings() {
                     <Save className="h-8 w-8 text-white" />
                   )}
                 </div>
-                <h3 className="text-2xl font-black text-gray-900 mb-2">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   {updateProfile.isPending ? "Saving..." : "Save Changes"}
                 </h3>
                 <p className="text-base text-gray-600 font-medium">
@@ -284,7 +284,7 @@ export default function ProfileSettings() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg mx-auto mb-6">
                   <Eye className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-black text-gray-900 mb-2">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   Preview Profile
                 </h3>
                 <p className="text-base text-gray-600 font-medium">

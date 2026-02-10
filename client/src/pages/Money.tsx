@@ -213,7 +213,7 @@ export default function Money() {
                           onChange={(e) => setLoanAmount(e.target.value)}
                           placeholder="Enter amount"
                         />
-                        <Button className="rounded-full rounded-xl font-black" onClick={handleApplyForLoan}
+                        <Button className="rounded-full rounded-xl font-bold" onClick={handleApplyForLoan}
                           disabled={applyForLoanMutation.isPending}
                           style={{ backgroundColor: '#4285F4' }}
                         >
