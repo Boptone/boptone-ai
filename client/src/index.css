@@ -55,6 +55,9 @@ html {
 }
 
 :root {
+  /* Force light mode - override browser dark mode */
+  color-scheme: light only;
+  
   /* Future-Forward Design System - Inspired by Brex */
   /* 90% Grayscale + 10% Brand Color Strategy */
   
@@ -185,6 +188,9 @@ html {
     font-feature-settings: 'cv11', 'ss01';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Force light mode colors explicitly */
+    background-color: white !important;
+    color: #111827 !important;
   }
   
   /* Typography Scale - Brex-inspired */
