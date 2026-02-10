@@ -44,8 +44,10 @@ export function ThemeProvider({
     
     if (actualTheme === "dark") {
       root.classList.add("dark");
+      root.classList.remove("light");
     } else {
       root.classList.remove("dark");
+      root.classList.add("light");
     }
 
     if (switchable) {

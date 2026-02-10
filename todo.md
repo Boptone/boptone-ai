@@ -1586,4 +1586,10 @@ Design System Rules:
 ## Restore Original Hero Text (User Request)
 - [x] Restore rotating hero text: "Automate Your Tone / Create Your Tone / Own Your Tone"
 - [x] Implement text rotation animation (3-second intervals with fade effect)
-- [ ] Save checkpoint after restoration
+- [x] Save checkpoint after restoration
+
+## Fix Dark Mode Override Issue (User Report)
+- [x] Diagnose why browser is forcing dark mode despite defaultTheme="light"
+- [x] Update ThemeProvider to force light mode and prevent system override
+- [x] Test that light mode displays correctly with white background
+- [ ] Save checkpoint after fix
