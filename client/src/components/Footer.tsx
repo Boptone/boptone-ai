@@ -142,16 +142,11 @@ export default function Footer() {
 
         {/* Large Centered Logo - Mobile Optimized */}
         <div className="flex justify-center mb-8 md:mb-12">
-          <div 
-            className="text-white font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight"
-            style={{
-              fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif',
-              letterSpacing: '-0.05em',
-              fontWeight: 900
-            }}
-          >
-            BOPTONE
-          </div>
+          <img 
+            src="/boptone-logo.png" 
+            alt="Boptone" 
+            className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto"
+          />
         </div>
       </div>
 

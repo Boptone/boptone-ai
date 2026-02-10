@@ -1541,3 +1541,11 @@ Design System Rules:
 - [x] Apply approved copy changes to Privacy page (5 changes: monitoring, section title, algorithms, marketing, decision-making)
 - [x] Apply approved copy changes to Terms page (6 changes: service definition, smart tools, risk assessment, IP protection, automated tools, recommendations)
 - [x] Test updated site and save checkpoint (dev server running, all 14 copy changes applied successfully)
+
+## Logo Replacement (User Request)
+- [x] Restart dev server
+- [x] Copy new Boptone logo to project public directory (saved as /client/public/boptone-logo.png)
+- [x] Update navigation component with properly sized logo (web: h-8, mobile: h-6)
+- [x] Update footer component with larger logo sizing (web: h-20, mobile: h-10, responsive scaling sm:h-12 md:h-16 lg:h-20)
+- [x] Test responsive sizing on web and mobile viewports (logo displays perfectly in nav and footer with proper scaling)
+- [ ] Save checkpoint after logo replacement complete

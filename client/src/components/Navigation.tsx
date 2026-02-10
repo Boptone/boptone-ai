@@ -33,7 +33,11 @@ export function Navigation() {
         {/* Logo - Flush Left */}
         <Link href="/">
           <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
-            <span className="text-6xl font-black" style={{ fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif', letterSpacing: '-0.05em' }}>BOPTONE</span>
+            <img 
+              src="/boptone-logo.png" 
+              alt="Boptone" 
+              className="h-6 md:h-8 w-auto"
+            />
           </div>
         </Link>
 
