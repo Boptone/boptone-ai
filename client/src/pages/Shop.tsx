@@ -36,7 +36,7 @@ export default function Shop() {
     : products;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-pink-50">
+    <div className="min-h-screen bg-white">
       {/* Revolutionary Header with Asymmetric Layout */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
@@ -45,7 +45,7 @@ export default function Shop() {
             <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
               Support
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600">
+              <span className="bg-primary">
                 Creators
               </span>
               <span className="text-black">.</span>
@@ -56,13 +56,13 @@ export default function Shop() {
             {user && (
               <Button 
                 onClick={() => setLocation("/cart")}
-                className="rounded-full text-xl px-10 py-7 bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-700 hover:to-pink-700 shadow-2xl font-bold relative"
+                className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 shadow-2xl font-bold relative"
                 size="lg"
               >
                 <ShoppingCart className="mr-3 h-6 w-6" />
                 View Cart
                 {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 rounded-full border-4 border-white bg-green-500 text-white font-bold text-lg px-3 py-1">
+                  <Badge className="absolute -top-2 -right-2 rounded-full border-4 border-white bg-green-500 text-gray-700 font-bold text-lg px-3 py-1">
                     {cartItemCount}
                   </Badge>
                 )}
@@ -71,12 +71,12 @@ export default function Shop() {
           </div>
 
           {/* Right: Stats Card */}
-          <Card className="rounded-3xl border-4 border-orange-500 shadow-2xl bg-gradient-to-br from-orange-50 to-pink-50">
+          <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg">
-                    <span className="text-3xl font-bold text-white">90%</span>
+                  <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center shadow-lg">
+                    <span className="text-3xl font-bold text-gray-700">90%</span>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-gray-900">To Artists</div>
@@ -84,8 +84,8 @@ export default function Shop() {
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center shadow-lg">
-                    <Package className="h-8 w-8 text-white" />
+                  <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center shadow-lg">
+                    <Package className="h-8 w-8 text-gray-700" />
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-gray-900">Exclusive</div>
@@ -93,8 +93,8 @@ export default function Shop() {
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
-                    <Sparkles className="h-8 w-8 text-white" />
+                  <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center shadow-lg">
+                    <Sparkles className="h-8 w-8 text-gray-700" />
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-gray-900">Authentic</div>
@@ -127,7 +127,7 @@ export default function Shop() {
                 }`}>
                   <Filter className={`h-7 w-7 ${selectedType === null ? 'text-black' : 'text-gray-600'}`} />
                 </div>
-                <h3 className={`text-xl font-bold ${selectedType === null ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`text-xl font-bold ${selectedType === null ? 'text-gray-700' : 'text-gray-900'}`}>
                   All Products
                 </h3>
               </CardContent>
@@ -141,19 +141,19 @@ export default function Shop() {
                 physical: { 
                   border: 'border-blue-500', 
                   bg: 'bg-gradient-to-br from-blue-50 to-indigo-50',
-                  iconBg: 'bg-gradient-to-br from-blue-400 to-indigo-500',
+                  iconBg: 'bg-gray-100',
                   selectedBg: 'bg-gradient-to-br from-blue-600 to-indigo-600'
                 },
                 digital: { 
                   border: 'border-purple-500', 
                   bg: 'bg-gradient-to-br from-purple-50 to-pink-50',
-                  iconBg: 'bg-gradient-to-br from-purple-400 to-pink-500',
+                  iconBg: 'bg-gray-100',
                   selectedBg: 'bg-gradient-to-br from-purple-600 to-pink-600'
                 },
                 experience: { 
                   border: 'border-green-500', 
                   bg: 'bg-gradient-to-br from-green-50 to-emerald-50',
-                  iconBg: 'bg-gradient-to-br from-green-400 to-emerald-500',
+                  iconBg: 'bg-gray-100',
                   selectedBg: 'bg-gradient-to-br from-green-600 to-emerald-600'
                 },
               };
@@ -171,9 +171,9 @@ export default function Shop() {
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg mx-auto mb-4 ${
                       isSelected ? 'bg-white' : colors.iconBg
                     }`}>
-                      <Icon className={`h-7 w-7 ${isSelected ? colors.iconBg.replace('bg-gradient-to-br', 'text').split(' ')[0].replace('bg', 'text') : 'text-white'}`} />
+                      <Icon className={`h-7 w-7 ${isSelected ? colors.iconBg.replace('bg-gradient-to-br', 'text').split(' ')[0].replace('bg', 'text') : 'text-gray-700'}`} />
                     </div>
-                    <h3 className={`text-xl font-bold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-xl font-bold ${isSelected ? 'text-gray-700' : 'text-gray-900'}`}>
                       {type.label}
                     </h3>
                   </CardContent>
@@ -186,7 +186,7 @@ export default function Shop() {
         {/* Product Grid */}
         {isLoading ? (
           <div className="text-center py-24">
-            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-white text-2xl font-bold shadow-xl">
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 text-gray-700 text-2xl font-bold shadow-xl">
               <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
               Loading Products...
             </div>
@@ -227,7 +227,7 @@ export default function Shop() {
                       {product.description}
                     </p>
                     <div className="flex items-center justify-between pt-3">
-                      <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600">
+                      <span className="text-3xl font-bold bg-primary">
                         ${product.price}
                       </span>
                       {product.status === "active" ? (

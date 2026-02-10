@@ -20,9 +20,9 @@ export default function Features() {
         "Reach fans globally",
         "You own everything"
       ],
-      gradient: "from-blue-500/20 to-cyan-500/20",
-      border: "border-blue-500",
-      iconBg: "bg-blue-500/20"
+      gradient: "",
+      border: "border-gray-200",
+      iconBg: "bg-gray-100"
     },
     {
       icon: DollarSign,
@@ -34,9 +34,9 @@ export default function Features() {
         "Monthly payouts",
         "Tax documents included"
       ],
-      gradient: "from-green-500/20 to-emerald-500/20",
-      border: "border-green-500",
-      iconBg: "bg-green-500/20"
+      gradient: "",
+      border: "border-gray-200",
+      iconBg: "bg-gray-100"
     },
     {
       icon: ShoppingBag,
@@ -48,9 +48,9 @@ export default function Features() {
         "Automatic inventory tracking",
         "Sell meet & greets and lessons"
       ],
-      gradient: "from-purple-500/20 to-pink-500/20",
-      border: "border-purple-500",
-      iconBg: "bg-purple-500/20"
+      gradient: "",
+      border: "border-gray-200",
+      iconBg: "bg-gray-100"
     },
     {
       icon: Brain,
@@ -62,9 +62,9 @@ export default function Features() {
         "Marketing ideas",
         "Trend insights"
       ],
-      gradient: "from-orange-500/20 to-red-500/20",
-      border: "border-orange-500",
-      iconBg: "bg-orange-500/20"
+      gradient: "",
+      border: "border-gray-200",
+      iconBg: "bg-gray-100"
     },
     {
       icon: Shield,
@@ -76,9 +76,9 @@ export default function Features() {
         "Monitors YouTube, SoundCloud, etc.",
         "Complete protection history"
       ],
-      gradient: "from-indigo-500/20 to-blue-500/20",
-      border: "border-indigo-500",
-      iconBg: "bg-indigo-500/20"
+      gradient: "",
+      border: "border-gray-200",
+      iconBg: "bg-gray-100"
     },
     {
       icon: BarChart3,
@@ -90,9 +90,9 @@ export default function Features() {
         "Growth charts",
         "Social media tracking"
       ],
-      gradient: "from-teal-500/20 to-cyan-500/20",
-      border: "border-teal-500",
-      iconBg: "bg-teal-500/20"
+      gradient: "",
+      border: "border-gray-200",
+      iconBg: "bg-gray-100"
     }
   ];
 
@@ -100,14 +100,14 @@ export default function Features() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
       
       {/* Hero Section - Asymmetric with massive typography */}
-      <div className="container mx-auto px-4 py-24">
+      <div className="container mx-auto px-4 py-24 bg-white">
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
           {/* Left: Content */}
           <div className="space-y-8">
             <h1 className="text-7xl md:text-8xl font-bold leading-tight">
               Everything
               <br />
-              <span style={{ color: '#4285F4' }}>You Need</span><span className="text-black">.</span>
+              You Need<span className="text-black">.</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
               Upload music, get paid, sell merch, and grow your career—all in one simple platform.
@@ -133,11 +133,11 @@ export default function Features() {
 
           {/* Right: Visual Stats Card */}
           <div className="relative">
-            <div className="rounded-3xl border-4 border-blue-500 bg-gradient-to-br from-blue-100/50 to-purple-100/50 p-12 shadow-2xl animate-pulse">
+            <div className="rounded-3xl border-2 border-gray-200 bg-white p-12">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-                    <Music className="h-10 w-10 text-white" />
+                  <div className="h-20 w-20 rounded-2xl bg-gray-100 flex items-center justify-center">
+                    <Music className="h-10 w-10 text-gray-700" />
                   </div>
                   <div>
                     <div className="text-4xl font-bold">6 Tools</div>
@@ -145,8 +145,8 @@ export default function Features() {
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-                    <DollarSign className="h-10 w-10 text-white" />
+                  <div className="h-20 w-20 rounded-2xl bg-gray-100 flex items-center justify-center">
+                    <DollarSign className="h-10 w-10 text-gray-700" />
                   </div>
                   <div>
                     <div className="text-4xl font-bold">90%</div>
@@ -154,8 +154,8 @@ export default function Features() {
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-                    <Zap className="h-10 w-10 text-white" />
+                  <div className="h-20 w-20 rounded-2xl bg-gray-100 flex items-center justify-center">
+                    <Zap className="h-10 w-10 text-gray-700" />
                   </div>
                   <div>
                     <div className="text-4xl font-bold">100%</div>
@@ -168,8 +168,8 @@ export default function Features() {
         </div>
       </div>
 
-      {/* Features Grid - Bold color-coded cards */}
-      <div className="container mx-auto px-4 py-24">
+      {/* Features Grid - Minimal grayscale cards */}
+      <div className="container mx-auto px-4 py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl md:text-6xl font-bold text-center mb-16">
             Six Powerful Tools<span className="text-black">.</span>
@@ -180,10 +180,10 @@ export default function Features() {
               return (
                 <div 
                   key={index}
-                  className={`rounded-3xl border-4 ${feature.border} bg-gradient-to-br ${feature.gradient} p-8 shadow-xl hover:scale-105 transition-transform duration-300`}
+                  className={`rounded-lg border-2 ${feature.border} bg-white p-8 hover:border-gray-300 transition-colors`}
                 >
-                  <div className={`h-16 w-16 rounded-2xl ${feature.iconBg} flex items-center justify-center mb-6 hover:scale-110 transition-transform`}>
-                    <Icon className="h-8 w-8" />
+                  <div className={`h-16 w-16 rounded-lg ${feature.iconBg} flex items-center justify-center mb-6`}>
+                    <Icon className="h-8 w-8 text-gray-700" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
                   <p className="text-muted-foreground mb-6 leading-relaxed">{feature.description}</p>

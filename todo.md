@@ -1644,4 +1644,16 @@ Design System Rules:
 - [x] Add grayscale depth to My Music page (cards already have white bg)
 - [x] Remove all remaining gradients from Discover page (tabs and buttons)
 - [x] Test all pages for visual consistency
-- [ ] Save checkpoint after typography and grayscale fixes
+- [x] Save checkpoint after typography and grayscale fixes
+
+## Redesign Public-Facing Pages (User Request)
+- [x] Read and analyze Features page current structure
+- [x] Redesign Features page with Brex aesthetic (90% grayscale + 10% turquoise, no gradients)
+- [x] Read and analyze BAP Protocol page current structure
+- [x] Redesign BAP Protocol page with Brex aesthetic
+- [x] Read and analyze BopShop page current structure
+- [x] Redesign BopShop page with Brex aesthetic
+- [x] Read and analyze About page current structure
+- [x] Redesign About page with Brex aesthetic
+- [x] Test all redesigned pages for visual consistency
+- [ ] Save checkpoint after all public pages redesigned

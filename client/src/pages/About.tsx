@@ -11,10 +11,7 @@ export default function About() {
     <div className="min-h-screen">
       
       {/* Hero Section - Revolutionary Asymmetric Layout */}
-      <section className="py-32 bg-gradient-to-br from-purple-50 via-white to-blue-50 relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <section className="py-32 bg-white relative overflow-hidden">
         
         <div className="container mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -24,7 +21,7 @@ export default function About() {
               <h1 className="text-7xl lg:text-8xl font-bold mb-8 leading-none">
                 Built for
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+                <span className="bg-primary">
                   Artists
                 </span>
                 <span className="text-black">.</span>
@@ -33,10 +30,10 @@ export default function About() {
                 You own your music. You own your career. You own your future. No middlemen, no hidden fees, no compromises.
               </p>
               <div className="flex items-center gap-4 flex-wrap">
-                <Button size="lg" className="rounded-full gap-2 text-xl px-10 py-7 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-105" onClick={() => setLocation("/signup")}>
+                <Button size="lg" className="rounded-full gap-2 text-xl px-10 py-7 bg-primary hover:bg-primary/90 shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-105" onClick={() => setLocation("/signup")}>
                   Get Started <ArrowRight className="h-6 w-6" />
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-full text-xl px-10 py-7 border-4 border-black hover:bg-black hover:text-white transition-all hover:scale-105 shadow-xl" onClick={() => setLocation("/contact")}>
+                <Button size="lg" variant="outline" className="rounded-full text-xl px-10 py-7 border-4 border-black hover:bg-black hover:text-gray-700 transition-all hover:scale-105 shadow-xl" onClick={() => setLocation("/contact")}>
                   Contact Us
                 </Button>
               </div>
@@ -44,11 +41,11 @@ export default function About() {
 
             {/* Right: Mission Card */}
             <div className="relative">
-              <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-blue-50 overflow-hidden animate-pulse">
+              <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white overflow-hidden animate-pulse">
                 <CardContent className="p-12">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
-                      <Target className="h-8 w-8 text-white" />
+                    <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center shadow-lg">
+                      <Target className="h-8 w-8 text-gray-700" />
                     </div>
                     <h2 className="text-4xl font-bold">Our Mission</h2>
                   </div>
@@ -66,13 +63,13 @@ export default function About() {
       </section>
 
       {/* Our Values - 3 Color-Coded Cards */}
-      <section className="py-32 bg-gradient-to-br from-white to-gray-50">
+      <section className="py-32 bg-gray-50">
         <div className="container mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-6xl lg:text-7xl font-bold mb-4">
               Our
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+              <span className="text-foreground">
                 Values
               </span>
               <span className="text-black">.</span>
@@ -80,10 +77,10 @@ export default function About() {
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* Blue Card - Artists First */}
-            <Card className="rounded-3xl border-4 border-blue-500 shadow-2xl hover:scale-105 transition-transform">
+            <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl hover:scale-105 transition-transform">
               <CardContent className="p-10">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
-                  <Users className="h-8 w-8 text-white" />
+                <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
+                  <Users className="h-8 w-8 text-gray-700" />
                 </div>
                 <h3 className="text-3xl font-bold mb-4">Artists First</h3>
                 <p className="text-gray-700 text-lg font-medium leading-relaxed">
@@ -93,10 +90,10 @@ export default function About() {
             </Card>
 
             {/* Green Card - Simple & Powerful */}
-            <Card className="rounded-3xl border-4 border-green-500 shadow-2xl hover:scale-105 transition-transform">
+            <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl hover:scale-105 transition-transform">
               <CardContent className="p-10">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
-                  <Zap className="h-8 w-8 text-white" />
+                <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
+                  <Zap className="h-8 w-8 text-gray-700" />
                 </div>
                 <h3 className="text-3xl font-bold mb-4">Simple & Powerful</h3>
                 <p className="text-gray-700 text-lg font-medium leading-relaxed">
@@ -106,10 +103,10 @@ export default function About() {
             </Card>
 
             {/* Purple Card - 100% Transparent */}
-            <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl hover:scale-105 transition-transform">
+            <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl hover:scale-105 transition-transform">
               <CardContent className="p-10">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center mb-6 shadow-lg hover:scale-110 transition-transform">
-                  <Heart className="h-8 w-8 text-white" />
+                  <Heart className="h-8 w-8 text-gray-700" />
                 </div>
                 <h3 className="text-3xl font-bold mb-4">100% Transparent</h3>
                 <p className="text-gray-700 text-lg font-medium leading-relaxed">
@@ -129,7 +126,7 @@ export default function About() {
               <h2 className="text-6xl lg:text-7xl font-bold mb-8 leading-tight">
                 Our
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">
+                <span className="bg-gradient-to-r from-orange-600 to-red-600">
                   Story
                 </span>
                 <span className="text-black">.</span>
@@ -159,7 +156,7 @@ export default function About() {
             <h2 className="text-6xl lg:text-7xl font-bold mb-8">
               What We're
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              <span className="bg-gradient-to-r from-indigo-600 to-purple-600">
                 Building
               </span>
               <span className="text-black">.</span>
@@ -180,7 +177,7 @@ export default function About() {
             </Card>
 
             {/* Purple Card - Established Artists */}
-            <Card className="rounded-3xl border-4 border-purple-500 shadow-2xl bg-gradient-to-br from-purple-50 to-purple-100 hover:scale-105 transition-transform">
+            <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-gradient-to-br from-purple-50 to-purple-100 hover:scale-105 transition-transform">
               <CardContent className="p-12">
                 <h3 className="text-4xl font-bold mb-6 text-purple-600">For Established Artists</h3>
                 <p className="text-xl text-gray-700 leading-relaxed font-medium">
@@ -200,7 +197,7 @@ export default function About() {
               <h2 className="text-5xl lg:text-6xl font-bold mb-8">
                 Join the
                 <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+                <span className="bg-primary">
                   Revolution
                 </span>
                 <span className="text-black">.</span>
@@ -209,10 +206,10 @@ export default function About() {
                 We're launching in 2026. Be one of the first to try Boptone and take control of your music career.
               </p>
               <div className="flex items-center justify-center gap-6 flex-wrap">
-                <Button size="lg" className="rounded-full gap-2 text-2xl px-12 py-8 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-105" onClick={() => setLocation("/signup")}>
+                <Button size="lg" className="rounded-full gap-2 text-2xl px-12 py-8 bg-primary hover:bg-primary/90 shadow-2xl hover:shadow-purple-500/50 transition-all hover:scale-105" onClick={() => setLocation("/signup")}>
                   Get Early Access <ArrowRight className="h-7 w-7" />
                 </Button>
-                <Button size="lg" variant="outline" className="rounded-full text-2xl px-12 py-8 border-4 border-black hover:bg-black hover:text-white transition-all hover:scale-105 shadow-xl" onClick={() => setLocation("/contact")}>
+                <Button size="lg" variant="outline" className="rounded-full text-2xl px-12 py-8 border-4 border-black hover:bg-black hover:text-gray-700 transition-all hover:scale-105 shadow-xl" onClick={() => setLocation("/contact")}>
                   Contact Us
                 </Button>
               </div>
