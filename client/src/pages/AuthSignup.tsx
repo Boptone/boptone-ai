@@ -130,8 +130,8 @@ export default function AuthSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
-      <Card className="rounded-xl w-full max-w-md">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <Card className="rounded-xl w-full max-w-md border-2 border-gray-200 shadow-sm">
         <CardHeader className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Music className="h-8 w-8 text-primary" />

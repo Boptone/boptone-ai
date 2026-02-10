@@ -1735,5 +1735,14 @@ Findings:
 - [x] Remove dark mode toggle icon from Navigation component
 - [x] Update ThemeProvider to lock to light mode (already locked - switchable=false)
 - [x] Test navigation without dark mode toggle
-- [ ] Save checkpoint after dark mode removal
+- [x] Save checkpoint after dark mode removal
+- [x] Push to GitHub
+
+## Redesign Auth-Signup Page (User Request)
+- [x] Find auth-signup page file (AuthSignup.tsx)
+- [x] Analyze current structure and identify gradients/colorful elements
+- [x] Redesign with Brex aesthetic (90% grayscale + 10% turquoise)
+- [x] Apply consistent typography (font-bold already applied)
+- [x] Test signup page design (clean white background with gray-200 border card)
+- [ ] Save checkpoint after redesign
 - [ ] Push to GitHub
