@@ -21,7 +21,7 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full border-b border-border bg-white">
       <div className="container">
         <div className="flex h-16 items-center justify-between">
           {/* Logo - Left */}
