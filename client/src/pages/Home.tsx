@@ -353,6 +353,33 @@ export default function Home() {
               </Card>
             ))}
           </div>
+
+          {/* All Plans Include */}
+          <div className="mt-16 text-center max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              All plans include
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6 text-left">
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="font-bold text-gray-900 mb-2">Data Ownership</h4>
+                <p className="text-sm text-gray-600">
+                  You own your fan data, master recordings, and publishing rights. Export anytime.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="font-bold text-gray-900 mb-2">90% Revenue Share</h4>
+                <p className="text-sm text-gray-600">
+                  Keep 90% of BAP streaming revenue before platform fees. No hidden costs.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="font-bold text-gray-900 mb-2">No Contracts</h4>
+                <p className="text-sm text-gray-600">
+                  Cancel anytime. No long-term commitments. Your music, your terms.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
