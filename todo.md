@@ -263,4 +263,23 @@
 - [x] Check for overflow-hidden on card containers (none found)
 - [x] Update Navigation component to replace About with Pricing
 - [x] Test badge visibility on both pages - pt-12 padding applied
+- [x] Save checkpoint
+
+## Reorder Pricing Tiers & Remove "Most Popular" Badge (User Request)
+
+### Psychology Behind Reordering
+- Use anchoring effect: Enterprise ($149) first makes Pro ($49) look like a steal
+- Natural left-to-right reading flow shows premium first, then accessible options
+- Removes pressure/judgment from "Most Popular" badge
+- Enterprise becomes decoy that makes Pro the obvious choice
+
+### New Order
+- Enterprise (left) → Pro (middle) → Free (right)
+
+### Implementation
+- [x] Reorder tiers array in Signup.tsx (Enterprise, Pro, Free)
+- [x] Remove "Most Popular" badge and related styling
+- [ ] Reorder tiers array in Home.tsx to match
+- [ ] Remove scale-105 effect from Pro tier
+- [ ] Test pricing pages
 - [ ] Save checkpoint

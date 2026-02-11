@@ -93,24 +93,29 @@ export default function Home() {
 
   const tiers = [
     {
-      name: "Free",
-      monthlyPrice: 0,
-      annualPrice: 0,
-      platformFee: "12%",
-      earningCap: "$1,000/month",
-      description: "Build your foundation—collect fans, sell music, grow your audience",
+      name: "Enterprise",
+      monthlyPrice: 149,
+      annualPrice: 124,
+      platformFee: "2%",
+      earningCap: "Unlimited",
+      description: "Advanced features for teams, labels, and artists managing complex operations",
       features: [
-        "BAP streaming (90% artist share)",
-        "Basic profile + 10 tracks",
-        "1GB storage",
-        "Basic analytics",
-        "Tip jar (Kick In)",
-        "E-commerce (3 products max)",
-        "Toney AI (5 questions/month)",
-        "Community support"
+        "Everything in Pro",
+        "Unlimited earnings (no cap)",
+        "2% platform fee (lowest in industry)",
+        "Team accounts (5 seats)",
+        "White-label embeds",
+        "API access",
+        "Advanced tour management",
+        "IP protection tools",
+        "Microloans (up to $50K)",
+        "Healthcare benefits access",
+        "Dedicated account manager",
+        "1-hour support response",
+        "Quarterly strategy sessions",
+        "10% Tone Dividend"
       ],
-      cta: "Get Started",
-      popular: false
+      cta: "Contact Sales"
     },
     {
       name: "Pro",
@@ -134,34 +139,26 @@ export default function Home() {
         "3% Tone Dividend",
         "Priority support (24-hour response)"
       ],
-      cta: "Start Pro",
-      popular: true
+      cta: "Start Pro"
     },
     {
-      name: "Enterprise",
-      monthlyPrice: 149,
-      annualPrice: 124,
-      platformFee: "2%",
-      earningCap: "Unlimited",
-      description: "Advanced features for teams, labels, and artists managing complex operations",
+      name: "Free",
+      monthlyPrice: 0,
+      annualPrice: 0,
+      platformFee: "12%",
+      earningCap: "$1,000/month",
+      description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
-        "Everything in Pro",
-        "Unlimited earnings (no cap)",
-        "2% platform fee (lowest in industry)",
-        "Team accounts (5 seats)",
-        "White-label embeds",
-        "API access",
-        "Advanced tour management",
-        "IP protection tools",
-        "Microloans (up to $50K)",
-        "Healthcare benefits access",
-        "Dedicated account manager",
-        "1-hour support response",
-        "Quarterly strategy sessions",
-        "10% Tone Dividend"
+        "BAP streaming (90% artist share)",
+        "Basic profile + 10 tracks",
+        "1GB storage",
+        "Basic analytics",
+        "Tip jar (Kick In)",
+        "E-commerce (3 products max)",
+        "Toney AI (5 questions/month)",
+        "Community support"
       ],
-      cta: "Contact Sales",
-      popular: false
+      cta: "Get Started"
     }
   ];
 
@@ -293,13 +290,8 @@ export default function Home() {
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
-                className={`relative border-2 ${tier.popular ? 'border-primary shadow-lg scale-105' : 'border-gray-200'} p-8 flex flex-col`}
+                className="relative border-2 border-gray-200 p-8 flex flex-col"
               >
-                {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                    Most Popular
-                  </div>
-                )}
                 <h3 className="text-2xl font-bold mb-2 text-gray-900">{tier.name}</h3>
                 <div className="mb-4">
                   <div className="flex items-baseline gap-1">
@@ -350,7 +342,7 @@ export default function Home() {
                 ) : (
                   <Button
                     onClick={() => window.location.href = getLoginUrl()}
-                    variant={tier.popular ? "default" : "outline"}
+                    variant="outline"
                     size="lg"
                     className="w-full"
                   >
