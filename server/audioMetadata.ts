@@ -78,12 +78,12 @@ export function validateAudioFile(
   fileBuffer: Buffer,
   filename: string,
   maxSizeMB: number = 500
-): { valid: boolean; error?: string } {
+): { isValid: boolean; error?: string; format?: string; mimeType?: string } {
   // Check file size
   const fileSizeMB = fileBuffer.length / (1024 * 1024);
   if (fileSizeMB > maxSizeMB) {
     return {
-      valid: false,
+      isValid: false,
       error: `File size (${fileSizeMB.toFixed(2)}MB) exceeds maximum allowed size (${maxSizeMB}MB)`,
     };
   }
@@ -94,12 +94,25 @@ export function validateAudioFile(
   
   if (!allowedFormats.includes(ext)) {
     return {
-      valid: false,
+      isValid: false,
       error: `File format '${ext}' is not supported. Allowed formats: ${allowedFormats.join(', ')}`,
     };
   }
   
-  return { valid: true };
+  // Map extension to format and MIME type
+  const formatMap: Record<string, { format: string; mimeType: string }> = {
+    '.mp3': { format: 'mp3', mimeType: 'audio/mpeg' },
+    '.wav': { format: 'wav', mimeType: 'audio/wav' },
+    '.flac': { format: 'flac', mimeType: 'audio/flac' },
+    '.m4a': { format: 'm4a', mimeType: 'audio/mp4' },
+    '.aac': { format: 'aac', mimeType: 'audio/aac' },
+    '.ogg': { format: 'ogg', mimeType: 'audio/ogg' },
+    '.wma': { format: 'wma', mimeType: 'audio/x-ms-wma' },
+  };
+  
+  const { format, mimeType } = formatMap[ext] || { format: ext.slice(1), mimeType: 'audio/mpeg' };
+  
+  return { isValid: true, format, mimeType };
 }
 
 /**

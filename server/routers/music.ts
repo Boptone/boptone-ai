@@ -80,7 +80,7 @@ export const musicRouter = router({
         
         // Validate audio file
         const validation = validateAudioFile(audioBuffer, input.audioFileName);
-        if (!validation.valid) {
+        if (!validation.isValid) {
           throw new TRPCError({ code: "BAD_REQUEST", message: validation.error });
         }
         
@@ -428,5 +428,251 @@ export const musicRouter = router({
         totalLikes: 0,
         totalEarnings: 0,
       };
+    }),
+
+  /**
+   * Batch Upload Tracks
+   * Upload multiple tracks at once with shared metadata
+   */
+  batchUploadTracks: protectedProcedure
+    .input(z.object({
+      tracks: z.array(z.object({
+        audioFileBase64: z.string(),
+        audioFileName: z.string(),
+        title: z.string().min(1).max(255),
+      })),
+      
+      // Shared metadata applied to all tracks
+      sharedMetadata: z.object({
+        artist: z.string().optional(),
+        genre: z.string().optional(),
+        mood: z.string().optional(),
+        artworkFileBase64: z.string().optional(),
+        artworkFileName: z.string().optional(),
+      }),
+      
+      // Distribution settings
+      distribution: z.object({
+        distributeToBAP: z.boolean().default(true),
+        platformIds: z.array(z.number()).default([]),
+        releaseDate: z.string().optional(), // ISO date string
+      }),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      const userId = ctx.user.id;
+      const uploadedTracks = [];
+
+      // Upload shared artwork once if provided
+      let sharedArtworkUrl: string | undefined;
+      if (input.sharedMetadata.artworkFileBase64 && input.sharedMetadata.artworkFileName) {
+        const artworkBuffer = Buffer.from(input.sharedMetadata.artworkFileBase64, "base64");
+        const artworkKey = generateArtworkFileKey(userId, input.sharedMetadata.artworkFileName);
+        const artworkResult = await storagePut(artworkKey, artworkBuffer, "image/jpeg");
+        sharedArtworkUrl = artworkResult.url;
+      }
+
+      // Process each track
+      for (const track of input.tracks) {
+        try {
+          // Decode and validate audio file
+          const audioBuffer = Buffer.from(track.audioFileBase64, "base64");
+          const validation = await validateAudioFile(audioBuffer, track.audioFileName);
+          
+          if (!validation.isValid) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: `Invalid audio file: ${track.audioFileName} - ${validation.error}`,
+            });
+          }
+
+          // Extract metadata
+          const metadata = await extractAudioMetadata(audioBuffer, track.audioFileName);
+
+          // Upload audio file to S3
+          const audioKey = generateTrackFileKey(userId, track.audioFileName);
+          const audioResult = await storagePut(audioKey, audioBuffer, validation.mimeType!);
+
+          // Insert track into database
+          const [insertedTrack] = await db.insert(bapTracks).values({
+            artistId: userId,
+            title: track.title,
+            artist: input.sharedMetadata.artist || ctx.user.name || "Unknown Artist",
+            genre: input.sharedMetadata.genre,
+            mood: input.sharedMetadata.mood,
+            audioUrl: audioResult.url,
+            artworkUrl: sharedArtworkUrl,
+            duration: metadata.duration,
+            audioFormat: validation.format,
+            fileSize: audioBuffer.length,
+            status: "draft",
+          }).$returningId();
+
+          const trackId = insertedTrack.id;
+
+          // Handle distribution if BAP is selected
+          if (input.distribution.distributeToBAP) {
+            // Track is already in bapTracks, just update status if releasing immediately
+            if (!input.distribution.releaseDate) {
+              await db.update(bapTracks)
+                .set({ status: "live" })
+                .where(eq(bapTracks.id, trackId));
+            }
+          }
+
+          // Handle third-party distribution
+          if (input.distribution.platformIds.length > 0) {
+            const { trackDistributions } = await import("../../drizzle/schema");
+            
+            for (const platformId of input.distribution.platformIds) {
+              await db.insert(trackDistributions).values({
+                trackId,
+                platformId,
+                status: "pending",
+                releaseDate: input.distribution.releaseDate ? new Date(input.distribution.releaseDate) : null,
+              });
+            }
+          }
+
+          uploadedTracks.push({
+            id: trackId,
+            title: track.title,
+            status: "success",
+          });
+        } catch (error) {
+          uploadedTracks.push({
+            title: track.title,
+            status: "error",
+            error: error instanceof Error ? error.message : "Unknown error",
+          });
+        }
+      }
+
+      return {
+        success: true,
+        uploadedTracks,
+        totalUploaded: uploadedTracks.filter(t => t.status === "success").length,
+        totalFailed: uploadedTracks.filter(t => t.status === "error").length,
+      };
+    }),
+
+  /**
+   * Get Distribution Platforms
+   * Fetch all available third-party streaming platforms
+   */
+  getDistributionPlatforms: protectedProcedure
+    .query(async () => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      const { distributionPlatforms } = await import("../../drizzle/schema");
+      const platforms = await db.select().from(distributionPlatforms).where(eq(distributionPlatforms.isActive, true));
+
+      return platforms;
+    }),
+
+  /**
+   * Get Track Distribution Status
+   * Get distribution status for a specific track across all platforms
+   */
+  getTrackDistribution: protectedProcedure
+    .input(z.object({
+      trackId: z.number(),
+    }))
+    .query(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      const { trackDistributions, distributionPlatforms } = await import("../../drizzle/schema");
+
+      // Verify track ownership
+      const track = await db.select().from(bapTracks)
+        .where(and(eq(bapTracks.id, input.trackId), eq(bapTracks.artistId, ctx.user.id)))
+        .limit(1);
+
+      if (track.length === 0) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Track not found" });
+      }
+
+      // Get distribution status
+      const distributions = await db
+        .select({
+          id: trackDistributions.id,
+          platformName: distributionPlatforms.name,
+          platformSlug: distributionPlatforms.slug,
+          status: trackDistributions.status,
+          platformUrl: trackDistributions.platformUrl,
+          releaseDate: trackDistributions.releaseDate,
+          publishedAt: trackDistributions.publishedAt,
+          totalStreams: trackDistributions.totalStreams,
+          totalEarnings: trackDistributions.totalEarnings,
+        })
+        .from(trackDistributions)
+        .leftJoin(distributionPlatforms, eq(trackDistributions.platformId, distributionPlatforms.id))
+        .where(eq(trackDistributions.trackId, input.trackId));
+
+      return {
+        trackId: input.trackId,
+        distributions,
+      };
+    }),
+
+  /**
+   * Update Track Distribution
+   * Update distribution settings for a track (e.g., add/remove platforms)
+   */
+  updateTrackDistribution: protectedProcedure
+    .input(z.object({
+      trackId: z.number(),
+      platformIds: z.array(z.number()),
+      releaseDate: z.string().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      const { trackDistributions } = await import("../../drizzle/schema");
+
+      // Verify track ownership
+      const track = await db.select().from(bapTracks)
+        .where(and(eq(bapTracks.id, input.trackId), eq(bapTracks.artistId, ctx.user.id)))
+        .limit(1);
+
+      if (track.length === 0) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Track not found" });
+      }
+
+      // Get existing distributions
+      const existing = await db.select().from(trackDistributions)
+        .where(eq(trackDistributions.trackId, input.trackId));
+
+      const existingPlatformIds = existing.map(d => d.platformId);
+
+      // Add new platforms
+      const toAdd = input.platformIds.filter(id => !existingPlatformIds.includes(id));
+      for (const platformId of toAdd) {
+        await db.insert(trackDistributions).values({
+          trackId: input.trackId,
+          platformId,
+          status: "pending",
+          releaseDate: input.releaseDate ? new Date(input.releaseDate) : null,
+        });
+      }
+
+      // Remove platforms no longer selected
+      const toRemove = existingPlatformIds.filter(id => !input.platformIds.includes(id));
+      if (toRemove.length > 0) {
+        await db.delete(trackDistributions)
+          .where(
+            and(
+              eq(trackDistributions.trackId, input.trackId),
+              sql`${trackDistributions.platformId} IN (${toRemove.join(",")})`
+            )
+          );
+      }
+
+      return { success: true };
     }),
 });

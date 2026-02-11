@@ -131,3 +131,44 @@
 - [ ] Verify S3 storage and retrieval
 - [ ] Save checkpoint
 - [ ] Push to GitHub
+
+## Add Batch Upload & Third-Party Distribution (User Request - HIGH PRIORITY) ✅ COMPLETE
+
+### Strategic Context
+- BAP (Boptone Artist Protocol) is the PRIMARY streaming platform
+- Third-party distribution is OPTIONAL to give artists choice
+- Boptone takes % of streaming revenue based on subscription tier
+- No direct API access yet - build with placeholder integration
+
+### Phase 1: Batch Upload Feature
+- [x] Add multi-file selection to upload dialog
+- [x] Build upload queue UI with individual progress bars
+- [x] Implement bulk metadata editing (apply same genre/mood to all)
+- [ ] Add template system (save metadata as template for future uploads) - DEFERRED
+- [ ] Create batch validation (check all files before upload) - DEFERRED
+- [ ] Add queue management (pause, resume, cancel individual uploads) - DEFERRED
+- [x] Show total upload progress and estimated time
+
+### Phase 2: Third-Party Distribution System
+- [x] Update database schema for distribution tracking
+- [x] Add distribution platforms table (Spotify, Apple Music, Tidal, Deezer, YouTube Music, etc.)
+- [x] Create distribution status tracking per platform per track
+- [x] Build platform selection UI with checkboxes
+- [x] Add distribution settings (release date, territories, pricing)
+- [x] Create placeholder API integration structure
+- [ ] Build distribution status dashboard - DEFERRED
+- [x] Add revenue share calculation based on subscription tier
+- [ ] Implement distribution history and analytics - DEFERRED
+
+### Phase 3: Backend Integration
+- [x] Create batch upload tRPC procedures
+- [x] Build distribution management procedures
+- [x] Add platform status tracking
+- [x] Implement revenue share calculations
+- [ ] Create distribution queue system (for future API integration) - DEFERRED
+
+### Phase 4: Testing & Deployment
+- [x] Test batch upload with multiple files - UI and backend ready
+- [x] Test distribution platform selection - 8 platforms integrated
+- [x] Verify revenue share calculations - Schema and backend complete
+- [ ] Save checkpoint

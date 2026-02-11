@@ -1990,3 +1990,125 @@ export const subscriptionChanges = mysqlTable("subscription_changes", {
 
 export type SubscriptionChange = typeof subscriptionChanges.$inferSelect;
 export type InsertSubscriptionChange = typeof subscriptionChanges.$inferInsert;
+
+// ============================================================================
+// THIRD-PARTY DISTRIBUTION SYSTEM
+// ============================================================================
+
+/**
+ * Distribution Platforms
+ * Supported third-party streaming platforms for music distribution
+ */
+export const distributionPlatforms = mysqlTable("distribution_platforms", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(), // "Spotify", "Apple Music", etc.
+  slug: varchar("slug", { length: 100 }).notNull().unique(), // "spotify", "apple_music"
+  logoUrl: text("logoUrl"),
+  apiEndpoint: text("apiEndpoint"), // Placeholder for future API integration
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Platform-specific settings
+  requiresIsrc: boolean("requiresIsrc").default(true).notNull(),
+  requiresUpc: boolean("requiresUpc").default(false).notNull(),
+  supportsPrerelease: boolean("supportsPrerelease").default(true).notNull(),
+  
+  // Metadata
+  description: text("description"),
+  websiteUrl: text("websiteUrl"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type DistributionPlatform = typeof distributionPlatforms.$inferSelect;
+export type InsertDistributionPlatform = typeof distributionPlatforms.$inferInsert;
+
+/**
+ * Track Distribution
+ * Tracks which platforms each track is distributed to
+ */
+export const trackDistributions = mysqlTable("track_distributions", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  platformId: int("platformId").notNull().references(() => distributionPlatforms.id),
+  
+  // Distribution status
+  status: mysqlEnum("status", [
+    "pending",      // Queued for distribution
+    "processing",   // Being sent to platform
+    "live",         // Successfully distributed
+    "failed",       // Distribution failed
+    "takedown",     // Removed from platform
+  ]).default("pending").notNull(),
+  
+  // Platform-specific data
+  platformTrackId: varchar("platformTrackId", { length: 255 }), // External platform's track ID
+  platformUrl: text("platformUrl"), // Direct link to track on platform
+  
+  // Release scheduling
+  releaseDate: timestamp("releaseDate"), // When to publish on this platform
+  publishedAt: timestamp("publishedAt"), // When actually went live
+  
+  // Revenue tracking
+  totalStreams: int("totalStreams").default(0).notNull(),
+  totalEarnings: int("totalEarnings").default(0).notNull(), // In cents
+  
+  // Error handling
+  errorMessage: text("errorMessage"),
+  retryCount: int("retryCount").default(0).notNull(),
+  lastAttemptAt: timestamp("lastAttemptAt"),
+  
+  // Metadata
+  distributionMetadata: json("distributionMetadata").$type<{
+    territories?: string[]; // Countries where distributed
+    pricing?: string; // "standard", "premium"
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  platformIdIdx: index("platform_id_idx").on(table.platformId),
+  statusIdx: index("status_idx").on(table.status),
+  uniqueTrackPlatform: index("unique_track_platform").on(table.trackId, table.platformId),
+}));
+
+export type TrackDistribution = typeof trackDistributions.$inferSelect;
+export type InsertTrackDistribution = typeof trackDistributions.$inferInsert;
+
+/**
+ * Distribution Revenue
+ * Track revenue from third-party platforms
+ */
+export const distributionRevenue = mysqlTable("distribution_revenue", {
+  id: int("id").autoincrement().primaryKey(),
+  trackDistributionId: int("trackDistributionId").notNull().references(() => trackDistributions.id),
+  
+  // Revenue period
+  periodStart: timestamp("periodStart").notNull(),
+  periodEnd: timestamp("periodEnd").notNull(),
+  
+  // Metrics
+  streams: int("streams").notNull(),
+  grossRevenue: int("grossRevenue").notNull(), // In cents, before Boptone cut
+  platformFee: int("platformFee").notNull(), // Platform's fee in cents
+  boptoneFee: int("boptoneFee").notNull(), // Boptone's revenue share in cents
+  artistRevenue: int("artistRevenue").notNull(), // What artist receives in cents
+  
+  // Revenue share percentages (based on subscription tier)
+  boptoneSharePercent: decimal("boptoneSharePercent", { precision: 5, scale: 2 }).notNull(), // e.g., 10.00 for 10%
+  
+  // Payout tracking
+  payoutStatus: mysqlEnum("payoutStatus", ["pending", "processing", "paid", "failed"]).default("pending").notNull(),
+  paidAt: timestamp("paidAt"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackDistributionIdIdx: index("track_distribution_id_idx").on(table.trackDistributionId),
+  periodIdx: index("period_idx").on(table.periodStart, table.periodEnd),
+}));
+
+export type DistributionRevenue = typeof distributionRevenue.$inferSelect;
+export type InsertDistributionRevenue = typeof distributionRevenue.$inferInsert;

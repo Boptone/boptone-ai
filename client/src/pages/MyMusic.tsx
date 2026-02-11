@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import AudioPlayer from "@/components/AudioPlayer";
+import BatchUploadDialog from "@/components/BatchUploadDialog";
 import { toast } from "sonner";
 import { 
   Upload as UploadIcon, 
@@ -99,6 +100,7 @@ export default function MyMusic() {
   
   // Dialog state
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [batchUploadDialogOpen, setBatchUploadDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedTrackId, setSelectedTrackId] = useState<number | null>(null);
   
@@ -324,13 +326,14 @@ export default function MyMusic() {
             </p>
           </div>
           
-          <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-            <DialogTrigger asChild>
-              <Button size="lg" className="gap-2">
-                <UploadIcon className="h-5 w-5" />
-                Upload Track
-              </Button>
-            </DialogTrigger>
+          <div className="flex gap-2">
+            <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+              <DialogTrigger asChild>
+                <Button size="lg" variant="outline" className="gap-2">
+                  <UploadIcon className="h-5 w-5" />
+                  Upload Single Track
+                </Button>
+              </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Upload New Track</DialogTitle>
@@ -607,6 +610,21 @@ export default function MyMusic() {
               </div>
             </DialogContent>
           </Dialog>
+          
+          <Button size="lg" onClick={() => setBatchUploadDialogOpen(true)} className="gap-2">
+            <UploadIcon className="h-5 w-5" />
+            Batch Upload
+          </Button>
+          </div>
+          
+          <BatchUploadDialog
+            open={batchUploadDialogOpen}
+            onOpenChange={setBatchUploadDialogOpen}
+            onUploadComplete={() => {
+              refetchTracks();
+              toast.success('Batch upload complete!');
+            }}
+          />
         </div>
         
         {/* Statistics */}
