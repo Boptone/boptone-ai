@@ -98,12 +98,12 @@ export default function Home() {
       name: "Enterprise",
       monthlyPrice: 149,
       annualPrice: 124,
-      platformFee: "2%",
+      platformFee: "10%",
       description: "Advanced features for teams, labels, and artists managing complex operations",
       features: [
         "Everything in Pro",
-        "2% platform fee (lowest in industry)",
-        "Team accounts (5 seats)",
+        "Keep 90% of all revenue",
+        "Team accounts (10 seats)",
         "White-label embeds",
         "API access",
         "Advanced tour management",
@@ -113,7 +113,7 @@ export default function Home() {
         "Dedicated account manager",
         "1-hour support response",
         "Quarterly strategy sessions",
-        "10% Tone Dividend"
+        "Early access to new features"
       ],
       cta: "Contact Sales"
     },
@@ -121,10 +121,11 @@ export default function Home() {
       name: "Pro",
       monthlyPrice: 49,
       annualPrice: 41,
-      platformFee: "5%",
+      platformFee: "10%",
       description: "Unlimited uploads, third-party distribution, and powerful tools to scale your career",
       features: [
         "Everything in Free",
+        "Keep 90% of all revenue",
         "Unlimited tracks & storage",
         "Third-party distribution",
         "Advanced analytics & fan data",
@@ -135,7 +136,7 @@ export default function Home() {
         "Toney AI unlimited",
         "Image generation (50/month)",
         "Songwriter splits & payouts",
-        "3% Tone Dividend",
+        "Team accounts (3 seats)",
         "Priority support (24-hour response)"
       ],
       cta: "Start Pro"
@@ -144,14 +145,16 @@ export default function Home() {
       name: "Free",
       monthlyPrice: 0,
       annualPrice: 0,
-      platformFee: "12%",
+      platformFee: "10%",
       description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
-        "BAP streaming (90% artist share)",
+        "Keep 90% of all revenue",
+        "Kick In tips: 100% to you",
+        "BAP streaming platform",
+        "Third-party distribution",
         "Basic profile + 10 tracks",
         "1GB storage",
         "Basic analytics",
-        "Tip jar (Kick In)",
         "E-commerce (3 products max)",
         "Toney AI (5 questions/month)",
         "Community support"
@@ -392,30 +395,25 @@ export default function Home() {
                   onClick={() => setFaqOpen(faqOpen === 1 ? null : 1)}
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <span className="font-bold text-gray-900">What's the difference between Free, Pro, and Enterprise?</span>
+                  <span className="font-bold text-gray-900">How does Boptone make money?</span>
                   <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 1 ? 'rotate-180' : ''}`} />
                 </button>
                 {faqOpen === 1 && (
                   <div className="px-6 pb-4 text-sm text-gray-600">
                     <p className="mb-3">
-                      All tiers let you earn unlimited money. The difference is <strong className="text-gray-900">features and platform fees</strong>:
+                      <strong className="text-gray-900">Simple: We keep 10% of everything you earn. You keep 90%.</strong>
                     </p>
-                    <ul className="space-y-3 ml-4">
-                      <li className="flex items-start gap-2">
-                        <span className="font-semibold text-gray-900 min-w-[90px]">Free (12%):</span>
-                        <span>Start building your career with <strong className="text-gray-900">10 tracks, 1GB storage, basic analytics</strong>, and e-commerce (3 products). Perfect for testing Boptone.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="font-semibold text-gray-900 min-w-[90px]">Pro (5%):</span>
-                        <span><strong className="text-gray-900">Unlimited tracks, storage, and products</strong>. Unlock third-party distribution, advanced analytics, fan data export, Printful integration, and unlimited Toney AI.</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="font-semibold text-gray-900 min-w-[90px]">Enterprise (2%):</span>
-                        <span><strong className="text-gray-900">Lowest platform fee + team features</strong>. Get API access, white-label embeds, dedicated account manager, microloans up to $50K, and healthcare benefits.</span>
-                      </li>
-                    </ul>
-                    <p className="mt-3 bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">No earning caps. No money holds.</strong> You can withdraw any amount you've earned, anytime. Upgrade for better features and lower fees, not to access your money.
+                    <p className="mb-3">
+                      This applies to all revenue sources—BAP streaming, third-party streaming (Spotify, Apple Music, etc.), BopShop sales, memberships, sync licensing, and live event tickets.
+                    </p>
+                    <p className="mb-3 bg-gray-50 p-3 rounded-lg">
+                      <strong className="text-gray-900">One exception: Kick In tips.</strong> You keep <strong className="text-gray-900">100% of every tip</strong> (minus only credit card processing: 2.9% + 30¢). We don't take a cut of tips—ever.
+                    </p>
+                    <p className="mb-3">
+                      <strong className="text-gray-900">Why 10%?</strong> Because we're your business partner, not your landlord. We succeed when you succeed. This single fee covers platform infrastructure, security, support, and continuous feature development.
+                    </p>
+                    <p className="bg-gray-50 p-3 rounded-lg">
+                      <strong className="text-gray-900">All tiers pay the same 10%.</strong> Free, Pro, and Enterprise differ in <strong className="text-gray-900">features</strong> (storage, analytics, team seats, support), not fees. Upgrade for capabilities, not to save pennies.
                     </p>
                   </div>
                 )}
@@ -464,33 +462,28 @@ export default function Home() {
                 {faqOpen === 3 && (
                   <div className="px-6 pb-4 text-sm text-gray-600">
                     <p className="mb-3">
-                      Platform fees are simple and transparent. Here's the exact math:
+                      <strong className="text-gray-900">You keep 90 cents of every dollar.</strong> Here's the breakdown:
                     </p>
                     <div className="bg-gray-50 p-4 rounded-lg space-y-3 mb-3">
                       <div>
-                        <p className="font-semibold text-gray-900 mb-1">Step 1: BAP Streaming Revenue</p>
-                        <p>You earn <strong className="text-gray-900">90% of all BAP streaming revenue</strong> (Boptone keeps 10% to run the platform).</p>
+                        <p className="font-semibold text-gray-900 mb-1">BAP Streaming</p>
+                        <p>$1,000 streaming revenue → <strong className="text-gray-900">You keep: $900</strong> (Boptone: $100)</p>
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900 mb-1">Step 2: Platform Fee</p>
-                        <p>We deduct the platform fee from your 90% share based on your plan:</p>
-                        <ul className="mt-2 space-y-1 ml-4">
-                          <li>• <strong className="text-gray-900">Free:</strong> 12% fee → You keep 78% net (90% - 12%)</li>
-                          <li>• <strong className="text-gray-900">Pro:</strong> 5% fee → You keep 85% net (90% - 5%)</li>
-                          <li>• <strong className="text-gray-900">Enterprise:</strong> 2% fee → You keep 88% net (90% - 2%)</li>
-                        </ul>
+                        <p className="font-semibold text-gray-900 mb-1">Third-Party Streaming (Spotify, Apple Music, etc.)</p>
+                        <p>$1,000 streaming revenue → <strong className="text-gray-900">You keep: $900</strong> (Boptone: $100)</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">BopShop Sales (Vinyl, Merch, Digital Downloads)</p>
+                        <p>$100 sale → <strong className="text-gray-900">You keep: $86.80</strong> (Boptone: $10, Stripe: $3.20)</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Kick In Tips (Sacred Exception)</p>
+                        <p>$100 tip → <strong className="text-gray-900">You keep: $96.80</strong> (Boptone: $0, Stripe: $3.20)</p>
                       </div>
                     </div>
-                    <p className="mb-2">
-                      <strong className="text-gray-900">Example:</strong> If fans stream your music and generate $1,000 in BAP revenue:
-                    </p>
-                    <ul className="space-y-1 ml-4 mb-3">
-                      <li>• Free plan: You get $780 ($1,000 × 90% - 12% = $780)</li>
-                      <li>• Pro plan: You get $850 ($1,000 × 90% - 5% = $850)</li>
-                      <li>• Enterprise: You get $880 ($1,000 × 90% - 2% = $880)</li>
-                    </ul>
                     <p className="bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">No hidden fees.</strong> What you see is what you get. Platform fees only apply to BAP streaming—direct sales, tips, and merch have no additional fees beyond payment processing (standard 2.9% + 30¢).
+                      <strong className="text-gray-900">Credit card fees (2.9% + 30¢)</strong> are passed directly to Stripe for physical transactions (sales, tips, memberships). We don't keep any of this—it's a third-party cost.
                     </p>
                   </div>
                 )}

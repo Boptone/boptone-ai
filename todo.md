@@ -408,3 +408,87 @@
 - Pro tier: Unlimited features (tracks, storage, distribution, advanced analytics)
 - Enterprise tier: Team features + lowest platform fee (2%)
 - All tiers: Unlimited earnings, no caps, no holds, no pressure
+
+
+## Implement Final 90/10 Fee Structure (User Request - QUANTUM-LEVEL PRIORITY) 🔥
+
+### Core Philosophy
+**"Keep 90% of everything. Except tips - you keep 100% of those."**
+
+- One simple number across ALL revenue sources (except Kick In tips)
+- Boptone is the artist's business HQ/homestead, NOT a distributor
+- Tier differentiation based on FEATURES, not fees
+- All tiers pay same 10% - fair, transparent, egalitarian
+
+### Fee Structure (Universal 90/10 Split)
+- BAP Streaming: **90% artist / 10% Boptone**
+- Third-Party Streaming (Spotify, Apple, etc.): **90% artist / 10% Boptone**
+- BopShop Sales: **90% artist / 10% Boptone** + 2.9% + 30¢ Stripe fee
+- Fan Memberships: **90% artist / 10% Boptone** + 2.9% + 30¢ Stripe fee
+- **Kick In Tips: 100% artist / 0% Boptone** + 2.9% + 30¢ Stripe fee ONLY (SACRED EXCEPTION)
+- Sync Licensing: **90% artist / 10% Boptone**
+- Live Event Tickets: **90% artist / 10% Boptone** + 2.9% + 30¢ Stripe fee
+
+### Tier Structure (Same 10% fee, different features)
+- **Free:** $0/mo, 10% platform fee, basic features (unlimited uploads, community support)
+- **Pro:** $49/mo, 10% platform fee, advanced features (analytics, priority support, custom domain, 3 team seats)
+- **Enterprise:** $149/mo, 10% platform fee, premium features (API access, white-label, dedicated manager, 10 team seats)
+
+### Implementation Tasks
+- [ ] Update pricing cards to show universal 90/10 split
+- [ ] Remove ALL tier-based fee variations from pricing display
+- [ ] Add prominent "Kick In Tips: You keep 100%" callout
+- [ ] Update tier descriptions to focus on FEATURES, not fee savings
+- [ ] Rewrite FAQ: "How does Boptone make money?"
+  - Answer: "We keep 10% of everything you earn (except tips - you keep 100% of those). Simple, transparent, fair."
+- [ ] Add FAQ: "Why 10%?"
+  - Answer: "Because we're your business partner, not your landlord. We succeed when you succeed."
+- [ ] Add FAQ: "Do you take a cut of tips?"
+  - Answer: "No. You keep 100% of every Kick In tip, minus only credit card processing (2.9% + 30¢). No platform fees."
+- [ ] Update Terms of Service with complete fee breakdown for ALL revenue sources
+- [ ] Add real-world examples for each revenue type (streaming, sales, tips, memberships)
+- [ ] Update "All plans include" section if needed
+- [ ] Add hero messaging: "Keep 90% of everything. Except tips - you keep 100%."
+- [ ] Save checkpoint after all updates
+
+### Messaging (Public-Facing)
+- **Homepage Hero:** "Keep 90% of everything you earn. We keep 10%. Build your entire career in one place."
+- **Pricing Page:** "One simple fee: 10%. No tiers, no tricks, no fine print. You make money, we make money."
+- **Kick In Feature:** "Your fans want to support you directly. We don't take a cut. You keep 100% of every tip (minus only credit card processing)."
+- **FAQ:** "Why 10%? Because we're your business partner, not your landlord."
+
+### Competitive Positioning
+- Record Labels: Take 70-85% → Boptone takes 10%
+- Spotify/Apple: Artist gets 30-50% → Boptone delivers 90%
+- Bandcamp: Takes 15% → Boptone takes 10%
+- Patreon: Takes 5-12% → Boptone takes 0% on tips
+- Managers: Take 15-20% → Boptone takes 10%
+
+### Investor Story
+- 10% gross margin is sustainable and scalable
+- $100M in artist revenue = $10M for Boptone
+- Clear path to profitability
+- Sticky business model (ecosystem lock-in)
+- Network effects (more artists = more fans = more revenue)
+
+
+## Implement Final 90/10 Fee Structure (User Request - CRITICAL) ✅ COMPLETE
+
+### Overview
+- Universal 90/10 split across all revenue sources
+- Sacred exception: Kick In tips = 100% to artist (0% to Boptone)
+- All tiers pay same 10% fee, differentiate on features only
+
+### Implementation Tasks - COMPLETED
+- [x] Update pricing tiers in Home.tsx to show universal 10% platform fee
+- [x] Update pricing tiers in Signup.tsx to show universal 10% platform fee
+- [x] Remove tier-based fee variations (12%, 5%, 2%) from all pricing cards
+- [x] Update tier descriptions to focus on features, not fee savings
+- [x] Add "Keep 90% of all revenue" and "Kick In tips: 100% to you" to Free tier features
+- [x] Rewrite FAQ "How does Boptone make money?" to explain 90/10 rule
+- [x] Rewrite FAQ "How do platform fees work?" with revenue source breakdowns
+- [x] Update Terms of Service section 6.7 with universal 90/10 split
+- [x] Add all revenue sources to TOS (BAP, third-party, BopShop, memberships, sync, tickets)
+- [x] Document Kick In tips exception in TOS
+- [x] Verified no conflicting fee language remains anywhere on site
+- [x] Ready for checkpoint
