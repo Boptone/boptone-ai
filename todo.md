@@ -383,3 +383,28 @@
 - [x] Ensure consistent spacing between all elements (mb-6, mb-3 pattern)
 - [x] Test visual consistency across all three cards
 - [x] Verified in browser - clean, professional appearance achieved
+
+## Remove Earning Caps - Trust-First Pricing (User Request - CRITICAL) ✅
+
+### Issue
+- Current earning caps create predatory "holding money" pressure to upgrade
+- Contradicts core value: artists should never be locked out of their money
+- Damages trust - artists will see this as a scam tactic
+
+### Implementation (Option 1: No Caps) - COMPLETED
+- [x] Remove all earning cap language from pricing tier data (Home.tsx, Signup.tsx)
+- [x] Remove "Earning cap" display from pricing cards
+- [x] Update tier descriptions to focus on features, not limits
+- [x] Rewrite FAQ "What happens when I reach my earning cap?" → Changed to "What's the difference between Free, Pro, and Enterprise?"
+- [x] Remove earning cap language from Terms of Service
+- [x] Increase feature list font from text-sm to text-base to match screenshot
+- [x] Bold key feature terms for clarity in FAQ
+- [x] "All plans include" section already trust-focused (no changes needed)
+- [x] Verified no earning cap language remains anywhere on site
+- [x] Ready for checkpoint
+
+### Trust-First Messaging
+- Free tier: Limited features (10 tracks, 1GB storage, basic analytics)
+- Pro tier: Unlimited features (tracks, storage, distribution, advanced analytics)
+- Enterprise tier: Team features + lowest platform fee (2%)
+- All tiers: Unlimited earnings, no caps, no holds, no pressure

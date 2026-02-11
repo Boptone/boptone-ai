@@ -103,9 +103,9 @@ export default function Terms() {
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.1 Subscription Tiers</h3>
                 <p className="mb-2">Boptone offers the following subscription tiers:</p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li><strong>Free ($0/month):</strong> Build your foundation with basic features, $1,000/month earning cap, 12% platform fee</li>
-                  <li><strong>Pro ($49/month):</strong> Unlimited uploads, third-party distribution, $10,000/month earning cap, 5% platform fee</li>
-                  <li><strong>Enterprise ($149/month):</strong> Advanced features for teams and labels, unlimited earning cap, 2% platform fee</li>
+                  <li><strong>Free ($0/month):</strong> Build your foundation with 10 tracks, 1GB storage, basic analytics, 3 e-commerce products, 12% platform fee</li>
+                  <li><strong>Pro ($49/month):</strong> Unlimited tracks, storage, and products, third-party distribution, advanced analytics, 5% platform fee</li>
+                  <li><strong>Enterprise ($149/month):</strong> All Pro features plus team accounts, API access, white-label embeds, dedicated support, 2% platform fee</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.2 Payment and Billing</h3>
@@ -145,7 +145,7 @@ export default function Terms() {
                   <strong>New Account Holds:</strong> For fraud protection and compliance purposes, payouts from new accounts may be held for up to seven (7) calendar days from the date of your first transaction. After this initial holding period, payouts will process according to your selected schedule.
                 </p>
                 <p className="mb-4">
-                  <strong>Earning Caps and Soft Limits:</strong> Depending on your subscription tier, your account may be subject to monthly earning caps. These caps are "soft limits" that do not prevent you from withdrawing funds. You may withdraw any amount up to your tier's monthly cap at any time, subject to the minimum withdrawal threshold. Earnings that exceed your monthly cap will be held in your account and become available for withdrawal when you upgrade to a higher subscription tier. Your content remains live and accessible to fans regardless of whether you have reached your earning cap.
+                  <strong>Unlimited Earnings:</strong> All subscription tiers allow unlimited earnings. There are no monthly earning caps or holds on your funds. You may withdraw any amount you have earned at any time, subject to the minimum withdrawal threshold of $20. The primary differences between tiers are the available features and the platform fee percentage (12% for Free, 5% for Pro, 2% for Enterprise).
                 </p>
                 <p className="mb-4">
                   <strong>Banking Information:</strong> You are solely responsible for providing accurate and current banking information for payouts. Boptone is not liable for any delays, failed payouts, or losses resulting from incorrect, incomplete, or outdated banking information. If a payout fails due to incorrect information, you must update your banking details before we can reprocess the payout.

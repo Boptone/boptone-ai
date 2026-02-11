@@ -48,11 +48,9 @@ export default function Signup() {
       price: "$149",
       period: "/month",
       platformFee: "2%",
-      earningCap: "Unlimited",
       description: "Advanced features for teams, labels, and artists managing complex operations",
       features: [
         "Everything in Pro",
-        "Unlimited earnings (no cap)",
         "2% platform fee (lowest in industry)",
         "Team accounts (5 seats)",
         "White-label embeds",
@@ -73,7 +71,6 @@ export default function Signup() {
       price: "$49",
       period: "/month",
       platformFee: "5%",
-      earningCap: "$10,000/month",
       description: "Unlimited uploads, third-party distribution, and powerful tools to scale your career",
       features: [
         "Everything in Free",
@@ -97,7 +94,6 @@ export default function Signup() {
       price: "$0",
       period: "/forever",
       platformFee: "12%",
-      earningCap: "$1,000/month",
       description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
         "BAP streaming (90% artist share)",
@@ -189,11 +185,7 @@ export default function Signup() {
                     <span className="text-sm font-bold text-gray-900">{tier.platformFee}</span>
                   </div>
                   
-                  {/* Earning Cap */}
-                  <div className="pb-6 border-b border-gray-200">
-                    <span className="text-sm text-gray-600">Earning cap: </span>
-                    <span className="text-sm font-semibold text-gray-900">{tier.earningCap}</span>
-                  </div>
+
                 </CardHeader>
 
                 <CardContent className="pt-0">
@@ -202,7 +194,7 @@ export default function Signup() {
                     {tier.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                        <span className="text-sm text-gray-700 leading-relaxed">{feature}</span>
+                        <span className="text-base text-gray-700 leading-relaxed">{feature}</span>
                       </li>
                     ))}
                   </ul>

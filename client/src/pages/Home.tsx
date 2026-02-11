@@ -99,11 +99,9 @@ export default function Home() {
       monthlyPrice: 149,
       annualPrice: 124,
       platformFee: "2%",
-      earningCap: "Unlimited",
       description: "Advanced features for teams, labels, and artists managing complex operations",
       features: [
         "Everything in Pro",
-        "Unlimited earnings (no cap)",
         "2% platform fee (lowest in industry)",
         "Team accounts (5 seats)",
         "White-label embeds",
@@ -124,7 +122,6 @@ export default function Home() {
       monthlyPrice: 49,
       annualPrice: 41,
       platformFee: "5%",
-      earningCap: "$10,000/month",
       description: "Unlimited uploads, third-party distribution, and powerful tools to scale your career",
       features: [
         "Everything in Free",
@@ -148,7 +145,6 @@ export default function Home() {
       monthlyPrice: 0,
       annualPrice: 0,
       platformFee: "12%",
-      earningCap: "$1,000/month",
       description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
         "BAP streaming (90% artist share)",
@@ -318,15 +314,9 @@ export default function Home() {
                 <p className="text-base text-gray-600 mb-6 leading-relaxed">{tier.description}</p>
                 
                 {/* Platform Fee Badge */}
-                <div className="mb-3 inline-flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md w-fit">
+                <div className="mb-6 pb-6 border-b border-gray-200 inline-flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md w-fit">
                   <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Platform Fee</span>
                   <span className="text-sm font-bold text-gray-900">{tier.platformFee}</span>
-                </div>
-                
-                {/* Earning Cap */}
-                <div className="mb-6 pb-6 border-b border-gray-200">
-                  <span className="text-sm text-gray-600">Earning cap: </span>
-                  <span className="text-sm font-semibold text-gray-900">{tier.earningCap}</span>
                 </div>
                 
                 {/* Features List */}
@@ -334,7 +324,7 @@ export default function Home() {
                   {tier.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-start gap-3">
                       <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                      <span className="text-sm text-gray-700 leading-relaxed">{feature}</span>
+                      <span className="text-base text-gray-700 leading-relaxed">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -402,30 +392,30 @@ export default function Home() {
                   onClick={() => setFaqOpen(faqOpen === 1 ? null : 1)}
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <span className="font-bold text-gray-900">What happens when I reach my earning cap?</span>
+                  <span className="font-bold text-gray-900">What's the difference between Free, Pro, and Enterprise?</span>
                   <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 1 ? 'rotate-180' : ''}`} />
                 </button>
                 {faqOpen === 1 && (
                   <div className="px-6 pb-4 text-sm text-gray-600">
                     <p className="mb-3">
-                      Earning caps are <strong className="text-gray-900">soft limits</strong>, not payout blocks. Here's exactly what happens:
+                      All tiers let you earn unlimited money. The difference is <strong className="text-gray-900">features and platform fees</strong>:
                     </p>
-                    <ul className="space-y-2 ml-4">
+                    <ul className="space-y-3 ml-4">
                       <li className="flex items-start gap-2">
-                        <span className="font-semibold text-gray-900 min-w-[80px]">Free ($1K):</span>
-                        <span>You can withdraw any amount up to $1,000 anytime. Earnings above $1K are <strong className="text-gray-900">held</strong> (not lost) until you upgrade to Pro.</span>
+                        <span className="font-semibold text-gray-900 min-w-[90px]">Free (12%):</span>
+                        <span>Start building your career with <strong className="text-gray-900">10 tracks, 1GB storage, basic analytics</strong>, and e-commerce (3 products). Perfect for testing Boptone.</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="font-semibold text-gray-900 min-w-[80px]">Pro ($10K):</span>
-                        <span>You can withdraw any amount up to $10,000 anytime. Earnings above $10K are <strong className="text-gray-900">held</strong> until you upgrade to Enterprise.</span>
+                        <span className="font-semibold text-gray-900 min-w-[90px]">Pro (5%):</span>
+                        <span><strong className="text-gray-900">Unlimited tracks, storage, and products</strong>. Unlock third-party distribution, advanced analytics, fan data export, Printful integration, and unlimited Toney AI.</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="font-semibold text-gray-900 min-w-[80px]">Enterprise:</span>
-                        <span>No cap—withdraw unlimited earnings with the lowest 2% platform fee.</span>
+                        <span className="font-semibold text-gray-900 min-w-[90px]">Enterprise (2%):</span>
+                        <span><strong className="text-gray-900">Lowest platform fee + team features</strong>. Get API access, white-label embeds, dedicated account manager, microloans up to $50K, and healthcare benefits.</span>
                       </li>
                     </ul>
                     <p className="mt-3 bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">You're never locked out of your money.</strong> Your music stays live, fans can still stream, and you can access all earnings up to your cap immediately. Upgrade anytime to release held earnings—no penalties, no waiting periods.
+                      <strong className="text-gray-900">No earning caps. No money holds.</strong> You can withdraw any amount you've earned, anytime. Upgrade for better features and lower fees, not to access your money.
                     </p>
                   </div>
                 )}
