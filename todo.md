@@ -283,3 +283,71 @@
 - [ ] Remove scale-105 effect from Pro tier
 - [ ] Test pricing pages
 - [ ] Save checkpoint
+
+## Implement Artist-First Payout System (User Request - CORE VALUE PROPOSITION)
+
+### Strategic Context
+- **Never lock artists out of their earnings** - core mission of Boptone
+- Inspired by Lyft/Uber/Shopify instant payout models
+- Two-tier system: Standard (free) + Instant (1% fee premium)
+- Earning caps are SOFT LIMITS - artists can always withdraw up to cap
+
+### Phase 1: Update FAQ with New Payout Policy
+- [ ] Add new FAQ: "When and how do I get paid?"
+  - Daily/weekly/monthly options (artist's choice)
+  - $20 minimum, next business day (free)
+  - Instant payouts: 1% fee, 1-hour delivery (optional)
+- [ ] Update FAQ: "What happens when I reach my earning cap?"
+  - Clarify caps are SOFT LIMITS
+  - Artists can withdraw ANY amount up to cap ANYTIME
+  - Earnings above cap are HELD (not lost) until upgrade
+  - Never locked out of money below cap
+- [ ] Update FAQ: "How do platform fees work?"
+  - Add payout fee structure (free standard, 1% instant)
+
+### Phase 2: Update Pricing Page Copy
+- [ ] Add payout policy to "All plans include" section
+  - "Flexible payouts: daily, weekly, or monthly"
+  - "$20 minimum, next business day delivery"
+  - "Optional instant payouts (1% fee, 1-hour delivery)"
+- [ ] Update tier descriptions to mention payout flexibility
+- [ ] Add reassurance: "Your earnings are always accessible"
+
+### Phase 3: Create/Update Terms of Service
+- [ ] Add "Payouts and Withdrawals" section to TOS
+  - Payout schedules (daily/weekly/monthly)
+  - Minimum threshold ($20)
+  - Processing times (next business day standard, 1 hour instant)
+  - Fees (free standard, 1% instant)
+  - New account holds (7 days for fraud protection)
+  - Earning caps and soft limit policy
+  - Right to delay/freeze payouts for fraud/chargebacks
+  - Artist responsibility for accurate banking info
+  - Bank processing disclaimers (delays beyond Boptone's control)
+- [ ] Add "Revenue Sharing and Platform Fees" section
+  - 90% artist share of BAP streaming revenue
+  - Platform fee structure (12% Free, 5% Pro, 2% Enterprise)
+  - Payout fee structure (free standard, 1% instant)
+- [ ] Update copyright date to 2026
+- [ ] Add contact email and business location
+
+### Phase 4: Testing & Deployment
+- [ ] Review all FAQ answers for clarity
+- [ ] Review TOS for legal completeness
+- [ ] Test pricing page updates
+- [ ] Save checkpoint
+- [ ] Push to GitHub
+
+
+## Update Payout Policy Implementation Status
+
+### Phase 1: Update FAQ with New Payout Policy
+- [x] Add new FAQ: "When and how do I get paid?"
+- [x] Update FAQ: "What happens when I reach my earning cap?"
+- [x] Update FAQ: "How do platform fees work?"
+
+### Phase 2: Update Terms of Service
+- [x] Add "Payouts and Withdrawals" section (6.6)
+- [x] Add "Revenue Sharing and Platform Fees" section (6.7)
+- [x] Update subscription tier pricing
+- [x] Update effective date to February 11, 2026

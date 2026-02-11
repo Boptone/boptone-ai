@@ -401,24 +401,24 @@ export default function Home() {
                 {faqOpen === 1 && (
                   <div className="px-6 pb-4 text-sm text-gray-600">
                     <p className="mb-3">
-                      When you reach your monthly earning cap, you'll receive a notification to upgrade. Here's what happens on each plan:
+                      Earning caps are <strong className="text-gray-900">soft limits</strong>, not payout blocks. Here's exactly what happens:
                     </p>
                     <ul className="space-y-2 ml-4">
                       <li className="flex items-start gap-2">
                         <span className="font-semibold text-gray-900 min-w-[80px]">Free ($1K):</span>
-                        <span>Additional earnings are held until you upgrade to Pro or Enterprise. Upgrade anytime to release funds immediately.</span>
+                        <span>You can withdraw any amount up to $1,000 anytime. Earnings above $1K are <strong className="text-gray-900">held</strong> (not lost) until you upgrade to Pro.</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-semibold text-gray-900 min-w-[80px]">Pro ($10K):</span>
-                        <span>Additional earnings are held until you upgrade to Enterprise. Upgrade to unlock unlimited earnings.</span>
+                        <span>You can withdraw any amount up to $10,000 anytime. Earnings above $10K are <strong className="text-gray-900">held</strong> until you upgrade to Enterprise.</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="font-semibold text-gray-900 min-w-[80px]">Enterprise:</span>
-                        <span>No cap—earn unlimited revenue with the lowest 2% platform fee.</span>
+                        <span>No cap—withdraw unlimited earnings with the lowest 2% platform fee.</span>
                       </li>
                     </ul>
-                    <p className="mt-3 text-gray-900 font-medium">
-                      💡 Your music stays live and fans can still stream—you just need to upgrade to access earnings above your cap.
+                    <p className="mt-3 bg-gray-50 p-3 rounded-lg">
+                      <strong className="text-gray-900">You're never locked out of your money.</strong> Your music stays live, fans can still stream, and you can access all earnings up to your cap immediately. Upgrade anytime to release held earnings—no penalties, no waiting periods.
                     </p>
                   </div>
                 )}
@@ -494,6 +494,37 @@ export default function Home() {
                     </ul>
                     <p className="bg-gray-50 p-3 rounded-lg">
                       <strong className="text-gray-900">No hidden fees.</strong> What you see is what you get. Platform fees only apply to BAP streaming—direct sales, tips, and merch have no additional fees beyond payment processing (standard 2.9% + 30¢).
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* FAQ Item 4 - New Payout Policy */}
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => setFaqOpen(faqOpen === 4 ? null : 4)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-bold text-gray-900">When and how do I get paid?</span>
+                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 4 ? 'rotate-180' : ''}`} />
+                </button>
+                {faqOpen === 4 && (
+                  <div className="px-6 pb-4 text-sm text-gray-600">
+                    <p className="mb-3">
+                      <strong className="text-gray-900">You control your payout schedule</strong>—choose daily, weekly, or monthly payouts with a $20 minimum.
+                    </p>
+                    <div className="bg-gray-50 p-4 rounded-lg space-y-3 mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Standard Payouts (Free)</p>
+                        <p>Funds arrive the <strong className="text-gray-900">next business day</strong> at no cost. Choose your schedule in settings: daily, weekly, or monthly.</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Instant Payouts (Optional)</p>
+                        <p><strong className="text-gray-900">1% fee</strong> for delivery within <strong className="text-gray-900">1 hour</strong>, available 24/7 including weekends and holidays.</p>
+                      </div>
+                    </div>
+                    <p className="bg-gray-50 p-3 rounded-lg">
+                      <strong className="text-gray-900">Your earnings are always accessible.</strong> Withdraw anytime you have $20 or more in your account. No waiting for quarterly statements or arbitrary payout dates like other platforms.
                     </p>
                   </div>
                 )}

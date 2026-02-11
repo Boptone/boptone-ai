@@ -16,7 +16,7 @@ export default function Terms() {
         <Card>
           <CardContent className="p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
-            <p className="text-muted-foreground mb-8">Effective Date: January 1, 2026</p>
+            <p className="text-muted-foreground mb-8">Effective Date: February 11, 2026</p>
 
             <div className="prose prose-slate dark:prose-invert max-w-none">
               <section className="mb-8">
@@ -103,9 +103,9 @@ export default function Terms() {
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.1 Subscription Tiers</h3>
                 <p className="mb-2">Boptone offers the following subscription tiers:</p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li><strong>Free:</strong> Basic features with limited functionality, suitable for emerging artists</li>
-                  <li><strong>Pro ($29/month):</strong> Full access to all platform features, unlimited revenue tracking, AI advisor, and priority support</li>
-                  <li><strong>Enterprise (Custom Pricing):</strong> White-label solutions, dedicated account management, custom integrations, and advanced reporting for labels and management companies</li>
+                  <li><strong>Free ($0/month):</strong> Build your foundation with basic features, $1,000/month earning cap, 12% platform fee</li>
+                  <li><strong>Pro ($49/month):</strong> Unlimited uploads, third-party distribution, $10,000/month earning cap, 5% platform fee</li>
+                  <li><strong>Enterprise ($149/month):</strong> Advanced features for teams and labels, unlimited earning cap, 2% platform fee</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.2 Payment and Billing</h3>
@@ -130,8 +130,58 @@ export default function Terms() {
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.5 Transaction Fees</h3>
-                <p>
+                <p className="mb-4">
                   Boptone may charge transaction fees for certain services, including merchandise sales, distribution services, and micro-loan processing. These fees will be clearly disclosed before you complete any transaction.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.6 Payouts and Withdrawals</h3>
+                <p className="mb-4">
+                  <strong>Payout Schedules:</strong> You may choose to receive payouts on a daily, weekly, or monthly schedule through your account settings. All payout schedules are subject to a minimum withdrawal amount of $20 USD (or equivalent in your local currency). Standard payouts are processed at no additional cost and typically arrive in your designated bank account or payment method within one (1) business day of the payout request, subject to banking processing times.
+                </p>
+                <p className="mb-4">
+                  <strong>Instant Payouts:</strong> For urgent cash flow needs, you may request instant payouts for a fee of 1% of the payout amount. Instant payouts are delivered within one (1) hour and are available 24/7, including weekends and holidays. Instant payouts are subject to the same $20 minimum threshold and daily volume limits as determined by Boptone in its sole discretion.
+                </p>
+                <p className="mb-4">
+                  <strong>New Account Holds:</strong> For fraud protection and compliance purposes, payouts from new accounts may be held for up to seven (7) calendar days from the date of your first transaction. After this initial holding period, payouts will process according to your selected schedule.
+                </p>
+                <p className="mb-4">
+                  <strong>Earning Caps and Soft Limits:</strong> Depending on your subscription tier, your account may be subject to monthly earning caps. These caps are "soft limits" that do not prevent you from withdrawing funds. You may withdraw any amount up to your tier's monthly cap at any time, subject to the minimum withdrawal threshold. Earnings that exceed your monthly cap will be held in your account and become available for withdrawal when you upgrade to a higher subscription tier. Your content remains live and accessible to fans regardless of whether you have reached your earning cap.
+                </p>
+                <p className="mb-4">
+                  <strong>Banking Information:</strong> You are solely responsible for providing accurate and current banking information for payouts. Boptone is not liable for any delays, failed payouts, or losses resulting from incorrect, incomplete, or outdated banking information. If a payout fails due to incorrect information, you must update your banking details before we can reprocess the payout.
+                </p>
+                <p className="mb-4">
+                  <strong>Payout Delays and Holds:</strong> We reserve the right to delay, suspend, or hold payouts if we suspect fraudulent activity, policy violations, chargebacks, disputes, or other security concerns. We may also hold payouts to comply with legal or regulatory requirements, court orders, or requests from law enforcement. Payouts may be delayed due to factors beyond our control, including but not limited to bank processing times, holidays, weekends, and technical issues with third-party payment processors.
+                </p>
+                <p className="mb-4">
+                  <strong>Currency and Fees:</strong> Payouts are processed in the currency of your bank account or payment method. Currency conversion fees, wire transfer fees, and other banking fees imposed by your financial institution are your sole responsibility. Boptone does not control or receive any portion of these third-party fees.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.7 Revenue Sharing and Platform Fees</h3>
+                <p className="mb-4">
+                  <strong>BAP Streaming Revenue:</strong> When your music is streamed through the Boptone Audio Protocol ("BAP"), you earn ninety percent (90%) of all streaming revenue generated by your content. Boptone retains ten percent (10%) to operate and maintain the platform infrastructure.
+                </p>
+                <p className="mb-4">
+                  <strong>Platform Fees:</strong> From your ninety percent (90%) share of BAP streaming revenue, Boptone deducts a platform fee based on your subscription tier:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Free Tier:</strong> 12% platform fee → You keep 78% net revenue (90% - 12% = 78%)</li>
+                  <li><strong>Pro Tier:</strong> 5% platform fee → You keep 85% net revenue (90% - 5% = 85%)</li>
+                  <li><strong>Enterprise Tier:</strong> 2% platform fee → You keep 88% net revenue (90% - 2% = 88%)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Example Calculation:</strong> If your music generates $1,000 USD in BAP streaming revenue:
+                </p>
+                <ul className="list-disc pl-6 space-y-1 mb-4">
+                  <li>Free Tier: You receive $780 USD ($1,000 × 90% - 12% = $780)</li>
+                  <li>Pro Tier: You receive $850 USD ($1,000 × 90% - 5% = $850)</li>
+                  <li>Enterprise Tier: You receive $880 USD ($1,000 × 90% - 2% = $880)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Direct Sales and Other Revenue:</strong> Platform fees apply only to BAP streaming revenue. Direct sales (music downloads, merchandise, tips, and other fan-to-artist transactions) are subject only to standard payment processing fees (typically 2.9% + $0.30 USD per transaction) charged by third-party payment processors such as Stripe. Boptone does not take a percentage of direct sales revenue beyond covering payment processing costs.
+                </p>
+                <p>
+                  <strong>Third-Party Distribution:</strong> If you choose to distribute your music to third-party platforms (Spotify, Apple Music, etc.) through Boptone, those platforms set their own royalty rates and payment terms. Boptone does not control or receive any portion of revenue from third-party platforms. Any fees for third-party distribution services will be clearly disclosed before you opt in to distribution.
                 </p>
               </section>
 
