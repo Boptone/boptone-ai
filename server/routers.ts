@@ -14,6 +14,7 @@ import { ecommerceRouter } from "./ecommerceRouter";
 import { podRouter } from "./routers/pod";
 import { writerPaymentsRouter } from "./routers/writerPayments";
 import { subscriptionsRouter } from "./routers/subscriptions";
+import { musicRouter } from "./routers/music";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -668,6 +669,9 @@ export const appRouter = router({
 
   // Subscription Management (Upgrade/Downgrade)
   subscriptions: subscriptionsRouter,
+
+  // Music Upload & Management System
+  music: musicRouter,
 });
 
 export type AppRouter = typeof appRouter;
