@@ -19,7 +19,8 @@ import {
   ShoppingBag,
   Calendar,
   Zap,
-  Target
+  Target,
+  ChevronDown
 } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -31,6 +32,7 @@ export default function Home() {
   const [verbIndex, setVerbIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isAnnual, setIsAnnual] = useState(false);
+  const [faqOpen, setFaqOpen] = useState<number | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -377,6 +379,124 @@ export default function Home() {
                 <p className="text-sm text-gray-600">
                   Cancel anytime. No long-term commitments. Your music, your terms.
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Pricing FAQ */}
+          <div className="mt-20 max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+              Pricing Questions
+            </h3>
+            <div className="space-y-4">
+              {/* FAQ Item 1 */}
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => setFaqOpen(faqOpen === 1 ? null : 1)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-bold text-gray-900">What happens when I reach my earning cap?</span>
+                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 1 ? 'rotate-180' : ''}`} />
+                </button>
+                {faqOpen === 1 && (
+                  <div className="px-6 pb-4 text-sm text-gray-600">
+                    <p className="mb-3">
+                      When you reach your monthly earning cap, you'll receive a notification to upgrade. Here's what happens on each plan:
+                    </p>
+                    <ul className="space-y-2 ml-4">
+                      <li className="flex items-start gap-2">
+                        <span className="font-semibold text-gray-900 min-w-[80px]">Free ($1K):</span>
+                        <span>Additional earnings are held until you upgrade to Pro or Enterprise. Upgrade anytime to release funds immediately.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-semibold text-gray-900 min-w-[80px]">Pro ($10K):</span>
+                        <span>Additional earnings are held until you upgrade to Enterprise. Upgrade to unlock unlimited earnings.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-semibold text-gray-900 min-w-[80px]">Enterprise:</span>
+                        <span>No cap—earn unlimited revenue with the lowest 2% platform fee.</span>
+                      </li>
+                    </ul>
+                    <p className="mt-3 text-gray-900 font-medium">
+                      💡 Your music stays live and fans can still stream—you just need to upgrade to access earnings above your cap.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* FAQ Item 2 */}
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => setFaqOpen(faqOpen === 2 ? null : 2)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-bold text-gray-900">Can I upgrade or downgrade my plan?</span>
+                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 2 ? 'rotate-180' : ''}`} />
+                </button>
+                {faqOpen === 2 && (
+                  <div className="px-6 pb-4 text-sm text-gray-600">
+                    <p className="mb-3">
+                      <strong className="text-gray-900">Yes, absolutely.</strong> You can change your plan anytime with zero penalties or long-term commitments.
+                    </p>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Upgrading (Free → Pro → Enterprise):</p>
+                        <p>Takes effect immediately. You'll be charged the prorated amount for the current billing period and unlock all new features instantly.</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Downgrading (Enterprise → Pro → Free):</p>
+                        <p>Takes effect at the end of your current billing period. You keep all features until then, and we'll prorate any refund if applicable.</p>
+                      </div>
+                    </div>
+                    <p className="mt-3 bg-gray-50 p-3 rounded-lg">
+                      <strong className="text-gray-900">Your data, music, and fan relationships stay intact</strong> regardless of plan changes. We never delete your content or lock you out.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* FAQ Item 3 */}
+              <div className="border border-gray-200 rounded-lg">
+                <button
+                  onClick={() => setFaqOpen(faqOpen === 3 ? null : 3)}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                >
+                  <span className="font-bold text-gray-900">How do platform fees work?</span>
+                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 3 ? 'rotate-180' : ''}`} />
+                </button>
+                {faqOpen === 3 && (
+                  <div className="px-6 pb-4 text-sm text-gray-600">
+                    <p className="mb-3">
+                      Platform fees are simple and transparent. Here's the exact math:
+                    </p>
+                    <div className="bg-gray-50 p-4 rounded-lg space-y-3 mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Step 1: BAP Streaming Revenue</p>
+                        <p>You earn <strong className="text-gray-900">90% of all BAP streaming revenue</strong> (Boptone keeps 10% to run the platform).</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-900 mb-1">Step 2: Platform Fee</p>
+                        <p>We deduct the platform fee from your 90% share based on your plan:</p>
+                        <ul className="mt-2 space-y-1 ml-4">
+                          <li>• <strong className="text-gray-900">Free:</strong> 12% fee → You keep 78% net (90% - 12%)</li>
+                          <li>• <strong className="text-gray-900">Pro:</strong> 5% fee → You keep 85% net (90% - 5%)</li>
+                          <li>• <strong className="text-gray-900">Enterprise:</strong> 2% fee → You keep 88% net (90% - 2%)</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p className="mb-2">
+                      <strong className="text-gray-900">Example:</strong> If fans stream your music and generate $1,000 in BAP revenue:
+                    </p>
+                    <ul className="space-y-1 ml-4 mb-3">
+                      <li>• Free plan: You get $780 ($1,000 × 90% - 12% = $780)</li>
+                      <li>• Pro plan: You get $850 ($1,000 × 90% - 5% = $850)</li>
+                      <li>• Enterprise: You get $880 ($1,000 × 90% - 2% = $880)</li>
+                    </ul>
+                    <p className="bg-gray-50 p-3 rounded-lg">
+                      <strong className="text-gray-900">No hidden fees.</strong> What you see is what you get. Platform fees only apply to BAP streaming—direct sales, tips, and merch have no additional fees beyond payment processing (standard 2.9% + 30¢).
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
