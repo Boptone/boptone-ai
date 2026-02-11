@@ -228,4 +228,20 @@
 - [x] Update Signup.tsx with new copy and visible badge (increased padding px-6 py-2, added shadow-lg)
 - [x] Update Home.tsx to match Signup.tsx exactly
 - [x] Test pricing pages - Site running smoothly
+- [x] Save checkpoint
+
+## Fix "Most Popular" Badge Clipping Issue (User Report)
+
+### Problem
+- Badge is getting cut off at the top of the pricing card due to overflow clipping
+
+### Solution
+- Adjust card container to allow badge overflow
+- Move badge positioning or add padding to parent container
+- Ensure badge is fully visible above the card
+
+### Implementation
+- [x] Fix Signup.tsx pricing card overflow (added pt-6 to grid)
+- [x] Fix Home.tsx pricing card overflow (added pt-6 to grid)
+- [x] Test badge visibility - Badge now fully visible with pt-6 padding
 - [ ] Save checkpoint
