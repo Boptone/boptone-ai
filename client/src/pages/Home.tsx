@@ -292,42 +292,49 @@ export default function Home() {
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
-                className="relative border-2 border-gray-200 p-8 flex flex-col"
+                className="relative border-2 border-gray-200 p-8 flex flex-col hover:border-gray-300 transition-colors"
               >
-                <h3 className="text-2xl font-bold mb-2 text-gray-900">{tier.name}</h3>
-                <div className="mb-4">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-bold text-gray-900">
+                {/* Tier Name */}
+                <h3 className="text-2xl font-bold mb-3 text-gray-900">{tier.name}</h3>
+                
+                {/* Pricing */}
+                <div className="mb-6">
+                  <div className="flex items-baseline gap-1 mb-1">
+                    <span className="text-5xl font-bold text-gray-900 tracking-tight">
                       ${currentPrice(tier)}
                     </span>
-                    <span className="text-gray-600">
+                    <span className="text-lg text-gray-500 font-normal">
                       /{isAnnual ? 'mo' : 'month'}
                     </span>
                   </div>
                   {isAnnual && tier.monthlyPrice > 0 && (
-                    <p className="text-sm text-primary font-medium mt-2">
+                    <p className="text-sm text-primary font-medium">
                       Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
                     </p>
                   )}
                 </div>
-                <p className="body-text text-sm mb-4 text-gray-600">{tier.description}</p>
+                
+                {/* Description */}
+                <p className="text-base text-gray-600 mb-6 leading-relaxed">{tier.description}</p>
                 
                 {/* Platform Fee Badge */}
-                <div className="mb-2 inline-flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg w-fit">
-                  <span className="text-sm font-medium text-gray-700">Platform Fee:</span>
+                <div className="mb-3 inline-flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md w-fit">
+                  <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Platform Fee</span>
                   <span className="text-sm font-bold text-gray-900">{tier.platformFee}</span>
                 </div>
                 
                 {/* Earning Cap */}
-                <div className="mb-6 text-sm text-gray-600">
-                  Earning cap: <span className="font-semibold">{tier.earningCap}</span>
+                <div className="mb-6 pb-6 border-b border-gray-200">
+                  <span className="text-sm text-gray-600">Earning cap: </span>
+                  <span className="text-sm font-semibold text-gray-900">{tier.earningCap}</span>
                 </div>
                 
+                {/* Features List */}
                 <ul className="space-y-3 mb-8 flex-grow">
                   {tier.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-start gap-3">
                       <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                      <span className="text-sm text-gray-700">{feature}</span>
+                      <span className="text-sm text-gray-700 leading-relaxed">{feature}</span>
                     </li>
                   ))}
                 </ul>

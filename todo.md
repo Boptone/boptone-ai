@@ -351,3 +351,35 @@
 - [x] Add "Revenue Sharing and Platform Fees" section (6.7)
 - [x] Update subscription tier pricing
 - [x] Update effective date to February 11, 2026
+
+## Clean Up Pricing Card Typography (User Request - HIGH PRIORITY)
+
+### Issue
+- Pricing cards look "wonky and not clean" with inconsistent font sizes and bolding
+- Need line-by-line review of all typography in Enterprise, Pro, and Free tier cards
+
+### Implementation
+- [ ] Audit current pricing card structure in Home.tsx and Signup.tsx
+- [ ] Standardize tier name typography (size, weight, color)
+- [ ] Standardize price typography (size, weight, spacing)
+- [ ] Standardize description typography (size, weight, line-height)
+- [ ] Standardize feature list typography (size, weight, spacing)
+- [ ] Standardize CTA button typography
+- [ ] Ensure consistent spacing between all elements
+- [ ] Test visual consistency across all three cards
+- [ ] Save checkpoint
+
+## Pricing Card Typography Cleanup - COMPLETED ✅
+
+### Implementation Complete
+- [x] Audit current pricing card structure in Home.tsx and Signup.tsx
+- [x] Standardize tier name typography (2xl bold, mb-3)
+- [x] Standardize price typography (5xl bold tracking-tight + lg gray-500 period)
+- [x] Standardize description typography (base size, relaxed leading)
+- [x] Standardize feature list typography (sm with relaxed leading)
+- [x] Standardize platform fee badge (xs uppercase tracking-wide)
+- [x] Add earning cap border separator for visual clarity
+- [x] Add subtle hover states (border-gray-300 transition)
+- [x] Ensure consistent spacing between all elements (mb-6, mb-3 pattern)
+- [x] Test visual consistency across all three cards
+- [x] Verified in browser - clean, professional appearance achieved

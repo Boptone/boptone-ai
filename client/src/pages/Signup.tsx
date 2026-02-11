@@ -160,59 +160,63 @@ export default function Signup() {
             {tiers.map((tier) => (
               <Card
                 key={tier.id}
-                className="relative border-2 border-gray-200"
+                className="relative border-2 border-gray-200 hover:border-gray-300 transition-colors"
               >
-
-                
-                <CardHeader className="pb-8">
-                  <CardTitle className="text-2xl font-bold text-gray-900">
+                <CardHeader className="pb-6">
+                  {/* Tier Name */}
+                  <CardTitle className="text-2xl font-bold text-gray-900 mb-3">
                     {tier.name}
                   </CardTitle>
-                  <div className="mt-4">
-                    <span className="text-5xl font-bold text-gray-900">
-                      {tier.price}
-                    </span>
-                    <span className="text-gray-600">{tier.period}</span>
+                  
+                  {/* Pricing */}
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-1 mb-1">
+                      <span className="text-5xl font-bold text-gray-900 tracking-tight">
+                        {tier.price}
+                      </span>
+                      <span className="text-lg text-gray-500 font-normal">{tier.period}</span>
+                    </div>
                   </div>
-                  <CardDescription className="mt-4 text-base text-gray-600">
+                  
+                  {/* Description */}
+                  <CardDescription className="text-base text-gray-600 mb-6 leading-relaxed">
                     {tier.description}
                   </CardDescription>
                   
                   {/* Platform Fee Badge */}
-                  <div className="mt-4 inline-flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
-                    <span className="text-sm font-medium text-gray-700">
-                      Platform Fee:
-                    </span>
-                    <span className="text-sm font-bold text-gray-900">
-                      {tier.platformFee}
-                    </span>
+                  <div className="mb-3 inline-flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md w-fit">
+                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Platform Fee</span>
+                    <span className="text-sm font-bold text-gray-900">{tier.platformFee}</span>
                   </div>
                   
                   {/* Earning Cap */}
-                  <div className="mt-2 text-sm text-gray-600">
-                    Earning cap: <span className="font-semibold">{tier.earningCap}</span>
+                  <div className="pb-6 border-b border-gray-200">
+                    <span className="text-sm text-gray-600">Earning cap: </span>
+                    <span className="text-sm font-semibold text-gray-900">{tier.earningCap}</span>
                   </div>
                 </CardHeader>
 
-                <CardContent>
+                <CardContent className="pt-0">
+                  {/* Features List */}
+                  <ul className="space-y-3 mb-6">
+                    {tier.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
+                        <span className="text-sm text-gray-700 leading-relaxed">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  {/* CTA Button */}
                   <Button
                     onClick={() => handleTierSelection(tier.id)}
-                    className="w-full mb-6"
+                    className="w-full"
                     variant="outline"
                     size="lg"
                   >
                     {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-
-                  <ul className="space-y-3">
-                    {tier.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-sm text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </CardContent>
               </Card>
             ))}
