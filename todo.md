@@ -40,4 +40,12 @@
 - [x] Add route to App.tsx (/forgot-password)
 - [x] Link from AuthSignup page
 - [x] Test forgot password flow
+- [x] Save checkpoint
+
+## Create Branded Password Reset Email Template (User Request)
+
+- [x] Create HTML email template with Brex-inspired design
+- [x] Create plain text fallback version
+- [x] Create email helper function for sending
+- [x] Create comprehensive README with usage instructions
 - [ ] Save checkpoint
