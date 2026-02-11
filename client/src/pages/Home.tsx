@@ -118,7 +118,7 @@ export default function Home() {
       annualPrice: 41,
       platformFee: "5%",
       earningCap: "$10,000/month",
-      description: "Unlimited uploads, third-party distribution, and advanced tools for serious artists",
+      description: "Unlimited uploads, third-party distribution, and powerful tools to scale your career",
       features: [
         "Everything in Free",
         "Unlimited tracks & storage",
@@ -143,7 +143,7 @@ export default function Home() {
       annualPrice: 124,
       platformFee: "2%",
       earningCap: "Unlimited",
-      description: "Premium tools for established artists, labels, and management companies",
+      description: "Advanced features for teams, labels, and artists managing complex operations",
       features: [
         "Everything in Pro",
         "Unlimited earnings (no cap)",
@@ -296,7 +296,7 @@ export default function Home() {
                 className={`relative border-2 ${tier.popular ? 'border-primary shadow-lg scale-105' : 'border-gray-200'} p-8 flex flex-col`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-sm font-bold">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
                     Most Popular
                   </div>
                 )}

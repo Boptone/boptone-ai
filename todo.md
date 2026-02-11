@@ -213,6 +213,19 @@
 - [x] Test pricing flow end-to-end
 
 ### Phase 5: Documentation & Checkpoint
-- [ ] Create pricing strategy document
-- [ ] Document cost analysis and projections
+- [x] Create pricing strategy document (boptone-pricing-analysis.md)
+- [x] Document cost analysis and projections
+- [x] Save checkpo## Fix Pricing Tier Copy & "Most Popular" Badge Visibility (User Request) ✅ COMPLETEIssues to Fix
+- [ ] "Most Popular" badge is not visible - add background color so it pops
+- [ ] Tier descriptions are not inclusive - rewrite to avoid making anyone feel excluded
+
+### New Inclusive Copy
+- [x] FREE: "Build your foundation—collect fans, sell music, grow your audience"
+- [x] PRO: "Unlimited uploads, third-party distribution, and powerful tools to scale your career"
+- [x] ENTERPRISE: "Advanced features for teams, labels, and artists managing complex operations"
+
+### Implementation
+- [x] Update Signup.tsx with new copy and visible badge (increased padding px-6 py-2, added shadow-lg)
+- [x] Update Home.tsx to match Signup.tsx exactly
+- [x] Test pricing pages - Site running smoothly
 - [ ] Save checkpoint
