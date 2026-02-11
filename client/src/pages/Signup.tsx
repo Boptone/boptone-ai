@@ -15,7 +15,7 @@ export default function Signup() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
   const [, setLocation] = useLocation();
   const [step, setStep] = useState<"tier" | "profile">("tier");
-  const [selectedTier, setSelectedTier] = useState<"free" | "pro" | "label" | "enterprise">("free");
+  const [selectedTier, setSelectedTier] = useState<"free" | "pro" | "enterprise">("free");
   
   const createProfile = trpc.artistProfile.create.useMutation({
     onSuccess: () => {
@@ -44,83 +44,76 @@ export default function Signup() {
   const tiers = [
     {
       id: "free" as const,
-      name: "Creator",
+      name: "Free",
       price: "$0",
       period: "/forever",
       platformFee: "12%",
       earningCap: "$1,000/month",
       description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
-        "3-click upload with AI metadata",
+        "BAP streaming (90% artist share)",
         "Basic profile + 10 tracks",
-        "Earning cap: $1,000/month",
-        "12% platform fee",
+        "1GB storage",
         "Basic analytics",
-        "Kick In tip jar",
+        "Tip jar (Kick In)",
+        "E-commerce (3 products max)",
+        "Toney AI (5 questions/month)",
         "Community support",
       ],
     },
     {
       id: "pro" as const,
       name: "Pro",
-      price: "$39",
+      price: "$49",
       period: "/month",
-      platformFee: "7%",
+      platformFee: "5%",
       earningCap: "$10,000/month",
-      description: "Identify your superfans and build your world around them",
+      description: "Unlimited uploads, third-party distribution, and advanced tools for serious artists",
       features: [
-        "Everything in Creator",
+        "Everything in Free",
         "Unlimited tracks & storage",
-        "Fan Funnel marketing tools",
+        "Third-party distribution (Spotify, Apple Music, Tidal, etc.)",
+        "Advanced analytics & fan data",
         "Smart links with source tracking",
         "Fan data ownership & export",
-        "3% Tone Dividend bonus",
-        "Advanced analytics",
-        "Priority support",
+        "Unlimited e-commerce products",
+        "Printful integration (print-on-demand)",
+        "Toney AI unlimited",
+        "Image generation (50/month)",
+        "Songwriter splits & automated payouts",
+        "3% Tone Dividend (annual cashback)",
+        "Priority support (24-hour response)",
       ],
       popular: true,
     },
     {
-      id: "label" as const,
-      name: "Label",
-      price: "$59",
-      period: "/month",
-      platformFee: "4%",
-      earningCap: "Unlimited",
-      description: "Scale operations and manage multiple artists with team tools",
-      features: [
-        "Everything in Pro",
-        "Unlimited earnings",
-        "4% platform fee",
-        "Team accounts (3 seats)",
-        "White-label embeds",
-        "API access",
-        "Dedicated account manager",
-        "1-hour support response",
-      ],
-    },
-    {
       id: "enterprise" as const,
       name: "Enterprise",
-      price: "Custom",
-      period: "",
-      platformFee: "2.5%",
+      price: "$149",
+      period: "/month",
+      platformFee: "2%",
       earningCap: "Unlimited",
-      description: "Custom solutions for labels managing multiple artist rosters",
+      description: "Premium tools for established artists, labels, and management companies",
       features: [
-        "Everything in Label",
-        "Unlimited earnings",
-        "2.5% platform fee",
-        "10+ team seats",
-        "Custom contract terms",
-        "Onboarding assistance",
-        "24/7 phone support",
+        "Everything in Pro",
+        "Unlimited earnings (no cap)",
+        "2% platform fee (lowest in industry)",
+        "Team accounts (5 seats)",
+        "White-label embeds",
+        "API access",
+        "Advanced tour management",
+        "IP protection tools",
+        "Microloans (up to $50K)",
+        "Healthcare benefits access",
+        "Dedicated account manager",
+        "1-hour support response",
         "Quarterly strategy sessions",
+        "10% Tone Dividend (annual cashback)",
       ],
     },
   ];
 
-  const handleTierSelection = (tier: "free" | "pro" | "label" | "enterprise") => {
+  const handleTierSelection = (tier: "free" | "pro" | "enterprise") => {
     setSelectedTier(tier);
     if (tier === "enterprise") {
       // Redirect to contact sales
@@ -149,189 +142,231 @@ export default function Signup() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-white">
-
-      <div className="container mx-auto px-4 py-12">
-        {step === "tier" ? (
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center space-y-4 mb-12">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900">Choose Your Plan</h1>
-              <p className="text-xl text-gray-600">
-                Start free, upgrade anytime. No credit card required.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {tiers.map((tier) => (
-                <div key={tier.id} className="relative">
-                  {/* Square-Style Card */}
-                  <div className="bg-white border-2 border-gray-200 rounded-xl p-8 h-full flex flex-col shadow-sm">
-                    {/* Header */}
-                    <div className="mb-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-2xl font-bold text-gray-900">{tier.name}</h3>
-                        {tier.popular && (
-                          <span className="inline-block bg-gray-900 text-white px-3 py-1 text-xs font-bold tracking-wide">
-                            BEST VALUE
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-gray-600 text-sm leading-relaxed min-h-[60px]">{tier.description}</p>
-                    </div>
-                    
-                    {/* Divider */}
-                    <div className="border-t border-gray-200 mb-6"></div>
-                    
-                    {/* Huge Pricing */}
-                    <div className="mb-6">
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-4xl md:text-5xl font-bold text-gray-900">
-                          {tier.price}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    {/* CTA Button */}
-                    <Button className="rounded-full w-full mb-8 font-bold"
-                      variant={tier.id === "free" ? "outline" : "default"}
-                      onClick={() => handleTierSelection(tier.id)}
-                    >
-                      {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                    
-                    {/* Platform Fee Section */}
-                    {tier.platformFee && (
-                      <div className="mb-6">
-                        <h4 className="text-sm font-bold mb-3 text-gray-900">Processing fees</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center text-sm">
-                            <span className="text-gray-600">Platform fee</span>
-                            <span className="font-bold text-gray-900">{tier.platformFee}</span>
-                          </div>
-                          <div className="flex justify-between items-center text-sm">
-                            <span className="text-gray-600">Earning cap</span>
-                            <span className="font-bold text-gray-900">{tier.earningCap}</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* What you get Section */}
-                    <div className="flex-1">
-                      <h4 className="text-sm font-bold mb-3 text-gray-900">What you get</h4>
-                      <div className="space-y-2">
-                        {tier.features.map((feature, index) => (
-                          <div key={index} className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2.5">
-                            <Check className="h-4 w-4 text-gray-900 flex-shrink-0" />
-                            <span className="text-sm text-gray-900">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-12 space-y-4">
-              <p className="text-sm text-gray-600">
-                All plans include 14-day Pro trial • Cancel anytime • No credit card required
-              </p>
-            </div>
+  if (step === "tier") {
+    return (
+      <div className="min-h-screen bg-white">
+        {/* Header */}
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6">
+              Choose Your Plan
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Start free, upgrade when you're ready. All plans include BAP streaming with 90% artist revenue share.
+            </p>
           </div>
-        ) : (
-          <div className="max-w-2xl mx-auto">
-            <Card className="border-2 border-gray-200 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-3xl font-bold text-gray-900">Claim Your Profile</CardTitle>
-                <CardDescription className="text-gray-600">
-                  Tell us about yourself to claim your profile with Boptone
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleProfileSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="stageName">Stage Name *</Label>
-                    <Input
-                      id="stageName"
-                      placeholder="Your artist name"
-                      value={profileData.stageName}
-                      onChange={(e) => setProfileData({ ...profileData, stageName: e.target.value })}
-                      required
-                    />
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="genre">Primary Genre *</Label>
-                    <Select
-                      value={profileData.genre}
-                      onValueChange={(value) => setProfileData({ ...profileData, genre: value })}
-                      required
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your genre" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pop">Pop</SelectItem>
-                        <SelectItem value="rock">Rock</SelectItem>
-                        <SelectItem value="hip-hop">Hip-Hop</SelectItem>
-                        <SelectItem value="r&b">R&B</SelectItem>
-                        <SelectItem value="electronic">Electronic</SelectItem>
-                        <SelectItem value="country">Country</SelectItem>
-                        <SelectItem value="jazz">Jazz</SelectItem>
-                        <SelectItem value="classical">Classical</SelectItem>
-                        <SelectItem value="indie">Indie</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+          {/* Pricing Cards */}
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {tiers.map((tier) => (
+              <Card
+                key={tier.id}
+                className={`relative border-2 ${
+                  tier.popular
+                    ? "border-primary shadow-lg scale-105"
+                    : "border-gray-200"
+                }`}
+              >
+                {tier.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-sm font-bold">
+                    Most Popular
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="location">Location</Label>
-                    <Input
-                      id="location"
-                      placeholder="City, Country"
-                      value={profileData.location}
-                      onChange={(e) => setProfileData({ ...profileData, location: e.target.value })}
-                    />
+                )}
+                
+                <CardHeader className="pb-8">
+                  <CardTitle className="text-2xl font-bold text-gray-900">
+                    {tier.name}
+                  </CardTitle>
+                  <div className="mt-4">
+                    <span className="text-5xl font-bold text-gray-900">
+                      {tier.price}
+                    </span>
+                    <span className="text-gray-600">{tier.period}</span>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <textarea
-                      id="bio"
-                      className="w-full min-h-[100px] px-3 py-2 rounded-md border border-input bg-background"
-                      placeholder="Tell us about your music and career..."
-                      value={profileData.bio}
-                      onChange={(e) => setProfileData({ ...profileData, bio: e.target.value })}
-                    />
+                  <CardDescription className="mt-4 text-base text-gray-600">
+                    {tier.description}
+                  </CardDescription>
+                  
+                  {/* Platform Fee Badge */}
+                  <div className="mt-4 inline-flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Platform Fee:
+                    </span>
+                    <span className="text-sm font-bold text-gray-900">
+                      {tier.platformFee}
+                    </span>
                   </div>
-
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-bold mb-2 text-gray-900">Selected Plan: {selectedTier === "free" ? "Free" : "Pro (14-day trial)"}</h4>
-                    <p className="text-sm text-gray-600">
-                      {selectedTier === "free" 
-                        ? "You can upgrade to Pro anytime from your dashboard."
-                        : "Your 14-day Pro trial starts today. No credit card required."}
-                    </p>
+                  
+                  {/* Earning Cap */}
+                  <div className="mt-2 text-sm text-gray-600">
+                    Earning cap: <span className="font-semibold">{tier.earningCap}</span>
                   </div>
+                </CardHeader>
 
-                  <Button className="rounded-full w-full font-bold" type="submit" 
+                <CardContent>
+                  <Button
+                    onClick={() => handleTierSelection(tier.id)}
+                    className="w-full mb-6"
+                    variant={tier.popular ? "default" : "outline"}
                     size="lg"
-                    disabled={createProfile.isPending}
                   >
-                    {createProfile.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Complete Setup
+                    {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </form>
-              </CardContent>
-            </Card>
+
+                  <ul className="space-y-3">
+                    {tier.features.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        )}
+
+          {/* FAQ / Additional Info */}
+          <div className="mt-16 text-center max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              All plans include
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6 text-left">
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="font-bold text-gray-900 mb-2">Data Ownership</h4>
+                <p className="text-sm text-gray-600">
+                  You own your fan data, master recordings, and publishing rights. Export anytime.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="font-bold text-gray-900 mb-2">90% Revenue Share</h4>
+                <p className="text-sm text-gray-600">
+                  Keep 90% of BAP streaming revenue before platform fees. No hidden costs.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-lg">
+                <h4 className="font-bold text-gray-900 mb-2">No Contracts</h4>
+                <p className="text-sm text-gray-600">
+                  Cancel anytime. No long-term commitments. Your music, your terms.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    );
+  }
+
+  // Profile Creation Step
+  return (
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <Card className="w-full max-w-2xl border-2 border-gray-200">
+        <CardHeader>
+          <CardTitle className="text-3xl font-bold text-gray-900">
+            Create Your Artist Profile
+          </CardTitle>
+          <CardDescription className="text-gray-600">
+            Complete your profile to start using Boptone
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleProfileSubmit} className="space-y-6">
+            <div>
+              <Label htmlFor="stageName" className="text-gray-900 font-medium">
+                Stage Name *
+              </Label>
+              <Input
+                id="stageName"
+                value={profileData.stageName}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, stageName: e.target.value })
+                }
+                placeholder="Your artist name"
+                required
+                className="mt-2"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="genre" className="text-gray-900 font-medium">
+                Primary Genre
+              </Label>
+              <Select
+                value={profileData.genre}
+                onValueChange={(value) =>
+                  setProfileData({ ...profileData, genre: value })
+                }
+              >
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="Select a genre" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="hip-hop">Hip Hop</SelectItem>
+                  <SelectItem value="r&b">R&B</SelectItem>
+                  <SelectItem value="pop">Pop</SelectItem>
+                  <SelectItem value="rock">Rock</SelectItem>
+                  <SelectItem value="electronic">Electronic</SelectItem>
+                  <SelectItem value="jazz">Jazz</SelectItem>
+                  <SelectItem value="country">Country</SelectItem>
+                  <SelectItem value="indie">Indie</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="bio" className="text-gray-900 font-medium">
+                Bio
+              </Label>
+              <textarea
+                id="bio"
+                value={profileData.bio}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, bio: e.target.value })
+                }
+                placeholder="Tell fans about yourself..."
+                rows={4}
+                className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="location" className="text-gray-900 font-medium">
+                Location
+              </Label>
+              <Input
+                id="location"
+                value={profileData.location}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, location: e.target.value })
+                }
+                placeholder="City, State/Country"
+                className="mt-2"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={createProfile.isPending}
+            >
+              {createProfile.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating Profile...
+                </>
+              ) : (
+                <>
+                  Create Profile
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </>
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

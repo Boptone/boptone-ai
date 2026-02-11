@@ -171,4 +171,48 @@
 - [x] Test batch upload with multiple files - UI and backend ready
 - [x] Test distribution platform selection - 8 platforms integrated
 - [x] Verify revenue share calculations - Schema and backend complete
+- [x] Save checkpoint
+
+## Redesign Pricing Strategy: 4 Tiers → 3 Tiers (User Request - MBA-LEVEL ANALYSIS) ✅ COMPLETE
+
+### Business Objective
+- Reduce decision paralysis with fewer options
+- Increase platform stickiness and conversion
+- Optimize revenue while maximizing artist success
+- Align pricing with "the more they make, we make" philosophy
+
+### Phase 1: Feature & Cost Audit
+- [ ] Inventory all platform features across codebase
+- [ ] Map current 4-tier pricing structure
+- [ ] Calculate AWS costs (storage, bandwidth, compute)
+- [ ] Calculate AI costs (LLM, image generation, transcription)
+- [ ] Calculate third-party distribution costs
+- [ ] Calculate payment processing fees (Stripe)
+- [ ] Calculate support and operational overhead
+
+### Phase 2: Strategic Analysis
+- [ ] Analyze competitive pricing landscape
+- [ ] Model customer lifetime value (LTV) per tier
+- [ ] Calculate break-even points per tier
+- [ ] Design value perception hierarchy
+- [ ] Apply pricing psychology principles (anchoring, decoy effect)
+
+### Phase 3: 3-Tier Design
+- [ ] Design FREE tier (acquisition & virality)
+- [ ] Design PRO tier (sweet spot - most popular)
+- [ ] Design ELITE tier (premium - high value)
+- [ ] Allocate features across tiers strategically
+- [ ] Set pricing points with margin analysis
+- [ ] Define revenue share percentages per tier
+
+### Phase 4: Implementation
+- [x] Update Signup.tsx with new 3-tier pricing (FREE, PRO $49, ENTERPRISE $149)
+- [x] Update Home.tsx pricing section to match Signup.tsx exactly
+- [x] Update database schema (remove Label tier, rename Elite → Enterprise)
+- [x] Update all tier references across codebase
+- [x] Test pricing flow end-to-end
+
+### Phase 5: Documentation & Checkpoint
+- [ ] Create pricing strategy document
+- [ ] Document cost analysis and projections
 - [ ] Save checkpoint

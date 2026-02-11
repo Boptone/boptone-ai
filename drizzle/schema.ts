@@ -709,7 +709,7 @@ export const subscriptions = mysqlTable("subscriptions", {
   
   // Subscription details
   tier: mysqlEnum("tier", ["free", "pro", "enterprise"]).notNull().default("free"),
-  plan: mysqlEnum("plan", ["creator", "pro", "studio", "label"]).notNull().default("creator"),
+  plan: mysqlEnum("plan", ["free", "pro", "enterprise"]).notNull().default("free"),
   billingCycle: mysqlEnum("billingCycle", ["monthly", "annual"]).notNull().default("monthly"),
   status: mysqlEnum("status", ["active", "canceled", "past_due", "trialing", "incomplete"]).notNull().default("active"),
   
@@ -1976,8 +1976,8 @@ export type InsertWriterPayout = typeof writerPayouts.$inferInsert;
 export const subscriptionChanges = mysqlTable("subscription_changes", {
   id: int("id").autoincrement().primaryKey(),
   subscriptionId: int("subscriptionId").notNull().references(() => subscriptions.id),
-  fromPlan: mysqlEnum("fromPlan", ["creator", "pro", "studio", "label"]).notNull(),
-  toPlan: mysqlEnum("toPlan", ["creator", "pro", "studio", "label"]).notNull(),
+  fromPlan: mysqlEnum("fromPlan", ["free", "pro", "enterprise"]).notNull(),
+  toPlan: mysqlEnum("toPlan", ["free", "pro", "enterprise"]).notNull(),
   fromBillingCycle: mysqlEnum("fromBillingCycle", ["monthly", "annual"]).notNull(),
   toBillingCycle: mysqlEnum("toBillingCycle", ["monthly", "annual"]).notNull(),
   proratedCredit: decimal("proratedCredit", { precision: 10, scale: 2 }).default("0.00"), // Credit applied

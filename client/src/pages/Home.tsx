@@ -93,63 +93,72 @@ export default function Home() {
 
   const tiers = [
     {
-      name: "Creator",
+      name: "Free",
       monthlyPrice: 0,
       annualPrice: 0,
-      description: "Perfect for getting started",
+      platformFee: "12%",
+      earningCap: "$1,000/month",
+      description: "Build your foundation—collect fans, sell music, grow your audience",
       features: [
-        "1 release per month",
+        "BAP streaming (90% artist share)",
+        "Basic profile + 10 tracks",
+        "1GB storage",
         "Basic analytics",
-        "Global distribution",
-        "Email support"
+        "Tip jar (Kick In)",
+        "E-commerce (3 products max)",
+        "Toney AI (5 questions/month)",
+        "Community support"
       ],
       cta: "Get Started",
       popular: false
     },
     {
       name: "Pro",
-      monthlyPrice: 29,
-      annualPrice: 23,
-      description: "For serious artists",
+      monthlyPrice: 49,
+      annualPrice: 41,
+      platformFee: "5%",
+      earningCap: "$10,000/month",
+      description: "Unlimited uploads, third-party distribution, and advanced tools for serious artists",
       features: [
-        "Unlimited releases",
-        "Advanced analytics",
-        "Career advisor access",
-        "IP protection",
-        "Priority support",
-        "Merchandise store"
+        "Everything in Free",
+        "Unlimited tracks & storage",
+        "Third-party distribution",
+        "Advanced analytics & fan data",
+        "Smart links with source tracking",
+        "Fan data ownership & export",
+        "Unlimited e-commerce products",
+        "Printful integration",
+        "Toney AI unlimited",
+        "Image generation (50/month)",
+        "Songwriter splits & payouts",
+        "3% Tone Dividend",
+        "Priority support (24-hour response)"
       ],
       cta: "Start Pro",
       popular: true
     },
     {
-      name: "Studio",
-      monthlyPrice: 99,
-      annualPrice: 79,
-      description: "For professionals",
+      name: "Enterprise",
+      monthlyPrice: 149,
+      annualPrice: 124,
+      platformFee: "2%",
+      earningCap: "Unlimited",
+      description: "Premium tools for established artists, labels, and management companies",
       features: [
         "Everything in Pro",
-        "Royalty-backed loans",
-        "Tour management",
-        "Healthcare access",
-        "Dedicated account manager",
-        "White-label options"
-      ],
-      cta: "Go Studio",
-      popular: false
-    },
-    {
-      name: "Label",
-      monthlyPrice: 499,
-      annualPrice: 399,
-      description: "For teams and labels",
-      features: [
-        "Everything in Studio",
-        "Multi-artist management",
-        "Custom integrations",
+        "Unlimited earnings (no cap)",
+        "2% platform fee (lowest in industry)",
+        "Team accounts (5 seats)",
+        "White-label embeds",
         "API access",
-        "Enterprise support",
-        "Custom contracts"
+        "Advanced tour management",
+        "IP protection tools",
+        "Microloans (up to $50K)",
+        "Healthcare benefits access",
+        "Dedicated account manager",
+        "1-hour support response",
+        "Quarterly strategy sessions",
+        "10% Tone Dividend"
       ],
       cta: "Contact Sales",
       popular: false
@@ -280,25 +289,24 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
-                className={`future-card p-8 flex flex-col ${tier.popular ? 'ring-2 ring-primary' : ''}`}
+                className={`relative border-2 ${tier.popular ? 'border-primary shadow-lg scale-105' : 'border-gray-200'} p-8 flex flex-col`}
               >
                 {tier.popular && (
-                  <div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary px-3 py-1 text-sm font-semibold text-primary-foreground w-fit">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-sm font-bold">
                     Most Popular
                   </div>
                 )}
-                <h3 className="text-2xl font-bold mb-2 text-foreground">{tier.name}</h3>
-                <p className="body-text text-sm mb-6">{tier.description}</p>
-                <div className="mb-6">
+                <h3 className="text-2xl font-bold mb-2 text-gray-900">{tier.name}</h3>
+                <div className="mb-4">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-bold text-foreground">
+                    <span className="text-5xl font-bold text-gray-900">
                       ${currentPrice(tier)}
                     </span>
-                    <span className="text-muted-foreground">
+                    <span className="text-gray-600">
                       /{isAnnual ? 'mo' : 'month'}
                     </span>
                   </div>
@@ -308,28 +316,47 @@ export default function Home() {
                     </p>
                   )}
                 </div>
+                <p className="body-text text-sm mb-4 text-gray-600">{tier.description}</p>
+                
+                {/* Platform Fee Badge */}
+                <div className="mb-2 inline-flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg w-fit">
+                  <span className="text-sm font-medium text-gray-700">Platform Fee:</span>
+                  <span className="text-sm font-bold text-gray-900">{tier.platformFee}</span>
+                </div>
+                
+                {/* Earning Cap */}
+                <div className="mb-6 text-sm text-gray-600">
+                  Earning cap: <span className="font-semibold">{tier.earningCap}</span>
+                </div>
+                
                 <ul className="space-y-3 mb-8 flex-grow">
                   {tier.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-start gap-3">
                       <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                      <span className="text-sm text-foreground">{feature}</span>
+                      <span className="text-sm text-gray-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                {tier.name === "Label" ? (
+                {tier.name === "Enterprise" ? (
                   <Button 
                     variant="outline" 
-                    className="w-full btn-secondary"
+                    className="w-full"
+                    size="lg"
                     onClick={() => window.location.href = 'mailto:sales@boptone.com'}
                   >
                     {tier.cta}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 ) : (
-                  <StripeCheckout
-                    tier={tier.name.toLowerCase() as "pro" | "enterprise"}
-                    buttonText={tier.cta}
-                    className={tier.popular ? "btn-primary w-full" : "btn-secondary w-full"}
-                  />
+                  <Button
+                    onClick={() => window.location.href = getLoginUrl()}
+                    variant={tier.popular ? "default" : "outline"}
+                    size="lg"
+                    className="w-full"
+                  >
+                    {tier.cta}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 )}
               </Card>
             ))}
