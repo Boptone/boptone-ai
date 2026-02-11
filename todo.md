@@ -31,3 +31,13 @@
 - [ ] Verify all auth pages match Brex aesthetic
 - [ ] Save checkpoint
 - [ ] Push to GitHub
+
+## Create Forgot Password Page (User Request)
+
+- [x] Create ForgotPassword.tsx component with Brex-inspired design
+- [x] Implement email input form with validation
+- [x] Add password reset flow (email → verification → success)
+- [x] Add route to App.tsx (/forgot-password)
+- [x] Link from AuthSignup page
+- [x] Test forgot password flow
+- [ ] Save checkpoint

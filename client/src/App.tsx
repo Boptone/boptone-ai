@@ -43,6 +43,7 @@ import ProductDetail from "./pages/ProductDetail";
 import MyStore from "./pages/MyStore";
 import MyStoreOrders from "./pages/MyStoreOrders";
 import AuthSignup from "./pages/AuthSignup";
+import ForgotPassword from "./pages/ForgotPassword";
 import HowItWorks from "./pages/HowItWorks";
 import WriterInvite from "./pages/WriterInvite";
 import WriterProfile from "./pages/WriterProfile";
@@ -54,6 +55,7 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/auth-signup"} component={AuthSignup} />
+      <Route path={"/forgot-password"} component={ForgotPassword} />
       <Route path={"/how-it-works"} component={HowItWorks} />
       <Route path={"/writer-invite"} component={WriterInvite} />
       <Route path={"/writer-profile"} component={WriterProfile} />

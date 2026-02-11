@@ -309,14 +309,22 @@ export default function AuthSignup() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
 
-              <Button
-                type="button"
-                variant="ghost"
-                className="w-full"
-                onClick={() => setAuthMethod("select")}
-              >
-                Back to options
-              </Button>
+              <div className="flex items-center justify-between">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="text-sm"
+                  onClick={() => setAuthMethod("select")}
+                >
+                  Back to options
+                </Button>
+                <a
+                  href="/forgot-password"
+                  className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                >
+                  Forgot password?
+                </a>
+              </div>
             </form>
           )}
 
