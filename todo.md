@@ -230,7 +230,7 @@
 - [x] Test pricing pages - Site running smoothly
 - [x] Save checkpoint
 
-## Fix "Most Popular" Badge Clipping Issue (User Report)
+## Fix "Most Popular" Badge Clipping Issue (User Report) ✅ COMPLETE
 
 ### Problem
 - Badge is getting cut off at the top of the pricing card due to overflow clipping
@@ -244,4 +244,23 @@
 - [x] Fix Signup.tsx pricing card overflow (added pt-6 to grid)
 - [x] Fix Home.tsx pricing card overflow (added pt-6 to grid)
 - [x] Test badge visibility - Badge now fully visible with pt-6 padding
+- [x] Save checkpoint
+
+## Fix Badge Visibility & Update Navigation (User Report) ✅ COMPLETE
+
+### Badge Visibility Issue
+- Badge still not visible despite pt-6 padding
+- Need to increase padding further (pt-10 or pt-12)
+- Ensure card containers don't have overflow-hidden
+
+### Navigation Update
+- Remove "About" from top navigation
+- Replace with "Pricing" link
+- Keep "About Us" in footer
+
+### Implementation
+- [x] Increase padding on pricing grids (pt-12 on both pages)
+- [x] Check for overflow-hidden on card containers (none found)
+- [x] Update Navigation component to replace About with Pricing
+- [x] Test badge visibility on both pages - pt-12 padding applied
 - [ ] Save checkpoint

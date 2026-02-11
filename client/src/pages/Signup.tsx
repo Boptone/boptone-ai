@@ -157,7 +157,7 @@ export default function Signup() {
           </div>
 
           {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto pt-6">
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto pt-12">
             {tiers.map((tier) => (
               <Card
                 key={tier.id}

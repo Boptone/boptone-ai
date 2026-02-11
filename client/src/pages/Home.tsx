@@ -289,7 +289,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto pt-12">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 

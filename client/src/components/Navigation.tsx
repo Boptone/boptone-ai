@@ -17,7 +17,7 @@ export function Navigation() {
     { href: "/bap", label: "BAP Protocol" },
     { href: "/shop", label: "BopShop" },
     { href: "/discover", label: "Discover" },
-    { href: "/about", label: "About" },
+    { href: "/signup", label: "Pricing" },
   ];
 
   return (
