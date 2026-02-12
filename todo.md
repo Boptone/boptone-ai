@@ -873,3 +873,8 @@
 
 ## Fix Ask Toney Visibility (Feb 12, 2026)
 - [x] Make Ask Toney button visible for all users (not just authenticated)
+
+## Navigation UX Redesign (Feb 12, 2026)
+- [x] Fix navigation spacing and visual hierarchy
+- [x] Change Get Started button to outline style (match View Demo)
+- [x] Improve button grouping and separation
