@@ -870,3 +870,6 @@
 
 ## Preview Panel Update (Feb 12, 2026)
 - [x] Add subtle homepage improvement to trigger preview refresh
+
+## Fix Ask Toney Visibility (Feb 12, 2026)
+- [x] Make Ask Toney button visible for all users (not just authenticated)
