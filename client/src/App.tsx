@@ -49,6 +49,7 @@ import WriterInvite from "./pages/WriterInvite";
 import WriterProfile from "./pages/WriterProfile";
 import WriterEarnings from "./pages/WriterEarnings";
 import PayoutSettings from "./pages/PayoutSettings";
+import Workflows from "./pages/Workflows";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -96,6 +97,7 @@ function Router() {
       <Route path="/audience" component={Fans} />
       <Route path="/releases" component={MyMusic} />
       <Route path="/settings/payouts" component={PayoutSettings} />
+      <Route path="/workflows" component={Workflows} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />

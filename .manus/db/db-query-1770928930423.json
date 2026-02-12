@@ -1,0 +1,38 @@
+{
+  "query": "SHOW CREATE TABLE workflow_templates;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SHOW CREATE TABLE workflow_templates;",
+  "rows": [
+    {
+      "Table": "workflow_templates",
+      "Create Table": "CREATE TABLE `workflow_templates` ("
+    }
+  ],
+  "messages": [
+    "  `id` int(11) NOT NULL AUTO_INCREMENT,",
+    "  `name` varchar(255) NOT NULL,",
+    "  `category` varchar(50) NOT NULL,",
+    "  `definition` json NOT NULL,",
+    "  `tags` json DEFAULT NULL,",
+    "  `difficulty` enum('beginner','intermediate','advanced') NOT NULL DEFAULT 'beginner',",
+    "  `description` text DEFAULT NULL,",
+    "  `templateConfig` json NOT NULL,",
+    "  `popularityScore` int(11) DEFAULT '0',",
+    "  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP,",
+    "  `thumbnailUrl` text DEFAULT NULL,",
+    "  `demoVideoUrl` text DEFAULT NULL,",
+    "  `metadata` json DEFAULT NULL,",
+    "  `isOfficial` tinyint(1) NOT NULL DEFAULT '0',",
+    "  `createdBy` varchar(255) DEFAULT NULL,",
+    "  `usageCount` int(11) NOT NULL DEFAULT '0',",
+    "  `rating` decimal(3,2) DEFAULT '0.00',",
+    "  `ratingCount` int(11) NOT NULL DEFAULT '0',",
+    "  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,",
+    "  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,",
+    "  KEY `idx_category` (`category`),",
+    "  KEY `idx_popularity` (`popularityScore`)",
+    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin"
+  ],
+  "stdout": "Table\tCreate Table\nworkflow_templates\tCREATE TABLE `workflow_templates` (\n  `id` int(11) NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) NOT NULL,\n  `category` varchar(50) NOT NULL,\n  `definition` json NOT NULL,\n  `tags` json DEFAULT NULL,\n  `difficulty` enum('beginner','intermediate','advanced') NOT NULL DEFAULT 'beginner',\n  `description` text DEFAULT NULL,\n  `templateConfig` json NOT NULL,\n  `popularityScore` int(11) DEFAULT '0',\n  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP,\n  `thumbnailUrl` text DEFAULT NULL,\n  `demoVideoUrl` text DEFAULT NULL,\n  `metadata` json DEFAULT NULL,\n  `isOfficial` tinyint(1) NOT NULL DEFAULT '0',\n  `createdBy` varchar(255) DEFAULT NULL,\n  `usageCount` int(11) NOT NULL DEFAULT '0',\n  `rating` decimal(3,2) DEFAULT '0.00',\n  `ratingCount` int(11) NOT NULL DEFAULT '0',\n  `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`) /*T![clustered_index] CLUSTERED */,\n  KEY `idx_category` (`category`),\n  KEY `idx_popularity` (`popularityScore`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

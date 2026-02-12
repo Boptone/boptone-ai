@@ -16,6 +16,7 @@ import { writerPaymentsRouter } from "./routers/writerPayments";
 import { subscriptionsRouter } from "./routers/subscriptions";
 import { musicRouter } from "./routers/music";
 import { payoutsRouter } from "./routers/payouts";
+import { workflowsRouter } from "./routers/workflows";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -676,6 +677,9 @@ export const appRouter = router({
 
   // Payout System (Withdrawals & Bank Accounts)
   payouts: payoutsRouter,
+
+  // Workflow Automation System (Pro/Enterprise)
+  workflows: workflowsRouter,
 });
 
 export type AppRouter = typeof appRouter;
