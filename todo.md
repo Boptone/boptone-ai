@@ -492,3 +492,25 @@
 - [x] Document Kick In tips exception in TOS
 - [x] Verified no conflicting fee language remains anywhere on site
 - [x] Ready for checkpoint
+
+
+## Rewrite FAQ to Be Artist-First (User Request - CRITICAL MESSAGING FIX) ✅ COMPLETE
+
+### Issue
+- Current FAQ question "How does Boptone make money?" centers the platform, not the artist
+- Should lead with artist benefits (90% earnings) not platform revenue (10%)
+- Boptone is about helping artists build sustainable careers, not about our business model
+
+### New Approach
+- Change question to "How much do I keep from my earnings?" or "How do I make money on Boptone?"
+- Lead with artist's 90% share and career-building benefits
+- Mention 10% platform fee as context, not the headline
+- Focus on sustainable career narrative
+
+### Implementation - COMPLETED
+- [x] Rewrite FAQ question title to "How much do I keep from my earnings?"
+- [x] Rewrite FAQ answer to lead with "You keep 90% of everything you earn"
+- [x] Emphasize career-building and revenue diversification (multiple revenue streams)
+- [x] Move platform fee explanation to supporting context ("Boptone keeps 10% to run the platform")
+- [x] Test messaging for artist-first tone
+- [x] Ready for checkpoint

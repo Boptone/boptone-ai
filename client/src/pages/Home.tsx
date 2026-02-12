@@ -395,25 +395,25 @@ export default function Home() {
                   onClick={() => setFaqOpen(faqOpen === 1 ? null : 1)}
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <span className="font-bold text-gray-900">How does Boptone make money?</span>
+                  <span className="font-bold text-gray-900">How much do I keep from my earnings?</span>
                   <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 1 ? 'rotate-180' : ''}`} />
                 </button>
                 {faqOpen === 1 && (
                   <div className="px-6 pb-4 text-sm text-gray-600">
                     <p className="mb-3">
-                      <strong className="text-gray-900">Simple: We keep 10% of everything you earn. You keep 90%.</strong>
+                      <strong className="text-gray-900">You keep 90% of everything you earn.</strong> Build a sustainable career with multiple revenue streams—all in one place.
                     </p>
                     <p className="mb-3">
-                      This applies to all revenue sources—BAP streaming, third-party streaming (Spotify, Apple Music, etc.), BopShop sales, memberships, sync licensing, and live event tickets.
+                      Earn from <strong className="text-gray-900">BAP streaming, distribution, BopShop sales, memberships, sync licensing, and live events</strong>. Every revenue source pays you 90%. Boptone keeps 10% to run the platform—infrastructure, security, support, and continuous development.
                     </p>
                     <p className="mb-3 bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">One exception: Kick In tips.</strong> You keep <strong className="text-gray-900">100% of every tip</strong> (minus only credit card processing: 2.9% + 30¢). We don't take a cut of tips—ever.
+                      <strong className="text-gray-900">Kick In tips: You keep 100%.</strong> When fans tip you directly, you receive <strong className="text-gray-900">every dollar</strong> (minus only credit card processing: 2.9% + 30¢). We don't take a cut of tips—ever.
                     </p>
                     <p className="mb-3">
-                      <strong className="text-gray-900">Why 10%?</strong> Because we're your business partner, not your landlord. We succeed when you succeed. This single fee covers platform infrastructure, security, support, and continuous feature development.
+                      <strong className="text-gray-900">Why this model?</strong> Because your success is our success. We grow when you grow. No hidden fees, no tier tricks, no revenue caps. Just a simple, transparent partnership.
                     </p>
                     <p className="bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">All tiers pay the same 10%.</strong> Free, Pro, and Enterprise differ in <strong className="text-gray-900">features</strong> (storage, analytics, team seats, support), not fees. Upgrade for capabilities, not to save pennies.
+                      <strong className="text-gray-900">All tiers keep the same 90%.</strong> Free, Pro, and Enterprise differ in <strong className="text-gray-900">features</strong> (storage, analytics, team seats, support), not earnings. Upgrade for capabilities that help you grow, not to keep more of your money.
                     </p>
                   </div>
                 )}
