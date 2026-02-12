@@ -169,10 +169,19 @@ export default function Money() {
 
             <Card className="rounded-xl border border-gray-200">
               <CardHeader className="bg-black text-white">
-                <CardTitle className="text-2xl font-semibold uppercase">PAYOUT HISTORY</CardTitle>
-                <CardDescription className="text-white/80 font-bold">
-                  YOUR RECENT PAYOUTS AND PENDING PAYMENTS
-                </CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-2xl font-semibold uppercase">PAYOUT HISTORY</CardTitle>
+                    <CardDescription className="text-white/80 font-bold">
+                      YOUR RECENT PAYOUTS AND PENDING PAYMENTS
+                    </CardDescription>
+                  </div>
+                  <a href="/payouts/history">
+                    <Button variant="outline" className="bg-white text-black hover:bg-gray-100">
+                      View Full History
+                    </Button>
+                  </a>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-center py-8 text-muted-foreground">

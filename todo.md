@@ -882,3 +882,9 @@
 ## Fix Navigation Regression (Feb 12, 2026)
 - [x] Restore previous navigation balance and quality
 - [x] Only apply specific improvements: spacing + Get Started outline style
+
+## Payout History Page (Feb 12, 2026)
+- [x] Create backend tRPC procedure to fetch payout history
+- [x] Create PayoutHistory page component with table UI
+- [x] Add route and navigation link
+- [x] Test with sample data

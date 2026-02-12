@@ -31,6 +31,8 @@ import {
   InsertNotification,
   analyticsSnapshots,
   InsertAnalyticsSnapshot,
+  payouts,
+  type Payout,
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -586,13 +588,13 @@ import {
   payoutAccounts,
   InsertPayoutAccount,
   PayoutAccount,
-  payouts,
   InsertPayout,
-  Payout,
   earningsBalance,
   InsertEarningsBalance,
   EarningsBalance,
 } from "../drizzle/schema";
+
+// Note: payouts and Payout type imported at top of file
 import crypto from "crypto";
 
 /**
