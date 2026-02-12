@@ -18,6 +18,7 @@ import {
   TrendingUp
 } from "lucide-react";
 import { toast } from "sonner";
+import AIWorkflowAssistant from "@/components/AIWorkflowAssistant";
 
 /**
  * Workflows Management Page
@@ -106,7 +107,13 @@ export default function Workflows() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* AI Workflow Assistant - Prominent placement */}
+        <AIWorkflowAssistant
+          onWorkflowGenerated={() => {
+            setActiveTab("my-workflows");
+          }}
+        />
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">

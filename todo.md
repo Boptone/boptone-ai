@@ -663,3 +663,50 @@
 - [x] Add to main Dashboard page
 - [x] Test widget display and navigation
 - [x] Save checkpoint
+
+
+## Build AI Workflow Assistant (User Request - GAME-CHANGING FEATURE)
+
+### Strategic Context
+- Natural language workflow creation: "When I hit 10K streams, post celebration to Instagram"
+- Zero technical knowledge required - just describe what you want
+- AI generates complete workflow with nodes, connections, and configuration
+- Makes Pro/Enterprise automation accessible to all artists
+- Competitive moat: No other platform has this level of AI-powered automation
+
+### Phase 1: AI Prompt System Design
+- [x] Design system prompt for workflow generation
+- [x] Create workflow schema for AI output (JSON structure)
+- [x] Build example workflows for few-shot learning
+- [x] Add validation rules for AI-generated workflows
+- [x] Test prompt with various natural language inputs
+
+### Phase 2: Backend API
+- [x] Create generateWorkflowFromText tRPC procedure
+- [x] Integrate with LLM (invokeLLM helper)
+- [x] Add structured output validation (JSON schema)
+- [x] Implement workflow node mapping (trigger types, action types)
+- [x] Add error handling for invalid AI outputs
+- [x] Create workflow preview before save
+
+### Phase 3: AI Assistant UI
+- [x] Create WorkflowAssistant.tsx component (AIWorkflowAssistant.tsx)
+- [x] Build natural language input textarea
+- [x] Add "Generate Workflow" button with loading states
+- [x] Create workflow preview modal (show generated nodes)
+- [x] Add edit/refine options ("Make it send email instead")
+- [x] Implement save to My Workflows functionality
+
+### Phase 4: Integration
+- [x] Add AI assistant to /workflows page (prominent placement)
+- [ ] Add AI assistant to /workflows/builder page
+- [x] Create onboarding tooltip ("Try: 'Thank fans who tip over $50'")
+- [x] Add example prompts for inspiration (5 examples)
+- [ ] Test complete flow (input → generate → preview → save)
+
+### Phase 5: Testing & Deployment
+- [ ] Test with 20+ natural language examples
+- [ ] Verify AI generates valid workflow JSON
+- [ ] Test workflow execution from AI-generated workflows
+- [ ] Add analytics tracking (AI usage, success rate)
+- [x] Save checkpoint

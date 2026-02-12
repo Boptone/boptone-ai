@@ -15,6 +15,7 @@ import {
   createWorkflowFromTemplate,
 } from "../workflowDb";
 import { executeWorkflow } from "../workflowEngine";
+import { generateWorkflowFromText, refineWorkflow } from "../aiWorkflowGenerator";
 
 // Workflow definition schema
 const workflowDefinitionSchema = z.object({
@@ -40,6 +41,60 @@ const workflowDefinitionSchema = z.object({
 });
 
 export const workflowsRouter = router({
+  // ============================================================================
+  // AI WORKFLOW GENERATION
+  // ============================================================================
+
+  generateFromText: protectedProcedure
+    .input(z.object({ description: z.string().min(10).max(500) }))
+    .mutation(async ({ input }) => {
+      const workflow = await generateWorkflowFromText(input.description);
+      return workflow;
+    }),
+
+  refineWorkflow: protectedProcedure
+    .input(
+      z.object({
+        currentWorkflow: workflowDefinitionSchema,
+        refinementRequest: z.string().min(5).max(200),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const refined = await refineWorkflow(
+        input.currentWorkflow,
+        input.refinementRequest
+      );
+      return refined;
+    }),
+
+  saveGeneratedWorkflow: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+        category: z.enum([
+          "fan_engagement",
+          "release_automation",
+          "revenue_tracking",
+          "marketing",
+          "collaboration",
+          "custom",
+        ]),
+        definition: workflowDefinitionSchema,
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const workflow = await createWorkflow({
+        artistId: ctx.user.id,
+        name: input.name,
+        description: input.description,
+        category: input.category,
+        definition: input.definition,
+        status: "draft",
+      });
+      return workflow;
+    }),
+
   // ============================================================================
   // WORKFLOW CRUD
   // ============================================================================
