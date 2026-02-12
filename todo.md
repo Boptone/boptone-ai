@@ -878,3 +878,7 @@
 - [x] Fix navigation spacing and visual hierarchy
 - [x] Change Get Started button to outline style (match View Demo)
 - [x] Improve button grouping and separation
+
+## Fix Navigation Regression (Feb 12, 2026)
+- [x] Restore previous navigation balance and quality
+- [x] Only apply specific improvements: spacing + Get Started outline style

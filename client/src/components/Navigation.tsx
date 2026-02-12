@@ -36,7 +36,7 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation - Center */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 <a
@@ -53,12 +53,11 @@ export function Navigation() {
           </div>
 
           {/* Right Side - Auth */}
-          <div className="hidden lg:flex items-center gap-4">
-            {/* Ask Toney - Always visible with separator */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Ask Toney - Always visible */}
             <Button 
               variant="ghost" 
-              size="sm"
-              className="text-sm font-medium gap-2 mr-2"
+              className="text-sm font-medium gap-2"
               onClick={() => {
                 // Trigger Toney chatbot to open
                 const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
@@ -69,24 +68,21 @@ export function Navigation() {
               Ask Toney
             </Button>
             
-            {/* Vertical separator */}
-            <div className="h-6 w-px bg-border" />
-            
             {isAuthenticated ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost" size="sm" className="text-sm font-medium">Dashboard</Button>
+                  <Button variant="ghost" className="text-sm font-medium">Dashboard</Button>
                 </Link>
                 <Link href="/profile-settings">
-                  <Button variant="outline" size="sm" className="text-sm font-medium">Profile</Button>
+                  <Button variant="outline" className="text-sm font-medium">Profile</Button>
                 </Link>
               </>
             ) : (
               <>
-                <Button variant="ghost" size="sm" asChild className="text-sm font-medium">
+                <Button variant="ghost" asChild className="text-sm font-medium">
                   <a href={getLoginUrl()}>Log In</a>
                 </Button>
-                <Button variant="outline" size="sm" asChild className="text-sm font-medium border-2 hover:bg-accent">
+                <Button variant="outline" asChild className="text-sm font-medium px-6">
                   <a href={getLoginUrl()}>
                     Get Started
                   </a>
@@ -97,7 +93,7 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2"
+            className="md:hidden p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -112,7 +108,7 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-border bg-background">
+        <div className="md:hidden border-t border-border bg-background">
           <div className="container py-6 space-y-4">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
