@@ -17,6 +17,7 @@ import { subscriptionsRouter } from "./routers/subscriptions";
 import { musicRouter } from "./routers/music";
 import { payoutsRouter } from "./routers/payouts";
 import { workflowsRouter } from "./routers/workflows";
+import { toneyRouter } from "./routers/toney";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -680,6 +681,9 @@ export const appRouter = router({
 
   // Workflow Automation System (Pro/Enterprise)
   workflows: workflowsRouter,
+
+  // Toney AI Assistant
+  toney: toneyRouter,
 });
 
 export type AppRouter = typeof appRouter;

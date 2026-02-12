@@ -1,0 +1,8 @@
+{
+  "query": "CREATE TABLE ai_recommendations (\n  id INT PRIMARY KEY AUTO_INCREMENT,\n  user_id INT NOT NULL,\n  recommendation_type VARCHAR(100) NOT NULL,\n  title VARCHAR(255) NOT NULL,\n  description TEXT NOT NULL,\n  action_data JSON,\n  status ENUM('pending', 'accepted', 'rejected', 'expired') DEFAULT 'pending',\n  expires_at TIMESTAMP NULL,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,\n  INDEX idx_user_status (user_id, status),\n  INDEX idx_expires (expires_at)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE ai_recommendations (\n  id INT PRIMARY KEY AUTO_INCREMENT,\n  user_id INT NOT NULL,\n  recommendation_type VARCHAR(100) NOT NULL,\n  title VARCHAR(255) NOT NULL,\n  description TEXT NOT NULL,\n  action_data JSON,\n  status ENUM('pending', 'accepted', 'rejected', 'expired') DEFAULT 'pending',\n  expires_at TIMESTAMP NULL,\n  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,\n  INDEX idx_user_status (user_id, status),\n  INDEX idx_expires (expires_at)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1050 (42S01) at line 1: Table 'nTbKjjzazhRpeJn9kKuXdQ.ai_recommendations' already exists"
+  ]
+}

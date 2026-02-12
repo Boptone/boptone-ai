@@ -1,8 +1,9 @@
 import { AIChatBox, Message } from "@/components/AIChatBox";
-import { MessageCircle, X } from "lucide-react";
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 import { useLocation } from "wouter";
 
 /**
@@ -15,6 +16,7 @@ const AUTO_OPENED_KEY = 'toney-auto-opened';
 export function ToneyChatbot() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const chatMutation = trpc.toney.chat.useMutation();
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {
     // Check if we've already auto-opened in this session
     return localStorage.getItem(AUTO_OPENED_KEY) === 'true';
@@ -183,18 +185,62 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
         <div className="flex-1 overflow-hidden">
           <AIChatBox
             messages={messages}
-            onSendMessage={(content) => {
+            onSendMessage={async (content) => {
               // Add user message immediately
               setMessages(prev => [...prev, { role: "user", content }]);
               
-              // TODO: Call tRPC mutation to get AI response
-              // For now, add a placeholder response
-              setTimeout(() => {
+              try {
+                // Call Toney AI backend
+                const response = await chatMutation.mutateAsync({
+                  message: content,
+                  conversationHistory: messages,
+                });
+                
+                // Check if Toney wants to generate a workflow
+                if (response.message.includes('GENERATE_WORKFLOW:')) {
+                  const workflowDescription = response.message.split('GENERATE_WORKFLOW:')[1].trim();
+                  
+                  // Add Toney's response (without the command)
+                  setMessages(prev => [...prev, {
+                    role: "assistant",
+                    content: "I'm generating that workflow for you now...",
+                  }]);
+                  
+                  // Trigger workflow generation
+                  try {
+                    const workflowResponse = await trpc.workflows.generateFromText.mutate({
+                      description: workflowDescription,
+                    });
+                    
+                    // Add success message with link to workflows page
+                    setMessages(prev => [...prev, {
+                      role: "assistant",
+                      content: `Workflow created successfully! I've generated "${workflowResponse.workflow.name}" for you. You can view and activate it on your [Workflows page](/workflows).`,
+                    }]);
+                  } catch (workflowError) {
+                    console.error('[Toney] Failed to generate workflow:', workflowError);
+                    setMessages(prev => [...prev, {
+                      role: "assistant",
+                      content: "I had trouble generating that workflow. You can try creating it manually on the [Workflows page](/workflows) or describe it differently.",
+                    }]);
+                  }
+                } else {
+                  // Normal AI response
+                  setMessages(prev => [...prev, {
+                    role: "assistant",
+                    content: response.message,
+                  }]);
+                }
+              } catch (error) {
+                console.error('[Toney] Failed to get AI response:', error);
+                toast.error('Failed to get response from Toney');
+                
+                // Add error message
                 setMessages(prev => [...prev, {
                   role: "assistant",
-                  content: "I'm Toney, your AI assistant! Full AI integration coming soon. For now, I can help you understand Boptone's features. What would you like to know?"
+                  content: "I'm having trouble connecting right now. Please try again in a moment.",
                 }]);
-              }, 500);
+              }
             }}
             placeholder="Ask Toney anything about your music career..."
             height="100%"

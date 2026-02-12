@@ -29,6 +29,7 @@ import { useLocation } from "wouter";
 import { useEffect } from "react";
 import { PlanManagementSection } from "@/components/PlanManagementSection";
 import { EarningsWidget } from "@/components/EarningsWidget";
+import { AIRecommendations } from "@/components/AIRecommendations";
 
 export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
@@ -225,6 +226,9 @@ export default function Dashboard() {
 
           {/* Earnings Widget */}
           <EarningsWidget />
+
+          {/* AI Recommendations */}
+          <AIRecommendations />
 
           {/* Quick Actions - Minimal grid */}
           <Card className="border-2 border-gray-200 bg-white">
