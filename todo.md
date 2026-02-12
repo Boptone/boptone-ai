@@ -867,3 +867,6 @@
 - [x] Fix payout database column mismatch (artistid vs artistId)
 - [x] Add prominent Toney chat button to navigation header
 - [x] Debug and fix AI recommendations widget visibility on dashboard
+
+## Preview Panel Update (Feb 12, 2026)
+- [x] Add subtle homepage improvement to trigger preview refresh

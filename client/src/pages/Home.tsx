@@ -193,7 +193,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="body-text text-xl md:text-2xl mb-8 max-w-2xl">
-              The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.
+              🎵 The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
