@@ -2114,46 +2114,10 @@ export type DistributionRevenue = typeof distributionRevenue.$inferSelect;
 export type InsertDistributionRevenue = typeof distributionRevenue.$inferInsert;
 
 
-// Workflow Automation Tables
-export const workflows = mysqlTable("workflows", {
-  id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull(),
-  name: varchar("name", { length: 255 }).notNull(),
-  description: text("description"),
-  isActive: boolean("isActive").default(true).notNull(),
-  triggerType: varchar("triggerType", { length: 50 }).notNull(),
-  triggerConfig: json("triggerConfig").notNull(),
-  actions: json("actions").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
-
-export const workflowExecutions = mysqlTable("workflow_executions", {
-  id: int("id").autoincrement().primaryKey(),
-  workflowId: int("workflowId").notNull(),
-  status: varchar("status", { length: 50 }).notNull().default("running"),
-  triggerData: json("triggerData"),
-  executionLog: json("executionLog"),
-  startedAt: timestamp("startedAt").defaultNow().notNull(),
-  completedAt: timestamp("completedAt"),
-});
-
-export const workflowTemplates = mysqlTable("workflow_templates", {
-  id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  category: varchar("category", { length: 50 }).notNull(),
-  description: text("description"),
-  templateConfig: json("templateConfig").notNull(),
-  popularityScore: int("popularityScore").default(0).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
-
-export type Workflow = typeof workflows.$inferSelect;
-export type InsertWorkflow = typeof workflows.$inferInsert;
-export type WorkflowExecution = typeof workflowExecutions.$inferSelect;
-export type InsertWorkflowExecution = typeof workflowExecutions.$inferInsert;
-export type WorkflowTemplate = typeof workflowTemplates.$inferSelect;
-export type InsertWorkflowTemplate = typeof workflowTemplates.$inferInsert;
+// ============================================================================
+// WORKFLOW AUTOMATION SYSTEM (PRO/ENTERPRISE FEATURE)
+// ============================================================================
+// Placeholder tables - will be replaced with comprehensive schema
 
 // ============================================================================
 // ARTIST PAYOUT SYSTEM
@@ -2310,3 +2274,310 @@ export const earningsBalance = mysqlTable("earnings_balance", {
 
 export type EarningsBalance = typeof earningsBalance.$inferSelect;
 export type InsertEarningsBalance = typeof earningsBalance.$inferInsert;
+
+
+// ============================================================================
+// WORKFLOW AUTOMATION SYSTEM (PRO/ENTERPRISE FEATURE)
+// ============================================================================
+
+/**
+ * Workflows - Artist automation workflows (n8n-inspired)
+ * Visual node-based workflows for automating artist tasks
+ */
+export const workflows = mysqlTable("workflows", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id, { onDelete: "cascade" }),
+  
+  // Basic Info
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  status: mysqlEnum("status", ["active", "paused", "draft"]).default("draft").notNull(),
+  
+  // Workflow Definition (nodes, edges, settings)
+  definition: json("definition").$type<{
+    nodes: Array<{
+      id: string;
+      type: "trigger" | "action" | "condition" | "data";
+      subtype: string; // e.g., "stream_milestone", "send_email", "if_else"
+      position: { x: number; y: number };
+      data: Record<string, any>;
+    }>;
+    edges: Array<{
+      id: string;
+      source: string;
+      target: string;
+      sourceHandle?: string;
+      targetHandle?: string;
+    }>;
+    settings?: Record<string, any>;
+  }>().notNull(),
+  
+  // Organization
+  category: mysqlEnum("category", [
+    "fan_engagement",
+    "release_automation",
+    "revenue_tracking",
+    "marketing",
+    "collaboration",
+    "custom"
+  ]).notNull(),
+  tags: json("tags").$type<string[]>(),
+  
+  // Template Info
+  isTemplate: boolean("isTemplate").default(false).notNull(),
+  templateSourceId: int("templateSourceId"), // If created from template
+  
+  // Version Control
+  version: int("version").default(1).notNull(),
+  
+  // Statistics
+  totalRuns: int("totalRuns").default(0).notNull(),
+  successfulRuns: int("successfulRuns").default(0).notNull(),
+  failedRuns: int("failedRuns").default(0).notNull(),
+  lastRunAt: timestamp("lastRunAt"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    createdBy?: string;
+    aiGenerated?: boolean;
+    estimatedSavingsHours?: number;
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  categoryIdx: index("category_idx").on(table.category),
+}));
+
+export type Workflow = typeof workflows.$inferSelect;
+export type InsertWorkflow = typeof workflows.$inferInsert;
+
+/**
+ * Workflow Executions - History of workflow runs
+ * Tracks each time a workflow is triggered and executed
+ */
+export const workflowExecutions = mysqlTable("workflow_executions", {
+  id: int("id").autoincrement().primaryKey(),
+  workflowId: int("workflowId").notNull().references(() => workflows.id, { onDelete: "cascade" }),
+  
+  // Execution Status
+  status: mysqlEnum("status", ["pending", "running", "completed", "failed", "cancelled"]).default("pending").notNull(),
+  
+  // Trigger Info
+  triggeredBy: mysqlEnum("triggeredBy", ["webhook", "schedule", "event", "manual", "ai"]).notNull(),
+  triggerData: json("triggerData").$type<Record<string, any>>(),
+  
+  // Timing
+  startedAt: timestamp("startedAt"),
+  completedAt: timestamp("completedAt"),
+  duration: int("duration"), // milliseconds
+  
+  // Error Handling
+  errorMessage: text("errorMessage"),
+  errorCode: varchar("errorCode", { length: 50 }),
+  retryCount: int("retryCount").default(0).notNull(),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    nodeExecutions?: number;
+    actionsPerformed?: number;
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  workflowIdIdx: index("workflow_id_idx").on(table.workflowId),
+  statusIdx: index("status_idx").on(table.status),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type WorkflowExecution = typeof workflowExecutions.$inferSelect;
+export type InsertWorkflowExecution = typeof workflowExecutions.$inferInsert;
+
+/**
+ * Workflow Execution Logs - Detailed node-level execution logs
+ * Records what happened at each node during workflow execution
+ */
+export const workflowExecutionLogs = mysqlTable("workflow_execution_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  executionId: int("executionId").notNull().references(() => workflowExecutions.id, { onDelete: "cascade" }),
+  
+  // Node Info
+  nodeId: varchar("nodeId", { length: 50 }).notNull(),
+  nodeType: varchar("nodeType", { length: 50 }).notNull(), // trigger, action, condition, data
+  nodeSubtype: varchar("nodeSubtype", { length: 50 }).notNull(), // specific node type
+  
+  // Execution Status
+  status: mysqlEnum("status", ["success", "failed", "skipped"]).notNull(),
+  
+  // Data
+  input: json("input").$type<Record<string, any>>(),
+  output: json("output").$type<Record<string, any>>(),
+  
+  // Error Info
+  errorMessage: text("errorMessage"),
+  errorStack: text("errorStack"),
+  
+  // Timing
+  executedAt: timestamp("executedAt").notNull(),
+  duration: int("duration"), // milliseconds
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  executionIdIdx: index("execution_id_idx").on(table.executionId),
+  nodeIdIdx: index("node_id_idx").on(table.nodeId),
+}));
+
+export type WorkflowExecutionLog = typeof workflowExecutionLogs.$inferSelect;
+export type InsertWorkflowExecutionLog = typeof workflowExecutionLogs.$inferInsert;
+
+/**
+ * Workflow Triggers - Trigger configurations for workflows
+ * Defines when and how workflows should be triggered
+ */
+export const workflowTriggers = mysqlTable("workflow_triggers", {
+  id: int("id").autoincrement().primaryKey(),
+  workflowId: int("workflowId").notNull().references(() => workflows.id, { onDelete: "cascade" }),
+  
+  // Trigger Type
+  type: mysqlEnum("type", ["webhook", "schedule", "event", "manual"]).notNull(),
+  
+  // Trigger Configuration
+  config: json("config").$type<{
+    // For schedule triggers
+    cronExpression?: string;
+    timezone?: string;
+    // For webhook triggers
+    webhookUrl?: string;
+    webhookSecret?: string;
+    // For event triggers
+    eventType?: string;
+    eventFilters?: Record<string, any>;
+    // For manual triggers
+    requiresConfirmation?: boolean;
+  }>().notNull(),
+  
+  // Status
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Statistics
+  triggerCount: int("triggerCount").default(0).notNull(),
+  lastTriggeredAt: timestamp("lastTriggeredAt"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  workflowIdIdx: index("workflow_id_idx").on(table.workflowId),
+  typeIdx: index("type_idx").on(table.type),
+  isActiveIdx: index("is_active_idx").on(table.isActive),
+}));
+
+export type WorkflowTrigger = typeof workflowTriggers.$inferSelect;
+export type InsertWorkflowTrigger = typeof workflowTriggers.$inferInsert;
+
+/**
+ * Workflow Templates - Pre-built workflow templates
+ * Official Boptone templates and community-created templates
+ */
+export const workflowTemplates = mysqlTable("workflow_templates", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Basic Info
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  category: mysqlEnum("category", [
+    "fan_engagement",
+    "release_automation",
+    "revenue_tracking",
+    "marketing",
+    "collaboration",
+    "custom"
+  ]).notNull(),
+  
+  // Template Definition (same structure as workflows.definition)
+  definition: json("definition").$type<{
+    nodes: Array<{
+      id: string;
+      type: "trigger" | "action" | "condition" | "data";
+      subtype: string;
+      position: { x: number; y: number };
+      data: Record<string, any>;
+    }>;
+    edges: Array<{
+      id: string;
+      source: string;
+      target: string;
+      sourceHandle?: string;
+      targetHandle?: string;
+    }>;
+    settings?: Record<string, any>;
+  }>().notNull(),
+  
+  // Organization
+  tags: json("tags").$type<string[]>(),
+  difficulty: mysqlEnum("difficulty", ["beginner", "intermediate", "advanced"]).default("beginner").notNull(),
+  
+  // Template Metadata
+  isOfficial: boolean("isOfficial").default(false).notNull(), // Boptone-created vs community
+  createdBy: varchar("createdBy", { length: 255 }), // "Boptone" or artist name
+  
+  // Statistics
+  usageCount: int("usageCount").default(0).notNull(),
+  rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00"), // 0.00 to 5.00
+  ratingCount: int("ratingCount").default(0).notNull(),
+  
+  // Preview
+  thumbnailUrl: text("thumbnailUrl"),
+  demoVideoUrl: text("demoVideoUrl"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    estimatedSetupTime?: number; // minutes
+    requiredIntegrations?: string[];
+    estimatedSavingsHours?: number;
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  categoryIdx: index("category_idx").on(table.category),
+  isOfficialIdx: index("is_official_idx").on(table.isOfficial),
+  usageCountIdx: index("usage_count_idx").on(table.usageCount),
+}));
+
+export type WorkflowTemplate = typeof workflowTemplates.$inferSelect;
+export type InsertWorkflowTemplate = typeof workflowTemplates.$inferInsert;
+
+/**
+ * Workflow History - Version control for workflows
+ * Stores previous versions of workflows for rollback
+ */
+export const workflowHistory = mysqlTable("workflow_history", {
+  id: int("id").autoincrement().primaryKey(),
+  workflowId: int("workflowId").notNull().references(() => workflows.id, { onDelete: "cascade" }),
+  
+  // Version Info
+  version: int("version").notNull(),
+  
+  // Snapshot of workflow at this version
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  definition: json("definition").$type<Record<string, any>>().notNull(),
+  status: varchar("status", { length: 50 }).notNull(),
+  
+  // Change Info
+  changeDescription: text("changeDescription"),
+  changedBy: varchar("changedBy", { length: 255 }),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  workflowIdIdx: index("workflow_id_idx").on(table.workflowId),
+  versionIdx: index("version_idx").on(table.version),
+}));
+
+export type WorkflowHistoryRecord = typeof workflowHistory.$inferSelect;
+export type InsertWorkflowHistoryRecord = typeof workflowHistory.$inferInsert;

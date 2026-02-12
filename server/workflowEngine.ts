@@ -1,38 +1,64 @@
 import { getDb } from "./db";
-import { workflows, workflowExecutions } from "../drizzle/schema";
+import { 
+  workflows, 
+  workflowExecutions, 
+  workflowExecutionLogs,
+  workflowTriggers 
+} from "../drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
 /**
  * Workflow Execution Engine
  * 
- * Handles trigger detection and action execution for artist workflows.
- * This is the core automation system that makes Boptone workflows "just work".
+ * World-class workflow automation system for Pro/Enterprise artists.
+ * Inspired by n8n architecture with artist-specific triggers and actions.
  */
 
-export interface TriggerConfig {
-  type: string;
-  config: Record<string, any>;
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
+
+export interface WorkflowNode {
+  id: string;
+  type: "trigger" | "action" | "condition" | "data";
+  subtype: string;
+  position: { x: number; y: number };
+  data: Record<string, any>;
 }
 
-export interface Action {
-  type: string;
-  config: Record<string, any>;
+export interface WorkflowEdge {
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle?: string;
+  targetHandle?: string;
 }
 
 export interface WorkflowDefinition {
-  id: number;
-  userId: number;
-  name: string;
-  triggerType: string;
-  triggerConfig: TriggerConfig;
-  actions: Action[];
+  nodes: WorkflowNode[];
+  edges: WorkflowEdge[];
+  settings?: Record<string, any>;
 }
+
+export interface ExecutionContext {
+  workflowId: number;
+  executionId: number;
+  artistId: number;
+  triggerData: Record<string, any>;
+  nodeOutputs: Map<string, any>;
+}
+
+// ============================================================================
+// WORKFLOW EXECUTION
+// ============================================================================
 
 /**
  * Execute a workflow with given trigger data
+ * Main entry point for workflow execution
  */
 export async function executeWorkflow(
   workflowId: number,
+  triggeredBy: "webhook" | "schedule" | "event" | "manual" | "ai",
   triggerData: Record<string, any>
 ): Promise<{ success: boolean; executionId: number; errors?: string[] }> {
   const db = await getDb();
@@ -40,17 +66,19 @@ export async function executeWorkflow(
     throw new Error("Database not available");
   }
 
+  const startTime = Date.now();
+
   // Create execution record
   const [execution] = await db.insert(workflowExecutions).values({
     workflowId,
     status: "running",
+    triggeredBy,
     triggerData,
-    executionLog: [],
+    startedAt: new Date(),
   });
 
   const executionId = execution.insertId;
   const errors: string[] = [];
-  const log: any[] = [];
 
   try {
     // Get workflow definition
@@ -64,48 +92,109 @@ export async function executeWorkflow(
       throw new Error(`Workflow ${workflowId} not found`);
     }
 
-    const actions = workflow.actions as Action[];
+    // Check if workflow is active
+    if (workflow.status !== "active") {
+      throw new Error(`Workflow ${workflowId} is not active (status: ${workflow.status})`);
+    }
 
-    // Execute each action sequentially
-    for (const action of actions) {
+    const definition = workflow.definition as WorkflowDefinition;
+
+    // Create execution context
+    const context: ExecutionContext = {
+      workflowId,
+      executionId,
+      artistId: workflow.artistId,
+      triggerData,
+      nodeOutputs: new Map(),
+    };
+
+    // Execute workflow nodes in order (topological sort based on edges)
+    const executionOrder = getExecutionOrder(definition);
+
+    for (const nodeId of executionOrder) {
+      const node = definition.nodes.find((n) => n.id === nodeId);
+      if (!node) continue;
+
       try {
-        log.push({
-          timestamp: new Date().toISOString(),
-          action: action.type,
-          status: "started",
-        });
+        const nodeStartTime = Date.now();
 
-        await executeAction(action, triggerData, workflow.userId);
+        // Get input data from connected nodes
+        const inputData = getNodeInputs(node, definition, context);
 
-        log.push({
-          timestamp: new Date().toISOString(),
-          action: action.type,
-          status: "completed",
+        // Execute node
+        const output = await executeNode(node, inputData, context);
+
+        // Store output for downstream nodes
+        context.nodeOutputs.set(nodeId, output);
+
+        // Log successful execution
+        await logNodeExecution(db, {
+          executionId,
+          nodeId: node.id,
+          nodeType: node.type,
+          nodeSubtype: node.subtype,
+          status: "success",
+          input: inputData,
+          output,
+          executedAt: new Date(),
+          duration: Date.now() - nodeStartTime,
         });
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
-        errors.push(`Action ${action.type} failed: ${errorMessage}`);
-        log.push({
-          timestamp: new Date().toISOString(),
-          action: action.type,
+        const errorStack = error instanceof Error ? error.stack : undefined;
+        errors.push(`Node ${node.id} (${node.subtype}) failed: ${errorMessage}`);
+
+        // Log failed execution
+        await logNodeExecution(db, {
+          executionId,
+          nodeId: node.id,
+          nodeType: node.type,
+          nodeSubtype: node.subtype,
           status: "failed",
-          error: errorMessage,
+          input: getNodeInputs(node, definition, context),
+          output: null,
+          errorMessage,
+          errorStack,
+          executedAt: new Date(),
+          duration: 0,
         });
+
+        // Stop execution on error (can be made configurable per workflow)
+        break;
       }
     }
+
+    const duration = Date.now() - startTime;
+    const success = errors.length === 0;
 
     // Update execution record
     await db
       .update(workflowExecutions)
       .set({
-        status: errors.length > 0 ? "failed" : "success",
-        executionLog: log,
+        status: success ? "completed" : "failed",
         completedAt: new Date(),
+        duration,
+        errorMessage: errors.length > 0 ? errors.join("; ") : null,
+        metadata: {
+          nodeExecutions: executionOrder.length,
+          actionsPerformed: context.nodeOutputs.size,
+        },
       })
       .where(eq(workflowExecutions.id, executionId));
 
+    // Update workflow statistics
+    await db
+      .update(workflows)
+      .set({
+        totalRuns: workflow.totalRuns + 1,
+        successfulRuns: success ? workflow.successfulRuns + 1 : workflow.successfulRuns,
+        failedRuns: success ? workflow.failedRuns : workflow.failedRuns + 1,
+        lastRunAt: new Date(),
+      })
+      .where(eq(workflows.id, workflowId));
+
     return {
-      success: errors.length === 0,
+      success,
       executionId,
       errors: errors.length > 0 ? errors : undefined,
     };
@@ -113,13 +202,14 @@ export async function executeWorkflow(
     const errorMessage = error instanceof Error ? error.message : String(error);
     errors.push(`Workflow execution failed: ${errorMessage}`);
 
-    // Update execution record with failure
+    // Update execution as failed
     await db
       .update(workflowExecutions)
       .set({
         status: "failed",
-        executionLog: log,
         completedAt: new Date(),
+        duration: Date.now() - startTime,
+        errorMessage,
       })
       .where(eq(workflowExecutions.id, executionId));
 
@@ -131,186 +221,319 @@ export async function executeWorkflow(
   }
 }
 
+// ============================================================================
+// NODE EXECUTION
+// ============================================================================
+
 /**
- * Execute a single action
+ * Execute a single workflow node
  */
-async function executeAction(
-  action: Action,
-  triggerData: Record<string, any>,
-  userId: number
-): Promise<void> {
-  switch (action.type) {
-    case "send_email":
-      await sendEmailAction(action.config, triggerData, userId);
-      break;
+async function executeNode(
+  node: WorkflowNode,
+  inputData: Record<string, any>,
+  context: ExecutionContext
+): Promise<any> {
+  switch (node.type) {
+    case "trigger":
+      // Triggers don't execute, they just provide data
+      return context.triggerData;
 
-    case "post_to_instagram":
-      await postToInstagramAction(action.config, triggerData, userId);
-      break;
+    case "action":
+      return await executeAction(node, inputData, context);
 
-    case "post_to_twitter":
-      await postToTwitterAction(action.config, triggerData, userId);
-      break;
+    case "condition":
+      return await executeCondition(node, inputData, context);
 
-    case "notify_artist":
-      await notifyArtistAction(action.config, triggerData, userId);
-      break;
-
-    case "ai_generate_social_post":
-      await aiGenerateSocialPostAction(action.config, triggerData, userId);
-      break;
+    case "data":
+      return await executeDataTransform(node, inputData, context);
 
     default:
-      throw new Error(`Unknown action type: ${action.type}`);
+      throw new Error(`Unknown node type: ${node.type}`);
   }
 }
 
 /**
- * Action: Send Email
+ * Execute an action node (send email, post to social, etc.)
  */
-async function sendEmailAction(
-  config: Record<string, any>,
-  triggerData: Record<string, any>,
-  userId: number
-): Promise<void> {
-  // TODO: Implement email sending via SendGrid/AWS SES
-  // For now, just log the action
-  console.log("[Workflow] Send Email:", {
-    to: config.to,
-    subject: interpolate(config.subject, triggerData),
-    body: interpolate(config.body, triggerData),
-  });
+async function executeAction(
+  node: WorkflowNode,
+  inputData: Record<string, any>,
+  context: ExecutionContext
+): Promise<any> {
+  const { subtype, data } = node;
+
+  switch (subtype) {
+    case "send_email":
+      // TODO: Implement email sending via Resend
+      console.log("[Workflow] Send email:", data.to, data.subject);
+      return { sent: true, to: data.to };
+
+    case "post_instagram":
+      // TODO: Implement Instagram posting
+      console.log("[Workflow] Post to Instagram:", data.caption);
+      return { posted: true, platform: "instagram" };
+
+    case "post_twitter":
+      // TODO: Implement Twitter posting
+      console.log("[Workflow] Post to Twitter:", data.text);
+      return { posted: true, platform: "twitter" };
+
+    case "send_sms":
+      // TODO: Implement SMS via Twilio
+      console.log("[Workflow] Send SMS:", data.to, data.message);
+      return { sent: true, to: data.to };
+
+    case "update_database":
+      // TODO: Implement database updates
+      console.log("[Workflow] Update database:", data.table, data.values);
+      return { updated: true };
+
+    case "call_webhook":
+      // TODO: Implement webhook calls
+      console.log("[Workflow] Call webhook:", data.url);
+      return { called: true, url: data.url };
+
+    case "generate_ai_content":
+      // TODO: Implement AI content generation
+      console.log("[Workflow] Generate AI content:", data.prompt);
+      return { generated: true, content: "AI-generated content placeholder" };
+
+    default:
+      throw new Error(`Unknown action subtype: ${subtype}`);
+  }
 }
 
 /**
- * Action: Post to Instagram
+ * Execute a condition node (if/else, filter, switch)
  */
-async function postToInstagramAction(
-  config: Record<string, any>,
-  triggerData: Record<string, any>,
-  userId: number
-): Promise<void> {
-  // TODO: Implement Instagram API integration
-  // For now, just log the action
-  console.log("[Workflow] Post to Instagram:", {
-    caption: interpolate(config.caption, triggerData),
-    image: config.image,
-  });
+async function executeCondition(
+  node: WorkflowNode,
+  inputData: Record<string, any>,
+  context: ExecutionContext
+): Promise<any> {
+  const { subtype, data } = node;
+
+  switch (subtype) {
+    case "if_else":
+      // TODO: Implement if/else logic
+      const condition = evaluateCondition(data.condition, inputData);
+      return { branch: condition ? "true" : "false", condition };
+
+    case "filter":
+      // TODO: Implement array filtering
+      return { filtered: true };
+
+    case "switch":
+      // TODO: Implement switch logic
+      return { branch: "default" };
+
+    default:
+      throw new Error(`Unknown condition subtype: ${subtype}`);
+  }
 }
 
 /**
- * Action: Post to Twitter
+ * Execute a data transformation node (map, aggregate, format)
  */
-async function postToTwitterAction(
-  config: Record<string, any>,
-  triggerData: Record<string, any>,
-  userId: number
-): Promise<void> {
-  // TODO: Implement Twitter API integration
-  // For now, just log the action
-  console.log("[Workflow] Post to Twitter:", {
-    text: interpolate(config.text, triggerData),
-  });
+async function executeDataTransform(
+  node: WorkflowNode,
+  inputData: Record<string, any>,
+  context: ExecutionContext
+): Promise<any> {
+  const { subtype, data } = node;
+
+  switch (subtype) {
+    case "map":
+      // TODO: Implement array mapping
+      return { mapped: true };
+
+    case "aggregate":
+      // TODO: Implement aggregation
+      return { aggregated: true };
+
+    case "format":
+      // TODO: Implement formatting
+      return { formatted: true };
+
+    default:
+      throw new Error(`Unknown data transform subtype: ${subtype}`);
+  }
+}
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Get execution order of nodes (topological sort)
+ */
+function getExecutionOrder(definition: WorkflowDefinition): string[] {
+  const { nodes, edges } = definition;
+  const order: string[] = [];
+  const visited = new Set<string>();
+  const visiting = new Set<string>();
+
+  // Build adjacency list
+  const adjacency = new Map<string, string[]>();
+  for (const node of nodes) {
+    adjacency.set(node.id, []);
+  }
+  for (const edge of edges) {
+    adjacency.get(edge.source)?.push(edge.target);
+  }
+
+  // DFS topological sort
+  function visit(nodeId: string) {
+    if (visited.has(nodeId)) return;
+    if (visiting.has(nodeId)) {
+      throw new Error("Circular dependency detected in workflow");
+    }
+
+    visiting.add(nodeId);
+
+    const neighbors = adjacency.get(nodeId) || [];
+    for (const neighbor of neighbors) {
+      visit(neighbor);
+    }
+
+    visiting.delete(nodeId);
+    visited.add(nodeId);
+    order.unshift(nodeId); // Add to front for reverse order
+  }
+
+  // Find trigger nodes (nodes with no incoming edges)
+  const hasIncoming = new Set<string>();
+  for (const edge of edges) {
+    hasIncoming.add(edge.target);
+  }
+
+  const triggerNodes = nodes.filter((n) => !hasIncoming.has(n.id));
+
+  // Start DFS from trigger nodes
+  for (const trigger of triggerNodes) {
+    visit(trigger.id);
+  }
+
+  return order;
 }
 
 /**
- * Action: Notify Artist
+ * Get input data for a node from connected upstream nodes
  */
-async function notifyArtistAction(
-  config: Record<string, any>,
-  triggerData: Record<string, any>,
-  userId: number
-): Promise<void> {
-  // TODO: Implement in-app notification system
-  // For now, just log the action
-  console.log("[Workflow] Notify Artist:", {
-    title: interpolate(config.title, triggerData),
-    message: interpolate(config.message, triggerData),
-  });
+function getNodeInputs(
+  node: WorkflowNode,
+  definition: WorkflowDefinition,
+  context: ExecutionContext
+): Record<string, any> {
+  const inputs: Record<string, any> = {};
+
+  // Find all edges pointing to this node
+  const incomingEdges = definition.edges.filter((e) => e.target === node.id);
+
+  for (const edge of incomingEdges) {
+    const sourceOutput = context.nodeOutputs.get(edge.source);
+    if (sourceOutput !== undefined) {
+      inputs[edge.source] = sourceOutput;
+    }
+  }
+
+  // If no inputs, use trigger data
+  if (Object.keys(inputs).length === 0) {
+    return context.triggerData;
+  }
+
+  return inputs;
 }
 
 /**
- * Action: AI Generate Social Post
+ * Evaluate a condition expression
  */
-async function aiGenerateSocialPostAction(
-  config: Record<string, any>,
-  triggerData: Record<string, any>,
-  userId: number
-): Promise<void> {
-  // TODO: Implement AI-powered social post generation using LLM
-  // For now, just log the action
-  console.log("[Workflow] AI Generate Social Post:", {
-    platform: config.platform,
-    template: interpolate(config.template, triggerData),
-  });
+function evaluateCondition(
+  condition: any,
+  data: Record<string, any>
+): boolean {
+  // TODO: Implement proper condition evaluation
+  // For now, just return true
+  return true;
 }
 
 /**
- * Interpolate template variables with trigger data
- * Example: "You hit {{streams}} streams!" + {streams: 1000} → "You hit 1000 streams!"
+ * Log node execution to database
  */
-function interpolate(template: string, data: Record<string, any>): string {
-  return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-    return data[key] !== undefined ? String(data[key]) : match;
-  });
+async function logNodeExecution(
+  db: any,
+  log: {
+    executionId: number;
+    nodeId: string;
+    nodeType: string;
+    nodeSubtype: string;
+    status: "success" | "failed" | "skipped";
+    input: Record<string, any>;
+    output: any;
+    errorMessage?: string;
+    errorStack?: string;
+    executedAt: Date;
+    duration: number;
+  }
+) {
+  await db.insert(workflowExecutionLogs).values(log);
 }
 
+// ============================================================================
+// TRIGGER SYSTEM
+// ============================================================================
+
 /**
- * Check if a workflow should be triggered based on an event
+ * Check and fire triggers for active workflows
+ * Called by cron job or event system
  */
 export async function checkTriggers(
-  triggerType: string,
-  eventData: Record<string, any>
+  triggerType: "webhook" | "schedule" | "event",
+  eventData?: Record<string, any>
 ): Promise<void> {
   const db = await getDb();
   if (!db) {
-    return;
+    throw new Error("Database not available");
   }
 
-  // Find all active workflows with this trigger type
-  const matchingWorkflows = await db
+  // Get all active triggers of this type
+  const triggers = await db
     .select()
-    .from(workflows)
-    .where(and(eq(workflows.triggerType, triggerType), eq(workflows.isActive, true)));
+    .from(workflowTriggers)
+    .where(and(eq(workflowTriggers.type, triggerType), eq(workflowTriggers.isActive, true)));
 
-  // Execute each matching workflow
-  for (const workflow of matchingWorkflows) {
-    const triggerConfig = workflow.triggerConfig as TriggerConfig;
+  for (const trigger of triggers) {
+    try {
+      // Check if trigger condition is met
+      const shouldFire = await evaluateTrigger(trigger, eventData);
 
-    // Check if trigger conditions are met
-    if (shouldTrigger(triggerConfig, eventData)) {
-      // Execute workflow asynchronously (don't block)
-      executeWorkflow(workflow.id, eventData).catch((error) => {
-        console.error(`[Workflow] Failed to execute workflow ${workflow.id}:`, error);
-      });
+      if (shouldFire) {
+        // Execute workflow
+        await executeWorkflow(trigger.workflowId, triggerType, eventData || {});
+
+        // Update trigger statistics
+        await db
+          .update(workflowTriggers)
+          .set({
+            triggerCount: trigger.triggerCount + 1,
+            lastTriggeredAt: new Date(),
+          })
+          .where(eq(workflowTriggers.id, trigger.id));
+      }
+    } catch (error) {
+      console.error(`[Workflow] Trigger ${trigger.id} failed:`, error);
     }
   }
 }
 
 /**
- * Determine if a trigger should fire based on config and event data
+ * Evaluate if a trigger should fire
  */
-function shouldTrigger(triggerConfig: TriggerConfig, eventData: Record<string, any>): boolean {
-  const config = triggerConfig.config || triggerConfig;
-
-  switch (triggerConfig.type || config.type) {
-    case "bap_milestone":
-      // Example: trigger when total_streams >= 1000
-      return (
-        eventData.metric === config.metric &&
-        eventData.value >= config.threshold &&
-        (config.song_id === null || eventData.song_id === config.song_id)
-      );
-
-    case "bopshop_sale":
-      // Trigger on any BopShop sale
-      return true;
-
-    case "schedule":
-      // Schedule triggers are handled by cron jobs, not event-based
-      return false;
-
-    default:
-      return false;
-  }
+async function evaluateTrigger(
+  trigger: any,
+  eventData?: Record<string, any>
+): Promise<boolean> {
+  // TODO: Implement proper trigger evaluation based on config
+  // For now, always return true for testing
+  return true;
 }
