@@ -710,3 +710,87 @@
 - [ ] Test workflow execution from AI-generated workflows
 - [ ] Add analytics tracking (AI usage, success rate)
 - [x] Save checkpoint
+
+
+## Build Unified AI Orchestration System - "Boptone Nervous System" (TRILLION-DOLLAR ARCHITECTURE)
+
+### Strategic Context
+- Make Boptone feel like a living, breathing organism that artists can trust with their entire career
+- All AI features (Toney, Workflow Assistant, Analytics, Career Advisor) connected through unified context
+- Seamless handoffs between AI systems - artists never feel like they're talking to different tools
+- Proactive AI that suggests actions before artists ask
+- The platform actively works FOR the artist, not just provides tools
+- This is Music Business 2.0 - the platform as intelligent partner, not passive tool
+
+### Phase 1: Find and Analyze Toney
+- [x] Search codebase for Toney chatbot implementation
+- [x] Understand current Toney architecture (where it lives, how it works)
+- [x] Document Toney's current capabilities and limitations
+- [x] Identify integration points for unified AI system
+
+**Findings:**
+- Toney exists at /client/src/components/ToneyChatbot.tsx
+- Has comprehensive system prompt with Boptone philosophy
+- Currently using placeholder responses (NOT connected to AI)
+- Stores chat history in localStorage
+- Proactive greeting on key pages
+- Perfect foundation for unified AI integration
+
+### Phase 2: Design Unified AI Context System
+- [x] Design central knowledge graph of artist data
+- [x] Create shared context schema (artist profile, goals, workflows, revenue, fans)
+- [x] Design event bus for AI-to-AI communication
+- [x] Map data flow between all AI features
+- [x] Design context persistence (how context is stored and updated)
+
+**Architecture Document Created:**
+- Complete blueprint at /home/ubuntu/boptone-ai-architecture.md
+- Defines ArtistContext interface with all artist data
+- AIOrchestrator service design
+- AI capability registry pattern
+- Event bus for real-time communication
+- Database schema for ai_context, ai_events, ai_recommendations
+- Implementation phases and success metrics
+- Ready for Phase 3 implementation when needed
+
+### Phase 3: Build Central AI Orchestration Layer
+- [ ] Create AIOrchestrator service (central brain)
+- [ ] Build unified context manager (stores artist state)
+- [ ] Implement event bus for AI feature communication
+- [ ] Add context enrichment (automatically gather artist data)
+- [ ] Create AI capability registry (what each AI can do)
+
+### Phase 4: Integrate Toney with Workflow Assistant
+- [ ] Connect Toney to workflow generation API
+- [ ] Add workflow-aware responses to Toney
+- [ ] Implement handoff flow (Toney → Workflow Assistant)
+- [ ] Add workflow status checking to Toney
+- [ ] Enable Toney to suggest workflows based on artist goals
+
+### Phase 5: Add Proactive AI Recommendations
+- [ ] Build recommendation engine (analyzes artist data)
+- [ ] Create workflow suggestion system (based on artist behavior)
+- [ ] Add predictive notifications ("You might want to...")
+- [ ] Implement automated optimization suggestions
+- [ ] Build AI insights dashboard (show what Boptone is doing for you)
+
+### Phase 6: Unified AI Experience Polish
+- [ ] Add seamless UI transitions between AI features
+- [ ] Create unified AI voice/personality across all features
+- [ ] Add context-aware help (AI knows what you're trying to do)
+- [ ] Implement smart defaults (AI pre-fills forms based on context)
+- [ ] Add AI activity feed (show all AI actions on artist's behalf)
+
+### Phase 7: Testing & Deployment
+- [ ] Test Toney → Workflow Assistant handoff
+- [ ] Test proactive recommendations accuracy
+- [ ] Verify context persistence across sessions
+- [ ] Test with real artist workflows
+- [ ] Save checkpoint
+
+### Success Metrics
+- Artists feel like Boptone "knows them"
+- Zero friction between AI features
+- Proactive suggestions have >70% acceptance rate
+- Artists describe platform as "intelligent partner"
+- Competitive moat: No other platform has unified AI orchestration
