@@ -535,7 +535,7 @@
 ### Phase 2: Core Workflow Engine
 - [x] Design workflow data model (triggers, actions, conditions)
 - [x] Build workflow execution engine
-- [ ] Create workflow builder UI (visual node-based editor)
+- [x] Create workflow builder UI (visual node-based editor with React Flow)
 - [x] Implement trigger system (webhooks, schedules, events)
 - [x] Build action system (send email, post to social, update data)
 
@@ -569,7 +569,7 @@
 - [x] Build workflow execution engine (node-based with topological sorting)
 - [x] Create trigger system (webhook, schedule, event, manual)
 - [x] Implement action system (email, social media, SMS, webhooks, AI)
-- [ ] Build workflow builder UI with visual editor
+- [x] Build workflow builder UI with visual editor (React Flow + custom nodes)
 - [ ] Add pre-built workflow templates (10-15 common use cases)
 - [ ] Create workflow management page (/workflows)
 - [ ] Add workflow execution history tracking
