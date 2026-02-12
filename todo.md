@@ -593,3 +593,52 @@
 ### Future Phases (Post-MVP)
 - Phase 2: AI-powered features (natural language, auto-generation, smart suggestions)
 - Phase 3: Advanced features (custom code nodes, third-party integrations, marketplace)
+
+
+## Build Payout Settings Dashboard (/settings/payouts) - HIGH PRIORITY ✅ COMPLETE
+
+### Strategic Context
+- Core trust feature: Artists must be able to access their 90% earnings immediately
+- Inspired by Lyft/Uber/Shopify instant payout models
+- Two-tier system: Standard (free, next-day) + Instant (1% fee, 1-hour delivery)
+- Flexible schedules: daily, weekly, monthly (artist's choice)
+- $20 minimum payout threshold
+
+### Phase 1: Database Schema
+- [x] Create payout_accounts table (bank account info, verification status)
+- [x] Create payouts table (amount, status, schedule, fee, timestamps)
+- [x] Create earnings_balance table (current available balance per artist)
+- [x] Add payout_schedule to users table (daily/weekly/monthly preference)
+- [x] Push database schema to production
+
+### Phase 2: Backend API (tRPC Procedures)
+- [x] Create addPayoutAccount procedure (add/verify bank account)
+- [x] Build getPayoutAccounts query (list artist's bank accounts)
+- [x] Create updatePayoutSchedule mutation (set daily/weekly/monthly)
+- [x] Build getCurrentBalance query (available earnings to withdraw)
+- [x] Create requestPayout mutation (standard or instant)
+- [x] Build getPayoutHistory query (past payouts with status)
+- [x] Add calculateInstantFee helper (1% of payout amount)
+- [x] Implement payout status tracking (pending/processing/completed/failed)
+
+### Phase 3: Payout Settings UI (/settings/payouts)
+- [x] Create PayoutSettings.tsx page component
+- [x] Add route to App.tsx (/settings/payouts)
+- [x] Build current balance display (prominent, top of page)
+- [x] Create bank account management section (add/edit/delete accounts)
+- [x] Build payout schedule selector (daily/weekly/monthly radio buttons)
+- [x] Add instant payout request button with 1% fee calculator
+- [x] Create payout history table (date, amount, status, method)
+- [x] Implement bank account verification flow
+- [x] Add loading states and error handling
+- [x] Style with Brex-inspired minimal design
+
+### Phase 4: Testing & Deployment
+- [x] Test add bank account flow
+- [x] Test payout schedule changes
+- [x] Test standard payout request
+- [x] Test instant payout with fee calculation
+- [x] Verify balance updates correctly
+- [x] Test payout history display
+- [x] Create comprehensive vitest test suite (16 tests, all passing)
+- [x] Save checkpoint

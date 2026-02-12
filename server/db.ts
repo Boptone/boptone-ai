@@ -577,3 +577,305 @@ export async function getAnalyticsSnapshots(artistId: number, startDate?: Date, 
   
   return await db.select().from(analyticsSnapshots).where(and(...conditions)).orderBy(desc(analyticsSnapshots.snapshotDate));
 }
+
+// ============================================================================
+// PAYOUT SYSTEM
+// ============================================================================
+
+import { 
+  payoutAccounts,
+  InsertPayoutAccount,
+  PayoutAccount,
+  payouts,
+  InsertPayout,
+  Payout,
+  earningsBalance,
+  InsertEarningsBalance,
+  EarningsBalance,
+} from "../drizzle/schema";
+import crypto from "crypto";
+
+/**
+ * Hash account number for duplicate detection (never store full account number)
+ */
+export function hashAccountNumber(accountNumber: string): string {
+  return crypto.createHash("sha256").update(accountNumber).digest("hex");
+}
+
+/**
+ * Get artist's payout accounts
+ */
+export async function getPayoutAccounts(artistId: number): Promise<PayoutAccount[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get payout accounts: database not available");
+    return [];
+  }
+
+  try {
+    const accounts = await db
+      .select()
+      .from(payoutAccounts)
+      .where(eq(payoutAccounts.artistId, artistId))
+      .orderBy(desc(payoutAccounts.isDefault), desc(payoutAccounts.createdAt));
+    
+    return accounts;
+  } catch (error) {
+    console.error("[Database] Failed to get payout accounts:", error);
+    throw error;
+  }
+}
+
+/**
+ * Add new payout account for artist
+ */
+export async function addPayoutAccount(account: InsertPayoutAccount): Promise<PayoutAccount> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    // If this is set as default, unset other defaults
+    if (account.isDefault) {
+      await db
+        .update(payoutAccounts)
+        .set({ isDefault: false })
+        .where(eq(payoutAccounts.artistId, account.artistId));
+    }
+
+    const result = await db.insert(payoutAccounts).values(account);
+    const insertedId = Number(result[0].insertId);
+    
+    const inserted = await db
+      .select()
+      .from(payoutAccounts)
+      .where(eq(payoutAccounts.id, insertedId))
+      .limit(1);
+    
+    return inserted[0]!;
+  } catch (error) {
+    console.error("[Database] Failed to add payout account:", error);
+    throw error;
+  }
+}
+
+/**
+ * Update payout account
+ */
+export async function updatePayoutAccount(
+  accountId: number,
+  artistId: number,
+  updates: Partial<PayoutAccount>
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    // If setting as default, unset other defaults first
+    if (updates.isDefault) {
+      await db
+        .update(payoutAccounts)
+        .set({ isDefault: false })
+        .where(eq(payoutAccounts.artistId, artistId));
+    }
+
+    await db
+      .update(payoutAccounts)
+      .set(updates)
+      .where(
+        and(
+          eq(payoutAccounts.id, accountId),
+          eq(payoutAccounts.artistId, artistId)
+        )
+      );
+  } catch (error) {
+    console.error("[Database] Failed to update payout account:", error);
+    throw error;
+  }
+}
+
+/**
+ * Delete payout account
+ */
+export async function deletePayoutAccount(accountId: number, artistId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    await db
+      .delete(payoutAccounts)
+      .where(
+        and(
+          eq(payoutAccounts.id, accountId),
+          eq(payoutAccounts.artistId, artistId)
+        )
+      );
+  } catch (error) {
+    console.error("[Database] Failed to delete payout account:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get artist's earnings balance
+ */
+export async function getEarningsBalance(artistId: number): Promise<EarningsBalance | null> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get earnings balance: database not available");
+    return null;
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(earningsBalance)
+      .where(eq(earningsBalance.artistId, artistId))
+      .limit(1);
+    
+    return result[0] || null;
+  } catch (error) {
+    console.error("[Database] Failed to get earnings balance:", error);
+    throw error;
+  }
+}
+
+/**
+ * Initialize earnings balance for new artist
+ */
+export async function initializeEarningsBalance(artistId: number): Promise<EarningsBalance> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const balance: InsertEarningsBalance = {
+      artistId,
+      totalEarnings: 0,
+      availableBalance: 0,
+      pendingBalance: 0,
+      withdrawnBalance: 0,
+      payoutSchedule: "manual",
+      autoPayoutEnabled: false,
+      autoPayoutThreshold: 2000, // $20.00
+    };
+
+    const result = await db.insert(earningsBalance).values(balance);
+    const insertedId = Number(result[0].insertId);
+    
+    const inserted = await db
+      .select()
+      .from(earningsBalance)
+      .where(eq(earningsBalance.id, insertedId))
+      .limit(1);
+    
+    return inserted[0]!;
+  } catch (error) {
+    console.error("[Database] Failed to initialize earnings balance:", error);
+    throw error;
+  }
+}
+
+/**
+ * Update earnings balance
+ */
+export async function updateEarningsBalance(
+  artistId: number,
+  updates: Partial<EarningsBalance>
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    await db
+      .update(earningsBalance)
+      .set(updates)
+      .where(eq(earningsBalance.artistId, artistId));
+  } catch (error) {
+    console.error("[Database] Failed to update earnings balance:", error);
+    throw error;
+  }
+}
+
+/**
+ * Create payout request
+ */
+export async function createPayout(payout: InsertPayout): Promise<Payout> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    const result = await db.insert(payouts).values(payout);
+    const insertedId = Number(result[0].insertId);
+    
+    const inserted = await db
+      .select()
+      .from(payouts)
+      .where(eq(payouts.id, insertedId))
+      .limit(1);
+    
+    return inserted[0]!;
+  } catch (error) {
+    console.error("[Database] Failed to create payout:", error);
+    throw error;
+  }
+}
+
+/**
+ * Get artist's payout history
+ */
+export async function getPayoutHistory(artistId: number, limit: number = 50): Promise<Payout[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get payout history: database not available");
+    return [];
+  }
+
+  try {
+    const history = await db
+      .select()
+      .from(payouts)
+      .where(eq(payouts.artistId, artistId))
+      .orderBy(desc(payouts.requestedAt))
+      .limit(limit);
+    
+    return history;
+  } catch (error) {
+    console.error("[Database] Failed to get payout history:", error);
+    throw error;
+  }
+}
+
+/**
+ * Update payout status
+ */
+export async function updatePayoutStatus(
+  payoutId: number,
+  status: Payout["status"],
+  updates?: Partial<Payout>
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  try {
+    await db
+      .update(payouts)
+      .set({ status, ...updates })
+      .where(eq(payouts.id, payoutId));
+  } catch (error) {
+    console.error("[Database] Failed to update payout status:", error);
+    throw error;
+  }
+}

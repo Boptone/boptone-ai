@@ -15,6 +15,7 @@ import { podRouter } from "./routers/pod";
 import { writerPaymentsRouter } from "./routers/writerPayments";
 import { subscriptionsRouter } from "./routers/subscriptions";
 import { musicRouter } from "./routers/music";
+import { payoutsRouter } from "./routers/payouts";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -672,6 +673,9 @@ export const appRouter = router({
 
   // Music Upload & Management System
   music: musicRouter,
+
+  // Payout System (Withdrawals & Bank Accounts)
+  payouts: payoutsRouter,
 });
 
 export type AppRouter = typeof appRouter;

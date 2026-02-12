@@ -2154,3 +2154,159 @@ export type WorkflowExecution = typeof workflowExecutions.$inferSelect;
 export type InsertWorkflowExecution = typeof workflowExecutions.$inferInsert;
 export type WorkflowTemplate = typeof workflowTemplates.$inferSelect;
 export type InsertWorkflowTemplate = typeof workflowTemplates.$inferInsert;
+
+// ============================================================================
+// ARTIST PAYOUT SYSTEM
+// ============================================================================
+
+/**
+ * Payout Accounts - Artist bank accounts for withdrawals
+ * Artists can add multiple bank accounts and set one as default
+ */
+export const payoutAccounts = mysqlTable("payout_accounts", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Bank account details (encrypted in production)
+  accountHolderName: varchar("accountHolderName", { length: 255 }).notNull(),
+  accountType: mysqlEnum("accountType", ["checking", "savings"]).default("checking").notNull(),
+  routingNumber: varchar("routingNumber", { length: 20 }).notNull(),
+  accountNumberLast4: varchar("accountNumberLast4", { length: 4 }).notNull(), // Only store last 4 digits
+  accountNumberHash: varchar("accountNumberHash", { length: 255 }).notNull(), // Hash of full account number for duplicate detection
+  
+  // Bank information
+  bankName: varchar("bankName", { length: 255 }),
+  
+  // Verification status
+  verificationStatus: mysqlEnum("verificationStatus", ["pending", "verified", "failed"]).default("pending").notNull(),
+  verifiedAt: timestamp("verifiedAt"),
+  verificationMethod: varchar("verificationMethod", { length: 50 }), // "micro_deposits", "instant", "manual"
+  
+  // Account status
+  isDefault: boolean("isDefault").default(false).notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    stripeExternalAccountId?: string; // Stripe external account ID for payouts
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+}));
+
+export type PayoutAccount = typeof payoutAccounts.$inferSelect;
+export type InsertPayoutAccount = typeof payoutAccounts.$inferInsert;
+
+/**
+ * Payouts - Individual payout transactions to artists
+ * Tracks both standard (free, next-day) and instant (1% fee, 1-hour) payouts
+ */
+export const payouts = mysqlTable("payouts", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  payoutAccountId: int("payoutAccountId").notNull().references(() => payoutAccounts.id),
+  
+  // Payout details
+  amount: int("amount").notNull(), // In cents
+  currency: varchar("currency", { length: 3 }).default("USD").notNull(),
+  
+  // Payout type and fees
+  payoutType: mysqlEnum("payoutType", ["standard", "instant"]).default("standard").notNull(),
+  fee: int("fee").default(0).notNull(), // In cents (0 for standard, 1% for instant)
+  netAmount: int("netAmount").notNull(), // Amount after fees, in cents
+  
+  // Status tracking
+  status: mysqlEnum("status", ["pending", "processing", "completed", "failed", "cancelled"]).default("pending").notNull(),
+  
+  // Payment processing
+  paymentProcessor: varchar("paymentProcessor", { length: 50 }).default("stripe"), // "stripe", "paypal", etc.
+  externalPayoutId: varchar("externalPayoutId", { length: 255 }), // Stripe payout ID, PayPal transaction ID, etc.
+  
+  // Failure handling
+  failureReason: text("failureReason"),
+  failureCode: varchar("failureCode", { length: 50 }),
+  retryCount: int("retryCount").default(0).notNull(),
+  
+  // Timestamps
+  requestedAt: timestamp("requestedAt").defaultNow().notNull(),
+  scheduledFor: timestamp("scheduledFor"), // When payout should be processed
+  processedAt: timestamp("processedAt"), // When payment processor started processing
+  completedAt: timestamp("completedAt"), // When funds arrived in bank account
+  estimatedArrival: timestamp("estimatedArrival"), // Expected arrival date
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    earningsBreakdown?: Array<{
+      source: string; // "bap_streaming", "bopshop_sales", "tips", etc.
+      amount: number;
+    }>;
+    ipAddress?: string;
+    userAgent?: string;
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  requestedAtIdx: index("requested_at_idx").on(table.requestedAt),
+}));
+
+export type Payout = typeof payouts.$inferSelect;
+export type InsertPayout = typeof payouts.$inferInsert;
+
+/**
+ * Earnings Balance - Current available balance for each artist
+ * Single source of truth for how much an artist can withdraw
+ */
+export const earningsBalance = mysqlTable("earnings_balance", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id).unique(),
+  
+  // Balance tracking (all in cents)
+  totalEarnings: int("totalEarnings").default(0).notNull(), // Lifetime total earnings
+  availableBalance: int("availableBalance").default(0).notNull(), // Current available to withdraw
+  pendingBalance: int("pendingBalance").default(0).notNull(), // Earnings being processed (7-day hold for new accounts)
+  withdrawnBalance: int("withdrawnBalance").default(0).notNull(), // Total withdrawn to date
+  
+  // Payout preferences
+  payoutSchedule: mysqlEnum("payoutSchedule", ["daily", "weekly", "monthly", "manual"]).default("manual").notNull(),
+  autoPayoutEnabled: boolean("autoPayoutEnabled").default(false).notNull(),
+  autoPayoutThreshold: int("autoPayoutThreshold").default(2000).notNull(), // Minimum balance for auto-payout ($20.00)
+  
+  // Account holds (for fraud protection)
+  isOnHold: boolean("isOnHold").default(false).notNull(),
+  holdReason: text("holdReason"),
+  holdUntil: timestamp("holdUntil"),
+  
+  // Last payout tracking
+  lastPayoutAt: timestamp("lastPayoutAt"),
+  lastPayoutAmount: int("lastPayoutAmount"),
+  
+  // Metadata
+  metadata: json("metadata").$type<{
+    earningsSources?: {
+      bapStreaming?: number;
+      thirdPartyDistribution?: number;
+      bopshopSales?: number;
+      tips?: number;
+      memberships?: number;
+      syncLicensing?: number;
+      liveEvents?: number;
+    };
+    [key: string]: unknown;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+}));
+
+export type EarningsBalance = typeof earningsBalance.$inferSelect;
+export type InsertEarningsBalance = typeof earningsBalance.$inferInsert;
