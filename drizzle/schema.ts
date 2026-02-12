@@ -2112,3 +2112,45 @@ export const distributionRevenue = mysqlTable("distribution_revenue", {
 
 export type DistributionRevenue = typeof distributionRevenue.$inferSelect;
 export type InsertDistributionRevenue = typeof distributionRevenue.$inferInsert;
+
+
+// Workflow Automation Tables
+export const workflows = mysqlTable("workflows", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  isActive: boolean("isActive").default(true).notNull(),
+  triggerType: varchar("triggerType", { length: 50 }).notNull(),
+  triggerConfig: json("triggerConfig").notNull(),
+  actions: json("actions").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export const workflowExecutions = mysqlTable("workflow_executions", {
+  id: int("id").autoincrement().primaryKey(),
+  workflowId: int("workflowId").notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("running"),
+  triggerData: json("triggerData"),
+  executionLog: json("executionLog"),
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+});
+
+export const workflowTemplates = mysqlTable("workflow_templates", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  category: varchar("category", { length: 50 }).notNull(),
+  description: text("description"),
+  templateConfig: json("templateConfig").notNull(),
+  popularityScore: int("popularityScore").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type Workflow = typeof workflows.$inferSelect;
+export type InsertWorkflow = typeof workflows.$inferInsert;
+export type WorkflowExecution = typeof workflowExecutions.$inferSelect;
+export type InsertWorkflowExecution = typeof workflowExecutions.$inferInsert;
+export type WorkflowTemplate = typeof workflowTemplates.$inferSelect;
+export type InsertWorkflowTemplate = typeof workflowTemplates.$inferInsert;

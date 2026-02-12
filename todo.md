@@ -514,3 +514,82 @@
 - [x] Move platform fee explanation to supporting context ("Boptone keeps 10% to run the platform")
 - [x] Test messaging for artist-first tone
 - [x] Ready for checkpoint
+
+
+## Build AI-Powered Workflow Automation System for Pro/Enterprise (User Request - HIGH PRIORITY)
+
+### Strategic Context
+- Inspired by n8n.io (open-source) and Zapier workflow automation
+- Pro/Enterprise tier exclusive feature
+- Artist-specific workflows (not generic business automation)
+- AI-powered to make workflows smarter and easier to set up
+- Must be extremely easy to use (artists are not technical)
+
+### Phase 1: Research & Architecture
+- [ ] Research n8n.io open-source architecture on GitHub
+- [ ] Study Zapier's workflow patterns and UI/UX
+- [ ] Identify artist-specific workflow use cases
+- [ ] Design AI integration opportunities
+- [ ] Document findings and present to user before building
+
+### Phase 2: Core Workflow Engine
+- [ ] Design workflow data model (triggers, actions, conditions)
+- [ ] Build workflow execution engine
+- [ ] Create workflow builder UI (visual node-based editor)
+- [ ] Implement trigger system (webhooks, schedules, events)
+- [ ] Build action system (send email, post to social, update data)
+
+### Phase 3: Artist-Specific Integrations
+- [ ] BAP streaming triggers (new stream, milestone reached)
+- [ ] BopShop triggers (new sale, inventory low)
+- [ ] Fan engagement triggers (new follower, tip received)
+- [ ] Social media actions (post to Instagram, Twitter, etc.)
+- [ ] Email/SMS actions (send thank you, notify team)
+- [ ] Analytics actions (track conversion, update dashboard)
+
+### Phase 4: AI-Powered Features
+- [ ] AI workflow suggestions based on artist goals
+- [ ] Auto-generate social media posts from triggers
+- [ ] Smart fan segmentation and targeting
+- [ ] Predictive analytics (forecast streams, sales)
+- [ ] Natural language workflow creation ("When I get 1K streams, post to Instagram")
+
+### Phase 5: Testing & Deployment
+- [ ] Test workflow creation and execution
+- [ ] Test AI-powered features
+- [ ] Add to Pro/Enterprise tier features
+- [ ] Create documentation and tutorials
+- [ ] Save checkpoint
+
+
+## Build AI-Powered Workflow Automation System (Pro/Enterprise Feature)
+
+### Phase 1: MVP Implementation
+- [ ] Create database schema (workflows, executions, templates tables)
+- [ ] Build workflow execution engine
+- [ ] Create trigger system (BAP, BopShop, schedule)
+- [ ] Implement action system (email, social media)
+- [ ] Build workflow builder UI with visual editor
+- [ ] Add pre-built workflow templates (10-15 common use cases)
+- [ ] Create workflow management page (/workflows)
+- [ ] Add workflow execution history tracking
+- [ ] Integrate with Pro/Enterprise tier features
+- [ ] Test end-to-end workflow execution
+- [ ] Document system for future AI enhancements
+- [ ] Save checkpoint
+
+### Pre-built Templates (MVP)
+1. "Celebrate 1K streams" → Post to Instagram + Email artist
+2. "New BopShop sale" → Send thank you email + Add to mailing list
+3. "Weekly revenue report" → Email breakdown every Monday
+4. "Hit monthly goal" → Notify + Post celebration
+5. "New follower" → Add to welcome email sequence
+6. "Low inventory alert" → Notify artist
+7. "Milestone reached" → Auto-generate social post
+8. "Fan tip $50+" → Send personal thank you
+9. "Streams trending up" → Suggest next single release
+10. "Monthly summary" → Email stats + insights
+
+### Future Phases (Post-MVP)
+- Phase 2: AI-powered features (natural language, auto-generation, smart suggestions)
+- Phase 3: Advanced features (custom code nodes, third-party integrations, marketplace)

@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS workflow_executions (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  workflowId INT NOT NULL,\n  status VARCHAR(50) NOT NULL DEFAULT 'running',\n  triggerData JSON,\n  executionLog JSON,\n  startedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  completedAt TIMESTAMP NULL,\n  FOREIGN KEY (workflowId) REFERENCES workflows(id) ON DELETE CASCADE,\n  INDEX idx_workflow_status (workflowId, status),\n  INDEX idx_started_at (startedAt)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS workflow_executions (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  workflowId INT NOT NULL,\n  status VARCHAR(50) NOT NULL DEFAULT 'running',\n  triggerData JSON,\n  executionLog JSON,\n  startedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  completedAt TIMESTAMP NULL,\n  FOREIGN KEY (workflowId) REFERENCES workflows(id) ON DELETE CASCADE,\n  INDEX idx_workflow_status (workflowId, status),\n  INDEX idx_started_at (startedAt)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 280
+}
