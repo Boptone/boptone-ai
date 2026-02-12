@@ -642,3 +642,24 @@
 - [x] Test payout history display
 - [x] Create comprehensive vitest test suite (16 tests, all passing)
 - [x] Save checkpoint
+
+
+## Add Earnings Dashboard Widget (User Request - HIGH PRIORITY) ✅ COMPLETE
+
+### Strategic Context
+- Make payout system front-and-center on main dashboard
+- Quick access to current balance without navigating to settings
+- One-click withdraw button for immediate action
+- Reinforce trust-first messaging (artists always have access to their money)
+
+### Implementation
+- [x] Create EarningsWidget.tsx component
+- [x] Display current available balance prominently
+- [x] Show pending balance and withdrawn total
+- [x] Add "Withdraw Funds" button linking to /settings/payouts
+- [x] Display next scheduled payout date (if auto-payout enabled)
+- [x] Show recent payout status (if any)
+- [x] Style with Brex-inspired minimal design matching payout settings
+- [x] Add to main Dashboard page
+- [x] Test widget display and navigation
+- [x] Save checkpoint

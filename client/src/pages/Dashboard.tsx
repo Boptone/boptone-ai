@@ -28,6 +28,7 @@ import { Progress } from "@/components/ui/progress";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
 import { PlanManagementSection } from "@/components/PlanManagementSection";
+import { EarningsWidget } from "@/components/EarningsWidget";
 
 export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
@@ -221,6 +222,9 @@ export default function Dashboard() {
               );
             })}
           </div>
+
+          {/* Earnings Widget */}
+          <EarningsWidget />
 
           {/* Quick Actions - Minimal grid */}
           <Card className="border-2 border-gray-200 bg-white">
