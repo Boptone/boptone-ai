@@ -23,6 +23,7 @@ interface Recommendation {
 export function AIRecommendations() {
   const { data: recommendations, refetch } = trpc.toney.getRecommendations.useQuery();
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
+  const executeMutation = trpc.toney.executeCapability.useMutation();
   
   if (!recommendations || recommendations.length === 0) {
     return null;
@@ -52,7 +53,7 @@ export function AIRecommendations() {
   const handleAccept = async (rec: Recommendation) => {
     try {
       // Execute the recommendation action
-      await trpc.toney.executeCapability.mutate({
+      await executeMutation.mutateAsync({
         capability: rec.type,
         params: rec.actionData,
       });

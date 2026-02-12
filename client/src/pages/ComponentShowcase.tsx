@@ -174,7 +174,7 @@ import { toast as sonnerToast } from "sonner";
 import { AIChatBox, type Message } from "@/components/AIChatBox";
 
 export default function ComponentsShowcase() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [datePickerDate, setDatePickerDate] = useState<Date>();
   const [selectedFruits, setSelectedFruits] = useState<string[]>([]);
@@ -233,7 +233,7 @@ export default function ComponentsShowcase() {
           <h2 className="text-3xl font-bold tracking-tight mb-6">
             Shadcn/ui Component Library
           </h2>
-          <Button className="rounded-full" variant="outline" size="icon" onClick={toggleTheme}>
+          <Button className="rounded-full" variant="outline" size="icon" onClick={() => setTheme?.(theme === 'light' ? 'dark' : 'light')}>
             {theme === "light" ? (
               <Moon className="h-5 w-5" />
             ) : (
@@ -474,8 +474,8 @@ export default function ComponentsShowcase() {
                   <Label>Date Time Picker</Label>
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button className="rounded-full" variant="outline"
-                        className={`w-full justify-start text-left font-normal ${
+                      <Button variant="outline"
+                        className={`rounded-full w-full justify-start text-left font-normal ${
                           !datePickerDate && "text-muted-foreground"
                         }`}
                       >

@@ -1,6 +1,6 @@
 import { AIChatBox, Message } from "@/components/AIChatBox";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
@@ -17,6 +17,7 @@ export function ToneyChatbot() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const chatMutation = trpc.toney.chat.useMutation();
+  const workflowMutation = trpc.workflows.generateFromText.useMutation();
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {
     // Check if we've already auto-opened in this session
     return localStorage.getItem(AUTO_OPENED_KEY) === 'true';
@@ -193,7 +194,10 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
                 // Call Toney AI backend
                 const response = await chatMutation.mutateAsync({
                   message: content,
-                  conversationHistory: messages,
+                  conversationHistory: messages.filter(m => m.role !== 'system').map(m => ({
+                    role: m.role as 'user' | 'assistant',
+                    content: m.content,
+                  })),
                 });
                 
                 // Check if Toney wants to generate a workflow
@@ -208,7 +212,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
                   
                   // Trigger workflow generation
                   try {
-                    const workflowResponse = await trpc.workflows.generateFromText.mutate({
+                    const workflowResponse = await workflowMutation.mutateAsync({
                       description: workflowDescription,
                     });
                     

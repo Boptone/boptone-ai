@@ -39,7 +39,7 @@ export function ConnectPrintfulDialog({
     success: boolean;
     storeInfo?: { name: string | null; website: string | null; email: string | null };
     error?: string;
-  } | null>(null);
+  } | null | undefined>(null);
 
   const connectMutation = trpc.pod.connectPrintful.useMutation({
     onSuccess: () => {
@@ -54,6 +54,8 @@ export function ConnectPrintfulDialog({
       toast.error(`Failed to connect: ${error.message}`);
     },
   });
+  
+  const testMutation = trpc.pod.testConnection.useMutation();
 
   const testConnection = async () => {
     if (!apiToken.trim()) {
@@ -66,7 +68,7 @@ export function ConnectPrintfulDialog({
 
     try {
       // Get Printful provider ID (should be 1 based on seed data)
-      const result = await trpc.pod.testConnection.mutate({
+      const result = await testMutation.mutateAsync({
         providerId: 1, // Printful
         apiToken: apiToken.trim(),
         storeId: storeId.trim() || undefined,
@@ -230,7 +232,7 @@ export function ConnectPrintfulDialog({
             disabled={
               connectMutation.isPending ||
               !apiToken.trim() ||
-              (connectionTestResult && !connectionTestResult.success)
+              (connectionTestResult ? !connectionTestResult.success : false)
             }
           >
             {connectMutation.isPending ? (
