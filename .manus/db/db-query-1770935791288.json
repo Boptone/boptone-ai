@@ -1,0 +1,73 @@
+{
+  "query": "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'payouts' AND TABLE_SCHEMA = DATABASE();",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'payouts' AND TABLE_SCHEMA = DATABASE();",
+  "rows": [
+    {
+      "COLUMN_NAME": "id"
+    },
+    {
+      "COLUMN_NAME": "userId"
+    },
+    {
+      "COLUMN_NAME": "bankAccountId"
+    },
+    {
+      "COLUMN_NAME": "grossAmount"
+    },
+    {
+      "COLUMN_NAME": "feeAmount"
+    },
+    {
+      "COLUMN_NAME": "netAmount"
+    },
+    {
+      "COLUMN_NAME": "currency"
+    },
+    {
+      "COLUMN_NAME": "method"
+    },
+    {
+      "COLUMN_NAME": "expectedArrival"
+    },
+    {
+      "COLUMN_NAME": "status"
+    },
+    {
+      "COLUMN_NAME": "processedAt"
+    },
+    {
+      "COLUMN_NAME": "paidAt"
+    },
+    {
+      "COLUMN_NAME": "failedAt"
+    },
+    {
+      "COLUMN_NAME": "cancelledAt"
+    },
+    {
+      "COLUMN_NAME": "errorCode"
+    },
+    {
+      "COLUMN_NAME": "errorMessage"
+    },
+    {
+      "COLUMN_NAME": "externalPayoutId"
+    },
+    {
+      "COLUMN_NAME": "metadata"
+    },
+    {
+      "COLUMN_NAME": "createdAt"
+    },
+    {
+      "COLUMN_NAME": "updatedAt"
+    },
+    {
+      "COLUMN_NAME": "requestedAt"
+    }
+  ],
+  "messages": [],
+  "stdout": "COLUMN_NAME\nid\nuserId\nbankAccountId\ngrossAmount\nfeeAmount\nnetAmount\ncurrency\nmethod\nexpectedArrival\nstatus\nprocessedAt\npaidAt\nfailedAt\ncancelledAt\nerrorCode\nerrorMessage\nexternalPayoutId\nmetadata\ncreatedAt\nupdatedAt\nrequestedAt\n",
+  "stderr": "",
+  "execution_time_ms": 65
+}

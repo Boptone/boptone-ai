@@ -413,21 +413,36 @@ class AIOrchestrator {
     if (!db) return [];
     
     try {
+      // Get artist profile ID for this user
+      const profileResult = await db.execute(`
+        SELECT id FROM artist_profiles WHERE userId = ${userId} LIMIT 1
+      `);
+      
+      if (!profileResult || (profileResult as any[]).length === 0) {
+        return [];
+      }
+      
+      const artistProfileId = (profileResult as any[])[0].id;
+      
       const result = await db.execute(`
-        SELECT recommendation_type, title, description, action_data, expires_at
+        SELECT type, title, description, reasoning, confidenceScore, dataSources, expiresAt
         FROM ai_recommendations
-        WHERE user_id = ${userId} AND status = 'pending'
-          AND (expires_at IS NULL OR expires_at > NOW())
-        ORDER BY created_at DESC
+        WHERE artistProfileId = ${artistProfileId} AND status = 'pending'
+          AND (expiresAt IS NULL OR expiresAt > NOW())
+        ORDER BY priority DESC, createdAt DESC
         LIMIT 10
       `);
       
       return (result as any[]).map((row: any) => ({
-        type: row.recommendation_type,
+        type: row.type,
         title: row.title,
         description: row.description,
-        actionData: JSON.parse(row.action_data),
-        expiresAt: row.expires_at ? new Date(row.expires_at) : undefined,
+        actionData: {
+          reasoning: row.reasoning,
+          confidence: row.confidenceScore,
+          sources: JSON.parse(row.dataSources || '[]')
+        },
+        expiresAt: row.expiresAt ? new Date(row.expiresAt) : undefined,
       }));
     } catch (error) {
       console.error('[AIOrchestrator] Failed to get recommendations:', error);

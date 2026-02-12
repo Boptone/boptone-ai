@@ -131,6 +131,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
         }}>
           {/* Inner button - primary blue */}
           <Button
+            data-toney-trigger
             onClick={() => setIsOpen(true)}
             className="h-14 w-14 rounded-full shadow-lg"
             style={{ backgroundColor: '#4A90E2', color: 'white' }}

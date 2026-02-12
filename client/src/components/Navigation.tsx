@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 
@@ -56,6 +56,18 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
               <>
+                <Button 
+                  variant="ghost" 
+                  className="text-sm font-medium gap-2"
+                  onClick={() => {
+                    // Trigger Toney chatbot to open
+                    const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
+                    if (toneyButton) toneyButton.click();
+                  }}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Ask Toney
+                </Button>
                 <Link href="/dashboard">
                   <Button variant="ghost" className="text-sm font-medium">Dashboard</Button>
                 </Link>
@@ -114,6 +126,18 @@ export function Navigation() {
             <div className="pt-4 space-y-3 border-t border-border">
               {isAuthenticated ? (
                 <>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-base gap-2"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
+                      if (toneyButton) toneyButton.click();
+                    }}
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Ask Toney
+                  </Button>
                   <Link href="/dashboard">
                     <Button
                       variant="ghost"
