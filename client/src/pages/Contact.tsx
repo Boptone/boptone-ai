@@ -150,11 +150,9 @@ ${formData.message}
               </div>
 
               <div className="border-2 border-gray-200 bg-white p-10">
-                <h3 className="text-2xl font-bold mb-4">Location</h3>
+                <h3 className="text-2xl font-bold mb-4">HQ</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Acid Bird, Inc.<br />
-                  Los Angeles, California<br />
-                  United States
+                  Los Angeles, CA USA
                 </p>
               </div>
 

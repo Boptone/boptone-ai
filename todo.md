@@ -1427,3 +1427,10 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Zero TypeScript errors
 - [x] Save checkpoint
 - [x] Push to GitHub
+
+
+## Update Contact Page HQ Card (User Request) ✅ COMPLETE
+- [x] Change "Location" heading to "HQ"
+- [x] Remove "Acid Bird, Inc." line
+- [x] Simplify address to "Los Angeles, CA USA"
+- [x] Save checkpoint
