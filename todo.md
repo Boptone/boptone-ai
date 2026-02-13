@@ -1329,39 +1329,42 @@
 - [x] Test both versions
 
 
-## Site-Wide Design Audit & Redesign (User Request - HIGH PRIORITY) 🚀 IN PROGRESS
+## Site-Wide Design Audit & Redesign (User Request - CRITICAL PRIORITY) 🚀 IN PROGRESS
 
 ### Objective
 Apply the visually stunning design style from the explainer component across ALL pages to create a cohesive, world-class experience throughout the entire Boptone platform.
 
-### Design System Principles (Based on Explainer)
-- Bold, oversized typography with gradient text effects
-- Smooth fade-in animations on scroll
-- Modern gradient backgrounds (purple/blue/pink tones)
-- Rounded cards with subtle shadows
-- Consistent spacing and padding
-- Pill-shaped buttons with hover effects
-- Clean, minimal iconography
-- Responsive grid layouts
+### Design System Principles (User-Defined)
+- **Xerox/photocopy effect gradients** - Subtle, light, tasteful (NOT vibrant purple/blue/pink)
+- **Bold typography for page titles/headers ONLY** - Not oversized everywhere
+- **Animation ONLY on homepage hero** - Remove all other animations site-wide
+- **NO icons, NO emojis** - Old internet aesthetic, Boptone is walking into the future
+- **100% cohesive experience** - Artists never visually leave Boptone ecosystem
+- Rounded cards with subtle shadows (keep)
+- Consistent spacing and padding (keep)
+- Pill-shaped buttons (keep)
+- Responsive grid layouts (keep)
 
 ### Phase 1: Page Inventory & Assessment
-- [ ] List all public pages (Home, Features, About, Contact, Demo, Explainer, etc.)
-- [ ] List all dashboard pages (Dashboard, Upload, Tracks, Analytics, etc.)
-- [ ] List all BAP pages (Listen, Discover, Pricing Dashboard, etc.)
-- [ ] List all auth pages (Signup, Login, Onboarding, etc.)
-- [ ] Assess current design state of each page
-- [ ] Identify pages that need major redesign vs minor tweaks
+- [x] List all public pages (Home, Features, About, Contact, Demo, Explainer, etc.)
+- [x] List all dashboard pages (Dashboard, Upload, Tracks, Analytics, etc.)
+- [x] List all BAP pages (Listen, Discover, Pricing Dashboard, etc.)
+- [x] List all auth pages (Signup, Login, Onboarding, etc.)
+- [x] Assess current design state of each page
+- [x] Identify pages that need major redesign vs minor tweaks
+- [x] Found 58 files using Lucide icons to remove
+- [x] Found 50 total pages to redesign
 
 ### Phase 2: Define Design System
-- [ ] Extract reusable design tokens from explainer component
-- [ ] Define typography scale (h1, h2, h3, body, etc.)
-- [ ] Define color palette (gradients, backgrounds, text, accents)
-- [ ] Define spacing system (margins, padding, gaps)
-- [ ] Define animation patterns (fade-in, slide-up, etc.)
-- [ ] Create reusable component library (if needed)
+- [x] Extract reusable design tokens from explainer component
+- [x] Define typography scale (text-4xl to text-7xl for headers, text-base to text-xl for body)
+- [x] Define color palette (black/white/gray, xerox gradients)
+- [x] Define spacing system (py-16 to py-32 for sections)
+- [x] Define animation patterns (homepage hero only, NO other animations)
+- [x] Create design system documentation (DESIGN_SYSTEM.md)
 
 ### Phase 3: Redesign Public Pages
-- [ ] Home page - Apply explainer aesthetic to hero, features, pricing
+- [x] Home page - Removed 14 icons, applied xerox gradients, timeless professional design
 - [ ] Features page - Redesign with bold typography and gradient backgrounds
 - [ ] About page - Modernize with consistent design language
 - [ ] Contact page - Simplify with explainer-style forms

@@ -5,23 +5,6 @@ import { getLoginUrl } from "@/const";
 import { StripeCheckout } from "@/components/StripeCheckout";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { useDemo } from "@/contexts/DemoContext";
-import { 
-  Music, 
-  TrendingUp, 
-  Shield, 
-  Heart, 
-  DollarSign, 
-  Sparkles,
-  Check,
-  ArrowRight,
-  Globe,
-  BarChart3,
-  ShoppingBag,
-  Calendar,
-  Zap,
-  Target,
-  ChevronDown
-} from "lucide-react";
 import { useLocation } from "wouter";
 
 const rotatingPhrases = ["Automate Your Tone", "Create Your Tone", "Own Your Tone"];
@@ -47,47 +30,38 @@ export default function Home() {
 
   const features = [
     {
-      icon: Sparkles,
       title: "Career Advisor",
       description: "Get personalized guidance on releases, marketing, and growth strategies."
     },
     {
-      icon: DollarSign,
       title: "Financial Management",
       description: "Track revenue across all sources and access royalty-backed micro-loans."
     },
     {
-      icon: ShoppingBag,
       title: "Direct-to-Fan Commerce",
       description: "Sell merchandise, digital downloads, and experiences directly to fans."
     },
     {
-      icon: Shield,
       title: "IP Protection",
       description: "Intelligent copyright monitoring with instant DMCA takedowns."
     },
     {
-      icon: Heart,
       title: "Healthcare & Wellness",
       description: "Artist-focused health coverage including mental health and vocal care."
     },
     {
-      icon: Calendar,
       title: "Tour Management",
       description: "Plan tours, track venues, manage budgets, and maximize live revenue."
     },
     {
-      icon: Globe,
       title: "Global Distribution",
       description: "Distribute your music to all major streaming platforms in real-time."
     },
     {
-      icon: BarChart3,
       title: "Analytics & Insights",
       description: "Track performance across platforms with actionable insights."
     },
     {
-      icon: Target,
       title: "Marketing Tools",
       description: "Launch campaigns, track engagement, and grow your audience."
     }
@@ -181,32 +155,31 @@ export default function Home() {
     tier.monthlyPrice > 0 ? Math.round((tier.monthlyPrice * 12 - tier.annualPrice * 12) / (tier.monthlyPrice * 12) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="section-spacing">
-        <div className="container">
+      <section className="py-20 md:py-32">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <h1 className="hero-headline mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               <span className={`inline-block transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                 {rotatingPhrases[verbIndex]}
               </span>
             </h1>
-            <p className="body-text text-xl md:text-2xl mb-8 max-w-2xl">
-              🎵 The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.
+            <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl leading-relaxed">
+              The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="btn-primary text-lg h-14 px-8"
+                className="rounded-full bg-black text-white hover:bg-gray-800 text-lg h-14 px-8"
                 onClick={() => window.location.href = getLoginUrl()}
               >
                 Get Started Free
-                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="btn-secondary text-lg h-14 px-8"
+                className="rounded-full border-2 border-black text-black hover:bg-gray-50 text-lg h-14 px-8"
                 onClick={handleDemoClick}
               >
                 View Demo
@@ -216,14 +189,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="section-spacing bg-secondary">
-        <div className="container">
+      {/* Stats Section - Xerox gradient background */}
+      <section className="py-16 md:py-24" style={{
+        background: 'linear-gradient(180deg, #fafafa 0%, #ffffff 100%)'
+      }}>
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="stat-number mb-2">{stat.number}</div>
-                <div className="stat-label">{stat.label}</div>
+                <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
+                <div className="text-sm md:text-base text-gray-600 uppercase tracking-wide">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -231,23 +206,24 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="section-spacing bg-gray-50">
-        <div className="container">
+      <section className="py-20 md:py-32" style={{
+        background: 'linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%)'
+      }}>
+        <div className="container mx-auto px-4">
           <div className="max-w-3xl mb-16">
-            <h2 className="section-headline mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Everything you need to build a sustainable music career
             </h2>
-            <p className="body-text text-xl">
+            <p className="text-xl text-gray-700">
               From distribution to healthcare, Boptone handles the business so you can focus on creating.
             </p>
           </div>
 
-          <div className="feature-grid">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
-              <Card key={index} className="future-card p-8 hover:shadow-md transition-shadow">
-                <feature.icon className="h-12 w-12 text-primary mb-4" strokeWidth={1.5} />
-                <h4 className="mb-3">{feature.title}</h4>
-                <p className="body-text text-base">{feature.description}</p>
+              <Card key={index} className="p-8 bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
+                <h4 className="text-xl font-bold mb-3">{feature.title}</h4>
+                <p className="text-base text-gray-700 leading-relaxed">{feature.description}</p>
               </Card>
             ))}
           </div>
@@ -255,23 +231,24 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="section-spacing bg-secondary">
-        <div className="container">
+      <section className="py-20 md:py-32" style={{
+        background: 'linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%)'
+      }}>
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="section-headline mb-6">Choose Your Plan</h2>
-            <p className="body-text text-xl mb-8">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Choose Your Plan</h2>
+            <p className="text-xl text-gray-700 mb-8">
               Start free, upgrade as you grow
             </p>
 
             {/* Annual/Monthly Toggle */}
             <div className="flex items-center justify-center gap-4 mb-12">
-              <span className={`text-base font-medium ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
+              <span className={`text-base font-medium ${!isAnnual ? 'text-black' : 'text-gray-500'}`}>
                 Monthly
               </span>
               <button
                 onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                style={{ backgroundColor: 'hsl(var(--primary))' }}
+                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
               >
                 <span
                   className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
@@ -279,269 +256,199 @@ export default function Home() {
                   }`}
                 />
               </button>
-              <span className={`text-base font-medium ${isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
+              <span className={`text-base font-medium ${isAnnual ? 'text-black' : 'text-gray-500'}`}>
                 Annual
-                <span className="ml-2 text-primary font-semibold">Save 20%</span>
+                <span className="ml-2 text-black font-semibold">Save 20%</span>
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto pt-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
-                className="relative border-2 border-gray-200 p-8 flex flex-col hover:border-gray-300 transition-colors"
+                className="relative border-2 border-gray-200 p-8 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
               >
                 {/* Tier Name */}
-                <h3 className="text-2xl font-bold mb-3 text-gray-900">{tier.name}</h3>
-                
+                <div className="mb-4">
+                  <h3 className="text-2xl font-bold">{tier.name}</h3>
+                  <p className="text-sm text-gray-600 mt-2">{tier.description}</p>
+                </div>
+
                 {/* Pricing */}
                 <div className="mb-6">
-                  <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-5xl font-bold text-gray-900 tracking-tight">
-                      ${currentPrice(tier)}
-                    </span>
-                    <span className="text-lg text-gray-500 font-normal">
-                      /{isAnnual ? 'mo' : 'month'}
-                    </span>
+                  {tier.monthlyPrice === 0 ? (
+                    <div className="text-5xl font-bold">Free</div>
+                  ) : (
+                    <div>
+                      <div className="text-5xl font-bold">
+                        ${currentPrice(tier)}
+                        <span className="text-2xl text-gray-600 font-normal">/mo</span>
+                      </div>
+                      {isAnnual && savings(tier) > 0 && (
+                        <div className="text-sm text-gray-600 mt-2">
+                          Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <div className="text-sm text-gray-600 mt-2">
+                    Platform fee: {tier.platformFee} on BAP streams
                   </div>
-                  {isAnnual && tier.monthlyPrice > 0 && (
-                    <p className="text-sm text-primary font-medium">
-                      Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
-                    </p>
+                </div>
+
+                {/* CTA Button */}
+                <div className="mb-6">
+                  {tier.name === "Enterprise" ? (
+                    <Button 
+                      className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                      onClick={() => setLocation("/contact")}
+                    >
+                      {tier.cta}
+                    </Button>
+                  ) : tier.name === "Free" ? (
+                    <Button 
+                      className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                      onClick={() => window.location.href = getLoginUrl()}
+                    >
+                      {tier.cta}
+                    </Button>
+                  ) : (
+                    <StripeCheckout 
+                      tier={tier.name.toLowerCase() as "pro"}
+                      buttonText={tier.cta}
+                      className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                    />
                   )}
                 </div>
-                
-                {/* Description */}
-                <p className="text-base text-gray-600 mb-6 leading-relaxed">{tier.description}</p>
-                
-                {/* Platform Fee Badge */}
-                <div className="mb-6 pb-6 border-b border-gray-200 inline-flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md w-fit">
-                  <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Platform Fee</span>
-                  <span className="text-sm font-bold text-gray-900">{tier.platformFee}</span>
-                </div>
-                
+
                 {/* Features List */}
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {tier.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                      <span className="text-base text-gray-700 leading-relaxed">{feature}</span>
+                <ul className="space-y-3 flex-1">
+                  {tier.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="flex items-start gap-3">
+                      <span className="text-black font-bold mt-1">•</span>
+                      <span className="text-sm text-gray-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
-                {tier.name === "Enterprise" ? (
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    size="lg"
-                    onClick={() => window.location.href = 'mailto:sales@boptone.com'}
-                  >
-                    {tier.cta}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => window.location.href = getLoginUrl()}
-                    variant="outline"
-                    size="lg"
-                    className="w-full"
-                  >
-                    {tier.cta}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                )}
               </Card>
             ))}
           </div>
 
-          {/* All Plans Include */}
-          <div className="mt-16 text-center max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              All plans include
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6 text-left">
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h4 className="font-bold text-gray-900 mb-2">Data Ownership</h4>
-                <p className="text-sm text-gray-600">
-                  You own your fan data, master recordings, and publishing rights. Export anytime.
-                </p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h4 className="font-bold text-gray-900 mb-2">90% Revenue Share</h4>
-                <p className="text-sm text-gray-600">
-                  Keep 90% of BAP streaming revenue before platform fees. No hidden costs.
-                </p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h4 className="font-bold text-gray-900 mb-2">No Contracts</h4>
-                <p className="text-sm text-gray-600">
-                  Cancel anytime. No long-term commitments. Your music, your terms.
-                </p>
-              </div>
-            </div>
-          </div>
+          {/* Pricing Info */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <div className="bg-white border border-gray-200 rounded-xl p-8">
+              <h3 className="text-2xl font-bold mb-6">Pricing Information</h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-bold mb-2">Platform Fee Structure</h4>
+                  <p className="text-gray-700">
+                    Boptone takes 10% of BAP streaming revenue across all plans. You keep 90% of every stream. 
+                    Tips received through "Kick In" have zero platform fees—you keep 100% (minus card processing fees).
+                  </p>
+                </div>
 
-          {/* Pricing FAQ */}
-          <div className="mt-20 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-              Pricing Questions
-            </h3>
-            <div className="space-y-4">
-              {/* FAQ Item 1 */}
-              <div className="border border-gray-200 rounded-lg">
-                <button
-                  onClick={() => setFaqOpen(faqOpen === 1 ? null : 1)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-bold text-gray-900">How much do I keep from my earnings?</span>
-                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 1 ? 'rotate-180' : ''}`} />
-                </button>
-                {faqOpen === 1 && (
-                  <div className="px-6 pb-4 text-sm text-gray-600">
-                    <p className="mb-3">
-                      <strong className="text-gray-900">You keep 90% of everything you earn.</strong> Build a sustainable career with multiple revenue streams—all in one place.
-                    </p>
-                    <p className="mb-3">
-                      Earn from <strong className="text-gray-900">BAP streaming, distribution, BopShop sales, memberships, sync licensing, and live events</strong>. Every revenue source pays you 90%. Boptone keeps 10% to run the platform—infrastructure, security, support, and continuous development.
-                    </p>
-                    <p className="mb-3 bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">Kick In tips: You keep 100%.</strong> When fans tip you directly, you receive <strong className="text-gray-900">every dollar</strong> (minus only credit card processing: 2.9% + 30¢). We don't take a cut of tips—ever.
-                    </p>
-                    <p className="mb-3">
-                      <strong className="text-gray-900">Why this model?</strong> Because your success is our success. We grow when you grow. No hidden fees, no tier tricks, no revenue caps. Just a simple, transparent partnership.
-                    </p>
-                    <p className="bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">All tiers keep the same 90%.</strong> Free, Pro, and Enterprise differ in <strong className="text-gray-900">features</strong> (storage, analytics, team seats, support), not earnings. Upgrade for capabilities that help you grow, not to keep more of your money.
-                    </p>
-                  </div>
-                )}
-              </div>
+                <div>
+                  <h4 className="font-bold mb-2">BopShop Commerce Fees</h4>
+                  <p className="text-gray-700">
+                    For merchandise and physical goods sold through BopShop, Boptone takes a small percentage 
+                    of each sale. Credit card processing fees are passed through to artists at cost.
+                  </p>
+                </div>
 
-              {/* FAQ Item 2 */}
-              <div className="border border-gray-200 rounded-lg">
-                <button
-                  onClick={() => setFaqOpen(faqOpen === 2 ? null : 2)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-bold text-gray-900">Can I upgrade or downgrade my plan?</span>
-                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 2 ? 'rotate-180' : ''}`} />
-                </button>
-                {faqOpen === 2 && (
-                  <div className="px-6 pb-4 text-sm text-gray-600">
-                    <p className="mb-3">
-                      <strong className="text-gray-900">Yes, absolutely.</strong> You can change your plan anytime with zero penalties or long-term commitments.
-                    </p>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">Upgrading (Free → Pro → Enterprise):</p>
-                        <p>Takes effect immediately. You'll be charged the prorated amount for the current billing period and unlock all new features instantly.</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">Downgrading (Enterprise → Pro → Free):</p>
-                        <p>Takes effect at the end of your current billing period. You keep all features until then, and we'll prorate any refund if applicable.</p>
-                      </div>
-                    </div>
-                    <p className="mt-3 bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">Your data, music, and fan relationships stay intact</strong> regardless of plan changes. We never delete your content or lock you out.
-                    </p>
-                  </div>
-                )}
-              </div>
+                <div>
+                  <h4 className="font-bold mb-2">Third-Party Distribution</h4>
+                  <p className="text-gray-700">
+                    Revenue from third-party streaming platforms is subject to their standard payout structures. 
+                    Boptone does not take additional fees on third-party revenue.
+                  </p>
+                </div>
 
-              {/* FAQ Item 3 */}
-              <div className="border border-gray-200 rounded-lg">
-                <button
-                  onClick={() => setFaqOpen(faqOpen === 3 ? null : 3)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-bold text-gray-900">How do platform fees work?</span>
-                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 3 ? 'rotate-180' : ''}`} />
-                </button>
-                {faqOpen === 3 && (
-                  <div className="px-6 pb-4 text-sm text-gray-600">
-                    <p className="mb-3">
-                      <strong className="text-gray-900">You keep 90 cents of every dollar.</strong> Here's the breakdown:
-                    </p>
-                    <div className="bg-gray-50 p-4 rounded-lg space-y-3 mb-3">
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">BAP Streaming</p>
-                        <p>$1,000 streaming revenue → <strong className="text-gray-900">You keep: $900</strong> (Boptone: $100)</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">Third-Party Streaming (Spotify, Apple Music, etc.)</p>
-                        <p>$1,000 streaming revenue → <strong className="text-gray-900">You keep: $900</strong> (Boptone: $100)</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">BopShop Sales (Vinyl, Merch, Digital Downloads)</p>
-                        <p>$100 sale → <strong className="text-gray-900">You keep: $86.80</strong> (Boptone: $10, Stripe: $3.20)</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">Kick In Tips (Sacred Exception)</p>
-                        <p>$100 tip → <strong className="text-gray-900">You keep: $96.80</strong> (Boptone: $0, Stripe: $3.20)</p>
-                      </div>
-                    </div>
-                    <p className="bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">Credit card fees (2.9% + 30¢)</strong> are passed directly to Stripe for physical transactions (sales, tips, memberships). We don't keep any of this—it's a third-party cost.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* FAQ Item 4 - New Payout Policy */}
-              <div className="border border-gray-200 rounded-lg">
-                <button
-                  onClick={() => setFaqOpen(faqOpen === 4 ? null : 4)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-bold text-gray-900">When and how do I get paid?</span>
-                  <ChevronDown className={`h-5 w-5 text-gray-600 transition-transform ${faqOpen === 4 ? 'rotate-180' : ''}`} />
-                </button>
-                {faqOpen === 4 && (
-                  <div className="px-6 pb-4 text-sm text-gray-600">
-                    <p className="mb-3">
-                      <strong className="text-gray-900">You control your payout schedule</strong>—choose daily, weekly, or monthly payouts with a $20 minimum.
-                    </p>
-                    <div className="bg-gray-50 p-4 rounded-lg space-y-3 mb-3">
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">Standard Payouts (Free)</p>
-                        <p>Funds arrive the <strong className="text-gray-900">next business day</strong> at no cost. Choose your schedule in settings: daily, weekly, or monthly.</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-gray-900 mb-1">Instant Payouts (Optional)</p>
-                        <p><strong className="text-gray-900">1% fee</strong> for delivery within <strong className="text-gray-900">1 hour</strong>, available 24/7 including weekends and holidays.</p>
-                      </div>
-                    </div>
-                    <p className="bg-gray-50 p-3 rounded-lg">
-                      <strong className="text-gray-900">Your earnings are always accessible.</strong> Withdraw anytime you have $20 or more in your account. No waiting for quarterly statements or arbitrary payout dates like other platforms.
-                    </p>
-                  </div>
-                )}
+                <div>
+                  <h4 className="font-bold mb-2">Payout Flexibility</h4>
+                  <p className="text-gray-700">
+                    Artists can withdraw earnings at any time, at any amount. Payouts are processed next-day 
+                    by default, with options for weekly or monthly schedules.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section-spacing bg-gray-50">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="section-headline mb-6">
-              Ready to take control of your music career?
-            </h2>
-            <p className="body-text text-xl mb-8">
-              Join thousands of artists building sustainable careers with Boptone.
-            </p>
-            <Button 
-              size="lg" 
-              className="btn-primary text-lg h-14 px-8"
-              onClick={() => window.location.href = getLoginUrl()}
-            >
-              Get Started Free
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+      {/* FAQ Section */}
+      <section className="py-20 md:py-32" style={{
+        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)'
+      }}>
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+            
+            <div className="space-y-4">
+              {[
+                {
+                  question: "How does the 90/10 revenue split work?",
+                  answer: "For every stream on the Boptone Artist Protocol (BAP), you keep 90% of the revenue and Boptone takes 10%. This applies to all plans. Revenue from third-party platforms follows their standard payout structures."
+                },
+                {
+                  question: "Can I upgrade or downgrade my plan anytime?",
+                  answer: "Yes, you can change your plan at any time. Upgrades take effect immediately. Downgrades take effect at the end of your current billing period."
+                },
+                {
+                  question: "What payment methods do you accept?",
+                  answer: "We accept all major credit cards (Visa, Mastercard, American Express, Discover) through Stripe. Annual plans can also be paid via invoice for Enterprise customers."
+                },
+                {
+                  question: "How quickly can I withdraw my earnings?",
+                  answer: "You can withdraw earnings at any time, at any amount. Payouts are processed next-day by default, similar to ride-sharing services. You can also choose weekly or monthly payout schedules."
+                },
+                {
+                  question: "Do you take a cut of merchandise sales?",
+                  answer: "Yes, Boptone takes a small percentage of BopShop sales (merchandise, vinyl, digital downloads). Credit card processing fees are passed through at cost. Tips received through 'Kick In' have zero platform fees."
+                },
+                {
+                  question: "Is there a storage limit?",
+                  answer: "Free plan includes 1GB of storage. Pro and Enterprise plans include unlimited storage for audio files, artwork, and other assets."
+                }
+              ].map((faq, index) => (
+                <div key={index} className="border border-gray-200 rounded-xl bg-white overflow-hidden">
+                  <button
+                    onClick={() => setFaqOpen(faqOpen === index ? null : index)}
+                    className="w-full text-left p-6 font-bold text-lg hover:bg-gray-50 transition-colors flex items-center justify-between"
+                  >
+                    {faq.question}
+                    <span className="text-2xl">{faqOpen === index ? '−' : '+'}</span>
+                  </button>
+                  {faqOpen === index && (
+                    <div className="px-6 pb-6 text-gray-700">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 md:py-32 bg-black text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to own your tone?
+          </h2>
+          <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
+            Join thousands of artists building sustainable careers on Boptone.
+          </p>
+          <Button 
+            size="lg" 
+            className="rounded-full bg-white text-black hover:bg-gray-100 text-lg h-14 px-8"
+            onClick={() => window.location.href = getLoginUrl()}
+          >
+            Get Started Free
+          </Button>
         </div>
       </section>
 
