@@ -2452,3 +2452,226 @@ export type InsertEarningsBalance = typeof earningsBalance.$inferInsert;
 
 
 
+// ============================================================================
+// INVISIBLE FLYWHEEL SYSTEM (Strategic Moat)
+// ============================================================================
+
+/**
+ * FLYWHEEL CORE PRINCIPLE:
+ * "If artists make money, Boptone makes money"
+ * 
+ * This system amplifies artist revenue through network effects:
+ * - 1% of all streams fund growth initiatives (network pool)
+ * - Artists get discovery bonuses when their fans find other artists (2% for 30 days)
+ * - Milestone achievements trigger automated promotional boosts
+ * - Super Fans (stream 3+ artists) generate 5% revenue multipliers
+ * - Artists never see mechanics, only benefits ("magic")
+ * 
+ * Result: Positive-sum ecosystem where every artist benefits as platform grows
+ */
+
+/**
+ * Network Pool - 1% of all BAP streams fund growth initiatives
+ * Separate from platform fee (artists still get 90%, platform gets 9%, pool gets 1%)
+ * Pool funds: milestone boosts, discovery bonuses, Super Fan multipliers
+ */
+export const flywheelNetworkPool = mysqlTable("flywheel_network_pool", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Contribution tracking
+  streamId: int("streamId").notNull().references(() => bapStreams.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  contributionAmount: int("contributionAmount").notNull(), // 1% of stream price in cents
+  
+  // Pool allocation (what this contribution funded)
+  allocatedTo: mysqlEnum("allocatedTo", ["milestone_boost", "discovery_bonus", "superfan_multiplier", "unallocated"]).default("unallocated").notNull(),
+  allocationId: int("allocationId"), // Reference to specific boost/bonus record
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  streamIdIdx: index("stream_id_idx").on(table.streamId),
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  allocatedToIdx: index("allocated_to_idx").on(table.allocatedTo),
+}));
+
+export type FlywheelNetworkPool = typeof flywheelNetworkPool.$inferSelect;
+export type InsertFlywheelNetworkPool = typeof flywheelNetworkPool.$inferInsert;
+
+/**
+ * Discovery Tracking - Who discovered whom through Boptone
+ * Enables 2% discovery bonuses: when Artist A's fans discover Artist B,
+ * Artist A gets 2% of Artist B's streams for 30 days
+ */
+export const flywheelDiscoveryTracking = mysqlTable("flywheel_discovery_tracking", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Discovery relationship
+  discovererArtistId: int("discovererArtistId").notNull().references(() => artistProfiles.id), // Artist A (gets bonus)
+  discoveredArtistId: int("discoveredArtistId").notNull().references(() => artistProfiles.id), // Artist B (being discovered)
+  fanUserId: int("fanUserId").notNull().references(() => users.id), // Fan who made the discovery
+  
+  // Discovery context
+  source: mysqlEnum("source", ["discover_page", "artist_profile", "playlist", "search", "recommendation"]).notNull(),
+  firstStreamId: int("firstStreamId").notNull().references(() => bapStreams.id), // First stream = discovery event
+  
+  // Bonus tracking
+  bonusActive: boolean("bonusActive").default(true).notNull(), // False after 30 days
+  bonusExpiresAt: timestamp("bonusExpiresAt").notNull(), // 30 days from discovery
+  totalBonusEarned: int("totalBonusEarned").default(0).notNull(), // Total cents earned from this discovery
+  
+  discoveredAt: timestamp("discoveredAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  discovererIdx: index("discoverer_idx").on(table.discovererArtistId),
+  discoveredIdx: index("discovered_idx").on(table.discoveredArtistId),
+  fanIdx: index("fan_idx").on(table.fanUserId),
+  bonusActiveIdx: index("bonus_active_idx").on(table.bonusActive),
+}));
+
+export type FlywheelDiscoveryTracking = typeof flywheelDiscoveryTracking.$inferSelect;
+export type InsertFlywheelDiscoveryTracking = typeof flywheelDiscoveryTracking.$inferInsert;
+
+/**
+ * Artist Milestones - Track achievement of stream count milestones
+ * Triggers automated promotional boosts (Discover featuring, email blasts, social promotion)
+ */
+export const flywheelMilestones = mysqlTable("flywheel_milestones", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Milestone details
+  artistProfileId: int("artistProfileId").notNull().references(() => artistProfiles.id),
+  milestoneType: mysqlEnum("milestoneType", ["1k_streams", "10k_streams", "50k_streams", "100k_streams", "500k_streams", "1m_streams"]).notNull(),
+  streamCount: int("streamCount").notNull(), // Actual count when milestone was hit
+  
+  // Automated boost triggered
+  boostTriggered: boolean("boostTriggered").default(false).notNull(),
+  boostType: mysqlEnum("boostType", ["discover_featured", "email_blast", "social_promotion", "playlist_inclusion"]),
+  boostStartDate: timestamp("boostStartDate"),
+  boostEndDate: timestamp("boostEndDate"), // 7-day boost window
+  
+  // Impact tracking
+  additionalStreams: int("additionalStreams").default(0).notNull(), // Streams gained from boost
+  additionalRevenue: int("additionalRevenue").default(0).notNull(), // Revenue gained in cents
+  
+  achievedAt: timestamp("achievedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistProfileId),
+  milestoneTypeIdx: index("milestone_type_idx").on(table.milestoneType),
+  boostTriggeredIdx: index("boost_triggered_idx").on(table.boostTriggered),
+}));
+
+export type FlywheelMilestone = typeof flywheelMilestones.$inferSelect;
+export type InsertFlywheelMilestone = typeof flywheelMilestones.$inferInsert;
+
+/**
+ * Super Fans - Fans who stream 3+ different artists in 30 days
+ * Super Fan streams generate 5% revenue multiplier for artists (funded by network pool)
+ */
+export const flywheelSuperFans = mysqlTable("flywheel_super_fans", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Super Fan details
+  userId: int("userId").notNull().references(() => users.id),
+  status: mysqlEnum("status", ["active", "inactive"]).default("active").notNull(),
+  
+  // Qualification tracking
+  uniqueArtistsStreamed: int("uniqueArtistsStreamed").default(0).notNull(), // Count of unique artists in last 30 days
+  totalStreamsLast30Days: int("totalStreamsLast30Days").default(0).notNull(),
+  qualifiedAt: timestamp("qualifiedAt").defaultNow().notNull(),
+  lastStreamAt: timestamp("lastStreamAt").defaultNow().notNull(),
+  
+  // Impact tracking
+  multiplierStreams: int("multiplierStreams").default(0).notNull(), // Total streams with 5% boost
+  totalBonusGenerated: int("totalBonusGenerated").default(0).notNull(), // Total bonus cents generated for artists
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  statusIdx: index("status_idx").on(table.status),
+  lastStreamIdx: index("last_stream_idx").on(table.lastStreamAt),
+}));
+
+export type FlywheelSuperFan = typeof flywheelSuperFans.$inferSelect;
+export type InsertFlywheelSuperFan = typeof flywheelSuperFans.$inferInsert;
+
+/**
+ * Discovery Bonuses - 2% bonus payments to artists whose fans discovered other artists
+ * Artist A's fan discovers Artist B → Artist A gets 2% of Artist B's streams for 30 days
+ */
+export const flywheelDiscoveryBonuses = mysqlTable("flywheel_discovery_bonuses", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Bonus details
+  discoveryTrackingId: int("discoveryTrackingId").notNull().references(() => flywheelDiscoveryTracking.id),
+  discovererArtistId: int("discovererArtistId").notNull().references(() => artistProfiles.id), // Artist getting bonus
+  discoveredArtistId: int("discoveredArtistId").notNull().references(() => artistProfiles.id), // Artist being streamed
+  
+  // Stream that generated bonus
+  streamId: int("streamId").notNull().references(() => bapStreams.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  
+  // Bonus calculation
+  baseRevenue: int("baseRevenue").notNull(), // Artist B's revenue from stream in cents
+  bonusAmount: int("bonusAmount").notNull(), // 2% of baseRevenue in cents
+  fundedBy: mysqlEnum("fundedBy", ["network_pool"]).default("network_pool").notNull(),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "paid", "expired"]).default("pending").notNull(),
+  paidAt: timestamp("paidAt"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  discovererIdx: index("discoverer_idx").on(table.discovererArtistId),
+  discoveredIdx: index("discovered_idx").on(table.discoveredArtistId),
+  streamIdIdx: index("stream_id_idx").on(table.streamId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type FlywheelDiscoveryBonus = typeof flywheelDiscoveryBonuses.$inferSelect;
+export type InsertFlywheelDiscoveryBonus = typeof flywheelDiscoveryBonuses.$inferInsert;
+
+/**
+ * Milestone Boosts - Automated promotional boosts triggered by milestone achievements
+ * Funded by network pool, managed by platform, invisible to artists (just shows as notification)
+ */
+export const flywheelBoosts = mysqlTable("flywheel_boosts", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Boost details
+  milestoneId: int("milestoneId").notNull().references(() => flywheelMilestones.id),
+  artistProfileId: int("artistProfileId").notNull().references(() => artistProfiles.id),
+  
+  // Boost configuration
+  boostType: mysqlEnum("boostType", ["discover_featured", "email_blast", "social_promotion", "playlist_inclusion"]).notNull(),
+  startDate: timestamp("startDate").notNull(),
+  endDate: timestamp("endDate").notNull(), // 7-day boost window
+  
+  // Targeting
+  targetGenres: json("targetGenres").$type<string[]>(), // Genre-specific targeting
+  targetAudience: mysqlEnum("targetAudience", ["all", "genre_fans", "similar_artists_fans"]).default("all").notNull(),
+  
+  // Impact tracking
+  impressions: int("impressions").default(0).notNull(), // How many people saw the boost
+  clicks: int("clicks").default(0).notNull(), // How many clicked through
+  newStreams: int("newStreams").default(0).notNull(), // Streams generated from boost
+  newFollowers: int("newFollowers").default(0).notNull(), // Followers gained
+  revenueGenerated: int("revenueGenerated").default(0).notNull(), // Revenue in cents
+  
+  // Cost tracking (funded by network pool)
+  poolCostCents: int("poolCostCents").default(0).notNull(), // How much pool budget was used
+  
+  // Status
+  status: mysqlEnum("status", ["scheduled", "active", "completed", "canceled"]).default("scheduled").notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistProfileId),
+  statusIdx: index("status_idx").on(table.status),
+  startDateIdx: index("start_date_idx").on(table.startDate),
+}));
+
+export type FlywheelBoost = typeof flywheelBoosts.$inferSelect;
+export type InsertFlywheelBoost = typeof flywheelBoosts.$inferInsert;

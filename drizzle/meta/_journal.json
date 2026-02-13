@@ -15,6 +15,13 @@
       "when": 1771003830186,
       "tag": "0001_fair_sleeper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1771015417192,
+      "tag": "0002_futuristic_metal_master",
+      "breakpoints": true
     }
   ]
 }

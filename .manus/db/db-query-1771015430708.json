@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `flywheel_network_pool` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `streamId` int NOT NULL,\n  `trackId` int NOT NULL,\n  `contributionAmount` int NOT NULL,\n  `allocatedTo` enum('milestone_boost','discovery_bonus','superfan_multiplier','unallocated') NOT NULL DEFAULT 'unallocated',\n  `allocationId` int,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `flywheel_network_pool_id` PRIMARY KEY(`id`),\n  KEY `stream_id_idx` (`streamId`),\n  KEY `track_id_idx` (`trackId`),\n  KEY `allocated_to_idx` (`allocatedTo`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `flywheel_network_pool` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `streamId` int NOT NULL,\n  `trackId` int NOT NULL,\n  `contributionAmount` int NOT NULL,\n  `allocatedTo` enum('milestone_boost','discovery_bonus','superfan_multiplier','unallocated') NOT NULL DEFAULT 'unallocated',\n  `allocationId` int,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `flywheel_network_pool_id` PRIMARY KEY(`id`),\n  KEY `stream_id_idx` (`streamId`),\n  KEY `track_id_idx` (`trackId`),\n  KEY `allocated_to_idx` (`allocatedTo`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 412
+}

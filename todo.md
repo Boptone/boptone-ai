@@ -1167,3 +1167,95 @@
 - [ ] Add route to dashboard navigation
 - [ ] Test dashboard with real track data
 
+
+
+## Build Invisible Flywheel System (Strategic Moat - HIGHEST PRIORITY) 🚀 IN PROGRESS
+
+### Core Principle
+**"If artists make money, Boptone makes money"** - This flywheel amplifies artist revenue through network effects, making every artist more successful as the platform grows. Artists never see the mechanics, only the benefits.
+
+### Phase 1: Database Schema & Foundation
+- [x] Create `flywheel_network_pool` table (tracks 1% contributions from all streams)
+- [x] Create `flywheel_discovery_tracking` table (who discovered whom through Boptone)
+- [x] Create `flywheel_milestones` table (track artist milestone achievements)
+- [x] Create `flywheel_super_fans` table (fans who stream multiple artists)
+- [x] Create `flywheel_discovery_bonuses` table (2% bonus when your fans discover others)
+- [x] Create `flywheel_boosts` table (automated promotional boosts from milestones)
+- [x] Update `bap_streams` to track referral source (organic vs discovery)
+
+### Phase 2: Network Pool Mechanics
+- [x] Implement 1% pool contribution on every BAP stream
+- [x] Build pool balance tracking and reporting
+- [x] Create pool allocation engine (milestone boosts, discovery bonuses, Super Fan multipliers)
+- [x] Add pool contribution to stream recording logic
+- [ ] Build pool analytics dashboard (admin-only)
+
+### Phase 3: Discovery Tracking System
+- [x] Track referral sources for all streams (Discover page, artist profile, playlist, external)
+- [x] Build artist-to-artist discovery graph (who's fans discovered whom)
+- [x] Implement 30-day discovery window for bonus tracking
+- [x] Create discovery attribution logic (first stream = discovery event)
+- [ ] Build discovery network visualization (admin-only)
+
+### Phase 4: Milestone Detection & Automated Boosts
+- [x] Define milestone tiers (1K, 10K, 50K, 100K, 500K, 1M streams)
+- [x] Build milestone detection system (triggers on stream count)
+- [x] Implement automated Discover page featuring (7-day boost)
+- [ ] Build email blast system for milestone achievements
+- [ ] Create social media promotion queue (@Boptone official)
+- [ ] Build genre-specific playlist auto-inclusion
+- [ ] Add milestone notification to artist dashboard
+
+### Phase 5: Super Fan Detection & Multiplier
+- [x] Define Super Fan criteria (streams 3+ different artists in 30 days)
+- [x] Build Super Fan detection algorithm
+- [x] Implement 5% revenue multiplier for Super Fan streams
+- [x] Track Super Fan status per user
+- [ ] Build Super Fan badge/indicator (optional: visible to fans)
+- [ ] Add Super Fan analytics to artist dashboard
+
+### Phase 6: Discovery Bonus Calculation Engine
+- [x] Build discovery bonus calculation (2% of discovered artist's streams for 30 days)
+- [x] Implement automated bonus payout system
+- [x] Track discovery bonus attribution (which artist gets credit)
+- [x] Build discovery bonus expiration logic (30-day window)
+- [ ] Add discovery bonus to earnings breakdown
+
+### Phase 7: Artist-Facing Earnings Display
+- [ ] Update Earnings page to show flywheel bonuses separately
+- [ ] Add "Discovery Bonus: +$X.XX this month" line item
+- [ ] Add "Milestone Boost: Featured on Discover" notification
+- [ ] Add "Super Fan Boost: +5% on X streams" line item
+- [ ] Build earnings breakdown chart (base revenue vs flywheel bonuses)
+- [ ] Add tooltips explaining bonuses (simple, non-technical language)
+
+### Phase 8: Automated A/B Pricing Tests (Future)
+- [ ] Build A/B test framework for new releases
+- [ ] Implement automated pricing optimization ($0.01 vs $0.02 vs $0.03)
+- [ ] Track conversion rates and total revenue per price point
+- [ ] Auto-select optimal price after 100 streams
+- [ ] Add "Optimized Pricing" indicator to dashboard
+
+### Phase 9: Testing & Validation
+- [ ] Create test scenarios with multiple artists and fans
+- [ ] Verify 1% pool contributions are accurate
+- [ ] Test discovery bonus calculations (2% for 30 days)
+- [ ] Verify Super Fan multiplier (5% boost)
+- [ ] Test milestone detection and automated boosts
+- [ ] Validate earnings display shows all flywheel bonuses
+- [ ] Ensure artists never see mechanics, only benefits
+
+### Success Metrics
+- [ ] Network pool grows exponentially with platform scale
+- [ ] Discovery bonuses create positive-sum ecosystem (artists benefit from each other)
+- [ ] Milestone boosts increase artist retention by 40%+
+- [ ] Super Fan multiplier increases cross-artist streaming by 60%+
+- [ ] Artists see flywheel bonuses as "magic" (no understanding of mechanics required)
+
+### Key Differentiators (vs Spotify/Bandcamp/SoundCloud)
+- ✅ First platform with invisible revenue amplification flywheel
+- ✅ Cross-artist collaboration benefits (discovery bonuses)
+- ✅ Automated growth initiatives funded by network pool
+- ✅ Super Fan incentives for cross-pollination
+- ✅ Milestone-based promotional boosts (no manual application)
+- ✅ Positive-sum ecosystem (not zero-sum competition)

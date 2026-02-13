@@ -1,5 +1,6 @@
 import { eq, desc, sql, and, inArray } from "drizzle-orm";
 import { getDb } from "./db";
+import * as flywheel from "./flywheel";
 import {
   bapTracks,
   bapAlbums,
@@ -452,6 +453,57 @@ export async function recordStream(stream: InsertBapStream) {
         totalEarnings: sql`${bapTracks.totalEarnings} + ${artistShare}`,
       })
       .where(eq(bapTracks.id, stream.trackId));
+  }
+  
+  // ============================================================================
+  // INVISIBLE FLYWHEEL ACTIVATION
+  // ============================================================================
+  
+  // 1. Contribute 1% to network pool
+  await flywheel.contributeToNetworkPool({
+    streamId: newStream.insertId,
+    trackId: stream.trackId,
+    streamRevenue: paymentAmount,
+  });
+  
+  // 2. Check for Super Fan status and apply 5% multiplier
+  if (stream.userId) {
+    await flywheel.checkSuperFanStatus(stream.userId);
+    const superFanBonus = await flywheel.applySuperFanMultiplier({
+      userId: stream.userId,
+      baseRevenue: artistShare,
+    });
+    
+    // Update artist earnings with Super Fan bonus
+    if (superFanBonus > 0 && track) {
+      await db
+        .update(bapTracks)
+        .set({
+          totalEarnings: sql`${bapTracks.totalEarnings} + ${superFanBonus}`,
+        })
+        .where(eq(bapTracks.id, stream.trackId));
+    }
+  }
+  
+  // 3. Check for active discovery bonuses (2% for 30 days)
+  if (track) {
+    const activeDiscoverers = await flywheel.getActiveDiscoverers(track.artistId);
+    
+    for (const discovery of activeDiscoverers) {
+      await flywheel.recordDiscoveryBonus({
+        discoveryTrackingId: discovery.discoveryTrackingId,
+        discovererArtistId: discovery.discovererArtistId,
+        discoveredArtistId: track.artistId,
+        streamId: newStream.insertId,
+        trackId: stream.trackId,
+        baseRevenue: artistShare,
+      });
+    }
+  }
+  
+  // 4. Check for milestone achievements
+  if (track) {
+    await flywheel.checkMilestones(track.artistId);
   }
   
   return newStream;
