@@ -1,17 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Phone, Send, Music } from "lucide-react";
-import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Contact() {
-  const [, setLocation] = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -55,184 +51,163 @@ ${formData.message}
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-white">
       
-
-      {/* Hero */}
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
-          Get in Touch
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Have questions about Boptone? Want to partner with us? We'd love to hear from you.
-        </p>
+      {/* Hero - Minimal with massive typography */}
+      <div className="border-b border-gray-200 bg-gradient-to-b from-white to-gray-50">
+        <div className="container py-32">
+          <div className="max-w-4xl">
+            <h1 className="text-7xl md:text-8xl font-bold mb-10 leading-none">
+              Get in Touch.
+            </h1>
+            <p className="text-2xl text-gray-600 leading-relaxed max-w-2xl">
+              Have questions about Boptone? Want to partner with us? We'd love to hear from you.
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Contact Form & Info */}
-      <div className="container mx-auto px-4 py-8 mb-16">
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Contact Form */}
-          <Card>
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
+      {/* Contact Form & Info - Xerox gradient */}
+      <div className="bg-gradient-to-r from-gray-100 via-white to-gray-100 py-32">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-16 max-w-6xl">
+            {/* Contact Form */}
+            <div className="border-2 border-gray-200 bg-white p-12">
+              <h2 className="text-4xl font-bold mb-10">Send us a message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <Label htmlFor="name">Name *</Label>
+                  <Label htmlFor="name" className="text-base font-medium mb-2 block">Name *</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Your name"
+                    className="h-12 text-base"
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email" className="text-base font-medium mb-2 block">Email *</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="your@email.com"
+                    className="h-12 text-base"
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="subject">Subject</Label>
+                  <Label htmlFor="subject" className="text-base font-medium mb-2 block">Subject</Label>
                   <Input
                     id="subject"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="What's this about?"
+                    className="h-12 text-base"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="message">Message *</Label>
+                  <Label htmlFor="message" className="text-base font-medium mb-2 block">Message *</Label>
                   <Textarea
                     id="message"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell us what's on your mind..."
                     rows={6}
+                    className="text-base"
                     required
                   />
                 </div>
 
-                <Button className="rounded-full w-full" type="submit" 
-                  size="lg"
+                <Button 
+                  className="rounded-full w-full h-14 text-lg bg-black hover:bg-gray-800 text-white" 
+                  type="submit" 
                   disabled={sendMessage.isPending}
                 >
-                  {sendMessage.isPending ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-2" />
-                      Send Message
-                    </>
-                  )}
+                  {sendMessage.isPending ? "Sending..." : "Send Message"}
                 </Button>
               </form>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <Card>
-              <CardContent className="p-8">
-                <div className="flex items-start gap-4">
-                  <Mail className="h-6 w-6 text-primary mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Email Us</h3>
-                    <p className="text-muted-foreground mb-2">
-                      For general inquiries, partnerships, or support:
-                    </p>
-                    <a 
-                      href="mailto:hello@boptone.com" 
-                      className="text-primary hover:underline font-medium"
-                    >
-                      hello@boptone.com
-                    </a>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Contact Info */}
+            <div className="space-y-8">
+              <div className="border-2 border-gray-200 bg-white p-10">
+                <h3 className="text-2xl font-bold mb-4">Email Us</h3>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  For general inquiries, partnerships, or support:
+                </p>
+                <a 
+                  href="mailto:hello@boptone.com" 
+                  className="text-black hover:underline font-medium text-lg"
+                >
+                  hello@boptone.com
+                </a>
+              </div>
 
-            <Card>
-              <CardContent className="p-8">
-                <div className="flex items-start gap-4">
-                  <MapPin className="h-6 w-6 text-primary mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">Location</h3>
-                    <p className="text-muted-foreground">
-                      Acid Bird, Inc.<br />
-                      Los Angeles, California<br />
-                      United States
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              <div className="border-2 border-gray-200 bg-white p-10">
+                <h3 className="text-2xl font-bold mb-4">Location</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Acid Bird, Inc.<br />
+                  Los Angeles, California<br />
+                  United States
+                </p>
+              </div>
 
-            <Card className="rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
-              <CardContent className="p-8">
-                <h3 className="font-semibold text-lg mb-3">Looking for Support?</h3>
-                <p className="text-muted-foreground mb-4">
+              <div className="border-2 border-black bg-white p-10">
+                <h3 className="text-xl font-bold mb-3">Looking for Support?</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   If you're an existing user and need technical support, please email us with "Support" in the subject line for priority handling.
                 </p>
-                <h3 className="font-semibold text-lg mb-3 mt-6">Media Inquiries</h3>
-                <p className="text-muted-foreground mb-4">
+                <h3 className="text-xl font-bold mb-3">Media Inquiries</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   For press and media inquiries, please include "Press" in your subject line.
                 </p>
-                <h3 className="font-semibold text-lg mb-3 mt-6">Partnership Opportunities</h3>
-                <p className="text-muted-foreground">
+                <h3 className="text-xl font-bold mb-3">Partnership Opportunities</h3>
+                <p className="text-gray-600 leading-relaxed">
                   Interested in partnering with Boptone? We'd love to explore collaboration opportunities. Include "Partnership" in your subject line.
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* FAQ Preview */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Common Questions</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">When does Boptone launch?</h3>
-                <p className="text-sm text-muted-foreground">
+      {/* FAQ Preview - Minimal cards */}
+      <div className="border-t border-gray-200 bg-white py-32">
+        <div className="container">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-5xl font-bold mb-16">Common Questions</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="border-2 border-gray-200 bg-white p-8">
+                <h3 className="text-xl font-bold mb-3">When does Boptone launch?</h3>
+                <p className="text-gray-600 leading-relaxed">
                   We're targeting a 2026 launch. Sign up for early access to be notified when we go live.
                 </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">How much does it cost?</h3>
-                <p className="text-sm text-muted-foreground">
+              </div>
+              <div className="border-2 border-gray-200 bg-white p-8">
+                <h3 className="text-xl font-bold mb-3">How much does it cost?</h3>
+                <p className="text-gray-600 leading-relaxed">
                   We offer a free tier for emerging artists and paid plans starting at $29/month. Check our pricing page for details.
                 </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">Can I try before I buy?</h3>
-                <p className="text-sm text-muted-foreground">
+              </div>
+              <div className="border-2 border-gray-200 bg-white p-8">
+                <h3 className="text-xl font-bold mb-3">Can I try before I buy?</h3>
+                <p className="text-gray-600 leading-relaxed">
                   Yes! We offer a 14-day free trial on our Pro tier with no credit card required.
                 </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-2">Do you take a percentage of my revenue?</h3>
-                <p className="text-sm text-muted-foreground">
+              </div>
+              <div className="border-2 border-gray-200 bg-white p-8">
+                <h3 className="text-xl font-bold mb-3">Do you take a percentage of my revenue?</h3>
+                <p className="text-gray-600 leading-relaxed">
                   No. We charge a flat subscription fee. You keep 100% of your revenue.
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </div>
