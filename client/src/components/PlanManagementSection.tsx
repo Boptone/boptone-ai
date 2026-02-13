@@ -1,38 +1,52 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
 const PLANS = [
   {
-    id: "creator",
-    name: "Creator",
+    id: "free",
+    name: "Free",
     monthlyPrice: 0,
     annualPrice: 0,
-    features: ["Basic distribution", "1 release/month", "Standard analytics"],
+    features: [
+      "Keep 90% of all revenue",
+      "5 tracks per month",
+      "Basic analytics",
+      "BopShop commerce",
+      "Toney AI (10 queries/month)",
+    ],
   },
   {
     id: "pro",
     name: "Pro",
-    monthlyPrice: 29,
-    annualPrice: 23.2, // 20% off
-    features: ["Unlimited releases", "Advanced analytics", "Priority support", "Playlist pitching"],
+    monthlyPrice: 49,
+    annualPrice: 39.2, // 20% off
+    features: [
+      "Everything in Free",
+      "Unlimited tracks & storage",
+      "Third-party distribution",
+      "Advanced analytics & fan data",
+      "Unlimited e-commerce products",
+      "Toney AI unlimited",
+      "Team accounts (3 seats)",
+    ],
   },
   {
-    id: "studio",
-    name: "Studio",
-    monthlyPrice: 99,
-    annualPrice: 79.2, // 20% off
-    features: ["Everything in Pro", "Team collaboration", "White-label options", "API access"],
-  },
-  {
-    id: "label",
-    name: "Label",
-    monthlyPrice: 499,
-    annualPrice: 399.2, // 20% off
-    features: ["Everything in Studio", "Unlimited artists", "Custom integrations", "Dedicated account manager"],
+    id: "enterprise",
+    name: "Enterprise",
+    monthlyPrice: 149,
+    annualPrice: 119.2, // 20% off
+    features: [
+      "Everything in Pro",
+      "Team accounts (10 seats)",
+      "White-label embeds",
+      "API access",
+      "Advanced tour management",
+      "Microloans (up to $50K)",
+      "Dedicated account manager",
+    ],
   },
 ];
 
@@ -86,7 +100,7 @@ export function PlanManagementSection() {
     );
   }
 
-  const currentPlan = currentSub?.plan || "creator";
+  const currentPlan = currentSub?.plan || "free";
   const currentCycle = currentSub?.billingCycle || "monthly";
 
   return (
@@ -96,7 +110,7 @@ export function PlanManagementSection() {
         <p className="text-lg text-gray-600 mb-10">
           Currently on {PLANS.find((p) => p.id === currentPlan)?.name} ({currentCycle})
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {PLANS.map((plan) => {
             const isCurrent = plan.id === currentPlan;
             const isUpgrade = PLANS.findIndex((p) => p.id === plan.id) > PLANS.findIndex((p) => p.id === currentPlan);
@@ -113,7 +127,7 @@ export function PlanManagementSection() {
                 </p>
 
                 <ul className="space-y-3 mb-8">
-                  {plan.features.slice(0, 3).map((feature, idx) => (
+                  {plan.features.map((feature, idx) => (
                     <li key={idx} className="text-sm text-gray-700">
                       • {feature}
                     </li>
