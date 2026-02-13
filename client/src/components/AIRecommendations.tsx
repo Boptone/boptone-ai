@@ -1,6 +1,4 @@
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Lightbulb, X, TrendingUp, Zap, DollarSign } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -37,19 +35,6 @@ export function AIRecommendations() {
     return null;
   }
   
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "workflow_suggestion":
-        return <Zap className="w-5 h-5" />;
-      case "revenue_optimization":
-        return <DollarSign className="w-5 h-5" />;
-      case "growth_opportunity":
-        return <TrendingUp className="w-5 h-5" />;
-      default:
-        return <Lightbulb className="w-5 h-5" />;
-    }
-  };
-  
   const handleAccept = async (rec: Recommendation) => {
     try {
       // Execute the recommendation action
@@ -72,28 +57,23 @@ export function AIRecommendations() {
   };
   
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2">
-        <Lightbulb className="w-5 h-5 text-yellow-500" />
-        <h3 className="font-semibold">AI Recommendations</h3>
-      </div>
+    <div className="border-2 border-gray-200 bg-white p-12">
+      <h3 className="text-4xl font-bold mb-8">AI Recommendations</h3>
       
-      {visibleRecommendations.map((rec, index) => (
-        <Card key={index} className="p-4 border-l-4 border-l-yellow-500">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-3 flex-1">
-              <div className="text-yellow-500 mt-0.5">
-                {getIcon(rec.type)}
-              </div>
+      <div className="space-y-4">
+        {visibleRecommendations.map((rec, index) => (
+          <div key={index} className="p-6 border-2 border-gray-300 bg-white">
+            <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <h4 className="font-medium mb-1">{rec.title}</h4>
-                <p className="text-sm text-muted-foreground mb-3">
+                <h4 className="text-xl font-bold mb-2">{rec.title}</h4>
+                <p className="text-base text-gray-600 mb-4">
                   {rec.description}
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <Button
                     size="sm"
                     onClick={() => handleAccept(rec)}
+                    className="rounded-full bg-black hover:bg-gray-800 text-white"
                   >
                     Apply
                   </Button>
@@ -101,23 +81,24 @@ export function AIRecommendations() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleDismiss(rec.title)}
+                    className="rounded-full"
                   >
                     Dismiss
                   </Button>
                 </div>
               </div>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => handleDismiss(rec.title)}
+                className="text-gray-400 hover:text-gray-900"
+              >
+                ×
+              </Button>
             </div>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="h-6 w-6"
-              onClick={() => handleDismiss(rec.title)}
-            >
-              <X className="w-4 h-4" />
-            </Button>
           </div>
-        </Card>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

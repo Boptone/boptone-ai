@@ -1,7 +1,5 @@
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { DollarSign, TrendingUp, Clock, CheckCircle2, ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 
 /**
@@ -69,65 +67,48 @@ export function EarningsWidget() {
 
   if (isLoading) {
     return (
-      <Card className="p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-gray-100 rounded-lg">
-            <DollarSign className="h-5 w-5 text-gray-600" />
-          </div>
-          <h3 className="text-lg font-bold text-gray-900">Earnings</h3>
-        </div>
-        <p className="text-sm text-gray-500">Loading balance...</p>
-      </Card>
+      <div className="border-2 border-gray-200 bg-white p-12">
+        <h3 className="text-3xl font-bold mb-2">Earnings</h3>
+        <p className="text-lg text-gray-600">Loading balance...</p>
+      </div>
     );
   }
 
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow">
+    <div className="border-2 border-gray-200 bg-white p-12">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg">
-            <DollarSign className="h-5 w-5 text-white" />
-          </div>
-          <h3 className="text-lg font-bold text-gray-900">Earnings</h3>
-        </div>
+      <div className="flex items-center justify-between mb-8">
+        <h3 className="text-4xl font-bold">Earnings</h3>
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setLocation("/settings/payouts")}
           className="text-gray-600 hover:text-gray-900"
         >
-          View All
-          <ArrowRight className="h-4 w-4 ml-1" />
+          View All →
         </Button>
       </div>
 
       {/* Available Balance */}
-      <div className="mb-6">
-        <p className="text-sm text-gray-600 mb-1">Available Balance</p>
-        <p className="text-4xl font-bold text-gray-900 tracking-tight">
+      <div className="mb-8">
+        <p className="text-sm text-gray-500 font-medium uppercase tracking-wide mb-2">Available Balance</p>
+        <p className="text-6xl font-bold text-gray-900">
           {formatCurrency(balance?.availableBalance || 0)}
         </p>
       </div>
 
       {/* Balance Breakdown */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="p-3 bg-gray-50 rounded-lg">
-          <div className="flex items-center gap-2 mb-1">
-            <Clock className="h-4 w-4 text-gray-400" />
-            <p className="text-xs text-gray-600">Pending</p>
-          </div>
-          <p className="text-base font-semibold text-gray-900">
+      <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="p-6 bg-gray-50 border border-gray-200">
+          <p className="text-sm text-gray-600 mb-2">Pending</p>
+          <p className="text-2xl font-bold text-gray-900">
             {formatCurrency(balance?.pendingBalance || 0)}
           </p>
         </div>
 
-        <div className="p-3 bg-gray-50 rounded-lg">
-          <div className="flex items-center gap-2 mb-1">
-            <TrendingUp className="h-4 w-4 text-gray-400" />
-            <p className="text-xs text-gray-600">Withdrawn</p>
-          </div>
-          <p className="text-base font-semibold text-gray-900">
+        <div className="p-6 bg-gray-50 border border-gray-200">
+          <p className="text-sm text-gray-600 mb-2">Withdrawn</p>
+          <p className="text-2xl font-bold text-gray-900">
             {formatCurrency(balance?.withdrawnBalance || 0)}
           </p>
         </div>
@@ -135,49 +116,30 @@ export function EarningsWidget() {
 
       {/* Payout Schedule Info */}
       {balance && (
-        <div className="mb-6 p-3 bg-blue-50 border border-blue-100 rounded-lg">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs text-blue-700 font-medium mb-1">Payout Schedule</p>
-              <p className="text-sm font-semibold text-blue-900">
-                {getScheduleLabel(balance.payoutSchedule)}
-                {nextPayoutDate && ` • Next: ${nextPayoutDate}`}
-              </p>
-            </div>
-          </div>
+        <div className="mb-8 p-6 bg-white border-2 border-gray-300">
+          <p className="text-sm text-gray-600 font-medium mb-1">Payout Schedule</p>
+          <p className="text-lg font-semibold text-gray-900">
+            {getScheduleLabel(balance.payoutSchedule)}
+            {nextPayoutDate && ` • Next: ${nextPayoutDate}`}
+          </p>
         </div>
       )}
 
       {/* Recent Payout Status */}
       {recentPayout && (
-        <div className="mb-6 p-3 bg-gray-50 rounded-lg">
+        <div className="mb-8 p-6 bg-gray-50 border border-gray-200">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {recentPayout.status === "completed" ? (
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
-              ) : (
-                <Clock className="h-4 w-4 text-yellow-600" />
-              )}
-              <div>
-                <p className="text-xs text-gray-600">Recent Payout</p>
-                <p className="text-sm font-semibold text-gray-900">
-                  {formatCurrency(recentPayout.netAmount)}
-                </p>
-              </div>
+            <div>
+              <p className="text-sm text-gray-600 mb-1">Recent Payout</p>
+              <p className="text-xl font-bold text-gray-900">
+                {formatCurrency(recentPayout.netAmount)}
+              </p>
             </div>
             <div className="text-right">
-              <p
-                className={`text-xs font-medium capitalize ${
-                  recentPayout.status === "completed"
-                    ? "text-green-600"
-                    : recentPayout.status === "failed"
-                    ? "text-red-600"
-                    : "text-yellow-600"
-                }`}
-              >
+              <p className="text-sm font-semibold text-gray-900 capitalize mb-1">
                 {recentPayout.status}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-sm text-gray-600">
                 {new Date(recentPayout.requestedAt).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -192,24 +154,23 @@ export function EarningsWidget() {
       <Button
         onClick={() => setLocation("/settings/payouts")}
         disabled={!balance || balance.availableBalance < 2000 || balance.isOnHold}
-        className="w-full"
+        className="w-full rounded-full h-14 text-lg bg-black hover:bg-gray-800 text-white"
         size="lg"
       >
-        <DollarSign className="h-5 w-5 mr-2" />
         Withdraw Funds
       </Button>
 
       {balance?.isOnHold && (
-        <p className="text-xs text-red-600 text-center mt-2">
-          ⚠️ Payouts temporarily on hold
+        <p className="text-sm text-gray-600 text-center mt-3">
+          Payouts temporarily on hold
         </p>
       )}
 
       {balance && balance.availableBalance < 2000 && !balance.isOnHold && (
-        <p className="text-xs text-gray-500 text-center mt-2">
+        <p className="text-sm text-gray-500 text-center mt-3">
           Minimum withdrawal: $20.00
         </p>
       )}
-    </Card>
+    </div>
   );
 }
