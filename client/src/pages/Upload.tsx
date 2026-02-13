@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Upload as UploadIcon, Music, Image as ImageIcon, Loader2, Check, Sparkles, AlertCircle, CheckCircle2, X } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import DashboardLayout from "@/components/DashboardLayout";
@@ -332,8 +331,8 @@ export default function Upload() {
   };
 
   const ValidationIcon = ({ status }: { status: ValidationStatus }) => {
-    if (status === 'valid') return <CheckCircle2 className="h-4 w-4 text-primary" />;
-    if (status === 'invalid') return <AlertCircle className="h-4 w-4 text-gray-500" />;
+    if (status === 'valid') return <span className="text-sm font-semibold text-gray-900">✓</span>;
+    if (status === 'invalid') return <span className="text-sm font-semibold text-gray-500">✗</span>;
     return null;
   };
 
@@ -341,7 +340,7 @@ export default function Upload() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="text-xl font-medium text-gray-600">Loading...</div>
         </div>
       </DashboardLayout>
     );
@@ -350,7 +349,7 @@ export default function Upload() {
   if (!user && !DEV_MODE) {
     return (
       <DashboardLayout>
-        <Card className="rounded-xl">
+        <Card className="border-2 border-gray-200">
           <CardHeader>
             <CardTitle>Sign In Required</CardTitle>
             <CardDescription>Please sign in to upload music to BAP</CardDescription>
@@ -366,7 +365,7 @@ export default function Upload() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground">Upload to BAP</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Upload to BAP</h1>
           <p className="text-xl text-gray-600">
             Share your music with the world. Your track will be live in minutes.
           </p>
@@ -375,7 +374,6 @@ export default function Upload() {
         {/* Compliance Score Banner */}
         {audioFile && (
           <Alert className="border-2 border-gray-200 bg-white">
-            <Sparkles className="h-5 w-5 text-gray-700" />
             <AlertDescription>
               <div className="flex items-center justify-between">
                 <div>
@@ -388,7 +386,7 @@ export default function Upload() {
                 </div>
                 <div className="w-32 h-2 bg-gray-100 rounded-full overflow-hidden">
                   <div
-                    className="h-full transition-all duration-500 bg-primary"
+                    className="h-full transition-all duration-500 bg-gray-900"
                     style={{ width: `${complianceScore}%` }}
                   />
                 </div>
@@ -398,12 +396,9 @@ export default function Upload() {
         )}
 
         {/* Audio Upload */}
-        <Card className="rounded-xl">
+        <Card className="border-2 border-gray-200">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Music className="h-5 w-5" />
-              Audio File
-            </CardTitle>
+            <CardTitle className="text-2xl font-bold">Audio File</CardTitle>
             <CardDescription>
               Upload your track (MP3, WAV, FLAC, or AAC)
             </CardDescription>
@@ -415,14 +410,14 @@ export default function Upload() {
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
-                  isDragging ? 'border-primary bg-primary/5' : 'border-muted-foreground/25'
+                  isDragging ? 'border-gray-900 bg-gray-50' : 'border-gray-300'
                 }`}
               >
-                <UploadIcon className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <div className="text-6xl font-bold text-gray-300 mb-4">↑</div>
                 <p className="text-lg font-medium mb-2">
                   Drag and drop your audio file here
                 </p>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-sm text-gray-600 mb-4">
                   or click to browse
                 </p>
                 <Input
@@ -433,26 +428,29 @@ export default function Upload() {
                   id="audio-upload"
                 />
                 <Label htmlFor="audio-upload">
-                  <Button variant="outline" asChild className="rounded-full">
+                  <Button variant="outline" asChild className="rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white">
                     <span>Choose File</span>
                   </Button>
                 </Label>
               </div>
             ) : (
-              <div className="flex items-center gap-4 p-4 bg-muted rounded-lg">
+              <div className="flex items-center gap-4 p-6 bg-gray-50 border border-gray-200">
                 {extractingMetadata ? (
-                  <Loader2 className="h-10 w-10 animate-spin text-primary flex-shrink-0" />
+                  <div className="h-10 w-10 flex items-center justify-center flex-shrink-0">
+                    <div className="text-2xl font-bold text-gray-400">...</div>
+                  </div>
                 ) : (
-                  <Check className="h-10 w-10 text-primary flex-shrink-0" />
+                  <div className="h-10 w-10 flex items-center justify-center flex-shrink-0">
+                    <div className="text-2xl font-bold text-gray-900">✓</div>
+                  </div>
                 )}
                 <div className="flex-1">
                   <p className="font-medium">{audioFile.name}</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600">
                     {(audioFile.size / 1024 / 1024).toFixed(2)} MB
                   </p>
                   {extractingMetadata && (
-                    <p className="text-sm text-primary flex items-center gap-1 mt-1">
-                      <Sparkles className="h-3 w-3" />
+                    <p className="text-sm text-gray-900 mt-1">
                       AI extracting metadata...
                     </p>
                   )}
@@ -493,9 +491,9 @@ export default function Upload() {
         {/* Metadata Form */}
         {audioFile && !extractingMetadata && (
           <>
-            <Card className="rounded-xl">
+            <Card className="border-2 border-gray-200">
               <CardHeader>
-                <CardTitle>Track Information</CardTitle>
+                <CardTitle className="text-2xl font-bold">Track Information</CardTitle>
                 <CardDescription>
                   AI extracted metadata. Review and edit as needed.
                 </CardDescription>
@@ -542,7 +540,6 @@ export default function Upload() {
                         <SelectItem value="pop">Pop</SelectItem>
                         <SelectItem value="rock">Rock</SelectItem>
                         <SelectItem value="hip-hop">Hip Hop</SelectItem>
-                        <SelectItem value="electronic">Electronic</SelectItem>
                         <SelectItem value="jazz">Jazz</SelectItem>
                         <SelectItem value="classical">Classical</SelectItem>
                         <SelectItem value="country">Country</SelectItem>
@@ -610,12 +607,9 @@ export default function Upload() {
             </Card>
 
             {/* Compliance & Metadata Section */}
-            <Card className="rounded-xl border-2 border-gray-200">
+            <Card className="border-2 border-gray-200">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-gray-700" />
-                  Compliance & Metadata
-                </CardTitle>
+                <CardTitle className="text-2xl font-bold">Compliance & Metadata</CardTitle>
                 <CardDescription>
                   Industry-standard metadata for distribution and royalty tracking. Optional but highly recommended.
                 </CardDescription>
@@ -635,7 +629,7 @@ export default function Upload() {
                     maxLength={15}
                     className={showValidation && validation.isrc === 'invalid' ? 'border-gray-400' : ''}
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     International Standard Recording Code - unique identifier for this recording
                   </p>
                   {showValidation && validation.isrc === 'invalid' && (
@@ -657,7 +651,7 @@ export default function Upload() {
                     maxLength={12}
                     className={showValidation && validation.upc === 'invalid' ? 'border-gray-400' : ''}
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     Universal Product Code - barcode identifier for commercial release
                   </p>
                   {showValidation && validation.upc === 'invalid' && (
@@ -668,7 +662,7 @@ export default function Upload() {
                 {/* Pricing Controls */}
                 <div className="space-y-2">
                   <Label className="text-lg font-semibold">Stream Pricing</Label>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Set your per-stream price and see real-time revenue projections. You keep 90% of every stream.
                   </p>
                   <RevenueCalculator
@@ -685,7 +679,7 @@ export default function Upload() {
                   </Label>
                   <div className="space-y-3">
                     {songwriterSplits.map((split, index) => (
-                      <div key={index} className="space-y-2 p-3 bg-muted/50 rounded-lg">
+                      <div key={index} className="space-y-2 p-3 bg-gray-50 border border-gray-200">
                         <div className="flex items-center gap-2">
                           <Input
                             value={split.fullName}
@@ -707,7 +701,7 @@ export default function Upload() {
                               onClick={() => removeSongwriter(index)}
                               className="flex-shrink-0"
                             >
-                              <X className="h-4 w-4" />
+                              ×
                             </Button>
                           )}
                         </div>
@@ -719,7 +713,7 @@ export default function Upload() {
                           className="w-full"
                         />
                         {index > 0 && (
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             We'll send an invitation to set up payment details
                           </p>
                         )}
@@ -734,7 +728,7 @@ export default function Upload() {
                   >
                     + Add Songwriter
                   </Button>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     Total: {songwriterSplits.reduce((sum, s) => sum + s.percentage, 0).toFixed(2)}% (must equal 100%)
                   </p>
                   {showValidation && validation.songwriterSplits === 'invalid' && (
@@ -775,7 +769,7 @@ export default function Upload() {
                 </div>
 
                 {/* AI Disclosure */}
-                <div className="space-y-3 p-4 bg-purple-50 dark:bg-purple-950 rounded-lg border-2 border-purple-500">
+                <div className="space-y-3 p-4 bg-white border-2 border-gray-300">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="aiUsed"
@@ -789,7 +783,7 @@ export default function Upload() {
                   </div>
                   {metadata.aiUsed && (
                     <div className="ml-6 space-y-2">
-                      <p className="text-sm text-muted-foreground mb-2">Select all that apply:</p>
+                      <p className="text-sm text-gray-600 mb-2">Select all that apply:</p>
                       {(['lyrics', 'production', 'mastering', 'vocals', 'artwork'] as const).map((type) => (
                         <div key={type} className="flex items-center space-x-2">
                           <Checkbox
@@ -810,7 +804,7 @@ export default function Upload() {
                       ))}
                     </div>
                   )}
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     Future-proof your release: Major platforms are beginning to require AI disclosure
                   </p>
                 </div>
@@ -818,12 +812,9 @@ export default function Upload() {
             </Card>
 
             {/* Artwork Upload */}
-            <Card className="rounded-xl">
+            <Card className="border-2 border-gray-200">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ImageIcon className="h-5 w-5" />
-                  Artwork
-                </CardTitle>
+                <CardTitle className="text-2xl font-bold">Artwork</CardTitle>
                 <CardDescription>
                   Upload cover art (recommended: 3000x3000px, JPG or PNG)
                 </CardDescription>
@@ -831,8 +822,8 @@ export default function Upload() {
               <CardContent>
                 {!artworkFile ? (
                   <div className="flex items-center gap-4">
-                    <div className="w-32 h-32 bg-muted rounded-lg flex items-center justify-center">
-                      <ImageIcon className="h-12 w-12 text-muted-foreground" />
+                    <div className="w-32 h-32 bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
+                      <div className="text-4xl text-gray-300">🖼</div>
                     </div>
                     <div className="flex-1">
                       <Input
@@ -843,11 +834,11 @@ export default function Upload() {
                         id="artwork-upload"
                       />
                       <Label htmlFor="artwork-upload">
-                        <Button variant="outline" asChild className="rounded-full">
+                        <Button variant="outline" asChild className="rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white">
                           <span>Upload Artwork</span>
                         </Button>
                       </Label>
-                      <p className="text-sm text-muted-foreground mt-2">
+                      <p className="text-sm text-gray-600 mt-2">
                         Optional - we'll generate a placeholder if not provided
                       </p>
                     </div>
@@ -857,11 +848,11 @@ export default function Upload() {
                     <img
                       src={URL.createObjectURL(artworkFile)}
                       alt="Artwork preview"
-                      className="w-32 h-32 rounded-lg object-cover"
+                      className="w-32 h-32 object-cover border-2 border-gray-200"
                     />
                     <div className="flex-1">
                       <p className="font-medium">{artworkFile.name}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {(artworkFile.size / 1024).toFixed(2)} KB
                       </p>
                     </div>
@@ -878,7 +869,7 @@ export default function Upload() {
             </Card>
 
             {/* Publish Button */}
-            <Card className="rounded-xl">
+            <Card className="border-2 border-gray-200">
               <CardContent className="pt-6">
                 {isUploading && (
                   <div className="mb-4">
@@ -886,9 +877,9 @@ export default function Upload() {
                       <span>Uploading to BAP...</span>
                       <span>{uploadProgress}%</span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2">
+                    <div className="w-full bg-gray-100 h-2">
                       <div
-                        className="bg-primary h-2 rounded-full transition-all duration-300"
+                        className="bg-gray-900 h-2 transition-all duration-300"
                         style={{ width: `${uploadProgress}%` }}
                       />
                     </div>
@@ -896,24 +887,14 @@ export default function Upload() {
                 )}
                 <Button
                   onClick={handlePublish}
-                  className="w-full rounded-full"
+                  className="w-full rounded-full bg-black hover:bg-gray-800 text-white h-14 text-lg"
                   disabled={isUploading || !canPublish()}
                   size="lg"
                 >
-                  {isUploading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Publishing...
-                    </>
-                  ) : (
-                    <>
-                      <UploadIcon className="mr-2 h-4 w-4" />
-                      Publish to BAP
-                    </>
-                  )}
+                  {isUploading ? "Publishing..." : "Publish to BAP"}
                 </Button>
                 {!canPublish() && audioFile && metadata.title && (
-                  <p className="text-sm text-center text-muted-foreground mt-2">
+                  <p className="text-sm text-center text-gray-600 mt-2">
                     Fix validation errors above to publish
                   </p>
                 )}

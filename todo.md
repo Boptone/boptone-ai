@@ -1456,3 +1456,13 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update feature lists to match actual tier features from Signup.tsx
 - [x] Verify grid layout works with 3 cards (md:grid-cols-3)
 - [x] Save checkpoint after fix
+
+
+## Redesign Upload.tsx Page ✅ COMPLETE
+- [x] Read Upload.tsx to identify all icons and colorful elements
+- [x] Remove all Lucide icons (UploadIcon, Music, ImageIcon, Loader2, Check, Sparkles, AlertCircle, CheckCircle2, X)
+- [x] Convert all colorful elements to black/white/gray palette (removed purple AI disclosure box)
+- [x] Apply xerox aesthetic (text-based icons, gray progress bars, bold typography)
+- [x] Maintain all upload functionality (file selection, drag-drop, form fields, validation)
+- [x] Ensure clean, minimal design for file upload UI (text-only validation icons ✓/✗)
+- [x] Mark as complete in todo.md
