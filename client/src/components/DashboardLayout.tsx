@@ -21,19 +21,19 @@ import {
 } from "@/components/ui/sidebar";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { Home, LogOut, PanelLeft, Music, DollarSign, Users, Settings, Store } from "lucide-react";
+import { LogOut, PanelLeft } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
 
 const menuItems = [
-  { icon: Home, label: "Home", path: "/dashboard" },
-  { icon: Music, label: "Releases", path: "/releases" },
-  { icon: Store, label: "Store", path: "/store" },
-  { icon: DollarSign, label: "Revenue", path: "/revenue" },
-  { icon: Users, label: "Audience", path: "/audience" },
-  { icon: Settings, label: "Settings", path: "/profile-settings" },
+  { label: "Home", path: "/dashboard" },
+  { label: "Releases", path: "/releases" },
+  { label: "Store", path: "/store" },
+  { label: "Revenue", path: "/revenue" },
+  { label: "Audience", path: "/audience" },
+  { label: "Settings", path: "/profile-settings" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
@@ -225,9 +225,6 @@ function DashboardLayoutContent({
                       tooltip={item.label}
                       className={`h-10 transition-all font-normal`}
                     >
-                      <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
-                      />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

@@ -1466,3 +1466,13 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Maintain all upload functionality (file selection, drag-drop, form fields, validation)
 - [x] Ensure clean, minimal design for file upload UI (text-only validation icons ✓/✗)
 - [x] Mark as complete in todo.md
+
+
+## Fix DashboardLayout Sidebar Icons (User Report - URGENT) ✅ COMPLETE
+- [x] User reported "U" icon visible in bottom left of Upload page
+- [x] Read DashboardLayout.tsx to identify all remaining sidebar icons
+- [x] Remove all Lucide icons from sidebar navigation (Home, Music, Store, DollarSign, Users, Settings)
+- [x] Convert sidebar navigation to text-only links
+- [x] Ensure sidebar matches xerox aesthetic (no icons, clean text navigation)
+- [x] Test Upload page to verify no icons visible
+- [x] Mark as complete in todo.md
