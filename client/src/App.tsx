@@ -53,6 +53,7 @@ import PayoutHistory from "./pages/PayoutHistory";
 import Workflows from "./pages/Workflows";
 import WorkflowSettings from "./pages/WorkflowSettings";
 import Listen from "./pages/Listen";
+import PricingDashboard from "./pages/PricingDashboard";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -104,6 +105,7 @@ function Router() {
       <Route path="/workflows" component={Workflows} />
       <Route path="/workflows/settings" component={WorkflowSettings} />
       <Route path="/listen/:trackId" component={Listen} />
+      <Route path="/pricing-dashboard" component={PricingDashboard} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />

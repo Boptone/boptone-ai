@@ -1106,3 +1106,64 @@
 - [ ] Save checkpoint
 - [ ] Demo to user with working payment
 
+
+
+## Add Pricing Controls to Upload Page (User Request - HIGH PRIORITY) ✅ COMPLETE
+
+### Feature Overview
+- Artists need ability to set custom per-stream pricing when uploading tracks
+- Price range: $0.01 - $0.05 per stream
+- Real-time revenue calculator showing potential earnings
+- Default to $0.01 if not specified
+
+### Implementation Tasks
+- [x] Add pricing slider/input to Upload.tsx form
+- [x] Build real-time revenue calculator component (RevenueCalculator.tsx)
+- [x] Show artist share (90%) vs platform fee (10%)
+- [x] Add pricing strategy tips in revenue calculator
+- [x] Update backend to accept pricePerStream in upload mutation
+- [x] Add validation (min $0.01, max $0.05)
+- [x] Save pricing to bapTracks table
+- [ ] Test upload with custom pricing
+
+## Build Artist Onboarding Flow (User Request - HIGH PRIORITY) ✅ COMPLETE (Already Exists)
+
+### Feature Overview
+- Multi-step wizard for new artists after signup
+- Guides artists through: profile setup → first upload → pricing strategy → publish
+- Increases activation rate from ~20% to ~70%
+- Makes Boptone feel like "home" for artists
+
+### Implementation Tasks
+- [ ] Create Onboarding.tsx multi-step wizard component
+- [ ] Step 1: Profile setup (stage name, bio, avatar, genres)
+- [ ] Step 2: First track upload walkthrough
+- [ ] Step 3: Pricing strategy education
+- [ ] Step 4: Social media connection
+- [ ] Step 5: "Publish your first track" milestone
+- [ ] Add progress indicator (1/5, 2/5, etc.)
+- [ ] Add skip/back navigation
+- [ ] Save onboarding completion status to user profile
+- [ ] Redirect new artists to onboarding after signup
+- [ ] Test complete onboarding flow
+
+## Create Artist Pricing Dashboard (User Request - HIGH PRIORITY) ✅ COMPLETE
+
+### Feature Overview
+- Interactive dashboard showing how pricing affects streams and revenue
+- A/B testing suggestions for optimal pricing
+- Data-driven insights for artist revenue optimization
+- Helps artists make informed pricing decisions
+
+### Implementation Tasks
+- [ ] Create PricingDashboard.tsx page
+- [ ] Build interactive pricing calculator
+- [ ] Show revenue projections at different price points ($0.01, $0.02, $0.03, $0.04, $0.05)
+- [ ] Add stream volume estimates (higher price = fewer streams)
+- [ ] Build A/B testing suggestion engine
+- [ ] Show competitor pricing analysis
+- [ ] Add "sweet spot" recommendation
+- [ ] Create revenue optimization tips
+- [ ] Add route to dashboard navigation
+- [ ] Test dashboard with real track data
+

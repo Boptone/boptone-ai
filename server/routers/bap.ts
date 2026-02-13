@@ -73,6 +73,7 @@ export const bapRouter = router({
           used: z.boolean(),
           types: z.array(z.enum(['lyrics', 'production', 'mastering', 'vocals', 'artwork'])).optional(),
         }).optional(),
+        pricePerStream: z.number().min(1).max(5).default(1), // In cents: $0.01-$0.05
       }))
       .mutation(async ({ input, ctx }) => {
         // Get artist profile
@@ -138,6 +139,7 @@ export const bapRouter = router({
           did: `did:boptone:${profile.stageName.toLowerCase().replace(/[^a-z0-9]/g, "")}:${Date.now()}`,
           isrcCode: input.isrcCode,
           upcCode: input.upcCode,
+          pricePerStream: input.pricePerStream,
           songwriterSplits: input.songwriterSplits ? input.songwriterSplits.map(s => ({
             name: s.fullName,
             percentage: s.percentage,

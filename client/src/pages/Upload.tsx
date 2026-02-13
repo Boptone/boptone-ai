@@ -14,6 +14,7 @@ import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { RevenueCalculator } from "@/components/RevenueCalculator";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -70,6 +71,8 @@ export default function Upload() {
     pro: "", // Performance Rights Organization
     aiUsed: false,
     aiTypes: [] as Array<'lyrics' | 'production' | 'mastering' | 'vocals' | 'artwork'>,
+    // Pricing
+    pricePerStream: 1, // Default $0.01 (in cents)
   });
 
   const [songwriterSplits, setSongwriterSplits] = useState<Array<{email: string; fullName: string; percentage: number}>>([
@@ -304,6 +307,7 @@ export default function Upload() {
         audioFile: audioBase64,
         artworkFile: artworkBase64,
         isExplicit: metadata.explicit,
+        pricePerStream: metadata.pricePerStream,
         // Compliance data
         isrcCode: metadata.isrcCode || undefined,
         upcCode: metadata.upcCode || undefined,
@@ -475,6 +479,7 @@ export default function Upload() {
                       pro: "",
                       aiUsed: false,
                       aiTypes: [],
+                      pricePerStream: 1,
                     });
                   }}
                 >
@@ -658,6 +663,18 @@ export default function Upload() {
                   {showValidation && validation.upc === 'invalid' && (
                     <p className="text-xs text-gray-600">Invalid UPC format. Must be exactly 12 digits</p>
                   )}
+                </div>
+
+                {/* Pricing Controls */}
+                <div className="space-y-2">
+                  <Label className="text-lg font-semibold">Stream Pricing</Label>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Set your per-stream price and see real-time revenue projections. You keep 90% of every stream.
+                  </p>
+                  <RevenueCalculator
+                    pricePerStream={metadata.pricePerStream}
+                    onChange={(price) => setMetadata(prev => ({ ...prev, pricePerStream: price }))}
+                  />
                 </div>
 
                 {/* Songwriter Splits */}
