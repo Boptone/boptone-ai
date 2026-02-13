@@ -205,3 +205,51 @@ export async function createWorkflowTemplate(data: InsertWorkflowTemplate) {
   const result = await db.insert(workflowTemplates).values(data);
   return result[0].insertId;
 }
+
+// ============================================================================
+// WORKFLOW TRIGGERS
+// ============================================================================
+
+export async function createWorkflowTrigger(data: {
+  workflowId: number;
+  type: "webhook" | "schedule" | "event" | "manual";
+  config: any;
+  isActive: boolean;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(workflowTriggers).values(data);
+  return result[0].insertId;
+}
+
+export async function getWorkflowTriggers(workflowId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return db
+    .select()
+    .from(workflowTriggers)
+    .where(eq(workflowTriggers.workflowId, workflowId))
+    .orderBy(desc(workflowTriggers.createdAt));
+}
+
+export async function updateWorkflowTrigger(
+  id: number,
+  data: {
+    config?: any;
+    isActive?: boolean;
+  }
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(workflowTriggers).set(data).where(eq(workflowTriggers.id, id));
+}
+
+export async function deleteWorkflowTrigger(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.delete(workflowTriggers).where(eq(workflowTriggers.id, id));
+}

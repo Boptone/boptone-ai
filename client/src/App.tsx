@@ -51,6 +51,7 @@ import WriterEarnings from "./pages/WriterEarnings";
 import PayoutSettings from "./pages/PayoutSettings";
 import PayoutHistory from "./pages/PayoutHistory";
 import Workflows from "./pages/Workflows";
+import WorkflowSettings from "./pages/WorkflowSettings";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -100,6 +101,7 @@ function Router() {
       <Route path="/settings/payouts" component={PayoutSettings} />
       <Route path="/payouts/history" component={PayoutHistory} />
       <Route path="/workflows" component={Workflows} />
+      <Route path="/workflows/settings" component={WorkflowSettings} />
       <Route path={"/admin"} component={Admin} />
       <Route path={"/signup"} component={Signup} />
       <Route path={"/404"} component={NotFound} />

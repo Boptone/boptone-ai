@@ -13,6 +13,10 @@ import {
   getAllWorkflowTemplates,
   getWorkflowTemplateById,
   createWorkflowFromTemplate,
+  createWorkflowTrigger,
+  getWorkflowTriggers,
+  updateWorkflowTrigger,
+  deleteWorkflowTrigger,
 } from "../workflowDb";
 import { executeWorkflow } from "../workflowEngine";
 import { generateWorkflowFromText, refineWorkflow } from "../aiWorkflowGenerator";
@@ -260,5 +264,69 @@ export const workflowsRouter = router({
       );
 
       return { id: workflowId };
+    }),
+
+  // ============================================================================
+  // WORKFLOW TRIGGERS
+  // ============================================================================
+
+  createTrigger: protectedProcedure
+    .input(
+      z.object({
+        workflowId: z.number(),
+        type: z.enum(["webhook", "schedule", "event", "manual"]),
+        config: z.object({
+          eventType: z.string().optional(), // e.g., "stream_milestone", "new_follower", "sale"
+          threshold: z.number().optional(), // e.g., 1000 streams
+          comparison: z.enum(["equals", "greater_than", "less_than", "greater_or_equal", "less_or_equal"]).optional(),
+          schedule: z.string().optional(), // cron expression for scheduled triggers
+          webhookUrl: z.string().url().optional(),
+          metadata: z.record(z.string(), z.any()).optional(),
+        }),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const triggerId = await createWorkflowTrigger({
+        workflowId: input.workflowId,
+        type: input.type,
+        config: input.config,
+        isActive: true,
+      });
+
+      return { id: triggerId };
+    }),
+
+  getTriggers: protectedProcedure
+    .input(z.object({ workflowId: z.number() }))
+    .query(async ({ input }) => {
+      return getWorkflowTriggers(input.workflowId);
+    }),
+
+  updateTrigger: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        config: z.object({
+          eventType: z.string().optional(),
+          threshold: z.number().optional(),
+          comparison: z.enum(["equals", "greater_than", "less_than", "greater_or_equal", "less_or_equal"]).optional(),
+          schedule: z.string().optional(),
+          webhookUrl: z.string().url().optional(),
+          metadata: z.record(z.string(), z.any()).optional(),
+        }).optional(),
+        isActive: z.boolean().optional(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { id, ...data } = input;
+      await updateWorkflowTrigger(id, data);
+      return { success: true };
+    }),
+
+  deleteTrigger: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ input }) => {
+      await deleteWorkflowTrigger(input.id);
+      return { success: true };
     }),
 });

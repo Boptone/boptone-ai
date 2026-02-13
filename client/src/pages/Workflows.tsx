@@ -15,7 +15,8 @@ import {
   CheckCircle2, 
   XCircle,
   Sparkles,
-  TrendingUp
+  TrendingUp,
+  Settings
 } from "lucide-react";
 import { toast } from "sonner";
 import AIWorkflowAssistant from "@/components/AIWorkflowAssistant";
@@ -123,14 +124,24 @@ export default function Workflows() {
                 Automate your music career with powerful no-code workflows
               </p>
             </div>
-            <Button
-              onClick={() => setLocation("/workflows/builder")}
-              size="lg"
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
-            >
-              <Plus className="w-5 h-5 mr-2" />
-              Create Custom Workflow
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                onClick={() => setLocation("/workflows/settings")}
+                size="lg"
+                variant="outline"
+              >
+                <Settings className="w-5 h-5 mr-2" />
+                Configure Triggers
+              </Button>
+              <Button
+                onClick={() => setLocation("/workflows/builder")}
+                size="lg"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              >
+                <Plus className="w-5 h-5 mr-2" />
+                Create Custom Workflow
+              </Button>
+            </div>
           </div>
         </div>
 
