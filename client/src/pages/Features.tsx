@@ -1,9 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
-import { 
-  Music, Brain, DollarSign, ShoppingBag, Shield, 
-  BarChart3, Globe, Zap, ArrowRight
-} from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Features() {
@@ -11,7 +7,6 @@ export default function Features() {
 
   const features = [
     {
-      icon: Globe,
       title: "Upload & Distribute Music",
       description: "Upload your music and reach fans worldwide. Keep 90% of what you earn—no middlemen, no platform fees.",
       benefits: [
@@ -19,13 +14,9 @@ export default function Features() {
         "Keep 90% of revenue",
         "Reach fans globally",
         "You own everything"
-      ],
-      gradient: "",
-      border: "border-gray-200",
-      iconBg: "bg-gray-100"
+      ]
     },
     {
-      icon: DollarSign,
       title: "Track Your Money",
       description: "See all your earnings in one place. Track streaming, sales, and shows with simple, clear reports.",
       benefits: [
@@ -33,13 +24,9 @@ export default function Features() {
         "Easy-to-read reports",
         "Monthly payouts",
         "Tax documents included"
-      ],
-      gradient: "",
-      border: "border-gray-200",
-      iconBg: "bg-gray-100"
+      ]
     },
     {
-      icon: ShoppingBag,
       title: "Sell Your Merch",
       description: "Sell t-shirts, albums, and experiences directly to fans. We handle payments and tracking for you.",
       benefits: [
@@ -47,13 +34,9 @@ export default function Features() {
         "Built-in payment processing",
         "Automatic inventory tracking",
         "Sell meet & greets and lessons"
-      ],
-      gradient: "",
-      border: "border-gray-200",
-      iconBg: "bg-gray-100"
+      ]
     },
     {
-      icon: Brain,
       title: "Get Career Advice",
       description: "Toney, your AI advisor, gives you personalized tips on when to release music, how to grow, and what to do next.",
       benefits: [
@@ -61,13 +44,9 @@ export default function Features() {
         "Growth recommendations",
         "Marketing ideas",
         "Trend insights"
-      ],
-      gradient: "",
-      border: "border-gray-200",
-      iconBg: "bg-gray-100"
+      ]
     },
     {
-      icon: Shield,
       title: "Protect Your Music",
       description: "We automatically find and remove unauthorized copies of your music from the internet. Your work stays yours.",
       benefits: [
@@ -75,13 +54,9 @@ export default function Features() {
         "Instant takedown requests",
         "Monitors YouTube, SoundCloud, etc.",
         "Complete protection history"
-      ],
-      gradient: "",
-      border: "border-gray-200",
-      iconBg: "bg-gray-100"
+      ]
     },
     {
-      icon: BarChart3,
       title: "See Your Stats",
       description: "Simple charts show who's listening, where they're from, and how you're growing. No confusing data.",
       benefits: [
@@ -89,39 +64,35 @@ export default function Features() {
         "Fan location maps",
         "Growth charts",
         "Social media tracking"
-      ],
-      gradient: "",
-      border: "border-gray-200",
-      iconBg: "bg-gray-100"
+      ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
+    <div className="min-h-screen bg-white">
       
-      {/* Hero Section - Asymmetric with massive typography */}
-      <div className="container mx-auto px-4 py-24 bg-white">
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-          {/* Left: Content */}
-          <div className="space-y-8">
-            <h1 className="text-7xl md:text-8xl font-bold leading-tight">
+      {/* Hero Section - Minimal with massive typography */}
+      <div className="border-b border-gray-200 bg-gradient-to-b from-white to-gray-50">
+        <div className="container py-32">
+          <div className="max-w-4xl">
+            <h1 className="text-7xl md:text-8xl font-bold leading-none mb-8">
               Everything
               <br />
-              You Need<span className="text-black">.</span>
+              You Need.
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+            <p className="text-2xl text-gray-600 leading-relaxed mb-12 max-w-2xl">
               Upload music, get paid, sell merch, and grow your career—all in one simple platform.
             </p>
             <div className="flex gap-4">
               <Button 
-                className="rounded-full text-lg px-8 py-6" 
+                className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white" 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
-                START FREE <ArrowRight className="ml-2 h-5 w-5" />
+                Start Free
               </Button>
               <Button 
-                className="rounded-full text-lg px-8 py-6" 
+                className="rounded-full text-lg px-10 py-7 border-2 border-gray-300 hover:border-black hover:bg-gray-50" 
                 size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/bap-protocol")}
@@ -130,138 +101,117 @@ export default function Features() {
               </Button>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Right: Visual Stats Card */}
-          <div className="relative">
-            <div className="rounded-3xl border-2 border-gray-200 bg-white p-12">
-              <div className="space-y-8">
-                <div className="flex items-center gap-6">
-                  <div className="h-20 w-20 rounded-2xl bg-gray-100 flex items-center justify-center">
-                    <Music className="h-10 w-10 text-gray-700" />
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold">6 Tools</div>
-                    <div className="text-muted-foreground font-medium">One Platform</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="h-20 w-20 rounded-2xl bg-gray-100 flex items-center justify-center">
-                    <DollarSign className="h-10 w-10 text-gray-700" />
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold">90%</div>
-                    <div className="text-muted-foreground font-medium">You Keep</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="h-20 w-20 rounded-2xl bg-gray-100 flex items-center justify-center">
-                    <Zap className="h-10 w-10 text-gray-700" />
-                  </div>
-                  <div>
-                    <div className="text-4xl font-bold">100%</div>
-                    <div className="text-muted-foreground font-medium">Simple</div>
-                  </div>
-                </div>
-              </div>
+      {/* Stats Bar - Xerox gradient background */}
+      <div className="bg-gradient-to-r from-gray-100 via-white to-gray-100 border-b border-gray-200">
+        <div className="container py-16">
+          <div className="grid grid-cols-3 gap-12 max-w-4xl">
+            <div className="text-center">
+              <div className="text-5xl font-bold mb-2">6 Tools</div>
+              <div className="text-lg text-gray-600">One Platform</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold mb-2">90%</div>
+              <div className="text-lg text-gray-600">You Keep</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl font-bold mb-2">100%</div>
+              <div className="text-lg text-gray-600">Simple</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Features Grid - Minimal grayscale cards */}
-      <div className="container mx-auto px-4 py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold text-center mb-16">
-            Six Powerful Tools<span className="text-black">.</span>
+      {/* Features Grid - Minimal cards with xerox background */}
+      <div className="bg-gradient-to-b from-white to-gray-50 py-32">
+        <div className="container">
+          <h2 className="text-6xl font-bold mb-20 max-w-3xl">
+            Six Powerful Tools.
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <div 
-                  key={index}
-                  className={`rounded-lg border-2 ${feature.border} bg-white p-8 hover:border-gray-300 transition-colors`}
-                >
-                  <div className={`h-16 w-16 rounded-lg ${feature.iconBg} flex items-center justify-center mb-6`}>
-                    <Icon className="h-8 w-8 text-gray-700" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">{feature.description}</p>
-                  <div className="space-y-3">
-                    {feature.benefits.map((benefit, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <div className="h-2 w-2 rounded-full bg-foreground mt-2 flex-shrink-0" />
-                        <p className="text-sm font-medium">{benefit}</p>
-                      </div>
-                    ))}
-                  </div>
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                className="border-2 border-gray-200 bg-white p-10 hover:border-gray-400 transition-colors"
+              >
+                <h3 className="text-3xl font-bold mb-4">{feature.title}</h3>
+                <p className="text-gray-600 mb-8 leading-relaxed text-lg">{feature.description}</p>
+                <div className="space-y-3">
+                  {feature.benefits.map((benefit, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="h-2 w-2 rounded-full bg-black mt-2 flex-shrink-0" />
+                      <p className="text-base font-medium">{benefit}</p>
+                    </div>
+                  ))}
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Comparison Section - Asymmetric with massive typography */}
-      <div className="container mx-auto px-4 py-24">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      {/* Comparison Section - Minimal with bold typography */}
+      <div className="border-t border-gray-200 bg-white py-32">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-20 items-start max-w-6xl">
             {/* Left: Massive headline */}
             <div>
-              <h2 className="text-6xl md:text-7xl font-bold leading-tight mb-8">
+              <h2 className="text-7xl font-bold leading-tight mb-8">
                 Why
                 <br />
-                <span style={{ color: '#4285F4' }}>Boptone</span><span className="text-black">?</span>
+                Boptone?
               </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <p className="text-2xl text-gray-600 leading-relaxed">
                 Stop juggling multiple platforms. Everything you need in one place.
               </p>
             </div>
 
             {/* Right: Comparison cards */}
-            <div className="space-y-6">
+            <div className="space-y-8">
               {/* Without Boptone */}
-              <div className="rounded-3xl border-4 border-red-500 bg-gradient-to-br from-red-500/10 to-orange-500/10 p-8 shadow-xl">
-                <h3 className="text-2xl font-bold mb-6 text-red-600">Without Boptone</h3>
+              <div className="border-2 border-gray-300 bg-gray-50 p-10">
+                <h3 className="text-2xl font-bold mb-6">Without Boptone</h3>
                 <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 font-bold text-xl">✗</span>
-                    <span className="font-medium">Using 10+ different websites</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">×</span>
+                    <span className="font-medium text-lg">Using 10+ different websites</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 font-bold text-xl">✗</span>
-                    <span className="font-medium">Losing 30-50% to middlemen</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">×</span>
+                    <span className="font-medium text-lg">Losing 30-50% to middlemen</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 font-bold text-xl">✗</span>
-                    <span className="font-medium">Tracking everything manually</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">×</span>
+                    <span className="font-medium text-lg">Tracking everything manually</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 font-bold text-xl">✗</span>
-                    <span className="font-medium">No help or guidance</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">×</span>
+                    <span className="font-medium text-lg">No help or guidance</span>
                   </li>
                 </ul>
               </div>
 
               {/* With Boptone */}
-              <div className="rounded-3xl border-4 border-green-500 bg-gradient-to-br from-green-500/10 to-emerald-500/10 p-8 shadow-xl">
-                <h3 className="text-2xl font-bold mb-6 text-green-600">With Boptone</h3>
+              <div className="border-2 border-black bg-white p-10">
+                <h3 className="text-2xl font-bold mb-6">With Boptone</h3>
                 <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 font-bold text-xl">✓</span>
-                    <span className="font-medium">Everything in one place</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">✓</span>
+                    <span className="font-medium text-lg">Everything in one place</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 font-bold text-xl">✓</span>
-                    <span className="font-medium">Keep 90% of your money</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">✓</span>
+                    <span className="font-medium text-lg">Keep 90% of your money</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 font-bold text-xl">✓</span>
-                    <span className="font-medium">Automatic tracking</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">✓</span>
+                    <span className="font-medium text-lg">Automatic tracking</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 font-bold text-xl">✓</span>
-                    <span className="font-medium">AI advisor helps you grow</span>
+                  <li className="flex items-start gap-4">
+                    <span className="font-mono text-xl">✓</span>
+                    <span className="font-medium text-lg">AI advisor helps you grow</span>
                   </li>
                 </ul>
               </div>
@@ -270,48 +220,50 @@ export default function Features() {
         </div>
       </div>
 
-      {/* CTA Section - Bold and centered */}
-      <div className="container mx-auto px-4 py-24">
-        <div className="max-w-5xl mx-auto text-center space-y-8">
-          <h2 className="text-6xl md:text-7xl font-bold">
-            Ready to Create
-            <br />
-            <span style={{ color: '#4285F4' }}>Your Tone</span><span className="text-black">?</span>
-          </h2>
-          <p className="text-2xl text-muted-foreground">
-            Join thousands of artists building their careers on the complete Creator OS
-          </p>
-          <div className="flex gap-4 justify-center pt-4">
-            <Button 
-              className="rounded-full text-lg px-10 py-7" 
-              size="lg" 
-              onClick={() => setLocation("/signup")}
-            >
-              START FREE <ArrowRight className="ml-2 h-6 w-6" />
-            </Button>
-            <Button 
-              className="rounded-full text-lg px-10 py-7" 
-              size="lg" 
-              variant="outline" 
-              onClick={() => setLocation("/demo")}
-            >
-              Watch Demo
-            </Button>
-          </div>
-          
-          {/* Trust signals */}
-          <div className="flex items-center justify-center gap-8 pt-8 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <span className="text-green-500 text-2xl">✓</span>
-              <span className="font-medium">No credit card required</span>
+      {/* CTA Section - Bold and centered with xerox gradient */}
+      <div className="border-t border-gray-200 bg-gradient-to-b from-gray-50 to-white py-32">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center space-y-10">
+            <h2 className="text-7xl font-bold leading-tight">
+              Ready to Create
+              <br />
+              Your Tone?
+            </h2>
+            <p className="text-2xl text-gray-600 max-w-2xl mx-auto">
+              Join thousands of artists building their careers on the complete Creator OS
+            </p>
+            <div className="flex gap-4 justify-center pt-6">
+              <Button 
+                className="rounded-full text-lg px-12 py-7 bg-black hover:bg-gray-800 text-white" 
+                size="lg" 
+                onClick={() => setLocation("/signup")}
+              >
+                Start Free
+              </Button>
+              <Button 
+                className="rounded-full text-lg px-12 py-7 border-2 border-gray-300 hover:border-black hover:bg-gray-50" 
+                size="lg" 
+                variant="outline" 
+                onClick={() => setLocation("/demo")}
+              >
+                Watch Demo
+              </Button>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-green-500 text-2xl">✓</span>
-              <span className="font-medium">14-day Pro trial</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-green-500 text-2xl">✓</span>
-              <span className="font-medium">Cancel anytime</span>
+            
+            {/* Trust signals - Text only, no icons */}
+            <div className="flex items-center justify-center gap-10 pt-10 text-gray-600">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xl">✓</span>
+                <span className="font-medium">No credit card required</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xl">✓</span>
+                <span className="font-medium">14-day Pro trial</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xl">✓</span>
+                <span className="font-medium">Cancel anytime</span>
+              </div>
             </div>
           </div>
         </div>

@@ -1365,8 +1365,8 @@ Apply the visually stunning design style from the explainer component across ALL
 
 ### Phase 3: Redesign Public Pages
 - [x] Home page - Removed 14 icons, applied xerox gradients, timeless professional design
-- [ ] Features page - Redesign with bold typography and gradient backgrounds
-- [ ] About page - Modernize with consistent design language
+- [x] Features page - Removed 9 icons, applied xerox gradients, black/white/gray palette
+- [x] About page - Removed 5 icons + all animations, applied xerox aesthetic
 - [ ] Contact page - Simplify with explainer-style forms
 - [ ] Demo page - Update to match explainer aesthetic
 - [ ] Terms/Privacy pages - Apply consistent typography
