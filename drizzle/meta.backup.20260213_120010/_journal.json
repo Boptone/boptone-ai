@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1761765878671,
+      "tag": "0000_unknown_randall",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1761766009719,
+      "tag": "0001_mushy_norman_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1761772067592,
+      "tag": "0002_fair_virginia_dare",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1761778437052,
+      "tag": "0003_wakeful_norrin_radd",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1763588846533,
+      "tag": "0004_tidy_professor_monster",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1763588937935,
+      "tag": "0005_ambitious_vanisher",
+      "breakpoints": true
+    }
+  ]
+}

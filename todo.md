@@ -942,3 +942,74 @@
 - [x] Manual testing of trigger creation flow
 - [x] Zero TypeScript errors
 - [x] Ready for checkpoint
+
+## BAP Public Streaming Page (Feb 13, 2026 - CRITICAL PATH TO LAUNCH)
+
+### Phase 1: Pricing Controls
+- [ ] Add pricePerStream field to bapTracks schema
+- [ ] Add pricing input to track upload flow
+- [ ] Add pricing controls to track edit page
+- [ ] Set default pricing (e.g., $0.01 per stream)
+
+### Phase 2: Public Streaming Page
+- [ ] Create /listen/:artistSlug/:trackSlug route
+- [ ] Build public player UI with artist info
+- [ ] Display pricing and payment options
+- [ ] Integrate Stripe payment processing
+- [ ] Add share/embed functionality
+
+### Phase 3: Play Tracking & Revenue
+- [ ] Track plays in bapStreams table
+- [ ] Calculate revenue per play
+- [ ] Update artist balance in real-time
+- [ ] Add revenue breakdown (artist split, platform fee)
+- [ ] Create payout records automatically
+
+### Phase 4: Testing & Launch
+- [ ] Test end-to-end payment flow
+- [ ] Verify revenue calculations
+- [ ] Test with multiple pricing tiers
+- [ ] Add analytics tracking
+
+## BAP Public Streaming Page (World-Class UX) ✅ COMPLETE
+
+### Phase 1: Core Streaming Experience
+- [x] Create Listen.tsx component at /listen/:trackId
+- [x] Build immersive hero section with blurred artwork background
+- [x] Implement HTML5 audio player with play/pause controls
+- [x] Add waveform-style progress bar with seek functionality
+- [x] Display track metadata (title, artist, genre, mood, duration)
+- [x] Show real-time pricing ($0.01-$0.05 per stream)
+- [x] Add sticky player controls at top of page
+- [x] Integrate with BAP backend (getTrack, trackPlay procedures)
+- [ ] Add Stripe payment integration for per-stream payments
+- [ ] Implement payment modal before/during playback
+- [ ] Add pricing controls to track upload/edit flow
+
+### Phase 2: Artist Profile Integration
+- [x] Fetch and display artist profile (avatar, bio, social links)
+- [x] Show Spotify and Instagram links
+- [x] Display artist stage name
+- [ ] Add "Follow Artist" button
+- [ ] Show follower count
+
+### Phase 3: Social Features
+- [x] Add "Like" button with heart icon
+- [x] Add "Share" button with clipboard copy
+- [ ] Implement like count updates
+- [ ] Add repost functionality
+- [ ] Show track stats (plays, likes, earnings)
+
+### Phase 4: Mobile Optimization
+- [ ] Test responsive design on mobile devices
+- [ ] Optimize player controls for touch
+- [ ] Add swipe gestures for seek
+- [ ] Test artwork loading performance
+
+### Phase 5: Testing & Polish
+- [ ] Write vitest tests for streaming logic
+- [ ] Test payment flow end-to-end
+- [ ] Test play tracking (30s threshold)
+- [ ] Verify revenue calculations
+- [ ] Save checkpoint
+

@@ -804,6 +804,9 @@ export const bapTracks = mysqlTable("bap_tracks", {
   repostCount: int("repostCount").default(0).notNull(),
   
   // Revenue tracking
+  pricePerStream: int("pricePerStream").default(100).notNull(), // In cents (default $0.01)
+  artistShare: int("artistShare").default(90).notNull(), // Percentage (90% default)
+  platformFee: int("platformFee").default(10).notNull(), // Percentage (10% default)
   totalEarnings: int("totalEarnings").default(0).notNull(), // In cents
   
   // Status

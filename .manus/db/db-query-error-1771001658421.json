@@ -1,0 +1,8 @@
+{
+  "query": "ALTER TABLE bap_tracks \nADD COLUMN pricePerStream INT NOT NULL DEFAULT 100 COMMENT 'In cents (default $0.01)' AFTER totalEarnings,\nADD COLUMN artistShare INT NOT NULL DEFAULT 90 COMMENT 'Percentage (90% default)' AFTER pricePerStream,\nADD COLUMN platformFee INT NOT NULL DEFAULT 10 COMMENT 'Percentage (10% default)' AFTER artistShare;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE bap_tracks \nADD COLUMN pricePerStream INT NOT NULL DEFAULT 100 COMMENT 'In cents (default $0.01)' AFTER totalEarnings,\nADD COLUMN artistShare INT NOT NULL DEFAULT 90 COMMENT 'Percentage (90% default)' AFTER pricePerStream,\nADD COLUMN platformFee INT NOT NULL DEFAULT 10 COMMENT 'Percentage (10% default)' AFTER artistShare;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'ntbkjjzazhrpejn9kkuxdq.bap_tracks' doesn't exist"
+  ]
+}

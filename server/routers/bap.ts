@@ -705,6 +705,66 @@ export const bapRouter = router({
   }),
   
   // ============================================================================
+  // PUBLIC STREAMING
+  // ============================================================================
+  
+  /**
+   * Get track by ID (public - for streaming page)
+   */
+  getTrack: publicProcedure
+    .input(z.object({ trackId: z.number() }))
+    .query(async ({ input }) => {
+      const track = await getTrackById(input.trackId);
+      if (!track) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Track not found",
+        });
+      }
+      return track;
+    }),
+  
+  /**
+   * Get artist profile (public)
+   */
+  getArtistProfile: publicProcedure
+    .input(z.object({ artistId: z.number() }))
+    .query(async ({ input }) => {
+      const { getArtistProfileById } = await import("../db");
+      const profile = await getArtistProfileById(input.artistId);
+      if (!profile) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Artist profile not found",
+        });
+      }
+      return profile;
+    }),
+  
+  /**
+   * Track a play event (public - records stream and payment)
+   */
+  trackPlay: publicProcedure
+    .input(z.object({
+      trackId: z.number(),
+      durationPlayed: z.number(),
+      completionRate: z.number(),
+      source: z.enum(["direct", "playlist", "artist_page", "search", "feed"]),
+    }))
+    .mutation(async ({ input, ctx }) => {
+      // Record the stream
+      const stream = await recordStream({
+        trackId: input.trackId,
+        userId: ctx.user?.id,
+        durationPlayed: input.durationPlayed,
+        completionRate: input.completionRate,
+        source: input.source,
+      });
+      
+      return { success: true };
+    }),
+  
+  // ============================================================================
   // DISCOVERY & FEEDS
   // ============================================================================
   

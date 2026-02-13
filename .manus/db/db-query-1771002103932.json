@@ -1,0 +1,22 @@
+{
+  "query": "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE '%bap%' ORDER BY TABLE_NAME;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME LIKE '%bap%' ORDER BY TABLE_NAME;",
+  "rows": [
+    {
+      "TABLE_NAME": "bap_albums"
+    },
+    {
+      "TABLE_NAME": "bap_follows"
+    },
+    {
+      "TABLE_NAME": "bap_likes"
+    },
+    {
+      "TABLE_NAME": "bap_payments"
+    }
+  ],
+  "messages": [],
+  "stdout": "TABLE_NAME\nbap_albums\nbap_follows\nbap_likes\nbap_payments\n",
+  "stderr": "",
+  "execution_time_ms": 66
+}

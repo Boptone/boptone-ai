@@ -1,0 +1,229 @@
+{
+  "query": "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() ORDER BY TABLE_NAME;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() ORDER BY TABLE_NAME;",
+  "rows": [
+    {
+      "TABLE_NAME": "__drizzle_migrations"
+    },
+    {
+      "TABLE_NAME": "ai_context"
+    },
+    {
+      "TABLE_NAME": "ai_conversations"
+    },
+    {
+      "TABLE_NAME": "ai_events"
+    },
+    {
+      "TABLE_NAME": "ai_recommendations"
+    },
+    {
+      "TABLE_NAME": "analytics_snapshots"
+    },
+    {
+      "TABLE_NAME": "artist_backing"
+    },
+    {
+      "TABLE_NAME": "artist_dividends"
+    },
+    {
+      "TABLE_NAME": "artist_loans"
+    },
+    {
+      "TABLE_NAME": "artist_microloans"
+    },
+    {
+      "TABLE_NAME": "artist_payment_methods"
+    },
+    {
+      "TABLE_NAME": "artist_pod_accounts"
+    },
+    {
+      "TABLE_NAME": "artist_profiles"
+    },
+    {
+      "TABLE_NAME": "artist_tax_settings"
+    },
+    {
+      "TABLE_NAME": "artist_values"
+    },
+    {
+      "TABLE_NAME": "backing_transactions"
+    },
+    {
+      "TABLE_NAME": "bank_accounts"
+    },
+    {
+      "TABLE_NAME": "bap_albums"
+    },
+    {
+      "TABLE_NAME": "bap_follows"
+    },
+    {
+      "TABLE_NAME": "bap_likes"
+    },
+    {
+      "TABLE_NAME": "bap_payments"
+    },
+    {
+      "TABLE_NAME": "cart_items"
+    },
+    {
+      "TABLE_NAME": "cashback_rewards"
+    },
+    {
+      "TABLE_NAME": "communities"
+    },
+    {
+      "TABLE_NAME": "discount_codes"
+    },
+    {
+      "TABLE_NAME": "distribution_platforms"
+    },
+    {
+      "TABLE_NAME": "earnings_balance"
+    },
+    {
+      "TABLE_NAME": "fan_events"
+    },
+    {
+      "TABLE_NAME": "fan_memberships"
+    },
+    {
+      "TABLE_NAME": "fan_segments"
+    },
+    {
+      "TABLE_NAME": "fans"
+    },
+    {
+      "TABLE_NAME": "forum_posts"
+    },
+    {
+      "TABLE_NAME": "funnel_snapshots"
+    },
+    {
+      "TABLE_NAME": "healthcare_plans"
+    },
+    {
+      "TABLE_NAME": "infringements"
+    },
+    {
+      "TABLE_NAME": "investor_revenue_share"
+    },
+    {
+      "TABLE_NAME": "kick_in_tips"
+    },
+    {
+      "TABLE_NAME": "link_clicks"
+    },
+    {
+      "TABLE_NAME": "loan_repayments"
+    },
+    {
+      "TABLE_NAME": "micro_loans"
+    },
+    {
+      "TABLE_NAME": "notifications"
+    },
+    {
+      "TABLE_NAME": "opportunities"
+    },
+    {
+      "TABLE_NAME": "order_items"
+    },
+    {
+      "TABLE_NAME": "orders"
+    },
+    {
+      "TABLE_NAME": "payments"
+    },
+    {
+      "TABLE_NAME": "payout_accounts"
+    },
+    {
+      "TABLE_NAME": "payout_settings"
+    },
+    {
+      "TABLE_NAME": "payouts"
+    },
+    {
+      "TABLE_NAME": "pod_order_fulfillments"
+    },
+    {
+      "TABLE_NAME": "pod_product_mappings"
+    },
+    {
+      "TABLE_NAME": "pod_providers"
+    },
+    {
+      "TABLE_NAME": "pod_webhook_events"
+    },
+    {
+      "TABLE_NAME": "product_reviews"
+    },
+    {
+      "TABLE_NAME": "product_variants"
+    },
+    {
+      "TABLE_NAME": "products"
+    },
+    {
+      "TABLE_NAME": "releases"
+    },
+    {
+      "TABLE_NAME": "revenue_records"
+    },
+    {
+      "TABLE_NAME": "shipping_rates"
+    },
+    {
+      "TABLE_NAME": "smart_links"
+    },
+    {
+      "TABLE_NAME": "social_media_metrics"
+    },
+    {
+      "TABLE_NAME": "streaming_metrics"
+    },
+    {
+      "TABLE_NAME": "subscription_changes"
+    },
+    {
+      "TABLE_NAME": "subscriptions"
+    },
+    {
+      "TABLE_NAME": "tours"
+    },
+    {
+      "TABLE_NAME": "users"
+    },
+    {
+      "TABLE_NAME": "workflow_execution_logs"
+    },
+    {
+      "TABLE_NAME": "workflow_executions"
+    },
+    {
+      "TABLE_NAME": "workflow_history"
+    },
+    {
+      "TABLE_NAME": "workflow_templates"
+    },
+    {
+      "TABLE_NAME": "workflow_triggers"
+    },
+    {
+      "TABLE_NAME": "workflows"
+    },
+    {
+      "TABLE_NAME": "writer_payment_methods"
+    },
+    {
+      "TABLE_NAME": "writer_profiles"
+    }
+  ],
+  "messages": [],
+  "stdout": "TABLE_NAME\n__drizzle_migrations\nai_context\nai_conversations\nai_events\nai_recommendations\nanalytics_snapshots\nartist_backing\nartist_dividends\nartist_loans\nartist_microloans\nartist_payment_methods\nartist_pod_accounts\nartist_profiles\nartist_tax_settings\nartist_values\nbacking_transactions\nbank_accounts\nbap_albums\nbap_follows\nbap_likes\nbap_payments\ncart_items\ncashback_rewards\ncommunities\ndiscount_codes\ndistribution_platforms\nearnings_balance\nfan_events\nfan_memberships\nfan_segments\nfans\nforum_posts\nfunnel_snapshots\nhealthcare_plans\ninfringements\ninvestor_revenue_share\nkick_in_tips\nlink_clicks\nloan_repayments\nmicro_loans\nnotifications\nopportunities\norder_items\norders\npayments\npayout_accounts\npayout_settings\npayouts\npod_order_fulfillments\npod_product_mappings\npod_providers\npod_webhook_events\nproduct_reviews\nproduct_variants\nproducts\nreleases\nrevenue_records\nshipping_rates\nsmart_links\nsocial_media_metrics\nstreaming_metrics\nsubscription_changes\nsubscriptions\ntours\nusers\nworkflow_execution_logs\nworkflow_executions\nworkflow_history\nworkflow_templates\nworkflow_triggers\nworkflows\nwriter_payment_methods\nwriter_profiles\n",
+  "stderr": "",
+  "execution_time_ms": 139
+}
