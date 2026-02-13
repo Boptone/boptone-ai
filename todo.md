@@ -1476,3 +1476,19 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Ensure sidebar matches xerox aesthetic (no icons, clean text navigation)
 - [x] Test Upload page to verify no icons visible
 - [x] Mark as complete in todo.md
+
+
+## Fix Upload Page UX Confusion (User Report - DEFERRED FOR MAJOR OVERHAUL)
+- [ ] User reports Upload page UX is "totally confusing for artists" when scrolling
+- [ ] DEFERRED: Upload page needs significant UX work beyond simple redesign
+- [ ] Will return to Upload page for complete UX overhaul after site-wide redesign
+- [ ] Priority: Continue with Analytics and remaining pages first
+
+## Redesign Analytics Page ✅ COMPLETE
+- [x] Read Analytics.tsx to identify all icons and colorful elements
+- [x] Remove all Lucide icons from Analytics page (TrendingUp, Users, Music, DollarSign, ArrowLeft, Download, BarChart3, PieChart, Activity, Target, Calendar)
+- [x] Convert all colorful elements to black/white/gray palette (removed blue border on insights card)
+- [x] Apply xerox aesthetic (minimal design, bold typography, text-only navigation)
+- [x] Maintain all analytics functionality (charts, data visualization, time range selector, export)
+- [x] Ensure clean, professional design for data presentation (gray progress bars, minimal cards)
+- [x] Mark as complete in todo.md
