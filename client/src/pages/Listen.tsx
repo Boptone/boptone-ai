@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { StreamPaymentModal } from "@/components/StreamPaymentModal";
 import {
   Play,
   Pause,
@@ -32,6 +33,38 @@ export default function Listen() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
+  
+  // Payment state
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [sessionToken, setSessionToken] = useState<string | null>(() => {
+    // Check localStorage for existing session token
+    return localStorage.getItem(`bap_session_${trackId}`);
+  });
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  
+  // Check if user has valid session
+  const { data: sessionCheck } = trpc.bap.payments.checkSession.useQuery(
+    {
+      trackId: parseInt(trackId || "0"),
+      sessionToken: sessionToken || "",
+    },
+    {
+      enabled: !!trackId && !!sessionToken,
+      retry: false,
+    }
+  );
+  
+  // Update unlock status based on session check
+  useEffect(() => {
+    if (sessionCheck?.unlocked) {
+      setIsUnlocked(true);
+    } else if (sessionCheck && !sessionCheck.unlocked) {
+      // Session expired or invalid, clear it
+      localStorage.removeItem(`bap_session_${trackId}`);
+      setSessionToken(null);
+      setIsUnlocked(false);
+    }
+  }, [sessionCheck, trackId]);
   
   // Fetch track data
   const { data: track, isLoading, error } = trpc.bap.getTrack.useQuery(
@@ -62,9 +95,30 @@ export default function Listen() {
     },
   });
   
+  // Handle payment success
+  const handlePaymentSuccess = (newSessionToken: string) => {
+    setSessionToken(newSessionToken);
+    setIsUnlocked(true);
+    localStorage.setItem(`bap_session_${trackId}`, newSessionToken);
+    toast.success("Payment successful! Enjoy your 24-hour access.");
+    
+    // Auto-play after payment
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.play();
+      }
+    }, 500);
+  };
+  
   // Audio player controls
   const togglePlay = () => {
     if (!audioRef.current) return;
+    
+    // Check if user needs to pay first
+    if (!isUnlocked && !isPlaying) {
+      setShowPaymentModal(true);
+      return;
+    }
     
     if (isPlaying) {
       audioRef.current.pause();
@@ -358,6 +412,20 @@ export default function Listen() {
           </Card>
         </div>
       </div>
+      
+      {/* Payment Modal */}
+      {track && (
+        <StreamPaymentModal
+          open={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          trackId={track.id}
+          trackTitle={track.title}
+          artistName={track.artist}
+          artworkUrl={track.artworkUrl || ""}
+          pricePerStream={track.pricePerStream}
+          onPaymentSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 }

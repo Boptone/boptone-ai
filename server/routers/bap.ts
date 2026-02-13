@@ -765,6 +765,81 @@ export const bapRouter = router({
     }),
   
   // ============================================================================
+  // STREAM PAYMENTS (Stripe Integration)
+  // ============================================================================
+  
+  payments: router({
+    /**
+     * Create a payment intent for a stream
+     */
+    createIntent: publicProcedure
+      .input(z.object({
+        trackId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createStreamPaymentIntent } = await import("../stripe-payments");
+        return createStreamPaymentIntent(input.trackId, ctx.user?.id);
+      }),
+    
+    /**
+     * Confirm a payment and create unlock session
+     */
+    confirmPayment: publicProcedure
+      .input(z.object({
+        paymentIntentId: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const { confirmStreamPayment } = await import("../stripe-payments");
+        return confirmStreamPayment(input.paymentIntentId);
+      }),
+    
+    /**
+     * Check if user has valid session for track
+     */
+    checkSession: publicProcedure
+      .input(z.object({
+        trackId: z.number(),
+        sessionToken: z.string(),
+      }))
+      .query(async ({ input }) => {
+        const { checkSessionUnlock } = await import("../stripe-payments");
+        return checkSessionUnlock(input.trackId, input.sessionToken);
+      }),
+    
+    /**
+     * Get payment stats for a track (artist only)
+     */
+    getTrackStats: protectedProcedure
+      .input(z.object({
+        trackId: z.number(),
+      }))
+      .query(async ({ input, ctx }) => {
+        const { getTrackPaymentStats } = await import("../stripe-payments");
+        const track = await getTrackById(input.trackId);
+        
+        if (!track) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Track not found",
+          });
+        }
+        
+        // Check if user owns this track
+        const { getArtistProfileByUserId } = await import("../db");
+        const profile = await getArtistProfileByUserId(ctx.user.id);
+        
+        if (!profile || profile.id !== track.artistId) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: "You don't own this track",
+          });
+        }
+        
+        return getTrackPaymentStats(input.trackId);
+      }),
+  }),
+  
+  // ============================================================================
   // DISCOVERY & FEEDS
   // ============================================================================
   

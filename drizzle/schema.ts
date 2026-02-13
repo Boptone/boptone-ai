@@ -982,6 +982,68 @@ export type BapPayment = typeof bapPayments.$inferSelect;
 export type InsertBapPayment = typeof bapPayments.$inferInsert;
 
 /**
+ * BAP Stream Payments - Stripe payment tracking for individual streams
+ * Fans pay $0.01-$0.05 per stream via Stripe
+ */
+export const bapStreamPayments = mysqlTable("bap_stream_payments", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  userId: int("userId").references(() => users.id), // Null for anonymous listeners
+  
+  // Payment details
+  amount: int("amount").notNull(), // Total amount in cents ($0.01 = 1)
+  artistShare: int("artistShare").notNull(), // 90% to artist in cents
+  platformShare: int("platformShare").notNull(), // 10% to platform in cents
+  
+  // Stripe integration
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }).notNull().unique(),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
+  status: mysqlEnum("status", ["pending", "succeeded", "failed", "refunded"]).default("pending").notNull(),
+  
+  // Metadata
+  paymentMethod: varchar("paymentMethod", { length: 50 }), // "card", "apple_pay", etc.
+  currency: varchar("currency", { length: 3 }).default("usd").notNull(),
+  
+  // Timestamps
+  paidAt: timestamp("paidAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+  stripePaymentIntentIdx: index("stripe_payment_intent_idx").on(table.stripePaymentIntentId),
+}));
+
+export type BapStreamPayment = typeof bapStreamPayments.$inferSelect;
+export type InsertBapStreamPayment = typeof bapStreamPayments.$inferInsert;
+
+/**
+ * Paid Stream Sessions - Track 24-hour unlock periods
+ * After paying once, fans can listen free for 24 hours
+ */
+export const paidStreamSessions = mysqlTable("paid_stream_sessions", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  paymentId: int("paymentId").notNull().references(() => bapStreamPayments.id),
+  
+  // Session tracking
+  sessionToken: varchar("sessionToken", { length: 255 }).notNull().unique(), // Stored in localStorage
+  userId: int("userId").references(() => users.id), // Null for anonymous
+  
+  // Expiration
+  expiresAt: timestamp("expiresAt").notNull(), // 24 hours from payment
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  sessionTokenIdx: index("session_token_idx").on(table.sessionToken),
+  expiresAtIdx: index("expires_at_idx").on(table.expiresAt),
+}));
+
+export type PaidStreamSession = typeof paidStreamSessions.$inferSelect;
+export type InsertPaidStreamSession = typeof paidStreamSessions.$inferInsert;
+
+/**
  * BAP Reposts - Social sharing of tracks
  */
 export const bapReposts = mysqlTable("bap_reposts", {
