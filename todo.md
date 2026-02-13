@@ -1327,3 +1327,100 @@
 - [x] Update homepage "View Demo" button to link to /explainer
 - [x] Add "Skip" and "Next" buttons with callbacks
 - [x] Test both versions
+
+
+## Site-Wide Design Audit & Redesign (User Request - HIGH PRIORITY) 🚀 IN PROGRESS
+
+### Objective
+Apply the visually stunning design style from the explainer component across ALL pages to create a cohesive, world-class experience throughout the entire Boptone platform.
+
+### Design System Principles (Based on Explainer)
+- Bold, oversized typography with gradient text effects
+- Smooth fade-in animations on scroll
+- Modern gradient backgrounds (purple/blue/pink tones)
+- Rounded cards with subtle shadows
+- Consistent spacing and padding
+- Pill-shaped buttons with hover effects
+- Clean, minimal iconography
+- Responsive grid layouts
+
+### Phase 1: Page Inventory & Assessment
+- [ ] List all public pages (Home, Features, About, Contact, Demo, Explainer, etc.)
+- [ ] List all dashboard pages (Dashboard, Upload, Tracks, Analytics, etc.)
+- [ ] List all BAP pages (Listen, Discover, Pricing Dashboard, etc.)
+- [ ] List all auth pages (Signup, Login, Onboarding, etc.)
+- [ ] Assess current design state of each page
+- [ ] Identify pages that need major redesign vs minor tweaks
+
+### Phase 2: Define Design System
+- [ ] Extract reusable design tokens from explainer component
+- [ ] Define typography scale (h1, h2, h3, body, etc.)
+- [ ] Define color palette (gradients, backgrounds, text, accents)
+- [ ] Define spacing system (margins, padding, gaps)
+- [ ] Define animation patterns (fade-in, slide-up, etc.)
+- [ ] Create reusable component library (if needed)
+
+### Phase 3: Redesign Public Pages
+- [ ] Home page - Apply explainer aesthetic to hero, features, pricing
+- [ ] Features page - Redesign with bold typography and gradient backgrounds
+- [ ] About page - Modernize with consistent design language
+- [ ] Contact page - Simplify with explainer-style forms
+- [ ] Demo page - Update to match explainer aesthetic
+- [ ] Terms/Privacy pages - Apply consistent typography
+
+### Phase 4: Redesign Dashboard & Artist Pages
+- [ ] Dashboard - Modernize with gradient cards and bold stats
+- [ ] Upload page - Apply explainer aesthetic to upload flow
+- [ ] Tracks page - Redesign track grid with modern cards
+- [ ] Analytics page - Update charts with gradient themes
+- [ ] Financials page - Modernize earnings display
+- [ ] Profile Settings - Apply consistent design language
+
+### Phase 5: Redesign BAP Pages
+- [ ] Listen page (/listen/:trackId) - Apply explainer aesthetic to player
+- [ ] Discover page - Redesign with modern grid and gradients
+- [ ] Pricing Dashboard - Update with explainer-style charts
+
+### Phase 6: Testing & Delivery
+- [ ] Test all pages for visual consistency
+- [ ] Verify responsive design on mobile/tablet/desktop
+- [ ] Check animation performance
+- [ ] Ensure accessibility (contrast, focus states)
+- [ ] Save checkpoint
+- [ ] Push to GitHub
+
+
+## Expand Explainer to Show Full Boptone Ecosystem (User Request - HIGH PRIORITY) ✅ COMPLETE
+
+### Current State (5 steps - BAP-focused)
+- Step 1: Welcome to Boptone
+- Step 2: Own Your Music (90% revenue split)
+- Step 3: Set Your Price ($0.01-$0.05 per stream)
+- Step 4: Get Paid Instantly
+- Step 5: AI-Powered Growth (Toney)
+
+### New Expanded Version (8 steps - Full ecosystem)
+- [x] Step 1: Welcome to Boptone ("Complete operating system for artists")
+- [x] Step 2: BAP Streaming (90/10 split, set your price)
+- [x] Step 3: Global Distribution (third-party streaming platforms - NO specific counts or names)
+- [x] Step 4: BopShop Commerce (sell merch, vinyl, digital goods)
+- [x] Step 5: Financial Tools (instant payouts, micro-loans, healthcare)
+- [x] Step 6: IP Protection (automated monitoring and rights management)
+- [x] Step 7: Analytics & Insights (data-driven career decisions)
+- [x] Step 8: AI Career Advisor (Toney - personalized guidance)
+
+### Content Guidelines
+- [x] Remove "150+ platforms" language - just say "third-party streaming platforms"
+- [x] Do NOT mention competitor names (Spotify, Apple Music, etc.)
+- [x] Avoid sales-y language
+- [x] Emphasize human element alongside AI ("backed by human expertise")
+- [x] Keep language accessible and inclusive
+
+### Implementation
+- [x] Update BoptoneExplainer component with 8 steps
+- [x] Update progress indicator (1/8, 2/8, etc.)
+- [x] Test public version (/explainer)
+- [x] Test private version (onboarding)
+- [x] Zero TypeScript errors
+- [x] Save checkpoint
+- [x] Push to GitHub

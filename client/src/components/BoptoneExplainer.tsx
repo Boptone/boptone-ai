@@ -9,6 +9,10 @@ import {
   Sparkles,
   ArrowRight,
   X,
+  Globe,
+  ShoppingBag,
+  Shield,
+  Bot,
 } from "lucide-react";
 import { getLoginUrl } from "@/const";
 
@@ -21,58 +25,94 @@ interface BoptoneExplainerProps {
 const EXPLAINER_STEPS = [
   {
     id: 1,
-    icon: Music2,
+    icon: Sparkles,
     title: "Welcome to Boptone",
-    subtitle: "The complete operating system for artists",
+    subtitle: "Your complete operating system",
     description:
-      "Everything you need to distribute, monetize, and grow your music career—all in one platform. No juggling multiple tools. No confusing dashboards. Just you, your music, and your fans.",
+      "Everything you need to build, manage, and grow your music career—all in one place. Distribution, commerce, analytics, financial tools, and AI-powered guidance.",
     highlight: null,
   },
   {
     id: 2,
-    icon: DollarSign,
-    title: "Own Your Music",
+    icon: Music2,
+    title: "BAP Streaming",
     subtitle: "Keep 90% of every stream",
     description:
-      "Traditional streaming pays artists $0.003-$0.005 per stream. With Boptone, you keep 90% of every dollar your fans pay. Real revenue. Real sustainability.",
+      "Set your own price ($0.01-$0.05 per stream) and get paid directly by fans. No middlemen, no waiting. You control pricing, you keep the revenue.",
     highlight: {
       label: "Example",
-      content: "1,000 streams at $0.01 each = $9.00 to you (vs $3-$5 elsewhere)",
+      content: "1,000 streams at $0.01 each = $9.00 to you (90% share)",
     },
   },
   {
     id: 3,
-    icon: TrendingUp,
-    title: "Set Your Price",
-    subtitle: "You decide what fans pay per stream",
+    icon: Globe,
+    title: "Global Distribution",
+    subtitle: "Reach fans everywhere",
     description:
-      "Choose between $0.01 and $0.05 per stream. Test different prices. Find what works for your audience. You're in control—not an algorithm.",
+      "Distribute your music to third-party streaming platforms with a few clicks. Track performance across all channels in real-time from one dashboard.",
     highlight: {
-      label: "Your Choice",
-      content: "Lower price = more streams. Higher price = more per stream. You decide the strategy.",
+      label: "Unified View",
+      content: "See all your streams, revenue, and fan data in one place—no more logging into multiple platforms.",
     },
   },
   {
     id: 4,
-    icon: Zap,
-    title: "Get Paid Instantly",
-    subtitle: "No waiting for quarterly payouts",
+    icon: ShoppingBag,
+    title: "BopShop Commerce",
+    subtitle: "Sell anything, keep everything",
     description:
-      "Track every stream in real-time. See exactly who's listening, when, and where. Withdraw your earnings whenever you're ready. No minimums. No delays.",
+      "Merch, vinyl, digital downloads, tickets—your store, your rules. Integrated checkout and fulfillment. No separate e-commerce platform needed.",
     highlight: {
-      label: "Full Transparency",
-      content: "Every stream is tracked. Every dollar is accounted for. You see it all.",
+      label: "Your Store",
+      content: "Sell physical and digital goods directly to fans. Keep more of what you earn.",
     },
   },
   {
     id: 5,
-    icon: Sparkles,
-    title: "AI-Powered Growth",
-    subtitle: "Toney helps you optimize everything",
+    icon: DollarSign,
+    title: "Financial Tools",
+    subtitle: "Get paid your way",
     description:
-      "Get personalized recommendations on pricing strategy, release timing, marketing tactics, and career decisions. Toney learns from your data and the platform's collective intelligence to help you grow faster.",
+      "Instant payouts, micro-loans for tours and equipment, and affordable healthcare plans designed for artists. Financial support when you need it.",
     highlight: {
-      label: "Smart Insights",
+      label: "Flexible Payouts",
+      content: "Daily, weekly, or monthly—you choose. $20 minimum, next business day delivery.",
+    },
+  },
+  {
+    id: 6,
+    icon: Shield,
+    title: "IP Protection",
+    subtitle: "Protect your work automatically",
+    description:
+      "Our system monitors the internet 24/7 for unauthorized use of your music and handles takedowns for you. Your rights, protected.",
+    highlight: {
+      label: "Always Watching",
+      content: "Automated monitoring and DMCA takedowns—no manual work required.",
+    },
+  },
+  {
+    id: 7,
+    icon: TrendingUp,
+    title: "Analytics & Insights",
+    subtitle: "Make smarter decisions",
+    description:
+      "Real-time data on streams, revenue, and fan behavior. Know what's working and where to focus your energy. Data-driven career growth.",
+    highlight: {
+      label: "Full Visibility",
+      content: "Track every metric that matters—streams, earnings, fan locations, and more.",
+    },
+  },
+  {
+    id: 8,
+    icon: Bot,
+    title: "AI Career Advisor",
+    subtitle: "Meet Toney, your AI advisor",
+    description:
+      "Get personalized recommendations for release timing, pricing strategy, and career growth—backed by human expertise. Toney learns from your data to help you succeed.",
+    highlight: {
+      label: "Smart Guidance",
       content: "\"Try raising your price to $0.02—similar artists see 15% more revenue\"",
     },
   },
