@@ -1013,3 +1013,37 @@
 - [ ] Verify revenue calculations
 - [ ] Save checkpoint
 
+
+## Fix BAP Streaming Page - Nothing Displays (User Report) ✅ COMPLETE
+
+### Issue
+- User reports nothing shows on /listen/:trackId page
+- Likely causes: no test data in database, or page loading error
+
+### Investigation Steps
+- [x] Check browser console for errors
+- [x] Verify database has test tracks
+- [x] Create test track data if missing
+- [x] Test page with valid track ID
+- [x] Verify all tRPC procedures work correctly
+
+### Fix Steps
+- [x] Create seed data script for test tracks
+- [x] Add sample artist profile (Luna Wave)
+- [x] Add sample track with audio URL and artwork (Midnight Dreams)
+- [x] Test /listen/1 page loads correctly
+- [x] Provide working demo link to user
+
+
+## Fix Toney Chatbot Transparency (User Request) ✅ COMPLETE
+
+### Issue
+- Toney chat window has transparent background
+- User wants solid white or #f5f5f5 background color
+
+### Fix Steps
+- [x] Find ToneyChatbot component
+- [x] Change background from transparent to solid #f5f5f5
+- [x] Test chatbot appearance
+- [x] Save checkpoint
+

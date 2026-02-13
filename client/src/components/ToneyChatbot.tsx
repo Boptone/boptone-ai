@@ -146,7 +146,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   return (
     <div className="fixed bottom-12 right-12 z-[9999] w-full max-w-md">
-      <div className="bg-card rounded-lg shadow-2xl border flex flex-col" style={{ height: "600px" }}>
+      <div className="rounded-lg shadow-2xl border flex flex-col" style={{ height: "600px", backgroundColor: "#f5f5f5" }}>
         <div className="flex items-center justify-between p-4 border-b bg-primary text-primary-foreground rounded-t-lg">
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
