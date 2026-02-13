@@ -171,8 +171,7 @@ export default function Home() {
   ];
 
   const handleDemoClick = () => {
-    setDemoMode(true);
-    setLocation("/dashboard");
+    setLocation("/explainer");
   };
 
   const currentPrice = (tier: typeof tiers[0]) => 

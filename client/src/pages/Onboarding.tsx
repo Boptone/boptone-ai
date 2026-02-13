@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import BoptoneExplainer from "@/components/BoptoneExplainer";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,6 +32,7 @@ const GENRES = [
 
 export default function Onboarding() {
   const [, setLocation] = useLocation();
+  const [showExplainer, setShowExplainer] = useState(true);
   const [step, setStep] = useState(1);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -61,6 +63,26 @@ export default function Onboarding() {
 
   const totalSteps = 3;
   const progress = (step / totalSteps) * 100;
+
+  // Handle explainer completion
+  const handleExplainerComplete = () => {
+    setShowExplainer(false);
+  };
+
+  const handleExplainerSkip = () => {
+    setShowExplainer(false);
+  };
+
+  // Show explainer first
+  if (showExplainer) {
+    return (
+      <BoptoneExplainer
+        mode="private"
+        onComplete={handleExplainerComplete}
+        onSkip={handleExplainerSkip}
+      />
+    );
+  }
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

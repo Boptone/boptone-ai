@@ -1259,3 +1259,71 @@
 - ✅ Super Fan incentives for cross-pollination
 - ✅ Milestone-based promotional boosts (no manual application)
 - ✅ Positive-sum ecosystem (not zero-sum competition)
+
+
+## Build Visually Stunning Boptone Explainer - Public & Private Versions (User Request - HIGH PRIORITY) 🚀 IN PROGRESS
+
+**Context:** Most artists will have zero clue how Boptone works. Need an easy, visually stunning explainer in the signup/onboarding flow that shows what Boptone offers and what happens on the platform.
+
+### Audit Current State
+- [ ] Check existing signup flow (OAuth redirect)
+- [ ] Check existing onboarding flow (Onboarding.tsx)
+- [ ] Identify gaps in platform explanation
+- [ ] Review what artists see when they first land
+
+### Explainer Content Design
+- [ ] Write clear, simple copy explaining Boptone's value proposition
+- [ ] Explain BAP (Boptone Artist Protocol) in plain English
+- [ ] Explain revenue model (90/10 split, per-stream pricing)
+- [ ] Explain platform features (Upload, Distribute, Earn, Analyze)
+- [ ] Explain what makes Boptone different from Spotify/Apple Music
+- [ ] Keep it under 5 screens/steps (attention span)
+
+### Visual Design
+- [ ] Create visually stunning explainer component with animations
+- [ ] Use illustrations/icons for each key concept
+- [ ] Add progress indicators (1/5, 2/5, etc.)
+- [ ] Make it skippable (but encourage completion)
+- [ ] Mobile-responsive design
+
+### Integration - Two Versions
+- [ ] Build reusable BoptoneExplainer component (supports public/private modes)
+- [ ] Create public demo page at /demo route (pre-signup education)
+- [ ] Integrate private version into onboarding flow (post-signup required)
+- [ ] Update homepage "View Demo" button to link to /demo
+- [ ] Add "Skip" and "Next" buttons (private mode only)
+- [ ] Track completion rate in analytics
+- [ ] Test both versions
+
+### Key Messages to Communicate
+1. **Own Your Music** - You keep 90% of every stream (vs Spotify's $0.003-$0.005)
+2. **Set Your Price** - You decide what fans pay per stream ($0.01-$0.05)
+3. **Get Paid Instantly** - No waiting for quarterly payouts
+4. **Full Transparency** - See exactly who streams your music and when
+5. **AI-Powered Growth** - Toney helps you optimize pricing, marketing, and career decisions
+
+
+## Build Visually Stunning Boptone Explainer - Public & Private Versions ✅ COMPLETE
+
+### Content Design
+- [x] Step 1: Welcome to Boptone ("Complete operating system for artists")
+- [x] Step 2: Own Your Music (90% revenue split explanation)
+- [x] Step 3: Set Your Price ($0.01-$0.05 per stream)
+- [x] Step 4: Get Paid Instantly (real-time tracking)
+- [x] Step 5: AI-Powered Growth (Toney introduction)
+
+### Visual Design
+- [x] Large icons/illustrations for each step
+- [x] Bold headlines with 2-3 sentence explanations
+- [x] Revenue comparison chart (traditional vs BAP)
+- [x] Progress indicator (1/5, 2/5, etc.)
+- [x] "Skip" button (top right) and "Next" button (bottom)
+- [x] Responsive design for mobile/tablet/desktop
+
+### Integration - Two Versions
+- [x] Build reusable BoptoneExplainer component (supports public/private modes)
+- [x] Create public explainer page at /explainer route (pre-signup education)
+- [x] Integrate private version into onboarding flow (post-signup required)
+- [x] Update homepage "View Demo" button to link to /explainer
+- [x] Add "Skip" and "Next" buttons with callbacks
+- [x] Test both versions

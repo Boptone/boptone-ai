@@ -18,6 +18,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Features from "./pages/Features";
 import Demo from "./pages/Demo";
+import Explainer from "./pages/Explainer";
 import Dashboard from "./pages/Dashboard";
 import AIAdvisor from "./pages/AIAdvisor";
 import Store from "./pages/Store";
@@ -80,6 +81,7 @@ function Router() {
       <Route path={"/contact"} component={Contact} />
       <Route path={"/features"} component={Features} />
       <Route path={"/demo"} component={Demo} />
+      <Route path={"/explainer"} component={Explainer} />
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/ai-advisor"} component={AIAdvisor} />
       <Route path={"/store"} component={Store} />
