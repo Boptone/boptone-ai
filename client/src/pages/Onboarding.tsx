@@ -10,20 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import {
-  Music,
-  User,
-  Upload,
-  Check,
-  ArrowRight,
-  ArrowLeft,
-  Sparkles,
-  Instagram,
-  Twitter,
-  Youtube,
-  Camera,
-  X,
-} from "lucide-react";
 
 const GENRES = [
   "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",
@@ -192,25 +178,25 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
-      <Card className="rounded-xl w-full max-w-2xl">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <Card className="rounded-none border-4 border-black w-full max-w-2xl bg-white">
         <CardHeader className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
-            <Music className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold">Boptone</h1>
+            <span className="text-2xl font-bold">♪</span>
+            <h1 className="text-2xl font-bold text-black">Boptone</h1>
           </div>
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-              <Sparkles className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-gray-100 border-2 border-black text-black text-sm font-medium">
+              <span className="font-bold">★</span>
               Create Your Tone
             </div>
-            <CardTitle className="text-3xl">Build Your Artist Profile</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-3xl text-black">Build Your Artist Profile</CardTitle>
+            <CardDescription className="text-gray-600">
               Let's set up your presence on Boptone
             </CardDescription>
           </div>
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
+            <div className="flex items-center justify-between text-sm text-gray-600">
               <span>Step {step} of {totalSteps}</span>
               <span>{Math.round(progress)}% complete</span>
             </div>
@@ -222,13 +208,13 @@ export default function Onboarding() {
           {/* Step 1: Basic Info + Photo */}
           {step === 1 && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User className="h-6 w-6 text-primary" />
+              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
+                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-black flex items-center justify-center">
+                  <span className="text-2xl font-bold">U</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold">Tell us about yourself</h3>
-                  <p className="text-sm text-muted-foreground">Basic profile information</p>
+                  <h3 className="font-semibold text-black">Tell us about yourself</h3>
+                  <p className="text-sm text-gray-600">Basic profile information</p>
                 </div>
               </div>
 
@@ -240,22 +226,22 @@ export default function Onboarding() {
                       <img
                         src={profilePhoto}
                         alt="Profile preview"
-                        className="h-32 w-32 rounded-full object-cover border-4 border-primary/20"
+                        className="h-32 w-32 rounded-full object-cover border-4 border-black"
                       />
                       <button
                         onClick={handleRemovePhoto}
-                        className="absolute -top-2 -right-2 h-8 w-8 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center hover:bg-destructive/90 transition-colors"
+                        className="absolute -top-2 -right-2 h-8 w-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
                       >
-                        <X className="h-4 w-4" />
+                        <span className="text-sm font-bold">×</span>
                       </button>
                     </div>
                   ) : (
                     <div
                       onClick={() => fileInputRef.current?.click()}
-                      className="h-32 w-32 rounded-full border-2 border-dashed border-muted-foreground/50 flex flex-col items-center justify-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors"
+                      className="h-32 w-32 rounded-full border-2 border-dashed border-gray-400 flex flex-col items-center justify-center cursor-pointer hover:border-black hover:bg-gray-50 transition-colors"
                     >
-                      <Camera className="h-8 w-8 text-muted-foreground mb-2" />
-                      <span className="text-xs text-muted-foreground">Add Photo</span>
+                      <span className="text-3xl text-gray-400 mb-2">📷</span>
+                      <span className="text-xs text-gray-600">Add Photo</span>
                     </div>
                   )}
                   <input
@@ -266,35 +252,35 @@ export default function Onboarding() {
                     className="hidden"
                   />
                 </div>
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs text-gray-600 text-center">
                   Optional - Add a profile photo (max 5MB)
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="displayName">Artist Name *</Label>
+                  <Label htmlFor="displayName" className="text-black font-medium">Artist Name *</Label>
                   <Input
                     id="displayName"
                     placeholder="Your stage name or band name"
                     value={formData.displayName}
                     onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                    className="rounded-full"
+                    className="rounded-full border-2 border-gray-300"
                     autoFocus
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="bio">Bio</Label>
+                  <Label htmlFor="bio" className="text-black font-medium">Bio</Label>
                   <Textarea
                     id="bio"
                     placeholder="Tell fans about your music and journey..."
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    className="rounded-xl"
+                    className="rounded-none border-2 border-gray-300"
                     rows={4}
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     This will appear on your public profile
                   </p>
                 </div>
@@ -305,13 +291,13 @@ export default function Onboarding() {
           {/* Step 2: Genre Selection */}
           {step === 2 && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Music className="h-6 w-6 text-primary" />
+              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
+                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-black flex items-center justify-center">
+                  <span className="text-2xl font-bold">♪</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold">Choose your genres</h3>
-                  <p className="text-sm text-muted-foreground">Select all that apply</p>
+                  <h3 className="font-semibold text-black">Choose your genres</h3>
+                  <p className="text-sm text-gray-600">Select all that apply</p>
                 </div>
               </div>
 
@@ -320,18 +306,22 @@ export default function Onboarding() {
                   <Badge
                     key={genre}
                     variant={formData.genres.includes(genre) ? "default" : "outline"}
-                    className="cursor-pointer justify-center py-3 text-sm rounded-full hover:bg-primary/10 transition-colors"
+                    className={`cursor-pointer justify-center py-3 text-sm rounded-full transition-colors ${
+                      formData.genres.includes(genre)
+                        ? "bg-black text-white hover:bg-gray-800"
+                        : "bg-white text-black border-2 border-gray-300 hover:border-black"
+                    }`}
                     onClick={() => toggleGenre(genre)}
                   >
                     {formData.genres.includes(genre) && (
-                      <Check className="h-4 w-4 mr-1" />
+                      <span className="mr-1 font-bold">✓</span>
                     )}
                     {genre}
                   </Badge>
                 ))}
               </div>
 
-              <p className="text-sm text-muted-foreground text-center">
+              <p className="text-sm text-gray-600 text-center">
                 Selected: {formData.genres.length} genre{formData.genres.length !== 1 ? 's' : ''}
               </p>
             </div>
@@ -340,20 +330,20 @@ export default function Onboarding() {
           {/* Step 3: Social Links */}
           {step === 3 && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Upload className="h-6 w-6 text-primary" />
+              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
+                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-black flex items-center justify-center">
+                  <span className="text-2xl font-bold">↑</span>
                 </div>
                 <div>
-                  <h3 className="font-semibold">Connect your socials</h3>
-                  <p className="text-sm text-muted-foreground">Optional - you can add these later</p>
+                  <h3 className="font-semibold text-black">Connect your socials</h3>
+                  <p className="text-sm text-gray-600">Optional - you can add these later</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="instagram" className="flex items-center gap-2">
-                    <Instagram className="h-4 w-4" />
+                  <Label htmlFor="instagram" className="flex items-center gap-2 text-black font-medium">
+                    <span className="font-bold">IG</span>
                     Instagram
                   </Label>
                   <Input
@@ -361,13 +351,13 @@ export default function Onboarding() {
                     placeholder="username"
                     value={formData.instagram}
                     onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                    className="rounded-full"
+                    className="rounded-full border-2 border-gray-300"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="twitter" className="flex items-center gap-2">
-                    <Twitter className="h-4 w-4" />
+                  <Label htmlFor="twitter" className="flex items-center gap-2 text-black font-medium">
+                    <span className="font-bold">X</span>
                     Twitter/X
                   </Label>
                   <Input
@@ -375,13 +365,13 @@ export default function Onboarding() {
                     placeholder="username"
                     value={formData.twitter}
                     onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                    className="rounded-full"
+                    className="rounded-full border-2 border-gray-300"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="youtube" className="flex items-center gap-2">
-                    <Youtube className="h-4 w-4" />
+                  <Label htmlFor="youtube" className="flex items-center gap-2 text-black font-medium">
+                    <span className="font-bold">YT</span>
                     YouTube
                   </Label>
                   <Input
@@ -389,13 +379,13 @@ export default function Onboarding() {
                     placeholder="Channel URL"
                     value={formData.youtube}
                     onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
-                    className="rounded-full"
+                    className="rounded-full border-2 border-gray-300"
                   />
                 </div>
               </div>
 
-              <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
-                <p className="text-sm text-center">
+              <div className="p-4 bg-gray-100 rounded-none border-2 border-black">
+                <p className="text-sm text-center text-black">
                   <strong>Almost done!</strong> Your Tone is ready to launch.
                 </p>
               </div>
@@ -410,24 +400,24 @@ export default function Onboarding() {
               disabled={step === 1}
               className="rounded-full"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
+              <span className="mr-2">←</span>
               Back
             </Button>
 
             <Button
               onClick={handleNext}
               disabled={updateProfile.isPending || uploadPhoto.isPending}
-              className="rounded-full"
+              className="rounded-full bg-black hover:bg-gray-800 text-white"
             >
               {step === totalSteps ? (
                 <>
                   {updateProfile.isPending || uploadPhoto.isPending ? "Creating..." : "Launch Your Tone"}
-                  <Check className="h-4 w-4 ml-2" />
+                  <span className="ml-2">✓</span>
                 </>
               ) : (
                 <>
                   Next
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                  <span className="ml-2">→</span>
                 </>
               )}
             </Button>
@@ -438,7 +428,7 @@ export default function Onboarding() {
             <Button
               variant="link"
               onClick={() => setLocation("/dashboard")}
-              className="rounded-full text-muted-foreground"
+              className="rounded-full text-gray-600"
             >
               Skip for now
             </Button>
