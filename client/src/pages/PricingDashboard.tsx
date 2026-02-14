@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
-import { DollarSign, TrendingUp, TrendingDown, Users, Zap, Target, Info, Sparkles } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function PricingDashboard() {
@@ -49,28 +48,27 @@ export default function PricingDashboard() {
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold mb-2">Pricing Strategy</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-4xl font-bold mb-2 text-black">Pricing Strategy</h1>
+          <p className="text-gray-700 font-medium">
             Optimize your per-stream pricing to maximize revenue and reach
           </p>
         </div>
         
         {/* Current Price Selector */}
-        <Card className="bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5 text-purple-600" />
-              Test Your Price Point
+        <Card className="rounded-none border-4 border-black bg-white">
+          <CardHeader className="border-b-4 border-black">
+            <CardTitle className="text-2xl font-bold text-black">
+              🎯 Test Your Price Point
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-700 font-medium">
               See how different prices affect your streams and revenue
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Price Per Stream</span>
-                <div className="text-3xl font-bold text-purple-600">
+                <span className="text-sm font-bold text-black">Price Per Stream</span>
+                <div className="text-4xl font-bold text-black">
                   ${selectedData.price.toFixed(2)}
                 </div>
               </div>
@@ -84,7 +82,7 @@ export default function PricingDashboard() {
                 className="w-full"
               />
               
-              <div className="flex justify-between text-sm text-muted-foreground">
+              <div className="flex justify-between text-sm text-gray-700 font-medium">
                 {priceTiers.map(price => (
                   <span key={price}>${(price / 100).toFixed(2)}</span>
                 ))}
@@ -93,43 +91,40 @@ export default function PricingDashboard() {
             
             {/* Metrics Grid */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                  <Users className="h-4 w-4" />
-                  <span>Estimated Streams</span>
+              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
+                <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
+                  <span>👥 Estimated Streams</span>
                 </div>
-                <div className="text-2xl font-bold">
+                <div className="text-2xl font-bold text-black">
                   {selectedData.estimatedStreams.toLocaleString()}
                 </div>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                  <DollarSign className="h-4 w-4" />
-                  <span>You Earn (90%)</span>
+              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
+                <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
+                  <span>$ You Earn (90%)</span>
                 </div>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-2xl font-bold text-black">
                   ${selectedData.revenuePerStream.toFixed(3)}
                 </div>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 col-span-2">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                  <TrendingUp className="h-4 w-4" />
-                  <span>Total Revenue (Monthly)</span>
+              <div className="bg-gray-100 rounded-none p-4 col-span-2 border-2 border-gray-900">
+                <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
+                  <span>↗ Total Revenue (Monthly)</span>
                 </div>
-                <div className="text-3xl font-bold text-purple-600">
+                <div className="text-3xl font-bold text-black">
                   ${selectedData.totalRevenue.toFixed(2)}
                 </div>
               </div>
             </div>
             
             {isOptimal && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
-                <Zap className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+              <div className="bg-gray-100 border-2 border-gray-900 rounded-none p-4 flex items-start gap-3">
+                <span className="text-2xl">⚡</span>
                 <div>
-                  <p className="font-semibold text-green-900">Optimal Price Point!</p>
-                  <p className="text-sm text-green-800">
+                  <p className="font-bold text-black">Optimal Price Point!</p>
+                  <p className="text-sm text-gray-700 font-medium">
                     This price maximizes your total revenue based on estimated demand.
                   </p>
                 </div>
@@ -139,14 +134,14 @@ export default function PricingDashboard() {
         </Card>
         
         {/* Price Comparison Table */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Price Point Comparison</CardTitle>
-            <CardDescription>
+        <Card className="rounded-none border-4 border-black bg-white">
+          <CardHeader className="border-b-4 border-black">
+            <CardTitle className="text-2xl font-bold text-black">Price Point Comparison</CardTitle>
+            <CardDescription className="text-gray-700 font-medium">
               Compare all pricing tiers side-by-side
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className="space-y-3">
               {priceTiers.map(price => {
                 const data = getPriceData(price);
@@ -156,38 +151,37 @@ export default function PricingDashboard() {
                 return (
                   <div
                     key={price}
-                    className={`p-4 rounded-lg border-2 transition-all cursor-pointer ${
+                    className={`p-4 rounded-none border-2 transition-all cursor-pointer ${
                       isSelected
-                        ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 hover:border-purple-300'
+                        ? 'border-black bg-gray-100'
+                        : 'border-gray-900 hover:bg-gray-50'
                     }`}
                     onClick={() => setSelectedPrice(price)}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="text-2xl font-bold text-purple-600">
+                        <div className="text-2xl font-bold text-black">
                           ${data.price.toFixed(2)}
                         </div>
                         {isOpt && (
-                          <Badge className="bg-green-500">
-                            <Zap className="h-3 w-3 mr-1" />
-                            Optimal
+                          <Badge className="rounded-none bg-black text-white border-2 border-black font-bold">
+                            ⚡ Optimal
                           </Badge>
                         )}
                       </div>
                       
                       <div className="flex items-center gap-6 text-sm">
                         <div>
-                          <div className="text-muted-foreground">Streams</div>
-                          <div className="font-semibold">{data.estimatedStreams.toLocaleString()}</div>
+                          <div className="text-gray-700 font-medium">Streams</div>
+                          <div className="font-bold text-black">{data.estimatedStreams.toLocaleString()}</div>
                         </div>
                         <div>
-                          <div className="text-muted-foreground">You Earn</div>
-                          <div className="font-semibold">${data.revenuePerStream.toFixed(3)}</div>
+                          <div className="text-gray-700 font-medium">You Earn</div>
+                          <div className="font-bold text-black">${data.revenuePerStream.toFixed(3)}</div>
                         </div>
                         <div>
-                          <div className="text-muted-foreground">Total Revenue</div>
-                          <div className="font-semibold text-green-600">${data.totalRevenue.toFixed(2)}</div>
+                          <div className="text-gray-700 font-medium">Total Revenue</div>
+                          <div className="font-bold text-black">${data.totalRevenue.toFixed(2)}</div>
                         </div>
                       </div>
                     </div>
@@ -199,26 +193,25 @@ export default function PricingDashboard() {
         </Card>
         
         {/* A/B Testing Suggestions */}
-        <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-cyan-50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-blue-600" />
-              A/B Testing Suggestions
+        <Card className="rounded-none border-4 border-black bg-white">
+          <CardHeader className="border-b-4 border-black">
+            <CardTitle className="text-2xl font-bold text-black">
+              ✨ A/B Testing Suggestions
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-700 font-medium">
               Data-driven strategies to optimize your pricing
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pt-6">
             <div className="space-y-3">
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-blue-200">
+              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-black">
                     1
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Start Low, Build Momentum</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="font-bold mb-1 text-black">Start Low, Build Momentum</h3>
+                    <p className="text-sm text-gray-700 font-medium">
                       Launch at <strong>$0.01</strong> to maximize initial streams and build your fanbase. 
                       Once you hit 10,000 streams, test increasing to <strong>$0.02</strong>.
                     </p>
@@ -226,14 +219,14 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-blue-200">
+              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-black">
                     2
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Test Premium Pricing</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="font-bold mb-1 text-black">Test Premium Pricing</h3>
+                    <p className="text-sm text-gray-700 font-medium">
                       For exclusive releases or special content, try <strong>$0.04-$0.05</strong>. 
                       Your most loyal fans will pay more for premium access.
                     </p>
@@ -241,14 +234,14 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-blue-200">
+              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-black">
                     3
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Monitor Competitor Pricing</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="font-bold mb-1 text-black">Monitor Competitor Pricing</h3>
+                    <p className="text-sm text-gray-700 font-medium">
                       Most artists on BAP price between <strong>$0.01-$0.03</strong>. 
                       Stay competitive while testing what works for your audience.
                     </p>
@@ -256,14 +249,14 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-blue-200">
+              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center flex-shrink-0 font-bold">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-black">
                     4
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Seasonal Adjustments</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="font-bold mb-1 text-black">Seasonal Adjustments</h3>
+                    <p className="text-sm text-gray-700 font-medium">
                       Lower prices during promotional periods (album launch, holidays) to drive volume. 
                       Raise prices for limited releases or anniversary editions.
                     </p>
@@ -275,37 +268,37 @@ export default function PricingDashboard() {
         </Card>
         
         {/* Spotify Comparison */}
-        <Card className="border-orange-200 bg-gradient-to-br from-orange-50 to-yellow-50">
-          <CardHeader>
-            <CardTitle>Why Boptone Beats Spotify</CardTitle>
-            <CardDescription>
+        <Card className="rounded-none border-4 border-black bg-white">
+          <CardHeader className="border-b-4 border-black">
+            <CardTitle className="text-2xl font-bold text-black">Why Boptone Beats Spotify</CardTitle>
+            <CardDescription className="text-gray-700 font-medium">
               See how much more you earn with BAP
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border-2 border-gray-300">
+              <div className="bg-gray-100 rounded-none p-6 border-2 border-gray-900">
                 <div className="text-center space-y-2">
-                  <div className="text-sm font-medium text-muted-foreground">Spotify</div>
-                  <div className="text-4xl font-bold text-gray-600">$0.003</div>
-                  <div className="text-xs text-muted-foreground">per stream</div>
-                  <div className="pt-4 border-t mt-4">
-                    <div className="text-sm text-muted-foreground">10,000 streams =</div>
-                    <div className="text-2xl font-bold text-gray-600">$30.00</div>
+                  <div className="text-sm font-bold text-gray-700">Spotify</div>
+                  <div className="text-4xl font-bold text-gray-900">$0.003</div>
+                  <div className="text-xs text-gray-700 font-medium">per stream</div>
+                  <div className="pt-4 border-t-2 border-gray-900 mt-4">
+                    <div className="text-sm text-gray-700 font-medium">10,000 streams =</div>
+                    <div className="text-2xl font-bold text-gray-900">$30.00</div>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border-2 border-green-500">
+              <div className="bg-black rounded-none p-6 border-2 border-black">
                 <div className="text-center space-y-2">
-                  <div className="text-sm font-medium text-green-600">Boptone (You)</div>
-                  <div className="text-4xl font-bold text-green-600">
+                  <div className="text-sm font-bold text-white">Boptone (You)</div>
+                  <div className="text-4xl font-bold text-white">
                     ${selectedData.revenuePerStream.toFixed(3)}
                   </div>
-                  <div className="text-xs text-muted-foreground">per stream (90% of ${selectedData.price.toFixed(2)})</div>
-                  <div className="pt-4 border-t border-green-200 mt-4">
-                    <div className="text-sm text-muted-foreground">10,000 streams =</div>
-                    <div className="text-2xl font-bold text-green-600">
+                  <div className="text-xs text-gray-300 font-medium">per stream (90% of ${selectedData.price.toFixed(2)})</div>
+                  <div className="pt-4 border-t-2 border-white mt-4">
+                    <div className="text-sm text-gray-300 font-medium">10,000 streams =</div>
+                    <div className="text-2xl font-bold text-white">
                       ${(10000 * selectedData.revenuePerStream).toFixed(2)}
                     </div>
                   </div>
@@ -313,11 +306,11 @@ export default function PricingDashboard() {
               </div>
             </div>
             
-            <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-              <p className="text-lg font-semibold text-green-900">
+            <div className="mt-6 bg-gray-100 border-2 border-gray-900 rounded-none p-4 text-center">
+              <p className="text-lg font-bold text-black">
                 You earn <strong>{((selectedData.revenuePerStream / 0.003) * 100).toFixed(0)}%</strong> more per stream on Boptone!
               </p>
-              <p className="text-sm text-green-800 mt-1">
+              <p className="text-sm text-gray-700 mt-1 font-medium">
                 That's ${((10000 * selectedData.revenuePerStream) - 30).toFixed(2)} extra for every 10,000 streams
               </p>
             </div>

@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Palette, Eye, Save, Sparkles, Zap } from "lucide-react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 
@@ -41,7 +40,7 @@ export default function ProfileSettings() {
     },
   });
 
-  // Update local state when profile loads (must be before early returns)
+  // Update local state when profile loads
   useEffect(() => {
     if (profile && profile.themeColor) {
       setThemeColor(profile.themeColor);
@@ -73,8 +72,8 @@ export default function ProfileSettings() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-2xl font-bold text-gray-900">Loading...</div>
       </div>
     );
   }
@@ -86,13 +85,16 @@ export default function ProfileSettings() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="rounded-3xl border-4 border-black shadow-2xl max-w-md">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="rounded-none border-4 border-black max-w-md">
           <CardContent className="p-8 text-center">
-            <p className="text-gray-700 mb-6 text-lg font-medium">
+            <p className="text-gray-900 mb-6 text-lg font-bold">
               You need to create an artist profile first.
             </p>
-            <Button className="rounded-full text-lg px-8 py-6 bg-primary hover:bg-primary/90 shadow-xl" onClick={() => setLocation("/signup")}>
+            <Button 
+              className="rounded-none text-lg px-8 py-4 bg-black text-white hover:bg-gray-900 border-4 border-black font-bold" 
+              onClick={() => setLocation("/signup")}
+            >
               Create Profile
             </Button>
           </CardContent>
@@ -102,17 +104,12 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-white py-12">
+    <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 max-w-5xl">
-        {/* Revolutionary Header with Asymmetric Layout */}
+        {/* Header */}
         <div className="mb-12">
-          <h1 className="text-5xl lg:text-6xl font-bold tracking-tight leading-none mb-4">
-            Make It
-            <br />
-            <span className="bg-primary">
-              Your Own
-            </span>
-            <span className="text-black">.</span>
+          <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-4 text-black">
+            Make It Your Own
           </h1>
           <p className="text-xl text-gray-700 font-medium">
             Customize the look and feel of your public artist profile
@@ -120,37 +117,36 @@ export default function ProfileSettings() {
         </div>
 
         <div className="grid gap-8">
-          {/* Color Customization - Purple Card */}
-          <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white">
-            <CardHeader className="pb-8">
-              <CardTitle className="flex items-center gap-3 text-3xl font-bold">
-                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg">
-                  <Palette className="h-6 w-6 text-white" />
-                </div>
+          {/* Color Customization */}
+          <Card className="rounded-none border-4 border-black bg-white">
+            <CardHeader className="pb-8 border-b-4 border-black">
+              <CardTitle className="text-3xl font-bold text-black">
                 Colors & Theme
               </CardTitle>
-              <CardDescription className="text-lg font-medium">
+              <CardDescription className="text-lg font-medium text-gray-700">
                 Choose colors that match your brand identity
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-8">
+            <CardContent className="space-y-8 pt-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
-                  <Label htmlFor="themeColor" className="text-lg font-bold text-gray-900">Primary Color</Label>
+                  <Label htmlFor="themeColor" className="text-lg font-bold text-gray-900">
+                    Primary Color
+                  </Label>
                   <div className="flex gap-4 items-center">
                     <Input
                       id="themeColor"
                       type="color"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-2xl border-2 border-gray-200 shadow-lg"
+                      className="w-24 h-16 cursor-pointer rounded-none border-2 border-gray-900"
                     />
                     <Input
                       type="text"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
                       placeholder="#0066ff"
-                      className="flex-1 rounded-2xl border-2 border-purple-300 text-lg font-medium"
+                      className="flex-1 rounded-none border-2 border-gray-900 text-lg font-medium"
                     />
                   </div>
                   <p className="text-sm text-gray-600 font-medium">
@@ -159,21 +155,23 @@ export default function ProfileSettings() {
                 </div>
 
                 <div className="space-y-4">
-                  <Label htmlFor="accentColor" className="text-lg font-bold text-gray-900">Accent Color</Label>
+                  <Label htmlFor="accentColor" className="text-lg font-bold text-gray-900">
+                    Accent Color
+                  </Label>
                   <div className="flex gap-4 items-center">
                     <Input
                       id="accentColor"
                       type="color"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-2xl border-2 border-gray-200 shadow-lg"
+                      className="w-24 h-16 cursor-pointer rounded-none border-2 border-gray-900"
                     />
                     <Input
                       type="text"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
                       placeholder="#00d4aa"
-                      className="flex-1 rounded-2xl border-2 border-purple-300 text-lg font-medium"
+                      className="flex-1 rounded-none border-2 border-gray-900 text-lg font-medium"
                     />
                   </div>
                   <p className="text-sm text-gray-600 font-medium">
@@ -182,8 +180,8 @@ export default function ProfileSettings() {
                 </div>
               </div>
 
-              {/* Color Preview - Bold Card */}
-              <div className="p-8 rounded-3xl border-4 border-white bg-white shadow-xl" style={{ backgroundColor: `${themeColor}10` }}>
+              {/* Color Preview */}
+              <div className="p-8 rounded-none border-4 border-gray-900 bg-white">
                 <h3 className="text-3xl font-bold mb-3" style={{ color: themeColor }}>
                   Preview Heading
                 </h3>
@@ -191,10 +189,17 @@ export default function ProfileSettings() {
                   This is how your profile will look with the selected colors.
                 </p>
                 <div className="flex gap-4">
-                  <Button className="rounded-full text-lg px-8 py-6 shadow-xl font-bold" style={{ backgroundColor: themeColor }}>
+                  <Button 
+                    className="rounded-none text-lg px-8 py-4 font-bold border-4 border-black" 
+                    style={{ backgroundColor: themeColor, color: 'white' }}
+                  >
                     Primary Button
                   </Button>
-                  <Button className="rounded-full text-lg px-8 py-6 border-4 shadow-xl font-bold" variant="outline" style={{ borderColor: accentColor, color: accentColor }}>
+                  <Button 
+                    className="rounded-none text-lg px-8 py-4 border-4 font-bold bg-white" 
+                    variant="outline" 
+                    style={{ borderColor: accentColor, color: accentColor }}
+                  >
                     Accent Button
                   </Button>
                 </div>
@@ -202,33 +207,32 @@ export default function ProfileSettings() {
             </CardContent>
           </Card>
 
-          {/* Layout Options - Blue Card */}
-          <Card className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white">
-            <CardHeader className="pb-8">
-              <CardTitle className="flex items-center gap-3 text-3xl font-bold">
-                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg">
-                  <Zap className="h-6 w-6 text-white" />
-                </div>
+          {/* Layout Options */}
+          <Card className="rounded-none border-4 border-black bg-white">
+            <CardHeader className="pb-8 border-b-4 border-black">
+              <CardTitle className="text-3xl font-bold text-black">
                 Layout Style
               </CardTitle>
-              <CardDescription className="text-lg font-medium">
+              <CardDescription className="text-lg font-medium text-gray-700">
                 Choose how your content is organized
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-8">
+            <CardContent className="space-y-8 pt-8">
               <div className="space-y-4">
-                <Label htmlFor="layoutStyle" className="text-lg font-bold text-gray-900">Layout</Label>
+                <Label htmlFor="layoutStyle" className="text-lg font-bold text-gray-900">
+                  Layout
+                </Label>
                 <Select value={layoutStyle} onValueChange={(value) => setLayoutStyle(value as "default" | "minimal" | "grid")}>
-                  <SelectTrigger id="layoutStyle" className="rounded-2xl border-2 border-blue-300 text-lg font-medium h-14">
+                  <SelectTrigger id="layoutStyle" className="rounded-none border-2 border-gray-900 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-2xl border-2 border-gray-200">
+                  <SelectContent className="rounded-none border-2 border-gray-900">
                     <SelectItem value="default" className="text-lg font-medium">Default (Single Column)</SelectItem>
                     <SelectItem value="grid" className="text-lg font-medium">Grid Layout</SelectItem>
                     <SelectItem value="minimal" className="text-lg font-medium">Minimal</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-base text-gray-600 font-medium p-4 rounded-2xl bg-white border-2 border-blue-200">
+                <p className="text-base text-gray-600 font-medium p-4 rounded-none bg-gray-100 border-2 border-gray-900">
                   {layoutStyle === "default" && "Clean single-column layout with all sections stacked"}
                   {layoutStyle === "grid" && "Modern grid layout with side-by-side content"}
                   {layoutStyle === "minimal" && "Minimalist design focusing on essential content"}
@@ -236,12 +240,14 @@ export default function ProfileSettings() {
               </div>
 
               <div className="space-y-4">
-                <Label htmlFor="fontFamily" className="text-lg font-bold text-gray-900">Font Family</Label>
+                <Label htmlFor="fontFamily" className="text-lg font-bold text-gray-900">
+                  Font Family
+                </Label>
                 <Select value={fontFamily} onValueChange={setFontFamily}>
-                  <SelectTrigger id="fontFamily" className="rounded-2xl border-2 border-blue-300 text-lg font-medium h-14">
+                  <SelectTrigger id="fontFamily" className="rounded-none border-2 border-gray-900 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-2xl border-2 border-gray-200">
+                  <SelectContent className="rounded-none border-2 border-gray-900">
                     <SelectItem value="Inter" className="text-lg font-medium">Inter (Modern Sans-Serif)</SelectItem>
                     <SelectItem value="Playfair Display" className="text-lg font-medium">Playfair Display (Elegant Serif)</SelectItem>
                     <SelectItem value="Roboto" className="text-lg font-medium">Roboto (Clean Sans-Serif)</SelectItem>
@@ -253,19 +259,17 @@ export default function ProfileSettings() {
             </CardContent>
           </Card>
 
-          {/* Action Buttons - Bold Gradient Cards */}
+          {/* Action Buttons */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card 
-              className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white cursor-pointer hover:scale-105 transition-transform"
+              className="rounded-none border-4 border-black bg-white cursor-pointer hover:bg-gray-50 transition-colors"
               onClick={handleSave}
             >
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg mx-auto mb-6">
-                  {updateProfile.isPending ? (
-                    <Loader2 className="h-8 w-8 animate-spin text-white" />
-                  ) : (
-                    <Save className="h-8 w-8 text-white" />
-                  )}
+                <div className="mb-6">
+                  <span className="text-6xl font-bold text-black">
+                    {updateProfile.isPending ? "..." : "💾"}
+                  </span>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   {updateProfile.isPending ? "Saving..." : "Save Changes"}
@@ -277,12 +281,12 @@ export default function ProfileSettings() {
             </Card>
 
             <Card 
-              className="rounded-3xl border-2 border-gray-200 shadow-2xl bg-white cursor-pointer hover:scale-105 transition-transform"
+              className="rounded-none border-4 border-black bg-white cursor-pointer hover:bg-gray-50 transition-colors"
               onClick={handlePreview}
             >
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-lg mx-auto mb-6">
-                  <Eye className="h-8 w-8 text-white" />
+                <div className="mb-6">
+                  <span className="text-6xl font-bold text-black">👁</span>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   Preview Profile

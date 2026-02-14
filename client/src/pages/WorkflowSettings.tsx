@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Plus, Trash2, Play, Pause, Zap } from "lucide-react";
 import { toast } from "sonner";
 
 /**
@@ -143,52 +142,52 @@ export default function WorkflowSettings() {
 
   if (authLoading || workflowsLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-8 h-8 animate-spin" />
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-2xl font-bold text-gray-900">Loading...</div>
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="container py-24">
-        <h1 className="text-4xl font-semibold tracking-tight mb-4">Workflow Triggers</h1>
-        <p className="text-lg">Please log in to configure workflow triggers.</p>
+      <div className="container py-24 bg-gray-50">
+        <h1 className="text-5xl font-bold tracking-tight mb-4 text-black">Workflow Triggers</h1>
+        <p className="text-lg text-gray-700">Please log in to configure workflow triggers.</p>
       </div>
     );
   }
 
   return (
-    <div className="container py-12 max-w-5xl">
+    <div className="container py-12 max-w-5xl bg-gray-50">
       {/* Header */}
       <div className="mb-12">
-        <h1 className="text-5xl md:text-6xl font-semibold tracking-tight mb-4">
+        <h1 className="text-6xl md:text-7xl font-bold tracking-tight mb-4 text-black">
           Workflow Triggers
         </h1>
-        <p className="text-lg text-muted-foreground">
+        <p className="text-lg text-gray-700 font-medium">
           Configure automation rules: "When X happens → do Y"
         </p>
       </div>
 
       {/* Workflow Selector */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Select Workflow</CardTitle>
-          <CardDescription>
+      <Card className="mb-8 rounded-none border-4 border-black bg-white">
+        <CardHeader className="border-b-4 border-black">
+          <CardTitle className="text-2xl font-bold text-black">Select Workflow</CardTitle>
+          <CardDescription className="text-gray-700 font-medium">
             Choose a workflow to configure its triggers
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <Select
             value={selectedWorkflow?.toString() || ""}
             onValueChange={(value) => setSelectedWorkflow(parseInt(value))}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full rounded-none border-2 border-gray-900 h-12 text-lg font-medium">
               <SelectValue placeholder="Select a workflow..." />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="rounded-none border-2 border-gray-900">
               {workflows?.map((workflow) => (
-                <SelectItem key={workflow.id} value={workflow.id.toString()}>
+                <SelectItem key={workflow.id} value={workflow.id.toString()} className="text-lg">
                   {workflow.name}
                 </SelectItem>
               ))}
@@ -196,9 +195,9 @@ export default function WorkflowSettings() {
           </Select>
 
           {workflows?.length === 0 && (
-            <p className="text-sm text-muted-foreground mt-4">
+            <p className="text-sm text-gray-600 mt-4 font-medium">
               No workflows found. Create a workflow first from the{" "}
-              <a href="/workflows" className="text-primary underline">
+              <a href="/workflows" className="text-black underline font-bold">
                 Workflows page
               </a>
               .
@@ -211,10 +210,12 @@ export default function WorkflowSettings() {
       {selectedWorkflow && (
         <>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">Active Triggers</h2>
-            <Button onClick={() => setShowCreateTrigger(true)} className="gap-2">
-              <Plus className="w-4 h-4" />
-              Add Trigger
+            <h2 className="text-3xl font-bold text-black">Active Triggers</h2>
+            <Button 
+              onClick={() => setShowCreateTrigger(true)} 
+              className="rounded-none bg-black text-white hover:bg-gray-900 border-4 border-black font-bold px-6 py-3 text-lg"
+            >
+              + Add Trigger
             </Button>
           </div>
 
@@ -223,24 +224,27 @@ export default function WorkflowSettings() {
             {triggers?.map((trigger) => {
               const config = trigger.config as any;
               return (
-                <Card key={trigger.id}>
+                <Card key={trigger.id} className="rounded-none border-4 border-black bg-white">
                   <CardContent className="pt-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <Zap className="w-5 h-5 text-primary" />
-                          <h3 className="font-semibold text-lg">
+                          <span className="text-2xl font-bold">⚡</span>
+                          <h3 className="font-bold text-xl text-black">
                             {getEventTypeLabel(config.eventType)}
                           </h3>
-                          <Badge variant={trigger.isActive ? "default" : "secondary"}>
+                          <Badge 
+                            variant={trigger.isActive ? "default" : "secondary"}
+                            className="rounded-none border-2 border-black font-bold"
+                          >
                             {trigger.isActive ? "Active" : "Paused"}
                           </Badge>
                         </div>
-                        <p className="text-muted-foreground">
+                        <p className="text-gray-700 font-medium">
                           When {getEventTypeLabel(config.eventType).toLowerCase()}{" "}
                           {getComparisonLabel(config.comparison)} {config.threshold}
                         </p>
-                        <p className="text-sm text-muted-foreground mt-2">
+                        <p className="text-sm text-gray-600 mt-2 font-medium">
                           Triggered {trigger.triggerCount} times
                           {trigger.lastTriggeredAt && (
                             <> • Last: {new Date(trigger.lastTriggeredAt).toLocaleDateString()}</>
@@ -249,22 +253,20 @@ export default function WorkflowSettings() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           onClick={() => handleToggleTrigger(trigger.id, trigger.isActive)}
+                          className="rounded-none border-2 border-gray-900 hover:bg-gray-100"
                         >
-                          {trigger.isActive ? (
-                            <Pause className="w-4 h-4" />
-                          ) : (
-                            <Play className="w-4 h-4" />
-                          )}
+                          {trigger.isActive ? "❚❚" : "▶"}
                         </Button>
                         <Button
-                          variant="ghost"
+                          variant="outline"
                           size="icon"
                           onClick={() => handleDeleteTrigger(trigger.id)}
+                          className="rounded-none border-2 border-gray-900 hover:bg-gray-100"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          🗑
                         </Button>
                       </div>
                     </div>
@@ -274,15 +276,17 @@ export default function WorkflowSettings() {
             })}
 
             {triggers?.length === 0 && !showCreateTrigger && (
-              <Card>
+              <Card className="rounded-none border-4 border-black bg-white">
                 <CardContent className="pt-6 text-center py-12">
-                  <Zap className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground mb-4">
+                  <span className="text-6xl mb-4 block">⚡</span>
+                  <p className="text-gray-700 mb-4 font-medium text-lg">
                     No triggers configured for this workflow yet.
                   </p>
-                  <Button onClick={() => setShowCreateTrigger(true)} className="gap-2">
-                    <Plus className="w-4 h-4" />
-                    Add Your First Trigger
+                  <Button 
+                    onClick={() => setShowCreateTrigger(true)} 
+                    className="rounded-none bg-black text-white hover:bg-gray-900 border-4 border-black font-bold px-6 py-3 text-lg"
+                  >
+                    + Add Your First Trigger
                   </Button>
                 </CardContent>
               </Card>
@@ -291,72 +295,73 @@ export default function WorkflowSettings() {
 
           {/* Create Trigger Form */}
           {showCreateTrigger && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Create New Trigger</CardTitle>
-                <CardDescription>
+            <Card className="rounded-none border-4 border-black bg-white">
+              <CardHeader className="border-b-4 border-black">
+                <CardTitle className="text-2xl font-bold text-black">Create New Trigger</CardTitle>
+                <CardDescription className="text-gray-700 font-medium">
                   Define when this workflow should automatically execute
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 pt-6">
                 {/* Event Type */}
                 <div className="space-y-2">
-                  <Label htmlFor="eventType">Event Type</Label>
+                  <Label htmlFor="eventType" className="text-lg font-bold text-black">Event Type</Label>
                   <Select value={eventType} onValueChange={setEventType}>
-                    <SelectTrigger id="eventType">
+                    <SelectTrigger id="eventType" className="rounded-none border-2 border-gray-900 h-12 text-lg font-medium">
                       <SelectValue placeholder="Select an event..." />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="stream_milestone">Stream Milestone</SelectItem>
-                      <SelectItem value="new_follower">New Follower</SelectItem>
-                      <SelectItem value="sale">Product Sale</SelectItem>
-                      <SelectItem value="tip">Tip Received</SelectItem>
-                      <SelectItem value="album_release">Album Release</SelectItem>
-                      <SelectItem value="playlist_add">Playlist Add</SelectItem>
+                    <SelectContent className="rounded-none border-2 border-gray-900">
+                      <SelectItem value="stream_milestone" className="text-lg">Stream Milestone</SelectItem>
+                      <SelectItem value="new_follower" className="text-lg">New Follower</SelectItem>
+                      <SelectItem value="sale" className="text-lg">Product Sale</SelectItem>
+                      <SelectItem value="tip" className="text-lg">Tip Received</SelectItem>
+                      <SelectItem value="album_release" className="text-lg">Album Release</SelectItem>
+                      <SelectItem value="playlist_add" className="text-lg">Playlist Add</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600 font-medium">
                     What event should trigger this workflow?
                   </p>
                 </div>
 
                 {/* Comparison */}
                 <div className="space-y-2">
-                  <Label htmlFor="comparison">Condition</Label>
+                  <Label htmlFor="comparison" className="text-lg font-bold text-black">Condition</Label>
                   <Select value={comparison} onValueChange={setComparison}>
-                    <SelectTrigger id="comparison">
+                    <SelectTrigger id="comparison" className="rounded-none border-2 border-gray-900 h-12 text-lg font-medium">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="equals">Equals</SelectItem>
-                      <SelectItem value="greater_than">Greater Than</SelectItem>
-                      <SelectItem value="less_than">Less Than</SelectItem>
-                      <SelectItem value="greater_or_equal">Greater Than or Equal To</SelectItem>
-                      <SelectItem value="less_or_equal">Less Than or Equal To</SelectItem>
+                    <SelectContent className="rounded-none border-2 border-gray-900">
+                      <SelectItem value="equals" className="text-lg">Equals</SelectItem>
+                      <SelectItem value="greater_than" className="text-lg">Greater Than</SelectItem>
+                      <SelectItem value="less_than" className="text-lg">Less Than</SelectItem>
+                      <SelectItem value="greater_or_equal" className="text-lg">Greater Than or Equal To</SelectItem>
+                      <SelectItem value="less_or_equal" className="text-lg">Less Than or Equal To</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 {/* Threshold */}
                 <div className="space-y-2">
-                  <Label htmlFor="threshold">Threshold Value</Label>
+                  <Label htmlFor="threshold" className="text-lg font-bold text-black">Threshold Value</Label>
                   <Input
                     id="threshold"
                     type="number"
                     placeholder="e.g., 1000"
                     value={threshold}
                     onChange={(e) => setThreshold(e.target.value)}
+                    className="rounded-none border-2 border-gray-900 h-12 text-lg font-medium"
                   />
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600 font-medium">
                     The value that must be reached to trigger the workflow
                   </p>
                 </div>
 
                 {/* Preview */}
                 {eventType && threshold && (
-                  <div className="bg-muted p-4 rounded-lg">
-                    <p className="text-sm font-medium mb-1">Trigger Preview:</p>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="bg-gray-100 p-4 rounded-none border-2 border-gray-900">
+                    <p className="text-sm font-bold mb-1 text-black">Trigger Preview:</p>
+                    <p className="text-sm text-gray-700 font-medium">
                       When <strong>{getEventTypeLabel(eventType).toLowerCase()}</strong>{" "}
                       {getComparisonLabel(comparison)} <strong>{threshold}</strong> → execute
                       workflow
@@ -369,9 +374,9 @@ export default function WorkflowSettings() {
                   <Button
                     onClick={handleCreateTrigger}
                     disabled={createTrigger.isPending}
-                    className="gap-2"
+                    className="rounded-none bg-black text-white hover:bg-gray-900 border-4 border-black font-bold px-6 py-3 text-lg"
                   >
-                    {createTrigger.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                    {createTrigger.isPending && "..."}
                     Create Trigger
                   </Button>
                   <Button
@@ -380,6 +385,7 @@ export default function WorkflowSettings() {
                       setShowCreateTrigger(false);
                       resetForm();
                     }}
+                    className="rounded-none border-2 border-gray-900 hover:bg-gray-100 font-bold px-6 py-3 text-lg"
                   >
                     Cancel
                   </Button>

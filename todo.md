@@ -1512,3 +1512,20 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Fix error: StreamPaymentModal props mismatch → added all required props (open, trackTitle, artistName, artworkUrl, pricePerStream, onPaymentSuccess)
 - [x] Verify zero TypeScript errors ✅ CONFIRMED
 - [ ] Save checkpoint
+
+
+## Batch Redesign 2: 5 Pages (MyMusic, Settings, Profile, BopShop, Pricing)
+- [ ] 1. MyMusic.tsx (859 lines) - Music library management page with upload dialogs
+- [ ] 2. Settings.tsx - User settings and preferences page
+- [ ] 3. Profile.tsx - User profile page
+- [ ] 4. BopShop.tsx - E-commerce/merchandise page
+- [ ] 5. Pricing.tsx - Pricing tiers page (verify matches 3-tier structure)
+- [ ] Save single checkpoint after all 5 pages complete
+
+
+## Batch Redesign 2: 4 Pages Complete (ProfileSettings, WorkflowSettings, Shop, PricingDashboard)
+- [x] 1. ProfileSettings.tsx - Removed 6 icons (Loader2, Palette, Eye, Save, Sparkles, Zap), purple/blue borders → text symbols (💾, 👁)
+- [x] 2. WorkflowSettings.tsx - Removed 6 icons (Loader2, Plus, Trash2, Play, Pause, Zap) → text symbols (⚡, ▶/❚❚, 🗑)
+- [x] 3. Shop.tsx - Removed 6 icons (ShoppingCart, Filter, Sparkles, Package, Download, Ticket), blue/purple/green/orange gradients → text symbols (🛒, 📦, 💾, 🎫, ⚫/⚪)
+- [x] 4. PricingDashboard.tsx - Removed 8 icons (DollarSign, TrendingUp, TrendingDown, Users, Zap, Target, Info, Sparkles), purple/blue/orange gradients → text symbols (🎯, 👥, $, ↗, ⚡, ✨)
+- [x] Save checkpoint after batch
