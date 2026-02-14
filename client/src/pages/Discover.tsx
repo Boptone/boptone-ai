@@ -196,8 +196,7 @@ export default function Discover() {
             </div>
           </div>
           <Button 
-            className="rounded-full border-2 border-black" 
-            size="icon"
+            className="rounded-full border-2 border-black px-6 py-2" 
             variant="outline"
             onClick={() => handleLikeTrack(track.id)}
           >
@@ -205,7 +204,7 @@ export default function Discover() {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
+              <Button className="rounded-full border-2 border-black px-6 py-2" variant="outline">
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
             </DropdownMenuTrigger>

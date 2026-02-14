@@ -1628,3 +1628,11 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Remove any colorful gradients or semantic colors
 - [ ] Test Discover page functionality
 - [ ] Save checkpoint
+
+
+## Discover Page Track Card Redesign (User Report - Looks Messy)
+- [ ] Fix messy track card layout - LIKE/SHARE buttons look unprofessional in circles
+- [ ] Change LIKE/SHARE from circular to rectangular pill-shaped buttons
+- [ ] Improve spacing and alignment between track elements
+- [ ] Make genre badge consistent with site aesthetic
+- [ ] Polish overall layout to look world-class
