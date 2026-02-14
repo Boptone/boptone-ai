@@ -110,10 +110,10 @@ export default function HowItWorks() {
                 <div className="bg-white rounded-none shadow-2xl p-12 border-4 border-black">
                   <div className="flex items-baseline gap-2 mb-4">
                     <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-black">$47.50</span>
-                    <span className="text-2xl font-bold">⚡</span>
+                    <span className="text-2xl font-bold text-black">INSTANT</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
-                    <div className="w-2 h-2 bg-black rounded-full" />
+                    <div className="w-2 h-2 bg-black rounded-none" />
                     <span className="text-lg font-semibold">Just now</span>
                   </div>
                   <p className="mt-6 text-sm text-gray-500 uppercase tracking-wide font-bold">
@@ -199,15 +199,15 @@ export default function HowItWorks() {
                     <h3 className="text-2xl font-bold text-gray-800">Your Earnings</h3>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-2 border-gray-900">
+                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-4 border-black">
                       <span className="text-sm font-semibold text-gray-600 uppercase">Today</span>
                       <span className="text-2xl font-bold text-black">$127.80</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-2 border-gray-900">
+                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-4 border-black">
                       <span className="text-sm font-semibold text-gray-600 uppercase">This Week</span>
                       <span className="text-2xl font-bold text-black">$892.40</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-2 border-gray-900">
+                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-4 border-black">
                       <span className="text-sm font-semibold text-gray-600 uppercase">This Month</span>
                       <span className="text-2xl font-bold text-black">$3,456.20</span>
                     </div>
