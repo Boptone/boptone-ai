@@ -54,7 +54,7 @@ ${formData.message}
     <div className="min-h-screen bg-white">
       
       {/* Hero - Minimal with massive typography */}
-      <div className="border-b border-gray-200 bg-gradient-to-b from-white to-gray-50">
+      <div className="border-b border-gray-200 bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h1 className="text-7xl md:text-8xl font-bold mb-10 leading-none">
@@ -68,7 +68,7 @@ ${formData.message}
       </div>
 
       {/* Contact Form & Info - Xerox gradient */}
-      <div className="bg-gradient-to-r from-gray-100 via-white to-gray-100 py-32">
+      <div className="bg-gray-50 py-32">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-16 max-w-6xl">
             {/* Contact Form */}

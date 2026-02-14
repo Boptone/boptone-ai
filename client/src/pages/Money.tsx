@@ -138,7 +138,7 @@ export default function Money() {
               <div className="text-xs font-bold tracking-wider mb-2 uppercase text-gray-600">
                 {stat.title}
               </div>
-              <div className={`text-4xl font-bold font-mono ${stat.title === "Dependency Risk" && dependencyRisk === "HIGH" ? "text-red-600" : ""}`}>
+              <div className="text-4xl font-bold font-mono">
                 {stat.value}
               </div>
             </div>

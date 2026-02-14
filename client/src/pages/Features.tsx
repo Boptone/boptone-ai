@@ -72,7 +72,7 @@ export default function Features() {
     <div className="min-h-screen bg-white">
       
       {/* Hero Section - Minimal with massive typography */}
-      <div className="border-b border-gray-200 bg-gradient-to-b from-white to-gray-50">
+      <div className="border-b border-gray-200 bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h1 className="text-7xl md:text-8xl font-bold leading-none mb-8">
@@ -105,7 +105,7 @@ export default function Features() {
       </div>
 
       {/* Stats Bar - Xerox gradient background */}
-      <div className="bg-gradient-to-r from-gray-100 via-white to-gray-100 border-b border-gray-200">
+      <div className="bg-gray-50 border-b border-gray-200">
         <div className="container py-16">
           <div className="grid grid-cols-3 gap-12 max-w-4xl">
             <div className="text-center">
@@ -125,7 +125,7 @@ export default function Features() {
       </div>
 
       {/* Features Grid - Minimal cards with xerox background */}
-      <div className="bg-gradient-to-b from-white to-gray-50 py-32">
+      <div className="bg-white py-32">
         <div className="container">
           <h2 className="text-6xl font-bold mb-20 max-w-3xl">
             Six Powerful Tools.
@@ -221,7 +221,7 @@ export default function Features() {
       </div>
 
       {/* CTA Section - Bold and centered with xerox gradient */}
-      <div className="border-t border-gray-200 bg-gradient-to-b from-gray-50 to-white py-32">
+      <div className="border-t border-gray-200 bg-gray-50 py-32">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center space-y-10">
             <h2 className="text-7xl font-bold leading-tight">

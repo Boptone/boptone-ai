@@ -202,7 +202,7 @@ export default function Listen() {
       />
       
       {/* Hero Section */}
-      <div className="relative min-h-[500px] bg-gradient-to-b from-gray-50 to-white border-b-4 border-black overflow-hidden">
+      <div className="relative min-h-[500px] bg-gray-50 border-b-4 border-black overflow-hidden">
         {/* Background artwork (subtle) */}
         {track.artworkUrl && (
           <div

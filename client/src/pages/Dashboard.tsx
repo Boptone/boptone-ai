@@ -128,7 +128,7 @@ export default function Dashboard() {
       <DemoBanner />
       <div className="min-h-screen bg-white">
         {/* Header - Minimal with massive typography */}
-        <div className="border-b border-gray-200 bg-gradient-to-b from-white to-gray-50">
+        <div className="border-b border-gray-200 bg-white">
           <div className="container py-20">
             <div className="flex items-start justify-between">
               {/* Left: Massive Typography */}

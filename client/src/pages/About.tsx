@@ -9,7 +9,7 @@ export default function About() {
     <div className="min-h-screen bg-white">
       
       {/* Hero Section - Minimal with massive typography */}
-      <section className="border-b border-gray-200 bg-gradient-to-b from-white to-gray-50">
+      <section className="border-b border-gray-200 bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h1 className="text-7xl lg:text-8xl font-bold mb-10 leading-none">
@@ -33,7 +33,7 @@ export default function About() {
       </section>
 
       {/* Mission Section - Xerox gradient */}
-      <section className="bg-gradient-to-r from-gray-100 via-white to-gray-100 border-b border-gray-200">
+      <section className="bg-gray-50 border-b border-gray-200">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h2 className="text-5xl font-bold mb-8">Our Mission</h2>
@@ -84,7 +84,7 @@ export default function About() {
       </section>
 
       {/* Our Story - Minimal layout with xerox gradient */}
-      <section className="border-t border-gray-200 bg-gradient-to-b from-gray-50 to-white py-32">
+      <section className="border-t border-gray-200 bg-gray-50 py-32">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-20 items-start max-w-6xl">
             <div>
@@ -139,7 +139,7 @@ export default function About() {
       </section>
 
       {/* CTA Section - Minimal with xerox gradient */}
-      <section className="border-t border-gray-200 bg-gradient-to-b from-gray-50 to-white py-32">
+      <section className="border-t border-gray-200 bg-gray-50 py-32">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-6xl font-bold mb-8">
