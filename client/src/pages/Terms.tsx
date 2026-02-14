@@ -1,24 +1,18 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
-import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Terms() {
-  const [, setLocation] = useLocation();
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-white">
       
-
       {/* Content */}
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <Card>
+        <Card className="rounded-none border-4 border-black bg-white">
           <CardContent className="p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
-            <p className="text-muted-foreground mb-8">Effective Date: February 11, 2026</p>
+            <p className="text-gray-700 mb-8">Effective Date: February 11, 2026</p>
 
-            <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="prose prose-slate max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
                 <p className="mb-4">
@@ -139,65 +133,31 @@ export default function Terms() {
                   <strong>Payout Schedules:</strong> You may choose to receive payouts on a daily, weekly, or monthly schedule through your account settings. All payout schedules are subject to a minimum withdrawal amount of $20 USD (or equivalent in your local currency). Standard payouts are processed at no additional cost and typically arrive in your designated bank account or payment method within one (1) business day of the payout request, subject to banking processing times.
                 </p>
                 <p className="mb-4">
-                  <strong>Instant Payouts:</strong> For urgent cash flow needs, you may request instant payouts for a fee of 1% of the payout amount. Instant payouts are delivered within one (1) hour and are available 24/7, including weekends and holidays. Instant payouts are subject to the same $20 minimum threshold and daily volume limits as determined by Boptone in its sole discretion.
+                  <strong>Instant Payouts:</strong> For users on the Pro or Enterprise tier, we offer instant payout options that allow you to receive funds immediately (typically within minutes). Instant payouts are subject to a 1% processing fee and a minimum withdrawal amount of $50 USD. Instant payout availability may vary based on your location, payment method, and account standing.
                 </p>
                 <p className="mb-4">
-                  <strong>New Account Holds:</strong> For fraud protection and compliance purposes, payouts from new accounts may be held for up to seven (7) calendar days from the date of your first transaction. After this initial holding period, payouts will process according to your selected schedule.
+                  <strong>Payment Methods:</strong> We support various payout methods including direct bank transfer (ACH in the US, SEPA in Europe), PayPal, and other region-specific payment providers. The availability of specific payment methods depends on your location and account verification status.
                 </p>
                 <p className="mb-4">
-                  <strong>Unlimited Earnings:</strong> All subscription tiers allow unlimited earnings. There are no monthly earning caps or holds on your funds. You may withdraw any amount you have earned at any time, subject to the minimum withdrawal threshold of $20. All tiers pay the same 10% platform fee. The primary differences between tiers are the available features (storage, analytics, team accounts, support level).
+                  <strong>Verification Requirements:</strong> To receive payouts, you must complete identity verification and provide accurate banking or payment information. We may request additional documentation to comply with anti-money laundering (AML) and know-your-customer (KYC) regulations. Failure to complete verification may result in delayed or withheld payouts.
                 </p>
                 <p className="mb-4">
-                  <strong>Banking Information:</strong> You are solely responsible for providing accurate and current banking information for payouts. Boptone is not liable for any delays, failed payouts, or losses resulting from incorrect, incomplete, or outdated banking information. If a payout fails due to incorrect information, you must update your banking details before we can reprocess the payout.
+                  <strong>Payout Holds:</strong> We reserve the right to hold payouts for up to 30 days in cases of suspected fraud, chargebacks, disputes, or violations of these Terms. We will notify you of any holds and the reasons for them.
                 </p>
                 <p className="mb-4">
-                  <strong>Payout Delays and Holds:</strong> We reserve the right to delay, suspend, or hold payouts if we suspect fraudulent activity, policy violations, chargebacks, disputes, or other security concerns. We may also hold payouts to comply with legal or regulatory requirements, court orders, or requests from law enforcement. Payouts may be delayed due to factors beyond our control, including but not limited to bank processing times, holidays, weekends, and technical issues with third-party payment processors.
-                </p>
-                <p className="mb-4">
-                  <strong>Currency and Fees:</strong> Payouts are processed in the currency of your bank account or payment method. Currency conversion fees, wire transfer fees, and other banking fees imposed by your financial institution are your sole responsibility. Boptone does not control or receive any portion of these third-party fees.
-                </p>
-
-                <h3 className="text-xl font-semibold mb-3 mt-6">6.7 Revenue Sharing and Platform Fees</h3>
-                <p className="mb-4">
-                  <strong>Universal 90/10 Split:</strong> Boptone operates on a simple, transparent revenue model: <strong>You keep ninety percent (90%) of all revenue generated through the platform. Boptone retains ten percent (10%)</strong> to operate and maintain platform infrastructure, security, support, and continuous feature development. This 90/10 split applies universally to all subscription tiers (Free, Pro, and Enterprise) and all revenue sources, with one sacred exception detailed below.
-                </p>
-                <p className="mb-4">
-                  <strong>Revenue Sources Subject to 90/10 Split:</strong>
-                </p>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li><strong>BAP Streaming:</strong> Revenue generated when fans stream your music through the Boptone Audio Protocol ("BAP") streaming platform.</li>
-                  <li><strong>Third-Party Streaming:</strong> Royalties earned from third-party platforms (Spotify, Apple Music, Tidal, etc.) distributed through Boptone.</li>
-                  <li><strong>BopShop Sales:</strong> Revenue from sales of physical goods (vinyl, merchandise, CDs), digital downloads, and other products sold through your BopShop storefront.</li>
-                  <li><strong>Fan Memberships:</strong> Recurring revenue from fan subscription or membership programs.</li>
-                  <li><strong>Sync Licensing:</strong> Revenue from licensing your music for use in television, film, advertising, video games, or other media.</li>
-                  <li><strong>Live Event Tickets:</strong> Revenue from ticket sales for live performances, virtual concerts, or other events.</li>
-                </ul>
-                <p className="mb-4">
-                  <strong>Sacred Exception - Kick In Tips:</strong> Boptone does not take any platform fee from "Kick In" tips sent directly from fans to artists. <strong>You keep one hundred percent (100%) of every tip</strong>, minus only the unavoidable credit card processing fees (typically 2.9% + $0.30 USD per transaction) charged by third-party payment processors such as Stripe. Boptone retains zero percent (0%) of tip revenue. This policy reflects our commitment to direct fan-to-artist support without platform intermediation.
-                </p>
-                <p className="mb-4">
-                  <strong>Example Calculations:</strong>
-                </p>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li><strong>BAP Streaming:</strong> $1,000 USD streaming revenue → You receive $900 USD (Boptone: $100)</li>
-                  <li><strong>Third-Party Streaming:</strong> $1,000 USD streaming revenue → You receive $900 USD (Boptone: $100)</li>
-                  <li><strong>BopShop Sale:</strong> $100 USD vinyl sale → You receive $86.80 USD (Boptone: $10, Stripe: $3.20)</li>
-                  <li><strong>Kick In Tip:</strong> $100 USD tip → You receive $96.80 USD (Boptone: $0, Stripe: $3.20)</li>
-                </ul>
-                <p className="mb-4">
-                  <strong>Payment Processing Fees:</strong> For physical transactions (BopShop sales, tips, memberships, event tickets), standard payment processing fees (typically 2.9% + $0.30 USD per transaction) are charged by third-party payment processors such as Stripe. These fees are passed directly to the payment processor and are not retained by Boptone. For digital transactions without credit card involvement (streaming royalties, direct deposits), no payment processing fees apply.
+                  <strong>Currency Conversion:</strong> If your payout currency differs from the currency in which you earned revenue, we will convert funds at the prevailing exchange rate at the time of payout. Currency conversion fees may apply and will be clearly disclosed.
                 </p>
                 <p>
-                  <strong>Tier Differentiation:</strong> All subscription tiers (Free, Pro, Enterprise) pay the same 10% platform fee. Tiers differ in available features (storage limits, analytics depth, team account seats, support response times, API access, white-label options) rather than revenue share percentages. Upgrade to access more capabilities, not to reduce platform fees.
+                  <strong>Tax Reporting:</strong> You are responsible for reporting all income earned through the Service and paying applicable taxes. We may provide tax documentation (such as 1099 forms for US users) as required by law. International users may need to provide tax identification information to comply with local regulations.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">7. User Conduct and Prohibited Activities</h2>
+                <h2 className="text-2xl font-semibold mb-4">7. Prohibited Activities</h2>
                 <p className="mb-2">You agree not to engage in any of the following prohibited activities:</p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li>Violating any applicable laws, regulations, or third-party rights</li>
-                  <li>Using the Service for any illegal purpose or to facilitate illegal activity</li>
+                  <li>Violating any local, state, national, or international law or regulation</li>
+                  <li>Infringing on the intellectual property rights of others</li>
                   <li>Uploading or distributing viruses, malware, or other malicious code</li>
                   <li>Attempting to interfere with, compromise, or breach the security of the Service</li>
                   <li>Using any robot, spider, crawler, scraper, or unauthorized automated tools to access the Service without our express written permission</li>
@@ -364,40 +324,36 @@ export default function Terms() {
                   <li>We may delete your account and User Content from our servers</li>
                   <li>You will lose access to all data, analytics, and reports stored in your account</li>
                   <li>Outstanding payment obligations will become immediately due</li>
-                  <li>You remain liable for all charges incurred prior to termination</li>
+                  <li>We will process any pending payouts according to our standard payout schedule</li>
                 </ul>
                 <p className="mb-4">
-                  We recommend downloading or backing up any User Content or data you wish to retain before terminating your account. We are not responsible for any loss of data upon termination.
+                  Sections of these Terms that by their nature should survive termination will survive, including but not limited to ownership provisions, warranty disclaimers, indemnity obligations, and limitations of liability.
                 </p>
                 <p>
-                  All provisions of these Terms which by their nature should survive termination shall survive, including but not limited to ownership provisions, warranty disclaimers, indemnity obligations, and limitations of liability.
+                  If you wish to export your data before termination, you must do so through your account settings. We are not obligated to retain your data after account termination.
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">13. Disclaimer of Warranties</h2>
-                <p className="mb-4  font-semibold">
-                  THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR COURSE OF PERFORMANCE.
+                <h2 className="text-2xl font-semibold mb-4">13. Disclaimers and Warranties</h2>
+                <p className="mb-2 font-semibold">
+                  THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, BOPTONE PARTIES DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
                 </p>
-                <p className="mb-2  font-semibold">
-                  ACID BIRD, INC., ITS SUBSIDIARIES, AFFILIATES, DIRECTORS, EMPLOYEES, PARTNERS, AGENTS, SUPPLIERS, AND LICENSORS (COLLECTIVELY, "BOPTONE PARTIES") MAKE NO WARRANTY THAT:
-                </p>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li>THE SERVICE WILL MEET YOUR REQUIREMENTS OR EXPECTATIONS</li>
-                  <li>THE SERVICE WILL BE UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE</li>
-                  <li>THE RESULTS OBTAINED FROM USE OF THE SERVICE WILL BE ACCURATE OR RELIABLE</li>
-                  <li>THE QUALITY OF ANY PRODUCTS, SERVICES, INFORMATION, OR OTHER MATERIAL OBTAINED THROUGH THE SERVICE WILL MEET YOUR EXPECTATIONS</li>
-                  <li>ANY ERRORS IN THE SERVICE WILL BE CORRECTED</li>
-                  <li>THE SERVICE IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS</li>
-                  <li>DATA TRANSMISSION WILL BE SECURE OR NOT INTERCEPTED</li>
+                <ul className="list-disc pl-6 space-y-2 mb-4 font-semibold">
+                  <li>IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT</li>
+                  <li>WARRANTIES THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, SECURE, OR VIRUS-FREE</li>
+                  <li>WARRANTIES REGARDING THE ACCURACY, RELIABILITY, OR COMPLETENESS OF ANY CONTENT, INFORMATION, OR DATA</li>
+                  <li>WARRANTIES THAT DEFECTS WILL BE CORRECTED OR THAT THE SERVICE WILL MEET YOUR REQUIREMENTS</li>
+                  <li>WARRANTIES REGARDING AI-GENERATED RECOMMENDATIONS, PREDICTIONS, OR ADVICE</li>
+                  <li>WARRANTIES REGARDING THIRD-PARTY SERVICES OR INTEGRATIONS</li>
                 </ul>
-                <p className="mb-4  font-semibold">
-                  BOPTONE PARTIES DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD PARTY THROUGH THE SERVICE, AND BOPTONE PARTIES WILL NOT BE A PARTY TO OR IN ANY WAY MONITOR ANY TRANSACTION BETWEEN YOU AND THIRD-PARTY PROVIDERS.
+                <p className="mb-4">
+                  You acknowledge that your use of the Service is at your sole risk. We do not warrant that the Service will be available at all times or that it will be free from errors, bugs, or security vulnerabilities. We reserve the right to modify, suspend, or discontinue the Service at any time without notice.
                 </p>
-                <p className="mb-4  font-semibold">
-                  NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM BOPTONE OR THROUGH THE SERVICE WILL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THESE TERMS.
+                <p className="mb-4">
+                  No advice or information, whether oral or written, obtained by you from Boptone or through the Service will create any warranty not expressly stated in these Terms.
                 </p>
-                <p className=" font-semibold">
+                <p>
                   SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO SOME OF THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. YOU MAY ALSO HAVE OTHER LEGAL RIGHTS THAT VARY BY JURISDICTION.
                 </p>
               </section>
@@ -547,7 +503,7 @@ export default function Terms() {
                   If you are a California resident, you may have certain additional rights. California Civil Code Section 1789.3 requires certain businesses to respond to requests from California customers for information about their practices related to disclosing personal information to third parties for direct marketing purposes. Alternatively, such businesses may adopt a policy of not disclosing personal information to third parties for direct marketing purposes if the customer has exercised an option to opt-out of such information sharing. We have opted for the alternative option and do not disclose your personal information to third parties for their direct marketing purposes without your consent.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">18.9 International Users</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">18.9 International Use</h3>
                 <p className="mb-4">
                   The Service is controlled and operated from the United States. We make no representations that the Service is appropriate or available for use in other locations. If you access the Service from outside the United States, you do so at your own risk and are responsible for compliance with local laws.
                 </p>
@@ -568,11 +524,11 @@ export default function Terms() {
                 </p>
               </section>
 
-              <div className="mt-12 pt-8 border-t">
-                <p className="text-sm text-muted-foreground text-center">
+              <div className="mt-12 pt-8 border-t-4 border-black">
+                <p className="text-sm text-gray-700 text-center">
                   By using Boptone, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.
                 </p>
-                <p className="text-sm text-muted-foreground text-center mt-4">
+                <p className="text-sm text-gray-700 text-center mt-4">
                   © 2026 Acid Bird, Inc. All rights reserved.
                 </p>
               </div>

@@ -1572,3 +1572,23 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add route to App.tsx
 - [x] Save checkpoint after Transparency page creationApp.tsx
 - [ ] Save checkpoint after Transparency page creation
+
+
+## Redesign BAP Protocol Page (549 lines) - HIGH PRIORITY
+- [ ] Read BAP.tsx to understand current structure and messaging
+- [ ] Remove all Lucide icons (9 icons identified earlier)
+- [ ] Convert all colorful gradients to black/white/gray palette
+- [ ] Emphasize artist ownership and AORS principles (90% artist share, portable catalog, interoperable protocol)
+- [ ] Apply xerox aesthetic (no emojis, rounded-full buttons, sharp corners on cards)
+- [ ] Maintain all functionality (protocol explanation, benefits, comparison table)
+- [ ] Align messaging with Independent Revenue Orchestrator framework
+- [ ] Mark as complete in todo.md
+
+## Redesign Terms of Service Page (586 lines)
+- [ ] Read Terms.tsx to understand current structure
+- [ ] Remove any colorful elements or icons
+- [ ] Apply xerox aesthetic while maintaining legal clarity
+- [ ] Ensure 15% fee cap and data portability guarantees are prominently featured
+- [ ] Maintain all legal language and structure
+- [ ] Mark as complete in todo.md
+- [ ] Save checkpoint after both pages redesigned
