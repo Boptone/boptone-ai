@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -159,17 +159,17 @@ export default function Discover() {
   };
 
   const TrackCard = ({ track }: { track: any }) => (
-    <Card className="rounded-none border-2 border-gray-300 shadow-lg hover:border-black transition-all bg-white">
+    <Card className="rounded-none border-4 border-black hover:shadow-lg transition-all bg-white">
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           <div className="relative flex-shrink-0 group">
             <img
               src={track.artworkUrl || `https://via.placeholder.com/96x96?text=${encodeURIComponent(track.title)}`}
               alt={track.title}
-              className="w-24 h-24 rounded-none object-cover border-2 border-black"
+              className="w-24 h-24 rounded-none object-cover border-4 border-black"
             />
             <Button 
-              className="rounded-none absolute inset-0 m-auto opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
+              className="rounded-full absolute inset-0 m-auto w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
               size="icon"
               onClick={() => handlePlayTrack(track)}
             >
@@ -179,11 +179,11 @@ export default function Discover() {
             </Button>
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-xl text-gray-900 truncate">{track.title}</h3>
+            <h3 className="font-bold text-xl text-black truncate">{track.title}</h3>
             <p className="text-lg text-gray-600 font-medium truncate">{track.artist}</p>
-            <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 font-medium">
+            <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 font-medium">
               {track.genre && (
-                <Badge className="rounded-none border-2 border-black bg-black text-white font-bold text-xs px-3 py-1 uppercase">
+                <Badge className="rounded-full border-2 border-black bg-white text-black font-bold text-xs px-3 py-1 uppercase">
                   {track.genre}
                 </Badge>
               )}
@@ -196,7 +196,7 @@ export default function Discover() {
             </div>
           </div>
           <Button 
-            className="rounded-none border-2 border-black" 
+            className="rounded-full border-2 border-black" 
             size="icon"
             variant="outline"
             onClick={() => handleLikeTrack(track.id)}
@@ -205,7 +205,7 @@ export default function Discover() {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+              <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
             </DropdownMenuTrigger>
@@ -250,32 +250,26 @@ export default function Discover() {
             </p>
           </div>
 
-          {/* Right: Stats Card */}
-          <Card className="border-4 border-black bg-gray-50 rounded-none">
+          {/* Right: Stats Card - Simplified without heavy black boxes */}
+          <Card className="border-4 border-black bg-white rounded-none">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-black flex items-center justify-center">
-                    <span className="text-white text-3xl">♪</span>
-                  </div>
+                  <div className="text-5xl">♪</div>
                   <div>
                     <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Total Tracks</p>
                     <p className="text-3xl font-bold">{trendingTracks?.length || 0}+</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-black flex items-center justify-center">
-                    <span className="text-white text-3xl">↗</span>
-                  </div>
+                  <div className="text-5xl">↗</div>
                   <div>
                     <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Trending Now</p>
                     <p className="text-3xl font-bold">{trendingTracks?.length || 0}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-black flex items-center justify-center">
-                    <span className="text-white text-3xl">◉</span>
-                  </div>
+                  <div className="text-5xl">◉</div>
                   <div>
                     <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Live Streams</p>
                     <p className="text-3xl font-bold">24/7</p>
@@ -301,14 +295,14 @@ export default function Discover() {
           </CardContent>
         </Card>
 
-        {/* Genre Filter */}
+        {/* Genre Filter - Rounded-full buttons */}
         <div className="flex flex-wrap gap-3 mb-12">
           {GENRES.map((genre) => (
             <Button
               key={genre}
               variant={selectedGenre === genre ? "default" : "outline"}
               onClick={() => setSelectedGenre(genre)}
-              className={`rounded-none border-2 border-black font-bold uppercase text-sm px-6 py-3 ${
+              className={`rounded-full border-2 border-black font-bold uppercase text-sm px-6 py-3 ${
                 selectedGenre === genre
                   ? "bg-black text-white"
                   : "bg-white text-black hover:bg-gray-100"
@@ -330,11 +324,9 @@ export default function Discover() {
                 ))}
               </div>
             ) : (
-              <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
+              <Card className="rounded-none border-4 border-black bg-white">
                 <CardContent className="p-16 text-center">
-                  <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
-                    <span className="text-gray-400 text-2xl font-bold">SEARCH</span>
-                  </div>
+                  <div className="text-6xl mb-6">🔍</div>
                   <h3 className="text-2xl font-bold mb-2">No results found</h3>
                   <p className="text-gray-600 text-lg">Try a different search term</p>
                 </CardContent>
@@ -343,25 +335,25 @@ export default function Discover() {
           </div>
         )}
 
-        {/* Tabs */}
+        {/* Tabs - Simplified without inverted backgrounds */}
         {!searchQuery && (
           <Tabs defaultValue="trending" className="space-y-8">
-            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-none border-4 border-black shadow-lg">
+            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-none border-4 border-black">
               <TabsTrigger 
                 value="trending"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-black data-[state=active]:text-white"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-gray-100 data-[state=active]:text-black"
               >
                 Trending
               </TabsTrigger>
               <TabsTrigger 
                 value="new"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-black data-[state=active]:text-white"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-gray-100 data-[state=active]:text-black"
               >
                 New This Week
               </TabsTrigger>
               <TabsTrigger 
                 value="rising"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-black data-[state=active]:text-white"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-gray-100 data-[state=active]:text-black"
               >
                 Rising Artists
               </TabsTrigger>
@@ -374,15 +366,13 @@ export default function Discover() {
                   <TrackCard key={track.id} track={track} />
                 ))
               ) : (
-                <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
+                <Card className="rounded-none border-4 border-black bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
-                      <span className="text-gray-400 text-5xl">♪</span>
-                    </div>
+                    <div className="text-6xl mb-6">♪</div>
                     <h3 className="text-2xl font-bold mb-2">No trending tracks yet</h3>
                     <p className="text-gray-600 text-lg mb-6">Be the first to upload!</p>
                     <Link href="/upload">
-                      <Button className="rounded-none text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
+                      <Button className="rounded-full text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -398,15 +388,13 @@ export default function Discover() {
                   <TrackCard key={track.id} track={track} />
                 ))
               ) : (
-                <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
+                <Card className="rounded-none border-4 border-black bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
-                      <span className="text-gray-400 text-5xl">♪</span>
-                    </div>
+                    <div className="text-6xl mb-6">♪</div>
                     <h3 className="text-2xl font-bold mb-2">No new releases yet</h3>
                     <p className="text-gray-600 text-lg mb-6">Check back soon for fresh music!</p>
                     <Link href="/upload">
-                      <Button className="rounded-none text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
+                      <Button className="rounded-full text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -420,15 +408,13 @@ export default function Discover() {
               {risingArtists.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {risingArtists.map((artist: any) => (
-                    <Card className="rounded-none border-4 border-gray-300 shadow-lg hover:border-black transition-all bg-white" key={artist.id}>
+                    <Card className="rounded-none border-4 border-black hover:shadow-lg transition-all bg-white" key={artist.id}>
                       <CardContent className="p-8 text-center">
-                        <div className="w-32 h-32 rounded-none bg-gray-900 mx-auto mb-6 flex items-center justify-center border-4 border-black">
-                          <span className="text-white text-5xl">♪</span>
-                        </div>
+                        <div className="text-6xl mb-6">♪</div>
                         <h3 className="text-2xl font-bold mb-2">{artist.name}</h3>
                         <p className="text-gray-600 mb-6">{artist.genre}</p>
                         <Link href={`/@${artist.username}`}>
-                          <Button className="rounded-none w-full text-lg px-6 py-6 bg-black hover:bg-gray-800 font-bold uppercase">
+                          <Button className="rounded-full w-full text-lg px-6 py-6 bg-black hover:bg-gray-800 font-bold uppercase">
                             View Profile
                           </Button>
                         </Link>
@@ -437,15 +423,13 @@ export default function Discover() {
                   ))}
                 </div>
               ) : (
-                <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
+                <Card className="rounded-none border-4 border-black bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
-                      <span className="text-gray-400 text-5xl">👥</span>
-                    </div>
+                    <div className="text-6xl mb-6">👥</div>
                     <h3 className="text-2xl font-bold mb-2">No rising artists yet</h3>
                     <p className="text-gray-600 text-lg mb-6">Be the first to rise!</p>
                     <Link href="/upload">
-                      <Button className="rounded-none text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
+                      <Button className="rounded-full text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -466,21 +450,21 @@ export default function Discover() {
               <img
                 src={currentTrack.artworkUrl || `https://via.placeholder.com/80x80?text=${encodeURIComponent(currentTrack.title)}`}
                 alt={currentTrack.title}
-                className="w-20 h-20 rounded-none object-cover flex-shrink-0 border-2 border-black shadow-lg"
+                className="w-20 h-20 rounded-none object-cover flex-shrink-0 border-4 border-black"
               />
               <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-xl text-gray-900 truncate">{currentTrack.title}</h4>
+                <h4 className="font-bold text-xl text-black truncate">{currentTrack.title}</h4>
                 <p className="text-lg text-gray-600 font-medium truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
                   <span className="text-lg">🔀</span>
                 </Button>
-                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
                   <span className="text-xl">⏮</span>
                 </Button>
                 <Button 
-                  className="rounded-none w-14 h-14 bg-black hover:bg-gray-800 border-2 border-black" 
+                  className="rounded-full w-14 h-14 bg-black hover:bg-gray-800 border-2 border-black" 
                   size="icon" 
                   onClick={() => setIsPlaying(!isPlaying)}
                 >
@@ -488,15 +472,15 @@ export default function Discover() {
                     {isPlaying ? "❚❚" : "▶"}
                   </span>
                 </Button>
-                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
                   <span className="text-xl">⏭</span>
                 </Button>
-                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
                   <span className="text-lg">🔁</span>
                 </Button>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-none border-2 border-black" size="icon"
+                <Button className="rounded-full border-2 border-black" size="icon"
                   variant="outline"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
@@ -504,7 +488,7 @@ export default function Discover() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                    <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
                       <span className="text-sm font-bold">SHARE</span>
                     </Button>
                   </DropdownMenuTrigger>
@@ -546,7 +530,7 @@ export default function Discover() {
               </span>
               <div className="flex-1">
                 <div className="relative">
-                  <div className="w-full h-3 bg-gray-200 border border-gray-300 rounded-none">
+                  <div className="w-full h-3 bg-gray-200 border-2 border-gray-300 rounded-none">
                     <div
                       className="h-full bg-black transition-all"
                       style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}

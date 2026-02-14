@@ -1616,3 +1616,15 @@ Apply the visually stunning design style from the explainer component across ALL
 - Emphasize artist ownership, transparent pricing, and BAP Protocol
 - Include real platform features and capabilities
 - Match xerox/photocopy aesthetic throughout
+
+
+## Navigation Logo Quality Issue
+- [ ] Fix navigation logo rendering - current size (h-12/h-14) looks pixelated, need to find optimal size for crisp display
+
+## Redesign Discover Page (User Request - HIGH PRIORITY)
+- [ ] Remove brutalist design elements from Discover.tsx
+- [ ] Apply xerox aesthetic (black/white/gray, rounded-full buttons, 4px borders)
+- [ ] Remove all Lucide icons and replace with text characters
+- [ ] Remove any colorful gradients or semantic colors
+- [ ] Test Discover page functionality
+- [ ] Save checkpoint
