@@ -27,7 +27,7 @@ export function Navigation() {
           <Link href="/">
             <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
               <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/aOvkkEGQOGrToRzV.png" 
+                src="/boptone-logo.png" 
                 alt="Boptone" 
                 className="h-9 md:h-10 w-auto"
               />
