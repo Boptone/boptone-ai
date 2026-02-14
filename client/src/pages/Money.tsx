@@ -54,22 +54,66 @@ export default function Money() {
     return `$${(cents / 100).toFixed(2)}`;
   };
 
+  // Mock revenue mix data (TODO: Replace with real data from backend)
+  const revenueMix = [
+    { source: "BAP Streams", amount: 1250, percentage: 35, color: "bg-black" },
+    { source: "Third-Party Distribution", amount: 1500, percentage: 42, color: "bg-gray-700" },
+    { source: "Merch & Products", amount: 450, percentage: 13, color: "bg-gray-500" },
+    { source: "Fan Tips", amount: 200, percentage: 6, color: "bg-gray-400" },
+    { source: "Live Events", amount: 150, percentage: 4, color: "bg-gray-300" },
+  ];
+
+  const totalMixRevenue = revenueMix.reduce((sum, item) => sum + item.amount, 0);
+  
+  // Calculate diversification score (0-100, where 100 = perfectly balanced)
+  const maxPercentage = Math.max(...revenueMix.map(item => item.percentage));
+  const diversificationScore = Math.round(100 - (maxPercentage - 20)); // 20% would be perfect balance for 5 sources
+  
+  // Dependency risk check
+  const dependencyRisk = maxPercentage > 60 ? "HIGH" : maxPercentage > 40 ? "MEDIUM" : "LOW";
+  const dependencySource = revenueMix.find(item => item.percentage === maxPercentage)?.source;
+
+  // Revenue forecasts (mock data - TODO: Replace with real forecasting logic)
+  const forecasts = [
+    { period: "30 Days", amount: "$1,200", change: "+12%" },
+    { period: "90 Days", amount: "$3,800", change: "+18%" },
+    { period: "365 Days", amount: "$16,500", change: "+22%" },
+  ];
+
+  // Actionable recommendations based on revenue mix
+  const recommendations = [];
+  if (revenueMix[1].percentage > 60) {
+    recommendations.push("Your revenue is heavily dependent on third-party platforms. Add BAP streaming to reduce platform risk.");
+  }
+  if (revenueMix[2].percentage < 10) {
+    recommendations.push("You have minimal merch revenue. Launch products to diversify income streams.");
+  }
+  if (activeLoans && activeLoans.length > 0) {
+    const loanToRevenue = (parseInt(activeLoans[0]?.remainingBalance || "0") / (totalRevenue || 1)) * 100;
+    if (loanToRevenue > 40) {
+      recommendations.push("Your loan-to-revenue ratio is high. Focus on reducing dependency on advances.");
+    }
+  }
+  if (revenueMix[4].percentage < 5) {
+    recommendations.push("Live events generate minimal revenue. Consider adding tour dates or virtual performances.");
+  }
+
   const stats = [
     {
       title: "Total Earnings",
       value: totalRevenue ? formatCurrency(totalRevenue) : "$0.00",
     },
     {
-      title: "This Month",
-      value: "$0.00", // TODO: Add monthly revenue query
+      title: "Diversification Score",
+      value: `${diversificationScore}/100`,
     },
     {
       title: "Active Loans",
       value: activeLoans?.length || 0,
     },
     {
-      title: "Fan Tips",
-      value: tips?.length || 0,
+      title: "Dependency Risk",
+      value: dependencyRisk,
     }
   ];
 
@@ -80,7 +124,7 @@ export default function Money() {
         <div className="border-b-4 border-black pb-4">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight uppercase">Revenue</h1>
           <p className="text-xl font-medium mt-3 text-gray-600">
-            Track earnings, manage loans, and view fan support
+            Independent Revenue Orchestrator - Maximize artist-owned revenue share
           </p>
         </div>
 
@@ -94,10 +138,115 @@ export default function Money() {
               <div className="text-xs font-bold tracking-wider mb-2 uppercase text-gray-600">
                 {stat.title}
               </div>
-              <div className="text-4xl font-bold font-mono">{stat.value}</div>
+              <div className={`text-4xl font-bold font-mono ${stat.title === "Dependency Risk" && dependencyRisk === "HIGH" ? "text-red-600" : ""}`}>
+                {stat.value}
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Dependency Risk Alert */}
+        {dependencyRisk !== "LOW" && (
+          <Card className="rounded-none border-4 border-black bg-gray-50">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-black flex items-center justify-center flex-shrink-0">
+                  <span className="text-white text-2xl font-bold">!</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2 uppercase">
+                    {dependencyRisk} Dependency Risk Detected
+                  </h3>
+                  <p className="text-gray-700 font-medium">
+                    {maxPercentage}% of your revenue comes from {dependencySource}. This creates a single-point-of-failure risk.
+                    Diversify your income streams to reduce platform dependency and increase long-term stability.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Revenue Mix Visualization */}
+        <Card className="rounded-none border-4 border-black">
+          <CardHeader className="bg-black text-white">
+            <CardTitle className="text-2xl font-bold uppercase">Revenue Mix</CardTitle>
+            <CardDescription className="text-white/90 font-medium">
+              Diversification across income streams
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            {/* Visual bar chart */}
+            <div className="space-y-4">
+              {revenueMix.map((item) => (
+                <div key={item.source} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-sm uppercase">{item.source}</span>
+                    <span className="font-bold text-lg">${item.amount.toLocaleString()} ({item.percentage}%)</span>
+                  </div>
+                  <div className="w-full h-8 bg-gray-200 border-2 border-black">
+                    <div 
+                      className={`h-full ${item.color} transition-all duration-500`}
+                      style={{ width: `${item.percentage}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-4 border-t-4 border-black">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-lg uppercase">Total Revenue</span>
+                <span className="font-bold text-3xl">${totalMixRevenue.toLocaleString()}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Revenue Forecasts */}
+        <Card className="rounded-none border-4 border-black">
+          <CardHeader className="bg-black text-white">
+            <CardTitle className="text-2xl font-bold uppercase">Revenue Forecasts</CardTitle>
+            <CardDescription className="text-white/90 font-medium">
+              Projected earnings based on current revenue mix
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid gap-4 md:grid-cols-3">
+              {forecasts.map((forecast) => (
+                <div key={forecast.period} className="p-6 border-4 border-black bg-white">
+                  <div className="text-xs font-bold tracking-wider mb-2 uppercase text-gray-600">
+                    {forecast.period}
+                  </div>
+                  <div className="text-3xl font-bold font-mono mb-1">{forecast.amount}</div>
+                  <div className="text-sm font-bold text-gray-700">{forecast.change} growth</div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Actionable Recommendations */}
+        {recommendations.length > 0 && (
+          <Card className="rounded-none border-4 border-black">
+            <CardHeader className="bg-black text-white">
+              <CardTitle className="text-2xl font-bold uppercase">Recommendations</CardTitle>
+              <CardDescription className="text-white/90 font-medium">
+                Actions to reduce dependency and increase AORS
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6 space-y-4">
+              {recommendations.map((rec, idx) => (
+                <div key={idx} className="flex items-start gap-4 p-4 border-2 border-black bg-gray-50">
+                  <div className="w-8 h-8 bg-black flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold">{idx + 1}</span>
+                  </div>
+                  <p className="font-medium text-gray-800 flex-1">{rec}</p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Tabs */}
         <Tabs defaultValue="earnings" className="space-y-4">
@@ -157,7 +306,7 @@ export default function Money() {
                     </CardDescription>
                   </div>
                   <a href="/payouts/history">
-                    <Button variant="outline" className="bg-white text-black hover:bg-gray-100 rounded-none border-2 border-white font-bold">
+                    <Button variant="outline" className="bg-white text-black hover:bg-gray-100 rounded-full border-2 border-white font-bold">
                       View Full History
                     </Button>
                   </a>
@@ -206,7 +355,7 @@ export default function Money() {
                           className="rounded-none border-2 border-black"
                         />
                         <Button 
-                          className="rounded-none bg-black hover:bg-gray-800 font-bold uppercase" 
+                          className="rounded-full bg-black hover:bg-gray-800 font-bold uppercase" 
                           onClick={handleApplyForLoan}
                           disabled={applyForLoanMutation.isPending}
                         >

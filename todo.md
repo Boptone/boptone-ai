@@ -1551,3 +1551,24 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update HowItWorks buttons to match homepage pill style (rounded-full, removed border-4)
 - [x] Ensure consistent button styling across all pages
 - [x] Save checkpoint after fix
+
+
+## Redesign Money.tsx with Independent Revenue Orchestrator Framework (HIGH PRIORITY) ✅ COMPLETE
+- [x] Read current Money.tsx to understand existing structure
+- [x] Add Revenue Mix Visualization (bar chart showing BAP streams, third-party distribution, merch, tips, live)
+- [x] Add Dependency Risk Alert system (flag if any single source >60% of revenue with HIGH/MEDIUM/LOW risk levels)
+- [x] Add 30/90/365-day revenue forecasts based on current mix
+- [x] Add Diversification Score (0-100, where 100 = perfectly balanced revenue) to stats grid
+- [x] Add Actionable Recommendations section (4 recommendations to reduce platform dependency)
+- [x] Maintain xerox aesthetic (no emojis, rounded-full buttons, black/white/gray palette)
+- [x] Save checkpoint after Money.tsx redesig## Create /transparency Page (Platform Accountability) (HIGH PRIORITY) ✅ COMPLETE
+- [x] Create new Transparency.tsx page at /transparency route
+- [x] Add Platform Health Score section (4 metrics: platform fee, artist portability, revenue concentration, artist retention)
+- [x] Add Boptone's Take Rate section (current 10%, maximum 15% cap, 90% artist share, contractual commitments)
+- [x] Add Artist Health Metrics section (94% retention rate, 87% average AORS)
+- [x] Add Platform Comparison table (Boptone vs Spotify/Apple/DistroKid with 6 columns)
+- [x] Add Public Commitment section (15% fee cap, data portability guarantee, open BAP protocol, public transparency)
+- [x] Maintain xerox aesthetic (no emojis, rounded-full buttons, black/white/gray palette)
+- [x] Add route to App.tsx
+- [x] Save checkpoint after Transparency page creationApp.tsx
+- [ ] Save checkpoint after Transparency page creation
