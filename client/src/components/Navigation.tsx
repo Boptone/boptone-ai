@@ -29,7 +29,7 @@ export function Navigation() {
               <img 
                 src="/boptone-logo.png" 
                 alt="Boptone" 
-                className="h-9 md:h-10 w-auto"
+                className="h-12 md:h-14 w-auto"
               />
             </div>
           </Link>
