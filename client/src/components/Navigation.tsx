@@ -1,7 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { Menu, X, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 
@@ -14,36 +13,36 @@ export function Navigation() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/features", label: "Features" },
-    { href: "/bap", label: "BAP Protocol" },
+    { href: "/bap", label: "BAP" },
     { href: "/shop", label: "BopShop" },
     { href: "/discover", label: "Discover" },
     { href: "/signup", label: "Pricing" },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-white">
+    <nav className="sticky top-0 z-50 w-full border-b-2 border-black bg-white">
       <div className="container">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between gap-8">
           {/* Logo - Left */}
           <Link href="/">
             <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
               <img 
                 src="/boptone-logo.png" 
                 alt="Boptone" 
-                className="h-6 md:h-7 w-auto"
+                className="h-9 md:h-10 w-auto"
               />
             </div>
           </Link>
 
           {/* Desktop Navigation - Center */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 <a
-                  className={`text-sm font-medium transition-colors hover:text-foreground ${
+                  className={`text-sm font-medium transition-colors hover:text-black ${
                     location === link.href
-                      ? "text-foreground"
-                      : "text-muted-foreground"
+                      ? "text-black"
+                      : "text-gray-600"
                   }`}
                 >
                   {link.label}
@@ -57,32 +56,31 @@ export function Navigation() {
             {/* Ask Toney - Always visible */}
             <Button 
               variant="ghost" 
-              className="text-sm font-medium gap-2"
+              className="text-sm font-medium hover:bg-gray-100"
               onClick={() => {
                 // Trigger Toney chatbot to open
                 const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
                 if (toneyButton) toneyButton.click();
               }}
             >
-              <MessageCircle className="h-4 w-4" />
               Ask Toney
             </Button>
             
             {isAuthenticated ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost" className="text-sm font-medium">Dashboard</Button>
+                  <Button variant="ghost" className="text-sm font-medium hover:bg-gray-100">Dashboard</Button>
                 </Link>
                 <Link href="/profile-settings">
-                  <Button variant="outline" className="text-sm font-medium">Profile</Button>
+                  <Button variant="outline" className="text-sm font-medium rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black">Profile</Button>
                 </Link>
               </>
             ) : (
               <>
-                <Button variant="ghost" asChild className="text-sm font-medium">
+                <Button variant="ghost" asChild className="text-sm font-medium hover:bg-gray-100">
                   <a href={getLoginUrl()}>Log In</a>
                 </Button>
-                <Button variant="outline" asChild className="text-sm font-medium px-6">
+                <Button variant="outline" asChild className="text-sm font-medium px-6 rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black">
                   <a href={getLoginUrl()}>
                     Get Started
                   </a>
@@ -93,14 +91,14 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 border-2 border-black rounded-none bg-white hover:bg-gray-100"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
+              <span className="text-xl font-bold">×</span>
             ) : (
-              <Menu className="h-6 w-6" />
+              <span className="text-xl font-bold">☰</span>
             )}
           </button>
         </div>
@@ -108,15 +106,15 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
+        <div className="md:hidden border-t-2 border-black bg-white">
           <div className="container py-6 space-y-4">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 <a
-                  className={`block py-2 text-base font-medium transition-colors hover:text-foreground ${
+                  className={`block py-2 text-base font-medium transition-colors hover:text-black ${
                     location === link.href
-                      ? "text-foreground"
-                      : "text-muted-foreground"
+                      ? "text-black"
+                      : "text-gray-600"
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -125,18 +123,17 @@ export function Navigation() {
               </Link>
             ))}
             
-            <div className="pt-4 space-y-3 border-t border-border">
+            <div className="pt-4 space-y-3 border-t-2 border-black">
               {/* Ask Toney - Always visible */}
               <Button
                 variant="ghost"
-                className="w-full justify-start text-base gap-2"
+                className="w-full justify-start text-base hover:bg-gray-100"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
                   if (toneyButton) toneyButton.click();
                 }}
               >
-                <MessageCircle className="h-4 w-4" />
                 Ask Toney
               </Button>
               
@@ -145,7 +142,7 @@ export function Navigation() {
                   <Link href="/dashboard">
                     <Button
                       variant="ghost"
-                      className="w-full justify-start text-base"
+                      className="w-full justify-start text-base hover:bg-gray-100"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Dashboard
@@ -154,7 +151,7 @@ export function Navigation() {
                   <Link href="/profile-settings">
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-base"
+                      className="w-full justify-start text-base rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Profile
@@ -163,10 +160,10 @@ export function Navigation() {
                 </>
               ) : (
                 <>
-                  <Button variant="ghost" className="w-full justify-start text-base" asChild>
+                  <Button variant="ghost" className="w-full justify-start text-base hover:bg-gray-100" asChild>
                     <a href={getLoginUrl()}>Log In</a>
                   </Button>
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" asChild>
+                  <Button className="w-full rounded-full bg-black hover:bg-gray-800 text-white font-semibold" asChild>
                     <a href={getLoginUrl()}>
                       Get Started
                     </a>
