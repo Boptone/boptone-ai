@@ -56,7 +56,7 @@ export default function HowItWorks() {
               <div className="flex items-center gap-4 pt-4">
                 <Button
                   onClick={handleNext}
-                  className="rounded-none bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg font-semibold border-4 border-black"
+                  className="rounded-full bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg font-semibold"
                   size="lg"
                 >
                   Next →
@@ -64,7 +64,7 @@ export default function HowItWorks() {
                 <Button
                   onClick={handleSkip}
                   variant="ghost"
-                  className="rounded-none text-gray-500 hover:text-gray-700"
+                  className="rounded-full text-gray-500 hover:text-gray-700"
                 >
                   Skip
                 </Button>
@@ -139,7 +139,7 @@ export default function HowItWorks() {
               <div className="flex items-center gap-4 pt-4">
                 <Button
                   onClick={handleNext}
-                  className="rounded-none bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg font-semibold border-4 border-black"
+                  className="rounded-full bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg font-semibold"
                   size="lg"
                 >
                   Next →
@@ -147,7 +147,7 @@ export default function HowItWorks() {
                 <Button
                   onClick={handleSkip}
                   variant="ghost"
-                  className="rounded-none text-gray-500 hover:text-gray-700"
+                  className="rounded-full text-gray-500 hover:text-gray-700"
                 >
                   Skip
                 </Button>
@@ -175,7 +175,7 @@ export default function HowItWorks() {
               <div className="flex items-center gap-4 pt-4">
                 <Button
                   onClick={handleNext}
-                  className="rounded-none bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg font-semibold border-4 border-black"
+                  className="rounded-full bg-black hover:bg-gray-800 text-white px-8 py-6 text-lg font-semibold"
                   size="lg"
                 >
                   Get Started →
@@ -183,7 +183,7 @@ export default function HowItWorks() {
                 <Button
                   onClick={handleSkip}
                   variant="ghost"
-                  className="rounded-none text-gray-500 hover:text-gray-700"
+                  className="rounded-full text-gray-500 hover:text-gray-700"
                 >
                   Skip
                 </Button>
