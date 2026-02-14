@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Mail, ArrowRight, Check } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -108,28 +107,28 @@ export default function ForgotPassword() {
       {/* Top-right Back to Sign In link */}
       <div className="absolute top-8 right-8 flex items-center gap-4">
         <span className="text-sm text-gray-600">Remember your password?</span>
-        <a href={getLoginUrl()} className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
+        <a href={getLoginUrl()} className="text-sm font-medium text-black hover:text-gray-600 transition-colors">
           Sign in
         </a>
       </div>
 
-      <Card className="rounded-xl w-full max-w-lg border border-gray-200 shadow-none">
+      <Card className="rounded-none w-full max-w-lg border-4 border-black shadow-none bg-white">
         <CardHeader className="space-y-6 pt-12">
           {/* Progress Indicator */}
           {(step === "sent" || step === "verify" || step === "success") && (
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-1 flex-1 rounded-full bg-gray-900" />
-              <div className={`h-1 flex-1 rounded-full ${
-                step === "verify" || step === "success" ? "bg-gray-900" : "bg-gray-200"
+              <div className="h-1 flex-1 rounded-none bg-black" />
+              <div className={`h-1 flex-1 rounded-none ${
+                step === "verify" || step === "success" ? "bg-black" : "bg-gray-200"
               }`} />
-              <div className={`h-1 flex-1 rounded-full ${
-                step === "success" ? "bg-gray-900" : "bg-gray-200"
+              <div className={`h-1 flex-1 rounded-none ${
+                step === "success" ? "bg-black" : "bg-gray-200"
               }`} />
             </div>
           )}
           
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-black">
               {step === "email" && "Reset your password"}
               {step === "sent" && "Check your email"}
               {step === "verify" && "Enter verification code"}
@@ -149,7 +148,7 @@ export default function ForgotPassword() {
           {step === "email" && (
             <form onSubmit={handleEmailSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email" className="text-black">Email Address</Label>
                 <Input
                   id="email"
                   type="email"
@@ -159,29 +158,29 @@ export default function ForgotPassword() {
                     setEmail(e.target.value);
                     setEmailError("");
                   }}
-                  className={`rounded-full ${
-                    emailError ? "border-red-500 focus-visible:ring-red-500" : ""
+                  className={`rounded-full border-2 ${
+                    emailError ? "border-black" : "border-gray-300"
                   }`}
                   required
                 />
                 {emailError && (
-                  <p className="text-sm text-red-600">{emailError}</p>
+                  <p className="text-sm text-black font-medium">{emailError}</p>
                 )}
               </div>
 
               <Button
                 type="submit"
-                className="w-full rounded-full font-bold"
+                className="w-full rounded-full font-bold bg-black hover:bg-gray-800 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? "Sending..." : "Send Reset Link"}
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <span className="ml-2">→</span>
               </Button>
 
               <Button
                 type="button"
                 variant="ghost"
-                className="w-full"
+                className="w-full rounded-full"
                 onClick={() => window.location.href = getLoginUrl()}
               >
                 Back to sign in
@@ -192,12 +191,12 @@ export default function ForgotPassword() {
           {/* Email Sent Confirmation */}
           {step === "sent" && (
             <div className="space-y-4">
-              <div className="bg-gray-50 rounded-lg p-6 text-center space-y-4">
-                <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
-                  <Mail className="h-6 w-6 text-white" />
+              <div className="bg-gray-50 rounded-none border-2 border-gray-300 p-6 text-center space-y-4">
+                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto">
+                  <span className="text-white text-xl font-bold">@</span>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-900 font-bold">
+                  <p className="text-sm text-black font-bold">
                     Reset link sent to:
                   </p>
                   <p className="text-sm text-gray-600">{email}</p>
@@ -210,7 +209,7 @@ export default function ForgotPassword() {
                 </p>
                 <Button
                   variant="ghost"
-                  className="text-sm font-medium"
+                  className="text-sm font-medium rounded-full"
                   onClick={handleResendEmail}
                   disabled={isLoading}
                 >
@@ -220,7 +219,7 @@ export default function ForgotPassword() {
 
               <Button
                 variant="outline"
-                className="w-full rounded-full font-bold"
+                className="w-full rounded-full font-bold border-2 border-black bg-white hover:bg-gray-100 text-black"
                 onClick={() => setStep("verify")}
               >
                 I have a verification code
@@ -229,7 +228,7 @@ export default function ForgotPassword() {
               <Button
                 type="button"
                 variant="ghost"
-                className="w-full"
+                className="w-full rounded-full"
                 onClick={() => setStep("email")}
               >
                 Try a different email
@@ -241,7 +240,7 @@ export default function ForgotPassword() {
           {step === "verify" && (
             <form onSubmit={handleVerifyCode} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="code">Verification Code</Label>
+                <Label htmlFor="code" className="text-black">Verification Code</Label>
                 <Input
                   id="code"
                   type="text"
@@ -251,14 +250,14 @@ export default function ForgotPassword() {
                     setVerificationCode(e.target.value);
                     setCodeError("");
                   }}
-                  className={`rounded-full text-center text-2xl tracking-widest ${
-                    codeError ? "border-red-500 focus-visible:ring-red-500" : ""
+                  className={`rounded-full border-2 text-center text-2xl tracking-widest ${
+                    codeError ? "border-black" : "border-gray-300"
                   }`}
                   maxLength={6}
                   required
                 />
                 {codeError ? (
-                  <p className="text-sm text-red-600 text-center">{codeError}</p>
+                  <p className="text-sm text-black font-medium text-center">{codeError}</p>
                 ) : (
                   <p className="text-xs text-gray-600 text-center">
                     Sent to {email}
@@ -268,17 +267,17 @@ export default function ForgotPassword() {
 
               <Button
                 type="submit"
-                className="w-full rounded-full font-bold"
+                className="w-full rounded-full font-bold bg-black hover:bg-gray-800 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? "Verifying..." : "Verify & Reset Password"}
-                <Check className="ml-2 h-4 w-4" />
+                <span className="ml-2">✓</span>
               </Button>
 
               <Button
                 type="button"
                 variant="ghost"
-                className="w-full"
+                className="w-full rounded-full"
                 onClick={handleResendEmail}
                 disabled={isLoading}
               >
@@ -290,12 +289,12 @@ export default function ForgotPassword() {
           {/* Success State */}
           {step === "success" && (
             <div className="space-y-4">
-              <div className="bg-gray-50 rounded-lg p-6 text-center space-y-4">
-                <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mx-auto">
-                  <Check className="h-6 w-6 text-white" />
+              <div className="bg-gray-50 rounded-none border-2 border-gray-300 p-6 text-center space-y-4">
+                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto">
+                  <span className="text-white text-2xl font-bold">✓</span>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-900 font-bold">
+                  <p className="text-sm text-black font-bold">
                     Your password has been reset
                   </p>
                   <p className="text-sm text-gray-600">
@@ -305,11 +304,11 @@ export default function ForgotPassword() {
               </div>
 
               <Button
-                className="w-full rounded-full font-bold"
+                className="w-full rounded-full font-bold bg-black hover:bg-gray-800 text-white"
                 onClick={() => window.location.href = getLoginUrl()}
               >
                 Continue to Sign In
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <span className="ml-2">→</span>
               </Button>
             </div>
           )}

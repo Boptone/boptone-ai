@@ -10,15 +10,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { trpc } from "@/lib/trpc";
-import { 
-  Users, 
-  DollarSign, 
-  TrendingUp, 
-  Heart,
-  Crown,
-  Star,
-  Gift
-} from "lucide-react";
 
 export default function ArtistBackers() {
   const { user } = useAuth();
@@ -37,19 +28,19 @@ export default function ArtistBackers() {
     { enabled: !!profile?.id }
   );
 
-  const getTierIcon = (tier: string) => {
+  const getTierLabel = (tier: string) => {
     switch (tier) {
-      case "investor": return Crown;
-      case "patron": return Star;
-      default: return Heart;
+      case "investor": return "👑";
+      case "patron": return "★";
+      default: return "♥";
     }
   };
 
-  const getTierColor = (tier: string) => {
+  const getTierStyle = (tier: string) => {
     switch (tier) {
-      case "investor": return "text-amber-500 bg-amber-100";
-      case "patron": return "text-purple-500 bg-purple-100";
-      default: return "text-blue-500 bg-blue-100";
+      case "investor": return "bg-black text-white";
+      case "patron": return "bg-gray-800 text-white";
+      default: return "bg-gray-600 text-white";
     }
   };
 
@@ -58,67 +49,67 @@ export default function ArtistBackers() {
       <div className="space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Your Backers</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold tracking-tight text-black">Your Backers</h1>
+          <p className="text-gray-600 mt-1">
             See who's supporting your music career
           </p>
         </div>
 
         {/* Stats Overview */}
         <div className="grid md:grid-cols-4 gap-4">
-          <Card>
+          <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-blue-100">
-                  <Users className="h-6 w-6 text-blue-500" />
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                  <span className="text-2xl font-bold">U</span>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{stats?.totalBackers || 0}</p>
-                  <p className="text-sm text-muted-foreground">Total Backers</p>
+                  <p className="text-2xl font-bold text-black">{stats?.totalBackers || 0}</p>
+                  <p className="text-sm text-gray-600">Total Backers</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-green-100">
-                  <DollarSign className="h-6 w-6 text-green-500" />
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                  <span className="text-2xl font-bold">$</span>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">${stats?.monthlyRevenue?.toFixed(2) || "0.00"}</p>
-                  <p className="text-sm text-muted-foreground">Monthly Revenue</p>
+                  <p className="text-2xl font-bold text-black">${stats?.monthlyRevenue?.toFixed(2) || "0.00"}</p>
+                  <p className="text-sm text-gray-600">Monthly Revenue</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-purple-100">
-                  <TrendingUp className="h-6 w-6 text-purple-500" />
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                  <span className="text-2xl font-bold">↑</span>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">${stats?.totalContributed?.toFixed(2) || "0.00"}</p>
-                  <p className="text-sm text-muted-foreground">Total Contributed</p>
+                  <p className="text-2xl font-bold text-black">${stats?.totalContributed?.toFixed(2) || "0.00"}</p>
+                  <p className="text-sm text-gray-600">Total Contributed</p>
                 </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-full bg-amber-100">
-                  <Gift className="h-6 w-6 text-amber-500" />
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                  <span className="text-2xl font-bold">G</span>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">
+                  <p className="text-2xl font-bold text-black">
                     ${dividends?.[0]?.dividendAmount || "0.00"}
                   </p>
-                  <p className="text-sm text-muted-foreground">Tone Dividend</p>
+                  <p className="text-sm text-gray-600">Tone Dividend</p>
                 </div>
               </div>
             </CardContent>
@@ -126,15 +117,15 @@ export default function ArtistBackers() {
         </div>
 
         {/* Tone Dividend Explanation */}
-        <Card className="rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/50 border-amber-200">
+        <Card className="rounded-none border-4 border-black bg-gray-50">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-full bg-amber-200">
-                <Gift className="h-6 w-6 text-amber-600" />
+              <div className="p-3 rounded-none bg-gray-200 border-2 border-black">
+                <span className="text-2xl font-bold">G</span>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Your Tone Dividend</h3>
-                <p className="text-muted-foreground">
+                <h3 className="font-semibold text-lg mb-2 text-black">Your Tone Dividend</h3>
+                <p className="text-gray-700">
                   As a Boptone artist, you earn a 3% bonus on all your platform earnings. 
                   This is our way of saying "thanks for building on Boptone." Your dividend 
                   is calculated annually and paid out at year end.
@@ -146,27 +137,27 @@ export default function ArtistBackers() {
 
         {/* Backers List */}
         <div>
-          <h2 className="text-xl font-semibold mb-4">Your Supporters</h2>
+          <h2 className="text-xl font-semibold mb-4 text-black">Your Supporters</h2>
           
           {backers && backers.length > 0 ? (
             <div className="space-y-3">
               {backers.map(({ backing, fan }) => {
-                const TierIcon = getTierIcon(backing.tier);
-                const tierColor = getTierColor(backing.tier);
+                const tierLabel = getTierLabel(backing.tier);
+                const tierStyle = getTierStyle(backing.tier);
                 
                 return (
-                  <Card className="rounded-xl" key={backing.id}>
+                  <Card className="rounded-none border-2 border-gray-300 bg-white" key={backing.id}>
                     <CardContent className="pt-4 pb-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <Avatar>
-                            <AvatarFallback>
+                          <Avatar className="rounded-none border-2 border-black">
+                            <AvatarFallback className="rounded-none bg-gray-100 text-black font-bold">
                               {fan.name?.charAt(0) || "?"}
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium">{fan.name || "Anonymous"}</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="font-medium text-black">{fan.name || "Anonymous"}</p>
+                            <p className="text-sm text-gray-600">
                               Backing since {new Date(backing.startDate).toLocaleDateString()}
                             </p>
                           </div>
@@ -174,13 +165,13 @@ export default function ArtistBackers() {
                         
                         <div className="flex items-center gap-4">
                           <div className="text-right">
-                            <p className="font-semibold">${backing.monthlyAmount}/mo</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="font-semibold text-black">${backing.monthlyAmount}/mo</p>
+                            <p className="text-sm text-gray-600">
                               ${backing.totalContributed} total
                             </p>
                           </div>
-                          <Badge className={tierColor}>
-                            <TierIcon className="h-3 w-3 mr-1" />
+                          <Badge className={`${tierStyle} rounded-full`}>
+                            <span className="mr-1">{tierLabel}</span>
                             {backing.tier}
                           </Badge>
                         </div>
@@ -191,50 +182,52 @@ export default function ArtistBackers() {
               })}
             </div>
           ) : (
-            <Card>
+            <Card className="border-4 border-black rounded-none bg-white">
               <CardContent className="pt-6 pb-6 text-center">
-                <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                <h3 className="font-semibold mb-2">No backers yet</h3>
-                <p className="text-muted-foreground mb-4">
+                <div className="h-12 w-12 mx-auto mb-4 rounded-full border-2 border-dashed border-gray-400 flex items-center justify-center">
+                  <span className="text-2xl text-gray-400">U</span>
+                </div>
+                <h3 className="font-semibold mb-2 text-black">No backers yet</h3>
+                <p className="text-gray-600 mb-4">
                   Share your Boptone profile to start building your supporter community
                 </p>
-                <Button>Share Your Profile</Button>
+                <Button className="rounded-full bg-black hover:bg-gray-800 text-white">Share Your Profile</Button>
               </CardContent>
             </Card>
           )}
         </div>
 
         {/* How Backing Works */}
-        <Card>
+        <Card className="border-4 border-black rounded-none bg-white">
           <CardHeader>
-            <CardTitle>How Fan Backing Works</CardTitle>
+            <CardTitle className="text-black">How Fan Backing Works</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-3">
-                  <Heart className="h-6 w-6 text-blue-500" />
+                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-600 flex items-center justify-center mb-3">
+                  <span className="text-2xl">♥</span>
                 </div>
-                <h3 className="font-semibold mb-1">Backer ($3/mo)</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-semibold mb-1 text-black">Backer ($3/mo)</h3>
+                <p className="text-sm text-gray-600">
                   Basic monthly support. You receive $2.70 (90%).
                 </p>
               </div>
               <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-3">
-                  <Star className="h-6 w-6 text-purple-500" />
+                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-800 flex items-center justify-center mb-3">
+                  <span className="text-2xl">★</span>
                 </div>
-                <h3 className="font-semibold mb-1">Patron ($10/mo)</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-semibold mb-1 text-black">Patron ($10/mo)</h3>
+                <p className="text-sm text-gray-600">
                   Premium support + early access. You receive $9 (90%).
                 </p>
               </div>
               <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-3">
-                  <Crown className="h-6 w-6 text-amber-500" />
+                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-black flex items-center justify-center mb-3">
+                  <span className="text-2xl">👑</span>
                 </div>
-                <h3 className="font-semibold mb-1">Investor ($25+/mo)</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="font-semibold mb-1 text-black">Investor ($25+/mo)</h3>
+                <p className="text-sm text-gray-600">
                   VIP support + revenue share. You receive $22.50+ (90%).
                 </p>
               </div>
