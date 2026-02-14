@@ -27,7 +27,7 @@ export function Navigation() {
           <Link href="/">
             <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
               <img 
-                src="/boptone-logo.png" 
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/aOvkkEGQOGrToRzV.png" 
                 alt="Boptone" 
                 className="h-9 md:h-10 w-auto"
               />
@@ -91,7 +91,7 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 border-2 border-black rounded-none bg-white hover:bg-gray-100"
+            className="md:hidden p-2 border-2 border-black rounded-full bg-white hover:bg-gray-100 w-12 h-12 flex items-center justify-center"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
