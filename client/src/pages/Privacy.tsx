@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
@@ -8,16 +6,16 @@ export default function Privacy() {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-white">
 
       {/* Content */}
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <Card>
-          <CardContent className="p-8 md:p-12">
+        <div className="border-4 border-black rounded-none">
+          <div className="p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-            <p className="text-muted-foreground mb-8">Effective Date: January 1, 2026</p>
+            <p className="text-gray-600 mb-8">Effective Date: January 1, 2026</p>
 
-            <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="prose max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
                 <p className="mb-4">
@@ -492,8 +490,8 @@ export default function Privacy() {
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
       <ToneyChatbot />
     </div>

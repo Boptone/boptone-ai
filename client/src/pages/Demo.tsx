@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Play, CheckCircle2 } from "lucide-react";
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
@@ -51,36 +49,34 @@ export default function Demo() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div className="min-h-screen bg-white">
 
       {/* Hero */}
-      <div className="container mx-auto px-4 py-16 text-center">
+      <div className="container mx-auto px-4 py-16 text-center border-b-4 border-black">
         <h1 className="text-5xl md:text-6xl font-bold mb-6">
           See Boptone in Action
         </h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
           Watch our comprehensive platform walkthrough to see how Boptone transforms artist career management from discovery to breakthrough success.
         </p>
       </div>
 
       {/* Video Placeholder */}
-      <div className="container mx-auto px-4 py-8 mb-16">
-        <Card className="rounded-xl max-w-5xl mx-auto">
-          <CardContent className="p-0">
-            <div className="relative aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <div className="bg-primary/10 backdrop-blur-sm rounded-full p-8 inline-block mb-6">
-                  <Play className="h-20 w-20 text-primary" />
-                </div>
-                <h3 className="text-2xl font-semibold mb-2">Platform Demo Video</h3>
-                <p className="text-muted-foreground mb-6">18-minute comprehensive walkthrough</p>
-                <p className="text-sm text-muted-foreground italic">
-                  Demo video coming soon. Sign up for early access to be notified when it's available.
-                </p>
+      <div className="container mx-auto px-4 py-16 mb-16">
+        <div className="border-4 border-black rounded-none max-w-5xl mx-auto">
+          <div className="relative aspect-video bg-gray-100 flex items-center justify-center">
+            <div className="text-center p-8">
+              <div className="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
+                <span className="text-3xl font-bold">▶</span>
               </div>
+              <h3 className="text-2xl font-semibold mb-2">Platform Demo Video</h3>
+              <p className="text-gray-600 mb-6">18-minute comprehensive walkthrough</p>
+              <p className="text-sm text-gray-500">
+                Demo video coming soon. Sign up for early access to be notified when it's available.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Demo Sections */}
@@ -88,37 +84,35 @@ export default function Demo() {
         <h2 className="text-4xl font-bold text-center mb-12">What You'll Learn</h2>
         <div className="max-w-4xl mx-auto space-y-6">
           {demoSections.map((section, index) => (
-            <Card className="rounded-xl hover:shadow-lg transition-shadow" key={index}>
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 rounded-full p-2 mt-1">
-                    <CheckCircle2 className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold">{section.title}</h3>
-                      <span className="text-sm text-muted-foreground whitespace-nowrap ml-4">
-                        {section.timestamp}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground">{section.description}</p>
-                  </div>
+            <div className="border-4 border-black rounded-none p-6 hover:bg-gray-50 transition-colors" key={index}>
+              <div className="flex items-start gap-4">
+                <div className="bg-black text-white rounded-none w-10 h-10 flex items-center justify-center flex-shrink-0 mt-1">
+                  <span className="text-lg font-bold">✓</span>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex-1">
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-xl font-semibold">{section.title}</h3>
+                    <span className="text-sm text-gray-600 whitespace-nowrap ml-4">
+                      {section.timestamp}
+                    </span>
+                  </div>
+                  <p className="text-gray-600">{section.description}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
       {/* Key Takeaways */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="rounded-xl max-w-5xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-          <CardContent className="p-12">
+        <div className="border-4 border-black rounded-none max-w-5xl mx-auto bg-gray-50">
+          <div className="p-12">
             <h2 className="text-3xl font-bold text-center mb-8">Key Takeaways</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h3 className="font-semibold text-lg mb-3">For Emerging Artists</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <ul className="space-y-2 text-gray-600">
                   <li>• How to leverage AI for career growth</li>
                   <li>• Accessing capital through micro-loans</li>
                   <li>• Building direct fan relationships</li>
@@ -127,7 +121,7 @@ export default function Demo() {
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-3">For Established Creators</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <ul className="space-y-2 text-gray-600">
                   <li>• Consolidating fragmented revenue streams</li>
                   <li>• Advanced analytics and forecasting</li>
                   <li>• Scaling commerce operations</li>
@@ -136,7 +130,7 @@ export default function Demo() {
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-3">For Labels & Managers</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <ul className="space-y-2 text-gray-600">
                   <li>• Multi-artist roster management</li>
                   <li>• White-label platform options</li>
                   <li>• Comprehensive reporting tools</li>
@@ -145,7 +139,7 @@ export default function Demo() {
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-3">Platform Advantages</h3>
-                <ul className="space-y-2 text-muted-foreground">
+                <ul className="space-y-2 text-gray-600">
                   <li>• No revenue sharing (keep 100%)</li>
                   <li>• Bank-level security (SOC 2, GDPR)</li>
                   <li>• 24/7 expert support</li>
@@ -153,8 +147,8 @@ export default function Demo() {
                 </ul>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* FAQ */}
@@ -162,68 +156,58 @@ export default function Demo() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">Demo FAQs</h2>
           <div className="space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-2">Can I try Boptone before committing?</h3>
-                <p className="text-muted-foreground">
-                  Yes! We offer a free tier for emerging artists and a 14-day free trial on our Pro tier with no credit card required. You can explore all features risk-free.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-2">How long does setup take?</h3>
-                <p className="text-muted-foreground">
-                  Most artists complete initial setup in under 15 minutes. Connecting streaming platforms and social accounts takes just a few clicks. Our AI advisor guides you through the entire process.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-2">Do I need technical skills?</h3>
-                <p className="text-muted-foreground">
-                  Not at all. Boptone is designed for artists, not developers. If you can use Instagram or TikTok, you can use Boptone. Our interface is intuitive and our AI assistant (Toney) helps with any questions.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-2">Can I migrate my existing data?</h3>
-                <p className="text-muted-foreground">
-                  Yes. Boptone automatically imports your streaming data, social media analytics, and revenue history when you connect your accounts. No manual data entry required.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-lg mb-2">What if I need help?</h3>
-                <p className="text-muted-foreground">
-                  Toney (our AI assistant) is available 24/7 for instant help. Pro and Enterprise users also get priority email support and access to our team of artist success managers.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="border-4 border-black rounded-none p-6">
+              <h3 className="font-semibold text-lg mb-2">Can I try Boptone before committing?</h3>
+              <p className="text-gray-600">
+                Yes! We offer a free tier for emerging artists and a 14-day free trial on our Pro tier with no credit card required. You can explore all features risk-free.
+              </p>
+            </div>
+            <div className="border-4 border-black rounded-none p-6">
+              <h3 className="font-semibold text-lg mb-2">How long does setup take?</h3>
+              <p className="text-gray-600">
+                Most artists complete initial setup in under 15 minutes. Connecting streaming platforms and social accounts takes just a few clicks. Our AI advisor guides you through the entire process.
+              </p>
+            </div>
+            <div className="border-4 border-black rounded-none p-6">
+              <h3 className="font-semibold text-lg mb-2">Do I need technical skills?</h3>
+              <p className="text-gray-600">
+                Not at all. Boptone is designed for artists, not developers. If you can use Instagram or TikTok, you can use Boptone. Our interface is intuitive and our AI assistant (Toney) helps with any questions.
+              </p>
+            </div>
+            <div className="border-4 border-black rounded-none p-6">
+              <h3 className="font-semibold text-lg mb-2">Can I migrate my existing data?</h3>
+              <p className="text-gray-600">
+                Yes. Boptone automatically imports your streaming data, social media analytics, and revenue history when you connect your accounts. No manual data entry required.
+              </p>
+            </div>
+            <div className="border-4 border-black rounded-none p-6">
+              <h3 className="font-semibold text-lg mb-2">What if I need help?</h3>
+              <p className="text-gray-600">
+                Toney (our AI assistant) is available 24/7 for instant help. Pro and Enterprise users also get priority email support and access to our team of artist success managers.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* CTA */}
       <div className="container mx-auto px-4 py-16">
-        <Card className="rounded-xl max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-          <CardContent className="p-12 text-center">
+        <div className="border-4 border-black rounded-none max-w-3xl mx-auto bg-gray-50">
+          <div className="p-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Take Control?</h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-gray-600 mb-8">
               Join the platform that's empowering the next generation of creators. Start free, upgrade when you're ready to scale.
             </p>
-            <div className="flex gap-4 justify-center">
-              <Button className="rounded-full" size="lg" onClick={() => setLocation("/signup")}>
+            <div className="flex gap-4 justify-center flex-wrap">
+              <Button className="rounded-full bg-black hover:bg-gray-800 text-white" size="lg" onClick={() => setLocation("/signup")}>
                 Start Free
               </Button>
-              <Button className="rounded-full" size="lg" variant="outline" onClick={() => setLocation("/contact")}>
+              <Button className="rounded-full border-4 border-black hover:bg-gray-50" size="lg" variant="outline" onClick={() => setLocation("/contact")}>
                 Contact Sales
               </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <ToneyChatbot />
