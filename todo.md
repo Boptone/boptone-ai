@@ -1592,3 +1592,27 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Maintain all legal language and structure
 - [ ] Mark as complete in todo.md
 - [ ] Save checkpoint after both pages redesigned
+
+## Create Platform Demo Video with Voiceover (User Request)
+
+### Scope
+- [ ] Generate animated slide deck covering 8 demo sections (~18 minutes)
+  - Dashboard Overview (0:00-2:30)
+  - AI Career Advisor / Toney (2:30-5:00)
+  - Financial Management (5:00-7:30)
+  - Direct-to-Fan Commerce (7:30-10:00)
+  - Global Distribution (10:00-12:00)
+  - IP Protection (12:00-14:00)
+  - Tour Management (14:00-16:00)
+  - Healthcare & Wellness (16:00-18:00)
+- [ ] Write professional voiceover script for each section
+- [ ] Generate speech audio using text-to-speech
+- [ ] Design slides matching xerox aesthetic with clear visual hierarchy
+- [ ] Deliver slides + audio with timestamps for video editing
+- [ ] Provide assembly instructions for combining in video editor
+
+### Notes
+- Focus on key value propositions and platform differentiators
+- Emphasize artist ownership, transparent pricing, and BAP Protocol
+- Include real platform features and capabilities
+- Match xerox/photocopy aesthetic throughout
