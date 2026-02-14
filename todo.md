@@ -1529,3 +1529,9 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] 3. Shop.tsx - Removed 6 icons (ShoppingCart, Filter, Sparkles, Package, Download, Ticket), blue/purple/green/orange gradients → text symbols (🛒, 📦, 💾, 🎫, ⚫/⚪)
 - [x] 4. PricingDashboard.tsx - Removed 8 icons (DollarSign, TrendingUp, TrendingDown, Users, Zap, Target, Info, Sparkles), purple/blue/orange gradients → text symbols (🎯, 👥, $, ↗, ⚡, ✨)
 - [x] Save checkpoint after batch
+
+
+## Batch Redesign 3: 1 Page Complete (HowItWorks)
+- [x] 1. HowItWorks.tsx - Removed 4 icons (ArrowRight, Zap, Wallet, TrendingUp), blue/purple/green gradients → text symbols (💰, ⚡, →, 📊)
+- [ ] 2-5. Deferred large pages (BAP 549 lines, Terms 586 lines, Onboarding 450 lines, AuthSignup 486 lines)
+- [x] Save checkpoint after batch
