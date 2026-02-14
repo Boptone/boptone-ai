@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Instagram, Twitter, Youtube, Music, ShoppingBag, Calendar, Mail } from "lucide-react";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 /**
@@ -62,7 +61,7 @@ export default function DemoArtistProfile() {
             backgroundColor: artist.themeColor 
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+          <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, transparent, white)` }} />
         </div>
 
         {/* Profile Header */}
@@ -71,36 +70,36 @@ export default function DemoArtistProfile() {
             <img
               src={artist.profileImageUrl}
               alt={artist.stageName}
-              className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-background object-cover shadow-xl"
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white object-cover shadow-xl"
             />
             <div className="text-center md:text-left flex-1">
               <h1 className="text-4xl md:text-5xl font-bold mb-2" style={{ color: artist.themeColor }}>
                 {artist.stageName}
               </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl">
+              <p className="text-lg text-gray-600 max-w-2xl">
                 {artist.bio}
               </p>
               
-              {/* Social Links */}
+              {/* Social Links - Text labels instead of icons */}
               <div className="flex items-center justify-center md:justify-start gap-4 mt-4">
                 {artist.instagramUrl && (
                   <a href={artist.instagramUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="rounded-full" variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
-                      <Instagram className="h-5 w-5" style={{ color: artist.accentColor }} />
+                    <Button className="rounded-full border-2" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
+                      IG
                     </Button>
                   </a>
                 )}
                 {artist.twitterUrl && (
                   <a href={artist.twitterUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="rounded-full" variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
-                      <Twitter className="h-5 w-5" style={{ color: artist.accentColor }} />
+                    <Button className="rounded-full border-2" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
+                      X
                     </Button>
                   </a>
                 )}
                 {artist.youtubeUrl && (
                   <a href={artist.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="rounded-full" variant="outline" size="icon" style={{ borderColor: artist.accentColor }}>
-                      <Youtube className="h-5 w-5" style={{ color: artist.accentColor }} />
+                    <Button className="rounded-full border-2" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
+                      YT
                     </Button>
                   </a>
                 )}
@@ -117,10 +116,10 @@ export default function DemoArtistProfile() {
               : ""
           }`}>
             {/* Featured Music */}
-            <Card>
+            <Card className="rounded-none border-4 border-black">
               <CardContent className="p-6">
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2" style={{ color: artist.themeColor }}>
-                  <Music className="h-6 w-6" />
+                  <span className="text-3xl">♪</span>
                   Featured Music
                 </h2>
                 {artist.spotifyArtistId && (
@@ -131,23 +130,23 @@ export default function DemoArtistProfile() {
                     frameBorder="0"
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
-                    className="rounded-lg"
+                    className="rounded-none"
                   />
                 )}
               </CardContent>
             </Card>
 
             {/* Merchandise */}
-            <Card>
+            <Card className="rounded-none border-4 border-black">
               <CardContent className="p-6">
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2" style={{ color: artist.themeColor }}>
-                  <ShoppingBag className="h-6 w-6" />
+                  <span className="text-3xl">$</span>
                   Merchandise
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {products.map((product) => (
                     <div key={product.id} className="group cursor-pointer">
-                      <div className="aspect-square bg-muted rounded-lg overflow-hidden mb-2">
+                      <div className="aspect-square bg-gray-100 rounded-none overflow-hidden mb-2 border-2 border-black">
                         <img
                           src={product.imageUrl}
                           alt={product.name}
@@ -161,31 +160,31 @@ export default function DemoArtistProfile() {
                     </div>
                   ))}
                 </div>
-                <Button className="rounded-full w-full mt-4" style={{ backgroundColor: artist.themeColor }}>
+                <Button className="rounded-full w-full mt-4" style={{ backgroundColor: artist.themeColor, color: 'white' }}>
                   View All Products
                 </Button>
               </CardContent>
             </Card>
 
             {/* Tour Dates */}
-            <Card>
+            <Card className="rounded-none border-4 border-black">
               <CardContent className="p-6">
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2" style={{ color: artist.themeColor }}>
-                  <Calendar className="h-6 w-6" />
+                  <span className="text-3xl">📅</span>
                   Upcoming Shows
                 </h2>
                 <div className="space-y-4">
                   {tourDates.map((show, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                    <div key={index} className="flex items-center justify-between p-3 rounded-none hover:bg-gray-50 transition-colors border-2 border-black">
                       <div>
                         <p className="font-medium">{show.venue}</p>
-                        <p className="text-sm text-muted-foreground">{show.city}</p>
+                        <p className="text-sm text-gray-600">{show.city}</p>
                       </div>
                       <div className="text-right">
                         <p className="text-sm font-medium" style={{ color: artist.accentColor }}>
                           {show.date}
                         </p>
-                        <Button size="sm" variant="outline" className="rounded-full mt-1">
+                        <Button size="sm" variant="outline" className="rounded-full mt-1 border-2 border-black">
                           Tickets
                         </Button>
                       </div>
@@ -196,32 +195,32 @@ export default function DemoArtistProfile() {
             </Card>
 
             {/* Contact */}
-            <Card>
+            <Card className="rounded-none border-4 border-black">
               <CardContent className="p-6">
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2" style={{ color: artist.themeColor }}>
-                  <Mail className="h-6 w-6" />
+                  <span className="text-3xl">✉</span>
                   Get in Touch
                 </h2>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-gray-600 mb-4">
                   Interested in booking or collaboration? Send me a message.
                 </p>
                 <div className="space-y-3">
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className="w-full px-4 py-2 rounded-lg border border-input bg-background"
+                    className="w-full px-4 py-2 rounded-none border-2 border-black bg-white"
                   />
                   <input
                     type="email"
                     placeholder="Your Email"
-                    className="w-full px-4 py-2 rounded-lg border border-input bg-background"
+                    className="w-full px-4 py-2 rounded-none border-2 border-black bg-white"
                   />
                   <textarea
                     placeholder="Your Message"
                     rows={4}
-                    className="w-full px-4 py-2 rounded-lg border border-input bg-background resize-none"
+                    className="w-full px-4 py-2 rounded-none border-2 border-black bg-white resize-none"
                   />
-                  <Button className="rounded-full w-full" style={{ backgroundColor: artist.themeColor }}>
+                  <Button className="rounded-full w-full" style={{ backgroundColor: artist.themeColor, color: 'white' }}>
                     Send Message
                   </Button>
                 </div>
@@ -230,12 +229,12 @@ export default function DemoArtistProfile() {
           </div>
 
           {/* Customization Info Banner */}
-          <Card className="rounded-xl mb-8 border-2" style={{ borderColor: artist.accentColor }}>
+          <Card className="rounded-none mb-8 border-4" style={{ borderColor: artist.accentColor }}>
             <CardContent className="p-6">
               <h3 className="text-xl font-bold mb-2" style={{ color: artist.themeColor }}>
-                🎨 Profile Customization Demo
+                PROFILE CUSTOMIZATION DEMO
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-gray-600 mb-4">
                 This is a sample artist profile showing customization options. Artists can personalize:
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -248,7 +247,7 @@ export default function DemoArtistProfile() {
                   <p><strong>Layout:</strong> {artist.layoutStyle}</p>
                 </div>
               </div>
-              <Button className="rounded-full mt-4" 
+              <Button className="rounded-full mt-4 border-2 border-black" 
                 variant="outline"
                 onClick={() => window.location.href = "/profile-settings"}
               >

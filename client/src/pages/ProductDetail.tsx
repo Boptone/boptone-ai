@@ -4,7 +4,6 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
-import { ShoppingCart, ArrowLeft, Star } from "lucide-react";
 import { toast } from "sonner";
 
 export default function ProductDetail() {
@@ -77,9 +76,8 @@ export default function ProductDetail() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-semibold mb-4">PRODUCT NOT FOUND</h1>
-          <Button onClick={() => setLocation("/shop")} className="rounded-xl border border-gray-200 font-bold">
-            <ArrowLeft className="mr-2" />
-            BACK TO BOPSHOP
+          <Button onClick={() => setLocation("/shop")} className="rounded-full border-2 border-black font-bold">
+            ← BACK TO BOPSHOP
           </Button>
         </div>
       </div>
@@ -89,14 +87,13 @@ export default function ProductDetail() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b border-gray-200">
+      <div className="border-b-2 border-black">
         <div className="container mx-auto px-4 py-6">
           <Button onClick={() => setLocation("/shop")}
             variant="outline"
-            className="rounded-full rounded-xl border-2 border-black font-semibold uppercase"
+            className="rounded-full border-2 border-black font-semibold uppercase"
           >
-            <ArrowLeft className="mr-2" />
-            Back to BopShop
+            ← Back to BopShop
           </Button>
         </div>
       </div>
@@ -107,7 +104,7 @@ export default function ProductDetail() {
           {/* Product Images */}
           <div>
             {product.images && product.images.length > 0 ? (
-              <div className="aspect-square bg-gray-100 border border-gray-200 overflow-hidden">
+              <div className="aspect-square bg-white border-4 border-black overflow-hidden">
                 <img
                   src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0].url}
                   alt={product.name}
@@ -115,8 +112,8 @@ export default function ProductDetail() {
                 />
               </div>
             ) : (
-              <div className="aspect-square bg-gray-100 border border-gray-200 flex items-center justify-center">
-                <ShoppingCart className="h-32 w-32 text-gray-400" />
+              <div className="aspect-square bg-white border-4 border-black flex items-center justify-center">
+                <span className="text-9xl">$</span>
               </div>
             )}
           </div>
@@ -124,25 +121,25 @@ export default function ProductDetail() {
           {/* Product Info */}
           <div className="space-y-6">
             <div>
-              <Badge className="rounded-xl border-2 border-black bg-white text-black font-semibold  mb-4">
+              <Badge className="rounded-full border-2 border-black bg-white text-black font-semibold mb-4">
                 {product.type}
               </Badge>
-              <h1 className="text-4xl md:text-5xl font-semibold  mb-4">
+              <h1 className="text-4xl md:text-5xl font-semibold mb-4">
                 {product.name}
               </h1>
               <p className="text-lg text-gray-600 mb-6">
                 {product.description}
               </p>
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-4xl font-semibold font-mono" style={{ color: '#4285F4' }}>
+                <span className="text-4xl font-semibold font-mono text-black">
                   ${product.price}
                 </span>
                 {product.status === "active" ? (
-                  <Badge className="rounded-xl border-2 border-green-600 bg-green-50 text-green-600 font-semibold uppercase">
+                  <Badge className="rounded-full border-2 border-black bg-white text-black font-semibold uppercase">
                     In Stock
                   </Badge>
                 ) : (
-                  <Badge className="rounded-xl border-2 border-red-600 bg-red-50 text-red-600 font-semibold uppercase">
+                  <Badge className="rounded-full border-2 border-black bg-black text-white font-semibold uppercase">
                     Sold Out
                   </Badge>
                 )}
@@ -151,16 +148,18 @@ export default function ProductDetail() {
               {/* Reviews Summary */}
               {reviews && reviews.length > 0 && (
                 <div className="flex items-center gap-2 mb-6">
-                  <div className="flex">
+                  <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star
+                      <span
                         key={i}
-                        className={`h-5 w-5 ${
+                        className={`text-2xl ${
                           i < Math.round(averageRating)
-                            ? "fill-yellow-400 text-yellow-400"
+                            ? "text-black"
                             : "text-gray-300"
                         }`}
-                      />
+                      >
+                        ★
+                      </span>
                     ))}
                   </div>
                   <span className="font-bold">
@@ -173,19 +172,19 @@ export default function ProductDetail() {
             {/* Variants */}
             {variants && variants.length > 0 && (
               <div className="border-t-4 border-black pt-6">
-                <h3 className="font-semibold  mb-4">Select Option:</h3>
+                <h3 className="font-semibold mb-4">Select Option:</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {variants.map((variant: any) => (
                     <Button key={variant.id}
                       onClick={() => setSelectedVariant(variant.id)}
                       variant={selectedVariant === variant.id ? "default" : "outline"}
-                      className="rounded-full rounded-xl border border-gray-200 font-semibold  h-auto py-4"
+                      className="rounded-full border-2 border-black font-semibold h-auto py-4"
                       disabled={variant.stock === 0}
                     >
                       <div className="text-left w-full">
                         <div>{variant.name}</div>
                         {variant.stock === 0 && (
-                          <div className="text-xs text-red-600">Out of Stock</div>
+                          <div className="text-xs">Out of Stock</div>
                         )}
                       </div>
                     </Button>
@@ -196,11 +195,11 @@ export default function ProductDetail() {
 
             {/* Quantity */}
             <div className="border-t-4 border-black pt-6">
-              <h3 className="font-semibold  mb-4">Quantity:</h3>
+              <h3 className="font-semibold mb-4">Quantity:</h3>
               <div className="flex items-center gap-4">
                 <Button onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   variant="outline"
-                  className="rounded-full rounded-xl border border-gray-200 font-semibold text-2xl w-12 h-12"
+                  className="rounded-full border-2 border-black font-semibold text-2xl w-12 h-12"
                 >
                   -
                 </Button>
@@ -209,7 +208,7 @@ export default function ProductDetail() {
                 </span>
                 <Button onClick={() => setQuantity(quantity + 1)}
                   variant="outline"
-                  className="rounded-full rounded-xl border border-gray-200 font-semibold text-2xl w-12 h-12"
+                  className="rounded-full border-2 border-black font-semibold text-2xl w-12 h-12"
                 >
                   +
                 </Button>
@@ -218,10 +217,10 @@ export default function ProductDetail() {
 
             {/* Add to Cart */}
             <div className="border-t-4 border-black pt-6">
-              <Button className="rounded-full w-full rounded-xl border border-gray-200 bg-black text-white hover:bg-white hover:text-black font-semibold text-lg py-6" onClick={handleAddToCart}
+              <Button className="rounded-full w-full border-2 border-black bg-black text-white hover:bg-white hover:text-black font-semibold text-lg py-6" onClick={handleAddToCart}
                 disabled={product.status !== "active" || addToCart.isPending}
               >
-                <ShoppingCart className="mr-2" />
+                <span className="mr-2">$</span>
                 {addToCart.isPending ? "Adding..." : "Add to Cart"}
               </Button>
               <p className="text-center text-sm text-gray-600 mt-4 font-bold">
@@ -234,22 +233,24 @@ export default function ProductDetail() {
         {/* Reviews Section */}
         {reviews && reviews.length > 0 && (
           <div className="mt-16 border-t-4 border-black pt-12">
-            <h2 className="text-3xl font-semibold  mb-8">CUSTOMER REVIEWS</h2>
+            <h2 className="text-3xl font-semibold mb-8">CUSTOMER REVIEWS</h2>
             <div className="space-y-6">
               {reviews.map((review) => (
-                <div key={review.id} className="border border-gray-200 p-6 bg-white">
+                <div key={review.id} className="border-2 border-black p-6 bg-white rounded-none">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                      <div className="flex">
+                      <div className="flex gap-1">
                         {[...Array(5)].map((_, i) => (
-                          <Star
+                          <span
                             key={i}
-                            className={`h-4 w-4 ${
+                            className={`text-xl ${
                               i < review.rating
-                                ? "fill-yellow-400 text-yellow-400"
+                                ? "text-black"
                                 : "text-gray-300"
                             }`}
-                          />
+                          >
+                            ★
+                          </span>
                         ))}
                       </div>
                       <span className="font-bold">{review.rating}/5</span>
