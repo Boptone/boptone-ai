@@ -240,8 +240,8 @@ export default function Onboarding() {
                       onClick={() => fileInputRef.current?.click()}
                       className="h-32 w-32 rounded-full border-2 border-dashed border-gray-400 flex flex-col items-center justify-center cursor-pointer hover:border-black hover:bg-gray-50 transition-colors"
                     >
-                      <span className="text-3xl text-gray-400 mb-2">📷</span>
-                      <span className="text-xs text-gray-600">Add Photo</span>
+                      <span className="text-2xl font-bold text-gray-400 mb-1">+</span>
+                      <span className="text-xs text-gray-600 font-medium">Add Photo</span>
                     </div>
                   )}
                   <input
