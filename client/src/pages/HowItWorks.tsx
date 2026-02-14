@@ -77,7 +77,7 @@ export default function HowItWorks() {
                 {/* Fan */}
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-none shadow-2xl p-8 border-4 border-black">
                   <div className="w-20 h-20 bg-gray-900 rounded-none flex items-center justify-center">
-                    <span className="text-4xl text-white">💰</span>
+                    <span className="text-2xl text-white font-bold">$</span>
                   </div>
                   <p className="mt-4 font-bold text-gray-800">Fan</p>
                 </div>
@@ -92,7 +92,7 @@ export default function HowItWorks() {
                 {/* Artist */}
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-none shadow-2xl p-8 border-4 border-black">
                   <div className="w-20 h-20 bg-gray-900 rounded-none flex items-center justify-center">
-                    <span className="text-4xl text-white">⚡</span>
+                    <span className="text-2xl text-white font-bold">YOU</span>
                   </div>
                   <p className="mt-4 font-bold text-gray-800">You</p>
                 </div>
@@ -110,7 +110,7 @@ export default function HowItWorks() {
                 <div className="bg-white rounded-none shadow-2xl p-12 border-4 border-black">
                   <div className="flex items-baseline gap-2 mb-4">
                     <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-black">$47.50</span>
-                    <span className="text-2xl">⚡</span>
+                    <span className="text-2xl font-bold">⚡</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
                     <div className="w-2 h-2 bg-black rounded-full" />
@@ -195,7 +195,7 @@ export default function HowItWorks() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white rounded-none shadow-2xl p-8 border-4 border-black w-full max-w-md">
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="text-4xl">📊</span>
+                    <span className="text-2xl font-bold">$</span>
                     <h3 className="text-2xl font-bold text-gray-800">Your Earnings</h3>
                   </div>
                   <div className="space-y-4">

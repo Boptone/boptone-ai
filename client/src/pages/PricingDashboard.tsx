@@ -58,7 +58,7 @@ export default function PricingDashboard() {
         <Card className="rounded-none border-4 border-black bg-white">
           <CardHeader className="border-b-4 border-black">
             <CardTitle className="text-2xl font-bold text-black">
-              🎯 Test Your Price Point
+              TARGET Test Your Price Point
             </CardTitle>
             <CardDescription className="text-gray-700 font-medium">
               See how different prices affect your streams and revenue
@@ -93,7 +93,7 @@ export default function PricingDashboard() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-900">
                 <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
-                  <span>👥 Estimated Streams</span>
+                  <span>FANS Estimated Streams</span>
                 </div>
                 <div className="text-2xl font-bold text-black">
                   {selectedData.estimatedStreams.toLocaleString()}
@@ -121,7 +121,7 @@ export default function PricingDashboard() {
             
             {isOptimal && (
               <div className="bg-gray-100 border-2 border-gray-900 rounded-none p-4 flex items-start gap-3">
-                <span className="text-2xl">⚡</span>
+                <span className="text-2xl">INSTANT</span>
                 <div>
                   <p className="font-bold text-black">Optimal Price Point!</p>
                   <p className="text-sm text-gray-700 font-medium">
@@ -165,7 +165,7 @@ export default function PricingDashboard() {
                         </div>
                         {isOpt && (
                           <Badge className="rounded-none bg-black text-white border-2 border-black font-bold">
-                            ⚡ Optimal
+                            INSTANT Optimal
                           </Badge>
                         )}
                       </div>
@@ -196,7 +196,7 @@ export default function PricingDashboard() {
         <Card className="rounded-none border-4 border-black bg-white">
           <CardHeader className="border-b-4 border-black">
             <CardTitle className="text-2xl font-bold text-black">
-              ✨ A/B Testing Suggestions
+              NEW A/B Testing Suggestions
             </CardTitle>
             <CardDescription className="text-gray-700 font-medium">
               Data-driven strategies to optimize your pricing

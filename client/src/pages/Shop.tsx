@@ -24,9 +24,9 @@ export default function Shop() {
   const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
   const productTypes = [
-    { value: "physical", label: "Physical Merch", symbol: "📦" },
-    { value: "digital", label: "Digital Downloads", symbol: "💾" },
-    { value: "experience", label: "Experiences", symbol: "🎫" },
+    { value: "physical", label: "Physical Merch", symbol: "PHYSICAL" },
+    { value: "digital", label: "Digital Downloads", symbol: "DIGITAL" },
+    { value: "experience", label: "Experiences", symbol: "TICKET" },
   ];
 
   // Filter products
@@ -53,7 +53,7 @@ export default function Shop() {
                 className="rounded-none text-xl px-10 py-6 bg-black text-white hover:bg-gray-900 border-4 border-black font-bold relative"
                 size="lg"
               >
-                🛒 View Cart
+                CART View Cart
                 {cartItemCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 rounded-none border-4 border-white bg-black text-white font-bold text-lg px-3 py-1">
                     {cartItemCount}
@@ -78,7 +78,7 @@ export default function Shop() {
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="w-16 h-16 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-900">
-                    <span className="text-3xl">📦</span>
+                    <span className="text-3xl">PHYSICAL</span>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-gray-900">Exclusive</div>
@@ -87,7 +87,7 @@ export default function Shop() {
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="w-16 h-16 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-900">
-                    <span className="text-3xl">✨</span>
+                    <span className="text-3xl">NEW</span>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-gray-900">Authentic</div>
@@ -118,7 +118,7 @@ export default function Shop() {
                     ? 'bg-white border-white' 
                     : 'bg-gray-100 border-gray-900'
                 }`}>
-                  <span className="text-2xl">{selectedType === null ? '⚫' : '⚪'}</span>
+                  <span className="text-2xl">{selectedType === null ? 'ALL' : ''}</span>
                 </div>
                 <h3 className={`text-xl font-bold ${selectedType === null ? 'text-white' : 'text-gray-900'}`}>
                   All Products
@@ -182,7 +182,7 @@ export default function Shop() {
                     </div>
                   ) : (
                     <div className="aspect-square bg-gray-100 rounded-none border-2 border-gray-900 mb-4 flex items-center justify-center">
-                      <span className="text-6xl">🛒</span>
+                      <span className="text-6xl">CART</span>
                     </div>
                   )}
 
@@ -220,7 +220,7 @@ export default function Shop() {
           <Card className="rounded-none border-4 border-gray-900 bg-white">
             <CardContent className="p-24 text-center">
               <div className="w-32 h-32 rounded-none bg-gray-100 flex items-center justify-center border-4 border-gray-900 mx-auto mb-8">
-                <span className="text-6xl">🛒</span>
+                <span className="text-6xl">CART</span>
               </div>
               <h2 className="text-4xl font-bold text-gray-900 mb-4">No Products Yet</h2>
               <p className="text-xl text-gray-600 font-medium">

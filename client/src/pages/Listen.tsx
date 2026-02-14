@@ -316,7 +316,7 @@ export default function Listen() {
                 onClick={() => likeTrack.mutate({ trackId: parseInt(trackId || "0") })}
                 className="border-2 border-black rounded-none"
               >
-                <span className="text-xl">♥</span>
+                <span className="text-sm font-bold">LIKE</span>
               </Button>
               <Button 
                 variant="outline" 
@@ -324,7 +324,7 @@ export default function Listen() {
                 onClick={handleShare}
                 className="border-2 border-black rounded-none"
               >
-                <span className="text-xl">⤴</span>
+                <span className="text-sm font-bold">SHARE</span>
               </Button>
               {!isUnlocked && (
                 <Button

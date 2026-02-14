@@ -229,7 +229,7 @@ export default function WorkflowSettings() {
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <span className="text-2xl font-bold">⚡</span>
+                          <span className="text-2xl font-bold">INSTANT</span>
                           <h3 className="font-bold text-xl text-black">
                             {getEventTypeLabel(config.eventType)}
                           </h3>
@@ -266,7 +266,7 @@ export default function WorkflowSettings() {
                           onClick={() => handleDeleteTrigger(trigger.id)}
                           className="rounded-none border-2 border-gray-900 hover:bg-gray-100"
                         >
-                          🗑
+                          DELETE
                         </Button>
                       </div>
                     </div>
@@ -278,7 +278,7 @@ export default function WorkflowSettings() {
             {triggers?.length === 0 && !showCreateTrigger && (
               <Card className="rounded-none border-4 border-black bg-white">
                 <CardContent className="pt-6 text-center py-12">
-                  <span className="text-6xl mb-4 block">⚡</span>
+                  <span className="text-6xl mb-4 block">INSTANT</span>
                   <p className="text-gray-700 mb-4 font-medium text-lg">
                     No triggers configured for this workflow yet.
                   </p>

@@ -97,7 +97,7 @@ export default function Fans() {
                 <CardContent>
                   <div className="text-center py-8 text-gray-600">
                     <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
-                      <span className="text-gray-400 text-5xl">👥</span>
+                      <span className="text-gray-400 text-5xl">FANS</span>
                     </div>
                     <p className="font-medium">No audience data yet</p>
                     <p className="text-sm mt-2">Build your fanbase to see demographics</p>
@@ -137,7 +137,7 @@ export default function Fans() {
               <CardContent className="space-y-4">
                 <div className="flex items-start gap-4 p-4 border-2 border-black">
                   <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
-                    <span className="text-white text-xl">⤴</span>
+                    <span className="text-white text-xl">SHARE</span>
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold mb-1">Share Your Profile</h3>
@@ -152,7 +152,7 @@ export default function Fans() {
 
                 <div className="flex items-start gap-4 p-4 border-2 border-black">
                   <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
-                    <span className="text-white text-xl">🎯</span>
+                    <span className="text-white text-xl">TARGET</span>
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold mb-1">Promote Your Music</h3>
@@ -165,7 +165,7 @@ export default function Fans() {
 
                 <div className="flex items-start gap-4 p-4 border-2 border-black">
                   <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
-                    <span className="text-white text-xl">✨</span>
+                    <span className="text-white text-xl">NEW</span>
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold mb-1">Collaborate with Artists</h3>

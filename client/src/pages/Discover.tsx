@@ -201,12 +201,12 @@ export default function Discover() {
             variant="outline"
             onClick={() => handleLikeTrack(track.id)}
           >
-            <span className="text-xl">♥</span>
+            <span className="text-sm font-bold">LIKE</span>
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
-                <span className="text-xl">⤴</span>
+                <span className="text-sm font-bold">SHARE</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -333,7 +333,7 @@ export default function Discover() {
               <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
                 <CardContent className="p-16 text-center">
                   <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
-                    <span className="text-gray-400 text-5xl">🔍</span>
+                    <span className="text-gray-400 text-2xl font-bold">SEARCH</span>
                   </div>
                   <h3 className="text-2xl font-bold mb-2">No results found</h3>
                   <p className="text-gray-600 text-lg">Try a different search term</p>
@@ -500,12 +500,12 @@ export default function Discover() {
                   variant="outline"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
-                  <span className="text-xl">♥</span>
+                  <span className="text-sm font-bold">LIKE</span>
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
-                      <span className="text-xl">⤴</span>
+                      <span className="text-sm font-bold">SHARE</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">

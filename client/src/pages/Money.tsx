@@ -166,7 +166,7 @@ export default function Money() {
               <CardContent>
                 <div className="text-center py-8 text-gray-600">
                   <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
-                    <span className="text-gray-400 text-5xl">📅</span>
+                    <span className="text-gray-400 text-2xl font-bold">DATE</span>
                   </div>
                   <p className="font-medium">No payout history yet</p>
                   <p className="text-sm mt-2">Payouts are processed monthly when you reach $50</p>
@@ -268,7 +268,7 @@ export default function Money() {
                       <div key={loan.id} className="flex items-center justify-between p-3 border-2 border-black">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-black flex items-center justify-center">
-                            <span className="text-white text-sm">💰</span>
+                            <span className="text-white text-sm font-bold">$</span>
                           </div>
                           <div>
                             <p className="font-bold">{formatCurrency(parseInt(loan.approvedAmount || "0"))}</p>
@@ -289,7 +289,7 @@ export default function Money() {
                 ) : (
                   <div className="text-center py-8 text-gray-600">
                     <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
-                      <span className="text-gray-400 text-5xl">💰</span>
+                      <span className="text-gray-400 text-2xl font-bold">LOANS</span>
                     </div>
                     <p className="font-medium">No loan history</p>
                   </div>
@@ -314,7 +314,7 @@ export default function Money() {
                       <div key={tip.id} className="flex items-center justify-between p-3 border-2 border-black">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-black flex items-center justify-center">
-                            <span className="text-white text-sm">♥</span>
+                            <span className="text-white text-sm font-bold">TIP</span>
                           </div>
                           <div>
                             <p className="font-bold">{tip.fanName || "Anonymous"}</p>
@@ -332,7 +332,7 @@ export default function Money() {
                 ) : (
                   <div className="text-center py-8 text-gray-600">
                     <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
-                      <span className="text-gray-400 text-5xl">♥</span>
+                      <span className="text-gray-400 text-2xl font-bold">TIPS</span>
                     </div>
                     <p className="font-medium">No tips yet</p>
                     <p className="text-sm mt-2">Share your Kick In link to receive support from fans</p>
