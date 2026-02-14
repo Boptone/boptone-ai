@@ -6,16 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
-import { 
-  Users, 
-  TrendingUp, 
-  Heart,
-  Share2,
-  BarChart3,
-  Award,
-  Target,
-  Sparkles
-} from "lucide-react";
 
 export default function Fans() {
   const { user } = useAuth();
@@ -25,32 +15,20 @@ export default function Fans() {
   
   const stats = [
     {
-      title: "Your Followers",
+      title: "Followers",
       value: "0", // TODO: Add followers count
-      icon: Users,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50"
     },
     {
-      title: "Your Streams",
+      title: "Streams",
       value: "0", // TODO: Add streams count
-      icon: TrendingUp,
-      color: "text-green-600",
-      bgColor: "bg-green-50"
     },
     {
-      title: "Your Engagement",
+      title: "Engagement",
       value: "0%", // TODO: Calculate engagement
-      icon: Heart,
-      color: "text-pink-600",
-      bgColor: "bg-pink-50"
     },
     {
-      title: "Your Rewards",
+      title: "Rewards",
       value: "0", // TODO: Add rewards points
-      icon: Award,
-      color: "text-purple-600",
-      bgColor: "bg-purple-50"
     }
   ];
 
@@ -58,80 +36,89 @@ export default function Fans() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="border-b border-gray-200 pb-4">
-          <h1 className="text-5xl md:text-6xl font-semibold tracking-tight uppercase">YOUR AUDIENCE</h1>
-          <p className="text-xl font-bold mt-3">
-            GROW YOUR AUDIENCE, TRACK ENGAGEMENT, AND REWARD YOUR SUPPORTERS
+        <div className="border-b-4 border-black pb-4">
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight uppercase">Audience</h1>
+          <p className="text-xl font-medium mt-3 text-gray-600">
+            Grow your audience, track engagement, and reward your supporters
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border border-gray-200">
+        <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border-4 border-black">
           {stats.map((stat, idx) => (
-            <div key={stat.title} className={`p-6 bg-white ${idx < stats.length - 1 ? 'border-r-4 border-black' : ''} ${idx < 2 ? 'lg:border-b-0 border-b-4' : ''} md:border-b-0`}>
-              <div className="text-xs font-semibold  tracking-wider mb-2">
+            <div 
+              key={stat.title} 
+              className={`p-6 bg-white ${idx < stats.length - 1 ? 'border-r-4 border-black' : ''} ${idx < 2 ? 'lg:border-b-0 border-b-4 border-black' : ''} md:border-b-0`}
+            >
+              <div className="text-xs font-bold tracking-wider mb-2 uppercase text-gray-600">
                 {stat.title}
               </div>
-              <div className="text-4xl font-semibold font-mono" style={{ color: '#4285F4' }}>{stat.value}</div>
+              <div className="text-4xl font-bold font-mono">{stat.value}</div>
             </div>
           ))}
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="analytics" className="space-y-4">
-          <TabsList className="rounded-xl border-2 border-black bg-white">
-            <TabsTrigger value="analytics" className="rounded-xl font-semibold  data-[state=active]:bg-black data-[state=active]:text-white">ANALYTICS</TabsTrigger>
-            <TabsTrigger value="growth" className="rounded-xl font-semibold  data-[state=active]:bg-black data-[state=active]:text-white">FAN GROWTH</TabsTrigger>
-            <TabsTrigger value="rewards" className="rounded-xl font-semibold  data-[state=active]:bg-black data-[state=active]:text-white">REWARDS</TabsTrigger>
+          <TabsList className="rounded-none border-4 border-black bg-white">
+            <TabsTrigger value="analytics" className="rounded-none font-bold uppercase data-[state=active]:bg-black data-[state=active]:text-white">Analytics</TabsTrigger>
+            <TabsTrigger value="growth" className="rounded-none font-bold uppercase data-[state=active]:bg-black data-[state=active]:text-white">Fan Growth</TabsTrigger>
+            <TabsTrigger value="rewards" className="rounded-none font-bold uppercase data-[state=active]:bg-black data-[state=active]:text-white">Rewards</TabsTrigger>
           </TabsList>
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <Card className="rounded-xl border border-gray-200">
+              <Card className="rounded-none border-4 border-black">
                 <CardHeader className="bg-black text-white">
-                  <CardTitle className="text-xl font-semibold uppercase">STREAM PERFORMANCE</CardTitle>
-                  <CardDescription className="text-white/80 font-bold">
-                    YOUR MOST POPULAR TRACKS
+                  <CardTitle className="text-xl font-bold uppercase">Stream Performance</CardTitle>
+                  <CardDescription className="text-white/90 font-medium">
+                    Your most popular tracks
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-center py-8 text-muted-foreground">
-                    <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>No streaming data yet</p>
+                  <div className="text-center py-8 text-gray-600">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
+                      <span className="text-gray-400 text-5xl">📊</span>
+                    </div>
+                    <p className="font-medium">No streaming data yet</p>
                     <p className="text-sm mt-2">Upload music to start tracking performance</p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="rounded-xl border border-gray-200">
+              <Card className="rounded-none border-4 border-black">
                 <CardHeader className="bg-black text-white">
-                  <CardTitle className="text-xl font-semibold uppercase">AUDIENCE DEMOGRAPHICS</CardTitle>
-                  <CardDescription className="text-white/80 font-bold">
-                    WHERE YOUR FANS ARE LISTENING FROM
+                  <CardTitle className="text-xl font-bold uppercase">Audience Demographics</CardTitle>
+                  <CardDescription className="text-white/90 font-medium">
+                    Where your fans are listening from
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>No audience data yet</p>
+                  <div className="text-center py-8 text-gray-600">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
+                      <span className="text-gray-400 text-5xl">👥</span>
+                    </div>
+                    <p className="font-medium">No audience data yet</p>
                     <p className="text-sm mt-2">Build your fanbase to see demographics</p>
                   </div>
                 </CardContent>
               </Card>
             </div>
 
-            <Card className="rounded-xl border border-gray-200">
+            <Card className="rounded-none border-4 border-black">
               <CardHeader className="bg-black text-white">
-                <CardTitle className="text-xl font-semibold uppercase">ENGAGEMENT TRENDS</CardTitle>
-                <CardDescription className="text-white/80 font-bold">
-                  LIKES, SHARES, AND PLAYLIST ADDS OVER TIME
+                <CardTitle className="text-xl font-bold uppercase">Engagement Trends</CardTitle>
+                <CardDescription className="text-white/90 font-medium">
+                  Likes, shares, and playlist adds over time
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-8 text-muted-foreground">
-                  <TrendingUp className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No engagement data yet</p>
+                <div className="text-center py-8 text-gray-600">
+                  <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-300">
+                    <span className="text-gray-400 text-5xl">↗</span>
+                  </div>
+                  <p className="font-medium">No engagement data yet</p>
                   <p className="text-sm mt-2">Fans will start engaging with your music soon</p>
                 </div>
               </CardContent>
@@ -140,82 +127,82 @@ export default function Fans() {
 
           {/* Fan Growth Tab */}
           <TabsContent value="growth" className="space-y-4">
-            <Card className="rounded-xl border border-gray-200">
+            <Card className="rounded-none border-4 border-black">
               <CardHeader className="bg-black text-white">
-                <CardTitle className="text-xl font-semibold uppercase">GROWTH STRATEGIES</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-xl font-bold uppercase">Growth Strategies</CardTitle>
+                <CardDescription className="text-white/90 font-medium">
                   Tools to help you reach more fans
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-start gap-4 p-4 border rounded-lg">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Share2 className="h-5 w-5 text-primary" />
+                <div className="flex items-start gap-4 p-4 border-2 border-black">
+                  <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
+                    <span className="text-white text-xl">⤴</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold mb-1">Share Your Profile</h3>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <h3 className="font-bold mb-1">Share Your Profile</h3>
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
                       Get your unique artist link to share on social media
                     </p>
-                    <Button className="rounded-full" variant="outline" size="sm">
+                    <Button className="rounded-none border-2 border-black font-bold" variant="outline" size="sm">
                       Copy Profile Link
                     </Button>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 border rounded-lg">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Target className="h-5 w-5 text-primary" />
+                <div className="flex items-start gap-4 p-4 border-2 border-black">
+                  <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
+                    <span className="text-white text-xl">🎯</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold mb-1">Promote Your Music</h3>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <h3 className="font-bold mb-1">Promote Your Music</h3>
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
                       Run targeted campaigns to reach new listeners
                     </p>
-                    <Badge variant="secondary">Coming Soon</Badge>
+                    <Badge variant="secondary" className="rounded-none border-2 border-black bg-gray-100 font-bold uppercase">Coming Soon</Badge>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 border rounded-lg">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <Sparkles className="h-5 w-5 text-primary" />
+                <div className="flex items-start gap-4 p-4 border-2 border-black">
+                  <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
+                    <span className="text-white text-xl">✨</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold mb-1">Collaborate with Artists</h3>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <h3 className="font-bold mb-1">Collaborate with Artists</h3>
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
                       Find and connect with other artists for features
                     </p>
-                    <Badge variant="secondary">Coming Soon</Badge>
+                    <Badge variant="secondary" className="rounded-none border-2 border-black bg-gray-100 font-bold uppercase">Coming Soon</Badge>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Growth Tips</CardTitle>
-                <CardDescription>
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-xl font-bold uppercase">Growth Tips</CardTitle>
+                <CardDescription className="text-white/90 font-medium">
                   Personalized recommendations to grow your audience
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-primary">1</span>
+                <div className="flex items-center gap-3 p-3 bg-gray-100 border-2 border-gray-300">
+                  <div className="h-8 w-8 bg-black flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-white">1</span>
                   </div>
-                  <p className="text-sm">Upload consistently - artists who release monthly grow 3x faster</p>
+                  <p className="text-sm font-medium">Upload consistently - artists who release monthly grow 3x faster</p>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-primary">2</span>
+                <div className="flex items-center gap-3 p-3 bg-gray-100 border-2 border-gray-300">
+                  <div className="h-8 w-8 bg-black flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-white">2</span>
                   </div>
-                  <p className="text-sm">Complete your profile - bios and photos get 50% more followers</p>
+                  <p className="text-sm font-medium">Complete your profile - bios and photos get 50% more followers</p>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-primary">3</span>
+                <div className="flex items-center gap-3 p-3 bg-gray-100 border-2 border-gray-300">
+                  <div className="h-8 w-8 bg-black flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-white">3</span>
                   </div>
-                  <p className="text-sm">Engage with fans - respond to comments and messages</p>
+                  <p className="text-sm font-medium">Engage with fans - respond to comments and messages</p>
                 </div>
               </CardContent>
             </Card>
@@ -223,53 +210,53 @@ export default function Fans() {
 
           {/* Rewards Tab */}
           <TabsContent value="rewards" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Tone Rewards Program</CardTitle>
-                <CardDescription>
+            <Card className="rounded-none border-4 border-black">
+              <CardHeader className="bg-black text-white">
+                <CardTitle className="text-xl font-bold uppercase">Tone Rewards Program</CardTitle>
+                <CardDescription className="text-white/90 font-medium">
                   Reward your most loyal fans with exclusive perks
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="p-4 border rounded-lg">
+                  <div className="p-4 border-2 border-black">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold">Bronze Tier</h3>
-                      <Badge variant="outline">0 fans</Badge>
+                      <h3 className="font-bold">Bronze Tier</h3>
+                      <Badge variant="outline" className="rounded-none border-2 border-black font-bold">0 fans</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
                       Fans who stream 10+ songs
                     </p>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
+                    <ul className="text-sm space-y-1 text-gray-600 font-medium">
                       <li>• Early access to new releases</li>
                       <li>• Exclusive behind-the-scenes content</li>
                     </ul>
                   </div>
 
-                  <div className="p-4 border rounded-lg">
+                  <div className="p-4 border-2 border-black">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold">Silver Tier</h3>
-                      <Badge variant="outline">0 fans</Badge>
+                      <h3 className="font-bold">Silver Tier</h3>
+                      <Badge variant="outline" className="rounded-none border-2 border-black font-bold">0 fans</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
                       Fans who stream 50+ songs
                     </p>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
+                    <ul className="text-sm space-y-1 text-gray-600 font-medium">
                       <li>• All Bronze benefits</li>
                       <li>• Discounted merchandise</li>
                       <li>• Priority support responses</li>
                     </ul>
                   </div>
 
-                  <div className="p-4 border rounded-lg">
+                  <div className="p-4 border-2 border-black">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold">Gold Tier</h3>
-                      <Badge variant="outline">0 fans</Badge>
+                      <h3 className="font-bold">Gold Tier</h3>
+                      <Badge variant="outline" className="rounded-none border-2 border-black font-bold">0 fans</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
                       Fans who stream 100+ songs
                     </p>
-                    <ul className="text-sm space-y-1 text-muted-foreground">
+                    <ul className="text-sm space-y-1 text-gray-600 font-medium">
                       <li>• All Silver benefits</li>
                       <li>• Free merchandise</li>
                       <li>• Meet & greet opportunities</li>
@@ -278,8 +265,8 @@ export default function Fans() {
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
-                  <p className="text-sm text-center">
+                <div className="mt-6 p-4 bg-gray-100 border-2 border-black">
+                  <p className="text-sm text-center font-medium">
                     <strong>Tip:</strong> Reward tiers are automatically assigned based on fan engagement. The more your fans listen, the more they unlock!
                   </p>
                 </div>

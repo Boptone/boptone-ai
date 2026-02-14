@@ -4,26 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Play, 
-  Pause, 
-  SkipForward, 
-  SkipBack, 
-  Heart, 
-  Music, 
-  Search,
-  TrendingUp,
-  Clock,
-  Users,
-  Volume2,
-  Repeat,
-  Shuffle,
-  Share2,
-  Copy,
-  Check,
-  Sparkles,
-  Radio
-} from "lucide-react";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -179,57 +159,54 @@ export default function Discover() {
   };
 
   const TrackCard = ({ track }: { track: any }) => (
-    <Card className="rounded-3xl border-4 border-gray-300 shadow-xl hover:scale-[1.02] hover:border-indigo-500 transition-all bg-white">
+    <Card className="rounded-none border-2 border-gray-300 shadow-lg hover:border-black transition-all bg-white">
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
-          <div className="relative flex-shrink-0">
+          <div className="relative flex-shrink-0 group">
             <img
               src={track.artworkUrl || `https://via.placeholder.com/96x96?text=${encodeURIComponent(track.title)}`}
               alt={track.title}
-              className="w-24 h-24 rounded-2xl object-cover border-2 border-gray-200"
+              className="w-24 h-24 rounded-none object-cover border-2 border-black"
             />
             <Button 
-              className="rounded-full absolute inset-0 m-auto opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700" 
+              className="rounded-none absolute inset-0 m-auto opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
               size="icon"
               onClick={() => handlePlayTrack(track)}
             >
-              {currentTrack?.id === track.id && isPlaying ? (
-                <Pause className="h-6 w-6 text-white" />
-              ) : (
-                <Play className="h-6 w-6 text-white" />
-              )}
+              <span className="text-white text-2xl">
+                {currentTrack?.id === track.id && isPlaying ? "❚❚" : "▶"}
+              </span>
             </Button>
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-bold text-xl text-gray-900 truncate">{track.title}</h3>
-            <p className="text-lg text-gray-600 font-bold truncate">{track.artist}</p>
+            <p className="text-lg text-gray-600 font-medium truncate">{track.artist}</p>
             <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 font-medium">
               {track.genre && (
-                <Badge className="rounded-full border-2 border-gray-200 bg-gray-100 text-gray-700 font-semibold text-xs px-3 py-1">
+                <Badge className="rounded-none border-2 border-black bg-black text-white font-bold text-xs px-3 py-1 uppercase">
                   {track.genre}
                 </Badge>
               )}
-              <span className="font-bold">{formatTime(track.duration)}</span>
+              <span className="font-mono">{formatTime(track.duration)}</span>
               {track.streamCount > 0 && (
-                <span className="flex items-center gap-1 font-bold">
-                  <Users className="h-4 w-4" />
-                  {track.streamCount.toLocaleString()}
+                <span className="font-medium">
+                  {track.streamCount.toLocaleString()} plays
                 </span>
               )}
             </div>
           </div>
           <Button 
-            className="rounded-full" 
+            className="rounded-none border-2 border-black" 
             size="icon"
-            variant="ghost"
+            variant="outline"
             onClick={() => handleLikeTrack(track.id)}
           >
-            <Heart className="h-5 w-5" />
+            <span className="text-xl">♥</span>
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-full" size="icon" variant="ghost">
-                <Share2 className="h-5 w-5" />
+              <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                <span className="text-xl">⤴</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -246,11 +223,7 @@ export default function Discover() {
                 Share on Facebook
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleShare(track, 'copy')}>
-                {copiedTrackId === track.id ? (
-                  <Check className="h-4 w-4 mr-2 text-primary" />
-                ) : (
-                  <Copy className="h-4 w-4 mr-2" />
-                )}
+                <span className="mr-2">{copiedTrackId === track.id ? "✓" : "⎘"}</span>
                 Copy Link
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -262,12 +235,12 @@ export default function Discover() {
 
   return (
     <div className="min-h-screen bg-white pb-32">
-      {/* Revolutionary Header with Asymmetric Layout */}
+      {/* Header */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
           {/* Left: Content */}
           <div>
-            <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6 text-foreground">
+            <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
               Discover
               <br />
               New Music.
@@ -278,34 +251,34 @@ export default function Discover() {
           </div>
 
           {/* Right: Stats Card */}
-          <Card className="border-2 border-gray-200 bg-white">
+          <Card className="border-4 border-black bg-gray-50 rounded-none">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center">
-                    <Music className="h-8 w-8 text-gray-700" />
+                  <div className="w-16 h-16 bg-black flex items-center justify-center">
+                    <span className="text-white text-3xl">♪</span>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-gray-900">Direct Streams</div>
-                    <div className="text-lg text-gray-600">Artist to Fan</div>
+                    <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Total Tracks</p>
+                    <p className="text-3xl font-bold">{trendingTracks?.length || 0}+</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center">
-                    <TrendingUp className="h-8 w-8 text-gray-700" />
+                  <div className="w-16 h-16 bg-black flex items-center justify-center">
+                    <span className="text-white text-3xl">↗</span>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-gray-900">Trending</div>
-                    <div className="text-lg text-gray-600">Fresh Releases</div>
+                    <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Trending Now</p>
+                    <p className="text-3xl font-bold">{trendingTracks?.length || 0}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center">
-                    <Radio className="h-8 w-8 text-gray-700" />
+                  <div className="w-16 h-16 bg-black flex items-center justify-center">
+                    <span className="text-white text-3xl">◉</span>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-gray-900">Live Feed</div>
-                    <div className="text-lg text-gray-600">Real-Time Updates</div>
+                    <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Live Streams</p>
+                    <p className="text-3xl font-bold">24/7</p>
                   </div>
                 </div>
               </div>
@@ -313,116 +286,103 @@ export default function Discover() {
           </Card>
         </div>
 
-        {/* Search Bar - Revolutionary Design */}
-        <Card className="border-2 border-gray-200 bg-white mb-12">
+        {/* Search Bar */}
+        <Card className="border-4 border-black bg-white mb-12 rounded-none">
           <CardContent className="p-8">
             <div className="relative">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-7 w-7 text-gray-400" />
               <Input
-                type="search"
-                placeholder="Search for tracks, artists, or albums..."
-                className="pl-16 h-16 text-xl font-bold border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                type="text"
+                placeholder="Search tracks, artists, albums..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                className="text-2xl py-8 pl-6 pr-6 border-2 border-gray-300 rounded-none font-medium"
               />
             </div>
           </CardContent>
         </Card>
 
-        {/* Genre Filters - Color-Coded Pills */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Browse by Genre</h2>
-          <div className="flex items-center gap-3 flex-wrap">
-            {GENRES.map((genre) => {
-              const isSelected = selectedGenre === genre;
-              return (
-                <Badge
-                  key={genre}
-                  className={`cursor-pointer whitespace-nowrap px-6 py-3 text-base font-semibold rounded-full border-2 transition-all ${
-                    isSelected 
-                      ? 'border-primary bg-primary text-white' 
-                      : 'border-gray-200 bg-white text-gray-900 hover:border-gray-300'
-                  }`}
-                  onClick={() => setSelectedGenre(genre)}
-                >
-                  {genre}
-                </Badge>
-              );
-            })}
-          </div>
+        {/* Genre Filter */}
+        <div className="flex flex-wrap gap-3 mb-12">
+          {GENRES.map((genre) => (
+            <Button
+              key={genre}
+              variant={selectedGenre === genre ? "default" : "outline"}
+              onClick={() => setSelectedGenre(genre)}
+              className={`rounded-none border-2 border-black font-bold uppercase text-sm px-6 py-3 ${
+                selectedGenre === genre
+                  ? "bg-black text-white"
+                  : "bg-white text-black hover:bg-gray-100"
+              }`}
+            >
+              {genre}
+            </Button>
+          ))}
         </div>
 
         {/* Search Results */}
-        {searchQuery && searchResults && (
+        {searchQuery && (
           <div className="mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Search <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Results</span>
-            </h2>
-            <div className="space-y-4">
-              {searchResults.length > 0 ? (
-                searchResults.map((track) => <TrackCard key={track.id} track={track} />)
-              ) : (
-                <Card className="rounded-3xl border-4 border-gray-300 shadow-2xl bg-white">
-                  <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
-                      <Search className="h-12 w-12 text-gray-400" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-2">No Results Found</h3>
-                    <p className="text-xl text-gray-600 font-medium">
-                      No tracks found for "{searchQuery}"
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+            <h2 className="text-4xl font-bold mb-6">Search Results</h2>
+            {searchResults && searchResults.length > 0 ? (
+              <div className="space-y-4">
+                {searchResults.map((track: any) => (
+                  <TrackCard key={track.id} track={track} />
+                ))}
+              </div>
+            ) : (
+              <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
+                <CardContent className="p-16 text-center">
+                  <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
+                    <span className="text-gray-400 text-5xl">🔍</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">No results found</h3>
+                  <p className="text-gray-600 text-lg">Try a different search term</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         )}
 
-        {/* Discovery Tabs */}
+        {/* Tabs */}
         {!searchQuery && (
           <Tabs defaultValue="trending" className="space-y-8">
-            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-3xl border-4 border-gray-300 shadow-2xl">
+            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-none border-4 border-black shadow-lg">
               <TabsTrigger 
-                value="trending" 
-                className="flex items-center gap-2 text-lg font-bold py-4 rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                value="trending"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-black data-[state=active]:text-white"
               >
-                <TrendingUp className="h-5 w-5" />
                 Trending
               </TabsTrigger>
               <TabsTrigger 
-                value="new" 
-                className="flex items-center gap-2 text-lg font-bold py-4 rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                value="new"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-black data-[state=active]:text-white"
               >
-                <Clock className="h-5 w-5" />
                 New This Week
               </TabsTrigger>
               <TabsTrigger 
-                value="rising" 
-                className="flex items-center gap-2 text-lg font-bold py-4 rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                value="rising"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-black data-[state=active]:text-white"
               >
-                <Users className="h-5 w-5" />
                 Rising Artists
               </TabsTrigger>
             </TabsList>
 
+            {/* Trending Tab */}
             <TabsContent value="trending" className="space-y-4">
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                Trending on <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">BAP</span>
-              </h2>
               {trendingTracks && trendingTracks.length > 0 ? (
-                trendingTracks.map((track) => <TrackCard key={track.id} track={track} />)
+                trendingTracks.map((track: any) => (
+                  <TrackCard key={track.id} track={track} />
+                ))
               ) : (
-                <Card className="rounded-3xl border-4 border-gray-300 shadow-2xl bg-white">
+                <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
-                      <Music className="h-12 w-12 text-gray-400" />
+                    <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
+                      <span className="text-gray-400 text-5xl">♪</span>
                     </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4">No Trending Tracks Yet</h3>
-                    <p className="text-xl text-gray-600 font-medium mb-8">
-                      Be the first to upload and start trending!
-                    </p>
+                    <h3 className="text-2xl font-bold mb-2">No trending tracks yet</h3>
+                    <p className="text-gray-600 text-lg mb-6">Be the first to upload!</p>
                     <Link href="/upload">
-                      <Button className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 font-bold">
+                      <Button className="rounded-none text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -431,24 +391,22 @@ export default function Discover() {
               )}
             </TabsContent>
 
+            {/* New Releases Tab */}
             <TabsContent value="new" className="space-y-4">
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                New This <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Week</span>
-              </h2>
               {newReleases && newReleases.length > 0 ? (
-                newReleases.map((track) => <TrackCard key={track.id} track={track} />)
+                newReleases.map((track: any) => (
+                  <TrackCard key={track.id} track={track} />
+                ))
               ) : (
-                <Card className="rounded-3xl border-4 border-gray-300 shadow-2xl bg-white">
+                <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
-                      <Music className="h-12 w-12 text-gray-400" />
+                    <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
+                      <span className="text-gray-400 text-5xl">♪</span>
                     </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4">No New Releases Yet</h3>
-                    <p className="text-xl text-gray-600 font-medium mb-8">
-                      Upload your music to BAP and be featured here!
-                    </p>
+                    <h3 className="text-2xl font-bold mb-2">No new releases yet</h3>
+                    <p className="text-gray-600 text-lg mb-6">Check back soon for fresh music!</p>
                     <Link href="/upload">
-                      <Button className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 font-bold">
+                      <Button className="rounded-none text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -457,24 +415,20 @@ export default function Discover() {
               )}
             </TabsContent>
 
-            <TabsContent value="rising" className="space-y-6">
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                Rising <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Artists</span>
-              </h2>
-              {risingArtists && risingArtists.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Rising Artists Tab */}
+            <TabsContent value="rising" className="space-y-4">
+              {risingArtists.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {risingArtists.map((artist: any) => (
-                    <Card className="rounded-3xl border-4 border-gray-300 shadow-xl hover:scale-105 hover:border-indigo-500 transition-all bg-white" key={artist.id}>
+                    <Card className="rounded-none border-4 border-gray-300 shadow-lg hover:border-black transition-all bg-white" key={artist.id}>
                       <CardContent className="p-8 text-center">
-                        <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-indigo-100 to-purple-100 mx-auto mb-6 flex items-center justify-center shadow-lg">
-                          <Music className="h-16 w-16 text-indigo-600" />
+                        <div className="w-32 h-32 rounded-none bg-gray-900 mx-auto mb-6 flex items-center justify-center border-4 border-black">
+                          <span className="text-white text-5xl">♪</span>
                         </div>
-                        <h3 className="font-bold text-2xl text-gray-900 mb-2">{artist.name}</h3>
-                        <p className="text-lg text-gray-600 font-bold mb-6">
-                          {artist.followerCount?.toLocaleString() || 0} followers
-                        </p>
+                        <h3 className="text-2xl font-bold mb-2">{artist.name}</h3>
+                        <p className="text-gray-600 mb-6">{artist.genre}</p>
                         <Link href={`/@${artist.username}`}>
-                          <Button className="rounded-full w-full text-lg px-6 py-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl font-bold">
+                          <Button className="rounded-none w-full text-lg px-6 py-6 bg-black hover:bg-gray-800 font-bold uppercase">
                             View Profile
                           </Button>
                         </Link>
@@ -483,17 +437,15 @@ export default function Discover() {
                   ))}
                 </div>
               ) : (
-                <Card className="rounded-3xl border-4 border-gray-300 shadow-2xl bg-white">
+                <Card className="rounded-none border-4 border-gray-300 shadow-lg bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-xl mx-auto mb-6">
-                      <Users className="h-12 w-12 text-gray-400" />
+                    <div className="w-24 h-24 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-300 mx-auto mb-6">
+                      <span className="text-gray-400 text-5xl">👥</span>
                     </div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4">No Rising Artists Yet</h3>
-                    <p className="text-xl text-gray-600 font-medium mb-8">
-                      Start uploading to grow your audience and get featured!
-                    </p>
+                    <h3 className="text-2xl font-bold mb-2">No rising artists yet</h3>
+                    <p className="text-gray-600 text-lg mb-6">Be the first to rise!</p>
                     <Link href="/upload">
-                      <Button className="rounded-full text-xl px-10 py-7 bg-primary hover:bg-primary/90 font-bold">
+                      <Button className="rounded-none text-xl px-10 py-7 bg-black hover:bg-gray-800 font-bold uppercase">
                         Upload Your Music
                       </Button>
                     </Link>
@@ -507,51 +459,53 @@ export default function Discover() {
 
       {/* Music Player (Fixed Bottom) */}
       {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-gray-300 z-50 shadow-2xl">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-black z-50 shadow-2xl">
           <div className="container mx-auto px-4 py-6">
             {/* Track Info & Controls */}
             <div className="flex items-center gap-6 mb-4">
               <img
                 src={currentTrack.artworkUrl || `https://via.placeholder.com/80x80?text=${encodeURIComponent(currentTrack.title)}`}
                 alt={currentTrack.title}
-                className="w-20 h-20 rounded-2xl object-cover flex-shrink-0 border-2 border-gray-300 shadow-lg"
+                className="w-20 h-20 rounded-none object-cover flex-shrink-0 border-2 border-black shadow-lg"
               />
               <div className="flex-1 min-w-0">
                 <h4 className="font-bold text-xl text-gray-900 truncate">{currentTrack.title}</h4>
-                <p className="text-lg text-gray-600 font-bold truncate">{currentTrack.artist}</p>
+                <p className="text-lg text-gray-600 font-medium truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full" size="icon" variant="ghost">
-                  <Shuffle className="h-5 w-5" />
+                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                  <span className="text-lg">🔀</span>
                 </Button>
-                <Button className="rounded-full" size="icon" variant="ghost">
-                  <SkipBack className="h-6 w-6" />
+                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                  <span className="text-xl">⏮</span>
                 </Button>
                 <Button 
-                  className="rounded-full w-14 h-14 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-xl" 
+                  className="rounded-none w-14 h-14 bg-black hover:bg-gray-800 border-2 border-black" 
                   size="icon" 
                   onClick={() => setIsPlaying(!isPlaying)}
                 >
-                  {isPlaying ? <Pause className="h-6 w-6 text-white" /> : <Play className="h-6 w-6 text-white" />}
+                  <span className="text-white text-2xl">
+                    {isPlaying ? "❚❚" : "▶"}
+                  </span>
                 </Button>
-                <Button className="rounded-full" size="icon" variant="ghost">
-                  <SkipForward className="h-6 w-6" />
+                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                  <span className="text-xl">⏭</span>
                 </Button>
-                <Button className="rounded-full" size="icon" variant="ghost">
-                  <Repeat className="h-5 w-5" />
+                <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                  <span className="text-lg">🔁</span>
                 </Button>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full" size="icon"
-                  variant="ghost"
+                <Button className="rounded-none border-2 border-black" size="icon"
+                  variant="outline"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
-                  <Heart className="h-5 w-5" />
+                  <span className="text-xl">♥</span>
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="rounded-full" size="icon" variant="ghost">
-                      <Share2 className="h-5 w-5" />
+                    <Button className="rounded-none border-2 border-black" size="icon" variant="outline">
+                      <span className="text-xl">⤴</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
@@ -568,49 +522,53 @@ export default function Discover() {
                       Share on Facebook
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleShare(currentTrack, 'copy')}>
-                      {copiedTrackId === currentTrack.id ? (
-                        <Check className="h-4 w-4 mr-2 text-primary" />
-                      ) : (
-                        <Copy className="h-4 w-4 mr-2" />
-                      )}
+                      <span className="mr-2">{copiedTrackId === currentTrack.id ? "✓" : "⎘"}</span>
                       Copy Link
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Volume2 className="h-5 w-5 text-gray-600" />
+                <span className="text-gray-600 text-lg">🔊</span>
                 <input
                   type="range"
                   min="0"
                   max="100"
                   value={volume}
                   onChange={(e) => setVolume(parseInt(e.target.value))}
-                  className="w-24"
+                  className="w-24 h-2"
                 />
               </div>
             </div>
 
             {/* Progress Bar */}
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600 font-bold w-12 text-right">
+              <span className="text-sm text-gray-600 font-mono w-12 text-right">
                 {formatTime(currentTime)}
               </span>
               <div className="flex-1">
-                <input
-                  type="range"
-                  min="0"
-                  max={duration || currentTrack.duration}
-                  value={currentTime}
-                  onChange={(e) => {
-                    const newTime = parseInt(e.target.value);
-                    setCurrentTime(newTime);
-                    if (audioRef.current) {
-                      audioRef.current.currentTime = newTime;
-                    }
-                  }}
-                  className="w-full h-2 rounded-full"
-                />
+                <div className="relative">
+                  <div className="w-full h-3 bg-gray-200 border border-gray-300 rounded-none">
+                    <div
+                      className="h-full bg-black transition-all"
+                      style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}
+                    />
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max={duration || currentTrack.duration}
+                    value={currentTime}
+                    onChange={(e) => {
+                      const newTime = parseInt(e.target.value);
+                      setCurrentTime(newTime);
+                      if (audioRef.current) {
+                        audioRef.current.currentTime = newTime;
+                      }
+                    }}
+                    className="absolute inset-0 w-full opacity-0 cursor-pointer"
+                  />
+                </div>
               </div>
-              <span className="text-sm text-gray-600 font-bold w-12">
+              <span className="text-sm text-gray-600 font-mono w-12">
                 {formatTime(duration || currentTrack.duration)}
               </span>
             </div>

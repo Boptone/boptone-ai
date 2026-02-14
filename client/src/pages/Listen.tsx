@@ -6,16 +6,6 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { StreamPaymentModal } from "@/components/StreamPaymentModal";
-import {
-  Play,
-  Pause,
-  Heart,
-  Share2,
-  ExternalLink,
-  Music,
-  Clock,
-  DollarSign,
-} from "lucide-react";
 
 /**
  * BAP Public Streaming Page
@@ -175,7 +165,7 @@ export default function Listen() {
   
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-12">
+      <div className="min-h-screen bg-white py-12">
         <div className="container max-w-4xl">
           <Skeleton className="h-96 w-full rounded-xl" />
         </div>
@@ -185,9 +175,8 @@ export default function Listen() {
   
   if (error || !track) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center">
-        <Card className="p-8 text-center max-w-md">
-          <Music className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Card className="p-8 text-center max-w-md border-2 border-gray-200">
           <h2 className="text-2xl font-bold mb-2">Track Not Found</h2>
           <p className="text-muted-foreground mb-6">
             This track doesn't exist or has been removed.
@@ -202,7 +191,7 @@ export default function Listen() {
   const artistShareAmount = ((track.pricePerStream * track.artistShare) / 10000).toFixed(2);
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <div className="min-h-screen bg-white">
       {/* Audio element */}
       <audio
         ref={audioRef}
@@ -213,16 +202,16 @@ export default function Listen() {
       />
       
       {/* Hero Section */}
-      <div className="relative h-[60vh] min-h-[500px] bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
-        {/* Background artwork (blurred) */}
+      <div className="relative min-h-[500px] bg-gradient-to-b from-gray-50 to-white border-b-4 border-black overflow-hidden">
+        {/* Background artwork (subtle) */}
         {track.artworkUrl && (
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-20 blur-xl scale-110"
+            className="absolute inset-0 bg-cover bg-center opacity-5 blur-xl scale-110"
             style={{ backgroundImage: `url(${track.artworkUrl})` }}
           />
         )}
         
-        <div className="relative container max-w-6xl h-full flex items-center">
+        <div className="relative container max-w-6xl py-16">
           <div className="grid md:grid-cols-[auto,1fr] gap-8 items-center w-full">
             {/* Artwork */}
             <div className="relative group">
@@ -230,60 +219,56 @@ export default function Listen() {
                 <img
                   src={track.artworkUrl}
                   alt={track.title}
-                  className="w-64 h-64 md:w-80 md:h-80 rounded-2xl shadow-2xl object-cover"
+                  className="w-64 h-64 md:w-80 md:h-80 rounded-none shadow-2xl object-cover border-4 border-black"
                 />
               ) : (
-                <div className="w-64 h-64 md:w-80 md:h-80 rounded-2xl shadow-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                  <Music className="h-32 w-32 text-white opacity-50" />
+                <div className="w-64 h-64 md:w-80 md:h-80 rounded-none shadow-2xl bg-gray-900 flex items-center justify-center border-4 border-black">
+                  <span className="text-white text-6xl font-bold">♪</span>
                 </div>
               )}
               
               {/* Play button overlay */}
               <button
                 onClick={togglePlay}
-                className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity"
               >
-                {isPlaying ? (
-                  <Pause className="h-20 w-20 text-white" />
-                ) : (
-                  <Play className="h-20 w-20 text-white ml-2" />
-                )}
+                <span className="text-white text-8xl font-bold">
+                  {isPlaying ? "❚❚" : "▶"}
+                </span>
               </button>
             </div>
             
             {/* Track info */}
-            <div className="text-white">
-              <h1 className="text-5xl md:text-6xl font-bold mb-4">{track.title}</h1>
-              <p className="text-2xl text-purple-200 mb-6">{track.artist}</p>
+            <div className="text-black">
+              <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-none">{track.title}</h1>
+              <p className="text-3xl text-gray-600 mb-8 font-medium">{track.artist}</p>
               
               <div className="flex flex-wrap gap-4 mb-8">
                 {track.genre && (
-                  <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm">
+                  <span className="px-4 py-2 bg-black text-white rounded-none text-sm font-bold uppercase">
                     {track.genre}
                   </span>
                 )}
                 {track.mood && (
-                  <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm">
+                  <span className="px-4 py-2 border-2 border-black rounded-none text-sm font-bold uppercase">
                     {track.mood}
                   </span>
                 )}
-                <span className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
+                <span className="px-4 py-2 border-2 border-gray-300 rounded-none text-sm font-medium">
                   {formatTime(track.duration)}
                 </span>
               </div>
               
               {/* Pricing */}
-              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+              <div className="bg-gray-100 rounded-none p-6 border-4 border-black">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <p className="text-sm text-purple-200 mb-1">Price per stream</p>
-                    <p className="text-3xl font-bold">${priceInDollars}</p>
+                    <p className="text-sm text-gray-600 mb-1 font-medium uppercase tracking-wide">Price per stream</p>
+                    <p className="text-4xl font-bold">${priceInDollars}</p>
                   </div>
-                  <DollarSign className="h-12 w-12 text-purple-300" />
                 </div>
-                <p className="text-sm text-purple-200">
-                  Artist receives <span className="font-bold text-white">${artistShareAmount}</span> ({track.artistShare}%)
+                <p className="text-sm text-gray-700 font-medium">
+                  Artist receives <span className="font-bold text-black">${artistShareAmount}</span> ({track.artistShare}%)
                 </p>
               </div>
             </div>
@@ -292,138 +277,186 @@ export default function Listen() {
       </div>
       
       {/* Player Controls */}
-      <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b shadow-lg">
+      <div className="sticky top-0 z-50 bg-white border-b-2 border-black shadow-lg">
         <div className="container max-w-6xl py-4">
           <div className="flex items-center gap-6">
             {/* Play/Pause */}
             <Button
               size="lg"
               onClick={togglePlay}
-              className="h-14 w-14 rounded-full"
+              className="h-14 w-14 rounded-full bg-black hover:bg-gray-800"
             >
-              {isPlaying ? (
-                <Pause className="h-6 w-6" />
-              ) : (
-                <Play className="h-6 w-6 ml-1" />
-              )}
+              <span className="text-white text-2xl">
+                {isPlaying ? "❚❚" : "▶"}
+              </span>
             </Button>
             
             {/* Progress bar */}
             <div className="flex-1">
+              <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
+                <span className="font-mono">{formatTime(currentTime)}</span>
+                <span className="font-mono">{formatTime(duration)}</span>
+              </div>
               <div
-                className="h-2 bg-gray-200 rounded-full cursor-pointer group"
+                className="w-full h-3 bg-gray-200 rounded-none cursor-pointer border border-gray-300"
                 onClick={handleSeek}
               >
                 <div
-                  className="h-full bg-gradient-to-r from-purple-600 to-blue-600 rounded-full transition-all group-hover:h-3"
+                  className="h-full bg-black transition-all"
                   style={{ width: `${(currentTime / duration) * 100}%` }}
                 />
-              </div>
-              <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                <span>{formatTime(currentTime)}</span>
-                <span>{formatTime(duration)}</span>
               </div>
             </div>
             
             {/* Actions */}
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => likeTrack.mutate({ trackId: track.id })}
+                onClick={() => likeTrack.mutate({ trackId: parseInt(trackId || "0") })}
+                className="border-2 border-black rounded-none"
               >
-                <Heart className="h-5 w-5" />
+                <span className="text-xl">♥</span>
               </Button>
-              <Button variant="outline" size="icon" onClick={handleShare}>
-                <Share2 className="h-5 w-5" />
+              <Button 
+                variant="outline" 
+                size="icon" 
+                onClick={handleShare}
+                className="border-2 border-black rounded-none"
+              >
+                <span className="text-xl">⤴</span>
               </Button>
+              {!isUnlocked && (
+                <Button
+                  onClick={() => setShowPaymentModal(true)}
+                  className="bg-black hover:bg-gray-800 text-white rounded-none font-bold"
+                >
+                  Unlock 24h Access
+                </Button>
+              )}
             </div>
           </div>
         </div>
       </div>
       
-      {/* Artist Profile Section */}
-      {artist && (
-        <div className="container max-w-4xl py-12">
-          <Card className="p-8">
-            <div className="flex items-start gap-6">
-              {artist.avatarUrl ? (
-                <img
-                  src={artist.avatarUrl}
-                  alt={artist.stageName}
-                  className="w-24 h-24 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                  <Music className="h-12 w-12 text-white" />
-                </div>
-              )}
-              
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold mb-2">{artist.stageName}</h2>
-                {artist.bio && (
-                  <p className="text-muted-foreground mb-4">{artist.bio}</p>
-                )}
-                
-                <div className="flex gap-4">
-                  {artist.socialLinks?.spotify && (
-                    <Button variant="outline" size="sm" asChild>
-                      <a href={artist.socialLinks.spotify} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Spotify
-                      </a>
-                    </Button>
-                  )}
-                  {artist.socialLinks?.instagram && (
-                    <Button variant="outline" size="sm" asChild>
-                      <a
-                        href={`https://instagram.com/${artist.socialLinks.instagram}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Instagram
-                      </a>
-                    </Button>
-                  )}
+      {/* Content Section */}
+      <div className="container max-w-6xl py-12">
+        <div className="grid md:grid-cols-[1fr,300px] gap-12">
+          {/* Main content */}
+          <div className="space-y-8">
+            {/* Description */}
+            {track.description && (
+              <div>
+                <h2 className="text-3xl font-bold mb-4">About This Track</h2>
+                <p className="text-gray-700 leading-relaxed text-lg">{track.description}</p>
+              </div>
+            )}
+            
+            {/* Lyrics */}
+            {track.lyrics && (
+              <div>
+                <h2 className="text-3xl font-bold mb-4">Lyrics</h2>
+                <div className="bg-gray-50 p-6 rounded-none border-2 border-gray-200">
+                  <pre className="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed">
+                    {track.lyrics}
+                  </pre>
                 </div>
               </div>
-            </div>
-          </Card>
-        </div>
-      )}
-      
-      {/* Track Stats */}
-      <div className="container max-w-4xl pb-12">
-        <div className="grid grid-cols-3 gap-4">
-          <Card className="p-6 text-center">
-            <p className="text-3xl font-bold text-purple-600">{track.playCount.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground mt-1">Plays</p>
-          </Card>
-          <Card className="p-6 text-center">
-            <p className="text-3xl font-bold text-blue-600">{track.likeCount.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground mt-1">Likes</p>
-          </Card>
-          <Card className="p-6 text-center">
-            <p className="text-3xl font-bold text-green-600">
-              ${(track.totalEarnings / 100).toLocaleString()}
-            </p>
-            <p className="text-sm text-muted-foreground mt-1">Artist Earnings</p>
-          </Card>
+            )}
+            
+            {/* Credits */}
+            {track.credits && (
+              <div>
+                <h2 className="text-3xl font-bold mb-4">Credits</h2>
+                <div className="bg-gray-50 p-6 rounded-none border-2 border-gray-200">
+                  <p className="text-gray-700 leading-relaxed">{track.credits}</p>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Artist profile */}
+            {artist && (
+              <Card className="p-6 border-2 border-gray-200 rounded-none">
+                <h3 className="text-xl font-bold mb-4">Artist</h3>
+                <div className="flex items-center gap-4 mb-4">
+                  {artist.profileImage ? (
+                    <img
+                      src={artist.profileImage}
+                      alt={artist.name}
+                      className="w-24 h-24 rounded-full object-cover border-2 border-black"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center border-2 border-black">
+                      <span className="text-white text-3xl font-bold">
+                        {artist.stageName.charAt(0)}
+                      </span>
+                    </div>
+                  )}
+                  <div>
+                    <h4 className="font-bold text-lg">{artist.stageName}</h4>
+                    {artist.location && (
+                      <p className="text-sm text-gray-600">{artist.location}</p>
+                    )}
+                  </div>
+                </div>
+                {artist.bio && (
+                  <p className="text-sm text-gray-700 mb-4 line-clamp-3">{artist.bio}</p>
+                )}
+                <Button
+                  variant="outline"
+                  className="w-full border-2 border-black rounded-none font-bold"
+                  onClick={() => navigate(`/artist/${artist.id}`)}
+                >
+                  View Profile
+                </Button>
+              </Card>
+            )}
+            
+            {/* Track stats */}
+            <Card className="p-6 border-2 border-gray-200 rounded-none">
+              <h3 className="text-xl font-bold mb-4">Track Stats</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-600 font-medium">Plays</span>
+                  <span className="font-bold">{track.playCount?.toLocaleString() || 0}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 font-medium">Likes</span>
+                  <span className="font-bold">{track.likeCount?.toLocaleString() || 0}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 font-medium">Released</span>
+                  <span className="font-bold">
+                    {track.releasedAt ? new Date(track.releasedAt).toLocaleDateString() : "N/A"}
+                  </span>
+                </div>
+              </div>
+            </Card>
+            
+            {/* Share */}
+            <Card className="p-6 border-2 border-gray-200 rounded-none">
+              <h3 className="text-xl font-bold mb-4">Share</h3>
+              <Button
+                variant="outline"
+                className="w-full border-2 border-black rounded-none font-bold"
+                onClick={handleShare}
+              >
+                Copy Link
+              </Button>
+            </Card>
+          </div>
         </div>
       </div>
       
       {/* Payment Modal */}
-      {track && (
+      {showPaymentModal && track && (
         <StreamPaymentModal
-          open={showPaymentModal}
+          track={track}
+          onSuccess={handlePaymentSuccess}
           onClose={() => setShowPaymentModal(false)}
-          trackId={track.id}
-          trackTitle={track.title}
-          artistName={track.artist}
-          artworkUrl={track.artworkUrl || ""}
-          pricePerStream={track.pricePerStream}
-          onPaymentSuccess={handlePaymentSuccess}
         />
       )}
     </div>

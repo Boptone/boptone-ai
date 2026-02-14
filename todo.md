@@ -1492,3 +1492,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Maintain all analytics functionality (charts, data visualization, time range selector, export)
 - [x] Ensure clean, professional design for data presentation (gray progress bars, minimal cards)
 - [x] Mark as complete in todo.md
+
+
+## Batch Redesign: 5 Pages (Listen, Discover, Money, Fans, MyMusic) - 4/5 COMPLETE
+- [x] 1. Listen.tsx - Removed 8 icons, purple/blue gradients → text-based controls (▶/❚❚, ♥, ⤴)
+- [x] 2. Discover.tsx - Removed 15+ icons, purple/indigo gradients → xerox aesthetic, text controls
+- [x] 3. Money.tsx (Revenue) - Removed 11 icons, colorful elements → text symbols ($, ✓, ⚠, 💰, ♥, 📅)
+- [x] 4. Fans.tsx (Audience) - Removed 8 icons, colorful elements → text symbols (📊, 👥, ↗, ⤴, 🎯, ✨)
+- [ ] 5. MyMusic.tsx (Releases) - Music library management page (859 lines - deferred to next batch)
+- [ ] Save single checkpoint after all 5 pages complete
