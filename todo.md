@@ -1636,3 +1636,10 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Improve spacing and alignment between track elements
 - [ ] Make genre badge consistent with site aesthetic
 - [ ] Polish overall layout to look world-class
+
+
+## Remove Skeleton Loaders from Discover Page (User Report)
+- [ ] Find and remove rectangle placeholder above artist cards
+- [ ] Remove grey box skeleton elements in middle of page
+- [ ] Ensure loading states are properly hidden when content loads
+- [ ] Test Discover page with and without loading states

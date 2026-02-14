@@ -304,7 +304,7 @@ export default function Discover() {
               className={`rounded-full border-2 border-black font-bold uppercase text-sm px-6 py-3 ${
                 selectedGenre === genre
                   ? "bg-black text-white"
-                  : "bg-white text-black hover:bg-gray-100"
+                  : "bg-white text-black hover:bg-white"
               }`}
             >
               {genre}
@@ -340,19 +340,19 @@ export default function Discover() {
             <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-none border-4 border-black">
               <TabsTrigger 
                 value="trending"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-gray-100 data-[state=active]:text-black"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
               >
                 Trending
               </TabsTrigger>
               <TabsTrigger 
                 value="new"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-gray-100 data-[state=active]:text-black"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
               >
                 New This Week
               </TabsTrigger>
               <TabsTrigger 
                 value="rising"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-gray-100 data-[state=active]:text-black"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
               >
                 Rising Artists
               </TabsTrigger>
@@ -529,7 +529,7 @@ export default function Discover() {
               </span>
               <div className="flex-1">
                 <div className="relative">
-                  <div className="w-full h-3 bg-gray-200 border-2 border-gray-300 rounded-none">
+                  <div className="w-full h-3 bg-white border-2 border-black rounded-none">
                     <div
                       className="h-full bg-black transition-all"
                       style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}
