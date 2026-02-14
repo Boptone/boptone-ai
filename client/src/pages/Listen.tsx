@@ -344,32 +344,20 @@ export default function Listen() {
         <div className="grid md:grid-cols-[1fr,300px] gap-12">
           {/* Main content */}
           <div className="space-y-8">
-            {/* Description */}
-            {track.description && (
-              <div>
-                <h2 className="text-3xl font-bold mb-4">About This Track</h2>
-                <p className="text-gray-700 leading-relaxed text-lg">{track.description}</p>
-              </div>
-            )}
             
-            {/* Lyrics */}
-            {track.lyrics && (
+            {/* Songwriter Splits */}
+            {track.songwriterSplits && track.songwriterSplits.length > 0 && (
               <div>
-                <h2 className="text-3xl font-bold mb-4">Lyrics</h2>
+                <h2 className="text-3xl font-bold mb-4">Songwriters</h2>
                 <div className="bg-gray-50 p-6 rounded-none border-2 border-gray-200">
-                  <pre className="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed">
-                    {track.lyrics}
-                  </pre>
-                </div>
-              </div>
-            )}
-            
-            {/* Credits */}
-            {track.credits && (
-              <div>
-                <h2 className="text-3xl font-bold mb-4">Credits</h2>
-                <div className="bg-gray-50 p-6 rounded-none border-2 border-gray-200">
-                  <p className="text-gray-700 leading-relaxed">{track.credits}</p>
+                  <div className="space-y-2">
+                    {track.songwriterSplits.map((writer: any, idx: number) => (
+                      <div key={idx} className="flex justify-between items-center">
+                        <span className="font-medium">{writer.name}</span>
+                        <span className="text-gray-600">{writer.percentage}%</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -382,10 +370,10 @@ export default function Listen() {
               <Card className="p-6 border-2 border-gray-200 rounded-none">
                 <h3 className="text-xl font-bold mb-4">Artist</h3>
                 <div className="flex items-center gap-4 mb-4">
-                  {artist.profileImage ? (
+                  {artist.avatarUrl ? (
                     <img
-                      src={artist.profileImage}
-                      alt={artist.name}
+                      src={artist.avatarUrl}
+                      alt={artist.stageName}
                       className="w-24 h-24 rounded-full object-cover border-2 border-black"
                     />
                   ) : (
@@ -454,8 +442,13 @@ export default function Listen() {
       {/* Payment Modal */}
       {showPaymentModal && track && (
         <StreamPaymentModal
-          track={track}
-          onSuccess={handlePaymentSuccess}
+          open={showPaymentModal}
+          trackId={track.id}
+          trackTitle={track.title}
+          artistName={track.artist}
+          artworkUrl={track.artworkUrl || ''}
+          pricePerStream={track.pricePerStream || 100}
+          onPaymentSuccess={handlePaymentSuccess}
           onClose={() => setShowPaymentModal(false)}
         />
       )}
