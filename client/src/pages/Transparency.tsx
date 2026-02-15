@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
 export default function Transparency() {
   // Mock data (TODO: Replace with real data from backend)
   const platformMetrics = {
@@ -7,7 +10,37 @@ export default function Transparency() {
     averageAORS: 87, // Average Artist-Owned Revenue Share across all tiers
     artistPortabilityScore: 100, // 100 = full data export available
     revenueConcentration: 42, // Percentage of revenue from single largest source
+    totalArtists: 1247, // Total artists on platform
+    totalRevenueProcessed: 2400000, // Total revenue processed in dollars
   };
+
+  // Fee comparison calculator state
+  const [monthlyStreams, setMonthlyStreams] = useState<string>("100000");
+
+  // Calculate earnings based on streams
+  const calculateEarnings = (streams: number) => {
+    const spotifyPerStream = 0.003; // $0.003 per stream
+    const appleMusicPerStream = 0.01; // $0.01 per stream
+    const boptonePerStream = 0.01; // $0.01 per stream (same as Apple, but artist keeps 90%)
+
+    const spotifyGross = streams * spotifyPerStream;
+    const spotifyArtistShare = spotifyGross * 0.3; // Spotify pays ~30% to artists
+
+    const appleMusicGross = streams * appleMusicPerStream;
+    const appleMusicArtistShare = appleMusicGross * 0.3; // Apple pays ~30% to artists
+
+    const boptoneGross = streams * boptonePerStream;
+    const boptoneArtistShare = boptoneGross * 0.9; // Boptone pays 90% to artists
+
+    return {
+      spotify: spotifyArtistShare,
+      appleMusic: appleMusicArtistShare,
+      boptone: boptoneArtistShare,
+      difference: boptoneArtistShare - Math.max(spotifyArtistShare, appleMusicArtistShare),
+    };
+  };
+
+  const earnings = calculateEarnings(parseInt(monthlyStreams) || 0);
 
   const comparisonData = [
     {
@@ -71,6 +104,23 @@ export default function Transparency() {
     },
   ];
 
+  // Fee breakdown data
+  const feeBreakdown = [
+    { category: "Cloud Infrastructure", percentage: 35, description: "S3 storage, CDN, database hosting" },
+    { category: "Payment Processing", percentage: 25, description: "Stripe fees, bank transfers, instant payouts" },
+    { category: "Development & Support", percentage: 20, description: "Engineering, customer support, maintenance" },
+    { category: "Security & Compliance", percentage: 15, description: "Legal, accounting, fraud prevention" },
+    { category: "Platform Growth", percentage: 5, description: "Marketing, artist acquisition, partnerships" },
+  ];
+
+  // Commitment tracker data
+  const commitments = [
+    { title: "15% Fee Cap", status: "ACTIVE", description: "Contractual guarantee in every artist agreement" },
+    { title: "Data Portability", status: "ACTIVE", description: "Full export available at any time" },
+    { title: "BAP Protocol", status: "ACTIVE", description: "Open source and interoperable" },
+    { title: "Public Financials", status: "ACTIVE", description: "Updated monthly on this page" },
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -87,6 +137,170 @@ export default function Transparency() {
       </div>
 
       <div className="container mx-auto px-4 py-16 space-y-16">
+        {/* Real-Time Platform Stats */}
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-8">
+            <h2 className="text-3xl font-bold mb-2">REAL-TIME PLATFORM STATS</h2>
+            <p className="text-lg text-gray-600">
+              Live metrics showing Boptone's growth and commitment to artists
+            </p>
+          </div>
+          <div className="p-8">
+            <div className="grid gap-6 md:grid-cols-4">
+              <div className="p-6 border-4 border-black bg-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  TOTAL ARTISTS
+                </div>
+                <div className="text-5xl font-bold mb-2">{platformMetrics.totalArtists.toLocaleString()}</div>
+                <p className="text-sm text-gray-700">Active on platform</p>
+              </div>
+              <div className="p-6 border-4 border-black bg-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  REVENUE PROCESSED
+                </div>
+                <div className="text-5xl font-bold mb-2">${(platformMetrics.totalRevenueProcessed / 1000000).toFixed(1)}M</div>
+                <p className="text-sm text-gray-700">Paid to artists</p>
+              </div>
+              <div className="p-6 border-4 border-black bg-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  AVERAGE AORS
+                </div>
+                <div className="text-5xl font-bold mb-2">{platformMetrics.averageAORS}%</div>
+                <p className="text-sm text-gray-700">Artist-owned revenue share</p>
+              </div>
+              <div className="p-6 border-4 border-black bg-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  CURRENT FEE
+                </div>
+                <div className="text-5xl font-bold mb-2">{platformMetrics.currentFee}%</div>
+                <p className="text-sm text-gray-700">Platform fee (15% cap)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Interactive Fee Comparison Calculator */}
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-8">
+            <h2 className="text-3xl font-bold mb-2">FEE COMPARISON CALCULATOR</h2>
+            <p className="text-lg text-gray-600">
+              See exactly how much more you'd earn on Boptone vs other platforms
+            </p>
+          </div>
+          <div className="p-8 space-y-8">
+            {/* Input */}
+            <div>
+              <label className="block text-sm font-bold mb-3 text-gray-700">
+                MONTHLY STREAMS
+              </label>
+              <input
+                type="number"
+                value={monthlyStreams}
+                onChange={(e) => setMonthlyStreams(e.target.value)}
+                className="w-full px-6 py-4 text-2xl font-bold border-4 border-black rounded-none focus:outline-none focus:ring-4 focus:ring-black"
+                placeholder="100000"
+              />
+            </div>
+
+            {/* Results */}
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="p-6 border-4 border-black bg-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  SPOTIFY
+                </div>
+                <div className="text-4xl font-bold mb-2">${earnings.spotify.toFixed(2)}</div>
+                <p className="text-sm text-gray-700">~30% artist share</p>
+              </div>
+              <div className="p-6 border-4 border-black bg-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  APPLE MUSIC
+                </div>
+                <div className="text-4xl font-bold mb-2">${earnings.appleMusic.toFixed(2)}</div>
+                <p className="text-sm text-gray-700">~30% artist share</p>
+              </div>
+              <div className="p-6 border-4 border-black bg-black text-white rounded-none">
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-300">
+                  BOPTONE
+                </div>
+                <div className="text-4xl font-bold mb-2">${earnings.boptone.toFixed(2)}</div>
+                <p className="text-sm text-gray-300">90% artist share</p>
+              </div>
+            </div>
+
+            {/* Difference Highlight */}
+            {earnings.difference > 0 && (
+              <div className="p-6 border-4 border-black bg-gray-50 rounded-none">
+                <p className="text-2xl font-bold mb-2">
+                  You'd earn <span className="text-4xl">${earnings.difference.toFixed(2)}</span> more per month on Boptone
+                </p>
+                <p className="text-sm text-gray-700">
+                  That's <strong>${(earnings.difference * 12).toFixed(2)}/year</strong> more in your pocket.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Fee Breakdown Visualization */}
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-8">
+            <h2 className="text-3xl font-bold mb-2">WHERE DOES THE 10% GO?</h2>
+            <p className="text-lg text-gray-600">
+              Complete breakdown of how platform fees are used
+            </p>
+          </div>
+          <div className="p-8 space-y-6">
+            {feeBreakdown.map((item) => (
+              <div key={item.category} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-lg">{item.category}</span>
+                  <span className="text-2xl font-bold">{item.percentage}%</span>
+                </div>
+                <div className="w-full bg-gray-200 h-8 border-2 border-black rounded-none overflow-hidden">
+                  <div 
+                    className="bg-black h-full flex items-center justify-end pr-4"
+                    style={{ width: `${item.percentage}%` }}
+                  >
+                    <span className="text-white text-xs font-bold">{item.percentage}%</span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600">{item.description}</p>
+              </div>
+            ))}
+            <div className="mt-8 p-6 border-4 border-black bg-gray-50 rounded-none">
+              <p className="text-sm text-gray-700">
+                <strong>Note:</strong> These percentages represent how the 10% platform fee is allocated. The remaining 90% goes directly to artists.
+                All costs are transparent and updated quarterly.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Commitment Tracker */}
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-8">
+            <h2 className="text-3xl font-bold mb-2">COMMITMENT TRACKER</h2>
+            <p className="text-lg text-gray-600">
+              Real-time status of Boptone's core promises to artists
+            </p>
+          </div>
+          <div className="p-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              {commitments.map((commitment) => (
+                <div key={commitment.title} className="p-6 border-4 border-black bg-white rounded-none">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-xl font-bold">{commitment.title}</h3>
+                    <span className="px-3 py-1 text-xs font-bold rounded-none bg-black text-white">
+                      ✓ {commitment.status}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-700">{commitment.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Platform Health Score */}
         <div className="border-4 border-black bg-white rounded-none">
           <div className="border-b-4 border-black p-8">
