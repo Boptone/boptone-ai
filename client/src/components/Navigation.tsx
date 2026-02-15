@@ -26,11 +26,9 @@ export function Navigation() {
           {/* Logo - Left */}
           <Link href="/">
             <div className="flex items-center hover:opacity-80 transition-opacity cursor-pointer">
-              <img 
-                src="/boptone-logo.png" 
-                alt="Boptone" 
-                className="h-12 md:h-14 w-auto"
-              />
+              <span className="text-3xl md:text-4xl font-black tracking-tight" style={{ fontFamily: 'Arial Black, sans-serif' }}>
+                B<span style={{ color: '#5EEAD4' }}>O</span>PTONE
+              </span>
             </div>
           </Link>
 
