@@ -143,7 +143,7 @@ export default function Footer() {
         {/* Large Centered Logo - Mobile Optimized */}
         <div className="flex justify-center mb-16 md:mb-20">
           <img 
-            src="/boptone-logo.png" 
+            src="/boptone-logo.png?v=2" 
             alt="Boptone" 
             className="h-12 sm:h-14 md:h-18 lg:h-24 w-auto opacity-90"
           />
