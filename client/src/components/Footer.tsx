@@ -145,7 +145,7 @@ export default function Footer() {
           <img 
             src="/boptone-logo-transparent.png" 
             alt="Boptone" 
-            className="h-32 sm:h-40 md:h-48 lg:h-64 w-auto opacity-90"
+            className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto opacity-90"
           />
         </div>
       </div>
