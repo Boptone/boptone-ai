@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Loader2, DollarSign, Music, TrendingUp, Download, Calendar } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 /**
  * Writer Earnings Dashboard
@@ -46,7 +43,7 @@ export default function WriterEarnings() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <div className="text-2xl font-bold">Loading...</div>
         </div>
       </DashboardLayout>
     );
@@ -55,12 +52,10 @@ export default function WriterEarnings() {
   if (!user) {
     return (
       <DashboardLayout>
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign In Required</CardTitle>
-            <CardDescription>Please sign in to view your earnings</CardDescription>
-          </CardHeader>
-        </Card>
+        <div className="border-4 border-black bg-white rounded-none p-8">
+          <h2 className="text-2xl font-bold mb-2">SIGN IN REQUIRED</h2>
+          <p className="text-gray-600">Please sign in to view your earnings</p>
+        </div>
       </DashboardLayout>
     );
   }
@@ -88,207 +83,176 @@ export default function WriterEarnings() {
   
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Writer Earnings</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-4xl font-bold mb-3">WRITER EARNINGS</h1>
+          <p className="text-lg text-gray-600">
             Track your songwriter split earnings and request payouts
           </p>
         </div>
         
         {/* Earnings Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Earned</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">${totalEarned.toFixed(2)}</div>
-              <p className="text-xs text-muted-foreground">
-                Across {earnings?.length || 0} tracks
-              </p>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="border-4 border-black bg-white rounded-none p-6">
+            <div className="text-xs font-bold tracking-wider mb-3 text-gray-600">TOTAL EARNED</div>
+            <div className="text-4xl font-bold mb-2">${totalEarned.toFixed(2)}</div>
+            <p className="text-sm text-gray-600">
+              Across {earnings?.length || 0} tracks
+            </p>
+          </div>
           
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Payout</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-orange-500">${pendingEarnings.toFixed(2)}</div>
-              <p className="text-xs text-muted-foreground">
-                Min. $25 to request payout
-              </p>
-            </CardContent>
-          </Card>
+          <div className="border-4 border-black bg-white rounded-none p-6">
+            <div className="text-xs font-bold tracking-wider mb-3 text-gray-600">PENDING PAYOUT</div>
+            <div className="text-4xl font-bold mb-2">${pendingEarnings.toFixed(2)}</div>
+            <p className="text-sm text-gray-600">
+              Min. $25 to request payout
+            </p>
+          </div>
           
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Paid Out</CardTitle>
-              <Download className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-500">${paidOut.toFixed(2)}</div>
-              <p className="text-xs text-muted-foreground">
-                {payouts?.filter(p => p.status === "completed").length || 0} payouts completed
-              </p>
-            </CardContent>
-          </Card>
+          <div className="border-4 border-black bg-white rounded-none p-6">
+            <div className="text-xs font-bold tracking-wider mb-3 text-gray-600">PAID OUT</div>
+            <div className="text-4xl font-bold mb-2">${paidOut.toFixed(2)}</div>
+            <p className="text-sm text-gray-600">
+              {payouts?.filter(p => p.status === "completed").length || 0} payouts completed
+            </p>
+          </div>
         </div>
         
         {/* Request Payout Button */}
         {pendingEarnings >= 25 && (
-          <Card className="bg-primary/5 border-primary/20">
-            <CardContent className="flex items-center justify-between p-6">
-              <div>
-                <h3 className="font-semibold mb-1">Ready to cash out?</h3>
-                <p className="text-sm text-muted-foreground">
-                  You have ${pendingEarnings.toFixed(2)} available for payout
-                </p>
-              </div>
-              <Button
-                onClick={handleRequestPayout}
-                disabled={requestPayoutMutation.isPending}
-                size="lg"
-              >
-                {requestPayoutMutation.isPending ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <Download className="mr-2 h-4 w-4" />
-                    Request Payout
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="border-4 border-black bg-gray-50 rounded-none p-6 flex items-center justify-between">
+            <div>
+              <h3 className="font-bold text-lg mb-1">READY TO CASH OUT?</h3>
+              <p className="text-sm text-gray-600">
+                You have ${pendingEarnings.toFixed(2)} available for payout
+              </p>
+            </div>
+            <Button
+              onClick={handleRequestPayout}
+              disabled={requestPayoutMutation.isPending}
+              className="rounded-full bg-black text-white hover:bg-gray-800 font-bold px-6"
+            >
+              {requestPayoutMutation.isPending ? "PROCESSING..." : "REQUEST PAYOUT"}
+            </Button>
+          </div>
         )}
         
         {/* Earnings by Track */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Music className="h-5 w-5" />
-              Earnings by Track
-            </CardTitle>
-            <CardDescription>
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-6">
+            <h2 className="text-2xl font-bold mb-2">EARNINGS BY TRACK</h2>
+            <p className="text-sm text-gray-600">
               Your songwriter split earnings for each track you've contributed to
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+            </p>
+          </div>
+          <div className="p-6">
             {earningsByTrack && Object.keys(earningsByTrack).length > 0 ? (
               <div className="space-y-4">
                 {Object.values(earningsByTrack).map((track) => (
                   <div
                     key={track.trackId}
-                    className="flex items-center justify-between p-4 border rounded-lg"
+                    className="flex items-center justify-between p-6 border-2 border-black rounded-none"
                   >
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Music className="h-4 w-4 text-muted-foreground" />
-                        <p className="font-medium">Track #{track.trackId}</p>
-                        <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                          {track.splitPercentage}% split
+                      <div className="flex items-center gap-3 mb-2">
+                        <p className="font-bold text-lg">TRACK #{track.trackId}</p>
+                        <span className="text-xs bg-black text-white px-3 py-1 rounded-full font-bold">
+                          {track.splitPercentage}% SPLIT
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {track.splitPercentage}% songwriter split
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-2xl font-bold">${track.totalEarned.toFixed(2)}</p>
-                      <p className="text-xs text-muted-foreground">Total earned</p>
+                      <p className="text-3xl font-bold">${track.totalEarned.toFixed(2)}</p>
+                      <p className="text-xs text-gray-600 mt-1">Total earned</p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <Alert>
-                <AlertDescription>
+              <div className="p-6 bg-gray-50 border-2 border-gray-300 rounded-none">
+                <p className="text-gray-700">
                   No earnings yet. You'll see earnings here once tracks you've contributed to start generating revenue.
-                </AlertDescription>
-              </Alert>
+                </p>
+              </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
         
         {/* Payout History */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Payout History
-            </CardTitle>
-            <CardDescription>
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-6">
+            <h2 className="text-2xl font-bold mb-2">PAYOUT HISTORY</h2>
+            <p className="text-sm text-gray-600">
               Your past and pending payouts
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+            </p>
+          </div>
+          <div className="p-6">
             {payouts && payouts.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {payouts.map((payout) => (
                   <div
                     key={payout.id}
-                    className="flex items-center justify-between p-4 border rounded-lg"
+                    className="flex items-center justify-between p-6 border-2 border-black rounded-none"
                   >
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-medium">${payout.amount.toFixed(2)}</p>
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full ${
-                            payout.status === "completed"
-                              ? "bg-green-100 text-green-700"
-                              : payout.status === "processing"
-                              ? "bg-blue-100 text-blue-700"
-                              : payout.status === "pending"
-                              ? "bg-orange-100 text-orange-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                        >
-                          {payout.status}
+                      <div className="flex items-center gap-3 mb-2">
+                        <p className="font-bold text-xl">${payout.amount.toFixed(2)}</p>
+                        <span className="text-xs px-3 py-1 rounded-full font-bold border-2 border-black bg-white">
+                          {payout.status.toUpperCase()}
                         </span>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         Requested {new Date(payout.createdAt).toLocaleDateString()}
                         {payout.processedAt && ` • Completed ${new Date(payout.processedAt).toLocaleDateString()}`}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-muted-foreground">
-                        Payment Method ID: {payout.paymentMethodId}
+                      <p className="text-sm text-gray-600 font-mono">
+                        ID: {payout.paymentMethodId}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <Alert>
-                <AlertDescription>
+              <div className="p-6 bg-gray-50 border-2 border-gray-300 rounded-none">
+                <p className="text-gray-700">
                   No payout history yet. Request your first payout when you reach $25 in earnings.
-                </AlertDescription>
-              </Alert>
+                </p>
+              </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
         
         {/* Help Section */}
-        <Card className="bg-muted/50">
-          <CardContent className="p-6">
-            <h3 className="font-semibold mb-2">How Payouts Work</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>• Minimum payout amount: $25</li>
-              <li>• Payouts are processed within 3-5 business days</li>
-              <li>• Earnings are automatically split based on your agreed percentage</li>
-              <li>• You'll receive an email notification when your payout is processed</li>
-              <li>• For tax purposes, you'll receive a 1099 form if you earn over $600/year</li>
-            </ul>
-          </CardContent>
-        </Card>
+        <div className="border-4 border-black bg-gray-50 rounded-none p-6">
+          <h3 className="font-bold text-lg mb-4">HOW PAYOUTS WORK</h3>
+          <ul className="space-y-3 text-sm text-gray-700">
+            <li className="flex items-start gap-2">
+              <span className="font-bold">•</span>
+              <span>Minimum payout amount: $25</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="font-bold">•</span>
+              <span>Payouts are processed within 3-5 business days</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="font-bold">•</span>
+              <span>Earnings are automatically split based on your agreed percentage</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="font-bold">•</span>
+              <span>You'll receive an email notification when your payout is processed</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="font-bold">•</span>
+              <span>For tax purposes, you'll receive a 1099 form if you earn over $600/year</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </DashboardLayout>
   );

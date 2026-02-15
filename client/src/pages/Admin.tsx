@@ -1,8 +1,6 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
-import { Users, DollarSign, TrendingUp, Activity, Shield, Package, Calendar, Heart, Loader2, ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 
@@ -24,40 +22,27 @@ export default function Admin() {
       title: "Total Artists",
       value: "1,247",
       change: "+12% this month",
-      icon: Users,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
     },
     {
       title: "Platform Revenue",
       value: "$2.4M",
       change: "+18% this month",
-      icon: DollarSign,
-      color: "text-green-600",
-      bgColor: "bg-green-50",
     },
     {
       title: "Active Loans",
       value: "$450K",
       change: "342 active",
-      icon: TrendingUp,
-      color: "text-purple-600",
-      bgColor: "bg-purple-50",
     },
     {
       title: "Monthly Active Users",
       value: "8,934",
       change: "+24% this month",
-      icon: Activity,
-      color: "text-orange-600",
-      bgColor: "bg-orange-50",
     },
   ];
 
   const systemMetrics = [
     {
       category: "IP Protection",
-      icon: Shield,
       stats: [
         { label: "Infringements Detected", value: "1,234" },
         { label: "DMCA Takedowns Sent", value: "892" },
@@ -66,7 +51,6 @@ export default function Admin() {
     },
     {
       category: "E-Commerce",
-      icon: Package,
       stats: [
         { label: "Total Products", value: "4,567" },
         { label: "Monthly Sales", value: "$127K" },
@@ -75,7 +59,6 @@ export default function Admin() {
     },
     {
       category: "Tours",
-      icon: Calendar,
       stats: [
         { label: "Active Tours", value: "234" },
         { label: "Upcoming Shows", value: "1,456" },
@@ -84,7 +67,6 @@ export default function Admin() {
     },
     {
       category: "Healthcare",
-      icon: Heart,
       stats: [
         { label: "Enrolled Artists", value: "567" },
         { label: "Monthly Premiums", value: "$89K" },
@@ -101,10 +83,19 @@ export default function Admin() {
     { type: "Healthcare Enrollment", description: "Premium plan enrolled by Alex Rodriguez", time: "3 hours ago" },
   ];
 
+  const quickActions = [
+    { label: "Manage Artists", symbol: "♪" },
+    { label: "Review IP Cases", symbol: "⚡" },
+    { label: "Loan Approvals", symbol: "$" },
+    { label: "Product Moderation", symbol: "□" },
+    { label: "Healthcare Claims", symbol: "+" },
+    { label: "System Health", symbol: "~" },
+  ];
+
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-2xl font-bold">Loading...</div>
       </div>
     );
   }
@@ -114,159 +105,137 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container py-4">
+      <div className="border-b-4 border-black bg-white sticky top-0 z-10">
+        <div className="container py-6">
           <div className="flex items-center gap-4">
-            <Button className="rounded-full" variant="ghost" size="icon" onClick={() => setLocation("/dashboard")}>
-              <ArrowLeft className="h-5 w-5" />
+            <Button 
+              className="rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black" 
+              variant="outline" 
+              size="sm"
+              onClick={() => setLocation("/dashboard")}
+            >
+              ← Back
             </Button>
             <div>
-              <h1 className="text-2xl font-bold">Platform Administration</h1>
-              <p className="text-sm text-muted-foreground">Boptone control center</p>
+              <h1 className="text-3xl font-bold">PLATFORM ADMINISTRATION</h1>
+              <p className="text-sm text-gray-600 mt-1">Boptone control center</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container py-8 space-y-8">
+      <div className="container py-12 space-y-12">
         {/* Platform Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {platformStats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <Card className="rounded-xl" key={stat.title}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                      <Icon className={`h-6 w-6 ${stat.color}`} />
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <p className="text-sm text-muted-foreground">{stat.title}</p>
-                    <p className="text-2xl font-bold mt-1">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{stat.change}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+        <div>
+          <h2 className="text-2xl font-bold mb-6">PLATFORM OVERVIEW</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {platformStats.map((stat) => (
+              <div className="p-6 border-4 border-black bg-white rounded-none" key={stat.title}>
+                <div className="text-xs font-bold tracking-wider mb-2 text-gray-600">
+                  {stat.title.toUpperCase()}
+                </div>
+                <div className="text-4xl font-bold mb-2">{stat.value}</div>
+                <div className="text-sm text-gray-600">{stat.change}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* System Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {systemMetrics.map((metric) => {
-            const Icon = metric.icon;
-            return (
-              <Card className="rounded-xl" key={metric.category}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Icon className="h-5 w-5 text-primary" />
-                    {metric.category}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
+        <div>
+          <h2 className="text-2xl font-bold mb-6">SYSTEM METRICS</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {systemMetrics.map((metric) => (
+              <div className="border-4 border-black bg-white rounded-none" key={metric.category}>
+                <div className="border-b-4 border-black p-6">
+                  <h3 className="text-xl font-bold">{metric.category.toUpperCase()}</h3>
+                </div>
+                <div className="p-6">
                   <div className="space-y-4">
                     {metric.stats.map((stat) => (
-                      <div key={stat.label} className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">{stat.label}</span>
-                        <span className="font-semibold">{stat.value}</span>
+                      <div key={stat.label} className="flex items-center justify-between pb-4 border-b-2 border-gray-200 last:border-0 last:pb-0">
+                        <span className="text-sm font-medium text-gray-700">{stat.label}</span>
+                        <span className="text-xl font-bold">{stat.value}</span>
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Recent Activity */}
-          <Card className="rounded-xl lg:col-span-2">
-            <CardHeader>
-              <CardTitle>Recent Platform Activity</CardTitle>
-              <CardDescription>Real-time updates across all systems</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
+          <div className="border-4 border-black bg-white rounded-none lg:col-span-2">
+            <div className="border-b-4 border-black p-6">
+              <h3 className="text-xl font-bold">RECENT PLATFORM ACTIVITY</h3>
+              <p className="text-sm text-gray-600 mt-1">Real-time updates across all systems</p>
+            </div>
+            <div className="p-6">
+              <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-                    <div className="w-2 h-2 rounded-full bg-primary mt-2" />
+                  <div key={index} className="flex items-start gap-4 pb-4 border-b-2 border-gray-200 last:border-0 last:pb-0">
+                    <div className="w-3 h-3 rounded-full bg-black mt-1 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm">{activity.type}</p>
-                      <p className="text-sm text-muted-foreground">{activity.description}</p>
+                      <p className="font-bold text-sm">{activity.type}</p>
+                      <p className="text-sm text-gray-700">{activity.description}</p>
                     </div>
-                    <span className="text-xs text-muted-foreground whitespace-nowrap">{activity.time}</span>
+                    <span className="text-xs text-gray-600 whitespace-nowrap">{activity.time}</span>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Quick Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Button className="rounded-full w-full justify-start" variant="outline">
-                <Users className="h-4 w-4 mr-2" />
-                Manage Artists
-              </Button>
-              <Button className="rounded-full w-full justify-start" variant="outline">
-                <Shield className="h-4 w-4 mr-2" />
-                Review IP Cases
-              </Button>
-              <Button className="rounded-full w-full justify-start" variant="outline">
-                <DollarSign className="h-4 w-4 mr-2" />
-                Loan Approvals
-              </Button>
-              <Button className="rounded-full w-full justify-start" variant="outline">
-                <Package className="h-4 w-4 mr-2" />
-                Product Moderation
-              </Button>
-              <Button className="rounded-full w-full justify-start" variant="outline">
-                <Heart className="h-4 w-4 mr-2" />
-                Healthcare Claims
-              </Button>
-              <Button className="rounded-full w-full justify-start" variant="outline">
-                <Activity className="h-4 w-4 mr-2" />
-                System Health
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="border-4 border-black bg-white rounded-none">
+            <div className="border-b-4 border-black p-6">
+              <h3 className="text-xl font-bold">QUICK ACTIONS</h3>
+            </div>
+            <div className="p-6 space-y-3">
+              {quickActions.map((action) => (
+                <Button 
+                  key={action.label}
+                  className="rounded-full w-full justify-start border-2 border-black bg-white hover:bg-gray-100 text-black font-medium" 
+                  variant="outline"
+                >
+                  <span className="mr-2 text-lg">{action.symbol}</span>
+                  {action.label}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Platform Health */}
-        <Card className="rounded-xl bg-gradient-to-br from-green-500/10 to-green-600/10 border-green-500/20">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Activity className="h-5 w-5 text-green-600" />
-              Platform Status: Operational
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="border-4 border-black bg-white rounded-none">
+          <div className="border-b-4 border-black p-6">
+            <h3 className="text-xl font-bold">PLATFORM STATUS: OPERATIONAL</h3>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div>
-                <p className="text-sm text-muted-foreground">API Response Time</p>
-                <p className="text-2xl font-bold text-green-600">42ms</p>
+                <p className="text-sm font-medium text-gray-600 mb-2">API Response Time</p>
+                <p className="text-4xl font-bold">42ms</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Uptime</p>
-                <p className="text-2xl font-bold text-green-600">99.98%</p>
+                <p className="text-sm font-medium text-gray-600 mb-2">Uptime</p>
+                <p className="text-4xl font-bold">99.98%</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Active Connections</p>
-                <p className="text-2xl font-bold text-green-600">2,341</p>
+                <p className="text-sm font-medium text-gray-600 mb-2">Active Connections</p>
+                <p className="text-4xl font-bold">2,341</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Database Load</p>
-                <p className="text-2xl font-bold text-green-600">34%</p>
+                <p className="text-sm font-medium text-gray-600 mb-2">Database Load</p>
+                <p className="text-4xl font-bold">34%</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
