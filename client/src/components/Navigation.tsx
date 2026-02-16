@@ -1,7 +1,7 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 
 
@@ -11,6 +11,24 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [platformMenuOpen, setPlatformMenuOpen] = useState(false);
   const [resourcesMenuOpen, setResourcesMenuOpen] = useState(false);
+  
+  const platformRef = useRef<HTMLDivElement>(null);
+  const resourcesRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (platformRef.current && !platformRef.current.contains(event.target as Node)) {
+        setPlatformMenuOpen(false);
+      }
+      if (resourcesRef.current && !resourcesRef.current.contains(event.target as Node)) {
+        setResourcesMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const platformLinks = [
     { href: "/features", label: "Features", description: "Explore all platform capabilities" },
@@ -43,7 +61,7 @@ export function Navigation() {
           {/* Desktop Navigation - Center */}
           <div className="hidden lg:flex items-center gap-8">
             {/* Platform Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={platformRef}>
               <button 
                 onClick={() => setPlatformMenuOpen(!platformMenuOpen)}
                 className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
@@ -69,7 +87,7 @@ export function Navigation() {
             </div>
 
             {/* Resources Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={resourcesRef}>
               <button 
                 onClick={() => setResourcesMenuOpen(!resourcesMenuOpen)}
                 className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"

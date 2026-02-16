@@ -1658,3 +1658,4 @@ Apply the visually stunning design style from the explainer component across ALL
   - [x] Maintain xerox aesthetic with clean layout
 - [x] Fix mega menu dropdown click behavior - allow clicking on menu items without dropdown closing
 - [ ] Debug and fix navigation dropdown hover behavior - dropdowns not appearing/working
+- [ ] Add click-outside-to-close functionality to navigation dropdowns for better UX
