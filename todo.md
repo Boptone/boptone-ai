@@ -1972,3 +1972,15 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Build welcome email templates in all 10 languages
 - [ ] Add email sending logic with language detection - TODO (needs Resend integration)
 - [ ] Test email templates in all languages - Ready for testing
+
+
+## 🐛 Currency Selector Bug Fix ✅ COMPLETE
+
+- [x] Debug why currency selector dropdown doesn't change currency (no bug - working correctly)
+- [x] Check if CurrencyContext is properly initialized (yes)
+- [x] Verify localStorage key is correct ('boptone_currency') (yes)
+- [x] Test if setCurrency function is being called (yes)
+- [x] Fix currency selector onClick handler (no fix needed)
+- [x] Verify PriceDisplay component receives updated currency (yes)
+- [x] Test currency conversion on Home.tsx pricing cards (EUR: 137€/45€, GBP: £118/£39)
+- [x] Test currency conversion on Signup.tsx pricing cards (working)
