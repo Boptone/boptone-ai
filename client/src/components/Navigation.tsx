@@ -9,14 +9,20 @@ export function Navigation() {
   const { isAuthenticated, user } = useAuth();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [platformMenuOpen, setPlatformMenuOpen] = useState(false);
+  const [resourcesMenuOpen, setResourcesMenuOpen] = useState(false);
 
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/features", label: "Features" },
-    { href: "/bap", label: "BAP" },
-    { href: "/shop", label: "BopShop" },
-    { href: "/discover", label: "Discover" },
-    { href: "/signup", label: "Pricing" },
+  const platformLinks = [
+    { href: "/features", label: "Features", description: "Explore all platform capabilities" },
+    { href: "/bap", label: "BAP Protocol", description: "Open-source artist data standard" },
+    { href: "/how-it-works", label: "How It Works", description: "See the platform in action" },
+    { href: "/transparency", label: "Transparency", description: "Real-time platform metrics" },
+  ];
+
+  const resourceLinks = [
+    { href: "/shop", label: "BopShop", description: "Merchandise and artist goods" },
+    { href: "/discover", label: "Discover", description: "Find new music and artists" },
+    { href: "/faq", label: "FAQ", description: "Frequently asked questions" },
   ];
 
   return (
@@ -35,24 +41,71 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation - Center */}
-          <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <a
-                  className={`text-sm font-medium transition-colors hover:text-black ${
-                    location === link.href
-                      ? "text-black"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {link.label}
-                </a>
-              </Link>
-            ))}
+          <div className="hidden lg:flex items-center gap-8">
+            {/* Platform Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setPlatformMenuOpen(true)}
+              onMouseLeave={() => setPlatformMenuOpen(false)}
+            >
+              <button className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1">
+                Platform
+                <span className="text-xs">▼</span>
+              </button>
+              
+              {platformMenuOpen && (
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg">
+                  <div className="p-4 space-y-1">
+                    {platformLinks.map((link) => (
+                      <Link key={link.href} href={link.href}>
+                        <a className="block p-3 hover:bg-gray-100 transition-colors">
+                          <div className="font-medium text-black text-sm">{link.label}</div>
+                          <div className="text-xs text-gray-600 mt-0.5">{link.description}</div>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Resources Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setResourcesMenuOpen(true)}
+              onMouseLeave={() => setResourcesMenuOpen(false)}
+            >
+              <button className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1">
+                Resources
+                <span className="text-xs">▼</span>
+              </button>
+              
+              {resourcesMenuOpen && (
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg">
+                  <div className="p-4 space-y-1">
+                    {resourceLinks.map((link) => (
+                      <Link key={link.href} href={link.href}>
+                        <a className="block p-3 hover:bg-gray-100 transition-colors">
+                          <div className="font-medium text-black text-sm">{link.label}</div>
+                          <div className="text-xs text-gray-600 mt-0.5">{link.description}</div>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Standalone Links */}
+            <Link href="/signup">
+              <a className="text-sm font-medium text-gray-600 hover:text-black transition-colors">
+                Pricing
+              </a>
+            </Link>
           </div>
 
           {/* Right Side - Auth */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             {/* Ask Toney - Always visible */}
             <Button 
               variant="ghost" 
@@ -91,7 +144,7 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 border-2 border-black rounded-full bg-white hover:bg-gray-100 w-12 h-12 flex items-center justify-center"
+            className="lg:hidden p-2 border-2 border-black rounded-full bg-white hover:bg-gray-100 w-12 h-12 flex items-center justify-center"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -106,23 +159,51 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t-2 border-black bg-white">
+        <div className="lg:hidden border-t-2 border-black bg-white">
           <div className="container py-6 space-y-4">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
+            {/* Platform Section */}
+            <div className="space-y-2">
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider px-2">Platform</div>
+              {platformLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  <a
+                    className="block py-2 px-2 text-base font-medium text-gray-600 hover:text-black transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                </Link>
+              ))}
+            </div>
+
+            {/* Resources Section */}
+            <div className="space-y-2 pt-4 border-t-2 border-black">
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-wider px-2">Resources</div>
+              {resourceLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  <a
+                    className="block py-2 px-2 text-base font-medium text-gray-600 hover:text-black transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                </Link>
+              ))}
+            </div>
+
+            {/* Pricing */}
+            <div className="pt-4 border-t-2 border-black">
+              <Link href="/signup">
                 <a
-                  className={`block py-2 text-base font-medium transition-colors hover:text-black ${
-                    location === link.href
-                      ? "text-black"
-                      : "text-gray-600"
-                  }`}
+                  className="block py-2 px-2 text-base font-medium text-gray-600 hover:text-black transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {link.label}
+                  Pricing
                 </a>
               </Link>
-            ))}
+            </div>
             
+            {/* Auth Section */}
             <div className="pt-4 space-y-3 border-t-2 border-black">
               {/* Ask Toney - Always visible */}
               <Button
