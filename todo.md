@@ -1984,3 +1984,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Verify PriceDisplay component receives updated currency (yes)
 - [x] Test currency conversion on Home.tsx pricing cards (EUR: 137€/45€, GBP: £118/£39)
 - [x] Test currency conversion on Signup.tsx pricing cards (working)
+
+
+## Small UI Tweaks (User Request) ✅ COMPLETE
+
+- [x] Make hero headline bigger and bolder (text-6xl md:text-8xl font-extrabold)
+- [x] Add period after "Your Tone" in hero headline
+- [x] Remove redundant "Privacy Center" link from footer (now: Terms | Privacy | Your Privacy Choices)
+- [x] Test changes (verified in browser)
+- [ ] Save checkpoint

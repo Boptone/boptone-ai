@@ -187,9 +187,6 @@ export default function Footer() {
                   Privacy
                 </Link>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy Center
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Your Privacy Choices
                 </a>
               </div>
