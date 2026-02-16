@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `verification_codes` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `type` enum('email','phone','password_reset') NOT NULL,\n  `identifier` varchar(320) NOT NULL,\n  `code` varchar(6) NOT NULL,\n  `userId` int,\n  `expiresAt` timestamp NOT NULL,\n  `verified` boolean NOT NULL DEFAULT false,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `verification_codes_id` PRIMARY KEY(`id`),\n  CONSTRAINT `verification_codes_userId_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE NO ACTION\n);\n\nCREATE INDEX `identifier_idx` ON `verification_codes` (`identifier`);\nCREATE INDEX `expires_at_idx` ON `verification_codes` (`expiresAt`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `verification_codes` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `type` enum('email','phone','password_reset') NOT NULL,\n  `identifier` varchar(320) NOT NULL,\n  `code` varchar(6) NOT NULL,\n  `userId` int,\n  `expiresAt` timestamp NOT NULL,\n  `verified` boolean NOT NULL DEFAULT false,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `verification_codes_id` PRIMARY KEY(`id`),\n  CONSTRAINT `verification_codes_userId_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE NO ACTION\n);\n\nCREATE INDEX `identifier_idx` ON `verification_codes` (`identifier`);\nCREATE INDEX `expires_at_idx` ON `verification_codes` (`expiresAt`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1190
+}

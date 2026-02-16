@@ -25,9 +25,9 @@ export default function ForgotPassword() {
   const [emailError, setEmailError] = useState("");
   const [codeError, setCodeError] = useState("");
 
-  // TODO: Implement tRPC mutations for password reset in server/routers.ts
-  // const sendResetEmail = trpc.auth.sendPasswordReset.useMutation();
-  // const verifyResetCode = trpc.auth.verifyPasswordReset.useMutation();
+  // tRPC mutations for password reset
+  const sendResetEmail = trpc.auth.sendPasswordReset.useMutation();
+  const verifyResetCode = trpc.auth.verifyPasswordReset.useMutation();
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,9 +47,7 @@ export default function ForgotPassword() {
 
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      // await sendResetEmail.mutateAsync({ email });
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      await sendResetEmail.mutateAsync({ email });
       setStep("sent");
       toast.success("Password reset link sent to your email!");
     } catch (error: any) {
@@ -75,12 +73,13 @@ export default function ForgotPassword() {
 
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      // const result = await verifyResetCode.mutateAsync({ email, code: verificationCode });
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      // Simulate success for demo purposes
-      setStep("success");
-      toast.success("Password reset successful!");
+      const result = await verifyResetCode.mutateAsync({ email, code: verificationCode });
+      if (result.success) {
+        setStep("success");
+        toast.success("Password reset successful!");
+      } else {
+        toast.error("Invalid verification code");
+      }
     } catch (error: any) {
       toast.error(error.message || "Verification failed");
     } finally {
@@ -91,9 +90,7 @@ export default function ForgotPassword() {
   const handleResendEmail = async () => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      // await sendResetEmail.mutateAsync({ email });
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      await sendResetEmail.mutateAsync({ email });
       toast.success("Reset link sent again!");
     } catch (error: any) {
       toast.error(error.message || "Failed to resend email");

@@ -24,6 +24,24 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
+// Verification Codes (Email/Phone)
+export const verificationCodes = mysqlTable("verification_codes", {
+  id: int("id").autoincrement().primaryKey(),
+  type: mysqlEnum("type", ["email", "phone", "password_reset"]).notNull(),
+  identifier: varchar("identifier", { length: 320 }).notNull(), // email or phone number
+  code: varchar("code", { length: 6 }).notNull(),
+  userId: int("userId").references(() => users.id), // Optional: link to user if exists
+  expiresAt: timestamp("expiresAt").notNull(),
+  verified: boolean("verified").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  identifierIdx: index("identifier_idx").on(table.identifier),
+  expiresAtIdx: index("expires_at_idx").on(table.expiresAt),
+}));
+
+export type VerificationCode = typeof verificationCodes.$inferSelect;
+export type InsertVerificationCode = typeof verificationCodes.$inferInsert;
+
 // ============================================================================
 // ARTIST PROFILES
 // ============================================================================
