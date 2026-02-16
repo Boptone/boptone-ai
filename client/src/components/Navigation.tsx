@@ -54,7 +54,11 @@ export function Navigation() {
               </button>
               
               {platformMenuOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg">
+                <div 
+                  className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg"
+                  onMouseEnter={() => setPlatformMenuOpen(true)}
+                  onMouseLeave={() => setPlatformMenuOpen(false)}
+                >
                   <div className="p-4 space-y-1">
                     {platformLinks.map((link) => (
                       <Link key={link.href} href={link.href}>
@@ -81,7 +85,11 @@ export function Navigation() {
               </button>
               
               {resourcesMenuOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg">
+                <div 
+                  className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg"
+                  onMouseEnter={() => setResourcesMenuOpen(true)}
+                  onMouseLeave={() => setResourcesMenuOpen(false)}
+                >
                   <div className="p-4 space-y-1">
                     {resourceLinks.map((link) => (
                       <Link key={link.href} href={link.href}>
