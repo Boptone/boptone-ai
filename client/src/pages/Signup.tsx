@@ -9,6 +9,7 @@ import { trpc } from "@/lib/trpc";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
+import PriceDisplay from "@/components/PriceDisplay";
 
 export default function Signup() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
@@ -44,7 +45,7 @@ export default function Signup() {
     {
       id: "enterprise" as const,
       name: "Enterprise",
-      price: "$149",
+      priceUSD: 149,
       period: "/month",
       platformFee: "10%",
       description: "Advanced features for teams, labels, and artists managing complex operations",
@@ -67,7 +68,7 @@ export default function Signup() {
     {
       id: "pro" as const,
       name: "Pro",
-      price: "$49",
+      priceUSD: 49,
       period: "/month",
       platformFee: "10%",
       description: "Unlimited uploads, third-party distribution, and powerful tools to scale your career",
@@ -91,7 +92,7 @@ export default function Signup() {
     {
       id: "free" as const,
       name: "Free",
-      price: "$0",
+      priceUSD: 0,
       period: "/forever",
       platformFee: "10%",
       description: "Build your foundation—collect fans, sell music, grow your audience",
@@ -170,7 +171,7 @@ export default function Signup() {
                   <div className="mb-6">
                     <div className="flex items-baseline gap-1 mb-1">
                       <span className="text-5xl font-bold text-black tracking-tight">
-                        {tier.price}
+                        {tier.priceUSD === 0 ? '$0' : <PriceDisplay amountUSD={tier.priceUSD} />}
                       </span>
                       <span className="text-lg text-gray-600 font-normal">{tier.period}</span>
                     </div>

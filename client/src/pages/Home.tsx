@@ -6,6 +6,7 @@ import { StripeCheckout } from "@/components/StripeCheckout";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { useDemo } from "@/contexts/DemoContext";
 import { useLocation } from "wouter";
+import PriceDisplay from "@/components/PriceDisplay";
 
 const rotatingPhrases = ["Automate Your Tone", "Create Your Tone", "Own Your Tone"];
 
@@ -282,12 +283,12 @@ export default function Home() {
                   ) : (
                     <div>
                       <div className="text-5xl font-bold">
-                        ${currentPrice(tier)}
+                        <PriceDisplay amountUSD={currentPrice(tier)} />
                         <span className="text-2xl text-gray-600 font-normal">/mo</span>
                       </div>
                       {isAnnual && savings(tier) > 0 && (
                         <div className="text-sm text-gray-600 mt-2">
-                          Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
+                          Save <PriceDisplay amountUSD={tier.monthlyPrice * 12 - tier.annualPrice * 12} />/year
                         </div>
                       )}
                     </div>
