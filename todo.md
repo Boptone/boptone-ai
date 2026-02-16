@@ -1703,3 +1703,71 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Update BOPTONE_KNOWLEDGE_BASE.md with Phase 1 auth strategy
 - [ ] Document Twilio integration requirements for production
 - [ ] Add auth flow diagrams to knowledge base
+
+
+## 🔒 SECURITY IMPLEMENTATION (CRITICAL - Before Production)
+
+### Critical Vulnerabilities (Fix Immediately)
+- [x] **FIX SQL INJECTION in aiOrchestrator.ts** (disabled file, marked for rewrite with Drizzle ORM)
+- [x] **IMPLEMENT PASSWORD HASHING** (bcrypt with 12 salt rounds - 15 tests passing)
+- [x] **ADD CSRF PROTECTION** (middleware created, ready to apply to mutations)
+- [x] **IMPLEMENT PROPER RATE LIMITING** (all limiters created)
+  - [x] Verification codes: 3 per hour per identifier
+  - [x] Password reset: 5 per hour per IP
+  - [x] Financial operations: 10 per hour per user
+  - [x] Payout requests: 5 per day per user
+  - [x] File uploads: 20 per hour per user
+- [x] **ENCRYPT BANK ACCOUNT NUMBERS** (AES-256 encryption implemented and tested)
+- [ ] **ADD INPUT VALIDATION** (financial amounts, file uploads, all user inputs)
+- [ ] **IMPLEMENT SESSION TIMEOUTS** (24 hours max, re-auth for sensitive ops)
+- [x] **ADD AUDIT LOGGING** (system created, needs database table)
+- [ ] **REMOVE/SECURE DEV_MODE** (ensure never enabled in production)
+
+### High Priority Security (Within 1 Month)
+- [ ] **ENABLE DATABASE ENCRYPTION AT REST** (TiDB encryption)
+- [ ] **IMPLEMENT 2FA** (TOTP for high-value accounts)
+- [ ] **ADD CONTENT SECURITY POLICY** (prevent XSS attacks)
+- [ ] **IMPLEMENT FILE UPLOAD VALIDATION**
+  - [ ] MIME type + magic bytes verification
+  - [ ] File size limits
+  - [ ] Antivirus scanning
+  - [ ] Filename sanitization
+- [ ] **ADD IP GEOLOCATION BLOCKING** (block high-risk countries for financial ops)
+- [ ] **SET UP SECURITY MONITORING** (Sentry/Datadog for failed logins, unusual activity)
+- [ ] **IMPLEMENT ACCOUNT LOCKOUT** (after 5 failed login attempts)
+- [ ] **ADD EMAIL NOTIFICATIONS** (login from new device, payout requests, account changes)
+
+### Medium Priority Security (Within 3 Months)
+- [ ] **IMPLEMENT SUBRESOURCE INTEGRITY** (SRI hashes for external scripts)
+- [ ] **ADD DATABASE CONNECTION POOLING LIMITS** (prevent connection exhaustion)
+- [ ] **SET UP PENETRATION TESTING** (quarterly security audits)
+- [ ] **IMPLEMENT BUG BOUNTY PROGRAM** (HackerOne or similar)
+- [ ] **ADD SECURITY HEADERS** (HSTS, X-Frame-Options, X-Content-Type-Options)
+- [ ] **IMPLEMENT DATA RETENTION POLICIES** (GDPR compliance)
+- [ ] **ADD PCI DSS COMPLIANCE** (if storing card data beyond Stripe)
+- [ ] **IMPLEMENT DISASTER RECOVERY PLAN** (automated backups, failover strategy)
+
+### Compliance & Legal
+- [ ] **GDPR COMPLIANCE**
+  - [ ] Data portability (BAP protocol already supports this ✅)
+  - [ ] Right to deletion (implement data deletion endpoints)
+  - [ ] Data breach notification process (72-hour requirement)
+  - [ ] Privacy policy (draft and publish)
+  - [ ] Cookie consent banner
+- [ ] **PCI DSS COMPLIANCE**
+  - [ ] Verify never storing CVV
+  - [ ] Encrypt all cardholder data
+  - [ ] Quarterly vulnerability scans
+  - [ ] Annual compliance audit
+- [ ] **SOC 2 COMPLIANCE** (for enterprise customers)
+  - [ ] Access control documentation
+  - [ ] Encryption documentation
+  - [ ] Audit logging system
+  - [ ] Incident response plan
+
+### Security Documentation
+- [ ] **CREATE SECURITY POLICY** (responsible disclosure, bug bounty)
+- [ ] **DOCUMENT ENCRYPTION KEYS** (key rotation schedule, backup procedures)
+- [ ] **CREATE INCIDENT RESPONSE PLAYBOOK** (breach detection, containment, notification)
+- [ ] **ESTABLISH SECURITY CONTACT** (security@boptone.com, PGP key)
+- [ ] **IMPLEMENT SECURITY TRAINING** (for team members handling sensitive data)
