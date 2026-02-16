@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "platform": "Plataforma",
+    "resources": "Recursos",
+    "pricing": "Preços",
+    "askToney": "Pergunte ao Toney",
+    "dashboard": "Painel",
+    "profile": "Perfil"
+  },
+  "hero": {
+    "title": "Crie Seu Tom",
+    "subtitle": "O sistema operacional completo para artistas. Distribuição, análises, ferramentas financeiras e orientação de carreira em uma plataforma.",
+    "cta": {
+      "getStarted": "Comece Grátis",
+      "viewDemo": "Ver Demo"
+    }
+  },
+  "auth": {
+    "login": "Entrar",
+    "logout": "Sair",
+    "signup": "Cadastrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu sua senha?",
+    "rememberMe": "Lembrar de mim",
+    "or": "ou",
+    "continueWith": "Continuar com {{provider}}",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "dontHaveAccount": "Não tem uma conta?",
+    "createAccount": "Criar Conta",
+    "verifyEmail": "Verificar E-mail",
+    "checkEmail": "Verifique seu e-mail para um link de verificação",
+    "resetPassword": "Redefinir Senha",
+    "sendResetLink": "Enviar Link de Redefinição"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "view": "Ver",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "close": "Fechar",
+    "open": "Abrir",
+    "yes": "Sim",
+    "no": "Não",
+    "ok": "OK"
+  },
+  "errors": {
+    "generic": "Algo deu errado. Por favor, tente novamente.",
+    "network": "Erro de rede. Por favor, verifique sua conexão.",
+    "unauthorized": "Você deve fazer login para acessar esta página.",
+    "forbidden": "Você não tem permissão para acessar este recurso.",
+    "notFound": "Página não encontrada.",
+    "validation": "Por favor, verifique sua entrada e tente novamente.",
+    "required": "Este campo é obrigatório.",
+    "invalidEmail": "Por favor, insira um endereço de e-mail válido.",
+    "passwordTooShort": "A senha deve ter pelo menos 8 caracteres.",
+    "passwordMismatch": "As senhas não coincidem."
+  },
+  "footer": {
+    "company": "Empresa",
+    "about": "Sobre",
+    "careers": "Carreiras",
+    "press": "Imprensa",
+    "contact": "Contato",
+    "legal": "Legal",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "cookies": "Configurações de Cookies",
+    "accessibility": "Declaração de Acessibilidade",
+    "language": "Idioma",
+    "copyright": "© {{year}} Boptone. Todos os direitos reservados."
+  },
+  "language": {
+    "en": "Inglês",
+    "es": "Espanhol",
+    "pt": "Português",
+    "fr": "Francês",
+    "de": "Alemão",
+    "ja": "Japonês",
+    "ko": "Coreano",
+    "zh": "Chinês",
+    "hi": "Hindi",
+    "ar": "Árabe",
+    "selectLanguage": "Selecionar Idioma"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "platform": "平台",
+    "resources": "资源",
+    "pricing": "定价",
+    "askToney": "询问Toney",
+    "dashboard": "仪表板",
+    "profile": "个人资料"
+  },
+  "hero": {
+    "title": "创造你的音调",
+    "subtitle": "艺术家的完整操作系统。分发、分析、财务工具和职业指导，尽在一个平台。",
+    "cta": {
+      "getStarted": "免费开始",
+      "viewDemo": "查看演示"
+    }
+  },
+  "auth": {
+    "login": "登录",
+    "logout": "登出",
+    "signup": "注册",
+    "email": "电子邮件",
+    "password": "密码",
+    "forgotPassword": "忘记密码？",
+    "rememberMe": "记住我",
+    "or": "或",
+    "continueWith": "使用{{provider}}继续",
+    "alreadyHaveAccount": "已有账户？",
+    "dontHaveAccount": "还没有账户？",
+    "createAccount": "创建账户",
+    "verifyEmail": "验证电子邮件",
+    "checkEmail": "请检查您的电子邮件以获取验证链接",
+    "resetPassword": "重置密码",
+    "sendResetLink": "发送重置链接"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "view": "查看",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "submit": "提交",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "close": "关闭",
+    "open": "打开",
+    "yes": "是",
+    "no": "否",
+    "ok": "确定"
+  },
+  "errors": {
+    "generic": "出了点问题。请重试。",
+    "network": "网络错误。请检查您的连接。",
+    "unauthorized": "您必须登录才能访问此页面。",
+    "forbidden": "您无权访问此资源。",
+    "notFound": "未找到页面。",
+    "validation": "请检查您的输入并重试。",
+    "required": "此字段为必填项。",
+    "invalidEmail": "请输入有效的电子邮件地址。",
+    "passwordTooShort": "密码必须至少8个字符。",
+    "passwordMismatch": "密码不匹配。"
+  },
+  "footer": {
+    "company": "公司",
+    "about": "关于我们",
+    "careers": "招聘",
+    "press": "新闻",
+    "contact": "联系我们",
+    "legal": "法律",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "cookies": "Cookie设置",
+    "accessibility": "无障碍声明",
+    "language": "语言",
+    "copyright": "© {{year}} Boptone。保留所有权利。"
+  },
+  "language": {
+    "en": "英语",
+    "es": "西班牙语",
+    "pt": "葡萄牙语",
+    "fr": "法语",
+    "de": "德语",
+    "ja": "日语",
+    "ko": "韩语",
+    "zh": "中文",
+    "hi": "印地语",
+    "ar": "阿拉伯语",
+    "selectLanguage": "选择语言"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "platform": "Plataforma",
+    "resources": "Recursos",
+    "pricing": "Precios",
+    "askToney": "Pregunta a Toney",
+    "dashboard": "Panel",
+    "profile": "Perfil"
+  },
+  "hero": {
+    "title": "Crea Tu Tono",
+    "subtitle": "El sistema operativo completo para artistas. Distribución, analíticas, herramientas financieras y orientación profesional en una sola plataforma.",
+    "cta": {
+      "getStarted": "Comienza Gratis",
+      "viewDemo": "Ver Demo"
+    }
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "signup": "Registrarse",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recuérdame",
+    "or": "o",
+    "continueWith": "Continuar con {{provider}}",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "createAccount": "Crear Cuenta",
+    "verifyEmail": "Verificar Correo",
+    "checkEmail": "Revisa tu correo para un enlace de verificación",
+    "resetPassword": "Restablecer Contraseña",
+    "sendResetLink": "Enviar Enlace de Restablecimiento"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "close": "Cerrar",
+    "open": "Abrir",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK"
+  },
+  "errors": {
+    "generic": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "network": "Error de red. Por favor, verifica tu conexión.",
+    "unauthorized": "Debes iniciar sesión para acceder a esta página.",
+    "forbidden": "No tienes permiso para acceder a este recurso.",
+    "notFound": "Página no encontrada.",
+    "validation": "Por favor, verifica tu entrada e inténtalo de nuevo.",
+    "required": "Este campo es obligatorio.",
+    "invalidEmail": "Por favor, ingresa un correo electrónico válido.",
+    "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
+    "passwordMismatch": "Las contraseñas no coinciden."
+  },
+  "footer": {
+    "company": "Empresa",
+    "about": "Acerca de",
+    "careers": "Carreras",
+    "press": "Prensa",
+    "contact": "Contacto",
+    "legal": "Legal",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "cookies": "Configuración de Cookies",
+    "accessibility": "Declaración de Accesibilidad",
+    "language": "Idioma",
+    "copyright": "© {{year}} Boptone. Todos los derechos reservados."
+  },
+  "language": {
+    "en": "Inglés",
+    "es": "Español",
+    "pt": "Portugués",
+    "fr": "Francés",
+    "de": "Alemán",
+    "ja": "Japonés",
+    "ko": "Coreano",
+    "zh": "Chino",
+    "hi": "Hindi",
+    "ar": "Árabe",
+    "selectLanguage": "Seleccionar Idioma"
+  }
+}

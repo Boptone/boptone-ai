@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "platform": "플랫폼",
+    "resources": "리소스",
+    "pricing": "가격",
+    "askToney": "Toney에게 물어보기",
+    "dashboard": "대시보드",
+    "profile": "프로필"
+  },
+  "hero": {
+    "title": "당신의 톤을 만드세요",
+    "subtitle": "아티스트를 위한 완벽한 운영 시스템. 배포, 분석, 재무 도구 및 경력 안내를 하나의 플랫폼에서.",
+    "cta": {
+      "getStarted": "무료로 시작하기",
+      "viewDemo": "데모 보기"
+    }
+  },
+  "auth": {
+    "login": "로그인",
+    "logout": "로그아웃",
+    "signup": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "rememberMe": "로그인 상태 유지",
+    "or": "또는",
+    "continueWith": "{{provider}}(으)로 계속하기",
+    "alreadyHaveAccount": "이미 계정이 있으신가요?",
+    "dontHaveAccount": "계정이 없으신가요?",
+    "createAccount": "계정 만들기",
+    "verifyEmail": "이메일 확인",
+    "checkEmail": "확인 링크를 위해 이메일을 확인하세요",
+    "resetPassword": "비밀번호 재설정",
+    "sendResetLink": "재설정 링크 보내기"
+  },
+  "common": {
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "편집",
+    "view": "보기",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "submit": "제출",
+    "search": "검색",
+    "filter": "필터",
+    "sort": "정렬",
+    "close": "닫기",
+    "open": "열기",
+    "yes": "예",
+    "no": "아니오",
+    "ok": "확인"
+  },
+  "errors": {
+    "generic": "문제가 발생했습니다. 다시 시도해 주세요.",
+    "network": "네트워크 오류입니다. 연결을 확인해 주세요.",
+    "unauthorized": "이 페이지에 액세스하려면 로그인해야 합니다.",
+    "forbidden": "이 리소스에 액세스할 권한이 없습니다.",
+    "notFound": "페이지를 찾을 수 없습니다.",
+    "validation": "입력 내용을 확인하고 다시 시도해 주세요.",
+    "required": "이 필드는 필수입니다.",
+    "invalidEmail": "유효한 이메일 주소를 입력해 주세요.",
+    "passwordTooShort": "비밀번호는 최소 8자 이상이어야 합니다.",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다."
+  },
+  "footer": {
+    "company": "회사",
+    "about": "회사 소개",
+    "careers": "채용",
+    "press": "언론",
+    "contact": "문의",
+    "legal": "법률",
+    "privacy": "개인정보 처리방침",
+    "terms": "서비스 약관",
+    "cookies": "쿠키 설정",
+    "accessibility": "접근성 선언",
+    "language": "언어",
+    "copyright": "© {{year}} Boptone. 모든 권리 보유."
+  },
+  "language": {
+    "en": "영어",
+    "es": "스페인어",
+    "pt": "포르투갈어",
+    "fr": "프랑스어",
+    "de": "독일어",
+    "ja": "일본어",
+    "ko": "한국어",
+    "zh": "중국어",
+    "hi": "힌디어",
+    "ar": "아랍어",
+    "selectLanguage": "언어 선택"
+  }
+}

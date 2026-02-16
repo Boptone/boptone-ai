@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { LanguagePicker } from "./LanguagePicker";
 
 /**
  * Shared Footer Component
@@ -159,8 +160,10 @@ export default function Footer() {
               <span>© {currentYear} Boptone, Inc. All rights reserved.</span>
             </div>
 
-            {/* Social Media & Legal Links */}
+            {/* Language Picker, Social Media & Legal Links */}
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+              {/* Language Picker */}
+              <LanguagePicker />
               {/* LinkedIn Icon */}
               <a 
                 href="#" 

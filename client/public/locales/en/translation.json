@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "platform": "Platform",
+    "resources": "Resources",
+    "pricing": "Pricing",
+    "askToney": "Ask Toney",
+    "dashboard": "Dashboard",
+    "profile": "Profile"
+  },
+  "hero": {
+    "title": "Create Your Tone",
+    "subtitle": "The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.",
+    "cta": {
+      "getStarted": "Get Started Free",
+      "viewDemo": "View Demo"
+    }
+  },
+  "auth": {
+    "login": "Log In",
+    "logout": "Log Out",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "rememberMe": "Remember Me",
+    "or": "or",
+    "continueWith": "Continue with {{provider}}",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "createAccount": "Create Account",
+    "verifyEmail": "Verify Email",
+    "checkEmail": "Check your email for a verification link",
+    "resetPassword": "Reset Password",
+    "sendResetLink": "Send Reset Link"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You must be logged in to access this page.",
+    "forbidden": "You don't have permission to access this resource.",
+    "notFound": "Page not found.",
+    "validation": "Please check your input and try again.",
+    "required": "This field is required.",
+    "invalidEmail": "Please enter a valid email address.",
+    "passwordTooShort": "Password must be at least 8 characters.",
+    "passwordMismatch": "Passwords do not match."
+  },
+  "footer": {
+    "company": "Company",
+    "about": "About",
+    "careers": "Careers",
+    "press": "Press",
+    "contact": "Contact",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Settings",
+    "accessibility": "Accessibility Statement",
+    "language": "Language",
+    "copyright": "© {{year}} Boptone. All rights reserved."
+  },
+  "language": {
+    "en": "English",
+    "es": "Spanish",
+    "pt": "Portuguese",
+    "fr": "French",
+    "de": "German",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "zh": "Chinese",
+    "hi": "Hindi",
+    "ar": "Arabic",
+    "selectLanguage": "Select Language"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "platform": "Plateforme",
+    "resources": "Ressources",
+    "pricing": "Tarifs",
+    "askToney": "Demander à Toney",
+    "dashboard": "Tableau de bord",
+    "profile": "Profil"
+  },
+  "hero": {
+    "title": "Créez Votre Ton",
+    "subtitle": "Le système d'exploitation complet pour les artistes. Distribution, analyses, outils financiers et conseils de carrière sur une seule plateforme.",
+    "cta": {
+      "getStarted": "Commencer Gratuitement",
+      "viewDemo": "Voir la Démo"
+    }
+  },
+  "auth": {
+    "login": "Se Connecter",
+    "logout": "Se Déconnecter",
+    "signup": "S'inscrire",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "rememberMe": "Se souvenir de moi",
+    "or": "ou",
+    "continueWith": "Continuer avec {{provider}}",
+    "alreadyHaveAccount": "Vous avez déjà un compte?",
+    "dontHaveAccount": "Vous n'avez pas de compte?",
+    "createAccount": "Créer un Compte",
+    "verifyEmail": "Vérifier l'E-mail",
+    "checkEmail": "Vérifiez votre e-mail pour un lien de vérification",
+    "resetPassword": "Réinitialiser le Mot de Passe",
+    "sendResetLink": "Envoyer le Lien de Réinitialisation"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "close": "Fermer",
+    "open": "Ouvrir",
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK"
+  },
+  "errors": {
+    "generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+    "unauthorized": "Vous devez vous connecter pour accéder à cette page.",
+    "forbidden": "Vous n'avez pas la permission d'accéder à cette ressource.",
+    "notFound": "Page non trouvée.",
+    "validation": "Veuillez vérifier votre saisie et réessayer.",
+    "required": "Ce champ est obligatoire.",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
+    "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères.",
+    "passwordMismatch": "Les mots de passe ne correspondent pas."
+  },
+  "footer": {
+    "company": "Entreprise",
+    "about": "À propos",
+    "careers": "Carrières",
+    "press": "Presse",
+    "contact": "Contact",
+    "legal": "Juridique",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "cookies": "Paramètres des Cookies",
+    "accessibility": "Déclaration d'Accessibilité",
+    "language": "Langue",
+    "copyright": "© {{year}} Boptone. Tous droits réservés."
+  },
+  "language": {
+    "en": "Anglais",
+    "es": "Espagnol",
+    "pt": "Portugais",
+    "fr": "Français",
+    "de": "Allemand",
+    "ja": "Japonais",
+    "ko": "Coréen",
+    "zh": "Chinois",
+    "hi": "Hindi",
+    "ar": "Arabe",
+    "selectLanguage": "Sélectionner la Langue"
+  }
+}
