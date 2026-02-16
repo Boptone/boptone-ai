@@ -43,22 +43,17 @@ export function Navigation() {
           {/* Desktop Navigation - Center */}
           <div className="hidden lg:flex items-center gap-8">
             {/* Platform Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setPlatformMenuOpen(true)}
-              onMouseLeave={() => setPlatformMenuOpen(false)}
-            >
-              <button className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1">
+            <div className="relative">
+              <button 
+                onClick={() => setPlatformMenuOpen(!platformMenuOpen)}
+                className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
+              >
                 Platform
                 <span className="text-xs">▼</span>
               </button>
               
               {platformMenuOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg"
-                  onMouseEnter={() => setPlatformMenuOpen(true)}
-                  onMouseLeave={() => setPlatformMenuOpen(false)}
-                >
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg z-50">
                   <div className="p-4 space-y-1">
                     {platformLinks.map((link) => (
                       <Link key={link.href} href={link.href}>
@@ -74,22 +69,17 @@ export function Navigation() {
             </div>
 
             {/* Resources Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setResourcesMenuOpen(true)}
-              onMouseLeave={() => setResourcesMenuOpen(false)}
-            >
-              <button className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1">
+            <div className="relative">
+              <button 
+                onClick={() => setResourcesMenuOpen(!resourcesMenuOpen)}
+                className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
+              >
                 Resources
                 <span className="text-xs">▼</span>
               </button>
               
               {resourcesMenuOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg"
-                  onMouseEnter={() => setResourcesMenuOpen(true)}
-                  onMouseLeave={() => setResourcesMenuOpen(false)}
-                >
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg z-50">
                   <div className="p-4 space-y-1">
                     {resourceLinks.map((link) => (
                       <Link key={link.href} href={link.href}>
