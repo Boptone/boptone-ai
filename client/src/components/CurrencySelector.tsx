@@ -1,4 +1,4 @@
-import { useCurrency } from "@/contexts/CurrencyContext";
+import { useCurrency, Currency } from "@/contexts/CurrencyContext";
 import {
   Select,
   SelectContent,
@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const currencies = [
+const currencies: { code: Currency; name: string; symbol: string }[] = [
   { code: "USD", symbol: "$", name: "US Dollar" },
   { code: "EUR", symbol: "€", name: "Euro" },
   { code: "GBP", symbol: "£", name: "British Pound" },
@@ -24,13 +24,17 @@ export function CurrencySelector() {
   const { currency, setCurrency } = useCurrency();
 
   return (
-    <Select value={currency} onValueChange={setCurrency}>
-      <SelectTrigger className="w-[120px] h-8 text-xs bg-transparent border-muted-foreground/20 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors">
+    <Select value={currency} onValueChange={(value) => setCurrency(value as Currency)}>
+      <SelectTrigger className="w-[160px] h-10 bg-background border-border text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="z-[100] bg-background border-border">
         {currencies.map((curr) => (
-          <SelectItem key={curr.code} value={curr.code} className="text-xs">
+          <SelectItem 
+            key={curr.code} 
+            value={curr.code}
+            className="text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
+          >
             {curr.code} ({curr.symbol})
           </SelectItem>
         ))}

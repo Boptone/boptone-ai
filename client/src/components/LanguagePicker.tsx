@@ -31,12 +31,16 @@ export function LanguagePicker() {
 
   return (
     <Select value={i18n.language} onValueChange={handleLanguageChange}>
-      <SelectTrigger className="w-[140px] h-8 text-xs bg-transparent border-muted-foreground/20 text-muted-foreground hover:text-foreground hover:border-foreground transition-colors">
+      <SelectTrigger className="w-[160px] h-10 bg-background border-border text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="z-[100] bg-background border-border">
         {languages.map((lang) => (
-          <SelectItem key={lang.code} value={lang.code} className="text-xs">
+          <SelectItem 
+            key={lang.code} 
+            value={lang.code}
+            className="text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer"
+          >
             {lang.name}
           </SelectItem>
         ))}

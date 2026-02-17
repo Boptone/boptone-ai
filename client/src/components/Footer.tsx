@@ -4,8 +4,8 @@ import { CurrencySelector } from "./CurrencySelector";
 
 /**
  * Shared Footer Component
- * Light gray background for professional, future-forward aesthetic
- * 4-column layout with large centered BOPTONE logo
+ * Professional footer with clean layout and proper visual hierarchy
+ * Language/currency selectors positioned above bottom bar for clarity
  * Mobile optimized with responsive text sizes and spacing
  * Used across all pages for brand consistency
  */
@@ -142,7 +142,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Large Centered Logo - Mobile Optimized */}
+        {/* Large Centered Logo */}
         <div className="flex justify-center mb-16 md:mb-20">
           <img 
             src="/boptone-logo-transparent.png" 
@@ -150,19 +150,32 @@ export default function Footer() {
             className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto"
           />
         </div>
+
+        {/* Language & Currency Selectors - Above Bottom Bar */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 pb-12 border-b border-border">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-foreground font-medium">Language:</span>
+            <LanguagePicker />
+          </div>
+          <div className="hidden sm:block h-6 w-px bg-border" />
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-foreground font-medium">Currency:</span>
+            <CurrencySelector />
+          </div>
+        </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-border">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="border-t border-border bg-background">
+        <div className="container mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Copyright */}
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>© {currentYear} Boptone, Inc. All rights reserved.</span>
+            <div className="text-sm text-muted-foreground">
+              © {currentYear} Boptone, Inc. All rights reserved.
             </div>
 
             {/* Social Media & Legal Links */}
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            <div className="flex items-center gap-6">
               {/* LinkedIn Icon */}
               <a 
                 href="#" 
@@ -174,21 +187,16 @@ export default function Footer() {
                 </svg>
               </a>
               
-              {/* Legal Links, Language & Currency Selectors */}
-              <div className="flex items-center gap-6 md:gap-8 text-sm">
-                <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Terms
-                </Link>
-                <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy
-                </Link>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Your Privacy Choices
-                </a>
-                <div className="h-4 w-px bg-border" />
-                <LanguagePicker />
-                <CurrencySelector />
-              </div>
+              {/* Legal Links */}
+              <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Terms
+              </Link>
+              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Privacy
+              </Link>
+              <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Your Privacy Choices
+              </a>
             </div>
           </div>
         </div>
