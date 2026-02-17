@@ -1734,3 +1734,6 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Move language/currency pills to bottom footer bar alongside copyright (not underneath logo)
 
 - [x] Fix default currency to USD instead of MXN
+
+- [x] Fix transparent dropdown behind logo (add solid background, increase z-index)
+- [x] Add 'Language:' and 'Currency:' labels before picker pills in footer

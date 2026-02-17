@@ -161,10 +161,16 @@ export default function Footer() {
             </div>
 
             {/* Language & Currency Selectors */}
-            <div className="flex items-center gap-3">
-              <LanguagePicker />
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Language:</span>
+                <LanguagePicker />
+              </div>
               <div className="h-6 w-px bg-border" />
-              <CurrencySelector />
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Currency:</span>
+                <CurrencySelector />
+              </div>
             </div>
           </div>
         </div>

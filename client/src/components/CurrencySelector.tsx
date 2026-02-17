@@ -29,7 +29,7 @@ export function CurrencySelector() {
         <SelectValue />
       </SelectTrigger>
       <SelectContent 
-        className="z-[200] bg-popover border-border"
+        className="z-[9999] bg-background border-border shadow-lg"
         position="popper"
         side="top"
         sideOffset={8}
