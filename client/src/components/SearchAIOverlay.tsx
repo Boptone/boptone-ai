@@ -198,6 +198,33 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                 </Button>
               </div>
               
+              {/* Suggested Questions */}
+              {aiMessages.length === 0 && (
+                <div className="mt-6 mb-4">
+                  <p className="text-sm font-semibold text-gray-700 mb-3">Suggested questions:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      "What's the difference between Free and Pro plans?",
+                      "How does the 90/10 revenue split work?",
+                      "What is BAP streaming?",
+                      "Can I distribute to other platforms?",
+                      "How do I withdraw my earnings?",
+                      "What is Toney AI?",
+                    ].map((question, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setAiInput(question);
+                        }}
+                        className="px-4 py-2 text-sm bg-white border-2 border-gray-300 rounded-full hover:border-black hover:bg-gray-50 transition-all"
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Legal Disclosure */}
               <div className="mt-4 space-y-2">
                 <p className="text-xs text-gray-600 leading-relaxed">

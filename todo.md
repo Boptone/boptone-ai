@@ -1785,3 +1785,8 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Build Boptone knowledge base context for AI responses
 - [x] Update SearchAIOverlay to call AI Chat procedure with streaming
 - [x] Test AI Chat with real LLM responses
+
+## Suggested Questions Feature
+- [x] Design and implement suggested questions UI in SearchAIOverlay
+- [x] Add click handlers to auto-populate input with selected question
+- [x] Test suggested questions feature
