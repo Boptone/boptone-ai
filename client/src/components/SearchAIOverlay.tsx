@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Search as SearchIcon, MessageSquare } from "lucide-react";
+import { X, Search as SearchIcon, MessageSquare, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -96,15 +96,37 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
               </div>
             </div>
 
-            {/* Close Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClose}
-              className="rounded-full w-12 h-12 border-2 border-black hover:bg-gray-100"
-            >
-              <X className="w-5 h-5" />
-            </Button>
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3">
+              {/* Clear Chat Button (only show in AI tab with messages) */}
+              {activeTab === "ai" && aiMessages.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    if (confirm("Clear all messages and start a new conversation?")) {
+                      setAiMessages([]);
+                      setAiInput("");
+                      toast.success("Chat cleared");
+                    }
+                  }}
+                  className="rounded-full px-4 py-2 border-2 border-gray-300 hover:border-black hover:bg-gray-100 text-sm font-medium"
+                >
+                  <RotateCcw className="w-4 h-4 mr-2" />
+                  Clear Chat
+                </Button>
+              )}
+              
+              {/* Close Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onClose}
+                className="rounded-full w-12 h-12 border-2 border-black hover:bg-gray-100"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
