@@ -1740,3 +1740,5 @@ Apply the visually stunning design style from the explainer component across ALL
 
 - [x] Fix dropdown opening behind logo - change positioning to open right/left instead of upward
 - [x] Fix language pill to show English as default (not auto-detected language)
+
+- [x] Redesign navigation with hover-triggered mega menu (icon + title + description, two-column layout)

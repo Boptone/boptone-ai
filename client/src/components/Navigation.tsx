@@ -3,30 +3,107 @@ import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-
+import { 
+  Music, 
+  BarChart3, 
+  ShoppingBag, 
+  Shield, 
+  Heart, 
+  Plane,
+  BookOpen,
+  HelpCircle,
+  FileText,
+  Lock,
+  UserX
+} from "lucide-react";
 
 export function Navigation() {
   const { isAuthenticated, user } = useAuth();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [platformMenuOpen, setPlatformMenuOpen] = useState(false);
-  const [resourcesMenuOpen, setResourcesMenuOpen] = useState(false);
 
-  const platformLinks = [
-    { href: "/features", label: "Features", description: "Explore all platform capabilities" },
-    { href: "/bap", label: "BAP Protocol", description: "Open-source artist data standard" },
-    { href: "/how-it-works", label: "How It Works", description: "See the platform in action" },
-    { href: "/transparency", label: "Transparency", description: "Real-time platform metrics" },
+  const platformItems = [
+    { 
+      icon: Music, 
+      href: "/features", 
+      label: "Distribution", 
+      description: "Distribute music to all major streaming platforms" 
+    },
+    { 
+      icon: BarChart3, 
+      href: "/bap", 
+      label: "Analytics & Insights", 
+      description: "Track performance with actionable data" 
+    },
+    { 
+      icon: ShoppingBag, 
+      href: "/how-it-works", 
+      label: "Direct-to-Fan Commerce", 
+      description: "Sell merchandise and digital downloads" 
+    },
+    { 
+      icon: Shield, 
+      href: "/transparency", 
+      label: "IP Protection", 
+      description: "Copyright monitoring and DMCA takedowns" 
+    },
+    { 
+      icon: Heart, 
+      href: "/features", 
+      label: "Healthcare & Wellness", 
+      description: "Artist-focused health coverage" 
+    },
+    { 
+      icon: Plane, 
+      href: "/features", 
+      label: "Tour Management", 
+      description: "Plan tours and maximize live revenue" 
+    },
   ];
 
-  const resourceLinks = [
-    { href: "/shop", label: "BopShop", description: "Merchandise and artist goods" },
-    { href: "/discover", label: "Discover", description: "Find new music and artists" },
-    { href: "/faq", label: "FAQ", description: "Frequently asked questions" },
-    { href: "/terms", label: "Terms of Service", description: "Platform terms and conditions" },
-    { href: "/privacy", label: "Privacy Policy", description: "How we protect your data" },
-    { href: "/california-notice", label: "California Notice", description: "CCPA privacy rights" },
-    { href: "/opt-out", label: "Opt-Out Choices", description: "Manage your privacy preferences" },
+  const resourceItems = [
+    { 
+      icon: BookOpen, 
+      href: "/shop", 
+      label: "BopShop", 
+      description: "Merchandise and artist goods" 
+    },
+    { 
+      icon: Music, 
+      href: "/discover", 
+      label: "Discover Music", 
+      description: "Find new artists and tracks" 
+    },
+    { 
+      icon: HelpCircle, 
+      href: "/faq", 
+      label: "FAQ", 
+      description: "Frequently asked questions" 
+    },
+    { 
+      icon: FileText, 
+      href: "/terms", 
+      label: "Terms of Service", 
+      description: "Platform terms and conditions" 
+    },
+    { 
+      icon: Lock, 
+      href: "/privacy", 
+      label: "Privacy Policy", 
+      description: "How we protect your data" 
+    },
+    { 
+      icon: FileText, 
+      href: "/california-notice", 
+      label: "California Notice", 
+      description: "CCPA privacy rights" 
+    },
+    { 
+      icon: UserX, 
+      href: "/opt-out", 
+      label: "Opt-Out Choices", 
+      description: "Manage privacy preferences" 
+    },
   ];
 
   return (
@@ -46,56 +123,72 @@ export function Navigation() {
 
           {/* Desktop Navigation - Center */}
           <div className="hidden lg:flex items-center gap-8">
-            {/* Platform Dropdown */}
-            <div className="relative">
+            {/* Platform Mega Menu */}
+            <div className="relative group">
               <button 
-                onClick={() => setPlatformMenuOpen(!platformMenuOpen)}
                 className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
               >
                 Platform
                 <span className="text-xs">▼</span>
               </button>
               
-              {platformMenuOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg z-50">
-                  <div className="p-4 space-y-1">
-                    {platformLinks.map((link) => (
-                      <Link key={link.href} href={link.href}>
-                        <a className="block p-3 hover:bg-gray-100 transition-colors">
-                          <div className="font-medium text-black text-sm">{link.label}</div>
-                          <div className="text-xs text-gray-600 mt-0.5">{link.description}</div>
-                        </a>
-                      </Link>
-                    ))}
+              {/* Mega Menu Dropdown */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[600px] bg-white border border-gray-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="p-8">
+                  <div className="grid grid-cols-2 gap-4">
+                    {platformItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link key={item.href} href={item.href}>
+                          <a className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors group/item">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center group-hover/item:bg-gray-200 transition-colors">
+                              <Icon className="w-5 h-5 text-gray-700" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="font-semibold text-gray-900 text-sm mb-1">{item.label}</div>
+                              <div className="text-xs text-gray-600 leading-relaxed">{item.description}</div>
+                            </div>
+                          </a>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
-            {/* Resources Dropdown */}
-            <div className="relative">
+            {/* Resources Mega Menu */}
+            <div className="relative group">
               <button 
-                onClick={() => setResourcesMenuOpen(!resourcesMenuOpen)}
                 className="text-sm font-medium text-gray-600 hover:text-black transition-colors flex items-center gap-1"
               >
                 Resources
                 <span className="text-xs">▼</span>
               </button>
               
-              {resourcesMenuOpen && (
-                <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-black shadow-lg z-50">
-                  <div className="p-4 space-y-1">
-                    {resourceLinks.map((link) => (
-                      <Link key={link.href} href={link.href}>
-                        <a className="block p-3 hover:bg-gray-100 transition-colors">
-                          <div className="font-medium text-black text-sm">{link.label}</div>
-                          <div className="text-xs text-gray-600 mt-0.5">{link.description}</div>
-                        </a>
-                      </Link>
-                    ))}
+              {/* Mega Menu Dropdown */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[600px] bg-white border border-gray-200 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="p-8">
+                  <div className="grid grid-cols-2 gap-4">
+                    {resourceItems.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link key={item.href} href={item.href}>
+                          <a className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors group/item">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center group-hover/item:bg-gray-200 transition-colors">
+                              <Icon className="w-5 h-5 text-gray-700" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="font-semibold text-gray-900 text-sm mb-1">{item.label}</div>
+                              <div className="text-xs text-gray-600 leading-relaxed">{item.description}</div>
+                            </div>
+                          </a>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Standalone Links */}
@@ -166,13 +259,13 @@ export function Navigation() {
             {/* Platform Section */}
             <div className="space-y-2">
               <div className="text-xs font-bold text-gray-500 uppercase tracking-wider px-2">Platform</div>
-              {platformLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
+              {platformItems.map((item) => (
+                <Link key={item.href} href={item.href}>
                   <a
                     className="block py-2 px-2 text-base font-medium text-gray-600 hover:text-black transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {link.label}
+                    {item.label}
                   </a>
                 </Link>
               ))}
@@ -181,13 +274,13 @@ export function Navigation() {
             {/* Resources Section */}
             <div className="space-y-2 pt-4 border-t-2 border-black">
               <div className="text-xs font-bold text-gray-500 uppercase tracking-wider px-2">Resources</div>
-              {resourceLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
+              {resourceItems.map((item) => (
+                <Link key={item.href} href={item.href}>
                   <a
                     className="block py-2 px-2 text-base font-medium text-gray-600 hover:text-black transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {link.label}
+                    {item.label}
                   </a>
                 </Link>
               ))}
