@@ -5,7 +5,7 @@ import { CurrencySelector } from "./CurrencySelector";
 /**
  * Shared Footer Component
  * Professional footer with 4-column layout, large centered logo, and clean bottom bar
- * Language/currency selectors positioned above bottom bar with proper z-index for dropdowns
+ * Language/currency selectors positioned in bottom bar alongside copyright
  * Mobile optimized with responsive text sizes and spacing
  */
 export default function Footer() {
@@ -149,28 +149,22 @@ export default function Footer() {
             className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto"
           />
         </div>
-
-        {/* Language & Currency Selectors - Above Bottom Bar with proper z-index */}
-        <div className="relative z-10 flex flex-col sm:flex-row justify-center items-center gap-4 mb-12 pb-12 border-b border-border">
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-foreground font-medium">Language:</span>
-            <LanguagePicker />
-          </div>
-          <div className="hidden sm:block h-6 w-px bg-border" />
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-foreground font-medium">Currency:</span>
-            <CurrencySelector />
-          </div>
-        </div>
       </div>
 
-      {/* Bottom Bar - Minimal */}
+      {/* Bottom Bar - Copyright + Language/Currency Pills */}
       <div className="border-t border-border bg-background">
         <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-            {/* Copyright Only */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Copyright */}
             <div className="text-sm text-muted-foreground">
               © {currentYear} Boptone, Inc. All rights reserved.
+            </div>
+
+            {/* Language & Currency Selectors */}
+            <div className="flex items-center gap-3">
+              <LanguagePicker />
+              <div className="h-6 w-px bg-border" />
+              <CurrencySelector />
             </div>
           </div>
         </div>

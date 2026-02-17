@@ -1730,3 +1730,5 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Fix language pill dropdown to display properly (not hidden/cut off)
 - [ ] Fix currency pill dropdown to display properly (not hidden/cut off)
 - [ ] Test both pills and save checkpoint
+
+- [x] Move language/currency pills to bottom footer bar alongside copyright (not underneath logo)
