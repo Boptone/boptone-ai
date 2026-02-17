@@ -1,0 +1,8 @@
+{
+  "query": "ALTER TABLE ai_conversations \nADD COLUMN userId int NULL AFTER id,\nADD COLUMN conversationType enum('public','toney') NOT NULL DEFAULT 'public' AFTER artistId,\nADD COLUMN title varchar(255) NULL AFTER conversationType,\nMODIFY COLUMN artistId int NULL,\nMODIFY COLUMN context enum('career_advice','release_strategy','content_ideas','financial_planning','tour_planning','general','search') NOT NULL;\n\nALTER TABLE ai_conversations\nADD INDEX user_id_idx (userId),\nADD INDEX conversation_type_idx (conversationType);\n\nALTER TABLE ai_conversations\nADD CONSTRAINT ai_conversations_userId_fk FOREIGN KEY (userId) REFERENCES users(id);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE ai_conversations \nADD COLUMN userId int NULL AFTER id,\nADD COLUMN conversationType enum('public','toney') NOT NULL DEFAULT 'public' AFTER artistId,\nADD COLUMN title varchar(255) NULL AFTER conversationType,\nMODIFY COLUMN artistId int NULL,\nMODIFY COLUMN context enum('career_advice','release_strategy','content_ideas','financial_planning','tour_planning','general','search') NOT NULL;\n\nALTER TABLE ai_conversations\nADD INDEX user_id_idx (userId),\nADD INDEX conversation_type_idx (conversationType);\n\nALTER TABLE ai_conversations\nADD CONSTRAINT ai_conversations_userId_fk FOREIGN KEY (userId) REFERENCES users(id);",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1054 (42S22) at line 1: Unknown column 'conversationtype' in 'ai_conversations'"
+  ]
+}

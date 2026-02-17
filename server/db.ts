@@ -881,3 +881,187 @@ export async function updatePayoutStatus(
     throw error;
   }
 }
+
+// ============================================================================
+// TONEY AI CONVERSATIONS (WITH MANDATORY USER ISOLATION)
+// ============================================================================
+
+/**
+ * Get all Toney conversations for a specific user
+ * CRITICAL SECURITY: Always filters by userId to prevent data leakage
+ */
+export async function getToneyConversations(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get Toney conversations: database not available");
+    return [];
+  }
+
+  try {
+    const conversations = await db
+      .select()
+      .from(aiConversations)
+      .where(
+        and(
+          eq(aiConversations.userId, userId),
+          eq(aiConversations.conversationType, "toney")
+        )
+      )
+      .orderBy(desc(aiConversations.updatedAt));
+
+    return conversations;
+  } catch (error) {
+    console.error("[Database] Failed to get Toney conversations:", error);
+    return [];
+  }
+}
+
+/**
+ * Get a single Toney conversation by ID
+ * CRITICAL SECURITY: Always validates userId ownership
+ */
+export async function getToneyConversation(conversationId: number, userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get Toney conversation: database not available");
+    return null;
+  }
+
+  try {
+    const [conversation] = await db
+      .select()
+      .from(aiConversations)
+      .where(
+        and(
+          eq(aiConversations.id, conversationId),
+          eq(aiConversations.userId, userId),
+          eq(aiConversations.conversationType, "toney")
+        )
+      )
+      .limit(1);
+
+    return conversation || null;
+  } catch (error) {
+    console.error("[Database] Failed to get Toney conversation:", error);
+    return null;
+  }
+}
+
+/**
+ * Create a new Toney conversation
+ * CRITICAL SECURITY: userId is mandatory and cannot be null
+ */
+export async function createToneyConversation(
+  userId: number,
+  title?: string,
+  context: "career_advice" | "release_strategy" | "content_ideas" | "financial_planning" | "tour_planning" | "general" = "general"
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create Toney conversation: database not available");
+    return null;
+  }
+
+  try {
+    const [conversation] = await db
+      .insert(aiConversations)
+      .values({
+        userId,
+        conversationType: "toney",
+        title: title || "New Conversation",
+        context,
+        messages: [],
+        tokensUsed: 0,
+      })
+      .$returningId();
+
+    return conversation.id;
+  } catch (error) {
+    console.error("[Database] Failed to create Toney conversation:", error);
+    return null;
+  }
+}
+
+/**
+ * Add a message to a Toney conversation
+ * CRITICAL SECURITY: Validates userId ownership before adding message
+ */
+export async function addToneyMessage(
+  conversationId: number,
+  userId: number,
+  role: "user" | "assistant" | "system",
+  content: string
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot add Toney message: database not available");
+    return false;
+  }
+
+  try {
+    // First verify ownership
+    const conversation = await getToneyConversation(conversationId, userId);
+    if (!conversation) {
+      console.error("[Database] Cannot add message: conversation not found or access denied");
+      return false;
+    }
+
+    // Get current messages
+    const currentMessages = conversation.messages || [];
+    
+    // Add new message
+    const newMessage = {
+      role,
+      content,
+      timestamp: new Date().toISOString(),
+    };
+
+    // Update conversation with new message
+    await db
+      .update(aiConversations)
+      .set({
+        messages: [...currentMessages, newMessage],
+        updatedAt: new Date(),
+      })
+      .where(
+        and(
+          eq(aiConversations.id, conversationId),
+          eq(aiConversations.userId, userId)
+        )
+      );
+
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to add Toney message:", error);
+    return false;
+  }
+}
+
+/**
+ * Delete a Toney conversation
+ * CRITICAL SECURITY: Validates userId ownership before deletion
+ */
+export async function deleteToneyConversation(conversationId: number, userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete Toney conversation: database not available");
+    return false;
+  }
+
+  try {
+    await db
+      .delete(aiConversations)
+      .where(
+        and(
+          eq(aiConversations.id, conversationId),
+          eq(aiConversations.userId, userId),
+          eq(aiConversations.conversationType, "toney")
+        )
+      );
+
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete Toney conversation:", error);
+    return false;
+  }
+}

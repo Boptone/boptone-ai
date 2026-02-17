@@ -14,13 +14,16 @@ import {
   HelpCircle,
   FileText,
   Lock,
-  UserX
+  UserX,
+  Search
 } from "lucide-react";
+import { SearchAIOverlay } from "@/components/SearchAIOverlay";
 
 export function Navigation() {
   const { isAuthenticated, user } = useAuth();
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
 
   const platformItems = [
     { 
@@ -199,20 +202,32 @@ export function Navigation() {
             </Link>
           </div>
 
-          {/* Right Side - Auth */}
+          {/* Right Side - Search + Auth */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* Ask Toney - Always visible */}
-            <Button 
-              variant="ghost" 
-              className="text-sm font-medium hover:bg-gray-100"
-              onClick={() => {
-                // Trigger Toney chatbot to open
-                const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
-                if (toneyButton) toneyButton.click();
-              }}
+            {/* Search Icon */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setSearchOverlayOpen(true)}
+              className="rounded-full w-10 h-10 hover:bg-gray-100"
+              aria-label="Search"
             >
-              Ask Toney
+              <Search className="w-5 h-5" />
             </Button>
+            {/* Ask Toney - Login required */}
+            {isAuthenticated && (
+              <Button 
+                variant="ghost" 
+                className="text-sm font-medium hover:bg-gray-100"
+                onClick={() => {
+                  // Trigger Toney chatbot to open
+                  const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
+                  if (toneyButton) toneyButton.click();
+                }}
+              >
+                Ask Toney
+              </Button>
+            )}
             
             {isAuthenticated ? (
               <>
@@ -251,6 +266,12 @@ export function Navigation() {
           </button>
         </div>
       </div>
+
+      {/* Search/AI Overlay */}
+      <SearchAIOverlay 
+        isOpen={searchOverlayOpen} 
+        onClose={() => setSearchOverlayOpen(false)} 
+      />
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
@@ -298,20 +319,37 @@ export function Navigation() {
               </Link>
             </div>
             
-            {/* Auth Section */}
-            <div className="pt-4 space-y-3 border-t-2 border-black">
-              {/* Ask Toney - Always visible */}
+            {/* Search Section */}
+            <div className="pt-4 border-t-2 border-black">
               <Button
                 variant="ghost"
                 className="w-full justify-start text-base hover:bg-gray-100"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
-                  if (toneyButton) toneyButton.click();
+                  setSearchOverlayOpen(true);
                 }}
               >
-                Ask Toney
+                <Search className="w-5 h-5 mr-2" />
+                Search
               </Button>
+            </div>
+            
+            {/* Auth Section */}
+            <div className="pt-4 space-y-3 border-t-2 border-black">
+              {/* Ask Toney - Login required */}
+              {isAuthenticated && (
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-base hover:bg-gray-100"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    const toneyButton = document.querySelector('[data-toney-trigger]') as HTMLButtonElement;
+                    if (toneyButton) toneyButton.click();
+                  }}
+                >
+                  Ask Toney
+                </Button>
+              )}
               
               {isAuthenticated ? (
                 <>

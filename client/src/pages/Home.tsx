@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getLoginUrl } from "@/const";
 import { StripeCheckout } from "@/components/StripeCheckout";
-import { ToneyChatbot } from "@/components/ToneyChatbot";
+
 import { useDemo } from "@/contexts/DemoContext";
 import { useLocation } from "wouter";
 
@@ -451,7 +451,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ToneyChatbot />
+
     </div>
   );
 }

@@ -1755,3 +1755,15 @@ Apply the visually stunning design style from the explainer component across ALL
 
 - [x] Fix mobile dropdown overlap - change language/currency dropdowns to open downward instead of upward on mobile
 - [x] Reduce footer logo size on mobile - make it crisp and proportional, not wonky
+
+## Toney AI System (Dual Mode)
+- [ ] Create database schema for Toney conversations with user_id isolation
+- [ ] Build public Search/AI Chat overlay component (no name, no personalization)
+- [ ] Add search icon to top navigation that opens overlay
+- [ ] Build Personal Toney system with complete artist data isolation
+- [ ] Implement row-level security - all queries filtered by ctx.user.id
+- [ ] Add Toney greeting with artist name from signup
+- [ ] Store conversation history per user in database
+- [ ] Remove homepage chat bubble (only show for logged-in artists)
+- [ ] Add Toney chat bubble for logged-in artists only
+- [ ] Test security isolation - verify zero data leakage between artists

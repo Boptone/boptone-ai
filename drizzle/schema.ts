@@ -596,23 +596,48 @@ export type HealthcarePlan = typeof healthcarePlans.$inferSelect;
 export type InsertHealthcarePlan = typeof healthcarePlans.$inferInsert;
 
 // ============================================================================
-// AI CONVERSATIONS (CAREER ADVISOR)
+// AI CONVERSATIONS (DUAL SYSTEM: PUBLIC SEARCH/AI CHAT + PERSONAL TONEY)
 // ============================================================================
 
+/**
+ * AI Conversations - Unified table for both public AI chat and personal Toney
+ * CRITICAL SECURITY: 
+ * - Public AI chat: conversationType="public", userId can be null (anonymous)
+ * - Personal Toney: conversationType="toney", userId MUST be set, ALWAYS filter by userId
+ * - Each artist's Toney is completely isolated - zero cross-user data access
+ */
 export const aiConversations = mysqlTable("ai_conversations", {
   id: int("id").autoincrement().primaryKey(),
-  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // User association - REQUIRED for Toney, optional for public chat
+  userId: int("userId").references(() => users.id),
+  artistId: int("artistId").references(() => artistProfiles.id),
+  
+  // Conversation type determines isolation rules
+  conversationType: mysqlEnum("conversationType", ["public", "toney"]).default("public").notNull(),
+  
+  // Conversation title (auto-generated from first message)
+  title: varchar("title", { length: 255 }),
+  
+  // Messages stored as JSON array
   messages: json("messages").$type<Array<{
     role: "user" | "assistant" | "system";
     content: string;
     timestamp: string;
   }>>(),
-  context: mysqlEnum("context", ["career_advice", "release_strategy", "content_ideas", "financial_planning", "tour_planning", "general"]).notNull(),
+  
+  // Context/topic for categorization
+  context: mysqlEnum("context", ["career_advice", "release_strategy", "content_ideas", "financial_planning", "tour_planning", "general", "search"]).notNull(),
+  
+  // Token usage tracking
   tokensUsed: int("tokensUsed").default(0).notNull(),
+  
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
   artistIdIdx: index("artist_id_idx").on(table.artistId),
+  conversationTypeIdx: index("conversation_type_idx").on(table.conversationType),
 }));
 
 export type AIConversation = typeof aiConversations.$inferSelect;
@@ -2675,3 +2700,5 @@ export const flywheelBoosts = mysqlTable("flywheel_boosts", {
 
 export type FlywheelBoost = typeof flywheelBoosts.$inferSelect;
 export type InsertFlywheelBoost = typeof flywheelBoosts.$inferInsert;
+
+

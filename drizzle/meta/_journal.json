@@ -22,6 +22,20 @@
       "when": 1771015417192,
       "tag": "0002_futuristic_metal_master",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1771366689600,
+      "tag": "0003_living_phantom_reporter",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1771366774834,
+      "tag": "0004_swift_scalphunter",
+      "breakpoints": true
     }
   ]
 }

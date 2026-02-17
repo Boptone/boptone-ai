@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE ai_conversations ADD COLUMN title varchar(255) NULL AFTER conversationType;\nALTER TABLE ai_conversations MODIFY COLUMN artistId int NULL;\nALTER TABLE ai_conversations MODIFY COLUMN context enum('career_advice','release_strategy','content_ideas','financial_planning','tour_planning','general','search') NOT NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE ai_conversations ADD COLUMN title varchar(255) NULL AFTER conversationType;\nALTER TABLE ai_conversations MODIFY COLUMN artistId int NULL;\nALTER TABLE ai_conversations MODIFY COLUMN context enum('career_advice','release_strategy','content_ideas','financial_planning','tour_planning','general','search') NOT NULL;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 648
+}

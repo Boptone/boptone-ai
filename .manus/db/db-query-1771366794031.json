@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE ai_conversations ADD COLUMN conversationType enum('public','toney') NOT NULL DEFAULT 'public' AFTER artistId;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE ai_conversations ADD COLUMN conversationType enum('public','toney') NOT NULL DEFAULT 'public' AFTER artistId;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 439
+}
