@@ -1737,3 +1737,6 @@ Apply the visually stunning design style from the explainer component across ALL
 
 - [x] Fix transparent dropdown behind logo (add solid background, increase z-index)
 - [x] Add 'Language:' and 'Currency:' labels before picker pills in footer
+
+- [x] Fix dropdown opening behind logo - change positioning to open right/left instead of upward
+- [x] Fix language pill to show English as default (not auto-detected language)

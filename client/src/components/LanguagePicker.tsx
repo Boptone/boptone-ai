@@ -37,7 +37,8 @@ export function LanguagePicker() {
       <SelectContent 
         className="z-[9999] bg-background border-border shadow-lg"
         position="popper"
-        side="top"
+        side="right"
+        align="end"
         sideOffset={8}
       >
         {languages.map((lang) => (
