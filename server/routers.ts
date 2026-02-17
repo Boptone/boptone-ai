@@ -18,6 +18,7 @@ import { musicRouter } from "./routers/music";
 import { payoutsRouter } from "./routers/payouts";
 import { workflowsRouter } from "./routers/workflows";
 import { toneyRouter } from "./routers/toney";
+import { aiChatRouter } from "./routers/aiChat";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -684,6 +685,9 @@ export const appRouter = router({
 
   // Toney AI Assistant
   toney: toneyRouter,
+
+  // Public AI Chat (no login required)
+  aiChat: aiChatRouter,
 });
 
 export type AppRouter = typeof appRouter;

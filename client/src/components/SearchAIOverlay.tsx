@@ -3,6 +3,8 @@ import { X, Search as SearchIcon, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 interface SearchAIOverlayProps {
   isOpen: boolean;
@@ -14,6 +16,9 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [aiMessages, setAiMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
   const [aiInput, setAiInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const sendMessageMutation = trpc.aiChat.sendMessage.useMutation();
 
   if (!isOpen) return null;
 
@@ -23,26 +28,38 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
     console.log("Search query:", searchQuery);
   };
 
-  const handleAISubmit = (e: React.FormEvent) => {
+  const handleAISubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!aiInput.trim()) return;
+    if (!aiInput.trim() || isLoading) return;
 
-    // Add user message
     const userMessage = { role: "user" as const, content: aiInput };
-    setAiMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...aiMessages, userMessage];
+    setAiMessages(updatedMessages);
     setAiInput("");
+    setIsLoading(true);
 
-    // TODO: Call AI API and add assistant response
-    // For now, just a placeholder
-    setTimeout(() => {
-      setAiMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: "I'm here to help! This is a placeholder response. The AI chat will be connected soon.",
-        },
-      ]);
-    }, 500);
+    try {
+      const response = await sendMessageMutation.mutateAsync({
+        messages: updatedMessages,
+      });
+
+      if (response.success) {
+        setAiMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: String(response.message),
+          },
+        ]);
+      } else {
+        toast.error("Failed to get AI response. Please try again.");
+      }
+    } catch (error) {
+      console.error("AI Chat error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -163,6 +180,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   placeholder="Type your question..."
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
+                  disabled={isLoading}
                   className="flex-1 min-h-[60px] max-h-[200px] border-2 border-black rounded-2xl resize-none"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
@@ -174,9 +192,9 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                 <Button
                   type="submit"
                   className="h-[60px] px-8 bg-black text-white hover:bg-gray-800 rounded-full font-semibold"
-                  disabled={!aiInput.trim()}
+                  disabled={!aiInput.trim() || isLoading}
                 >
-                  Send
+                  {isLoading ? "Thinking..." : "Send"}
                 </Button>
               </div>
               

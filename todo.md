@@ -1779,3 +1779,9 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Replace search icon with chat bubble icon in Navigation
 - [x] Set AI Chat as default tab when overlay opens
 - [x] Change active tab styling to black background with white text (remove cyan outline)
+
+## AI Chat LLM Integration
+- [x] Create tRPC procedure for AI Chat with LLM integration
+- [x] Build Boptone knowledge base context for AI responses
+- [x] Update SearchAIOverlay to call AI Chat procedure with streaming
+- [x] Test AI Chat with real LLM responses
