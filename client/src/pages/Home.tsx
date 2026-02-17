@@ -166,23 +166,19 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl leading-relaxed">
-              The complete operating system for artists. Distribution, analytics, financial tools, and career guidance in one platform.
+              Boptone is the all-in-one platform built for independent artists at every stage.
+              Distribution, analytics, and financial tools—designed to help you grow.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="rounded-full bg-black text-white hover:bg-gray-800 text-lg h-14 px-8"
+                className="rounded-full bg-black text-white hover:bg-gray-800 text-lg h-14 px-8 relative"
+                style={{
+                  boxShadow: '4px 4px 0px #81e6fe'
+                }}
                 onClick={() => window.location.href = getLoginUrl()}
               >
                 Get Started Free
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="rounded-full border-2 border-black text-black hover:bg-gray-50 text-lg h-14 px-8"
-                onClick={handleDemoClick}
-              >
-                View Demo
               </Button>
             </div>
           </div>

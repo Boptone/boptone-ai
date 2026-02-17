@@ -1742,3 +1742,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Fix language pill to show English as default (not auto-detected language)
 
 - [x] Redesign navigation with hover-triggered mega menu (icon + title + description, two-column layout)
+
+- [x] Add solid cyan shadow (#81e6fe) to Get Started Free button in hero section
+- [x] Remove View Demo button from hero section
+- [x] Update platform description to new copy about independent artists
