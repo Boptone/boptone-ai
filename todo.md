@@ -1750,3 +1750,5 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add cyan shadow to Get Started Free button in black CTA section
 
 - [x] Fix transparent dropdown backgrounds in language/currency selectors - add solid white background and proper borders
+
+- [x] Optimize footer layout for mobile - adjust language/currency selector positioning and sizing for smaller screens

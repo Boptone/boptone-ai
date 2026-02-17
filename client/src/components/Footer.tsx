@@ -154,21 +154,21 @@ export default function Footer() {
       {/* Bottom Bar - Copyright + Language/Currency Pills */}
       <div className="border-t border-border bg-background">
         <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Copyright */}
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground text-center md:text-left">
               © {currentYear} Boptone, Inc. All rights reserved.
             </div>
 
-            {/* Language & Currency Selectors */}
-            <div className="flex items-center gap-6">
+            {/* Language & Currency Selectors - Mobile Optimized */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Language:</span>
+                <span className="text-sm text-muted-foreground whitespace-nowrap">Language:</span>
                 <LanguagePicker />
               </div>
-              <div className="h-6 w-px bg-border" />
+              <div className="hidden sm:block h-6 w-px bg-border" />
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Currency:</span>
+                <span className="text-sm text-muted-foreground whitespace-nowrap">Currency:</span>
                 <CurrencySelector />
               </div>
             </div>
