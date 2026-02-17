@@ -23,6 +23,10 @@ export function Navigation() {
     { href: "/shop", label: "BopShop", description: "Merchandise and artist goods" },
     { href: "/discover", label: "Discover", description: "Find new music and artists" },
     { href: "/faq", label: "FAQ", description: "Frequently asked questions" },
+    { href: "/terms", label: "Terms of Service", description: "Platform terms and conditions" },
+    { href: "/privacy", label: "Privacy Policy", description: "How we protect your data" },
+    { href: "/california-notice", label: "California Notice", description: "CCPA privacy rights" },
+    { href: "/opt-out", label: "Opt-Out Choices", description: "Manage your privacy preferences" },
   ];
 
   return (

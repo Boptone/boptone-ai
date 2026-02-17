@@ -1712,3 +1712,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Improve layout spacing and visual hierarchy
 - [x] Make selectors look professional like Tidal/Spotify
 - [ ] Test footer appearance and save checkpoint
+
+## Ultra-Minimal Footer Redesign (User Request - HIGH PRIORITY)
+
+- [x] Remove all 4 link columns (Platform, Resources, For Artists, Legal)
+- [x] Remove giant Boptone logo from footer
+- [x] Create single horizontal bar with copyright left, language/currency right
+- [x] Add California Notice to Resources navigation
+- [x] Add Opt-Out Choices to Resources navigation
+- [ ] Test footer appearance and save checkpoint
