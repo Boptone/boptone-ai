@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "Plataforma",
+    "resources": "Recursos",
+    "pricing": "Preços",
+    "features": "Recursos",
+    "bap_protocol": "Protocolo BAP",
+    "how_it_works": "Como Funciona",
+    "transparency": "Transparência",
+    "bopshop": "BopShop",
+    "discover": "Descobrir",
+    "faq": "Perguntas Frequentes",
+    "sign_in": "Entrar",
+    "get_started": "Começar"
+  },
+  "hero": {
+    "title": "Seu Tom.",
+    "subtitle": "Seus Termos.",
+    "description": "O sistema operacional autônomo para criadores. Otimização de carreira com IA, distribuição global e comércio direto com fãs—tudo em uma plataforma.",
+    "cta_primary": "Iniciar Teste Gratuito",
+    "cta_secondary": "Assistir Demo"
+  },
+  "pricing": {
+    "title": "Preços Simples e Transparentes",
+    "subtitle": "Sem taxas ocultas. Sem barreiras. Apenas tarifas justas para criadores.",
+    "free_tier": "Grátis Para Sempre",
+    "free_description": "Perfeito para começar",
+    "free_features": [
+      "Uploads de música ilimitados",
+      "Distribuição básica",
+      "Página de perfil de artista",
+      "Acesso à comunidade"
+    ],
+    "pro_tier": "Pro",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "Para criadores sérios",
+    "pro_features": [
+      "Tudo no Grátis",
+      "Distribuição global (mais de 200 plataformas)",
+      "Otimização de carreira com IA",
+      "Suporte prioritário",
+      "Análises avançadas",
+      "Comércio direto com fãs"
+    ],
+    "per_month": "/mês",
+    "billed_monthly": "Cobrado mensalmente",
+    "billed_yearly": "Cobrado anualmente",
+    "choose_plan": "Escolher Plano"
+  },
+  "footer": {
+    "tagline": "O sistema operacional autônomo para criadores",
+    "product": "Produto",
+    "company": "Empresa",
+    "legal": "Legal",
+    "terms": "Termos",
+    "privacy": "Privacidade",
+    "privacy_choices": "Suas Escolhas de Privacidade",
+    "all_rights_reserved": "Todos os direitos reservados."
+  },
+  "auth": {
+    "sign_up": "Cadastrar-se",
+    "sign_in": "Entrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "confirm_password": "Confirmar Senha",
+    "forgot_password": "Esqueceu a Senha?",
+    "reset_password": "Redefinir Senha",
+    "send_code": "Enviar Código",
+    "verify_code": "Verificar Código",
+    "verification_code": "Código de Verificação",
+    "continue": "Continuar",
+    "back_to_login": "Voltar ao Login"
+  }
+}

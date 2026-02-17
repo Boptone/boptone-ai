@@ -1,4 +1,6 @@
 import { Link } from "wouter";
+import { LanguagePicker } from "./LanguagePicker";
+import { CurrencySelector } from "./CurrencySelector";
 
 /**
  * Shared Footer Component
@@ -172,7 +174,7 @@ export default function Footer() {
                 </svg>
               </a>
               
-              {/* Legal Links */}
+              {/* Legal Links, Language & Currency Selectors */}
               <div className="flex items-center gap-6 md:gap-8 text-sm">
                 <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
                   Terms
@@ -181,11 +183,11 @@ export default function Footer() {
                   Privacy
                 </Link>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Privacy Center
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Your Privacy Choices
                 </a>
+                <div className="h-4 w-px bg-border" />
+                <LanguagePicker />
+                <CurrencySelector />
               </div>
             </div>
           </div>

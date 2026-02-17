@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "Platform",
+    "resources": "Resources",
+    "pricing": "Pricing",
+    "features": "Features",
+    "bap_protocol": "BAP Protocol",
+    "how_it_works": "How It Works",
+    "transparency": "Transparency",
+    "bopshop": "BopShop",
+    "discover": "Discover",
+    "faq": "FAQ",
+    "sign_in": "Sign In",
+    "get_started": "Get Started"
+  },
+  "hero": {
+    "title": "Your Tone.",
+    "subtitle": "Your Terms.",
+    "description": "The autonomous operating system for creators. AI-powered career optimization, global distribution, and direct-to-fan commerce—all in one platform.",
+    "cta_primary": "Start Free Trial",
+    "cta_secondary": "Watch Demo"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "No hidden fees. No gatekeeping. Just fair rates for creators.",
+    "free_tier": "Free Forever",
+    "free_description": "Perfect for getting started",
+    "free_features": [
+      "Unlimited music uploads",
+      "Basic distribution",
+      "Artist profile page",
+      "Community access"
+    ],
+    "pro_tier": "Pro",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "For serious creators",
+    "pro_features": [
+      "Everything in Free",
+      "Global distribution (200+ platforms)",
+      "AI career optimization",
+      "Priority support",
+      "Advanced analytics",
+      "Direct-to-fan commerce"
+    ],
+    "per_month": "/month",
+    "billed_monthly": "Billed monthly",
+    "billed_yearly": "Billed yearly",
+    "choose_plan": "Choose Plan"
+  },
+  "footer": {
+    "tagline": "The autonomous operating system for creators",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "privacy_choices": "Your Privacy Choices",
+    "all_rights_reserved": "All rights reserved."
+  },
+  "auth": {
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "forgot_password": "Forgot Password?",
+    "reset_password": "Reset Password",
+    "send_code": "Send Code",
+    "verify_code": "Verify Code",
+    "verification_code": "Verification Code",
+    "continue": "Continue",
+    "back_to_login": "Back to Login"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "プラットフォーム",
+    "resources": "リソース",
+    "pricing": "料金",
+    "features": "機能",
+    "bap_protocol": "BAPプロトコル",
+    "how_it_works": "仕組み",
+    "transparency": "透明性",
+    "bopshop": "BopShop",
+    "discover": "発見",
+    "faq": "よくある質問",
+    "sign_in": "ログイン",
+    "get_started": "始める"
+  },
+  "hero": {
+    "title": "あなたのトーン。",
+    "subtitle": "あなたの条件。",
+    "description": "クリエイターのための自律型オペレーティングシステム。AIによるキャリア最適化、グローバル配信、ファンとの直接取引—すべて1つのプラットフォームで。",
+    "cta_primary": "無料トライアルを開始",
+    "cta_secondary": "デモを見る"
+  },
+  "pricing": {
+    "title": "シンプルで透明な料金",
+    "subtitle": "隠れた料金なし。障壁なし。クリエイターのための公正な料金のみ。",
+    "free_tier": "永久無料",
+    "free_description": "始めるのに最適",
+    "free_features": [
+      "無制限の音楽アップロード",
+      "基本配信",
+      "アーティストプロフィールページ",
+      "コミュニティアクセス"
+    ],
+    "pro_tier": "プロ",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "本格的なクリエイター向け",
+    "pro_features": [
+      "無料のすべて",
+      "グローバル配信（200以上のプラットフォーム）",
+      "AIキャリア最適化",
+      "優先サポート",
+      "高度な分析",
+      "ファンとの直接取引"
+    ],
+    "per_month": "/月",
+    "billed_monthly": "月次請求",
+    "billed_yearly": "年次請求",
+    "choose_plan": "プランを選択"
+  },
+  "footer": {
+    "tagline": "クリエイターのための自律型オペレーティングシステム",
+    "product": "製品",
+    "company": "会社",
+    "legal": "法的情報",
+    "terms": "利用規約",
+    "privacy": "プライバシー",
+    "privacy_choices": "プライバシー選択",
+    "all_rights_reserved": "全著作権所有。"
+  },
+  "auth": {
+    "sign_up": "サインアップ",
+    "sign_in": "ログイン",
+    "email": "メール",
+    "password": "パスワード",
+    "confirm_password": "パスワード確認",
+    "forgot_password": "パスワードをお忘れですか？",
+    "reset_password": "パスワードリセット",
+    "send_code": "コードを送信",
+    "verify_code": "コードを確認",
+    "verification_code": "確認コード",
+    "continue": "続ける",
+    "back_to_login": "ログインに戻る"
+  }
+}

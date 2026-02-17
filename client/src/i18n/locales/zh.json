@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "平台",
+    "resources": "资源",
+    "pricing": "定价",
+    "features": "功能",
+    "bap_protocol": "BAP协议",
+    "how_it_works": "工作原理",
+    "transparency": "透明度",
+    "bopshop": "BopShop",
+    "discover": "发现",
+    "faq": "常见问题",
+    "sign_in": "登录",
+    "get_started": "开始"
+  },
+  "hero": {
+    "title": "你的音调。",
+    "subtitle": "你的条款。",
+    "description": "创作者的自主操作系统。AI驱动的职业优化、全球分发和直接面向粉丝的商务—全部在一个平台上。",
+    "cta_primary": "开始免费试用",
+    "cta_secondary": "观看演示"
+  },
+  "pricing": {
+    "title": "简单透明的定价",
+    "subtitle": "没有隐藏费用。没有障碍。只有对创作者公平的费率。",
+    "free_tier": "永久免费",
+    "free_description": "非常适合入门",
+    "free_features": [
+      "无限音乐上传",
+      "基本分发",
+      "艺术家个人资料页面",
+      "社区访问"
+    ],
+    "pro_tier": "专业版",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "适合认真的创作者",
+    "pro_features": [
+      "免费版的所有功能",
+      "全球分发（200多个平台）",
+      "AI职业优化",
+      "优先支持",
+      "高级分析",
+      "直接面向粉丝的商务"
+    ],
+    "per_month": "/月",
+    "billed_monthly": "按月计费",
+    "billed_yearly": "按年计费",
+    "choose_plan": "选择计划"
+  },
+  "footer": {
+    "tagline": "创作者的自主操作系统",
+    "product": "产品",
+    "company": "公司",
+    "legal": "法律",
+    "terms": "条款",
+    "privacy": "隐私",
+    "privacy_choices": "您的隐私选择",
+    "all_rights_reserved": "版权所有。"
+  },
+  "auth": {
+    "sign_up": "注册",
+    "sign_in": "登录",
+    "email": "电子邮件",
+    "password": "密码",
+    "confirm_password": "确认密码",
+    "forgot_password": "忘记密码？",
+    "reset_password": "重置密码",
+    "send_code": "发送验证码",
+    "verify_code": "验证码",
+    "verification_code": "验证码",
+    "continue": "继续",
+    "back_to_login": "返回登录"
+  }
+}

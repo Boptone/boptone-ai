@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "Plattform",
+    "resources": "Ressourcen",
+    "pricing": "Preise",
+    "features": "Funktionen",
+    "bap_protocol": "BAP-Protokoll",
+    "how_it_works": "Wie Es Funktioniert",
+    "transparency": "Transparenz",
+    "bopshop": "BopShop",
+    "discover": "Entdecken",
+    "faq": "FAQ",
+    "sign_in": "Anmelden",
+    "get_started": "Loslegen"
+  },
+  "hero": {
+    "title": "Dein Ton.",
+    "subtitle": "Deine Bedingungen.",
+    "description": "Das autonome Betriebssystem für Kreative. KI-gestützte Karriereoptimierung, globale Distribution und direkter Fan-Commerce—alles auf einer Plattform.",
+    "cta_primary": "Kostenlose Testversion Starten",
+    "cta_secondary": "Demo Ansehen"
+  },
+  "pricing": {
+    "title": "Einfache, Transparente Preise",
+    "subtitle": "Keine versteckten Gebühren. Keine Barrieren. Nur faire Preise für Kreative.",
+    "free_tier": "Für Immer Kostenlos",
+    "free_description": "Perfekt zum Einstieg",
+    "free_features": [
+      "Unbegrenzte Musik-Uploads",
+      "Basis-Distribution",
+      "Künstler-Profilseite",
+      "Community-Zugang"
+    ],
+    "pro_tier": "Pro",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "Für ernsthafte Kreative",
+    "pro_features": [
+      "Alles in Kostenlos",
+      "Globale Distribution (über 200 Plattformen)",
+      "KI-Karriereoptimierung",
+      "Prioritäts-Support",
+      "Erweiterte Analysen",
+      "Direkter Fan-Commerce"
+    ],
+    "per_month": "/Monat",
+    "billed_monthly": "Monatlich abgerechnet",
+    "billed_yearly": "Jährlich abgerechnet",
+    "choose_plan": "Plan Wählen"
+  },
+  "footer": {
+    "tagline": "Das autonome Betriebssystem für Kreative",
+    "product": "Produkt",
+    "company": "Unternehmen",
+    "legal": "Rechtliches",
+    "terms": "Bedingungen",
+    "privacy": "Datenschutz",
+    "privacy_choices": "Ihre Datenschutzoptionen",
+    "all_rights_reserved": "Alle Rechte vorbehalten."
+  },
+  "auth": {
+    "sign_up": "Registrieren",
+    "sign_in": "Anmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirm_password": "Passwort Bestätigen",
+    "forgot_password": "Passwort Vergessen?",
+    "reset_password": "Passwort Zurücksetzen",
+    "send_code": "Code Senden",
+    "verify_code": "Code Überprüfen",
+    "verification_code": "Verifizierungscode",
+    "continue": "Weiter",
+    "back_to_login": "Zurück zum Login"
+  }
+}

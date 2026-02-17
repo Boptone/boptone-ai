@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "Plataforma",
+    "resources": "Recursos",
+    "pricing": "Precios",
+    "features": "Características",
+    "bap_protocol": "Protocolo BAP",
+    "how_it_works": "Cómo Funciona",
+    "transparency": "Transparencia",
+    "bopshop": "BopShop",
+    "discover": "Descubrir",
+    "faq": "Preguntas Frecuentes",
+    "sign_in": "Iniciar Sesión",
+    "get_started": "Comenzar"
+  },
+  "hero": {
+    "title": "Tu Tono.",
+    "subtitle": "Tus Términos.",
+    "description": "El sistema operativo autónomo para creadores. Optimización de carrera impulsada por IA, distribución global y comercio directo con fans, todo en una plataforma.",
+    "cta_primary": "Comenzar Prueba Gratuita",
+    "cta_secondary": "Ver Demo"
+  },
+  "pricing": {
+    "title": "Precios Simples y Transparentes",
+    "subtitle": "Sin tarifas ocultas. Sin barreras. Solo tarifas justas para creadores.",
+    "free_tier": "Gratis Para Siempre",
+    "free_description": "Perfecto para comenzar",
+    "free_features": [
+      "Subidas de música ilimitadas",
+      "Distribución básica",
+      "Página de perfil de artista",
+      "Acceso a la comunidad"
+    ],
+    "pro_tier": "Pro",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "Para creadores serios",
+    "pro_features": [
+      "Todo en Gratis",
+      "Distribución global (más de 200 plataformas)",
+      "Optimización de carrera con IA",
+      "Soporte prioritario",
+      "Análisis avanzados",
+      "Comercio directo con fans"
+    ],
+    "per_month": "/mes",
+    "billed_monthly": "Facturado mensualmente",
+    "billed_yearly": "Facturado anualmente",
+    "choose_plan": "Elegir Plan"
+  },
+  "footer": {
+    "tagline": "El sistema operativo autónomo para creadores",
+    "product": "Producto",
+    "company": "Empresa",
+    "legal": "Legal",
+    "terms": "Términos",
+    "privacy": "Privacidad",
+    "privacy_choices": "Tus Opciones de Privacidad",
+    "all_rights_reserved": "Todos los derechos reservados."
+  },
+  "auth": {
+    "sign_up": "Registrarse",
+    "sign_in": "Iniciar Sesión",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirm_password": "Confirmar Contraseña",
+    "forgot_password": "¿Olvidaste tu Contraseña?",
+    "reset_password": "Restablecer Contraseña",
+    "send_code": "Enviar Código",
+    "verify_code": "Verificar Código",
+    "verification_code": "Código de Verificación",
+    "continue": "Continuar",
+    "back_to_login": "Volver al Inicio de Sesión"
+  }
+}

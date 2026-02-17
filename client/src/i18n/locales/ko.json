@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "플랫폼",
+    "resources": "리소스",
+    "pricing": "가격",
+    "features": "기능",
+    "bap_protocol": "BAP 프로토콜",
+    "how_it_works": "작동 방식",
+    "transparency": "투명성",
+    "bopshop": "BopShop",
+    "discover": "발견",
+    "faq": "자주 묻는 질문",
+    "sign_in": "로그인",
+    "get_started": "시작하기"
+  },
+  "hero": {
+    "title": "당신의 톤.",
+    "subtitle": "당신의 조건.",
+    "description": "크리에이터를 위한 자율 운영 시스템. AI 기반 경력 최적화, 글로벌 배포, 팬과의 직접 거래—모두 하나의 플랫폼에서.",
+    "cta_primary": "무료 체험 시작",
+    "cta_secondary": "데모 보기"
+  },
+  "pricing": {
+    "title": "간단하고 투명한 가격",
+    "subtitle": "숨겨진 수수료 없음. 장벽 없음. 크리에이터를 위한 공정한 요금만.",
+    "free_tier": "영원히 무료",
+    "free_description": "시작하기에 완벽",
+    "free_features": [
+      "무제한 음악 업로드",
+      "기본 배포",
+      "아티스트 프로필 페이지",
+      "커뮤니티 액세스"
+    ],
+    "pro_tier": "프로",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "진지한 크리에이터를 위한",
+    "pro_features": [
+      "무료의 모든 것",
+      "글로벌 배포 (200개 이상의 플랫폼)",
+      "AI 경력 최적화",
+      "우선 지원",
+      "고급 분석",
+      "팬과의 직접 거래"
+    ],
+    "per_month": "/월",
+    "billed_monthly": "월별 청구",
+    "billed_yearly": "연간 청구",
+    "choose_plan": "플랜 선택"
+  },
+  "footer": {
+    "tagline": "크리에이터를 위한 자율 운영 시스템",
+    "product": "제품",
+    "company": "회사",
+    "legal": "법적 고지",
+    "terms": "약관",
+    "privacy": "개인정보",
+    "privacy_choices": "개인정보 선택",
+    "all_rights_reserved": "모든 권리 보유."
+  },
+  "auth": {
+    "sign_up": "가입하기",
+    "sign_in": "로그인",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirm_password": "비밀번호 확인",
+    "forgot_password": "비밀번호를 잊으셨나요?",
+    "reset_password": "비밀번호 재설정",
+    "send_code": "코드 전송",
+    "verify_code": "코드 확인",
+    "verification_code": "확인 코드",
+    "continue": "계속",
+    "back_to_login": "로그인으로 돌아가기"
+  }
+}

@@ -1690,3 +1690,17 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Document rate limit management
 - [ ] Document fallback strategy
 - [ ] Add monitoring for API failures
+
+
+## 🐛 Missing Features After Deployment (URGENT)
+
+- [ ] Check Footer.tsx for LanguagePicker and CurrencySelector imports
+- [ ] Check Home.tsx for hero headline font-extrabold class
+- [ ] Restore LanguagePicker component to Footer
+- [ ] Restore CurrencySelector component to Footer
+- [ ] Fix hero headline to use text-8xl font-extrabold
+- [ ] Test language picker functionality
+- [ ] Test currency selector functionality
+- [ ] Test hero headline boldness
+- [ ] Create new checkpoint with all features intact
+- [ ] Redeploy to production

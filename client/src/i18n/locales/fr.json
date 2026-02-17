@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "platform": "Plateforme",
+    "resources": "Ressources",
+    "pricing": "Tarifs",
+    "features": "Fonctionnalités",
+    "bap_protocol": "Protocole BAP",
+    "how_it_works": "Comment Ça Marche",
+    "transparency": "Transparence",
+    "bopshop": "BopShop",
+    "discover": "Découvrir",
+    "faq": "FAQ",
+    "sign_in": "Se Connecter",
+    "get_started": "Commencer"
+  },
+  "hero": {
+    "title": "Votre Ton.",
+    "subtitle": "Vos Conditions.",
+    "description": "Le système d'exploitation autonome pour les créateurs. Optimisation de carrière par IA, distribution mondiale et commerce direct avec les fans—le tout sur une seule plateforme.",
+    "cta_primary": "Démarrer l'Essai Gratuit",
+    "cta_secondary": "Voir la Démo"
+  },
+  "pricing": {
+    "title": "Tarifs Simples et Transparents",
+    "subtitle": "Pas de frais cachés. Pas de barrières. Juste des tarifs équitables pour les créateurs.",
+    "free_tier": "Gratuit Pour Toujours",
+    "free_description": "Parfait pour commencer",
+    "free_features": [
+      "Téléchargements de musique illimités",
+      "Distribution de base",
+      "Page de profil d'artiste",
+      "Accès à la communauté"
+    ],
+    "pro_tier": "Pro",
+    "pro_price_monthly": "150",
+    "pro_price_yearly": "50",
+    "pro_description": "Pour les créateurs sérieux",
+    "pro_features": [
+      "Tout dans Gratuit",
+      "Distribution mondiale (plus de 200 plateformes)",
+      "Optimisation de carrière par IA",
+      "Support prioritaire",
+      "Analyses avancées",
+      "Commerce direct avec les fans"
+    ],
+    "per_month": "/mois",
+    "billed_monthly": "Facturé mensuellement",
+    "billed_yearly": "Facturé annuellement",
+    "choose_plan": "Choisir le Plan"
+  },
+  "footer": {
+    "tagline": "Le système d'exploitation autonome pour les créateurs",
+    "product": "Produit",
+    "company": "Entreprise",
+    "legal": "Légal",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "privacy_choices": "Vos Choix de Confidentialité",
+    "all_rights_reserved": "Tous droits réservés."
+  },
+  "auth": {
+    "sign_up": "S'inscrire",
+    "sign_in": "Se Connecter",
+    "email": "E-mail",
+    "password": "Mot de Passe",
+    "confirm_password": "Confirmer le Mot de Passe",
+    "forgot_password": "Mot de Passe Oublié?",
+    "reset_password": "Réinitialiser le Mot de Passe",
+    "send_code": "Envoyer le Code",
+    "verify_code": "Vérifier le Code",
+    "verification_code": "Code de Vérification",
+    "continue": "Continuer",
+    "back_to_login": "Retour à la Connexion"
+  }
+}
