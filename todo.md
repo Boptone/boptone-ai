@@ -1767,3 +1767,10 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Remove homepage chat bubble (only show for logged-in artists)
 - [ ] Add Toney chat bubble for logged-in artists only
 - [ ] Test security isolation - verify zero data leakage between artists
+
+## Add AI Chat Legal Disclosure (User Request - COMPLIANCE REQUIREMENT)
+
+- [x] Add legal disclosure below AI Chat input field with links to TOS and Privacy Policy
+- [x] Update Terms of Service with AI chatbot usage terms
+- [x] Update Privacy Policy with AI data collection and processing language for public AI chat
+

@@ -179,9 +179,23 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   Send
                 </Button>
               </div>
-              <p className="text-xs text-gray-500 mt-2">
-                This is a public AI chat. No personalization or login required.
-              </p>
+              
+              {/* Legal Disclosure */}
+              <div className="mt-4 space-y-2">
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  You are being connected to our automated chatbot which utilizes generative AI. By continuing, you recognize that Boptone's{" "}
+                  <a href="/privacy" className="underline hover:text-black transition-colors">
+                    Privacy Notice
+                  </a>{" "}
+                  applies to your use of this tool and you agree to Boptone's AI terms of use located in our{" "}
+                  <a href="/terms" className="underline hover:text-black transition-colors">
+                    Terms of Service
+                  </a>.
+                </p>
+                <p className="text-xs text-gray-500 text-center">
+                  This is a public AI chat. No personalization or login required.
+                </p>
+              </div>
             </form>
           </div>
         )}

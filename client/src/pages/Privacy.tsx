@@ -105,6 +105,29 @@ export default function Privacy() {
                 <p className="mb-4">
                   In certain circumstances, we may collect sensitive personal information, including financial account credentials, precise geolocation data, health information (for healthcare enrollment), government-issued identification numbers (for tax compliance and loan underwriting), and biometric data (for voice analysis in IP protection). We collect sensitive information only with your explicit consent and process it in accordance with applicable laws. You have the right to limit our use of sensitive personal information as described in Section 9 below.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">2.5 AI Chat and AI-Powered Features</h3>
+                <p className="mb-4">
+                  When you use our AI-powered features, including the AI Chat service, we collect and process the following information:
+                </p>
+                <p className="mb-2">
+                  <strong>Chat Inputs and Outputs:</strong> All messages, questions, and prompts you submit to the AI Chat, along with the AI-generated responses. This data is collected to provide the service, improve AI model accuracy, and enhance user experience.
+                </p>
+                <p className="mb-2">
+                  <strong>Conversation Metadata:</strong> Timestamps, conversation duration, session identifiers, and interaction patterns. We use this data to monitor service performance, detect abuse, and improve the AI system.
+                </p>
+                <p className="mb-2">
+                  <strong>User Identification (Optional):</strong> For logged-in users, we may associate AI Chat conversations with your account to provide personalized responses and maintain conversation history. For anonymous users, we collect only session-level data without linking it to a specific account.
+                </p>
+                <p className="mb-4">
+                  <strong>Training and Improvement:</strong> Your AI Chat interactions may be used to train, test, and improve our AI models and services. We implement safeguards to remove personally identifiable information before using data for model training. You can opt out of having your data used for AI training by contacting us at hello@boptone.com.
+                </p>
+                <p className="mb-4">
+                  <strong>Third-Party AI Providers:</strong> We use third-party AI service providers (such as OpenAI, Anthropic, or similar) to power our AI features. Your inputs and the AI's responses may be processed by these providers in accordance with their privacy policies. We select providers that maintain strong data protection standards and do not use customer data to train their general models without explicit consent.
+                </p>
+                <p className="mb-4">
+                  <strong>Data Retention for AI Features:</strong> AI Chat conversations are retained for up to 90 days for service improvement and abuse prevention. After 90 days, conversations are either deleted or anonymized for long-term analysis. Logged-in users can delete their AI Chat history at any time through account settings.
+                </p>
               </section>
 
               <section className="mb-8">
