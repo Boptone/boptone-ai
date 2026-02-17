@@ -23,15 +23,11 @@ export function AIRecommendations() {
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
   const executeMutation = trpc.toney.executeCapability.useMutation();
   
-  // Feature temporarily disabled for security updates
   if (!recommendations || recommendations.length === 0) {
     return null;
   }
   
-  // Type guard for recommendations
-  const typedRecommendations = recommendations as Recommendation[];
-  
-  const visibleRecommendations = typedRecommendations.filter(
+  const visibleRecommendations = recommendations.filter(
     (rec) => !dismissed.has(rec.title)
   );
   

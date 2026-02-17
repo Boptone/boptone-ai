@@ -22,13 +22,6 @@
       "when": 1771015417192,
       "tag": "0002_futuristic_metal_master",
       "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1771274727468,
-      "tag": "0003_living_callisto",
-      "breakpoints": true
     }
   ]
 }

@@ -576,11 +576,12 @@ export const appRouter = router({
     sendEmailVerification: publicProcedure
       .input(z.object({ email: z.string().email() }))
       .mutation(async ({ input }) => {
-        // Create verification code in database
-        const code = await db.createVerificationCode("email", input.email);
+        // TODO: Integrate with Resend or similar email service
+        // For now, generate a code and store it (in production, use Redis or database)
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(`[Auth] Email verification code for ${input.email}: ${code}`);
         
-        // TODO: Send email via Resend API
+        // In production: Send email via Resend API
         // await resend.emails.send({
         //   from: 'Boptone <verify@boptone.com>',
         //   to: input.email,
@@ -594,9 +595,9 @@ export const appRouter = router({
     verifyEmailCode: publicProcedure
       .input(z.object({ email: z.string().email(), code: z.string() }))
       .mutation(async ({ input }) => {
-        // Verify code against database
-        const isValid = await db.verifyCode("email", input.email, input.code);
-        if (isValid) {
+        // TODO: Verify code against stored value
+        // For now, accept any 6-digit code for demo purposes
+        if (input.code.length === 6) {
           console.log(`[Auth] Email verified: ${input.email}`);
           return { success: true };
         }
@@ -607,11 +608,12 @@ export const appRouter = router({
     sendPhoneVerification: publicProcedure
       .input(z.object({ phone: z.string() }))
       .mutation(async ({ input }) => {
-        // Create verification code in database
-        const code = await db.createVerificationCode("phone", input.phone);
+        // TODO: Integrate with Twilio
+        // For now, generate a code and log it
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(`[Auth] SMS verification code for ${input.phone}: ${code}`);
         
-        // TODO: Send SMS via Twilio
+        // In production: Send SMS via Twilio
         // await twilioClient.messages.create({
         //   body: `Your Boptone verification code is: ${code}`,
         //   from: process.env.TWILIO_PHONE_NUMBER,
@@ -624,41 +626,10 @@ export const appRouter = router({
     verifyPhoneCode: publicProcedure
       .input(z.object({ phone: z.string(), code: z.string() }))
       .mutation(async ({ input }) => {
-        // Verify code against database
-        const isValid = await db.verifyCode("phone", input.phone, input.code);
-        if (isValid) {
+        // TODO: Verify code against stored value
+        // For now, accept any 6-digit code for demo purposes
+        if (input.code.length === 6) {
           console.log(`[Auth] Phone verified: ${input.phone}`);
-          return { success: true };
-        }
-        return { success: false };
-      }),
-
-    // Password reset flow
-    sendPasswordReset: publicProcedure
-      .input(z.object({ email: z.string().email() }))
-      .mutation(async ({ input }) => {
-        // Create password reset code in database
-        const code = await db.createVerificationCode("password_reset", input.email);
-        console.log(`[Auth] Password reset code for ${input.email}: ${code}`);
-        
-        // TODO: Send email via Resend API
-        // await resend.emails.send({
-        //   from: 'Boptone <reset@boptone.com>',
-        //   to: input.email,
-        //   subject: 'Reset your Boptone password',
-        //   html: `Your password reset code is: <strong>${code}</strong>`,
-        // });
-        
-        return { success: true, message: "Password reset code sent to email" };
-      }),
-
-    verifyPasswordReset: publicProcedure
-      .input(z.object({ email: z.string().email(), code: z.string() }))
-      .mutation(async ({ input }) => {
-        // Verify code against database
-        const isValid = await db.verifyCode("password_reset", input.email, input.code);
-        if (isValid) {
-          console.log(`[Auth] Password reset code verified for: ${input.email}`);
           return { success: true };
         }
         return { success: false };

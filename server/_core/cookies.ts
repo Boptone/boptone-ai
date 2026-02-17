@@ -21,16 +21,9 @@ function isSecureRequest(req: Request) {
   return protoList.some(proto => proto.trim().toLowerCase() === "https");
 }
 
-/**
- * Session timeout constants
- */
-const SESSION_TIMEOUT_MS = 24 * 60 * 60 * 1000; // 24 hours
-const REMEMBER_ME_TIMEOUT_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-
 export function getSessionCookieOptions(
-  req: Request,
-  rememberMe: boolean = false
-): Pick<CookieOptions, "domain" | "httpOnly" | "path" | "sameSite" | "secure" | "maxAge"> {
+  req: Request
+): Pick<CookieOptions, "domain" | "httpOnly" | "path" | "sameSite" | "secure"> {
   // const hostname = req.hostname;
   // const shouldSetDomain =
   //   hostname &&
@@ -46,15 +39,10 @@ export function getSessionCookieOptions(
   //       ? hostname
   //       : undefined;
 
-  const isSecure = isSecureRequest(req);
-  const maxAge = rememberMe ? REMEMBER_ME_TIMEOUT_MS : SESSION_TIMEOUT_MS;
-
   return {
-    httpOnly: true, // Prevent JavaScript access (XSS protection)
+    httpOnly: true,
     path: "/",
-    // Use 'strict' for production security, 'none' for development cross-origin
-    sameSite: isSecure ? "strict" : "none",
-    secure: isSecure, // HTTPS only in production
-    maxAge, // Session timeout (24 hours or 30 days)
+    sameSite: "none",
+    secure: isSecureRequest(req),
   };
 }

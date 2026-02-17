@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { publicProcedure, protectedProcedure, router } from "../_core/trpc";
 import { invokeLLM, Message } from "../_core/llm";
-// TEMPORARILY DISABLED: SQL injection vulnerability in aiOrchestrator
-// import { aiOrchestrator } from "../aiOrchestrator";
+import { aiOrchestrator } from "../aiOrchestrator";
 
 /**
  * Toney Chatbot Router
@@ -79,14 +78,24 @@ export const toneyRouter = router({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.user.id;
       
-      // TEMPORARILY DISABLED: SQL injection vulnerability
-      // const artistContext = await aiOrchestrator.getArtistContext(userId);
-      // await aiOrchestrator.enrichContext(userId);
-      const artistContext = null;
+      // Get artist context from AIOrchestrator
+      const artistContext = await aiOrchestrator.getArtistContext(userId);
+      
+      // Enrich context with latest data
+      await aiOrchestrator.enrichContext(userId);
       
       // Build context-aware system prompt
-      // TEMPORARILY DISABLED: SQL injection vulnerability
-      const contextPrompt = '';
+      const contextPrompt = artistContext ? `
+CURRENT ARTIST CONTEXT:
+- Name: ${artistContext.artistName}
+- Available Balance: $${artistContext.revenue.available.toFixed(2)}
+- Pending Balance: $${artistContext.revenue.pending.toFixed(2)}
+- Payout Schedule: ${artistContext.payoutSchedule}
+- Active Workflows: ${artistContext.activeWorkflows.length}
+- Career Stage: ${artistContext.careerStage}
+
+Use this context to provide personalized responses.
+` : '';
       
       // Build conversation history
       const messages: Message[] = [
@@ -116,28 +125,31 @@ export const toneyRouter = router({
           ? assistantMessage.map(c => 'text' in c ? c.text : '').join('') 
           : '';
       
-      // TEMPORARILY DISABLED: SQL injection vulnerability
-      // if (artistContext) {
-      //   const updatedHistory = [
-      //     ...(artistContext.conversationHistory || []),
-      //     { role: "user", content: input.message },
-      //     { role: "assistant", content: assistantText },
-      //   ].slice(-20);
-      //   await aiOrchestrator.updateContext(userId, {
-      //     conversationHistory: updatedHistory,
-      //     lastActive: new Date(),
-      //     recentActions: [
-      //       ...(artistContext.recentActions || []),
-      //       `Asked Toney: "${input.message.substring(0, 50)}..."`,
-      //     ].slice(-10),
-      //   });
-      // }
-      // await aiOrchestrator.publishEvent({
-      //   type: "toney_conversation",
-      //   userId,
-      //   data: { message: input.message, response: assistantText },
-      //   timestamp: new Date(),
-      // });
+      // Update artist context with conversation
+      if (artistContext) {
+        const updatedHistory = [
+          ...(artistContext.conversationHistory || []),
+          { role: "user", content: input.message },
+          { role: "assistant", content: assistantText },
+        ].slice(-20); // Keep last 20 messages
+        
+        await aiOrchestrator.updateContext(userId, {
+          conversationHistory: updatedHistory,
+          lastActive: new Date(),
+          recentActions: [
+            ...(artistContext.recentActions || []),
+            `Asked Toney: "${input.message.substring(0, 50)}..."`,
+          ].slice(-10),
+        });
+      }
+      
+      // Publish event
+      await aiOrchestrator.publishEvent({
+        type: "toney_conversation",
+        userId,
+        data: { message: input.message, response: assistantText },
+        timestamp: new Date(),
+      });
       
       return {
         message: assistantText,
@@ -148,40 +160,39 @@ export const toneyRouter = router({
   /**
    * Get artist context for Toney UI
    */
-  // TEMPORARILY DISABLED: SQL injection vulnerability
   getContext: protectedProcedure
     .query(async ({ ctx }) => {
-      // const context = await aiOrchestrator.getArtistContext(ctx.user.id);
-      return null;
+      const context = await aiOrchestrator.getArtistContext(ctx.user.id);
+      return context;
     }),
   
   /**
    * Get pending recommendations for artist
    */
-  // TEMPORARILY DISABLED: SQL injection vulnerability
   getRecommendations: protectedProcedure
     .query(async ({ ctx }) => {
-      // const recommendations = await aiOrchestrator.getPendingRecommendations(ctx.user.id);
-      return [];
+      const recommendations = await aiOrchestrator.getPendingRecommendations(ctx.user.id);
+      return recommendations;
     }),
   
   /**
    * Generate proactive recommendations
    */
-  // TEMPORARILY DISABLED: SQL injection vulnerability
   generateRecommendations: protectedProcedure
     .mutation(async ({ ctx }) => {
-      // const recommendations = await aiOrchestrator.generateRecommendations(ctx.user.id);
-      // for (const rec of recommendations) {
-      //   await aiOrchestrator.saveRecommendation(ctx.user.id, rec);
-      // }
-      return [];
+      const recommendations = await aiOrchestrator.generateRecommendations(ctx.user.id);
+      
+      // Save recommendations to database
+      for (const rec of recommendations) {
+        await aiOrchestrator.saveRecommendation(ctx.user.id, rec);
+      }
+      
+      return recommendations;
     }),
   
   /**
    * Execute capability through Toney
    */
-  // TEMPORARILY DISABLED: SQL injection vulnerability
   executeCapability: protectedProcedure
     .input(
       z.object({
@@ -190,11 +201,12 @@ export const toneyRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // const result = await aiOrchestrator.executeCapability(
-      //   input.capability,
-      //   ctx.user.id,
-      //   input.params
-      // );
-      return { success: false, message: 'Feature temporarily disabled for security updates' };
+      const result = await aiOrchestrator.executeCapability(
+        input.capability,
+        ctx.user.id,
+        input.params
+      );
+      
+      return result;
     }),
 });

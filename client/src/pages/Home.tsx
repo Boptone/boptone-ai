@@ -6,9 +6,8 @@ import { StripeCheckout } from "@/components/StripeCheckout";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { useDemo } from "@/contexts/DemoContext";
 import { useLocation } from "wouter";
-import PriceDisplay from "@/components/PriceDisplay";
 
-const rotatingPhrases = ["Automate Your Tone.", "Create Your Tone.", "Own Your Tone."];
+const rotatingPhrases = ["Automate Your Tone", "Create Your Tone", "Own Your Tone"];
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -161,7 +160,7 @@ export default function Home() {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               <span className={`inline-block transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                 {rotatingPhrases[verbIndex]}
               </span>
@@ -283,12 +282,12 @@ export default function Home() {
                   ) : (
                     <div>
                       <div className="text-5xl font-bold">
-                        <PriceDisplay amountUSD={currentPrice(tier)} />
+                        ${currentPrice(tier)}
                         <span className="text-2xl text-gray-600 font-normal">/mo</span>
                       </div>
                       {isAnnual && savings(tier) > 0 && (
                         <div className="text-sm text-gray-600 mt-2">
-                          Save <PriceDisplay amountUSD={tier.monthlyPrice * 12 - tier.annualPrice * 12} />/year
+                          Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
                         </div>
                       )}
                     </div>
