@@ -31,9 +31,9 @@ export function CurrencySelector() {
       <SelectContent 
         className="z-[9999] bg-white border border-gray-200 shadow-2xl"
         position="popper"
-        side="left"
-        align="end"
-        sideOffset={8}
+        side="bottom"
+        align="center"
+        sideOffset={4}
       >
         {currencies.map((curr) => (
           <SelectItem 

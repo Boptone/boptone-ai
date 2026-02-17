@@ -1752,3 +1752,6 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Fix transparent dropdown backgrounds in language/currency selectors - add solid white background and proper borders
 
 - [x] Optimize footer layout for mobile - adjust language/currency selector positioning and sizing for smaller screens
+
+- [x] Fix mobile dropdown overlap - change language/currency dropdowns to open downward instead of upward on mobile
+- [x] Reduce footer logo size on mobile - make it crisp and proportional, not wonky
