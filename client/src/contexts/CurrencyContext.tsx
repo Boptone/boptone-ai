@@ -11,26 +11,13 @@ const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
   const [currency, setCurrencyState] = useState<Currency>(() => {
-    // Try to load from localStorage
+    // Try to load from localStorage (user's explicit choice)
     const saved = localStorage.getItem('boptone-currency');
     if (saved && ['USD', 'EUR', 'GBP', 'JPY', 'CNY', 'INR', 'BRL', 'MXN', 'KRW', 'AED'].includes(saved)) {
       return saved as Currency;
     }
     
-    // Auto-detect from browser locale
-    const locale = navigator.language;
-    if (locale.startsWith('en-GB')) return 'GBP';
-    if (locale.startsWith('es-ES')) return 'EUR';
-    if (locale.startsWith('pt-BR')) return 'BRL';
-    if (locale.startsWith('es-MX')) return 'MXN';
-    if (locale.startsWith('fr')) return 'EUR';
-    if (locale.startsWith('de')) return 'EUR';
-    if (locale.startsWith('ja')) return 'JPY';
-    if (locale.startsWith('ko')) return 'KRW';
-    if (locale.startsWith('zh')) return 'CNY';
-    if (locale.startsWith('hi')) return 'INR';
-    if (locale.startsWith('ar-AE')) return 'AED';
-    
+    // Always default to USD (no auto-detection)
     return 'USD';
   });
 

@@ -1732,3 +1732,5 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Test both pills and save checkpoint
 
 - [x] Move language/currency pills to bottom footer bar alongside copyright (not underneath logo)
+
+- [x] Fix default currency to USD instead of MXN
