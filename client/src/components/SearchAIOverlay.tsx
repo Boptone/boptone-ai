@@ -69,8 +69,8 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   onClick={() => setActiveTab("ai")}
                   className={`flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium transition-all ${
                     activeTab === "ai"
-                      ? "bg-white text-black shadow-sm"
-                      : "text-gray-600 hover:text-black"
+                      ? "bg-white text-black shadow-sm border-2 border-[#81e6fe]"
+                      : "text-gray-600 hover:text-black border-2 border-transparent"
                   }`}
                 >
                   <MessageSquare className="w-4 h-4" />
