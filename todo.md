@@ -1748,3 +1748,5 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update platform description to new copy about independent artists
 
 - [x] Add cyan shadow to Get Started Free button in black CTA section
+
+- [x] Fix transparent dropdown backgrounds in language/currency selectors - add solid white background and proper borders

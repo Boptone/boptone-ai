@@ -35,7 +35,7 @@ export function LanguagePicker() {
         <SelectValue />
       </SelectTrigger>
       <SelectContent 
-        className="z-[9999] bg-background border-border shadow-lg"
+        className="z-[9999] bg-white border border-gray-200 shadow-2xl"
         position="popper"
         side="right"
         align="end"
