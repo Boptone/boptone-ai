@@ -1721,3 +1721,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add California Notice to Resources navigation
 - [x] Add Opt-Out Choices to Resources navigation
 - [ ] Test footer appearance and save checkpoint
+
+## Restore Footer Correctly (User Correction - HIGH PRIORITY)
+
+- [ ] Restore giant Boptone logo to footer
+- [ ] Restore 4 link columns (Platform, Resources, For Artists, Legal)
+- [ ] Keep minimal bottom bar (copyright + language/currency pills only)
+- [ ] Fix language pill dropdown to display properly (not hidden/cut off)
+- [ ] Fix currency pill dropdown to display properly (not hidden/cut off)
+- [ ] Test both pills and save checkpoint

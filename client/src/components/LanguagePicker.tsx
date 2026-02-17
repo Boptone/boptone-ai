@@ -34,7 +34,12 @@ export function LanguagePicker() {
       <SelectTrigger className="w-[160px] h-10 bg-background border-border text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="z-[100] bg-background border-border">
+      <SelectContent 
+        className="z-[200] bg-popover border-border"
+        position="popper"
+        side="top"
+        sideOffset={8}
+      >
         {languages.map((lang) => (
           <SelectItem 
             key={lang.code} 
