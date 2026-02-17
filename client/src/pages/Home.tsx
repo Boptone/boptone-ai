@@ -441,6 +441,9 @@ export default function Home() {
           <Button 
             size="lg" 
             className="rounded-full bg-white text-black hover:bg-gray-100 text-lg h-14 px-8"
+            style={{
+              boxShadow: '4px 4px 0px #81e6fe'
+            }}
             onClick={() => window.location.href = getLoginUrl()}
           >
             Get Started Free

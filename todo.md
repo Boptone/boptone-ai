@@ -1746,3 +1746,5 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add solid cyan shadow (#81e6fe) to Get Started Free button in hero section
 - [x] Remove View Demo button from hero section
 - [x] Update platform description to new copy about independent artists
+
+- [x] Add cyan shadow to Get Started Free button in black CTA section
