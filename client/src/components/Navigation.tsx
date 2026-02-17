@@ -15,7 +15,7 @@ import {
   FileText,
   Lock,
   UserX,
-  Search
+  MessageCircle
 } from "lucide-react";
 import { SearchAIOverlay } from "@/components/SearchAIOverlay";
 
@@ -210,9 +210,9 @@ export function Navigation() {
               size="icon"
               onClick={() => setSearchOverlayOpen(true)}
               className="rounded-full w-10 h-10 hover:bg-gray-100"
-              aria-label="Search"
+              aria-label="AI Chat"
             >
-              <Search className="w-5 h-5" />
+              <MessageCircle className="w-5 h-5" />
             </Button>
             {/* Ask Toney - Login required */}
             {isAuthenticated && (
@@ -319,7 +319,7 @@ export function Navigation() {
               </Link>
             </div>
             
-            {/* Search Section */}
+            {/* AI Chat Section */}
             <div className="pt-4 border-t-2 border-black">
               <Button
                 variant="ghost"
@@ -329,8 +329,8 @@ export function Navigation() {
                   setSearchOverlayOpen(true);
                 }}
               >
-                <Search className="w-5 h-5 mr-2" />
-                Search
+                <MessageCircle className="w-5 h-5 mr-2" />
+                AI Chat
               </Button>
             </div>
             

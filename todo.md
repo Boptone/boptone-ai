@@ -1774,3 +1774,8 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update Terms of Service with AI chatbot usage terms
 - [x] Update Privacy Policy with AI data collection and processing language for public AI chat
 
+
+## AI Chat UI Updates
+- [x] Replace search icon with chat bubble icon in Navigation
+- [x] Set AI Chat as default tab when overlay opens
+- [x] Change active tab styling to black background with white text (remove cyan outline)

@@ -10,7 +10,7 @@ interface SearchAIOverlayProps {
 }
 
 export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
-  const [activeTab, setActiveTab] = useState<"search" | "ai">("search");
+  const [activeTab, setActiveTab] = useState<"search" | "ai">("ai");
   const [searchQuery, setSearchQuery] = useState("");
   const [aiMessages, setAiMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
   const [aiInput, setAiInput] = useState("");
@@ -58,8 +58,8 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   onClick={() => setActiveTab("search")}
                   className={`flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium transition-all ${
                     activeTab === "search"
-                      ? "bg-white text-black shadow-sm"
-                      : "text-gray-600 hover:text-black"
+                      ? "bg-black text-white"
+                      : "bg-white text-gray-600 hover:text-black"
                   }`}
                 >
                   <SearchIcon className="w-4 h-4" />
@@ -69,8 +69,8 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   onClick={() => setActiveTab("ai")}
                   className={`flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium transition-all ${
                     activeTab === "ai"
-                      ? "bg-white text-black shadow-sm border-2 border-[#81e6fe]"
-                      : "text-gray-600 hover:text-black border-2 border-transparent"
+                      ? "bg-black text-white"
+                      : "bg-white text-gray-600 hover:text-black"
                   }`}
                 >
                   <MessageSquare className="w-4 h-4" />
