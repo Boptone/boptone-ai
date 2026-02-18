@@ -100,15 +100,24 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
         const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
         
         if (isPlaying) {
-          // Cyan blue gradient when playing (#06B6D4)
+          // Electrified cyan blue gradient when playing (#06B6D4)
           const intensity = normalizedHeight;
-          gradient.addColorStop(0, `rgba(6, 182, 212, ${0.9 + intensity * 0.1})`);
-          gradient.addColorStop(0.5, `rgba(6, 182, 212, ${0.7 + intensity * 0.3})`);
-          gradient.addColorStop(1, `rgba(6, 182, 212, ${0.5 + intensity * 0.5})`);
+          
+          // Add glow effect
+          ctx.shadowBlur = 15 + (intensity * 10);
+          ctx.shadowColor = '#06B6D4';
+          
+          // Vibrant gradient
+          gradient.addColorStop(0, `rgba(6, 182, 212, ${1.0})`);
+          gradient.addColorStop(0.5, `rgba(6, 182, 212, ${0.95})`);
+          gradient.addColorStop(1, `rgba(6, 182, 212, ${0.85 + intensity * 0.15})`);
         } else {
-          // Muted cyan when paused
-          gradient.addColorStop(0, 'rgba(6, 182, 212, 0.3)');
-          gradient.addColorStop(1, 'rgba(6, 182, 212, 0.1)');
+          // Visible but muted cyan when paused
+          ctx.shadowBlur = 5;
+          ctx.shadowColor = 'rgba(6, 182, 212, 0.3)';
+          
+          gradient.addColorStop(0, 'rgba(6, 182, 212, 0.6)');
+          gradient.addColorStop(1, 'rgba(6, 182, 212, 0.4)');
         }
 
         ctx.fillStyle = gradient;
