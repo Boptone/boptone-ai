@@ -1,0 +1,30 @@
+{
+  "query": "SELECT id, stageName FROM artist_profiles LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT id, stageName FROM artist_profiles LIMIT 5;",
+  "rows": [
+    {
+      "id": "1",
+      "stageName": "SD"
+    },
+    {
+      "id": "30001",
+      "stageName": "cccc"
+    },
+    {
+      "id": "60001",
+      "stageName": "vv"
+    },
+    {
+      "id": "90001",
+      "stageName": "VVV"
+    },
+    {
+      "id": "120001",
+      "stageName": "vvv"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tstageName\n1\tSD\n30001\tcccc\n60001\tvv\n90001\tVVV\n120001\tvvv\n",
+  "stderr": "",
+  "execution_time_ms": 49
+}

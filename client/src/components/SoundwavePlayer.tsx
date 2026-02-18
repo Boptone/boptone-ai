@@ -30,7 +30,7 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
     // Initialize WaveSurfer
     const wavesurfer = WaveSurfer.create({
       container: waveformRef.current,
-      waveColor: "#374151",
+      waveColor: "#1f2937",
       progressColor: "#81e6fe",
       cursorColor: "#81e6fe",
       barWidth: 3,
@@ -131,6 +131,7 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
         <div
           ref={waveformRef}
           className="w-full rounded-xl overflow-hidden bg-black/40 border-2 border-cyan-500/30 cursor-pointer hover:border-cyan-500/50 transition-all"
+          style={{ minHeight: "180px" }}
         />
         
         {/* Grid Overlay for Pro Feel */}
