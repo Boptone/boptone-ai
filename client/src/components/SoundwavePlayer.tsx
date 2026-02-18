@@ -100,15 +100,15 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
         const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
         
         if (isPlaying) {
-          // Vibrant gradient when playing
+          // Cyan blue gradient when playing (#06B6D4)
           const intensity = normalizedHeight;
-          gradient.addColorStop(0, `rgba(0, 0, 0, ${0.8 + intensity * 0.2})`);
-          gradient.addColorStop(0.5, `rgba(75, 85, 99, ${0.6 + intensity * 0.4})`);
-          gradient.addColorStop(1, `rgba(156, 163, 175, ${0.4 + intensity * 0.6})`);
+          gradient.addColorStop(0, `rgba(6, 182, 212, ${0.9 + intensity * 0.1})`);
+          gradient.addColorStop(0.5, `rgba(6, 182, 212, ${0.7 + intensity * 0.3})`);
+          gradient.addColorStop(1, `rgba(6, 182, 212, ${0.5 + intensity * 0.5})`);
         } else {
-          // Muted gradient when paused
-          gradient.addColorStop(0, '#D1D5DB');
-          gradient.addColorStop(1, '#E5E7EB');
+          // Muted cyan when paused
+          gradient.addColorStop(0, 'rgba(6, 182, 212, 0.3)');
+          gradient.addColorStop(1, 'rgba(6, 182, 212, 0.1)');
         }
 
         ctx.fillStyle = gradient;
@@ -210,7 +210,7 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
             />
             {/* Pulsing indicator when playing */}
             {isPlaying && (
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-black rounded-full animate-pulse shadow-lg" />
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full animate-pulse shadow-lg" />
             )}
           </div>
 
