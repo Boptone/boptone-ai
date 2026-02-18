@@ -1937,3 +1937,17 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Replace purple demo artwork with solid blue + music icon
 - [x] Test soundwave animation while playing
 - [ ] Save checkpoint
+
+## Fix Soundwave Visualization Trigger
+- [x] Add useEffect to start draw loop when isPlaying changes to true
+- [x] Stop draw loop when isPlaying changes to false
+- [ ] Remove aggressive console logging after fix is verified (ADDED)
+- [ ] Test soundwave bars visibility when playing
+- [ ] Save checkpoint
+
+## Replace Web Audio API with WaveSurfer.js
+- [x] Install wavesurfer.js package
+- [x] Rebuild SoundwavePlayer component with WaveSurfer
+- [x] Configure #81e6fe cyan color for soundbars
+- [ ] Test player with real audio playback
+- [x] Save checkpoint for production-ready player

@@ -14,7 +14,7 @@ import {
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Music, TrendingUp, Radio, Search, Heart, Share2, Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Copy, Check } from "lucide-react";
-import { SoundwavePlayer } from "@/components/SoundwavePlayer";
+import SoundwavePlayer from "@/components/SoundwavePlayer";
 
 const GENRES = [
   "All", "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",

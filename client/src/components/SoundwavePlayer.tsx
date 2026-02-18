@@ -1,15 +1,15 @@
+import { Heart, Music, Pause, Play, Share2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Play, Pause, Heart, Share2, Music } from "lucide-react";
+import WaveSurfer from "wavesurfer.js";
 
 interface Track {
   id: number;
   title: string;
   artist: string;
+  genre: string | null;
+  duration: number;
+  artworkUrl: string | null;
   audioUrl: string;
-  artworkUrl?: string | null;
-  genre?: string | null;
 }
 
 interface SoundwavePlayerProps {
@@ -17,185 +17,65 @@ interface SoundwavePlayerProps {
   autoPlay?: boolean;
 }
 
-export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProps) {
+export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const analyserRef = useRef<AnalyserNode | null>(null);
-  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
-  const animationRef = useRef<number | null>(null);
+  const waveformRef = useRef<HTMLDivElement>(null);
+  const wavesurferRef = useRef<WaveSurfer | null>(null);
 
-  // Initialize Web Audio API
+  // Initialize WaveSurfer
   useEffect(() => {
-    if (!audioRef.current || !canvasRef.current) return;
+    if (!waveformRef.current) return;
 
-    const audio = audioRef.current;
-    
-    // Create audio context and analyser
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const analyser = audioContext.createAnalyser();
-    analyser.fftSize = 256;
-    
-    // Connect audio element to analyser
-    if (!sourceRef.current) {
-      const source = audioContext.createMediaElementSource(audio);
-      source.connect(analyser);
-      analyser.connect(audioContext.destination);
-      sourceRef.current = source;
-    }
-    
-    audioContextRef.current = audioContext;
-    analyserRef.current = analyser;
+    // Create WaveSurfer instance
+    const wavesurfer = WaveSurfer.create({
+      container: waveformRef.current,
+      waveColor: '#e5e7eb', // gray-200
+      progressColor: '#81e6fe', // cyan color requested
+      cursorColor: '#81e6fe',
+      barWidth: 3,
+      barRadius: 3,
+      barGap: 2,
+      height: 120,
+      normalize: true,
+      backend: 'WebAudio',
+    });
+
+    // Load audio
+    wavesurfer.load(track.audioUrl);
+
+    // Event listeners
+    wavesurfer.on('ready', () => {
+      setDuration(wavesurfer.getDuration());
+      if (autoPlay) {
+        wavesurfer.play();
+        setIsPlaying(true);
+      }
+    });
+
+    wavesurfer.on('audioprocess', () => {
+      setCurrentTime(wavesurfer.getCurrentTime());
+    });
+
+    wavesurfer.on('play', () => setIsPlaying(true));
+    wavesurfer.on('pause', () => setIsPlaying(false));
+    wavesurfer.on('finish', () => setIsPlaying(false));
+
+    wavesurferRef.current = wavesurfer;
 
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        audioContextRef.current.close();
-      }
+      wavesurfer.destroy();
     };
-  }, []);
+  }, [track.audioUrl, autoPlay]);
 
-  // Draw soundwave visualization
-  const drawSoundwave = () => {
-    if (!canvasRef.current || !analyserRef.current) return;
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const analyser = analyserRef.current;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-
-    const draw = () => {
-      animationRef.current = requestAnimationFrame(draw);
-
-      analyser.getByteFrequencyData(dataArray);
-
-      // Clear canvas with white background for better contrast
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Calculate bar width and spacing
-      const barCount = 50; // Fewer, thicker bars for better visibility
-      const barWidth = canvas.width / barCount;
-      const barSpacing = 2;
-
-      // Draw bars with gradient
-      for (let i = 0; i < barCount; i++) {
-        const dataIndex = Math.floor((i / barCount) * bufferLength);
-        const normalizedHeight = dataArray[dataIndex] / 255;
-        const barHeight = normalizedHeight * canvas.height * 0.9; // 90% max height
-        
-        // Create dynamic gradient based on audio intensity
-        const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
-        
-        if (isPlaying) {
-          // Electrified cyan blue gradient when playing (#06B6D4)
-          const intensity = normalizedHeight;
-          
-          // Add glow effect
-          ctx.shadowBlur = 15 + (intensity * 10);
-          ctx.shadowColor = '#06B6D4';
-          
-          // Vibrant gradient
-          gradient.addColorStop(0, `rgba(6, 182, 212, ${1.0})`);
-          gradient.addColorStop(0.5, `rgba(6, 182, 212, ${0.95})`);
-          gradient.addColorStop(1, `rgba(6, 182, 212, ${0.85 + intensity * 0.15})`);
-        } else {
-          // Visible but muted cyan when paused
-          ctx.shadowBlur = 5;
-          ctx.shadowColor = 'rgba(6, 182, 212, 0.3)';
-          
-          gradient.addColorStop(0, 'rgba(6, 182, 212, 0.6)');
-          gradient.addColorStop(1, 'rgba(6, 182, 212, 0.4)');
-        }
-
-        ctx.fillStyle = gradient;
-        
-        const x = i * barWidth;
-        const y = canvas.height - barHeight;
-        const width = barWidth - barSpacing;
-        const height = Math.max(barHeight, 10); // Minimum height of 10px for visibility
-
-        // Draw rounded bars
-        ctx.beginPath();
-        ctx.roundRect(x, y, width, height, 1.5);
-        ctx.fill();
-      }
-
-      // Draw progress line
-      const progressX = (currentTime / duration) * canvas.width;
-      if (progressX > 0) {
-        ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(progressX, 0);
-        ctx.lineTo(progressX, canvas.height);
-        ctx.stroke();
-      }
-    };
-
-    draw();
+  const togglePlayPause = () => {
+    if (wavesurferRef.current) {
+      wavesurferRef.current.playPause();
+    }
   };
 
-  // Handle play/pause
-  useEffect(() => {
-    if (!audioRef.current) return;
-
-    const audio = audioRef.current;
-
-    if (isPlaying) {
-      // Resume audio context if suspended
-      if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
-        audioContextRef.current.resume();
-      }
-      
-      audio.play().catch(err => {
-        console.error('Failed to play audio:', err);
-        setIsPlaying(false);
-      });
-      
-      drawSoundwave();
-    } else {
-      audio.pause();
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    }
-  }, [isPlaying]);
-
-  // Load new track
-  useEffect(() => {
-    if (!audioRef.current) return;
-
-    const audio = audioRef.current;
-    audio.src = track.audioUrl;
-    setCurrentTime(0);
-    setIsPlaying(autoPlay);
-
-    const handleLoadedMetadata = () => setDuration(audio.duration);
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleEnded = () => setIsPlaying(false);
-
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [track, autoPlay]);
-
-  // Format time
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -203,104 +83,85 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
   };
 
   return (
-    <div className="relative w-full bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-xl p-8">
-      <div className="flex flex-col lg:flex-row items-center gap-8">
-        {/* Left: Artwork + Controls */}
-        <div className="flex-shrink-0 flex flex-col items-center gap-6">
+    <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-xl p-8 shadow-lg">
+      <div className="flex items-start gap-8">
+        {/* Artwork and Play Button */}
+        <div className="flex-shrink-0 relative">
           {/* Artwork */}
-          <div className="relative">
+          <div className="w-64 h-64 rounded-xl overflow-hidden shadow-2xl relative group">
             {track.artworkUrl ? (
               <img
                 src={track.artworkUrl}
                 alt={track.title}
-                className="w-48 h-48 rounded-2xl object-cover border-4 border-white shadow-2xl"
+                className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-48 h-48 rounded-2xl bg-cyan-500 border-4 border-white shadow-2xl flex items-center justify-center">
-                <Music className="w-20 h-20 text-white" />
+              <div className="w-full h-full bg-cyan-500 flex items-center justify-center">
+                <Music className="w-24 h-24 text-white" />
               </div>
             )}
+            
             {/* Pulsing indicator when playing */}
             {isPlaying && (
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full animate-pulse shadow-lg" />
+              <div className="absolute top-4 right-4 w-4 h-4 bg-red-500 rounded-full animate-pulse shadow-lg" />
             )}
           </div>
 
-          {/* Large Play/Pause Button */}
-          <Button 
-            className="rounded-full w-20 h-20 bg-black hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all hover:scale-105" 
-            size="icon"
-            onClick={() => setIsPlaying(!isPlaying)}
+          {/* Play/Pause Button */}
+          <button
+            onClick={togglePlayPause}
+            className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-black hover:bg-gray-900 rounded-full flex items-center justify-center shadow-2xl transition-all hover:scale-105"
           >
             {isPlaying ? (
-              <Pause className="h-10 w-10 text-white" fill="white" />
+              <Pause className="w-8 h-8 text-white" fill="white" />
             ) : (
-              <Play className="h-10 w-10 text-white ml-1" fill="white" />
+              <Play className="w-8 h-8 text-white ml-1" fill="white" />
             )}
-          </Button>
+          </button>
         </div>
 
-        {/* Right: Track Info + Soundwave */}
-        <div className="flex-1 w-full min-w-0">
+        {/* Track Info and Waveform */}
+        <div className="flex-1 min-w-0">
           {/* Track Info */}
           <div className="mb-6">
-            <div className="flex items-start justify-between gap-4 mb-3">
-              <div className="min-w-0 flex-1">
-                <h3 className="font-bold text-4xl text-black truncate mb-2 leading-tight">{track.title}</h3>
-                <p className="text-2xl text-gray-600 font-medium truncate">{track.artist}</p>
+            <div className="flex items-start justify-between gap-4 mb-2">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-4xl font-bold text-gray-900 mb-2 truncate">
+                  {track.title}
+                </h3>
+                <p className="text-xl text-gray-600 mb-3 truncate">{track.artist}</p>
+                {track.genre && (
+                  <span className="inline-block px-4 py-1.5 bg-white border-2 border-black rounded-full text-sm font-medium">
+                    {track.genre.toUpperCase()}
+                  </span>
+                )}
               </div>
+              
+              {/* Action Buttons */}
               <div className="flex items-center gap-2 flex-shrink-0">
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="rounded-full border-2 border-gray-300 hover:border-black hover:bg-black hover:text-white transition-all"
-                >
-                  <Heart className="h-5 w-5" />
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="rounded-full border-2 border-gray-300 hover:border-black hover:bg-black hover:text-white transition-all"
-                >
-                  <Share2 className="h-5 w-5" />
-                </Button>
+                <button className="w-12 h-12 rounded-full border-2 border-gray-300 hover:border-gray-400 flex items-center justify-center transition-colors">
+                  <Heart className="w-5 h-5 text-gray-600" />
+                </button>
+                <button className="w-12 h-12 rounded-full border-2 border-gray-300 hover:border-gray-400 flex items-center justify-center transition-colors">
+                  <Share2 className="w-5 h-5 text-gray-600" />
+                </button>
               </div>
             </div>
-            {track.genre && (
-              <Badge className="rounded-full border-2 border-black bg-white text-black font-bold uppercase text-sm px-4 py-1">
-                {track.genre}
-              </Badge>
-            )}
           </div>
 
-          {/* Soundwave Canvas */}
-          <div className="relative mb-4">
-            <canvas
-              ref={canvasRef}
-              width={1000}
-              height={120}
-              className="w-full h-32 rounded-xl shadow-inner cursor-pointer"
-              onClick={(e) => {
-                if (!audioRef.current || !canvasRef.current) return;
-                const rect = canvasRef.current.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const percentage = x / rect.width;
-                audioRef.current.currentTime = percentage * duration;
-              }}
-            />
-          </div>
+          {/* Waveform */}
+          <div 
+            ref={waveformRef} 
+            className="w-full rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity border-2 border-gray-200 bg-white"
+          />
 
           {/* Time Display */}
-          <div className="flex items-center justify-between text-lg text-gray-700 font-mono font-bold">
+          <div className="flex items-center justify-between mt-4 text-lg font-medium text-gray-700">
             <span>{formatTime(currentTime)}</span>
-            <span className="text-gray-400">•</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
       </div>
-
-      {/* Hidden audio element */}
-      <audio ref={audioRef} />
     </div>
   );
 }
