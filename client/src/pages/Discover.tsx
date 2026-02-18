@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import {
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Music, TrendingUp, Radio, Search, Heart, Share2, Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Copy, Check } from "lucide-react";
+import { SoundwavePlayer } from "@/components/SoundwavePlayer";
 
 const GENRES = [
   "All", "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",
@@ -68,6 +69,14 @@ export default function Discover() {
   const { data: newReleases } = trpc.bap.discover.newReleases.useQuery({ 
     limit: 10
   });
+
+  // Select random track for spotlight (rotates on page load)
+  const spotlightTrack = useMemo(() => {
+    const allTracks = [...(trendingTracks || []), ...(newReleases || [])];
+    if (allTracks.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * allTracks.length);
+    return allTracks[randomIndex];
+  }, [trendingTracks, newReleases]);
   // Rising artists feature not yet implemented
   const risingArtists: any[] = [];
   const { data: searchResults } = trpc.bap.discover.search.useQuery(
@@ -349,6 +358,18 @@ export default function Discover() {
                 </CardContent>
               </Card>
             )}
+          </div>
+        )}
+
+        {/* Artist Spotlight with Soundwave Player */}
+        {!searchQuery && spotlightTrack && (
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold mb-6">Artist Spotlight</h2>
+            <Card className="rounded-xl border-2 border-gray-200 bg-white hover:border-gray-400 hover:shadow-lg transition-all">
+              <CardContent className="p-0">
+                <SoundwavePlayer track={spotlightTrack} />
+              </CardContent>
+            </Card>
           </div>
         )}
 
