@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Play, Pause } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Play, Pause, Heart, Share2 } from "lucide-react";
 
 interface Track {
   id: number;
   title: string;
   artist: string;
   audioUrl: string;
-  artworkUrl?: string;
-  genre?: string;
+  artworkUrl?: string | null;
+  genre?: string | null;
 }
 
 interface SoundwavePlayerProps {
@@ -77,35 +78,61 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
 
       analyser.getByteFrequencyData(dataArray);
 
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas with gradient background
+      const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+      bgGradient.addColorStop(0, '#F9FAFB');
+      bgGradient.addColorStop(1, '#F3F4F6');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Calculate bar width and spacing
-      const barCount = 64; // Number of bars to display
+      const barCount = 80; // More bars for denser visualization
       const barWidth = canvas.width / barCount;
-      const barSpacing = 2;
+      const barSpacing = 1;
 
-      // Draw bars
+      // Draw bars with gradient
       for (let i = 0; i < barCount; i++) {
         const dataIndex = Math.floor((i / barCount) * bufferLength);
-        const barHeight = (dataArray[dataIndex] / 255) * canvas.height;
+        const normalizedHeight = dataArray[dataIndex] / 255;
+        const barHeight = normalizedHeight * canvas.height * 0.9; // 90% max height
         
-        // Create gradient for bars
+        // Create dynamic gradient based on audio intensity
         const gradient = ctx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
-        gradient.addColorStop(0, '#000000');
-        gradient.addColorStop(1, '#4B5563');
+        
+        if (isPlaying) {
+          // Vibrant gradient when playing
+          const intensity = normalizedHeight;
+          gradient.addColorStop(0, `rgba(0, 0, 0, ${0.8 + intensity * 0.2})`);
+          gradient.addColorStop(0.5, `rgba(75, 85, 99, ${0.6 + intensity * 0.4})`);
+          gradient.addColorStop(1, `rgba(156, 163, 175, ${0.4 + intensity * 0.6})`);
+        } else {
+          // Muted gradient when paused
+          gradient.addColorStop(0, '#D1D5DB');
+          gradient.addColorStop(1, '#E5E7EB');
+        }
 
-        ctx.fillStyle = isPlaying ? gradient : '#E5E7EB';
+        ctx.fillStyle = gradient;
         
         const x = i * barWidth;
         const y = canvas.height - barHeight;
         const width = barWidth - barSpacing;
-        const height = Math.max(barHeight, 4); // Minimum height of 4px
+        const height = Math.max(barHeight, 3); // Minimum height of 3px
 
         // Draw rounded bars
         ctx.beginPath();
-        ctx.roundRect(x, y, width, height, 2);
+        ctx.roundRect(x, y, width, height, 1.5);
         ctx.fill();
+      }
+
+      // Draw progress line
+      const progressX = (currentTime / duration) * canvas.width;
+      if (progressX > 0) {
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(progressX, 0);
+        ctx.lineTo(progressX, canvas.height);
+        ctx.stroke();
       }
     };
 
@@ -170,54 +197,93 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
   };
 
   return (
-    <div className="relative w-full h-full flex items-center gap-6 p-8">
-      {/* Artwork */}
-      <div className="relative flex-shrink-0 group">
-        <img
-          src={track.artworkUrl || `https://via.placeholder.com/160x160?text=${encodeURIComponent(track.title)}`}
-          alt={track.title}
-          className="w-40 h-40 rounded-xl object-cover border-2 border-gray-200"
-        />
-        <Button 
-          className="rounded-full absolute inset-0 m-auto w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
-          size="icon"
-          onClick={() => setIsPlaying(!isPlaying)}
-        >
-          {isPlaying ? (
-            <Pause className="h-7 w-7 text-white" />
-          ) : (
-            <Play className="h-7 w-7 text-white ml-1" />
-          )}
-        </Button>
-      </div>
+    <div className="relative w-full bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-xl p-8">
+      <div className="flex flex-col lg:flex-row items-center gap-8">
+        {/* Left: Artwork + Controls */}
+        <div className="flex-shrink-0 flex flex-col items-center gap-6">
+          {/* Artwork */}
+          <div className="relative">
+            <img
+              src={track.artworkUrl || `https://via.placeholder.com/200x200?text=${encodeURIComponent(track.title)}`}
+              alt={track.title}
+              className="w-48 h-48 rounded-2xl object-cover border-4 border-white shadow-2xl"
+            />
+            {/* Pulsing indicator when playing */}
+            {isPlaying && (
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-black rounded-full animate-pulse shadow-lg" />
+            )}
+          </div>
 
-      {/* Track Info & Soundwave */}
-      <div className="flex-1 min-w-0">
-        <div className="mb-4">
-          <h3 className="font-bold text-2xl text-black truncate mb-1">{track.title}</h3>
-          <p className="text-lg text-gray-600 font-medium truncate">{track.artist}</p>
+          {/* Large Play/Pause Button */}
+          <Button 
+            className="rounded-full w-20 h-20 bg-black hover:bg-gray-800 shadow-xl hover:shadow-2xl transition-all hover:scale-105" 
+            size="icon"
+            onClick={() => setIsPlaying(!isPlaying)}
+          >
+            {isPlaying ? (
+              <Pause className="h-10 w-10 text-white" fill="white" />
+            ) : (
+              <Play className="h-10 w-10 text-white ml-1" fill="white" />
+            )}
+          </Button>
         </div>
 
-        {/* Soundwave Canvas */}
-        <div className="relative mb-4">
-          <canvas
-            ref={canvasRef}
-            width={800}
-            height={80}
-            className="w-full h-20 rounded-xl bg-gray-50 border-2 border-gray-200"
-          />
-          
-          {/* Progress Overlay */}
-          <div 
-            className="absolute top-0 left-0 h-full bg-black/5 rounded-xl pointer-events-none transition-all"
-            style={{ width: `${(currentTime / duration) * 100}%` }}
-          />
-        </div>
+        {/* Right: Track Info + Soundwave */}
+        <div className="flex-1 w-full min-w-0">
+          {/* Track Info */}
+          <div className="mb-6">
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-4xl text-black truncate mb-2 leading-tight">{track.title}</h3>
+                <p className="text-2xl text-gray-600 font-medium truncate">{track.artist}</p>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full border-2 border-gray-300 hover:border-black hover:bg-black hover:text-white transition-all"
+                >
+                  <Heart className="h-5 w-5" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full border-2 border-gray-300 hover:border-black hover:bg-black hover:text-white transition-all"
+                >
+                  <Share2 className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+            {track.genre && (
+              <Badge className="rounded-full border-2 border-black bg-white text-black font-bold uppercase text-sm px-4 py-1">
+                {track.genre}
+              </Badge>
+            )}
+          </div>
 
-        {/* Time Display */}
-        <div className="flex items-center justify-between text-sm text-gray-600 font-mono">
-          <span>{formatTime(currentTime)}</span>
-          <span>{formatTime(duration)}</span>
+          {/* Soundwave Canvas */}
+          <div className="relative mb-4">
+            <canvas
+              ref={canvasRef}
+              width={1000}
+              height={120}
+              className="w-full h-32 rounded-xl shadow-inner cursor-pointer"
+              onClick={(e) => {
+                if (!audioRef.current || !canvasRef.current) return;
+                const rect = canvasRef.current.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const percentage = x / rect.width;
+                audioRef.current.currentTime = percentage * duration;
+              }}
+            />
+          </div>
+
+          {/* Time Display */}
+          <div className="flex items-center justify-between text-lg text-gray-700 font-mono font-bold">
+            <span>{formatTime(currentTime)}</span>
+            <span className="text-gray-400">•</span>
+            <span>{formatTime(duration)}</span>
+          </div>
         </div>
       </div>
 

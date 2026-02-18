@@ -400,9 +400,11 @@ export default function Discover() {
             {/* Trending Tab */}
             <TabsContent value="trending" className="space-y-4">
               {trendingTracks && trendingTracks.length > 0 ? (
-                trendingTracks.map((track: any) => (
-                  <TrackCard key={track.id} track={track} />
-                ))
+                trendingTracks
+                  .filter((track: any) => !spotlightTrack || track.id !== spotlightTrack.id)
+                  .map((track: any) => (
+                    <TrackCard key={track.id} track={track} />
+                  ))
               ) : (
                 <Card className="rounded-xl border-2 border-gray-200 bg-white">
                   <CardContent className="p-16 text-center">
