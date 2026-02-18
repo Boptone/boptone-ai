@@ -1841,3 +1841,19 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Match typography, spacing, and layout to established template
 - [x] Test redesigned /shop page
 - [x] Save checkpoint with correct design
+
+## Add Rounded Corners to All Cards Site-Wide (User Request - HIGH PRIORITY)
+
+**Issue:** Sharp box corners feel too rigid and intimidating. Artists need to feel comfortable and spend time on the site.
+
+**Goal:** Replace all sharp-cornered cards with rounded-xl or rounded-2xl corners for a softer, more welcoming aesthetic.
+
+- [x] Audit Home.tsx for cards with sharp corners
+- [x] Audit Features.tsx for cards with sharp corners
+- [x] Audit Shop.tsx for cards with sharp corners
+- [x] Audit Dashboard pages for cards with sharp corners
+- [ ] Audit Pricing cards for sharp corners
+- [ ] Audit all other pages for cards with sharp corners
+- [x] Update all identified cards to use rounded-xl or rounded-2xl
+- [ ] Test updated design across all pages
+- [ ] Save checkpoint with rounded card design

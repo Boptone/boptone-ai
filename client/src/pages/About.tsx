@@ -57,7 +57,7 @@ export default function About() {
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl">
             {/* Artists First */}
-            <div className="border-2 border-gray-200 bg-white p-10">
+            <div className="border-2 border-gray-200 bg-white p-10 rounded-xl">
               <h3 className="text-3xl font-bold mb-6">Artists First</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 Every decision we make starts with one question: Does this help artists? We build for you, not for anyone else.
@@ -65,7 +65,7 @@ export default function About() {
             </div>
 
             {/* Simple & Powerful */}
-            <div className="border-2 border-gray-200 bg-white p-10">
+            <div className="border-2 border-gray-200 bg-white p-10 rounded-xl">
               <h3 className="text-3xl font-bold mb-6">Simple & Powerful</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 We use the latest technology to give you powerful tools that are easy to use. No technical knowledge required.
@@ -73,7 +73,7 @@ export default function About() {
             </div>
 
             {/* 100% Transparent */}
-            <div className="border-2 border-gray-200 bg-white p-10">
+            <div className="border-2 border-gray-200 bg-white p-10 rounded-xl">
               <h3 className="text-3xl font-bold mb-6">100% Transparent</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 No hidden fees, no confusing contracts. You own your music, your data, and your money—100%.
@@ -95,7 +95,7 @@ export default function About() {
                 We built Boptone because we were frustrated with how complicated and unfair the music industry is for independent artists.
               </p>
             </div>
-            <div className="border-2 border-gray-200 bg-white p-12">
+            <div className="border-2 border-gray-200 bg-white p-12 rounded-xl">
               <p className="text-2xl text-gray-900 leading-relaxed font-bold mb-8">
                 We wanted to create a platform that's simple, fair, and puts artists in control.
               </p>
@@ -120,7 +120,7 @@ export default function About() {
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl">
             {/* New Artists */}
-            <div className="border-2 border-gray-200 bg-white p-12">
+            <div className="border-2 border-gray-200 bg-white p-12 rounded-xl">
               <h3 className="text-4xl font-bold mb-6">For New Artists</h3>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Get help from our AI advisor, upload your music, and start earning money from day one.
@@ -128,7 +128,7 @@ export default function About() {
             </div>
 
             {/* Established Artists */}
-            <div className="border-2 border-black bg-white p-12">
+            <div className="border-2 border-black bg-white p-12 rounded-xl">
               <h3 className="text-4xl font-bold mb-6">For Established Artists</h3>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Advanced tools to grow your career, protect your music, and keep more of what you earn.

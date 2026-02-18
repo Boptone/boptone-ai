@@ -76,7 +76,7 @@ export default function Shop() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* All Products Card */}
             <div 
-              className={`border-2 p-10 cursor-pointer transition-colors ${
+              className={`border-2 p-10 cursor-pointer transition-colors rounded-xl ${
                 selectedType === null 
                   ? 'border-black bg-black' 
                   : 'border-gray-200 bg-white hover:border-gray-400'
@@ -98,7 +98,7 @@ export default function Shop() {
               return (
                 <div 
                   key={type.value}
-                  className={`border-2 p-10 cursor-pointer transition-colors ${
+                  className={`border-2 p-10 cursor-pointer transition-colors rounded-xl ${
                     isSelected 
                       ? 'border-black bg-black' 
                       : 'border-gray-200 bg-white hover:border-gray-400'
@@ -130,7 +130,7 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className="rounded-none border-4 border-black cursor-pointer hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all bg-white"
+                className="rounded-xl border-4 border-black cursor-pointer hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all bg-white"
                 onClick={() => setLocation(`/product/${product.id}`)}
               >
                 <CardContent className="p-6">

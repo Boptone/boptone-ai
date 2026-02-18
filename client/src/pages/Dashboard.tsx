@@ -171,7 +171,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat) => {
               return (
-                <div key={stat.title} className="border-2 border-gray-200 hover:border-gray-300 transition-colors bg-white p-8">
+                <div key={stat.title} className="border-2 border-gray-200 hover:border-gray-300 transition-colors bg-white p-8 rounded-xl">
                   <p className="text-sm text-gray-500 font-medium uppercase tracking-wide mb-3">{stat.title}</p>
                   <p className="text-5xl font-bold text-gray-900 mb-2">{stat.value}</p>
                   <p className={`text-sm font-medium ${stat.trend === "up" ? "text-gray-600" : stat.trend === "down" ? "text-gray-600" : "text-gray-500"}`}>
@@ -189,7 +189,7 @@ export default function Dashboard() {
           <AIRecommendations />
 
           {/* Quick Actions - Minimal grid */}
-          <div className="border-2 border-gray-200 bg-white p-12">
+          <div className="border-2 border-gray-200 bg-white p-12 rounded-xl">
             <h2 className="text-4xl font-bold mb-3">Quick Actions</h2>
             <p className="text-lg text-gray-600 mb-10">Common tasks to manage your career</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -197,7 +197,7 @@ export default function Dashboard() {
                 return (
                   <button
                     key={action.label}
-                    className="p-8 border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all text-center"
+                    className="p-8 border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all text-center rounded-xl"
                     onClick={() => setLocation(action.href)}
                   >
                     <span className="text-lg font-semibold text-gray-900">{action.label}</span>
@@ -208,7 +208,7 @@ export default function Dashboard() {
           </div>
 
           {/* Compliance Score Widget */}
-          <div className="border-2 border-black bg-white p-12">
+          <div className="border-2 border-black bg-white p-12 rounded-xl">
             <h2 className="text-3xl font-bold mb-6">Compliance Score</h2>
             <div className="flex items-center justify-between mb-8">
               <div>
@@ -245,7 +245,7 @@ export default function Dashboard() {
           </div>
 
           {/* Goals Progress */}
-          <div className="border-2 border-gray-200 bg-white p-12">
+          <div className="border-2 border-gray-200 bg-white p-12 rounded-xl">
             <h2 className="text-4xl font-bold mb-3">Your Goals</h2>
             <p className="text-lg text-gray-600 mb-10">Track your progress toward key milestones</p>
             <div className="space-y-6">
@@ -265,12 +265,12 @@ export default function Dashboard() {
           </div>
 
           {/* Growth Tips */}
-          <div className="border-2 border-gray-200 bg-white p-12">
+          <div className="border-2 border-gray-200 bg-white p-12 rounded-xl">
             <h2 className="text-4xl font-bold mb-3">Growth Tips</h2>
             <p className="text-lg text-gray-600 mb-10">Personalized recommendations to accelerate your career</p>
             <div className="grid md:grid-cols-3 gap-6">
               {tips.map((tip) => (
-                <div key={tip.title} className="border-2 border-gray-200 p-8">
+                <div key={tip.title} className="border-2 border-gray-200 p-8 rounded-xl">
                   <h3 className="text-xl font-bold mb-3">{tip.title}</h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">{tip.description}</p>
                   <Button
