@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Play, Pause, Heart, Share2 } from "lucide-react";
+import { Play, Pause, Heart, Share2, Music } from "lucide-react";
 
 interface Track {
   id: number;
@@ -78,17 +78,14 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
 
       analyser.getByteFrequencyData(dataArray);
 
-      // Clear canvas with gradient background
-      const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-      bgGradient.addColorStop(0, '#F9FAFB');
-      bgGradient.addColorStop(1, '#F3F4F6');
-      ctx.fillStyle = bgGradient;
+      // Clear canvas with white background for better contrast
+      ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Calculate bar width and spacing
-      const barCount = 80; // More bars for denser visualization
+      const barCount = 50; // Fewer, thicker bars for better visibility
       const barWidth = canvas.width / barCount;
-      const barSpacing = 1;
+      const barSpacing = 2;
 
       // Draw bars with gradient
       for (let i = 0; i < barCount; i++) {
@@ -125,7 +122,7 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
         const x = i * barWidth;
         const y = canvas.height - barHeight;
         const width = barWidth - barSpacing;
-        const height = Math.max(barHeight, 3); // Minimum height of 3px
+        const height = Math.max(barHeight, 10); // Minimum height of 10px for visibility
 
         // Draw rounded bars
         ctx.beginPath();
@@ -212,11 +209,17 @@ export function SoundwavePlayer({ track, autoPlay = false }: SoundwavePlayerProp
         <div className="flex-shrink-0 flex flex-col items-center gap-6">
           {/* Artwork */}
           <div className="relative">
-            <img
-              src={track.artworkUrl || `https://via.placeholder.com/200x200?text=${encodeURIComponent(track.title)}`}
-              alt={track.title}
-              className="w-48 h-48 rounded-2xl object-cover border-4 border-white shadow-2xl"
-            />
+            {track.artworkUrl ? (
+              <img
+                src={track.artworkUrl}
+                alt={track.title}
+                className="w-48 h-48 rounded-2xl object-cover border-4 border-white shadow-2xl"
+              />
+            ) : (
+              <div className="w-48 h-48 rounded-2xl bg-cyan-500 border-4 border-white shadow-2xl flex items-center justify-center">
+                <Music className="w-20 h-20 text-white" />
+              </div>
+            )}
             {/* Pulsing indicator when playing */}
             {isPlaying && (
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full animate-pulse shadow-lg" />
