@@ -24,9 +24,9 @@ export default function Shop() {
   const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
   const productTypes = [
-    { value: "physical", label: "Physical Merch", icon: "👕", description: "T-shirts, vinyl, posters" },
-    { value: "digital", label: "Digital Downloads", icon: "💿", description: "Beats, samples, stems" },
-    { value: "experience", label: "Experiences", icon: "🎫", description: "Meet & greets, studio sessions" },
+    { value: "physical", label: "Physical Merch", description: "T-shirts, vinyl, posters" },
+    { value: "digital", label: "Digital Downloads", description: "Beats, samples, stems" },
+    { value: "experience", label: "Experiences", description: "Meet & greets, studio sessions" },
   ];
 
   // Filter products
@@ -75,49 +75,43 @@ export default function Shop() {
           <h2 className="text-4xl md:text-5xl font-bold mb-10 text-center">Browse by Category</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* All Products Card */}
-            <Card 
-              className={`rounded-none border-4 cursor-pointer transition-all ${
+            <div 
+              className={`border-2 p-10 cursor-pointer transition-colors ${
                 selectedType === null 
-                  ? 'border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]' 
-                  : 'border-black bg-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]'
+                  ? 'border-black bg-black' 
+                  : 'border-gray-200 bg-white hover:border-gray-400'
               }`}
               onClick={() => setSelectedType(null)}
             >
-              <CardContent className="p-8 text-center">
-                <div className="text-6xl mb-4">🛍️</div>
-                <h3 className={`text-2xl font-bold mb-2 ${selectedType === null ? 'text-white' : 'text-black'}`}>
-                  All Products
-                </h3>
-                <p className={`text-sm font-medium ${selectedType === null ? 'text-gray-300' : 'text-gray-600'}`}>
-                  Browse everything
-                </p>
-              </CardContent>
-            </Card>
+              <h3 className={`text-3xl font-bold mb-4 ${selectedType === null ? 'text-white' : 'text-black'}`}>
+                All Products
+              </h3>
+              <p className={`leading-relaxed text-lg ${selectedType === null ? 'text-gray-300' : 'text-gray-600'}`}>
+                Browse everything
+              </p>
+            </div>
 
             {/* Category Cards */}
             {productTypes.map((type) => {
               const isSelected = selectedType === type.value;
 
               return (
-                <Card 
+                <div 
                   key={type.value}
-                  className={`rounded-none border-4 cursor-pointer transition-all ${
+                  className={`border-2 p-10 cursor-pointer transition-colors ${
                     isSelected 
-                      ? 'border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]' 
-                      : 'border-black bg-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]'
+                      ? 'border-black bg-black' 
+                      : 'border-gray-200 bg-white hover:border-gray-400'
                   }`}
                   onClick={() => setSelectedType(type.value)}
                 >
-                  <CardContent className="p-8 text-center">
-                    <div className="text-6xl mb-4">{type.icon}</div>
-                    <h3 className={`text-2xl font-bold mb-2 ${isSelected ? 'text-white' : 'text-black'}`}>
-                      {type.label}
-                    </h3>
-                    <p className={`text-sm font-medium ${isSelected ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {type.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <h3 className={`text-3xl font-bold mb-4 ${isSelected ? 'text-white' : 'text-black'}`}>
+                    {type.label}
+                  </h3>
+                  <p className={`leading-relaxed text-lg ${isSelected ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {type.description}
+                  </p>
+                </div>
               );
             })}
           </div>
@@ -151,7 +145,7 @@ export default function Shop() {
                     </div>
                   ) : (
                     <div className="aspect-square bg-gray-100 rounded-none border-2 border-black mb-4 flex items-center justify-center">
-                      <span className="text-6xl">🛍️</span>
+                      <span className="text-4xl font-bold text-gray-400">No Image</span>
                     </div>
                   )}
 
@@ -186,21 +180,21 @@ export default function Shop() {
             ))}
           </div>
         ) : (
-          <Card className="rounded-none border-4 border-black bg-white max-w-2xl mx-auto">
-            <CardContent className="p-16 text-center">
-              <div className="text-8xl mb-6">🎨</div>
-              <h2 className="text-4xl font-bold text-black mb-4">Coming Soon</h2>
-              <p className="text-xl text-gray-600 font-medium mb-8">
-                Artists are preparing exclusive merchandise and digital content. Check back soon!
-              </p>
-              <Button
-                onClick={() => setLocation("/discover")}
-                className="rounded-full text-lg px-10 py-6 bg-black text-white hover:bg-gray-800 border-4 border-black font-bold shadow-[4px_4px_0px_0px_rgba(129,230,254,1)] hover:shadow-[2px_2px_0px_0px_rgba(129,230,254,1)] transition-all"
-              >
-                Discover Artists
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="max-w-3xl mx-auto text-center py-16">
+            <h2 className="text-6xl font-bold mb-8">
+              Coming Soon
+            </h2>
+            <p className="text-2xl text-gray-600 leading-relaxed mb-12">
+              Artists are preparing exclusive merchandise and digital content. Check back soon!
+            </p>
+            <Button
+              onClick={() => setLocation("/discover")}
+              className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white shadow-[8px_8px_0px_0px_#81e6fe]"
+              size="lg"
+            >
+              Discover Artists
+            </Button>
+          </div>
         )}
       </div>
     </div>
