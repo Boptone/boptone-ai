@@ -161,7 +161,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
             <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
-              <span className={`inline-block transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+              <span className={`inline-block min-w-[280px] md:min-w-[650px] transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                 {rotatingPhrases[verbIndex]}
               </span>
             </h1>
