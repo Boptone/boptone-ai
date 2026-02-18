@@ -24,9 +24,9 @@ export default function Shop() {
   const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
   const productTypes = [
-    { value: "physical", label: "Physical Merch", symbol: "PHYSICAL" },
-    { value: "digital", label: "Digital Downloads", symbol: "DIGITAL" },
-    { value: "experience", label: "Experiences", symbol: "TICKET" },
+    { value: "physical", label: "Physical Merch", icon: "👕", description: "T-shirts, vinyl, posters" },
+    { value: "digital", label: "Digital Downloads", icon: "💿", description: "Beats, samples, stems" },
+    { value: "experience", label: "Experiences", icon: "🎫", description: "Meet & greets, studio sessions" },
   ];
 
   // Filter products
@@ -35,118 +35,87 @@ export default function Shop() {
     : products;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Left: Content */}
-          <div>
-            <h1 className="text-7xl lg:text-8xl font-bold tracking-tight leading-none mb-6 text-black">
-              Support Creators
-            </h1>
-            <p className="text-2xl text-gray-700 font-bold mb-8">
-              90% goes directly to artists. Shop exclusive merch, digital content, and experiences.
-            </p>
-            {user && (
-              <Button 
-                onClick={() => setLocation("/cart")}
-                className="rounded-none text-xl px-10 py-6 bg-black text-white hover:bg-gray-900 border-4 border-black font-bold relative"
-                size="lg"
-              >
-                CART View Cart
-                {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 rounded-none border-4 border-white bg-black text-white font-bold text-lg px-3 py-1">
-                    {cartItemCount}
-                  </Badge>
-                )}
-              </Button>
-            )}
+    <div className="min-h-screen bg-white">
+      {/* Hero Section - Full Width, Centered */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center max-w-5xl mx-auto mb-20">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-none mb-6">
+            BopShop.
+          </h1>
+          <p className="text-2xl md:text-3xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Support artists directly. 90% of every purchase goes straight to creators—no middlemen, no hidden fees.
+          </p>
+          
+          {/* Value Props - Inline Badges */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+            <Badge className="rounded-full border-4 border-black bg-white text-black font-bold text-lg px-6 py-3">
+              90% to Artists
+            </Badge>
+            <Badge className="rounded-full border-4 border-black bg-white text-black font-bold text-lg px-6 py-3">
+              Exclusive Merch
+            </Badge>
+            <Badge className="rounded-full border-4 border-black bg-white text-black font-bold text-lg px-6 py-3">
+              Verified Creators
+            </Badge>
           </div>
 
-          {/* Right: Stats Card */}
-          <Card className="rounded-none border-4 border-black bg-white">
-            <CardContent className="p-10">
-              <div className="space-y-8">
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-900">
-                    <span className="text-3xl font-bold text-gray-900">90%</span>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-gray-900">To Artists</div>
-                    <div className="text-lg text-gray-600 font-medium">Direct Support</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-900">
-                    <span className="text-3xl">PHYSICAL</span>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-gray-900">Exclusive</div>
-                    <div className="text-lg text-gray-600 font-medium">Limited Editions</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-none bg-gray-100 flex items-center justify-center border-2 border-gray-900">
-                    <span className="text-3xl">NEW</span>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-gray-900">Authentic</div>
-                    <div className="text-lg text-gray-600 font-medium">Verified Creators</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {user && cartItemCount > 0 && (
+            <Button 
+              onClick={() => setLocation("/cart")}
+              className="rounded-full text-xl px-12 py-7 bg-black text-white hover:bg-gray-800 border-4 border-black font-bold shadow-[8px_8px_0px_0px_rgba(129,230,254,1)] hover:shadow-[4px_4px_0px_0px_rgba(129,230,254,1)] transition-all"
+              size="lg"
+            >
+              View Cart ({cartItemCount})
+            </Button>
+          )}
         </div>
 
-        {/* Filter Buttons */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Browse by Category</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {/* All Button */}
+        {/* Browse by Category */}
+        <div className="mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-10 text-center">Browse by Category</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            {/* All Products Card */}
             <Card 
-              className={`rounded-none border-4 cursor-pointer hover:bg-gray-100 transition-colors ${
+              className={`rounded-none border-4 cursor-pointer transition-all ${
                 selectedType === null 
-                  ? 'border-black bg-black' 
-                  : 'border-gray-900 bg-white'
+                  ? 'border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]' 
+                  : 'border-black bg-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]'
               }`}
               onClick={() => setSelectedType(null)}
             >
-              <CardContent className="p-6 text-center">
-                <div className={`w-14 h-14 rounded-none flex items-center justify-center mx-auto mb-4 border-2 ${
-                  selectedType === null 
-                    ? 'bg-white border-white' 
-                    : 'bg-gray-100 border-gray-900'
-                }`}>
-                  <span className="text-2xl">{selectedType === null ? 'ALL' : ''}</span>
-                </div>
-                <h3 className={`text-xl font-bold ${selectedType === null ? 'text-white' : 'text-gray-900'}`}>
+              <CardContent className="p-8 text-center">
+                <div className="text-6xl mb-4">🛍️</div>
+                <h3 className={`text-2xl font-bold mb-2 ${selectedType === null ? 'text-white' : 'text-black'}`}>
                   All Products
                 </h3>
+                <p className={`text-sm font-medium ${selectedType === null ? 'text-gray-300' : 'text-gray-600'}`}>
+                  Browse everything
+                </p>
               </CardContent>
             </Card>
 
-            {/* Category Buttons */}
+            {/* Category Cards */}
             {productTypes.map((type) => {
               const isSelected = selectedType === type.value;
 
               return (
                 <Card 
                   key={type.value}
-                  className={`rounded-none border-4 cursor-pointer hover:bg-gray-100 transition-colors ${
-                    isSelected ? 'border-black bg-black' : 'border-gray-900 bg-white'
+                  className={`rounded-none border-4 cursor-pointer transition-all ${
+                    isSelected 
+                      ? 'border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]' 
+                      : 'border-black bg-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]'
                   }`}
                   onClick={() => setSelectedType(type.value)}
                 >
-                  <CardContent className="p-6 text-center">
-                    <div className={`w-14 h-14 rounded-none flex items-center justify-center mx-auto mb-4 border-2 ${
-                      isSelected ? 'bg-white border-white' : 'bg-gray-100 border-gray-900'
-                    }`}>
-                      <span className="text-2xl">{type.symbol}</span>
-                    </div>
-                    <h3 className={`text-xl font-bold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
+                  <CardContent className="p-8 text-center">
+                    <div className="text-6xl mb-4">{type.icon}</div>
+                    <h3 className={`text-2xl font-bold mb-2 ${isSelected ? 'text-white' : 'text-black'}`}>
                       {type.label}
                     </h3>
+                    <p className={`text-sm font-medium ${isSelected ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {type.description}
+                    </p>
                   </CardContent>
                 </Card>
               );
@@ -157,7 +126,7 @@ export default function Shop() {
         {/* Product Grid */}
         {isLoading ? (
           <div className="text-center py-24">
-            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-none bg-black text-white text-2xl font-bold border-4 border-black">
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black text-white text-2xl font-bold border-4 border-black">
               <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
               Loading Products...
             </div>
@@ -167,31 +136,31 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className="rounded-none border-4 border-gray-900 cursor-pointer hover:bg-gray-100 transition-colors bg-white"
+                className="rounded-none border-4 border-black cursor-pointer hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all bg-white"
                 onClick={() => setLocation(`/product/${product.id}`)}
               >
                 <CardContent className="p-6">
                   {/* Product Image */}
                   {product.images && product.images.length > 0 ? (
-                    <div className="aspect-square bg-gray-50 rounded-none border-2 border-gray-900 mb-4 overflow-hidden">
+                    <div className="aspect-square bg-gray-50 rounded-none border-2 border-black mb-4 overflow-hidden">
                       <img
                         src={product.images[0]}
                         alt={product.name}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   ) : (
-                    <div className="aspect-square bg-gray-100 rounded-none border-2 border-gray-900 mb-4 flex items-center justify-center">
-                      <span className="text-6xl">CART</span>
+                    <div className="aspect-square bg-gray-100 rounded-none border-2 border-black mb-4 flex items-center justify-center">
+                      <span className="text-6xl">🛍️</span>
                     </div>
                   )}
 
                   {/* Product Info */}
                   <div className="space-y-3">
-                    <Badge className="rounded-none border-2 border-gray-900 bg-white text-gray-900 font-bold text-xs px-3 py-1">
+                    <Badge className="rounded-full border-2 border-black bg-white text-black font-bold text-xs px-3 py-1 uppercase">
                       {product.type}
                     </Badge>
-                    <h3 className="font-bold text-xl text-gray-900 line-clamp-2">
+                    <h3 className="font-bold text-xl text-black line-clamp-2">
                       {product.name}
                     </h3>
                     <p className="text-sm text-gray-600 font-medium line-clamp-2">
@@ -202,11 +171,11 @@ export default function Shop() {
                         ${product.price}
                       </span>
                       {product.status === "active" ? (
-                        <Badge className="rounded-none border-2 border-gray-900 bg-white text-gray-900 font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full border-2 border-black bg-white text-black font-bold text-xs px-3 py-1">
                           In Stock
                         </Badge>
                       ) : (
-                        <Badge className="rounded-none border-2 border-gray-900 bg-gray-900 text-white font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full border-2 border-black bg-black text-white font-bold text-xs px-3 py-1">
                           Sold Out
                         </Badge>
                       )}
@@ -217,15 +186,19 @@ export default function Shop() {
             ))}
           </div>
         ) : (
-          <Card className="rounded-none border-4 border-gray-900 bg-white">
-            <CardContent className="p-24 text-center">
-              <div className="w-32 h-32 rounded-none bg-gray-100 flex items-center justify-center border-4 border-gray-900 mx-auto mb-8">
-                <span className="text-6xl">CART</span>
-              </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">No Products Yet</h2>
-              <p className="text-xl text-gray-600 font-medium">
-                Check back soon for exclusive artist merchandise and digital content.
+          <Card className="rounded-none border-4 border-black bg-white max-w-2xl mx-auto">
+            <CardContent className="p-16 text-center">
+              <div className="text-8xl mb-6">🎨</div>
+              <h2 className="text-4xl font-bold text-black mb-4">Coming Soon</h2>
+              <p className="text-xl text-gray-600 font-medium mb-8">
+                Artists are preparing exclusive merchandise and digital content. Check back soon!
               </p>
+              <Button
+                onClick={() => setLocation("/discover")}
+                className="rounded-full text-lg px-10 py-6 bg-black text-white hover:bg-gray-800 border-4 border-black font-bold shadow-[4px_4px_0px_0px_rgba(129,230,254,1)] hover:shadow-[2px_2px_0px_0px_rgba(129,230,254,1)] transition-all"
+              >
+                Discover Artists
+              </Button>
             </CardContent>
           </Card>
         )}

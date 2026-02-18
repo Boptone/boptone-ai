@@ -1825,3 +1825,9 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update all user-facing references across pages to use 'Bop Audio'
 - [ ] Verify TOS and Privacy still reference technical 'BAP' terminology
 - [ ] Test changes and save checkpoint
+
+## /shop Page Redesign
+- [x] Audit current /shop page design and identify all issues
+- [x] Redesign /shop page with professional layout and consistent branding
+- [ ] Fix all layout shift issues and ensure cross-browser compatibility
+- [x] Test redesigned /shop page and save checkpoint
