@@ -97,7 +97,7 @@ export default function Features() {
                 variant="outline" 
                 onClick={() => setLocation("/bap-protocol")}
               >
-                Learn About Bop Audio
+                Learn About BopAudio
               </Button>
             </div>
           </div>

@@ -124,7 +124,7 @@ export default function Home() {
       features: [
         "Keep 90% of all revenue",
         "Kick In tips: 100% to you",
-        "Bop Audio streaming platform",
+        "BopAudio streaming platform",
         "Third-party distribution",
         "Basic profile + 10 tracks",
         "1GB storage",
@@ -289,7 +289,7 @@ export default function Home() {
                     </div>
                   )}
                   <div className="text-sm text-gray-600 mt-2">
-                    Platform fee: {tier.platformFee} on Bop Audio streams
+                    Platform fee: {tier.platformFee} on BopAudio streams
                   </div>
                 </div>
 
@@ -340,7 +340,7 @@ export default function Home() {
                 <div>
                   <h4 className="font-bold mb-2">Platform Fee Structure</h4>
                   <p className="text-gray-700">
-                    Boptone takes 10% of Bop Audio streaming revenue across all plans. You keep 90% of every stream. 
+                    Boptone takes 10% of BopAudio streaming revenue across all plans. You keep 90% of every stream. 
                     Tips received through "Kick In" have zero platform fees—you keep 100% (minus card processing fees).
                   </p>
                 </div>
@@ -386,7 +386,7 @@ export default function Home() {
               {[
                 {
                   question: "How does the 90/10 revenue split work?",
-                  answer: "For every stream on Bop Audio (powered by the Boptone Artist Protocol), you keep 90% of the revenue and Boptone takes 10%. This applies to all plans. Revenue from third-party platforms follows their standard payout structures."
+                  answer: "For every stream on BopAudio (powered by the Boptone Artist Protocol), you keep 90% of the revenue and Boptone takes 10%. This applies to all plans. Revenue from third-party platforms follows their standard payout structures."
                 },
                 {
                   question: "Can I upgrade or downgrade my plan anytime?",

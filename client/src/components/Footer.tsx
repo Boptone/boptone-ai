@@ -28,7 +28,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/bap-protocol" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Bop Audio
+                  BopAudio
                 </Link>
               </li>
               <li>
