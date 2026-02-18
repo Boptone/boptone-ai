@@ -1986,4 +1986,20 @@ Apply the visually stunning design style from the explainer component across ALL
 ## Remove Public Artist Earnings Ticker (User Request - Privacy Concern)
 - [x] Remove "ARTIST EARNING" green ticker from public player view
 - [x] Keep earnings data private (only visible in artist dashboard)
-- [ ] Save checkpoint with privacy-focused player
+- [x] Save checkpoint with privacy-focused player
+
+## Create Compact Mini-Player (User Request - SoundCloud-Inspired)
+- [x] Remove VERSE/CHORUS/DROP AI markers (table for future)
+- [x] Design compact horizontal layout (artwork + info + waveform + controls in one line)
+- [x] Replace dark background with lighter gradient (gray-100 → white or subtle cyan tint)
+- [x] Keep #81e6fe cyan accent for progress and buttons
+- [x] Keep live listener count badge (creates FOMO)
+- [x] Keep blockchain verification on artwork
+- [x] Keep "Kick In" tipping button (appears at 30 sec)
+- [x] Keep AirPlay button
+- [x] Add prev/next/shuffle controls
+- [x] Add volume control
+- [x] Add queue button
+- [ ] Make waveform visible with actual bars (WaveSurfer rendering needs investigation)
+- [x] Test compact player layout
+- [ ] Save checkpoint for compact mini-player
