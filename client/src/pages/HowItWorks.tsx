@@ -26,7 +26,7 @@ export default function HowItWorks() {
           {[1, 2, 3].map((step) => (
             <div
               key={step}
-              className={`h-2 rounded-none transition-all duration-300 ${
+              className={`h-2 rounded-xl transition-all duration-300 ${
                 step === currentStep
                   ? "w-12 bg-black"
                   : step < currentStep
@@ -42,7 +42,7 @@ export default function HowItWorks() {
           <div className="grid md:grid-cols-2 gap-12 items-center animate-in fade-in duration-500">
             {/* Left: Content */}
             <div className="space-y-6">
-              <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-none text-sm font-bold uppercase tracking-wide border-4 border-black">
+              <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-xl text-sm font-bold uppercase tracking-wide border-4 border-black">
                 Step 1 of 3
               </div>
               <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
@@ -75,8 +75,8 @@ export default function HowItWorks() {
             <div className="relative h-96">
               <div className="absolute inset-0 flex items-center justify-center">
                 {/* Fan */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-none shadow-2xl p-8 border-4 border-black">
-                  <div className="w-20 h-20 bg-gray-900 rounded-none flex items-center justify-center">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-8 border-4 border-black">
+                  <div className="w-20 h-20 bg-gray-900 rounded-xl flex items-center justify-center">
                     <span className="text-2xl text-white font-bold">$</span>
                   </div>
                   <p className="mt-4 font-bold text-gray-800">Fan</p>
@@ -90,8 +90,8 @@ export default function HowItWorks() {
                 </div>
 
                 {/* Artist */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-none shadow-2xl p-8 border-4 border-black">
-                  <div className="w-20 h-20 bg-gray-900 rounded-none flex items-center justify-center">
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-8 border-4 border-black">
+                  <div className="w-20 h-20 bg-gray-900 rounded-xl flex items-center justify-center">
                     <span className="text-2xl text-white font-bold">YOU</span>
                   </div>
                   <p className="mt-4 font-bold text-gray-800">You</p>
@@ -107,13 +107,13 @@ export default function HowItWorks() {
             {/* Left: Visual */}
             <div className="relative h-96 order-2 md:order-1">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white rounded-none shadow-2xl p-12 border-4 border-black">
+                <div className="bg-white rounded-xl shadow-2xl p-12 border-4 border-black">
                   <div className="flex items-baseline gap-2 mb-4">
                     <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-black">$47.50</span>
                     <span className="text-2xl font-bold text-black">INSTANT</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
-                    <div className="w-2 h-2 bg-black rounded-none" />
+                    <div className="w-2 h-2 bg-black rounded-xl" />
                     <span className="text-lg font-semibold">Just now</span>
                   </div>
                   <p className="mt-6 text-sm text-gray-500 uppercase tracking-wide font-bold">
@@ -125,7 +125,7 @@ export default function HowItWorks() {
 
             {/* Right: Content */}
             <div className="space-y-6 order-1 md:order-2">
-              <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-none text-sm font-bold uppercase tracking-wide border-4 border-black">
+              <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-xl text-sm font-bold uppercase tracking-wide border-4 border-black">
                 Step 2 of 3
               </div>
               <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
@@ -161,7 +161,7 @@ export default function HowItWorks() {
           <div className="grid md:grid-cols-2 gap-12 items-center animate-in fade-in duration-500">
             {/* Left: Content */}
             <div className="space-y-6">
-              <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-none text-sm font-bold uppercase tracking-wide border-4 border-black">
+              <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-xl text-sm font-bold uppercase tracking-wide border-4 border-black">
                 Step 3 of 3
               </div>
               <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
@@ -193,21 +193,21 @@ export default function HowItWorks() {
             {/* Right: Visual */}
             <div className="relative h-96">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white rounded-none shadow-2xl p-8 border-4 border-black w-full max-w-md">
+                <div className="bg-white rounded-xl shadow-2xl p-8 border-4 border-black w-full max-w-md">
                   <div className="flex items-center gap-3 mb-6">
                     <span className="text-2xl font-bold">$</span>
                     <h3 className="text-2xl font-bold text-gray-800">Your Earnings</h3>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-4 border-black">
+                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border-4 border-black">
                       <span className="text-sm font-semibold text-gray-600 uppercase">Today</span>
                       <span className="text-2xl font-bold text-black">$127.80</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-4 border-black">
+                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border-4 border-black">
                       <span className="text-sm font-semibold text-gray-600 uppercase">This Week</span>
                       <span className="text-2xl font-bold text-black">$892.40</span>
                     </div>
-                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-none border-4 border-black">
+                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border-4 border-black">
                       <span className="text-sm font-semibold text-gray-600 uppercase">This Month</span>
                       <span className="text-2xl font-bold text-black">$3,456.20</span>
                     </div>

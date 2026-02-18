@@ -1857,3 +1857,11 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update all identified cards to use rounded-xl or rounded-2xl
 - [ ] Test updated design across all pages
 - [ ] Save checkpoint with rounded card design
+
+## Audit Remaining Pages for Rounded Corners
+- [x] Audit Pricing page for sharp-cornered cards (no pricing page found)
+- [x] Audit How It Works page for sharp-cornered cards
+- [x] Audit Discover page for sharp-cornered cards
+- [x] Audit Profile page for sharp-cornered cards (ProfileSettings.tsx)
+- [x] Update all identified cards to rounded-xl
+- [x] Test visual consistency across all four pages

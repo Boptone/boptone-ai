@@ -159,14 +159,14 @@ export default function Discover() {
   };
 
   const TrackCard = ({ track }: { track: any }) => (
-    <Card className="rounded-none border-4 border-black hover:shadow-lg transition-all bg-white">
+    <Card className="rounded-xl border-4 border-black hover:shadow-lg transition-all bg-white">
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           <div className="relative flex-shrink-0 group">
             <img
               src={track.artworkUrl || `https://via.placeholder.com/96x96?text=${encodeURIComponent(track.title)}`}
               alt={track.title}
-              className="w-24 h-24 rounded-none object-cover border-4 border-black"
+              className="w-24 h-24 rounded-xl object-cover border-4 border-black"
             />
             <Button 
               className="rounded-full absolute inset-0 m-auto w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
@@ -250,7 +250,7 @@ export default function Discover() {
           </div>
 
           {/* Right: Stats Card - Simplified without heavy black boxes */}
-          <Card className="border-4 border-black bg-white rounded-none">
+          <Card className="border-4 border-black bg-white rounded-xl">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
@@ -280,7 +280,7 @@ export default function Discover() {
         </div>
 
         {/* Search Bar */}
-        <Card className="border-4 border-black bg-white mb-12 rounded-none">
+        <Card className="border-4 border-black bg-white mb-12 rounded-xl">
           <CardContent className="p-8">
             <div className="relative">
               <Input
@@ -288,7 +288,7 @@ export default function Discover() {
                 placeholder="Search tracks, artists, albums..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-2xl py-8 pl-6 pr-6 border-2 border-gray-300 rounded-none font-medium"
+                className="text-2xl py-8 pl-6 pr-6 border-2 border-gray-300 rounded-xl font-medium"
               />
             </div>
           </CardContent>
@@ -323,7 +323,7 @@ export default function Discover() {
                 ))}
               </div>
             ) : (
-              <Card className="rounded-none border-4 border-black bg-white">
+              <Card className="rounded-xl border-4 border-black bg-white">
                 <CardContent className="p-16 text-center">
                   <div className="text-6xl mb-6">🔍</div>
                   <h3 className="text-2xl font-bold mb-2">No results found</h3>
@@ -337,22 +337,22 @@ export default function Discover() {
         {/* Tabs - Simplified without inverted backgrounds */}
         {!searchQuery && (
           <Tabs defaultValue="trending" className="space-y-8">
-            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-none border-4 border-black">
+            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-xl border-4 border-black">
               <TabsTrigger 
                 value="trending"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-xl data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
               >
                 Trending
               </TabsTrigger>
               <TabsTrigger 
                 value="new"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-xl data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
               >
                 New This Week
               </TabsTrigger>
               <TabsTrigger 
                 value="rising"
-                className="text-xl py-4 px-8 font-bold uppercase rounded-none data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
+                className="text-xl py-4 px-8 font-bold uppercase rounded-xl data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
               >
                 Rising Artists
               </TabsTrigger>
@@ -365,7 +365,7 @@ export default function Discover() {
                   <TrackCard key={track.id} track={track} />
                 ))
               ) : (
-                <Card className="rounded-none border-4 border-black bg-white">
+                <Card className="rounded-xl border-4 border-black bg-white">
                   <CardContent className="p-16 text-center">
                     <div className="text-6xl mb-6">♪</div>
                     <h3 className="text-2xl font-bold mb-2">No trending tracks yet</h3>
@@ -387,7 +387,7 @@ export default function Discover() {
                   <TrackCard key={track.id} track={track} />
                 ))
               ) : (
-                <Card className="rounded-none border-4 border-black bg-white">
+                <Card className="rounded-xl border-4 border-black bg-white">
                   <CardContent className="p-16 text-center">
                     <div className="text-6xl mb-6">♪</div>
                     <h3 className="text-2xl font-bold mb-2">No new releases yet</h3>
@@ -407,7 +407,7 @@ export default function Discover() {
               {risingArtists.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {risingArtists.map((artist: any) => (
-                    <Card className="rounded-none border-4 border-black hover:shadow-lg transition-all bg-white" key={artist.id}>
+                    <Card className="rounded-xl border-4 border-black hover:shadow-lg transition-all bg-white" key={artist.id}>
                       <CardContent className="p-8 text-center">
                         <div className="text-6xl mb-6">♪</div>
                         <h3 className="text-2xl font-bold mb-2">{artist.name}</h3>
@@ -422,7 +422,7 @@ export default function Discover() {
                   ))}
                 </div>
               ) : (
-                <Card className="rounded-none border-4 border-black bg-white">
+                <Card className="rounded-xl border-4 border-black bg-white">
                   <CardContent className="p-16 text-center">
                     <div className="text-6xl mb-6">👥</div>
                     <h3 className="text-2xl font-bold mb-2">No rising artists yet</h3>
@@ -449,7 +449,7 @@ export default function Discover() {
               <img
                 src={currentTrack.artworkUrl || `https://via.placeholder.com/80x80?text=${encodeURIComponent(currentTrack.title)}`}
                 alt={currentTrack.title}
-                className="w-20 h-20 rounded-none object-cover flex-shrink-0 border-4 border-black"
+                className="w-20 h-20 rounded-xl object-cover flex-shrink-0 border-4 border-black"
               />
               <div className="flex-1 min-w-0">
                 <h4 className="font-bold text-xl text-black truncate">{currentTrack.title}</h4>
@@ -529,7 +529,7 @@ export default function Discover() {
               </span>
               <div className="flex-1">
                 <div className="relative">
-                  <div className="w-full h-3 bg-white border-2 border-black rounded-none">
+                  <div className="w-full h-3 bg-white border-2 border-black rounded-xl">
                     <div
                       className="h-full bg-black transition-all"
                       style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}
