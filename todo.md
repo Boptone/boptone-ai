@@ -1818,3 +1818,10 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Test fixes in Chrome, Firefox, Safari, Edge
 - [ ] Verify mobile responsiveness and stability
 - [ ] Save checkpoint with all stability fixes
+
+## Rename BAP to Bop Audio
+- [x] Update navigation menu to show 'Bop Audio' instead of 'BAP Protocol'
+- [x] Update BAP page title and hero section to use 'Bop Audio'
+- [x] Update all user-facing references across pages to use 'Bop Audio'
+- [ ] Verify TOS and Privacy still reference technical 'BAP' terminology
+- [ ] Test changes and save checkpoint

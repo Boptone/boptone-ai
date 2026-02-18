@@ -98,7 +98,7 @@ export default function Signup() {
       features: [
         "Keep 90% of all revenue",
         "Kick In tips: 100% to you",
-        "BAP streaming platform",
+        "Bop Audio streaming platform",
         "Third-party distribution",
         "Basic profile + 10 tracks",
         "1GB storage",
@@ -149,7 +149,7 @@ export default function Signup() {
               Choose Your Plan
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Start free, upgrade when you're ready. All plans include BAP streaming with 90% artist revenue share.
+              Start free, upgrade when you're ready. All plans include Bop Audio streaming with 90% artist revenue share.
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export default function Signup() {
               <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-none">
                 <h4 className="font-bold text-black mb-2">90% Revenue Share</h4>
                 <p className="text-sm text-gray-600">
-                  Keep 90% of BAP streaming revenue before platform fees. No hidden costs.
+                  Keep 90% of Bop Audio streaming revenue before platform fees. No hidden costs.
                 </p>
               </div>
               <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-none">

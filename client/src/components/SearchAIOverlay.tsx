@@ -229,7 +229,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                     {[
                       "What's the difference between Free and Pro plans?",
                       "How does the 90/10 revenue split work?",
-                      "What is BAP streaming?",
+                      "What is Bop Audio streaming?",
                       "Can I distribute to other platforms?",
                       "How do I withdraw my earnings?",
                       "What is Toney AI?",

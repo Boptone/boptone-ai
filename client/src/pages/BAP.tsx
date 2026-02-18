@@ -97,7 +97,7 @@ export default function BAP() {
                 <span className="text-black">.</span>
               </h2>
               <p className="text-2xl text-gray-700 leading-relaxed font-medium">
-                Traditional platforms control the money and pay artists scraps. BAP inverts this—fans control the money and pay you directly.
+                Traditional platforms control the money and pay artists scraps. Bop Audio inverts this—fans control the money and pay you directly.
               </p>
             </div>
           </div>
@@ -157,14 +157,14 @@ export default function BAP() {
                   <div className="w-16 h-16 rounded-none bg-black text-white flex items-center justify-center border-2 border-black">
                     <span className="text-4xl font-bold">✓</span>
                   </div>
-                  <h3 className="text-3xl font-bold text-black">BAP Streaming</h3>
+                  <h3 className="text-3xl font-bold text-black">Bop Audio Streaming</h3>
                 </div>
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-none bg-black text-white border-2 border-black flex items-center justify-center flex-shrink-0 mt-1">
                       <span className="text-lg font-bold">1</span>
                     </div>
-                    <p className="text-lg text-black font-bold">Fan loads <strong>their BAP wallet</strong> with funds ($10, $50, $100—their choice)</p>
+                    <p className="text-lg text-black font-bold">Fan loads <strong>their Bop Audio wallet</strong> with funds ($10, $50, $100—their choice)</p>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-none bg-black text-white border-2 border-black flex items-center justify-center flex-shrink-0 mt-1">
@@ -259,8 +259,8 @@ export default function BAP() {
                     <h3 className="text-3xl font-bold mb-6">Real Earnings Comparison</h3>
                     <div className="space-y-4 text-xl">
                       <p className="font-medium"><strong className="text-black">Traditional Streaming:</strong> 10,000 streams × $0.004 = <span className="text-black font-bold text-2xl">$40</span></p>
-                      <p className="font-medium"><strong className="text-black">BAP (Average Fan):</strong> 10,000 streams × $0.05 = <span className="text-black font-bold text-2xl">$500</span></p>
-                      <p className="font-medium"><strong className="text-black">BAP (Superfan Mix):</strong> 5,000 × $0.05 + 5,000 × $0.25 = <span className="text-black font-bold text-2xl">$1,500</span></p>
+                      <p className="font-medium"><strong className="text-black">Bop Audio (Average Fan):</strong> 10,000 streams × $0.05 = <span className="text-black font-bold text-2xl">$500</span></p>
+                      <p className="font-medium"><strong className="text-black">Bop Audio (Superfan Mix):</strong> 5,000 × $0.05 + 5,000 × $0.25 = <span className="text-black font-bold text-2xl">$1,500</span></p>
                     </div>
                   </div>
                 </div>
@@ -347,7 +347,7 @@ export default function BAP() {
         <div className="container mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-6xl lg:text-7xl font-bold mb-8">
-              Why BAP
+              Why Bop Audio
               <br />
               <span className="bg-black text-white px-4">
                 Changes Everything
@@ -504,7 +504,7 @@ export default function BAP() {
                 <span className="text-black">?</span>
               </h2>
               <p className="text-2xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-                Join thousands of artists already earning 10-100x more with BAP. No hidden fees. No locked-in contracts. Cancel anytime.
+                Join thousands of artists already earning 10-100x more with Bop Audio. No hidden fees. No locked-in contracts. Cancel anytime.
               </p>
               <div className="flex items-center justify-center gap-6 flex-wrap">
                 <Link href="/signup">

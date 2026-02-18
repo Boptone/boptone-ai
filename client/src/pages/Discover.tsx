@@ -245,7 +245,7 @@ export default function Discover() {
               New Music.
             </h1>
             <p className="text-2xl text-gray-600 mb-8">
-              Stream directly from artists. Every play supports creators through BAP.
+              Stream directly from artists. Every play supports creators through Bop Audio.
             </p>
           </div>
 
