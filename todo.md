@@ -2003,3 +2003,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Make waveform visible with actual bars (WaveSurfer rendering needs investigation)
 - [x] Test compact player layout
 - [ ] Save checkpoint for compact mini-player
+
+## Add Speaker Connectivity (User Request - Bluetooth & Sonos)
+- [x] Add Web Bluetooth API integration for Bluetooth speakers
+- [x] Add "Connect to Speaker" button in player
+- [x] Implement device picker UI for selecting speakers
+- [x] Add Sonos/smart speaker support via Web Audio API
+- [x] Show connected device indicator in player
+- [x] Test Bluetooth speaker connection
+- [ ] Save checkpoint with speaker connectivity

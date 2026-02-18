@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Play, Pause, Heart, Share2, Music, SkipBack, SkipForward, Shuffle, Volume2, List, Radio, Zap } from "lucide-react";
+import { Play, Pause, Heart, Share2, Music, SkipBack, SkipForward, Shuffle, Volume2, List, Radio, Zap, Bluetooth, Speaker } from "lucide-react";
 import WaveSurfer from "wavesurfer.js";
 
 interface Track {
@@ -28,6 +28,8 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   // GAME-CHANGING FEATURES
   const [liveListeners, setLiveListeners] = useState(847); // Simulated live count
   const [showKickIn, setShowKickIn] = useState(false); // Tipping modal
+  const [connectedDevice, setConnectedDevice] = useState<string | null>(null); // Connected speaker name
+  const [showDevicePicker, setShowDevicePicker] = useState(false); // Device picker modal
 
   // Simulate live listener count fluctuation
   useEffect(() => {
@@ -125,6 +127,39 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
     } else {
       alert("AirPlay is only supported on Apple devices with Safari browser");
     }
+  };
+
+  const handleConnectSpeaker = async () => {
+    try {
+      // Check if Web Bluetooth API is available
+      if ('bluetooth' in navigator) {
+        const device = await (navigator as any).bluetooth.requestDevice({
+          filters: [{ services: ['audio_sink'] }],
+          optionalServices: ['battery_service']
+        });
+        setConnectedDevice(device.name || 'Bluetooth Speaker');
+        setShowDevicePicker(false);
+      } else if ('mediaDevices' in navigator) {
+        // Fallback: Show device picker for audio output
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const audioOutputs = devices.filter(d => d.kind === 'audiooutput');
+        if (audioOutputs.length > 0) {
+          setShowDevicePicker(true);
+        } else {
+          alert('No external speakers detected. Please connect a Bluetooth speaker or use system audio settings.');
+        }
+      } else {
+        alert('Speaker connectivity is not supported in this browser. Try Chrome or Edge.');
+      }
+    } catch (error) {
+      console.error('Speaker connection error:', error);
+      alert('Failed to connect to speaker. Make sure Bluetooth is enabled.');
+    }
+  };
+
+  const disconnectSpeaker = () => {
+    setConnectedDevice(null);
+    setShowDevicePicker(false);
   };
 
   return (
@@ -250,6 +285,24 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
               <path d="M6 22h12l-6-6-6 6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
             </svg>
           </button>
+          {/* GAME-CHANGER: Connect to Bluetooth/Sonos Speakers */}
+          {connectedDevice ? (
+            <button 
+              onClick={disconnectSpeaker}
+              className="w-8 h-8 rounded-full bg-[#81e6fe]/20 hover:bg-[#81e6fe]/30 flex items-center justify-center transition-all border border-[#81e6fe]/50"
+              title={`Connected to ${connectedDevice}`}
+            >
+              <Speaker className="w-4 h-4 text-[#81e6fe]" />
+            </button>
+          ) : (
+            <button 
+              onClick={handleConnectSpeaker}
+              className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all"
+              title="Connect to Bluetooth/Sonos Speaker"
+            >
+              <Bluetooth className="w-4 h-4 text-gray-700" />
+            </button>
+          )}
           <button className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
             <List className="w-4 h-4 text-gray-700" />
           </button>
