@@ -154,62 +154,52 @@ export default function Signup() {
           </div>
 
           {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto pt-12">
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {tiers.map((tier) => (
               <Card
                 key={tier.id}
-                className="relative border-4 border-black rounded-none hover:shadow-xl transition-shadow bg-white"
+                className="relative border-2 border-gray-200 p-8 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
               >
-                <CardHeader className="pb-6">
-                  {/* Tier Name */}
-                  <CardTitle className="text-2xl font-bold text-black mb-3">
-                    {tier.name}
-                  </CardTitle>
-                  
-                  {/* Pricing */}
-                  <div className="mb-6">
-                    <div className="flex items-baseline gap-1 mb-1">
-                      <span className="text-5xl font-bold text-black tracking-tight">
-                        {tier.price}
-                      </span>
-                      <span className="text-lg text-gray-600 font-normal">{tier.period}</span>
+                {/* Tier Name */}
+                <div className="mb-4">
+                  <h3 className="text-2xl font-bold">{tier.name}</h3>
+                  <p className="text-sm text-gray-600 mt-2">{tier.description}</p>
+                </div>
+
+                {/* Pricing */}
+                <div className="mb-6">
+                  {tier.price === "$0" ? (
+                    <div className="text-5xl font-bold">Free</div>
+                  ) : (
+                    <div className="text-5xl font-bold">
+                      {tier.price}
+                      <span className="text-2xl text-gray-600 font-normal">/mo</span>
                     </div>
+                  )}
+                  <div className="text-sm text-gray-600 mt-2">
+                    Platform fee: {tier.platformFee} on Bop Audio streams
                   </div>
-                  
-                  {/* Description */}
-                  <CardDescription className="text-base text-gray-600 mb-6 leading-relaxed">
-                    {tier.description}
-                  </CardDescription>
-                  
-                  {/* Platform Fee Badge */}
-                  <div className="mb-3 inline-flex items-center gap-2 bg-gray-100 px-3 py-1.5 border-2 border-black rounded-none w-fit">
-                    <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Platform Fee</span>
-                    <span className="text-sm font-bold text-black">{tier.platformFee}</span>
-                  </div>
-                  
+                </div>
 
-                </CardHeader>
-
-                <CardContent className="pt-0">
-                  {/* Features List */}
-                  <ul className="space-y-3 mb-6">
-                    {tier.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <span className="text-black font-bold flex-shrink-0 mt-0.5">✓</span>
-                        <span className="text-base text-gray-700 leading-relaxed">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  {/* CTA Button */}
+                {/* CTA Button */}
+                <div className="mb-6">
                   <Button
                     onClick={() => handleTierSelection(tier.id)}
-                    className="w-full rounded-full bg-black hover:bg-gray-800 text-white"
-                    size="lg"
+                    className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
                   >
-                    {tier.id === "enterprise" ? "Contact Sales →" : "Get Started →"}
+                    {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                   </Button>
-                </CardContent>
+                </div>
+
+                {/* Features List */}
+                <ul className="space-y-3 flex-1">
+                  {tier.features.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-black font-bold mt-1">•</span>
+                      <span className="text-sm text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </Card>
             ))}
           </div>
@@ -220,19 +210,19 @@ export default function Signup() {
               All plans include
             </h3>
             <div className="grid md:grid-cols-3 gap-6 text-left">
-              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-none">
+              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-xl">
                 <h4 className="font-bold text-black mb-2">Data Ownership</h4>
                 <p className="text-sm text-gray-600">
                   You own your fan data, master recordings, and publishing rights. Export anytime.
                 </p>
               </div>
-              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-none">
+              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-xl">
                 <h4 className="font-bold text-black mb-2">90% Revenue Share</h4>
                 <p className="text-sm text-gray-600">
                   Keep 90% of Bop Audio streaming revenue before platform fees. No hidden costs.
                 </p>
               </div>
-              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-none">
+              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-xl">
                 <h4 className="font-bold text-black mb-2">No Contracts</h4>
                 <p className="text-sm text-gray-600">
                   Cancel anytime. No long-term commitments. Your music, your terms.
@@ -248,7 +238,7 @@ export default function Signup() {
   // Profile Creation Step
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl border-4 border-black rounded-none bg-white">
+      <Card className="w-full max-w-2xl border-2 border-gray-200 rounded-xl bg-white">
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-black">
             Create Your Artist Profile
@@ -271,7 +261,7 @@ export default function Signup() {
                 }
                 placeholder="Your artist name"
                 required
-                className="mt-2 border-2 border-gray-300 rounded-none"
+                className="mt-2 border-2 border-gray-300 rounded-xl"
               />
             </div>
 
@@ -329,7 +319,7 @@ export default function Signup() {
                   setProfileData({ ...profileData, location: e.target.value })
                 }
                 placeholder="City, State/Country"
-                className="mt-2 border-2 border-gray-300 rounded-none"
+                className="mt-2 border-2 border-gray-300 rounded-xl"
               />
             </div>
 

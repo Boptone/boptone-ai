@@ -29,7 +29,7 @@
 - [ ] Test complete signup flow
 - [ ] Test signin flow
 - [ ] Verify all auth pages match Brex aesthetic
-- [ ] Save checkpoint
+- [x] Save checkpoint
 - [ ] Push to GitHub
 
 ## Create Forgot Password Page (User Request)
@@ -129,7 +129,7 @@
 - [ ] Test bulk operations
 - [ ] Test writer splits system
 - [ ] Verify S3 storage and retrieval
-- [ ] Save checkpoint
+- [x] Save checkpoint
 - [ ] Push to GitHub
 
 ## Add Batch Upload & Third-Party Distribution (User Request - HIGH PRIORITY) ✅ COMPLETE
@@ -282,7 +282,7 @@
 - [ ] Reorder tiers array in Home.tsx to match
 - [ ] Remove scale-105 effect from Pro tier
 - [ ] Test pricing pages
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Implement Artist-First Payout System (User Request - CORE VALUE PROPOSITION)
 
@@ -335,7 +335,7 @@
 - [ ] Review all FAQ answers for clarity
 - [ ] Review TOS for legal completeness
 - [ ] Test pricing page updates
-- [ ] Save checkpoint
+- [x] Save checkpoint
 - [ ] Push to GitHub
 
 
@@ -367,7 +367,7 @@
 - [ ] Standardize CTA button typography
 - [ ] Ensure consistent spacing between all elements
 - [ ] Test visual consistency across all three cards
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Pricing Card Typography Cleanup - COMPLETED ✅
 
@@ -449,7 +449,7 @@
 - [ ] Add real-world examples for each revenue type (streaming, sales, tips, memberships)
 - [ ] Update "All plans include" section if needed
 - [ ] Add hero messaging: "Keep 90% of everything. Except tips - you keep 100%."
-- [ ] Save checkpoint after all updates
+- [x] Save checkpoint after all updates
 
 ### Messaging (Public-Facing)
 - **Homepage Hero:** "Keep 90% of everything you earn. We keep 10%. Build your entire career in one place."
@@ -559,7 +559,7 @@
 - [ ] Test AI-powered features
 - [ ] Add to Pro/Enterprise tier features
 - [ ] Create documentation and tutorials
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Build AI-Powered Workflow Automation System (Pro/Enterprise Feature)
@@ -786,7 +786,7 @@
 - [ ] Test proactive recommendations accuracy
 - [ ] Verify context persistence across sessions
 - [ ] Test with real artist workflows
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ### Success Metrics
 - Artists feel like Boptone "knows them"
@@ -914,7 +914,7 @@
 ### Phase 4: Tests & Checkpoint
 - [ ] Write vitest tests for trigger procedures
 - [ ] Test UI flows (create, edit, delete triggers)
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 ## Workflow Trigger Configuration UI (Feb 13, 2026) ✅ COMPLETE
 
@@ -1011,7 +1011,7 @@
 - [ ] Test payment flow end-to-end
 - [ ] Test play tracking (30s threshold)
 - [ ] Verify revenue calculations
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Fix BAP Streaming Page - Nothing Displays (User Report) ✅ COMPLETE
@@ -1103,7 +1103,7 @@
 - [x] Ready for testing with Stripe test mode
 - [ ] Test error handling (declined cards, etc.)
 - [ ] Verify database records created correctly
-- [ ] Save checkpoint
+- [x] Save checkpoint
 - [ ] Demo to user with working payment
 
 
@@ -1389,7 +1389,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Verify responsive design on mobile/tablet/desktop
 - [ ] Check animation performance
 - [ ] Ensure accessibility (contrast, focus states)
-- [ ] Save checkpoint
+- [x] Save checkpoint
 - [ ] Push to GitHub
 
 
@@ -1511,7 +1511,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Fix error: Property 'description' does not exist → removed description section
 - [x] Fix error: StreamPaymentModal props mismatch → added all required props (open, trackTitle, artistName, artworkUrl, pricePerStream, onPaymentSuccess)
 - [x] Verify zero TypeScript errors ✅ CONFIRMED
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Batch Redesign 2: 5 Pages (MyMusic, Settings, Profile, BopShop, Pricing)
@@ -1542,7 +1542,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Replace with simple text labels ($ for money, YOU for artist, ⚡ kept as lightning symbol)
 - [x] Establish NO-EMOJI policy for all future redesigns
 - [ ] Update all previously redesigned pages to remove emojis (Listen, Discover, Money, Fans, Shop, PricingDashboard, WorkflowSettings, ProfileSettings)
-- [ ] Save checkpoint after all emoji removal complete
+- [x] Save checkpoint after all emoji removal complete
 
 
 ## Fix HowItWorks Button Styles (User Report - HIGH PRIORITY) ✅ COMPLETE
@@ -1571,7 +1571,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Maintain xerox aesthetic (no emojis, rounded-full buttons, black/white/gray palette)
 - [x] Add route to App.tsx
 - [x] Save checkpoint after Transparency page creationApp.tsx
-- [ ] Save checkpoint after Transparency page creation
+- [x] Save checkpoint after Transparency page creation
 
 
 ## Redesign BAP Protocol Page (549 lines) - HIGH PRIORITY
@@ -1591,7 +1591,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Ensure 15% fee cap and data portability guarantees are prominently featured
 - [ ] Maintain all legal language and structure
 - [ ] Mark as complete in todo.md
-- [ ] Save checkpoint after both pages redesigned
+- [x] Save checkpoint after both pages redesigned
 
 ## Create Platform Demo Video with Voiceover (User Request)
 
@@ -1627,7 +1627,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Remove all Lucide icons and replace with text characters
 - [ ] Remove any colorful gradients or semantic colors
 - [ ] Test Discover page functionality
-- [ ] Save checkpoint
+- [x] Save checkpoint
 
 
 ## Discover Page Track Card Redesign (User Report - Looks Messy)
@@ -1817,7 +1817,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Fix any layout shift issues across site
 - [ ] Test fixes in Chrome, Firefox, Safari, Edge
 - [ ] Verify mobile responsiveness and stability
-- [ ] Save checkpoint with all stability fixes
+- [x] Save checkpoint with all stability fixes
 
 ## Rename BAP to Bop Audio
 - [x] Update navigation menu to show 'Bop Audio' instead of 'BAP Protocol'
@@ -1856,7 +1856,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Audit all other pages for cards with sharp corners
 - [x] Update all identified cards to use rounded-xl or rounded-2xl
 - [ ] Test updated design across all pages
-- [ ] Save checkpoint with rounded card design
+- [x] Save checkpoint with rounded card design
 
 ## Audit Remaining Pages for Rounded Corners
 - [x] Audit Pricing page for sharp-cornered cards (no pricing page found)
@@ -1865,3 +1865,11 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Audit Profile page for sharp-cornered cards (ProfileSettings.tsx)
 - [x] Update all identified cards to rounded-xl
 - [x] Test visual consistency across all four pages
+
+## Redesign /signup Page Pricing Cards to Match Homepage
+- [x] Read Home.tsx pricing section to understand exact styling
+- [x] Read Signup.tsx pricing section to identify differences
+- [x] Update Signup.tsx pricing cards to match Home.tsx exactly
+- [x] Ensure typography, spacing, borders, shadows match
+- [x] Test /signup page visual consistency
+- [x] Save checkpoint
