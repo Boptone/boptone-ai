@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
+import { Music, TrendingUp, Radio, Search, Heart, Share2, Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Copy, Check } from "lucide-react";
 
 const GENRES = [
   "All", "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",
@@ -159,23 +160,25 @@ export default function Discover() {
   };
 
   const TrackCard = ({ track }: { track: any }) => (
-    <Card className="rounded-xl border-4 border-black hover:shadow-lg transition-all bg-white">
+    <Card className="rounded-xl border-2 border-gray-200 hover:border-gray-400 hover:shadow-lg transition-all bg-white">
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           <div className="relative flex-shrink-0 group">
             <img
               src={track.artworkUrl || `https://via.placeholder.com/96x96?text=${encodeURIComponent(track.title)}`}
               alt={track.title}
-              className="w-24 h-24 rounded-xl object-cover border-4 border-black"
+              className="w-24 h-24 rounded-xl object-cover border-2 border-gray-200"
             />
             <Button 
               className="rounded-full absolute inset-0 m-auto w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
               size="icon"
               onClick={() => handlePlayTrack(track)}
             >
-              <span className="text-white text-2xl">
-                {currentTrack?.id === track.id && isPlaying ? "❚❚" : "▶"}
-              </span>
+              {currentTrack?.id === track.id && isPlaying ? (
+                <Pause className="h-5 w-5 text-white" />
+              ) : (
+                <Play className="h-5 w-5 text-white ml-0.5" />
+              )}
             </Button>
           </div>
           <div className="flex-1 min-w-0">
@@ -196,15 +199,17 @@ export default function Discover() {
             </div>
           </div>
           <Button 
-            className="rounded-full border-2 border-black px-6 py-2" 
+            className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" 
             variant="outline"
             onClick={() => handleLikeTrack(track.id)}
           >
+            <Heart className="h-4 w-4 mr-2" />
             <span className="text-sm font-bold">LIKE</span>
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-full border-2 border-black px-6 py-2" variant="outline">
+              <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" variant="outline">
+                <Share2 className="h-4 w-4 mr-2" />
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
             </DropdownMenuTrigger>
@@ -222,7 +227,11 @@ export default function Discover() {
                 Share on Facebook
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleShare(track, 'copy')}>
-                <span className="mr-2">{copiedTrackId === track.id ? "✓" : "⎘"}</span>
+                {copiedTrackId === track.id ? (
+                  <Check className="h-4 w-4 mr-2" />
+                ) : (
+                  <Copy className="h-4 w-4 mr-2" />
+                )}
                 Copy Link
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -249,26 +258,32 @@ export default function Discover() {
             </p>
           </div>
 
-          {/* Right: Stats Card - Simplified without heavy black boxes */}
-          <Card className="border-4 border-black bg-white rounded-xl">
+          {/* Right: Stats Card */}
+          <Card className="border-2 border-gray-200 bg-white rounded-xl">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="text-5xl">♪</div>
+                  <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <Music className="h-7 w-7 text-black" />
+                  </div>
                   <div>
                     <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Total Tracks</p>
                     <p className="text-3xl font-bold">{trendingTracks?.length || 0}+</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="text-5xl">↗</div>
+                  <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="h-7 w-7 text-black" />
+                  </div>
                   <div>
                     <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Trending Now</p>
                     <p className="text-3xl font-bold">{trendingTracks?.length || 0}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="text-5xl">◉</div>
+                  <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <Radio className="h-7 w-7 text-black" />
+                  </div>
                   <div>
                     <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Live Streams</p>
                     <p className="text-3xl font-bold">24/7</p>
@@ -280,21 +295,22 @@ export default function Discover() {
         </div>
 
         {/* Search Bar */}
-        <Card className="border-4 border-black bg-white mb-12 rounded-xl">
+        <Card className="border-2 border-gray-200 bg-white mb-12 rounded-xl">
           <CardContent className="p-8">
             <div className="relative">
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400" />
               <Input
                 type="text"
                 placeholder="Search tracks, artists, albums..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-2xl py-8 pl-6 pr-6 border-2 border-gray-300 rounded-xl font-medium"
+                className="text-2xl py-8 pl-16 pr-6 border-2 border-gray-300 rounded-xl font-medium"
               />
             </div>
           </CardContent>
         </Card>
 
-        {/* Genre Filter - Rounded-full buttons */}
+        {/* Genre Filter */}
         <div className="flex flex-wrap gap-3 mb-12">
           {GENRES.map((genre) => (
             <Button
@@ -323,9 +339,11 @@ export default function Discover() {
                 ))}
               </div>
             ) : (
-              <Card className="rounded-xl border-4 border-black bg-white">
+              <Card className="rounded-xl border-2 border-gray-200 bg-white">
                 <CardContent className="p-16 text-center">
-                  <div className="text-6xl mb-6">🔍</div>
+                  <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                    <Search className="h-10 w-10 text-gray-400" />
+                  </div>
                   <h3 className="text-2xl font-bold mb-2">No results found</h3>
                   <p className="text-gray-600 text-lg">Try a different search term</p>
                 </CardContent>
@@ -334,10 +352,10 @@ export default function Discover() {
           </div>
         )}
 
-        {/* Tabs - Simplified without inverted backgrounds */}
+        {/* Tabs */}
         {!searchQuery && (
           <Tabs defaultValue="trending" className="space-y-8">
-            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-xl border-4 border-black">
+            <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-3 h-auto p-2 bg-white rounded-xl border-2 border-gray-200">
               <TabsTrigger 
                 value="trending"
                 className="text-xl py-4 px-8 font-bold uppercase rounded-xl data-[state=active]:bg-white data-[state=active]:text-black data-[state=active]:border-b-4 data-[state=active]:border-black"
@@ -365,9 +383,11 @@ export default function Discover() {
                   <TrackCard key={track.id} track={track} />
                 ))
               ) : (
-                <Card className="rounded-xl border-4 border-black bg-white">
+                <Card className="rounded-xl border-2 border-gray-200 bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="text-6xl mb-6">♪</div>
+                    <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                      <Music className="h-10 w-10 text-gray-400" />
+                    </div>
                     <h3 className="text-2xl font-bold mb-2">No trending tracks yet</h3>
                     <p className="text-gray-600 text-lg mb-6">Be the first to upload!</p>
                     <Link href="/upload">
@@ -387,9 +407,11 @@ export default function Discover() {
                   <TrackCard key={track.id} track={track} />
                 ))
               ) : (
-                <Card className="rounded-xl border-4 border-black bg-white">
+                <Card className="rounded-xl border-2 border-gray-200 bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="text-6xl mb-6">♪</div>
+                    <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                      <Music className="h-10 w-10 text-gray-400" />
+                    </div>
                     <h3 className="text-2xl font-bold mb-2">No new releases yet</h3>
                     <p className="text-gray-600 text-lg mb-6">Check back soon for fresh music!</p>
                     <Link href="/upload">
@@ -407,9 +429,11 @@ export default function Discover() {
               {risingArtists.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {risingArtists.map((artist: any) => (
-                    <Card className="rounded-xl border-4 border-black hover:shadow-lg transition-all bg-white" key={artist.id}>
+                    <Card className="rounded-xl border-2 border-gray-200 hover:border-gray-400 hover:shadow-lg transition-all bg-white" key={artist.id}>
                       <CardContent className="p-8 text-center">
-                        <div className="text-6xl mb-6">♪</div>
+                        <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                          <Music className="h-10 w-10 text-gray-400" />
+                        </div>
                         <h3 className="text-2xl font-bold mb-2">{artist.name}</h3>
                         <p className="text-gray-600 mb-6">{artist.genre}</p>
                         <Link href={`/@${artist.username}`}>
@@ -422,9 +446,11 @@ export default function Discover() {
                   ))}
                 </div>
               ) : (
-                <Card className="rounded-xl border-4 border-black bg-white">
+                <Card className="rounded-xl border-2 border-gray-200 bg-white">
                   <CardContent className="p-16 text-center">
-                    <div className="text-6xl mb-6">👥</div>
+                    <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center mx-auto mb-6">
+                      <Music className="h-10 w-10 text-gray-400" />
+                    </div>
                     <h3 className="text-2xl font-bold mb-2">No rising artists yet</h3>
                     <p className="text-gray-600 text-lg mb-6">Be the first to rise!</p>
                     <Link href="/upload">
@@ -442,52 +468,56 @@ export default function Discover() {
 
       {/* Music Player (Fixed Bottom) */}
       {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-black z-50 shadow-2xl">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 z-50 shadow-2xl">
           <div className="container mx-auto px-4 py-6">
             {/* Track Info & Controls */}
             <div className="flex items-center gap-6 mb-4">
               <img
                 src={currentTrack.artworkUrl || `https://via.placeholder.com/80x80?text=${encodeURIComponent(currentTrack.title)}`}
                 alt={currentTrack.title}
-                className="w-20 h-20 rounded-xl object-cover flex-shrink-0 border-4 border-black"
+                className="w-20 h-20 rounded-xl object-cover flex-shrink-0 border-2 border-gray-200"
               />
               <div className="flex-1 min-w-0">
                 <h4 className="font-bold text-xl text-black truncate">{currentTrack.title}</h4>
                 <p className="text-lg text-gray-600 font-medium truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
-                  <span className="text-lg">🔀</span>
+                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                  <Shuffle className="h-4 w-4" />
                 </Button>
-                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
-                  <span className="text-xl">⏮</span>
+                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                  <SkipBack className="h-4 w-4" />
                 </Button>
                 <Button 
                   className="rounded-full w-14 h-14 bg-black hover:bg-gray-800 border-2 border-black" 
                   size="icon" 
                   onClick={() => setIsPlaying(!isPlaying)}
                 >
-                  <span className="text-white text-2xl">
-                    {isPlaying ? "❚❚" : "▶"}
-                  </span>
+                  {isPlaying ? (
+                    <Pause className="h-6 w-6 text-white" />
+                  ) : (
+                    <Play className="h-6 w-6 text-white ml-0.5" />
+                  )}
                 </Button>
-                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
-                  <span className="text-xl">⏭</span>
+                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                  <SkipForward className="h-4 w-4" />
                 </Button>
-                <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
-                  <span className="text-lg">🔁</span>
+                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                  <Repeat className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-black" size="icon"
+                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" 
                   variant="outline"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
+                  <Heart className="h-4 w-4 mr-2" />
                   <span className="text-sm font-bold">LIKE</span>
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="rounded-full border-2 border-black" size="icon" variant="outline">
+                    <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" variant="outline">
+                      <Share2 className="h-4 w-4 mr-2" />
                       <span className="text-sm font-bold">SHARE</span>
                     </Button>
                   </DropdownMenuTrigger>
@@ -505,20 +535,26 @@ export default function Discover() {
                       Share on Facebook
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleShare(currentTrack, 'copy')}>
-                      <span className="mr-2">{copiedTrackId === currentTrack.id ? "✓" : "⎘"}</span>
+                      {copiedTrackId === currentTrack.id ? (
+                        <Check className="h-4 w-4 mr-2" />
+                      ) : (
+                        <Copy className="h-4 w-4 mr-2" />
+                      )}
                       Copy Link
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <span className="text-gray-600 text-lg">🔊</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={volume}
-                  onChange={(e) => setVolume(parseInt(e.target.value))}
-                  className="w-24 h-2"
-                />
+                <div className="flex items-center gap-2">
+                  <Volume2 className="h-5 w-5 text-gray-600" />
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={volume}
+                    onChange={(e) => setVolume(parseInt(e.target.value))}
+                    className="w-24 h-2"
+                  />
+                </div>
               </div>
             </div>
 
@@ -529,9 +565,9 @@ export default function Discover() {
               </span>
               <div className="flex-1">
                 <div className="relative">
-                  <div className="w-full h-3 bg-white border-2 border-black rounded-xl">
+                  <div className="w-full h-3 bg-white border-2 border-gray-200 rounded-xl">
                     <div
-                      className="h-full bg-black transition-all"
+                      className="h-full bg-black rounded-xl transition-all"
                       style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}
                     />
                   </div>
