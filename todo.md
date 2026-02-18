@@ -1982,3 +1982,8 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add blockchain/NFT verification badge for authenticity
 - [x] Test all revolutionary features
 - [ ] Save checkpoint for game-changing player
+
+## Remove Public Artist Earnings Ticker (User Request - Privacy Concern)
+- [x] Remove "ARTIST EARNING" green ticker from public player view
+- [x] Keep earnings data private (only visible in artist dashboard)
+- [ ] Save checkpoint with privacy-focused player

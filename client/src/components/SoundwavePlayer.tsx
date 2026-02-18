@@ -26,7 +26,6 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   
   // GAME-CHANGING FEATURES
   const [liveListeners, setLiveListeners] = useState(847); // Simulated live count
-  const [artistEarnings, setArtistEarnings] = useState(0.00); // Real-time earnings
   const [showKickIn, setShowKickIn] = useState(false); // Tipping modal
 
   // Simulate live listener count fluctuation
@@ -37,15 +36,7 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
     return () => clearInterval(interval);
   }, []);
 
-  // Simulate real-time earnings (increments as song plays)
-  useEffect(() => {
-    if (isPlaying) {
-      const earningsInterval = setInterval(() => {
-        setArtistEarnings(prev => prev + 0.0012); // $0.0012 per second
-      }, 1000);
-      return () => clearInterval(earningsInterval);
-    }
-  }, [isPlaying]);
+
 
   // Show "Kick In" button at 30 seconds
   useEffect(() => {
@@ -187,35 +178,24 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
           </div>
         </div>
 
-        {/* Action Buttons + GAME-CHANGER: Real-Time Earnings */}
-        <div className="flex flex-col items-end gap-3">
-          {/* GAME-CHANGER: Real-Time Artist Earnings */}
-          <div className="flex items-center gap-2 px-4 py-2 bg-green-500/10 rounded-full border border-green-500/30">
-            <DollarSign className="w-5 h-5 text-green-400" />
-            <div className="text-right">
-              <div className="text-xs text-green-300 uppercase font-semibold">Artist Earning</div>
-              <div className="text-lg font-bold text-green-400 font-mono">${artistEarnings.toFixed(4)}</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
-              <Heart className="w-5 h-5 text-white" />
-            </button>
-            <button className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
-              <Share2 className="w-5 h-5 text-white" />
-            </button>
-            {/* GAME-CHANGER: AirPlay Button */}
-            <button 
-              onClick={handleAirPlay}
-              className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/20"
-              title="AirPlay to Apple Devices"
-            >
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 22h12l-6-6-6 6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-              </svg>
-            </button>
-          </div>
+        {/* Action Buttons */}
+        <div className="flex items-center gap-3">
+          <button className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <Heart className="w-5 h-5 text-white" />
+          </button>
+          <button className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <Share2 className="w-5 h-5 text-white" />
+          </button>
+          {/* GAME-CHANGER: AirPlay Button */}
+          <button 
+            onClick={handleAirPlay}
+            className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all border border-white/20"
+            title="AirPlay to Apple Devices"
+          >
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 22h12l-6-6-6 6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+            </svg>
+          </button>
         </div>
       </div>
 
