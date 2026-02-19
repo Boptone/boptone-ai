@@ -182,10 +182,10 @@ export default function BoptoneExplainer({
         </div>
 
         {/* Main content card */}
-        <div className="bg-card border rounded-2xl p-8 md:p-12 shadow-xl animate-in fade-in duration-500">
+        <div className="bg-card border-2 border-gray-200 rounded-xl p-8 md:p-12 shadow-sm hover:border-gray-400 transition-colors animate-in fade-in duration-500">
           {/* Icon */}
           <div className="mb-8 flex justify-center">
-            <div className="h-24 w-24 rounded-full bg-primary/10 flex items-center justify-center animate-in zoom-in duration-300">
+            <div className="h-24 w-24 rounded-xl bg-primary/10 border-2 border-gray-200 flex items-center justify-center animate-in zoom-in duration-300">
               <Icon className="h-12 w-12 text-primary" />
             </div>
           </div>
@@ -207,9 +207,9 @@ export default function BoptoneExplainer({
 
           {/* Highlight box (if exists) */}
           {step.highlight && (
-            <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 mb-8 animate-in slide-in-from-bottom-4 duration-500 delay-300">
+            <div className="bg-primary/5 border-2 border-gray-200 rounded-xl p-6 mb-8 animate-in slide-in-from-bottom-4 duration-500 delay-300">
               <div className="flex items-start gap-3">
-                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="h-8 w-8 rounded-xl bg-primary/10 border-2 border-gray-200 flex items-center justify-center flex-shrink-0 mt-1">
                   <Sparkles className="h-4 w-4 text-primary" />
                 </div>
                 <div>
@@ -229,7 +229,7 @@ export default function BoptoneExplainer({
                 variant="outline"
                 size="lg"
                 onClick={() => setCurrentStep(currentStep - 1)}
-                className="flex-1 rounded-full"
+                className="flex-1 rounded-xl"
               >
                 Back
               </Button>
@@ -237,7 +237,7 @@ export default function BoptoneExplainer({
             <Button
               size="lg"
               onClick={handleNext}
-              className={`rounded-full ${currentStep === 1 ? "w-full" : "flex-1"}`}
+              className={`rounded-xl shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] ${currentStep === 1 ? "w-full" : "flex-1"}`}
             >
               {isLastStep
                 ? mode === "public"
