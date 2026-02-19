@@ -150,7 +150,7 @@ export default function Dashboard() {
 
               {/* Right: Action Buttons */}
               <div className="flex items-center gap-4">
-                <Button variant="outline" size="lg" className="relative border-2 border-gray-300 hover:border-gray-900 hover:bg-gray-50 rounded-full">
+                <Button variant="outline" size="lg" className="relative border-2 border-gray-200 hover:border-gray-400 rounded-full">
                   Notifications
                   {notifications && notifications.length > 0 && (
                     <span className="ml-2 h-6 w-6 rounded-full bg-black text-white text-xs flex items-center justify-center font-semibold">
@@ -171,7 +171,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat) => {
               return (
-                <div key={stat.title} className="border-2 border-gray-200 hover:border-gray-300 transition-colors bg-white p-8 rounded-xl">
+                <div key={stat.title} className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
                   <p className="text-sm text-gray-500 font-medium uppercase tracking-wide mb-3">{stat.title}</p>
                   <p className="text-5xl font-bold text-gray-900 mb-2">{stat.value}</p>
                   <p className={`text-sm font-medium ${stat.trend === "up" ? "text-gray-600" : stat.trend === "down" ? "text-gray-600" : "text-gray-500"}`}>
@@ -197,7 +197,7 @@ export default function Dashboard() {
                 return (
                   <button
                     key={action.label}
-                    className="p-8 border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all text-center rounded-xl"
+                    className="p-8 border-2 border-gray-200 hover:border-gray-400 transition-all text-center rounded-xl"
                     onClick={() => setLocation(action.href)}
                   >
                     <span className="text-lg font-semibold text-gray-900">{action.label}</span>
@@ -208,14 +208,14 @@ export default function Dashboard() {
           </div>
 
           {/* Compliance Score Widget */}
-          <div className="border-2 border-black bg-white p-12 rounded-xl">
+          <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-12 rounded-xl">
             <h2 className="text-3xl font-bold mb-6">Compliance Score</h2>
             <div className="flex items-center justify-between mb-8">
               <div>
                 <p className="text-6xl font-bold text-gray-900">85%</p>
                 <p className="text-lg text-gray-600 mt-2">Overall compliance</p>
               </div>
-              <Button onClick={() => setLocation("/compliance")} variant="outline" className="rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white">
+              <Button onClick={() => setLocation("/compliance")} variant="outline" className="rounded-full border-2 border-gray-200 hover:border-gray-400">
                 View Details
               </Button>
             </div>
@@ -276,7 +276,7 @@ export default function Dashboard() {
                   <Button
                     onClick={() => setLocation(tip.href)}
                     variant="outline"
-                    className="w-full rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white"
+                    className="w-full rounded-full border-2 border-gray-200 hover:border-gray-400"
                   >
                     {tip.action}
                   </Button>
