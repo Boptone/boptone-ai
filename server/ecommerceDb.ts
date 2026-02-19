@@ -158,11 +158,28 @@ export async function addToCart(item: InsertCartItem): Promise<CartItem> {
   }
 }
 
-export async function getCartByUser(userId: number): Promise<CartItem[]> {
+export async function getCartByUser(userId: number) {
   const db = await getDb();
   if (!db) return [];
   
-  return await db.select().from(cartItems).where(eq(cartItems.userId, userId));
+  // Join cart items with products to get product details
+  const items = await db
+    .select({
+      id: cartItems.id,
+      userId: cartItems.userId,
+      productId: cartItems.productId,
+      variantId: cartItems.variantId,
+      quantity: cartItems.quantity,
+      priceAtAdd: cartItems.priceAtAdd,
+      createdAt: cartItems.createdAt,
+      updatedAt: cartItems.updatedAt,
+      product: products,
+    })
+    .from(cartItems)
+    .leftJoin(products, eq(cartItems.productId, products.id))
+    .where(eq(cartItems.userId, userId));
+  
+  return items;
 }
 
 export async function updateCartItem(id: number, quantity: number): Promise<void> {

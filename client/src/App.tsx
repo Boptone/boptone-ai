@@ -16,6 +16,10 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import ProductManagement from "./pages/ProductManagement";
 import ProductForm from "./pages/ProductForm";
+import BopShop from "./pages/BopShop";
+import BopShopProduct from "./pages/BopShopProduct";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Features from "./pages/Features";
@@ -72,6 +76,10 @@ function Router() {
       <Route path={"/writer-earnings"} component={WriterEarnings} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path={"/@:username"} component={ArtistProfile} />
+      <Route path="/bopshop" component={BopShop} />
+      <Route path="/bopshop/:slug" component={BopShopProduct} />
+      <Route path="/cart" component={Cart} />
+      <Route path="/checkout" component={Checkout} />
       <Route path="/shop" component={Shop} />
       <Route path="/product/:productId" component={ProductDetail} />
       <Route path="/store" component={MyStore} />

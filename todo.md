@@ -2254,4 +2254,20 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add inventory tracking and stock alerts
 - [x] Implement product categories and tags
 - [x] Test product management UI end-to-end
-- [ ] Save checkpoint with BopShop product management UI
+- [x] Save checkpoint with BopShop product management UI
+
+## Build Public-Facing BopShop Storefront (User Request)
+- [x] Design storefront architecture and user flow
+- [x] Identify required tRPC procedures for public product browsing
+- [x] Build product catalog page with grid layout
+- [x] Add product filtering by category, price, artist
+- [x] Add product sorting (newest, price, popularity)
+- [x] Create individual product detail pages
+- [x] Build shopping cart component with item management
+- [x] Add cart persistence (database via tRPC)
+- [x] Implement quantity controls and item removal
+- [x] Create checkout page with Stripe integration
+- [x] Add shipping address collection
+- [ ] Implement order confirmation page (deferred - Stripe handles this)
+- [x] Test complete purchase flow end-to-end
+- [ ] Save checkpoint with BopShop storefront
