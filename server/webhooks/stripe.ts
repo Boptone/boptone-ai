@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { stripe } from "../stripe";
 import { getDb } from "../db";
-import { bapPayments, subscriptions } from "../../drizzle/schema";
+import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bapStreamPayments, products } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
+import { calculateFees } from "../stripe";
 
 /**
  * Stripe Webhook Handler
@@ -95,21 +96,243 @@ async function handleCheckoutSessionCompleted(session: any) {
   const db = await getDb();
   if (!db) return;
 
-  // Update subscription status if this was a subscription checkout
-  if (session.mode === 'subscription' && session.subscription) {
-    const userId = parseInt(session.metadata?.userId || '0');
-    if (userId) {
-      await db
-        .update(subscriptions)
-        .set({
-          stripeSubscriptionId: session.subscription,
-          status: 'active',
-        })
-        .where(eq(subscriptions.userId, userId));
+  const paymentType = session.metadata?.paymentType;
+  const userId = parseInt(session.metadata?.userId || '0');
 
-      console.log(`[Stripe Webhook] Updated subscription for user ${userId}`);
-    }
+  // Handle different payment types
+  switch (paymentType) {
+    case 'bopshop':
+      await handleBopShopPayment(session, db);
+      break;
+    
+    case 'bap_stream':
+      await handleBopAudioPayment(session, db);
+      break;
+    
+    case 'kickin':
+      await handleKickinPayment(session, db);
+      break;
+    
+    default:
+      // Handle subscription checkout
+      if (session.mode === 'subscription' && session.subscription) {
+        if (userId) {
+          await db
+            .update(subscriptions)
+            .set({
+              stripeSubscriptionId: session.subscription,
+              status: 'active',
+            })
+            .where(eq(subscriptions.userId, userId));
+
+          console.log(`[Stripe Webhook] Updated subscription for user ${userId}`);
+        }
+      }
   }
+}
+
+/**
+ * Handle BopShop merch purchase
+ */
+async function handleBopShopPayment(session: any, db: any) {
+  const userId = parseInt(session.metadata?.userId || '0');
+  const artistId = parseInt(session.metadata?.artistId || '0');
+  const productId = parseInt(session.metadata?.productId || '0');
+  const quantity = parseInt(session.metadata?.quantity || '1');
+
+  if (!userId || !artistId || !productId) {
+    console.error('[Stripe Webhook] Missing required metadata for BopShop payment');
+    return;
+  }
+
+  // Get product details
+  const [product] = await db
+    .select()
+    .from(products)
+    .where(eq(products.id, productId))
+    .limit(1);
+
+  if (!product) {
+    console.error(`[Stripe Webhook] Product ${productId} not found`);
+    return;
+  }
+
+  const totalAmount = product.price * quantity;
+  const fees = calculateFees({ amount: totalAmount, paymentType: 'bopshop' });
+
+  // Generate order number
+  const orderNumber = `BOP-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+
+  // Create order
+  const [order] = await db
+    .insert(orders)
+    .values({
+      orderNumber,
+      customerId: userId,
+      artistId,
+      subtotal: totalAmount,
+      total: totalAmount,
+      currency: session.currency?.toUpperCase() || 'USD',
+      paymentStatus: 'paid',
+      paymentMethod: 'stripe',
+      paymentIntentId: session.payment_intent,
+      paidAt: new Date(),
+      customerEmail: session.customer_email || '',
+    });
+
+  // Create order item
+  await db
+    .insert(orderItems)
+    .values({
+      orderId: order.id,
+      productId,
+      productName: product.name,
+      productType: product.type,
+      quantity,
+      pricePerUnit: product.price,
+      subtotal: totalAmount,
+      total: totalAmount,
+      fulfillmentStatus: product.type === 'digital' ? 'fulfilled' : 'unfulfilled',
+      digitalFileUrl: product.digitalFileUrl || null,
+    });
+
+  // Create transaction record
+  await db
+    .insert(transactions)
+    .values({
+      type: 'payment',
+      amount: totalAmount,
+      currency: session.currency?.toUpperCase() || 'USD',
+      status: 'completed',
+      stripePaymentIntentId: session.payment_intent,
+      fromUserId: userId,
+      toUserId: null,
+      orderId: order.id,
+      platformFee: fees.platformFee,
+      processingFee: fees.stripeFee,
+      netAmount: fees.artistReceives,
+    });
+
+  // Update product inventory
+  if (product.trackInventory) {
+    await db
+      .update(products)
+      .set({
+        inventoryQuantity: product.inventoryQuantity - quantity,
+      })
+      .where(eq(products.id, productId));
+  }
+
+  console.log(`[Stripe Webhook] BopShop order ${orderNumber} created for user ${userId}`);
+}
+
+/**
+ * Handle BopAudio stream payment
+ */
+async function handleBopAudioPayment(session: any, db: any) {
+  const userId = parseInt(session.metadata?.userId || '0');
+  const artistId = parseInt(session.metadata?.artistId || '0');
+  const trackId = parseInt(session.metadata?.trackId || '0');
+  const streamCount = parseInt(session.metadata?.streamCount || '1');
+
+  if (!userId || !artistId || !trackId) {
+    console.error('[Stripe Webhook] Missing required metadata for BopAudio payment');
+    return;
+  }
+
+  const totalAmount = session.amount_total || 0;
+  const fees = calculateFees({ amount: totalAmount, paymentType: 'bap_stream' });
+
+  // Create stream payment record
+  await db
+    .insert(bapStreamPayments)
+    .values({
+      trackId,
+      userId,
+      amount: totalAmount,
+      currency: session.currency?.toUpperCase() || 'USD',
+      status: 'completed',
+      stripePaymentIntentId: session.payment_intent,
+      streamCount,
+      platformFee: fees.platformFee,
+      processingFee: fees.stripeFee,
+      artistEarnings: fees.artistReceives,
+    });
+
+  // Create transaction record
+  await db
+    .insert(transactions)
+    .values({
+      type: 'payment',
+      amount: totalAmount,
+      currency: session.currency?.toUpperCase() || 'USD',
+      status: 'completed',
+      stripePaymentIntentId: session.payment_intent,
+      fromUserId: userId,
+      toUserId: null,
+      platformFee: fees.platformFee,
+      processingFee: fees.stripeFee,
+      netAmount: fees.artistReceives,
+    });
+
+  console.log(`[Stripe Webhook] BopAudio payment for ${streamCount} stream(s) of track ${trackId}`);
+}
+
+/**
+ * Handle Kick-in tip payment (0% platform fee)
+ */
+async function handleKickinPayment(session: any, db: any) {
+  const userId = parseInt(session.metadata?.userId || '0');
+  const artistId = parseInt(session.metadata?.artistId || '0');
+  const message = session.metadata?.message || '';
+  const isAnonymous = session.metadata?.isAnonymous === 'true';
+
+  if (!userId || !artistId) {
+    console.error('[Stripe Webhook] Missing required metadata for Kick-in payment');
+    return;
+  }
+
+  const totalAmount = session.amount_total || 0;
+  const fees = calculateFees({ amount: totalAmount, paymentType: 'kickin' });
+
+  // Create transaction record first
+  const [transaction] = await db
+    .insert(transactions)
+    .values({
+      type: 'tip',
+      amount: totalAmount,
+      currency: session.currency?.toUpperCase() || 'USD',
+      status: 'completed',
+      stripePaymentIntentId: session.payment_intent,
+      fromUserId: userId,
+      toUserId: null,
+      platformFee: 0, // 0% platform fee for tips
+      processingFee: fees.stripeFee,
+      netAmount: fees.artistReceives,
+      metadata: {
+        tipMessage: message,
+      },
+    });
+
+  // Create tip record
+  await db
+    .insert(tips)
+    .values({
+      transactionId: transaction.id,
+      fromUserId: userId,
+      toArtistId: artistId,
+      amount: totalAmount,
+      currency: session.currency?.toUpperCase() || 'USD',
+      message,
+      isAnonymous,
+      status: 'completed',
+      platformFee: 0, // Always 0 for tips
+      processingFee: fees.stripeFee,
+      netAmount: fees.artistReceives,
+      stripePaymentIntentId: session.payment_intent,
+    });
+
+  console.log(`[Stripe Webhook] Kick-in tip of $${(totalAmount / 100).toFixed(2)} from user ${userId} to artist ${artistId}`);
 }
 
 /**

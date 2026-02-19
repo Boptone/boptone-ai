@@ -20,6 +20,7 @@ import { workflowsRouter } from "./routers/workflows";
 import { toneyRouter } from "./routers/toney";
 import { aiChatRouter } from "./routers/aiChat";
 import { taskContractRouter } from "./routers/taskContract";
+import { paymentRouter } from "./routers/payment";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -663,6 +664,9 @@ export const appRouter = router({
   
   // Kick In Tip Jar
   kickin: kickinRouter,
+  
+  // Multi-Currency Payment System (BopShop, BopAudio, Kick-in)
+  payment: paymentRouter,
   
   // Fan Funnel Marketing
   fanFunnel: fanFunnelRouter,

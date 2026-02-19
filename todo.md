@@ -2159,4 +2159,28 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Redesign BoptoneExplainer component with BAP Protocol
 - [x] Redesign any other onboarding-related components with BAP Protocol (no other components found)
 - [x] Test complete onboarding flow from start to finish
-- [ ] Save checkpoint with all onboarding components redesigned
+- [x] Save checkpoint with all onboarding components redesigned
+
+## Build Payment Flows with Multi-Currency and Multi-Payment-Method Support (User Request)
+- [x] Design database schema for products, orders, and transactions (already exists)
+- [x] Create products table for BopShop merch (physical and digital goods) (already exists)
+- [x] Create orders table for purchase tracking (already exists)
+- [x] Create transactions table for payment records (already exists)
+- [x] Build Stripe checkout integration with multi-currency support (135+ currencies)
+- [x] Configure Stripe payment methods (CashApp, Klarna, WeChat Pay, Alipay, etc.)
+- [x] Create tRPC procedures for checkout session creation
+- [x] Implement webhook handlers for payment events
+- [ ] Build BopShop merch purchase flow
+- [ ] Create product listing UI with currency selector
+- [ ] Implement add-to-cart functionality
+- [ ] Build checkout flow with Stripe
+- [ ] Build BopAudio streaming payment flow
+- [ ] Implement per-stream pricing ($0.01-$0.05)
+- [ ] Create payment flow for stream purchases
+- [ ] Track artist revenue (90% share)
+- [ ] Build Kick-in (fan support/tips) flow
+- [ ] Create tip/support UI
+- [ ] Implement one-time payment flow
+- [ ] Pass only card processing fees (no platform cut)
+- [ ] Test all payment flows with multiple currencies and payment methods
+- [ ] Save checkpoint with complete payment system
