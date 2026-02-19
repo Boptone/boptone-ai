@@ -13,7 +13,7 @@ export default function Privacy() {
         <div className="border-4 border-black rounded-none">
           <div className="p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
-            <p className="text-gray-600 mb-8">Effective Date: January 1, 2026</p>
+            <p className="text-gray-600 mb-8">Effective Date: February 19, 2026</p>
 
             <div className="prose max-w-none">
               <section className="mb-8">
@@ -49,7 +49,24 @@ export default function Privacy() {
                   <strong>User Content:</strong> We collect all content you upload, create, submit, post, publish, transmit, or make available through the Service, including music files, audio recordings, video content, artwork, images, photographs, lyrics, metadata, descriptions, comments, messages, and any other creative works or materials ("User Content").
                 </p>
                 <p className="mb-2">
-                  <strong>Financial and Payment Information:</strong> When you subscribe to paid services, make purchases, or apply for micro-loans, we collect payment card information (processed securely by our third-party payment processor Stripe), billing address, tax identification numbers, bank account information for payouts, royalty data, revenue information, financial statements, and credit history for loan underwriting.
+                  <strong>Financial and Payment Information:</strong> When you subscribe to paid services, make purchases through BopShop, stream music via BopAudio, send or receive Kick-in tips, or apply for micro-loans, we collect the following financial information:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Payment Card Data:</strong> Card number, expiration date, CVV code, and cardholder name (processed and stored securely by our PCI-DSS compliant payment processor Stripe—we do not store complete card numbers on our servers)</li>
+                  <li><strong>Bank Account Information:</strong> Account number, routing number, account holder name, and bank name for payout processing</li>
+                  <li><strong>Billing Information:</strong> Billing address, postal code, country, and phone number</li>
+                  <li><strong>Tax Identification:</strong> Social Security Number (SSN), Employer Identification Number (EIN), Tax Identification Number (TIN), VAT ID, or other government-issued tax identifiers required for tax reporting and compliance</li>
+                  <li><strong>Transaction History:</strong> Purchase records, payment amounts, transaction dates, currency, payment method used, refund history, chargeback data, and payout records</li>
+                  <li><strong>Revenue and Royalty Data:</strong> Streaming revenue, merchandise sales, tip income, royalty earnings from third-party platforms, and revenue forecasts</li>
+                  <li><strong>Identity Verification Documents:</strong> Government-issued photo ID (passport, driver's license, national ID card), proof of address (utility bills, bank statements), and selfie photos for identity verification required by anti-money laundering (AML) and know-your-customer (KYC) regulations</li>
+                  <li><strong>Credit and Financial History:</strong> Credit scores, credit reports, financial statements, income verification, and loan repayment history (collected only when you apply for micro-loans)</li>
+                  <li><strong>Fraud Detection Data:</strong> Device fingerprints, IP addresses, transaction velocity patterns, geolocation data, and behavioral biometrics used to detect and prevent fraudulent transactions</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>PCI-DSS Compliance:</strong> We comply with the Payment Card Industry Data Security Standard (PCI-DSS) by using Stripe, a PCI-DSS Level 1 certified payment processor, to handle all payment card data. We do not store complete payment card numbers, CVV codes, or magnetic stripe data on our servers. All payment card data is encrypted in transit using TLS 1.2 or higher and at rest using AES-256 encryption.
+                </p>
+                <p className="mb-4">
+                  <strong>Kick-in Tips Data:</strong> When you send or receive tips through Kick-in, we collect the tip amount, currency, sender name (or "Anonymous" if the sender chooses anonymity), optional message, transaction timestamp, and recipient artist ID. We track cumulative tip totals to provide tax threshold notifications to artists and enforce velocity limits to prevent money laundering.
                 </p>
                 <p className="mb-2">
                   <strong>Communications:</strong> When you contact us via email, support tickets, chat, or other communication channels, we collect the contents of your messages, attachments, contact information, and any other information you choose to provide.

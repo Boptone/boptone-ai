@@ -2199,10 +2199,27 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Implement currency selector for global tips
 - [x] Add compliance checks (daily limits, velocity monitoring)
 - [ ] Test tip widget with various amounts and currencies
-- [ ] Save checkpoint with compliant Kick-in tip widget
+- [x] Save checkpoint with compliant Kick-in tip widget
 - [x] Build artist tax threshold notification system (warn at $15k, $18k annual tips received))
 - [ ] Test Kick-in tip widget with multiple scenarios and currencies
 - [ ] Update Terms of Service to enterprise-grade standards (META/AWS/Nvidia level)
 - [ ] Update Privacy Policy to enterprise-grade standards (META/AWS/Nvidia level)
 - [ ] Add Kick-in tip legal disclosures and liability protections
 - [ ] Save checkpoint with complete Kick-in system and updated legal documents
+
+## Update Legal Documents to Enterprise-Grade Standards (User Request)
+- [x] Research META, AWS, Nvidia payment terms for enterprise-grade legal language
+- [x] Research Stripe, PayPal legal disclosures for payment processing best practices
+- [x] Update TOS: Add comprehensive payment terms section (BopShop, BopAudio, Kick-in)
+- [x] Update TOS: Add AML/KYC compliance disclosures
+- [x] Update TOS: Add tax reporting obligations and user responsibilities
+- [x] Update TOS: Add refund policies for tips vs. purchases
+- [x] Update TOS: Add fraud prevention and dispute resolution procedures
+- [x] Update TOS: Add liability limitations for payment processing
+- [x] Update TOS: Add multi-currency transaction disclosures
+- [- [x] Update Privacy Policy: Add financial data collection and processing
+- [x] Update Privacy Policy: Add Stripe data sharing disclosures
+- [x] Update Privacy Policy: Add PCI-DSS compliance statements
+- [x] Update Privacy Policy: Add international data transfer for payments
+- [x] Update Privacy Policy: Update effective date to current date (February 19, 2026)
+- [ ] Save checkpoint with updated TOS and Privacy Policy enterprise-grade legal documents

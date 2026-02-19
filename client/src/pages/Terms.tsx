@@ -10,7 +10,7 @@ export default function Terms() {
         <Card className="rounded-none border-4 border-black bg-white">
           <CardContent className="p-8 md:p-12">
             <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
-            <p className="text-gray-700 mb-8">Effective Date: February 11, 2026</p>
+            <p className="text-gray-700 mb-8">Effective Date: February 19, 2026</p>
 
             <div className="prose prose-slate max-w-none">
               <section className="mb-8">
@@ -149,6 +149,119 @@ export default function Terms() {
                 </p>
                 <p>
                   <strong>Tax Reporting:</strong> You are responsible for reporting all income earned through the Service and paying applicable taxes. We may provide tax documentation (such as 1099 forms for US users) as required by law. International users may need to provide tax identification information to comply with local regulations.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.7 Payment Processing Services</h3>
+                <p className="mb-4">
+                  Boptone provides payment processing services for three distinct revenue streams: BopShop (merchandise sales), BopAudio (streaming payments), and Kick-in (fan support tips). By using these payment services, you agree to be bound by the following terms.
+                </p>
+                <p className="mb-4">
+                  <strong>BopShop Merchandise Sales:</strong> When you sell physical or digital products through BopShop, Boptone charges a platform fee of 10% of the transaction value. You are responsible for fulfilling orders, managing inventory, providing accurate product descriptions, and handling customer service. All sales are final unless otherwise required by law or your stated refund policy. We are not liable for the quality, safety, legality, or any other aspect of the products you sell.
+                </p>
+                <p className="mb-4">
+                  <strong>BopAudio Streaming Payments:</strong> Artists using BopAudio receive 90% of streaming revenue, with Boptone retaining 10% as a platform fee. Streaming payments are processed through our payment provider (Stripe) and are subject to their terms of service. We are not responsible for the quality, availability, or content of music streamed through BopAudio.
+                </p>
+                <p className="mb-4">
+                  <strong>Kick-in Fan Support Tips:</strong> Kick-in allows fans to send monetary tips directly to artists. Boptone charges zero platform fees for tips—only standard payment processing fees apply (typically 2.9% + $0.30 per transaction, set by our payment processor). Tips are considered gifts from fans to artists and are not refundable except as required by law. Tips are subject to velocity limits and compliance monitoring as described in Section 6.9.
+                </p>
+                <p className="mb-4">
+                  <strong>Payment Processing Provider:</strong> All payment processing is handled by Stripe, Inc., a third-party payment processor. Your use of Stripe's services is subject to their terms of service and privacy policy. We do not store your full credit card information on our servers. By using our payment services, you authorize Stripe to process payments on your behalf.
+                </p>
+                <p className="mb-4">
+                  <strong>Platform Liability Limitations:</strong> We provide payment processing services "as is" and to the maximum extent permitted by law, disclaim all warranties, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We are not liable for any delays, failures, or problems inherent in the use of the internet, electronic communications, or payment processing systems outside our control. Our only responsibility is to facilitate payment transactions—we have no liability for the underlying goods, services, or content being purchased.
+                </p>
+                <p className="mb-4">
+                  <strong>All Payments Final:</strong> All payments made through the Service are final unless otherwise required by law. If you believe an unauthorized or problematic transaction has occurred, you must notify us immediately at hello@boptone.com. Unless you submit a claim within 30 days after the charge, you will have waived, to the fullest extent permitted by law, all claims against us arising out of or related to the transaction.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.8 Multi-Currency Transactions</h3>
+                <p className="mb-4">
+                  Boptone supports transactions in 135+ currencies and accepts 18 global payment methods, including credit/debit cards, CashApp, Klarna, WeChat Pay, Alipay, and other region-specific payment methods. The availability of specific payment methods depends on your location and the transaction type.
+                </p>
+                <p className="mb-4">
+                  <strong>Currency Exchange:</strong> If your transaction requires a currency exchange, we will use the most recent foreign exchange rates sourced from one or more external vendors at the time of the transaction. Exchange rates may differ from prevailing market rates and are subject to change without notice. Currency conversion fees may apply and will be disclosed before you complete the transaction.
+                </p>
+                <p className="mb-4">
+                  <strong>Pricing Display:</strong> Prices displayed on the Service are in the currency you select. The final amount charged to your payment method may differ due to currency conversion, taxes, and payment processing fees. You are responsible for any additional fees charged by your bank or payment provider for international transactions.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.9 Anti-Money Laundering (AML) and Know Your Customer (KYC) Compliance</h3>
+                <p className="mb-4">
+                  Boptone is committed to preventing money laundering, terrorist financing, and other financial crimes. We comply with all applicable anti-money laundering (AML) and know-your-customer (KYC) regulations in the jurisdictions where we operate.
+                </p>
+                <p className="mb-4">
+                  <strong>Identity Verification:</strong> To use payment services, you must complete identity verification by providing government-issued identification, proof of address, and other documentation as required. We may use third-party identity verification services to confirm your identity. Failure to complete verification may result in restricted access to payment features or account suspension.
+                </p>
+                <p className="mb-4">
+                  <strong>Velocity Limits and Transaction Monitoring:</strong> To prevent money laundering and fraud, we impose the following limits on Kick-in tips: (1) $500 maximum per transaction, (2) $1,000 maximum per day, (3) $2,500 maximum per week, (4) $10,000 maximum per month, and (5) $19,000 maximum per year. We monitor all transactions for suspicious activity and may hold, delay, or refuse transactions that violate these limits or appear fraudulent.
+                </p>
+                <p className="mb-4">
+                  <strong>Suspicious Activity Reporting:</strong> We reserve the right to report suspicious transactions to law enforcement and regulatory authorities as required by law. We may freeze accounts, hold funds, or terminate access to payment services if we suspect fraudulent activity, money laundering, or violations of these Terms.
+                </p>
+                <p className="mb-4">
+                  <strong>Fraud Warning:</strong> Use of Boptone's payment services to perform fraudulent activities or transactions may result in the permanent loss of funds with no recourse, immediate account termination, and referral to law enforcement. Do not attempt to structure transactions to evade reporting requirements or circumvent velocity limits—doing so is illegal and will result in account termination.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.10 Tax Obligations and Reporting</h3>
+                <p className="mb-4">
+                  <strong>Your Tax Responsibilities:</strong> You are solely responsible for determining, collecting, reporting, and remitting all applicable taxes on income earned through the Service, including income taxes, sales taxes, value-added taxes (VAT), goods and services taxes (GST), and any other taxes required by your jurisdiction. Boptone does not provide tax advice—consult a qualified tax professional for guidance.
+                </p>
+                <p className="mb-4">
+                  <strong>Kick-in Tax Implications:</strong> Tips received through Kick-in may be considered taxable income in your jurisdiction. In the United States, tips are generally taxable as income. The annual gift tax exclusion for 2026 is $19,000 per recipient—tips exceeding this amount may trigger gift tax reporting requirements for the sender. Artists receiving tips are responsible for reporting all tip income on their tax returns.
+                </p>
+                <p className="mb-4">
+                  <strong>Artist Tax Threshold Notifications:</strong> Boptone provides automatic notifications to artists when their annual Kick-in tip total reaches $15,000, $18,000, and $19,000 to help you stay aware of potential tax reporting thresholds. These notifications are provided as a courtesy and do not constitute tax advice. You remain solely responsible for complying with all tax obligations.
+                </p>
+                <p className="mb-4">
+                  <strong>Tax Documentation:</strong> We may provide tax documentation (such as IRS Form 1099-K for US users) as required by law when your annual transaction volume exceeds reporting thresholds. International users may need to provide tax identification numbers (TIN, VAT ID, etc.) to comply with local regulations. Failure to provide required tax information may result in withheld payouts or account suspension.
+                </p>
+                <p className="mb-4">
+                  <strong>Sales Tax Collection:</strong> For BopShop merchandise sales, you are responsible for determining whether sales tax applies and collecting the appropriate amount from customers. Boptone may provide sales tax calculation tools, but you remain solely responsible for compliance with all sales tax laws.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.11 Refund Policies</h3>
+                <p className="mb-4">
+                  <strong>Kick-in Tips (Non-Refundable):</strong> All tips sent through Kick-in are final and non-refundable except as required by law. Tips are considered voluntary gifts from fans to artists. Once a tip is sent, it cannot be reversed, canceled, or refunded unless the transaction was unauthorized or fraudulent. If you believe an unauthorized tip transaction occurred, you must notify us immediately at hello@boptone.com within 30 days.
+                </p>
+                <p className="mb-4">
+                  <strong>BopShop Merchandise (Seller-Defined Policy):</strong> Refund policies for BopShop merchandise are determined by the individual seller (artist). Sellers must clearly state their refund policy on their product pages. Boptone is not responsible for processing refunds or mediating disputes between buyers and sellers. If a seller offers a refund, the platform fee is not refunded to the seller.
+                </p>
+                <p className="mb-4">
+                  <strong>BopAudio Streaming (Non-Refundable):</strong> Payments for BopAudio streaming are final and non-refundable. Once a stream is purchased and played, the transaction is complete. If you experience technical issues preventing playback, contact hello@boptone.com for assistance.
+                </p>
+                <p className="mb-4">
+                  <strong>Subscription Fees:</strong> As stated in Section 6.4, subscription fees are generally non-refundable except within the first 14 days of your initial paid subscription.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.12 Fraud Prevention and Dispute Resolution</h3>
+                <p className="mb-4">
+                  <strong>Fraud Detection:</strong> We employ automated fraud detection systems to monitor transactions for suspicious activity. Transactions flagged as potentially fraudulent may be held, delayed, or declined. We may request additional verification before processing high-value or unusual transactions.
+                </p>
+                <p className="mb-4">
+                  <strong>Chargebacks:</strong> If a customer initiates a chargeback with their payment provider, we will notify you and may hold funds from your account to cover the disputed amount plus any associated fees. You are responsible for providing evidence to dispute the chargeback. Excessive chargebacks may result in account suspension or termination.
+                </p>
+                <p className="mb-4">
+                  <strong>Dispute Resolution Process:</strong> If you have a dispute regarding a payment transaction, you must first contact us at hello@boptone.com within 30 days of the transaction. We provide tools in our Support Center to assist in resolving disputes between buyers and sellers. We may intervene in disputes but have no obligation to do so. Our role is limited to facilitating payment processing—we are not responsible for resolving disputes about the quality, delivery, or legality of goods and services.
+                </p>
+                <p className="mb-4">
+                  <strong>Technical Failures:</strong> If you experience a technical failure or interruption of service that causes your payment to fail, you may request that your transaction be completed at a later time by contacting hello@boptone.com. We are not liable for failed transactions due to technical issues outside our control.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.13 Limitation of Liability for Payment Processing</h3>
+                <p className="mb-4">
+                  <strong>Disclaimer of Warranties:</strong> To the maximum extent permitted by law, Boptone provides payment processing services "as is" without any warranties, express or implied, including warranties of merchantability, fitness for a particular purpose, title, or non-infringement. We do not warrant that payment services will be uninterrupted, error-free, secure, or free from viruses or other harmful components.
+                </p>
+                <p className="mb-4">
+                  <strong>No Liability for Underlying Transactions:</strong> We have no liability for the goods, services, content, or tips underlying any payment transaction. If you have a dispute with another user regarding a purchase, sale, or tip, you release Boptone from all claims, demands, and damages arising out of or related to such dispute.
+                </p>
+                <p className="mb-4">
+                  <strong>Limitation on Indirect Damages:</strong> To the maximum extent permitted by law, Boptone shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including lost profits, lost revenue, lost savings, lost data, business interruption, or personal injury arising out of or related to your use of payment services, whether in contract, tort, negligence, strict liability, or any other legal theory, even if we have been advised of the possibility of such damages.
+                </p>
+                <p className="mb-4">
+                  <strong>Liability Cap:</strong> To the maximum extent permitted by law, Boptone's total aggregate liability for all claims arising out of or related to payment processing services is limited to the total platform fees you paid to Boptone (excluding payment processor fees) during the 12-month period immediately preceding the first event giving rise to liability. This limitation does not apply to your payment obligations, which remain due in full.
+                </p>
+                <p className="mb-4">
+                  <strong>Third-Party Payment Processor:</strong> Stripe, Inc. is an independent third-party payment processor. Boptone is not responsible for Stripe's acts, omissions, errors, or failures. Your use of Stripe's services is governed by their terms of service, and any claims related to payment processing should be directed to Stripe in accordance with their dispute resolution procedures.
                 </p>
               </section>
 
