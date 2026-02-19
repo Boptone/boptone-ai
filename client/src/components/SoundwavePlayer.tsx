@@ -26,10 +26,9 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   const [volume, setVolume] = useState(0.7);
   
   // GAME-CHANGING FEATURES
-  const [liveListeners, setLiveListeners] = useState(847); // Simulated live count
-  const [showKickIn, setShowKickIn] = useState(false); // Tipping modal
-  const [connectedDevice, setConnectedDevice] = useState<string | null>(null); // Connected speaker name
-  const [showDevicePicker, setShowDevicePicker] = useState(false); // Device picker modal
+  const [liveListeners, setLiveListeners] = useState(847);
+  const [showKickIn, setShowKickIn] = useState(false);
+  const [connectedDevice, setConnectedDevice] = useState<string | null>(null);
 
   // Simulate live listener count fluctuation
   useEffect(() => {
@@ -43,33 +42,30 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   useEffect(() => {
     if (currentTime >= 30 && currentTime <= 35 && !showKickIn) {
       setShowKickIn(true);
-      setTimeout(() => setShowKickIn(false), 8000); // Show for 8 seconds
+      setTimeout(() => setShowKickIn(false), 8000);
     }
   }, [currentTime, showKickIn]);
 
   useEffect(() => {
     if (!waveformRef.current) return;
 
-    // Initialize WaveSurfer with visible waveform
     const wavesurfer = WaveSurfer.create({
       container: waveformRef.current,
-      waveColor: "#9ca3af", // Gray for unplayed
-      progressColor: "#81e6fe", // Cyan for played
+      waveColor: "#9ca3af",
+      progressColor: "#81e6fe",
       cursorColor: "#81e6fe",
-      barWidth: 2,
-      barRadius: 2,
-      barGap: 1,
-      height: 60,
+      barWidth: 3,
+      barRadius: 3,
+      barGap: 2,
+      height: 100,
       normalize: true,
       backend: "WebAudio",
     });
 
     wavesurferRef.current = wavesurfer;
 
-    // Load audio
     wavesurfer.load(track.audioUrl);
 
-    // Event listeners
     wavesurfer.on("ready", () => {
       setDuration(wavesurfer.getDuration());
       if (autoPlay) {
@@ -86,7 +82,6 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
     wavesurfer.on("pause", () => setIsPlaying(false));
     wavesurfer.on("finish", () => setIsPlaying(false));
 
-    // Add click-to-seek functionality
     wavesurfer.on("interaction", () => {
       if (wavesurferRef.current) {
         setCurrentTime(wavesurferRef.current.getCurrentTime());
@@ -119,7 +114,6 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   };
 
   const handleAirPlay = () => {
-    // AirPlay functionality (requires native browser support)
     const video = document.createElement('video');
     video.src = track.audioUrl;
     if ('webkitShowPlaybackTargetPicker' in video) {
@@ -131,20 +125,17 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
 
   const handleConnectSpeaker = async () => {
     try {
-      // Check if Web Bluetooth API is available
       if ('bluetooth' in navigator) {
         const device = await (navigator as any).bluetooth.requestDevice({
           filters: [{ services: ['audio_sink'] }],
           optionalServices: ['battery_service']
         });
         setConnectedDevice(device.name || 'Bluetooth Speaker');
-        setShowDevicePicker(false);
       } else if ('mediaDevices' in navigator) {
-        // Fallback: Show device picker for audio output
         const devices = await navigator.mediaDevices.enumerateDevices();
         const audioOutputs = devices.filter(d => d.kind === 'audiooutput');
         if (audioOutputs.length > 0) {
-          setShowDevicePicker(true);
+          alert('Audio output devices detected. Use your system settings to select a speaker.');
         } else {
           alert('No external speakers detected. Please connect a Bluetooth speaker or use system audio settings.');
         }
@@ -159,157 +150,160 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
 
   const disconnectSpeaker = () => {
     setConnectedDevice(null);
-    setShowDevicePicker(false);
   };
 
   return (
-    <div className="w-full bg-gradient-to-br from-gray-50 via-white to-cyan-50/30 rounded-xl p-4 shadow-lg border border-gray-200/50 relative">
-      {/* GAME-CHANGER: Kick In Tipping Button (appears mid-song) */}
+    <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ minHeight: "400px" }}>
+      {/* IMMERSIVE: Full-bleed artwork background with blur */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: track.artworkUrl ? `url(${track.artworkUrl})` : 'none',
+          filter: 'blur(40px) brightness(0.3)',
+          transform: 'scale(1.1)',
+        }}
+      />
+      
+      {/* Solid black overlay */}
+      <div className="absolute inset-0 bg-black" style={{ opacity: 0.85 }} />
+
+      {/* GAME-CHANGER: Kick In Tipping Button */}
       {showKickIn && (
-        <div className="absolute -top-12 right-4 z-50 animate-bounce">
-          <button className="px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold rounded-full shadow-2xl border-2 border-yellow-300 hover:scale-110 transition-transform flex items-center gap-2 text-sm">
-            <Zap className="w-4 h-4" />
+        <div className="absolute top-4 right-4 z-50 animate-bounce">
+          <button className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold rounded-full shadow-2xl border-2 border-yellow-300 hover:scale-110 transition-transform flex items-center gap-2">
+            <Zap className="w-5 h-5" />
             Kick In $5
           </button>
         </div>
       )}
 
-      {/* Compact Horizontal Layout */}
-      <div className="flex items-center gap-4">
-        {/* Left: Artwork + Track Info */}
-        <div className="flex items-center gap-3 min-w-0 flex-shrink-0">
-          {/* Artwork */}
-          <div className="relative group flex-shrink-0">
-            {track.artworkUrl ? (
-              <img
-                src={track.artworkUrl}
-                alt={track.title}
-                className="w-14 h-14 rounded-lg object-cover shadow-md border border-gray-200"
-              />
-            ) : (
-              <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-md border border-gray-200">
-                <Music className="w-7 h-7 text-white" />
-              </div>
-            )}
-            {isPlaying && (
-              <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-lg" />
-            )}
-            {/* GAME-CHANGER: Blockchain Verification Badge */}
-            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center border-2 border-white shadow-md" title="Blockchain Verified">
-              <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
+      {/* Main Content */}
+      <div className="relative z-10 p-8 flex flex-col items-center justify-center" style={{ minHeight: "400px" }}>
+        {/* Hero Artwork */}
+        <div className="relative group mb-6">
+          {track.artworkUrl ? (
+            <img
+              src={track.artworkUrl}
+              alt={track.title}
+              className={`w-40 h-40 rounded-2xl object-cover shadow-2xl border-4 ${isPlaying ? 'border-[#81e6fe] animate-pulse' : 'border-white/20'} transition-all duration-300`}
+            />
+          ) : (
+            <div className={`w-40 h-40 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-2xl border-4 ${isPlaying ? 'border-[#81e6fe] animate-pulse' : 'border-white/20'}`}>
+              <Music className="w-20 h-20 text-white" />
             </div>
+          )}
+          {/* Blockchain Verification Badge */}
+          <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center border-4 border-black shadow-xl" title="Blockchain Verified">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
           </div>
+          {isPlaying && (
+            <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg" />
+          )}
+        </div>
 
-          {/* Track Info */}
-          <div className="min-w-0 flex-shrink-0" style={{ width: "200px" }}>
-            <h4 className="text-sm font-bold text-gray-900 truncate">{track.title}</h4>
-            <p className="text-xs text-gray-600 truncate">{track.artist}</p>
-            <div className="flex items-center gap-2 mt-1">
-              {track.genre && (
-                <span className="inline-block px-2 py-0.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-full border border-gray-200">
-                  {track.genre.toUpperCase()}
-                </span>
-              )}
-              {/* GAME-CHANGER: Live Listener Count */}
-              <div className="flex items-center gap-1 px-2 py-0.5 bg-red-50 rounded-full border border-red-200">
-                <Radio className="w-3 h-3 text-red-500 animate-pulse" />
-                <span className="text-red-600 text-xs font-bold">{liveListeners.toLocaleString()}</span>
-              </div>
+        {/* Track Info */}
+        <div className="text-center mb-6 max-w-2xl">
+          <h2 className="text-5xl font-bold text-white mb-2 drop-shadow-lg">{track.title}</h2>
+          <p className="text-2xl text-white/80 mb-4">{track.artist}</p>
+          <div className="flex items-center justify-center gap-3">
+            {track.genre && (
+              <span className="px-4 py-1.5 bg-white/10 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/20">
+                {track.genre.toUpperCase()}
+              </span>
+            )}
+            {/* Live Listener Count */}
+            <div className="flex items-center gap-2 px-4 py-1.5 bg-red-500/20 backdrop-blur-sm rounded-full border border-red-500/30">
+              <Radio className="w-4 h-4 text-red-400 animate-pulse" />
+              <span className="text-red-300 text-sm font-bold">{liveListeners.toLocaleString()} LIVE</span>
             </div>
           </div>
         </div>
 
-        {/* Center: Playback Controls + Waveform */}
-        <div className="flex-1 min-w-0">
-          {/* Controls Row */}
-          <div className="flex items-center gap-2 mb-2">
-            {/* Prev */}
-            <button className="w-7 h-7 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
-              <SkipBack className="w-4 h-4 text-gray-700" />
-            </button>
-
-            {/* Play/Pause */}
-            <button
-              onClick={togglePlay}
-              className="w-9 h-9 rounded-full bg-[#81e6fe] hover:bg-[#6dd5ed] flex items-center justify-center transition-all shadow-md"
-            >
-              {isPlaying ? (
-                <Pause className="w-5 h-5 text-black fill-black" />
-              ) : (
-                <Play className="w-5 h-5 text-black fill-black ml-0.5" />
-              )}
-            </button>
-
-            {/* Next */}
-            <button className="w-7 h-7 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
-              <SkipForward className="w-4 h-4 text-gray-700" />
-            </button>
-
-            {/* Shuffle */}
-            <button className="w-7 h-7 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
-              <Shuffle className="w-4 h-4 text-gray-700" />
-            </button>
-
-            {/* Time Display */}
-            <div className="text-xs font-mono text-gray-700 ml-2">
-              <span className="text-[#81e6fe] font-bold">{formatTime(currentTime)}</span>
-              <span className="text-gray-400 mx-1">/</span>
-              <span className="text-gray-500">{formatTime(duration)}</span>
-            </div>
-          </div>
-
-          {/* Waveform */}
+        {/* Waveform */}
+        <div className="w-full max-w-3xl mb-6">
           <div
             ref={waveformRef}
-            className="w-full rounded-lg overflow-hidden bg-gray-50 border border-gray-200 cursor-pointer hover:border-[#81e6fe]/50 transition-all"
-            style={{ minHeight: "60px", height: "60px" }}
+            className="w-full rounded-xl overflow-hidden bg-black/20 backdrop-blur-sm border border-white/10 cursor-pointer hover:border-[#81e6fe]/50 transition-all"
+            style={{ minHeight: "100px", height: "100px" }}
           />
         </div>
 
-        {/* Right: Action Buttons */}
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <button className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
-            <Heart className="w-4 h-4 text-gray-700" />
+        {/* Playback Controls */}
+        <div className="flex items-center gap-4 mb-4">
+          <button className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <SkipBack className="w-5 h-5 text-white" />
           </button>
-          <button className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
-            <Share2 className="w-4 h-4 text-gray-700" />
+
+          <button
+            onClick={togglePlay}
+            className="w-16 h-16 rounded-full bg-[#81e6fe] hover:bg-[#6dd5ed] flex items-center justify-center transition-all shadow-2xl hover:scale-110"
+          >
+            {isPlaying ? (
+              <Pause className="w-7 h-7 text-black fill-black" />
+            ) : (
+              <Play className="w-7 h-7 text-black fill-black ml-1" />
+            )}
+          </button>
+
+          <button className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <SkipForward className="w-5 h-5 text-white" />
+          </button>
+
+          <button className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <Shuffle className="w-5 h-5 text-white" />
+          </button>
+        </div>
+
+        {/* Time Display */}
+        <div className="text-lg font-mono text-white/80 mb-6">
+          <span className="text-[#81e6fe] font-bold">{formatTime(currentTime)}</span>
+          <span className="text-white/40 mx-2">/</span>
+          <span className="text-white/60">{formatTime(duration)}</span>
+        </div>
+
+        {/* Action Buttons Row */}
+        <div className="flex items-center gap-3">
+          <button className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <Heart className="w-5 h-5 text-white" />
+          </button>
+          <button className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <Share2 className="w-5 h-5 text-white" />
           </button>
           <button 
             onClick={handleAirPlay}
-            className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all"
+            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20"
             title="AirPlay to Apple Devices"
           >
-            <svg className="w-4 h-4 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6 22h12l-6-6-6 6zM21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4v-2H3V5h18v12h-4v2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
             </svg>
           </button>
-          {/* GAME-CHANGER: Connect to Bluetooth/Sonos Speakers */}
           {connectedDevice ? (
             <button 
               onClick={disconnectSpeaker}
-              className="w-8 h-8 rounded-full bg-[#81e6fe]/20 hover:bg-[#81e6fe]/30 flex items-center justify-center transition-all border border-[#81e6fe]/50"
+              className="w-10 h-10 rounded-full bg-[#81e6fe]/30 backdrop-blur-sm hover:bg-[#81e6fe]/40 flex items-center justify-center transition-all border border-[#81e6fe]/50"
               title={`Connected to ${connectedDevice}`}
             >
-              <Speaker className="w-4 h-4 text-[#81e6fe]" />
+              <Speaker className="w-5 h-5 text-[#81e6fe]" />
             </button>
           ) : (
             <button 
               onClick={handleConnectSpeaker}
-              className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all"
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20"
               title="Connect to Bluetooth/Sonos Speaker"
             >
-              <Bluetooth className="w-4 h-4 text-gray-700" />
+              <Bluetooth className="w-5 h-5 text-white" />
             </button>
           )}
-          <button className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all">
-            <List className="w-4 h-4 text-gray-700" />
+          <button className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
+            <List className="w-5 h-5 text-white" />
           </button>
           
           {/* Volume Control */}
           <div className="flex items-center gap-2 ml-2">
-            <Volume2 className="w-4 h-4 text-gray-700 flex-shrink-0" />
+            <Volume2 className="w-5 h-5 text-white/80" />
             <input
               type="range"
               min="0"
@@ -317,15 +311,15 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
               step="0.01"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-20 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#81e6fe]"
+              className="w-24 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-[#81e6fe]"
             />
           </div>
         </div>
       </div>
 
       {/* BopAudio Badge */}
-      <div className="absolute bottom-2 right-2 px-2 py-1 bg-[#81e6fe]/10 rounded-full border border-[#81e6fe]/30">
-        <span className="text-[#81e6fe] font-semibold text-xs">BopAudio</span>
+      <div className="absolute bottom-4 right-4 px-3 py-1.5 bg-[#81e6fe]/20 backdrop-blur-sm rounded-full border border-[#81e6fe]/30">
+        <span className="text-[#81e6fe] font-semibold text-sm">BopAudio</span>
       </div>
     </div>
   );
