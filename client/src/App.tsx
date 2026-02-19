@@ -14,6 +14,8 @@ import ArtistProfile from "./pages/ArtistProfile";
 import DemoArtistProfile from "./pages/DemoArtistProfile";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import ProductManagement from "./pages/ProductManagement";
+import ProductForm from "./pages/ProductForm";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Features from "./pages/Features";
@@ -79,6 +81,9 @@ function Router() {
       <Route path={"/404"} component={NotFound} />
       <Route path={"/terms"} component={Terms} />
       <Route path={"/privacy"} component={Privacy} />
+      <Route path="/products" component={ProductManagement} />
+      <Route path="/products/new" component={ProductForm} />
+      <Route path="/products/edit/:id" component={ProductForm} />
       <Route path={"/about"} component={About} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/features"} component={Features} />
