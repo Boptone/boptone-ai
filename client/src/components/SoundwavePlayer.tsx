@@ -222,16 +222,16 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
         </div>
 
         {/* Waveform */}
-        <div className="w-full max-w-3xl mb-6">
+        <div className="w-full max-w-3xl mb-4">
           <div
             ref={waveformRef}
             className="w-full rounded-xl overflow-hidden bg-black/20 backdrop-blur-sm border border-white/10 cursor-pointer hover:border-[#81e6fe]/50 transition-all"
-            style={{ minHeight: "100px", height: "100px" }}
+            style={{ minHeight: "60px", height: "60px" }}
           />
         </div>
 
         {/* Playback Controls */}
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-3 md:gap-4 mb-3">
           <button className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 flex items-center justify-center transition-all border border-white/20">
             <SkipBack className="w-5 h-5 text-white" />
           </button>
