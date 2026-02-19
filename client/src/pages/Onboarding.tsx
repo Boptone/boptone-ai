@@ -179,14 +179,14 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="rounded-none border-4 border-black w-full max-w-2xl bg-white">
+      <Card className="rounded-xl border-2 border-gray-200 w-full max-w-2xl bg-white shadow-sm hover:border-gray-400 transition-colors">
         <CardHeader className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <span className="text-2xl font-bold">♪</span>
             <h1 className="text-2xl font-bold text-black">Boptone</h1>
           </div>
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-gray-100 border-2 border-gray-200 text-black text-sm font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 border-2 border-gray-200 text-black text-sm font-medium">
               <span className="font-bold">★</span>
               Create Your Tone
             </div>
@@ -208,8 +208,8 @@ export default function Onboarding() {
           {/* Step 1: Basic Info + Photo */}
           {step === 1 && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
-                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
+              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-xl">
+                <div className="h-12 w-12 rounded-xl bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                   <span className="text-2xl font-bold">U</span>
                 </div>
                 <div>
@@ -226,7 +226,7 @@ export default function Onboarding() {
                       <img
                         src={profilePhoto}
                         alt="Profile preview"
-                        className="h-32 w-32 rounded-full object-cover border-4 border-black"
+                        className="h-32 w-32 rounded-full object-cover border-2 border-gray-200"
                       />
                       <button
                         onClick={handleRemovePhoto}
@@ -238,7 +238,7 @@ export default function Onboarding() {
                   ) : (
                     <div
                       onClick={() => fileInputRef.current?.click()}
-                      className="h-32 w-32 rounded-full border-2 border-dashed border-gray-400 flex flex-col items-center justify-center cursor-pointer hover:border-black hover:bg-gray-50 transition-colors"
+                      className="h-32 w-32 rounded-full border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition-colors"
                     >
                       <span className="text-2xl font-bold text-gray-400 mb-1">+</span>
                       <span className="text-xs text-gray-600 font-medium">Add Photo</span>
@@ -265,7 +265,7 @@ export default function Onboarding() {
                     placeholder="Your stage name or band name"
                     value={formData.displayName}
                     onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                    className="rounded-full border-2 border-gray-200"
+                    className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
                     autoFocus
                   />
                 </div>
@@ -277,7 +277,7 @@ export default function Onboarding() {
                     placeholder="Tell fans about your music and journey..."
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    className="rounded-none border-2 border-gray-200"
+                    className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
                     rows={4}
                   />
                   <p className="text-xs text-gray-600">
@@ -291,8 +291,8 @@ export default function Onboarding() {
           {/* Step 2: Genre Selection */}
           {step === 2 && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
-                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
+              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-xl">
+                <div className="h-12 w-12 rounded-xl bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                   <span className="text-2xl font-bold">♪</span>
                 </div>
                 <div>
@@ -306,7 +306,7 @@ export default function Onboarding() {
                   <Badge
                     key={genre}
                     variant={formData.genres.includes(genre) ? "default" : "outline"}
-                    className={`cursor-pointer justify-center py-3 text-sm rounded-full transition-colors ${
+                    className={`cursor-pointer justify-center py-3 text-sm rounded-xl transition-colors ${
                       formData.genres.includes(genre)
                         ? "bg-black text-white hover:bg-gray-800"
                         : "bg-white text-black border-2 border-gray-200 hover:border-black"
@@ -330,8 +330,8 @@ export default function Onboarding() {
           {/* Step 3: Social Links */}
           {step === 3 && (
             <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
-                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
+              <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-xl">
+                <div className="h-12 w-12 rounded-xl bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                   <span className="text-2xl font-bold">↑</span>
                 </div>
                 <div>
@@ -351,7 +351,7 @@ export default function Onboarding() {
                     placeholder="username"
                     value={formData.instagram}
                     onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                    className="rounded-full border-2 border-gray-200"
+                    className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
                   />
                 </div>
 
@@ -365,7 +365,7 @@ export default function Onboarding() {
                     placeholder="username"
                     value={formData.twitter}
                     onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                    className="rounded-full border-2 border-gray-200"
+                    className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
                   />
                 </div>
 
@@ -379,12 +379,12 @@ export default function Onboarding() {
                     placeholder="Channel URL"
                     value={formData.youtube}
                     onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
-                    className="rounded-full border-2 border-gray-200"
+                    className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
                   />
                 </div>
               </div>
 
-              <div className="p-4 bg-gray-100 rounded-none border-2 border-gray-200">
+              <div className="p-4 bg-gray-100 rounded-xl border-2 border-gray-200">
                 <p className="text-sm text-center text-black">
                   <strong>Almost done!</strong> Your Tone is ready to launch.
                 </p>
@@ -398,7 +398,7 @@ export default function Onboarding() {
               variant="ghost"
               onClick={handleBack}
               disabled={step === 1}
-              className="rounded-full"
+              className="rounded-xl"
             >
               <span className="mr-2">←</span>
               Back
@@ -407,7 +407,7 @@ export default function Onboarding() {
             <Button
               onClick={handleNext}
               disabled={updateProfile.isPending || uploadPhoto.isPending}
-              className="rounded-full bg-black hover:bg-gray-800 text-white"
+              className="rounded-xl bg-black hover:bg-gray-800 text-white shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)]"
             >
               {step === totalSteps ? (
                 <>
@@ -428,7 +428,7 @@ export default function Onboarding() {
             <Button
               variant="link"
               onClick={() => setLocation("/dashboard")}
-              className="rounded-full text-gray-600"
+              className="rounded-xl text-gray-600"
             >
               Skip for now
             </Button>
