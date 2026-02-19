@@ -151,7 +151,7 @@ export default function WriterEarnings() {
                 {Object.values(earningsByTrack).map((track) => (
                   <div
                     key={track.trackId}
-                    className="flex items-center justify-between p-6 border-2 border-black rounded-none"
+                    className="flex items-center justify-between p-6 border-2 border-gray-200 rounded-none"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
@@ -172,7 +172,7 @@ export default function WriterEarnings() {
                 ))}
               </div>
             ) : (
-              <div className="p-6 bg-gray-50 border-2 border-gray-300 rounded-none">
+              <div className="p-6 bg-gray-50 border-2 border-gray-200 rounded-none">
                 <p className="text-gray-700">
                   No earnings yet. You'll see earnings here once tracks you've contributed to start generating revenue.
                 </p>
@@ -195,12 +195,12 @@ export default function WriterEarnings() {
                 {payouts.map((payout) => (
                   <div
                     key={payout.id}
-                    className="flex items-center justify-between p-6 border-2 border-black rounded-none"
+                    className="flex items-center justify-between p-6 border-2 border-gray-200 rounded-none"
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <p className="font-bold text-xl">${payout.amount.toFixed(2)}</p>
-                        <span className="text-xs px-3 py-1 rounded-full font-bold border-2 border-black bg-white">
+                        <span className="text-xs px-3 py-1 rounded-full font-bold border-2 border-gray-200 bg-white">
                           {payout.status.toUpperCase()}
                         </span>
                       </div>
@@ -218,7 +218,7 @@ export default function WriterEarnings() {
                 ))}
               </div>
             ) : (
-              <div className="p-6 bg-gray-50 border-2 border-gray-300 rounded-none">
+              <div className="p-6 bg-gray-50 border-2 border-gray-200 rounded-none">
                 <p className="text-gray-700">
                   No payout history yet. Request your first payout when you reach $25 in earnings.
                 </p>

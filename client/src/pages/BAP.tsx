@@ -173,7 +173,7 @@ export default function BAP() {
               <div className="text-xl font-bold mb-3">Superfan</div>
               <div className="text-lg text-gray-700">1,000 streams = $250</div>
             </div>
-            <div className="border-2 border-black rounded-xl p-8 text-center bg-black text-white hover:border-gray-800 transition-colors">
+            <div className="border-2 border-gray-200 rounded-xl p-8 text-center bg-black text-white hover:border-gray-800 transition-colors">
               <div className="text-5xl font-bold mb-4">$1.00+</div>
               <div className="text-xl font-bold mb-3">Patron</div>
               <div className="text-lg">100 streams = $100+</div>

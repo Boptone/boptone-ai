@@ -139,14 +139,14 @@ export default function ProfileSettings() {
                       type="color"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-xl border-2 border-gray-900"
+                      className="w-24 h-16 cursor-pointer rounded-xl border-2 border-gray-200"
                     />
                     <Input
                       type="text"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
                       placeholder="#0066ff"
-                      className="flex-1 rounded-xl border-2 border-gray-900 text-lg font-medium"
+                      className="flex-1 rounded-xl border-2 border-gray-200 text-lg font-medium"
                     />
                   </div>
                   <p className="text-sm text-gray-600 font-medium">
@@ -164,14 +164,14 @@ export default function ProfileSettings() {
                       type="color"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-xl border-2 border-gray-900"
+                      className="w-24 h-16 cursor-pointer rounded-xl border-2 border-gray-200"
                     />
                     <Input
                       type="text"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
                       placeholder="#00d4aa"
-                      className="flex-1 rounded-xl border-2 border-gray-900 text-lg font-medium"
+                      className="flex-1 rounded-xl border-2 border-gray-200 text-lg font-medium"
                     />
                   </div>
                   <p className="text-sm text-gray-600 font-medium">
@@ -223,16 +223,16 @@ export default function ProfileSettings() {
                   Layout
                 </Label>
                 <Select value={layoutStyle} onValueChange={(value) => setLayoutStyle(value as "default" | "minimal" | "grid")}>
-                  <SelectTrigger id="layoutStyle" className="rounded-xl border-2 border-gray-900 text-lg font-medium h-14">
+                  <SelectTrigger id="layoutStyle" className="rounded-xl border-2 border-gray-200 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2 border-gray-900">
+                  <SelectContent className="rounded-xl border-2 border-gray-200">
                     <SelectItem value="default" className="text-lg font-medium">Default (Single Column)</SelectItem>
                     <SelectItem value="grid" className="text-lg font-medium">Grid Layout</SelectItem>
                     <SelectItem value="minimal" className="text-lg font-medium">Minimal</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-base text-gray-600 font-medium p-4 rounded-xl bg-gray-100 border-2 border-gray-900">
+                <p className="text-base text-gray-600 font-medium p-4 rounded-xl bg-gray-100 border-2 border-gray-200">
                   {layoutStyle === "default" && "Clean single-column layout with all sections stacked"}
                   {layoutStyle === "grid" && "Modern grid layout with side-by-side content"}
                   {layoutStyle === "minimal" && "Minimalist design focusing on essential content"}
@@ -244,10 +244,10 @@ export default function ProfileSettings() {
                   Font Family
                 </Label>
                 <Select value={fontFamily} onValueChange={setFontFamily}>
-                  <SelectTrigger id="fontFamily" className="rounded-xl border-2 border-gray-900 text-lg font-medium h-14">
+                  <SelectTrigger id="fontFamily" className="rounded-xl border-2 border-gray-200 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2 border-gray-900">
+                  <SelectContent className="rounded-xl border-2 border-gray-200">
                     <SelectItem value="Inter" className="text-lg font-medium">Inter (Modern Sans-Serif)</SelectItem>
                     <SelectItem value="Playfair Display" className="text-lg font-medium">Playfair Display (Elegant Serif)</SelectItem>
                     <SelectItem value="Roboto" className="text-lg font-medium">Roboto (Clean Sans-Serif)</SelectItem>

@@ -186,7 +186,7 @@ export default function Onboarding() {
             <h1 className="text-2xl font-bold text-black">Boptone</h1>
           </div>
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-gray-100 border-2 border-black text-black text-sm font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-gray-100 border-2 border-gray-200 text-black text-sm font-medium">
               <span className="font-bold">★</span>
               Create Your Tone
             </div>
@@ -209,7 +209,7 @@ export default function Onboarding() {
           {step === 1 && (
             <div className="space-y-6 animate-in fade-in duration-300">
               <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
-                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-black flex items-center justify-center">
+                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                   <span className="text-2xl font-bold">U</span>
                 </div>
                 <div>
@@ -265,7 +265,7 @@ export default function Onboarding() {
                     placeholder="Your stage name or band name"
                     value={formData.displayName}
                     onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                    className="rounded-full border-2 border-gray-300"
+                    className="rounded-full border-2 border-gray-200"
                     autoFocus
                   />
                 </div>
@@ -277,7 +277,7 @@ export default function Onboarding() {
                     placeholder="Tell fans about your music and journey..."
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    className="rounded-none border-2 border-gray-300"
+                    className="rounded-none border-2 border-gray-200"
                     rows={4}
                   />
                   <p className="text-xs text-gray-600">
@@ -292,7 +292,7 @@ export default function Onboarding() {
           {step === 2 && (
             <div className="space-y-6 animate-in fade-in duration-300">
               <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
-                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-black flex items-center justify-center">
+                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                   <span className="text-2xl font-bold">♪</span>
                 </div>
                 <div>
@@ -309,7 +309,7 @@ export default function Onboarding() {
                     className={`cursor-pointer justify-center py-3 text-sm rounded-full transition-colors ${
                       formData.genres.includes(genre)
                         ? "bg-black text-white hover:bg-gray-800"
-                        : "bg-white text-black border-2 border-gray-300 hover:border-black"
+                        : "bg-white text-black border-2 border-gray-200 hover:border-black"
                     }`}
                     onClick={() => toggleGenre(genre)}
                   >
@@ -331,7 +331,7 @@ export default function Onboarding() {
           {step === 3 && (
             <div className="space-y-6 animate-in fade-in duration-300">
               <div className="flex items-center gap-3 p-4 bg-gray-50 border-2 border-gray-200 rounded-none">
-                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-black flex items-center justify-center">
+                <div className="h-12 w-12 rounded-none bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
                   <span className="text-2xl font-bold">↑</span>
                 </div>
                 <div>
@@ -351,7 +351,7 @@ export default function Onboarding() {
                     placeholder="username"
                     value={formData.instagram}
                     onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                    className="rounded-full border-2 border-gray-300"
+                    className="rounded-full border-2 border-gray-200"
                   />
                 </div>
 
@@ -365,7 +365,7 @@ export default function Onboarding() {
                     placeholder="username"
                     value={formData.twitter}
                     onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                    className="rounded-full border-2 border-gray-300"
+                    className="rounded-full border-2 border-gray-200"
                   />
                 </div>
 
@@ -379,12 +379,12 @@ export default function Onboarding() {
                     placeholder="Channel URL"
                     value={formData.youtube}
                     onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
-                    className="rounded-full border-2 border-gray-300"
+                    className="rounded-full border-2 border-gray-200"
                   />
                 </div>
               </div>
 
-              <div className="p-4 bg-gray-100 rounded-none border-2 border-black">
+              <div className="p-4 bg-gray-100 rounded-none border-2 border-gray-200">
                 <p className="text-sm text-center text-black">
                   <strong>Almost done!</strong> Your Tone is ready to launch.
                 </p>

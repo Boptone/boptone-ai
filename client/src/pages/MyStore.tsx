@@ -88,7 +88,7 @@ export default function MyStore() {
                 </span>
               </div>
             ) : (
-              <Badge className="bg-white text-black border-2 border-black rounded-full">Not Connected</Badge>
+              <Badge className="bg-white text-black border-2 border-gray-200 rounded-full">Not Connected</Badge>
             )}
           </div>
           <Button className="rounded-full" onClick={() => setShowConnectPrintful(true)}
@@ -178,13 +178,13 @@ export default function MyStore() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button className="rounded-full flex-1 border-2 border-black font-bold bg-white hover:bg-gray-100 text-black" variant="outline"
+                    <Button className="rounded-full flex-1 border-2 border-gray-200 font-bold bg-white hover:bg-gray-100 text-black" variant="outline"
                       size="sm"
                     >
                       <span className="mr-1">E</span>
                       EDIT
                     </Button>
-                    <Button className="rounded-full border-2 border-black font-bold bg-white hover:bg-gray-100 text-black" variant="outline"
+                    <Button className="rounded-full border-2 border-gray-200 font-bold bg-white hover:bg-gray-100 text-black" variant="outline"
                       size="sm"
                     >
                       <span>×</span>
@@ -202,7 +202,7 @@ export default function MyStore() {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl font-semibold tracking-tighter text-black">RECENT ORDERS</h2>
           <Link href="/my-store/orders">
-            <Button variant="outline" className="rounded-full border-2 border-black font-bold bg-white hover:bg-gray-100 text-black">
+            <Button variant="outline" className="rounded-full border-2 border-gray-200 font-bold bg-white hover:bg-gray-100 text-black">
               VIEW ALL ORDERS
             </Button>
           </Link>

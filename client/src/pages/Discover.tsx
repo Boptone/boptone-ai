@@ -195,7 +195,7 @@ export default function Discover() {
             <p className="text-lg text-gray-600 font-medium truncate">{track.artist}</p>
             <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 font-medium">
               {track.genre && (
-                <Badge className="rounded-full border-2 border-black bg-white text-black font-bold text-xs px-3 py-1 uppercase">
+                <Badge className="rounded-full border-2 border-gray-200 bg-white text-black font-bold text-xs px-3 py-1 uppercase">
                   {track.genre}
                 </Badge>
               )}
@@ -208,7 +208,7 @@ export default function Discover() {
             </div>
           </div>
           <Button 
-            className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" 
+            className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" 
             variant="outline"
             onClick={() => handleLikeTrack(track.id)}
           >
@@ -313,7 +313,7 @@ export default function Discover() {
                 placeholder="Search tracks, artists, albums..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-2xl py-8 pl-16 pr-6 border-2 border-gray-300 rounded-xl font-medium"
+                className="text-2xl py-8 pl-16 pr-6 border-2 border-gray-200 rounded-xl font-medium"
               />
             </div>
           </CardContent>
@@ -399,7 +399,7 @@ export default function Discover() {
                   <SkipBack className="h-4 w-4" />
                 </Button>
                 <Button 
-                  className="rounded-full w-14 h-14 bg-black hover:bg-gray-800 border-2 border-black" 
+                  className="rounded-full w-14 h-14 bg-black hover:bg-gray-800 border-2 border-gray-200" 
                   size="icon" 
                   onClick={() => setIsPlaying(!isPlaying)}
                 >

@@ -261,7 +261,7 @@ export default function Signup() {
                 }
                 placeholder="Your artist name"
                 required
-                className="mt-2 border-2 border-gray-300 rounded-xl"
+                className="mt-2 border-2 border-gray-200 rounded-xl"
               />
             </div>
 
@@ -275,7 +275,7 @@ export default function Signup() {
                   setProfileData({ ...profileData, genre: value })
                 }
               >
-                <SelectTrigger className="mt-2 border-2 border-gray-300 rounded-none">
+                <SelectTrigger className="mt-2 border-2 border-gray-200 rounded-none">
                   <SelectValue placeholder="Select a genre" />
                 </SelectTrigger>
                 <SelectContent>
@@ -304,7 +304,7 @@ export default function Signup() {
                 }
                 placeholder="Tell fans about yourself..."
                 rows={4}
-                className="mt-2 w-full px-3 py-2 border-2 border-gray-300 rounded-none focus:outline-none focus:ring-2 focus:ring-black"
+                className="mt-2 w-full px-3 py-2 border-2 border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
 
@@ -319,7 +319,7 @@ export default function Signup() {
                   setProfileData({ ...profileData, location: e.target.value })
                 }
                 placeholder="City, State/Country"
-                className="mt-2 border-2 border-gray-300 rounded-xl"
+                className="mt-2 border-2 border-gray-200 rounded-xl"
               />
             </div>
 

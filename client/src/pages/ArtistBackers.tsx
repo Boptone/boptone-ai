@@ -60,7 +60,7 @@ export default function ArtistBackers() {
           <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-gray-200">
                   <span className="text-2xl font-bold">U</span>
                 </div>
                 <div>
@@ -74,7 +74,7 @@ export default function ArtistBackers() {
           <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-gray-200">
                   <span className="text-2xl font-bold">$</span>
                 </div>
                 <div>
@@ -88,7 +88,7 @@ export default function ArtistBackers() {
           <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-gray-200">
                   <span className="text-2xl font-bold">↑</span>
                 </div>
                 <div>
@@ -102,7 +102,7 @@ export default function ArtistBackers() {
           <Card className="border-4 border-black rounded-none bg-white">
             <CardContent className="pt-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 rounded-none bg-gray-100 border-2 border-black">
+                <div className="p-3 rounded-none bg-gray-100 border-2 border-gray-200">
                   <span className="text-2xl font-bold">G</span>
                 </div>
                 <div>
@@ -120,7 +120,7 @@ export default function ArtistBackers() {
         <Card className="rounded-none border-4 border-black bg-gray-50">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-none bg-gray-200 border-2 border-black">
+              <div className="p-3 rounded-none bg-gray-200 border-2 border-gray-200">
                 <span className="text-2xl font-bold">G</span>
               </div>
               <div>
@@ -146,11 +146,11 @@ export default function ArtistBackers() {
                 const tierStyle = getTierStyle(backing.tier);
                 
                 return (
-                  <Card className="rounded-none border-2 border-gray-300 bg-white" key={backing.id}>
+                  <Card className="rounded-none border-2 border-gray-200 bg-white" key={backing.id}>
                     <CardContent className="pt-4 pb-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <Avatar className="rounded-none border-2 border-black">
+                          <Avatar className="rounded-none border-2 border-gray-200">
                             <AvatarFallback className="rounded-none bg-gray-100 text-black font-bold">
                               {fan.name?.charAt(0) || "?"}
                             </AvatarFallback>
@@ -223,7 +223,7 @@ export default function ArtistBackers() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-black flex items-center justify-center mb-3">
+                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-3">
                   <span className="text-2xl">👑</span>
                 </div>
                 <h3 className="font-semibold mb-1 text-black">Investor ($25+/mo)</h3>

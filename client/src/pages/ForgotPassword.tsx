@@ -191,7 +191,7 @@ export default function ForgotPassword() {
           {/* Email Sent Confirmation */}
           {step === "sent" && (
             <div className="space-y-4">
-              <div className="bg-gray-50 rounded-none border-2 border-gray-300 p-6 text-center space-y-4">
+              <div className="bg-gray-50 rounded-none border-2 border-gray-200 p-6 text-center space-y-4">
                 <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto">
                   <span className="text-white text-xl font-bold">@</span>
                 </div>
@@ -219,7 +219,7 @@ export default function ForgotPassword() {
 
               <Button
                 variant="outline"
-                className="w-full rounded-full font-bold border-2 border-black bg-white hover:bg-gray-100 text-black"
+                className="w-full rounded-full font-bold border-2 border-gray-200 bg-white hover:bg-gray-100 text-black"
                 onClick={() => setStep("verify")}
               >
                 I have a verification code
@@ -289,7 +289,7 @@ export default function ForgotPassword() {
           {/* Success State */}
           {step === "success" && (
             <div className="space-y-4">
-              <div className="bg-gray-50 rounded-none border-2 border-gray-300 p-6 text-center space-y-4">
+              <div className="bg-gray-50 rounded-none border-2 border-gray-200 p-6 text-center space-y-4">
                 <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto">
                   <span className="text-white text-2xl font-bold">✓</span>
                 </div>

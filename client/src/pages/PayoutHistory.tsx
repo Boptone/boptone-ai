@@ -52,9 +52,9 @@ export default function PayoutHistory() {
         return "bg-gray-200 text-black border-2 border-gray-400";
       case "failed":
       case "cancelled":
-        return "bg-white text-black border-2 border-black";
+        return "bg-white text-black border-2 border-gray-200";
       default:
-        return "bg-white text-black border-2 border-gray-300";
+        return "bg-white text-black border-2 border-gray-200";
     }
   };
 
@@ -110,7 +110,7 @@ export default function PayoutHistory() {
                 View all your past payouts and their status
               </p>
             </div>
-            <Button variant="outline" size="sm" className="rounded-full border-2 border-black">
+            <Button variant="outline" size="sm" className="rounded-full border-2 border-gray-200">
               <span className="mr-2">↓</span>
               Export CSV
             </Button>

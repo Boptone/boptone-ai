@@ -250,11 +250,11 @@ export default function Listen() {
                   </span>
                 )}
                 {track.mood && (
-                  <span className="px-4 py-2 border-2 border-black rounded-none text-sm font-bold uppercase">
+                  <span className="px-4 py-2 border-2 border-gray-200 rounded-none text-sm font-bold uppercase">
                     {track.mood}
                   </span>
                 )}
-                <span className="px-4 py-2 border-2 border-gray-300 rounded-none text-sm font-medium">
+                <span className="px-4 py-2 border-2 border-gray-200 rounded-none text-sm font-medium">
                   {formatTime(track.duration)}
                 </span>
               </div>
@@ -314,7 +314,7 @@ export default function Listen() {
                 variant="outline"
                 size="icon"
                 onClick={() => likeTrack.mutate({ trackId: parseInt(trackId || "0") })}
-                className="border-2 border-black rounded-none"
+                className="border-2 border-gray-200 rounded-none"
               >
                 <span className="text-sm font-bold">LIKE</span>
               </Button>
@@ -322,7 +322,7 @@ export default function Listen() {
                 variant="outline" 
                 size="icon" 
                 onClick={handleShare}
-                className="border-2 border-black rounded-none"
+                className="border-2 border-gray-200 rounded-none"
               >
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
@@ -374,10 +374,10 @@ export default function Listen() {
                     <img
                       src={artist.avatarUrl}
                       alt={artist.stageName}
-                      className="w-24 h-24 rounded-full object-cover border-2 border-black"
+                      className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
                     />
                   ) : (
-                    <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center border-2 border-black">
+                    <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center border-2 border-gray-200">
                       <span className="text-white text-3xl font-bold">
                         {artist.stageName.charAt(0)}
                       </span>
@@ -395,7 +395,7 @@ export default function Listen() {
                 )}
                 <Button
                   variant="outline"
-                  className="w-full border-2 border-black rounded-none font-bold"
+                  className="w-full border-2 border-gray-200 rounded-none font-bold"
                   onClick={() => navigate(`/artist/${artist.id}`)}
                 >
                   View Profile
@@ -429,7 +429,7 @@ export default function Listen() {
               <h3 className="text-xl font-bold mb-4">Share</h3>
               <Button
                 variant="outline"
-                className="w-full border-2 border-black rounded-none font-bold"
+                className="w-full border-2 border-gray-200 rounded-none font-bold"
                 onClick={handleShare}
               >
                 Copy Link

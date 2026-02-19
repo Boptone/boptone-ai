@@ -76,7 +76,7 @@ export default function ProductDetail() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-semibold mb-4">PRODUCT NOT FOUND</h1>
-          <Button onClick={() => setLocation("/shop")} className="rounded-full border-2 border-black font-bold">
+          <Button onClick={() => setLocation("/shop")} className="rounded-full border-2 border-gray-200 font-bold">
             ← BACK TO BOPSHOP
           </Button>
         </div>
@@ -91,7 +91,7 @@ export default function ProductDetail() {
         <div className="container mx-auto px-4 py-6">
           <Button onClick={() => setLocation("/shop")}
             variant="outline"
-            className="rounded-full border-2 border-black font-semibold uppercase"
+            className="rounded-full border-2 border-gray-200 font-semibold uppercase"
           >
             ← Back to BopShop
           </Button>
@@ -121,7 +121,7 @@ export default function ProductDetail() {
           {/* Product Info */}
           <div className="space-y-6">
             <div>
-              <Badge className="rounded-full border-2 border-black bg-white text-black font-semibold mb-4">
+              <Badge className="rounded-full border-2 border-gray-200 bg-white text-black font-semibold mb-4">
                 {product.type}
               </Badge>
               <h1 className="text-4xl md:text-5xl font-semibold mb-4">
@@ -135,11 +135,11 @@ export default function ProductDetail() {
                   ${product.price}
                 </span>
                 {product.status === "active" ? (
-                  <Badge className="rounded-full border-2 border-black bg-white text-black font-semibold uppercase">
+                  <Badge className="rounded-full border-2 border-gray-200 bg-white text-black font-semibold uppercase">
                     In Stock
                   </Badge>
                 ) : (
-                  <Badge className="rounded-full border-2 border-black bg-black text-white font-semibold uppercase">
+                  <Badge className="rounded-full border-2 border-gray-200 bg-black text-white font-semibold uppercase">
                     Sold Out
                   </Badge>
                 )}
@@ -178,7 +178,7 @@ export default function ProductDetail() {
                     <Button key={variant.id}
                       onClick={() => setSelectedVariant(variant.id)}
                       variant={selectedVariant === variant.id ? "default" : "outline"}
-                      className="rounded-full border-2 border-black font-semibold h-auto py-4"
+                      className="rounded-full border-2 border-gray-200 font-semibold h-auto py-4"
                       disabled={variant.stock === 0}
                     >
                       <div className="text-left w-full">
@@ -199,7 +199,7 @@ export default function ProductDetail() {
               <div className="flex items-center gap-4">
                 <Button onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   variant="outline"
-                  className="rounded-full border-2 border-black font-semibold text-2xl w-12 h-12"
+                  className="rounded-full border-2 border-gray-200 font-semibold text-2xl w-12 h-12"
                 >
                   -
                 </Button>
@@ -208,7 +208,7 @@ export default function ProductDetail() {
                 </span>
                 <Button onClick={() => setQuantity(quantity + 1)}
                   variant="outline"
-                  className="rounded-full border-2 border-black font-semibold text-2xl w-12 h-12"
+                  className="rounded-full border-2 border-gray-200 font-semibold text-2xl w-12 h-12"
                 >
                   +
                 </Button>
@@ -217,7 +217,7 @@ export default function ProductDetail() {
 
             {/* Add to Cart */}
             <div className="border-t-4 border-black pt-6">
-              <Button className="rounded-full w-full border-2 border-black bg-black text-white hover:bg-white hover:text-black font-semibold text-lg py-6" onClick={handleAddToCart}
+              <Button className="rounded-full w-full border-2 border-gray-200 bg-black text-white hover:bg-white hover:text-black font-semibold text-lg py-6" onClick={handleAddToCart}
                 disabled={product.status !== "active" || addToCart.isPending}
               >
                 <span className="mr-2">$</span>
@@ -236,7 +236,7 @@ export default function ProductDetail() {
             <h2 className="text-3xl font-semibold mb-8">CUSTOMER REVIEWS</h2>
             <div className="space-y-6">
               {reviews.map((review) => (
-                <div key={review.id} className="border-2 border-black p-6 bg-white rounded-none">
+                <div key={review.id} className="border-2 border-gray-200 p-6 bg-white rounded-none">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <div className="flex gap-1">

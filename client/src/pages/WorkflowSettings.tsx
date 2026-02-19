@@ -182,10 +182,10 @@ export default function WorkflowSettings() {
             value={selectedWorkflow?.toString() || ""}
             onValueChange={(value) => setSelectedWorkflow(parseInt(value))}
           >
-            <SelectTrigger className="w-full rounded-none border-2 border-gray-900 h-12 text-lg font-medium">
+            <SelectTrigger className="w-full rounded-none border-2 border-gray-200 h-12 text-lg font-medium">
               <SelectValue placeholder="Select a workflow..." />
             </SelectTrigger>
-            <SelectContent className="rounded-none border-2 border-gray-900">
+            <SelectContent className="rounded-none border-2 border-gray-200">
               {workflows?.map((workflow) => (
                 <SelectItem key={workflow.id} value={workflow.id.toString()} className="text-lg">
                   {workflow.name}
@@ -235,7 +235,7 @@ export default function WorkflowSettings() {
                           </h3>
                           <Badge 
                             variant={trigger.isActive ? "default" : "secondary"}
-                            className="rounded-none border-2 border-black font-bold"
+                            className="rounded-none border-2 border-gray-200 font-bold"
                           >
                             {trigger.isActive ? "Active" : "Paused"}
                           </Badge>
@@ -256,7 +256,7 @@ export default function WorkflowSettings() {
                           variant="outline"
                           size="icon"
                           onClick={() => handleToggleTrigger(trigger.id, trigger.isActive)}
-                          className="rounded-none border-2 border-gray-900 hover:bg-gray-100"
+                          className="rounded-none border-2 border-gray-200 hover:bg-gray-100"
                         >
                           {trigger.isActive ? "❚❚" : "▶"}
                         </Button>
@@ -264,7 +264,7 @@ export default function WorkflowSettings() {
                           variant="outline"
                           size="icon"
                           onClick={() => handleDeleteTrigger(trigger.id)}
-                          className="rounded-none border-2 border-gray-900 hover:bg-gray-100"
+                          className="rounded-none border-2 border-gray-200 hover:bg-gray-100"
                         >
                           DELETE
                         </Button>
@@ -307,10 +307,10 @@ export default function WorkflowSettings() {
                 <div className="space-y-2">
                   <Label htmlFor="eventType" className="text-lg font-bold text-black">Event Type</Label>
                   <Select value={eventType} onValueChange={setEventType}>
-                    <SelectTrigger id="eventType" className="rounded-none border-2 border-gray-900 h-12 text-lg font-medium">
+                    <SelectTrigger id="eventType" className="rounded-none border-2 border-gray-200 h-12 text-lg font-medium">
                       <SelectValue placeholder="Select an event..." />
                     </SelectTrigger>
-                    <SelectContent className="rounded-none border-2 border-gray-900">
+                    <SelectContent className="rounded-none border-2 border-gray-200">
                       <SelectItem value="stream_milestone" className="text-lg">Stream Milestone</SelectItem>
                       <SelectItem value="new_follower" className="text-lg">New Follower</SelectItem>
                       <SelectItem value="sale" className="text-lg">Product Sale</SelectItem>
@@ -328,10 +328,10 @@ export default function WorkflowSettings() {
                 <div className="space-y-2">
                   <Label htmlFor="comparison" className="text-lg font-bold text-black">Condition</Label>
                   <Select value={comparison} onValueChange={setComparison}>
-                    <SelectTrigger id="comparison" className="rounded-none border-2 border-gray-900 h-12 text-lg font-medium">
+                    <SelectTrigger id="comparison" className="rounded-none border-2 border-gray-200 h-12 text-lg font-medium">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="rounded-none border-2 border-gray-900">
+                    <SelectContent className="rounded-none border-2 border-gray-200">
                       <SelectItem value="equals" className="text-lg">Equals</SelectItem>
                       <SelectItem value="greater_than" className="text-lg">Greater Than</SelectItem>
                       <SelectItem value="less_than" className="text-lg">Less Than</SelectItem>
@@ -350,7 +350,7 @@ export default function WorkflowSettings() {
                     placeholder="e.g., 1000"
                     value={threshold}
                     onChange={(e) => setThreshold(e.target.value)}
-                    className="rounded-none border-2 border-gray-900 h-12 text-lg font-medium"
+                    className="rounded-none border-2 border-gray-200 h-12 text-lg font-medium"
                   />
                   <p className="text-sm text-gray-600 font-medium">
                     The value that must be reached to trigger the workflow
@@ -359,7 +359,7 @@ export default function WorkflowSettings() {
 
                 {/* Preview */}
                 {eventType && threshold && (
-                  <div className="bg-gray-100 p-4 rounded-none border-2 border-gray-900">
+                  <div className="bg-gray-100 p-4 rounded-none border-2 border-gray-200">
                     <p className="text-sm font-bold mb-1 text-black">Trigger Preview:</p>
                     <p className="text-sm text-gray-700 font-medium">
                       When <strong>{getEventTypeLabel(eventType).toLowerCase()}</strong>{" "}
@@ -385,7 +385,7 @@ export default function WorkflowSettings() {
                       setShowCreateTrigger(false);
                       resetForm();
                     }}
-                    className="rounded-none border-2 border-gray-900 hover:bg-gray-100 font-bold px-6 py-3 text-lg"
+                    className="rounded-none border-2 border-gray-200 hover:bg-gray-100 font-bold px-6 py-3 text-lg"
                   >
                     Cancel
                   </Button>
