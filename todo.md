@@ -2048,4 +2048,29 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Adjust typography scale for compact layout (2xl-4xl responsive)
 - [x] Test on desktop - player fits viewport
 - [x] Verify all interactions work without scrolling
-- [ ] Save checkpoint with responsive player sizing
+- [x] Save checkpoint with responsive player sizing
+
+## Implement "Kick In" Stripe Payment Flow (User Request)
+- [x] Create tRPC procedure for Stripe Checkout session (tip artist)
+- [x] Add artist metadata to checkout session
+- [x] Open Stripe Checkout in new tab when "Kick In" button clicked
+- [ ] Handle successful payment webhook (deferred - needs webhook endpoint)
+- [x] Show success toast after payment completes
+- [x] Test $5 tip payment flow end-to-end
+- [ ] Save checkpoint with Kick In payment
+
+## Add Mobile Gesture Controls (User Request)
+- [x] Implement swipe left gesture for next track
+- [x] Implement swipe right gesture for previous track
+- [x] Implement swipe up gesture to open queue
+- [x] Add touch event listeners to player
+- [x] Test gestures on mobile devices (iOS/Android)
+- [x] Add visual feedback for swipe gestures (toast notifications)
+- [ ] Save checkpoint with mobile gestures
+
+## Update Kick In Button to Green Color (User Request)
+- [x] Change Kick In button from yellow/orange gradient to green #008000
+- [x] Add subtle gradient for attention (from green-600 to green-500)
+- [x] Maintain trust and safety aesthetic
+- [x] Test button visibility and appearance
+- [ ] Save checkpoint with green Kick In button

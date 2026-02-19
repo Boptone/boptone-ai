@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Play, Pause, Heart, Share2, Music, SkipBack, SkipForward, Shuffle, Volume2, List, Radio, Zap, Bluetooth, Speaker } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 import WaveSurfer from "wavesurfer.js";
 
 interface Track {
@@ -29,6 +31,10 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   const [liveListeners, setLiveListeners] = useState(847);
   const [showKickIn, setShowKickIn] = useState(false);
   const [connectedDevice, setConnectedDevice] = useState<string | null>(null);
+  
+  // Mobile gesture controls
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
 
   // Simulate live listener count fluctuation
   useEffect(() => {
@@ -107,6 +113,49 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
     }
   };
 
+  // Mobile gesture handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    });
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd({
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    });
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const deltaX = touchStart.x - touchEnd.x;
+    const deltaY = touchStart.y - touchEnd.y;
+    const minSwipeDistance = 50;
+
+    // Horizontal swipes (left/right for prev/next)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+      if (deltaX > 0) {
+        // Swipe left - next track
+        toast.info("⏭️ Next track");
+        // TODO: Implement next track functionality
+      } else {
+        // Swipe right - previous track
+        toast.info("⏮️ Previous track");
+        // TODO: Implement previous track functionality
+      }
+    }
+    // Vertical swipe up for queue
+    else if (deltaY > minSwipeDistance && Math.abs(deltaY) > Math.abs(deltaX)) {
+      // Swipe up - open queue
+      toast.info("📋 Opening queue...");
+      // TODO: Implement queue panel
+    }
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -153,7 +202,13 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
   };
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ minHeight: "400px" }}>
+    <div 
+      className="relative w-full rounded-2xl overflow-hidden shadow-2xl" 
+      style={{ minHeight: "320px" }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* IMMERSIVE: Full-bleed artwork background with blur */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
@@ -169,12 +224,7 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
 
       {/* GAME-CHANGER: Kick In Tipping Button */}
       {showKickIn && (
-        <div className="absolute top-4 right-4 z-50 animate-bounce">
-          <button className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold rounded-full shadow-2xl border-2 border-yellow-300 hover:scale-110 transition-transform flex items-center gap-2">
-            <Zap className="w-5 h-5" />
-            Kick In $5
-          </button>
-        </div>
+        <KickInButton track={track} />
       )}
 
       {/* Main Content */}
@@ -324,6 +374,46 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
           <span className="text-[#81e6fe] font-semibold text-sm">BopAudio</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Kick In Button Component with Stripe Integration
+function KickInButton({ track }: { track: Track }) {
+  const createTipCheckout = trpc.kickin.createStripeTipCheckout.useMutation();
+
+  const handleKickIn = async () => {
+    try {
+      toast.info("Opening payment checkout...");
+      
+      const result = await createTipCheckout.mutateAsync({
+        artistId: 1, // TODO: Get actual artist ID from track
+        artistName: track.artist,
+        trackTitle: track.title,
+        amount: 5,
+      });
+
+      if (result.checkoutUrl) {
+        window.open(result.checkoutUrl, "_blank");
+        toast.success("Checkout opened in new tab!");
+      }
+    } catch (error) {
+      console.error("Kick In error:", error);
+      toast.error("Failed to open checkout. Please try again.");
+    }
+  };
+
+  return (
+    <div className="absolute top-4 right-4 z-50 animate-bounce">
+      <button 
+        onClick={handleKickIn}
+        disabled={createTipCheckout.isPending}
+        className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white font-bold rounded-full shadow-2xl border-2 border-green-400 hover:scale-110 transition-transform flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{ backgroundColor: '#008000' }}
+      >
+        <Zap className="w-5 h-5" />
+        {createTipCheckout.isPending ? "Opening..." : "Kick In $5"}
+      </button>
     </div>
   );
 }
