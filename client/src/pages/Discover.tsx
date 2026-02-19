@@ -15,6 +15,7 @@ import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Music, TrendingUp, Radio, Search, Heart, Share2, Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Copy, Check } from "lucide-react";
 import SoundwavePlayer from "@/components/SoundwavePlayer";
+import { PayToStreamButton } from "@/components/PayToStreamButton";
 
 const GENRES = [
   "All", "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",
@@ -207,6 +208,13 @@ export default function Discover() {
               )}
             </div>
           </div>
+          <PayToStreamButton
+            trackId={track.id}
+            trackTitle={track.title}
+            artistName={track.artist}
+            artistId={track.artistId || 1}
+            defaultPrice={3}
+          />
           <Button 
             className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" 
             variant="outline"

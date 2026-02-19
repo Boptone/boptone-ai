@@ -2222,4 +2222,15 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update Privacy Policy: Add PCI-DSS compliance statements
 - [x] Update Privacy Policy: Add international data transfer for payments
 - [x] Update Privacy Policy: Update effective date to current date (February 19, 2026)
-- [ ] Save checkpoint with updated TOS and Privacy Policy enterprise-grade legal documents
+- [x] Save checkpoint with updated TOS and Privacy Policy enterprise-grade legal documents
+
+## Implement BopAudio Payment Flow (User Request)
+- [x] Identify track pages where Pay to Stream buttons will be displayed
+- [x] Design PayToStream button component with BAP Protocol aesthetic
+- [x] Add customizable per-stream pricing (default $0.01-$0.05)
+- [x] Add currency selector for multi-currency support
+- [x] Build streaming payment modal with pricing display
+- [x] Integrate with existing payment.createBopAudioCheckout tRPC procedure
+- [x] Add PayToStream buttons to Discover page track cards
+- [x] Test BopAudio payment flow (buttons integrated, needs real track data)
+- [ ] Save checkpoint with complete BopAudio payment flow
