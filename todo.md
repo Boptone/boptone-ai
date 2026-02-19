@@ -2057,7 +2057,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Handle successful payment webhook (deferred - needs webhook endpoint)
 - [x] Show success toast after payment completes
 - [x] Test $5 tip payment flow end-to-end
-- [ ] Save checkpoint with Kick In payment
+- [x] Save checkpoint with Kick In payment
 
 ## Add Mobile Gesture Controls (User Request)
 - [x] Implement swipe left gesture for next track
@@ -2066,11 +2066,11 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add touch event listeners to player
 - [x] Test gestures on mobile devices (iOS/Android)
 - [x] Add visual feedback for swipe gestures (toast notifications)
-- [ ] Save checkpoint with mobile gestures
+- [x] Save checkpoint with mobile gestures
 
 ## Update Kick In Button to Green Color (User Request)
 - [x] Change Kick In button from yellow/orange gradient to green #008000
 - [x] Add subtle gradient for attention (from green-600 to green-500)
 - [x] Maintain trust and safety aesthetic
 - [x] Test button visibility and appearance
-- [ ] Save checkpoint with green Kick In button
+- [x] Save checkpoint with green Kick In button
