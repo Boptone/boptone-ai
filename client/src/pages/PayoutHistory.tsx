@@ -49,7 +49,7 @@ export default function PayoutHistory() {
       case "completed":
         return "bg-black text-white";
       case "processing":
-        return "bg-gray-200 text-black border-2 border-gray-400";
+        return "bg-gray-200 text-black border-2 border-gray-200";
       case "failed":
       case "cancelled":
         return "bg-white text-black border-2 border-gray-200";

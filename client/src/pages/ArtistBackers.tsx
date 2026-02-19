@@ -205,7 +205,7 @@ export default function ArtistBackers() {
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-600 flex items-center justify-center mb-3">
+                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-3">
                   <span className="text-2xl">♥</span>
                 </div>
                 <h3 className="font-semibold mb-1 text-black">Backer ($3/mo)</h3>
@@ -214,7 +214,7 @@ export default function ArtistBackers() {
                 </p>
               </div>
               <div className="text-center">
-                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-800 flex items-center justify-center mb-3">
+                <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 border-2 border-gray-200 flex items-center justify-center mb-3">
                   <span className="text-2xl">★</span>
                 </div>
                 <h3 className="font-semibold mb-1 text-black">Patron ($10/mo)</h3>
