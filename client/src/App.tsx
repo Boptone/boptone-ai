@@ -77,6 +77,7 @@ function Router() {
       <Route path="/demo-profile" component={DemoArtistProfile} />
       <Route path={"/profile-settings"} component={ProfileSettings} />
       <Route path={"/404"} component={NotFound} />
+      <Route path={"/terms"} component={Terms} />
       <Route path={"/privacy"} component={Privacy} />
       <Route path={"/about"} component={About} />
       <Route path={"/contact"} component={Contact} />

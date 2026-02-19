@@ -2233,4 +2233,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Integrate with existing payment.createBopAudioCheckout tRPC procedure
 - [x] Add PayToStream buttons to Discover page track cards
 - [x] Test BopAudio payment flow (buttons integrated, needs real track data)
-- [ ] Save checkpoint with complete BopAudio payment flow
+- [x] Save checkpoint with complete BopAudio payment flow
+
+## Redesign Terms and Privacy Pages (User Request)
+- [x] Remove boxed layout from Terms page
+- [x] Remove boxed layout from Privacy page
+- [x] Apply clean, minimal design to both pages (BAP Protocol aesthetic)
+- [x] Ensure both pages have consistent typography and spacing
+- [x] Test redesigned pages in browser
+- [ ] Save checkpoint with clean Terms and Privacy pages

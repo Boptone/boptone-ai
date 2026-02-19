@@ -1,18 +1,16 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Terms() {
   return (
+    <>
     <div className="min-h-screen bg-white">
       
       {/* Content */}
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <Card className="rounded-none border-4 border-black bg-white">
-          <CardContent className="p-8 md:p-12">
-            <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
-            <p className="text-gray-700 mb-8">Effective Date: February 19, 2026</p>
+      <div className="container mx-auto px-4 py-16 max-w-4xl">
+        <h1 className="text-5xl font-bold mb-4">Terms of Service</h1>
+        <p className="text-xl text-gray-600 mb-16">Effective Date: February 19, 2026</p>
 
-            <div className="prose prose-slate max-w-none">
+        <div className="prose prose-lg max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
                 <p className="mb-4">
@@ -693,11 +691,10 @@ export default function Terms() {
                   © 2026 Acid Bird, Inc. All rights reserved.
                 </p>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
       <ToneyChatbot />
     </div>
+    </>
   );
 }
