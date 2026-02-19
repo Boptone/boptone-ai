@@ -428,7 +428,7 @@ export default function Upload() {
                   id="audio-upload"
                 />
                 <Label htmlFor="audio-upload">
-                  <Button variant="outline" asChild className="rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white">
+                  <Button variant="outline" asChild className="rounded-full border-2 border-gray-200 hover:border-gray-400">
                     <span>Choose File</span>
                   </Button>
                 </Label>
@@ -769,7 +769,7 @@ export default function Upload() {
                 </div>
 
                 {/* AI Disclosure */}
-                <div className="space-y-3 p-4 bg-white border-2 border-gray-300">
+                <div className="space-y-3 p-4 bg-white border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-xl">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="aiUsed"
@@ -834,7 +834,7 @@ export default function Upload() {
                         id="artwork-upload"
                       />
                       <Label htmlFor="artwork-upload">
-                        <Button variant="outline" asChild className="rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white">
+                        <Button variant="outline" asChild className="rounded-full border-2 border-gray-200 hover:border-gray-400">
                           <span>Upload Artwork</span>
                         </Button>
                       </Label>

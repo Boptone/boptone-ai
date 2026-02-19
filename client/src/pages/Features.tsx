@@ -92,7 +92,7 @@ export default function Features() {
                 Start Free
               </Button>
               <Button 
-                className="rounded-full text-lg px-10 py-7 border-2 border-gray-300 hover:border-black hover:bg-gray-50" 
+                className="rounded-full text-lg px-10 py-7 border-2 border-gray-200 hover:border-gray-400" 
                 size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/bap-protocol")}
@@ -171,7 +171,7 @@ export default function Features() {
             {/* Right: Comparison cards */}
             <div className="space-y-8">
               {/* Without Boptone */}
-              <div className="border-2 border-gray-300 bg-gray-50 p-10 rounded-xl">
+              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-gray-50 p-10 rounded-xl">
                 <h3 className="text-2xl font-bold mb-6">Without Boptone</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-4">
@@ -194,7 +194,7 @@ export default function Features() {
               </div>
 
               {/* With Boptone */}
-              <div className="border-2 border-black bg-white p-10 rounded-xl">
+              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
                 <h3 className="text-2xl font-bold mb-6">With Boptone</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-4">
@@ -241,7 +241,7 @@ export default function Features() {
                 Start Free
               </Button>
               <Button 
-                className="rounded-full text-lg px-12 py-7 border-2 border-gray-300 hover:border-black hover:bg-gray-50" 
+                className="rounded-full text-lg px-12 py-7 border-2 border-gray-200 hover:border-gray-400" 
                 size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/demo")}

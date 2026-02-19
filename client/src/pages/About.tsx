@@ -24,7 +24,7 @@ export default function About() {
               <Button size="lg" className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white" onClick={() => setLocation("/signup")}>
                 Get Started
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full text-lg px-10 py-7 border-2 border-gray-300 hover:border-black hover:bg-gray-50" onClick={() => setLocation("/contact")}>
+              <Button size="lg" variant="outline" className="rounded-full text-lg px-10 py-7 border-2 border-gray-200 hover:border-gray-400" onClick={() => setLocation("/contact")}>
                 Contact Us
               </Button>
             </div>
@@ -128,7 +128,7 @@ export default function About() {
             </div>
 
             {/* Established Artists */}
-            <div className="border-2 border-black bg-white p-12 rounded-xl">
+            <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-12 rounded-xl">
               <h3 className="text-4xl font-bold mb-6">For Established Artists</h3>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Advanced tools to grow your career, protect your music, and keep more of what you earn.
@@ -152,7 +152,7 @@ export default function About() {
               <Button size="lg" className="rounded-full text-lg px-12 py-7 bg-black hover:bg-gray-800 text-white" onClick={() => setLocation("/signup")}>
                 Get Early Access
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full text-lg px-12 py-7 border-2 border-gray-300 hover:border-black hover:bg-gray-50" onClick={() => setLocation("/contact")}>
+              <Button size="lg" variant="outline" className="rounded-full text-lg px-12 py-7 border-2 border-gray-200 hover:border-gray-400" onClick={() => setLocation("/contact")}>
                 Contact Us
               </Button>
             </div>

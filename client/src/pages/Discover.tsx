@@ -217,7 +217,7 @@ export default function Discover() {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" variant="outline">
+              <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" variant="outline">
                 <Share2 className="h-4 w-4 mr-2" />
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
@@ -268,7 +268,7 @@ export default function Discover() {
           </div>
 
           {/* Right: Stats Card */}
-          <Card className="border-2 border-gray-200 bg-white rounded-xl">
+          <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white rounded-xl">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
@@ -304,7 +304,7 @@ export default function Discover() {
         </div>
 
         {/* Search Bar */}
-        <Card className="border-2 border-gray-200 bg-white mb-12 rounded-xl">
+        <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white mb-12 rounded-xl">
           <CardContent className="p-8">
             <div className="relative">
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400" />
@@ -326,10 +326,10 @@ export default function Discover() {
               key={genre}
               variant={selectedGenre === genre ? "default" : "outline"}
               onClick={() => setSelectedGenre(genre)}
-              className={`rounded-full border-2 border-black font-bold uppercase text-sm px-6 py-3 ${
+              className={`rounded-full border-2 font-bold uppercase text-sm px-6 py-3 ${
                 selectedGenre === genre
-                  ? "bg-black text-white"
-                  : "bg-white text-black hover:bg-white"
+                  ? "border-black bg-black text-white"
+                  : "border-gray-200 bg-white text-black hover:border-gray-400"
               }`}
             >
               {genre}
@@ -392,10 +392,10 @@ export default function Discover() {
                 <p className="text-lg text-gray-600 font-medium truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
                   <Shuffle className="h-4 w-4" />
                 </Button>
-                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
                   <SkipBack className="h-4 w-4" />
                 </Button>
                 <Button 
@@ -409,15 +409,15 @@ export default function Discover() {
                     <Play className="h-6 w-6 text-white ml-0.5" />
                   )}
                 </Button>
-                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
                   <SkipForward className="h-4 w-4" />
                 </Button>
-                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
                   <Repeat className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" 
+                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" 
                   variant="outline"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
@@ -426,7 +426,7 @@ export default function Discover() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2" variant="outline">
+                    <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" variant="outline">
                       <Share2 className="h-4 w-4 mr-2" />
                       <span className="text-sm font-bold">SHARE</span>
                     </Button>
