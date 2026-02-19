@@ -2170,6 +2170,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Configure Stripe payment methods (CashApp, Klarna, WeChat Pay, Alipay, etc.)
 - [x] Create tRPC procedures for checkout session creation
 - [x] Implement webhook handlers for payment events
+- [x] Save checkpoint with complete backend payment system
 - [ ] Build BopShop merch purchase flow
 - [ ] Create product listing UI with currency selector
 - [ ] Implement add-to-cart functionality
@@ -2184,3 +2185,24 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Pass only card processing fees (no platform cut)
 - [ ] Test all payment flows with multiple currencies and payment methods
 - [ ] Save checkpoint with complete payment system
+
+## Build Kick-in Tip Widget with Tax and AML Compliance (User Request)
+- [x] Research international tax thresholds for gifts/tips (US, EU, UK, Canada, Australia, etc.)
+- [x] Research AML regulations and transaction limits
+- [x] Identify safe tip limits that avoid tax reporting requirements globally
+- [x] Design tip preset amounts and maximum limits
+- [x] Design compliance guardrails (velocity limits, daily caps, verification thresholds)
+- [x] Build Kick-in tip widget component with preset amounts
+- [x] Add custom tip amount input with validation
+- [x] Add optional message field (character limit)
+- [x] Add anonymous tipping option
+- [x] Implement currency selector for global tips
+- [x] Add compliance checks (daily limits, velocity monitoring)
+- [ ] Test tip widget with various amounts and currencies
+- [ ] Save checkpoint with compliant Kick-in tip widget
+- [x] Build artist tax threshold notification system (warn at $15k, $18k annual tips received))
+- [ ] Test Kick-in tip widget with multiple scenarios and currencies
+- [ ] Update Terms of Service to enterprise-grade standards (META/AWS/Nvidia level)
+- [ ] Update Privacy Policy to enterprise-grade standards (META/AWS/Nvidia level)
+- [ ] Add Kick-in tip legal disclosures and liability protections
+- [ ] Save checkpoint with complete Kick-in system and updated legal documents

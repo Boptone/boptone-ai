@@ -18,6 +18,46 @@ export const paymentRouter = router({
   }),
 
   /**
+   * Get user's tip velocity limits (daily, weekly, monthly)
+   */
+  getUserTipLimits: protectedProcedure.query(async ({ ctx }) => {
+    const db = await getDb();
+    if (!db) throw new Error('Database not available');
+
+    const now = new Date();
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    // Get user's tips in various time periods (amount is in cents, convert to dollars)
+    const dailyTipsResult = await db.execute(
+      `SELECT COALESCE(SUM(amount), 0) as total FROM tips WHERE fanId = ${ctx.user.id} AND createdAt >= '${oneDayAgo.toISOString()}'`
+    );
+    const weeklyTipsResult = await db.execute(
+      `SELECT COALESCE(SUM(amount), 0) as total FROM tips WHERE fanId = ${ctx.user.id} AND createdAt >= '${oneWeekAgo.toISOString()}'`
+    );
+    const monthlyTipsResult = await db.execute(
+      `SELECT COALESCE(SUM(amount), 0) as total FROM tips WHERE fanId = ${ctx.user.id} AND createdAt >= '${oneMonthAgo.toISOString()}'`
+    );
+
+    const dailyTotal = Number((dailyTipsResult[0] as any)?.total || 0);
+    const weeklyTotal = Number((weeklyTipsResult[0] as any)?.total || 0);
+    const monthlyTotal = Number((monthlyTipsResult[0] as any)?.total || 0);
+
+    return {
+      dailyLimit: 1000,
+      dailyUsed: dailyTotal,
+      dailyRemaining: Math.max(0, 1000 - dailyTotal),
+      weeklyLimit: 2500,
+      weeklyUsed: weeklyTotal,
+      weeklyRemaining: Math.max(0, 2500 - weeklyTotal),
+      monthlyLimit: 10000,
+      monthlyUsed: monthlyTotal,
+      monthlyRemaining: Math.max(0, 10000 - monthlyTotal),
+    };
+  }),
+
+  /**
    * BopShop: Create checkout session for merch purchase
    */
   createBopShopCheckout: protectedProcedure
@@ -97,7 +137,7 @@ export const paymentRouter = router({
 
       return {
         checkoutUrl: session.url,
-        sessionId: session.id,
+        sessionId: session.id || '',
         fees,
       };
     }),
@@ -168,7 +208,7 @@ export const paymentRouter = router({
 
       return {
         checkoutUrl: session.url,
-        sessionId: session.id,
+        sessionId: session.id || '',
         fees,
       };
     }),
@@ -180,7 +220,7 @@ export const paymentRouter = router({
     .input(
       z.object({
         artistId: z.number(),
-        amount: z.number().min(100), // Minimum $1.00
+        amount: z.number().min(1).max(500), // $1-$500 USD
         message: z.string().max(500).optional(),
         isAnonymous: z.boolean().default(false),
         currency: z.string().length(3).default('USD'),
@@ -213,7 +253,7 @@ export const paymentRouter = router({
                   isAnonymous: input.isAnonymous.toString(),
                 },
               },
-              unit_amount: input.amount,
+              unit_amount: input.amount * 100, // Convert dollars to cents
             },
             quantity: 1,
           },
@@ -235,7 +275,7 @@ export const paymentRouter = router({
 
       return {
         checkoutUrl: session.url,
-        sessionId: session.id,
+        sessionId: session.id || '',
         fees,
       };
     }),

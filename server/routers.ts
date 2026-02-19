@@ -21,6 +21,7 @@ import { toneyRouter } from "./routers/toney";
 import { aiChatRouter } from "./routers/aiChat";
 import { taskContractRouter } from "./routers/taskContract";
 import { paymentRouter } from "./routers/payment";
+import { artistNotificationsRouter } from "./routers/artistNotifications";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -667,6 +668,7 @@ export const appRouter = router({
   
   // Multi-Currency Payment System (BopShop, BopAudio, Kick-in)
   payment: paymentRouter,
+  artistNotifications: artistNotificationsRouter,
   
   // Fan Funnel Marketing
   fanFunnel: fanFunnelRouter,
