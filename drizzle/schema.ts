@@ -2702,3 +2702,66 @@ export type FlywheelBoost = typeof flywheelBoosts.$inferSelect;
 export type InsertFlywheelBoost = typeof flywheelBoosts.$inferInsert;
 
 
+
+// ============================================================================
+// TASK CONTRACT SYSTEM (Ironclad Agent Handoffs)
+// ============================================================================
+
+/**
+ * Task Contracts table
+ * 
+ * Stores all task contracts for agent handoffs.
+ * Enforces ironclad contract system for preventing silent divergence.
+ */
+export const taskContracts = mysqlTable("task_contracts", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  goal: text("goal").notNull(),
+  acceptedOutputs: text("acceptedOutputs").notNull(), // JSON string
+  knownRisks: text("knownRisks").notNull(), // JSON string
+  nextAction: text("nextAction").notNull(),
+  constraints: text("constraints").notNull(), // JSON string
+  priority: mysqlEnum("priority", ["critical", "high", "medium", "low"]).notNull(),
+  status: mysqlEnum("status", ["pending", "accepted", "completed", "failed", "rejected"]).notNull(),
+  createdBy: varchar("createdBy", { length: 255 }).notNull(),
+  acceptedBy: varchar("acceptedBy", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  acceptedAt: timestamp("acceptedAt"),
+  completedAt: timestamp("completedAt"),
+  actualOutputs: text("actualOutputs"), // JSON string
+  failureReason: text("failureReason"),
+  rejectionReason: text("rejectionReason"),
+  context: text("context"), // JSON string
+  parentContractId: varchar("parentContractId", { length: 255 }),
+  childContractIds: text("childContractIds"), // JSON array string
+}, (table) => ({
+  statusIdx: index("status_idx").on(table.status),
+  createdByIdx: index("created_by_idx").on(table.createdBy),
+  acceptedByIdx: index("accepted_by_idx").on(table.acceptedBy),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type TaskContract = typeof taskContracts.$inferSelect;
+export type InsertTaskContract = typeof taskContracts.$inferInsert;
+
+/**
+ * Contract Audit Log table
+ * 
+ * Stores all handoff events for debugging and auditing.
+ */
+export const contractAuditLog = mysqlTable("contract_audit_log", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  contractId: varchar("contractId", { length: 255 }).notNull(),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+  fromAgentId: varchar("fromAgentId", { length: 255 }).notNull(),
+  toAgentId: varchar("toAgentId", { length: 255 }).notNull(),
+  action: varchar("action", { length: 255 }).notNull(),
+  validationResult: text("validationResult"), // JSON string
+  metadata: text("metadata"), // JSON string
+}, (table) => ({
+  contractIdIdx: index("contract_id_idx").on(table.contractId),
+  timestampIdx: index("timestamp_idx").on(table.timestamp),
+  actionIdx: index("action_idx").on(table.action),
+}));
+
+export type ContractAuditLog = typeof contractAuditLog.$inferSelect;
+export type InsertContractAuditLog = typeof contractAuditLog.$inferInsert;

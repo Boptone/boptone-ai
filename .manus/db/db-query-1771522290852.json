@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `contract_audit_log` (\n  `id` varchar(255) NOT NULL,\n  `contractId` varchar(255) NOT NULL,\n  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `fromAgentId` varchar(255) NOT NULL,\n  `toAgentId` varchar(255) NOT NULL,\n  `action` varchar(255) NOT NULL,\n  `validationResult` text,\n  `metadata` text,\n  PRIMARY KEY (`id`),\n  KEY `contract_id_idx` (`contractId`),\n  KEY `timestamp_idx` (`timestamp`),\n  KEY `action_idx` (`action`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE `contract_audit_log` (\n  `id` varchar(255) NOT NULL,\n  `contractId` varchar(255) NOT NULL,\n  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  `fromAgentId` varchar(255) NOT NULL,\n  `toAgentId` varchar(255) NOT NULL,\n  `action` varchar(255) NOT NULL,\n  `validationResult` text,\n  `metadata` text,\n  PRIMARY KEY (`id`),\n  KEY `contract_id_idx` (`contractId`),\n  KEY `timestamp_idx` (`timestamp`),\n  KEY `action_idx` (`action`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 200
+}

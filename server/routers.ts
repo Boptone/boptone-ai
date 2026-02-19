@@ -19,6 +19,7 @@ import { payoutsRouter } from "./routers/payouts";
 import { workflowsRouter } from "./routers/workflows";
 import { toneyRouter } from "./routers/toney";
 import { aiChatRouter } from "./routers/aiChat";
+import { taskContractRouter } from "./routers/taskContract";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -562,6 +563,7 @@ const notificationsRouter = router({
 
 export const appRouter = router({
   system: systemRouter,
+  taskContract: taskContractRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
