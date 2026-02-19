@@ -156,7 +156,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
+      {/* Hero Section - KEEP INTACT */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
@@ -185,10 +185,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section - Xerox gradient background */}
-      <section className="py-16 md:py-24" style={{
-        background: 'linear-gradient(180deg, #fafafa 0%, #ffffff 100%)'
-      }}>
+      {/* Stats Section - BAP Protocol Design */}
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
@@ -201,39 +199,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 md:py-32" style={{
-        background: 'linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%)'
-      }}>
+      {/* Features Section - BAP Protocol Design */}
+      <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">
               Everything you need to build a sustainable music career
             </h2>
-            <p className="text-xl text-gray-700">
+            <p className="text-2xl text-gray-700 leading-relaxed">
               From distribution to healthcare, Boptone handles the business so you can focus on creating.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
-              <Card key={index} className="p-8 bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-shadow">
+              <div key={index} className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
                 <h4 className="text-xl font-bold mb-3">{feature.title}</h4>
-                <p className="text-base text-gray-700 leading-relaxed">{feature.description}</p>
-              </Card>
+                <p className="text-lg text-gray-700 leading-relaxed">{feature.description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-20 md:py-32" style={{
-        background: 'linear-gradient(180deg, #f5f5f5 0%, #ffffff 100%)'
-      }}>
+      {/* Pricing Section - BAP Protocol Design */}
+      <section className="py-20 md:py-32 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Choose Your Plan</h2>
-            <p className="text-xl text-gray-700 mb-8">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">Choose Your Plan</h2>
+            <p className="text-2xl text-gray-700 mb-8">
               Start free, upgrade as you grow
             </p>
 
@@ -261,14 +255,14 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {tiers.map((tier, index) => (
-              <Card 
+              <div 
                 key={index} 
-                className="relative border-2 border-gray-200 p-8 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
+                className="relative border-2 border-gray-200 p-10 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
               >
                 {/* Tier Name */}
                 <div className="mb-4">
-                  <h3 className="text-2xl font-bold">{tier.name}</h3>
-                  <p className="text-sm text-gray-600 mt-2">{tier.description}</p>
+                  <h3 className="text-3xl font-bold">{tier.name}</h3>
+                  <p className="text-lg text-gray-600 mt-2">{tier.description}</p>
                 </div>
 
                 {/* Pricing */}
@@ -288,7 +282,7 @@ export default function Home() {
                       )}
                     </div>
                   )}
-                  <div className="text-sm text-gray-600 mt-2">
+                  <div className="text-lg text-gray-600 mt-2">
                     Platform fee: {tier.platformFee} on BopAudio streams
                   </div>
                 </div>
@@ -298,6 +292,9 @@ export default function Home() {
                   {tier.name === "Enterprise" ? (
                     <Button 
                       className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                      style={{
+                        boxShadow: '4px 4px 0px #81e6fe'
+                      }}
                       onClick={() => setLocation("/contact")}
                     >
                       {tier.cta}
@@ -305,6 +302,9 @@ export default function Home() {
                   ) : tier.name === "Free" ? (
                     <Button 
                       className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                      style={{
+                        boxShadow: '4px 4px 0px #81e6fe'
+                      }}
                       onClick={() => window.location.href = getLoginUrl()}
                     >
                       {tier.cta}
@@ -314,6 +314,9 @@ export default function Home() {
                       tier={tier.name.toLowerCase() as "pro"}
                       buttonText={tier.cta}
                       className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                      style={{
+                        boxShadow: '4px 4px 0px #81e6fe'
+                      }}
                     />
                   )}
                 </div>
@@ -323,47 +326,47 @@ export default function Home() {
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start gap-3">
                       <span className="text-black font-bold mt-1">•</span>
-                      <span className="text-sm text-gray-700">{feature}</span>
+                      <span className="text-lg text-gray-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
-              </Card>
+              </div>
             ))}
           </div>
 
           {/* Pricing Info */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <div className="bg-white border border-gray-200 rounded-xl p-8">
-              <h3 className="text-2xl font-bold mb-6">Pricing Information</h3>
+            <div className="bg-white border-2 border-gray-200 rounded-xl p-10 hover:border-gray-400 transition-colors">
+              <h3 className="text-3xl font-bold mb-6">Pricing Information</h3>
               
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-bold mb-2">Platform Fee Structure</h4>
-                  <p className="text-gray-700">
+                  <h4 className="text-xl font-bold mb-2">Platform Fee Structure</h4>
+                  <p className="text-lg text-gray-700">
                     Boptone takes 10% of BopAudio streaming revenue across all plans. You keep 90% of every stream. 
                     Tips received through "Kick In" have zero platform fees—you keep 100% (minus card processing fees).
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-bold mb-2">BopShop Commerce Fees</h4>
-                  <p className="text-gray-700">
+                  <h4 className="text-xl font-bold mb-2">BopShop Commerce Fees</h4>
+                  <p className="text-lg text-gray-700">
                     For merchandise and physical goods sold through BopShop, Boptone takes a small percentage 
                     of each sale. Credit card processing fees are passed through to artists at cost.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-bold mb-2">Third-Party Distribution</h4>
-                  <p className="text-gray-700">
+                  <h4 className="text-xl font-bold mb-2">Third-Party Distribution</h4>
+                  <p className="text-lg text-gray-700">
                     Revenue from third-party streaming platforms is subject to their standard payout structures. 
                     Boptone does not take additional fees on third-party revenue.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-bold mb-2">Payout Flexibility</h4>
-                  <p className="text-gray-700">
+                  <h4 className="text-xl font-bold mb-2">Payout Flexibility</h4>
+                  <p className="text-lg text-gray-700">
                     Artists can withdraw earnings at any time, at any amount. Payouts are processed next-day 
                     by default, with options for weekly or monthly schedules.
                   </p>
@@ -374,13 +377,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 md:py-32" style={{
-        background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)'
-      }}>
+      {/* FAQ Section - BAP Protocol Design */}
+      <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-5xl md:text-6xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
             
             <div className="space-y-4">
               {[
@@ -409,16 +410,16 @@ export default function Home() {
                   answer: "Free plan includes 1GB of storage. Pro and Enterprise plans include unlimited storage for audio files, artwork, and other assets."
                 }
               ].map((faq, index) => (
-                <div key={index} className="border border-gray-200 rounded-xl bg-white overflow-hidden">
+                <div key={index} className="border-2 border-gray-200 rounded-xl bg-white overflow-hidden hover:border-gray-400 transition-colors">
                   <button
                     onClick={() => setFaqOpen(faqOpen === index ? null : index)}
-                    className="w-full text-left p-6 font-bold text-lg hover:bg-gray-50 transition-colors flex items-center justify-between"
+                    className="w-full text-left p-6 font-bold text-xl hover:bg-gray-50 transition-colors flex items-center justify-between"
                   >
                     {faq.question}
                     <span className="text-2xl">{faqOpen === index ? '−' : '+'}</span>
                   </button>
                   {faqOpen === index && (
-                    <div className="px-6 pb-6 text-gray-700">
+                    <div className="px-6 pb-6 text-lg text-gray-700">
                       {faq.answer}
                     </div>
                   )}
@@ -432,15 +433,15 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-20 md:py-32 bg-black text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
             Ready to own your tone?
           </h2>
-          <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
+          <p className="text-2xl mb-8 text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Join thousands of artists building sustainable careers on Boptone.
           </p>
           <Button 
             size="lg" 
-            className="rounded-full bg-white text-black hover:bg-gray-100 text-lg h-14 px-8"
+            className="rounded-full bg-white text-black hover:bg-gray-100 text-xl h-14 px-10"
             style={{
               boxShadow: '4px 4px 0px #81e6fe'
             }}
