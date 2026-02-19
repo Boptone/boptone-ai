@@ -317,9 +317,12 @@ export default function SoundwavePlayer({ track, autoPlay = false }: SoundwavePl
         </div>
       </div>
 
-      {/* BopAudio Badge */}
-      <div className="absolute bottom-4 right-4 px-3 py-1.5 bg-[#81e6fe]/20 backdrop-blur-sm rounded-full border border-[#81e6fe]/30">
-        <span className="text-[#81e6fe] font-semibold text-sm">BopAudio</span>
+      {/* BopAudio Badge with Favicon */}
+      <div className="absolute bottom-4 right-4 flex flex-col items-center gap-2">
+        <img src="/favicon-48.png" alt="Boptone" className="w-8 h-8" />
+        <div className="px-3 py-1.5 bg-[#81e6fe]/20 backdrop-blur-sm rounded-full border border-[#81e6fe]/30">
+          <span className="text-[#81e6fe] font-semibold text-sm">BopAudio</span>
+        </div>
       </div>
     </div>
   );
