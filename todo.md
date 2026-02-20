@@ -2304,4 +2304,11 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Update tagline to position BopShop as standalone brand
 - [x] Revise collection section headers with better branding
 - [x] Test rebranded landing page
-- [ ] Save checkpoint with rebranded BopShop
+- [x] Save checkpoint with rebranded BopShop
+
+## Redesign BopShop Category Section (User Feedback - Icons Look Cheap/Dated)
+- [x] Remove gray card backgrounds and outlined icons
+- [x] Create modern, text-forward category design
+- [x] Align with brutalist utility aesthetic
+- [x] Test redesigned category section
+- [ ] Save checkpoint with redesigned categories

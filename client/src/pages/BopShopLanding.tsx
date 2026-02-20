@@ -285,19 +285,22 @@ export default function BopShopLanding() {
       )}
 
       {/* Browse by Category */}
-      <section className="py-16 bg-white border-t-2 border-gray-200">
+      <section className="py-20 bg-white border-t-2 border-gray-200">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-black mb-8 text-center">Browse by Category</h2>
+          <h2 className="text-4xl md:text-5xl font-black mb-12 text-center">Browse by Category</h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          {/* Text-forward category links */}
+          <div className="max-w-3xl mx-auto space-y-4">
             {categories.map((cat) => (
               <Link key={cat.name} href={cat.link}>
-                <div className="group cursor-pointer">
-                  <div className="aspect-square bg-gray-100 rounded-xl border-2 border-gray-200 flex flex-col items-center justify-center gap-4 group-hover:border-gray-400 group-hover:bg-gray-50 transition-all">
-                    <cat.icon className="h-16 w-16 text-gray-600 group-hover:text-cyan-600 transition-colors" />
-                    <h3 className="text-xl font-black group-hover:text-cyan-600 transition-colors">
+                <div className="group cursor-pointer border-2 border-gray-200 rounded-xl p-6 hover:border-black transition-all">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-3xl font-black group-hover:translate-x-2 transition-transform">
                       {cat.name}
                     </h3>
+                    <div className="text-4xl font-black text-gray-300 group-hover:text-black group-hover:translate-x-2 transition-all">
+                      →
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -305,11 +308,11 @@ export default function BopShopLanding() {
           </div>
 
           {/* CTA to Full Catalog */}
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <Link href="/bopshop/browse">
               <Button
                 size="lg"
-                className="rounded-full px-8 py-6 text-lg font-bold shadow-[0_4px_0_0_rgb(6,182,212)]"
+                className="rounded-full px-12 py-7 text-xl font-black shadow-[0_4px_0_0_rgb(6,182,212)] hover:shadow-[0_2px_0_0_rgb(6,182,212)] transition-all"
               >
                 Browse All Products
               </Button>
