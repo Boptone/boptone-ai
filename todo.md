@@ -2270,4 +2270,15 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add shipping address collection
 - [ ] Implement order confirmation page (deferred - Stripe handles this)
 - [x] Test complete purchase flow end-to-end
-- [ ] Save checkpoint with BopShop storefront
+- [x] Save checkpoint with BopShop storefront
+
+## Redesign BopShop with Gem-Inspired Layout (User Request)
+- [x] Analyze Gem marketplace design (https://gem.app/search?terms=hats)
+- [x] Extract key layout patterns and functionality from Gem
+- [x] Design hybrid layout combining Gem UX with BAP Protocol aesthetic
+- [x] Rebuild product catalog with improved grid layout
+- [x] Add enhanced filtering and sorting UI
+- [x] Improve product card design with better imagery and info hierarchy
+- [x] Enhance product detail pages with better layout
+- [x] Test redesigned BopShop for usability improvements
+- [ ] Save checkpoint with Gem-inspired BopShop redesign
