@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `audit_logs` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int,\n  `action` varchar(100) NOT NULL,\n  `entityType` varchar(50) NOT NULL,\n  `entityId` int,\n  `changes` json,\n  `metadata` json,\n  `ipAddress` varchar(45),\n  `userAgent` text,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `audit_logs_id` PRIMARY KEY(`id`),\n  CONSTRAINT `audit_logs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`)\n);\n\nCREATE INDEX IF NOT EXISTS `user_id_idx` ON `audit_logs` (`userId`);\nCREATE INDEX IF NOT EXISTS `action_idx` ON `audit_logs` (`action`);\nCREATE INDEX IF NOT EXISTS `entity_idx` ON `audit_logs` (`entityType`, `entityId`);\nCREATE INDEX IF NOT EXISTS `created_at_idx` ON `audit_logs` (`createdAt`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `audit_logs` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int,\n  `action` varchar(100) NOT NULL,\n  `entityType` varchar(50) NOT NULL,\n  `entityId` int,\n  `changes` json,\n  `metadata` json,\n  `ipAddress` varchar(45),\n  `userAgent` text,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `audit_logs_id` PRIMARY KEY(`id`),\n  CONSTRAINT `audit_logs_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`)\n);\n\nCREATE INDEX IF NOT EXISTS `user_id_idx` ON `audit_logs` (`userId`);\nCREATE INDEX IF NOT EXISTS `action_idx` ON `audit_logs` (`action`);\nCREATE INDEX IF NOT EXISTS `entity_idx` ON `audit_logs` (`entityType`, `entityId`);\nCREATE INDEX IF NOT EXISTS `created_at_idx` ON `audit_logs` (`createdAt`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 3618
+}

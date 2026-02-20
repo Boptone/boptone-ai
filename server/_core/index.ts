@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import { createServer } from "http";
 import net from "net";
+import cookieParser from "cookie-parser";
 import { rateLimit } from "express-rate-limit";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
@@ -34,6 +35,45 @@ async function startServer() {
   
   // Trust proxy for accurate IP detection behind load balancers
   app.set('trust proxy', 1);
+  
+  // Cookie parser for session management
+  app.use(cookieParser());
+  
+  // Modern CSRF Protection Middleware (Origin + Referer validation)
+  // This replaces deprecated token-based CSRF protection
+  app.use((req, res, next) => {
+    // Skip CSRF check for GET, HEAD, OPTIONS (safe methods)
+    if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+      return next();
+    }
+    
+    // Skip CSRF check for Stripe webhooks (verified by signature)
+    if (req.path === '/api/webhooks/stripe') {
+      return next();
+    }
+    
+    const origin = req.get('origin');
+    const referer = req.get('referer');
+    const host = req.get('host');
+    
+    // In production, validate origin/referer matches our domain
+    if (process.env.NODE_ENV === 'production') {
+      const allowedOrigins = [
+        `https://${host}`,
+        process.env.FRONTEND_URL,
+      ].filter(Boolean);
+      
+      const isValidOrigin = origin && allowedOrigins.some(allowed => allowed && origin.startsWith(allowed));
+      const isValidReferer = referer && allowedOrigins.some(allowed => allowed && referer.startsWith(allowed));
+      
+      if (!isValidOrigin && !isValidReferer) {
+        console.warn('[CSRF] Blocked request with invalid origin/referer:', { origin, referer, host });
+        return res.status(403).json({ error: 'Invalid request origin' });
+      }
+    }
+    
+    next();
+  });
   
   // Rate limiting for API endpoints
   const apiLimiter = rateLimit({
@@ -83,6 +123,30 @@ async function startServer() {
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  
+  // CORS configuration for production
+  if (process.env.NODE_ENV === 'production') {
+    app.use((req, res, next) => {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        `https://${req.get('host')}`,
+      ].filter(Boolean);
+      
+      const origin = req.get('origin');
+      if (origin && allowedOrigins.some(allowed => allowed && origin.startsWith(allowed))) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      }
+      
+      if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+      }
+      
+      next();
+    });
+  }
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   // tRPC API

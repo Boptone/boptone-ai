@@ -42,7 +42,9 @@ export function getSessionCookieOptions(
   return {
     httpOnly: true,
     path: "/",
-    sameSite: "none",
+    // SameSite 'lax' provides CSRF protection while allowing navigation from external sites
+    // This is the modern standard for session cookies (used by Google, GitHub, Stripe)
+    sameSite: "lax",
     secure: isSecureRequest(req),
   };
 }

@@ -3,6 +3,7 @@ import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as ecommerceDb from "./ecommerceDb";
 import * as wishlistDb from "./wishlistDb";
 import * as db from "./db";
+import { logAudit } from "./auditLog";
 
 /**
  * E-COMMERCE TRPC ROUTER
@@ -296,11 +297,25 @@ export const ecommerceRouter = router({
       .mutation(async ({ ctx, input }) => {
         const orderNumber = ecommerceDb.generateOrderNumber();
         
-        return await ecommerceDb.createOrder({
+        const order = await ecommerceDb.createOrder({
           orderNumber,
           customerId: ctx.user.id,
           ...input,
         });
+        
+        // Audit log: Order created
+        await logAudit({
+          userId: ctx.user.id,
+          action: "order.created",
+          entityType: "order",
+          entityId: order.id,
+          metadata: {
+            total: input.total,
+            artistId: input.artistId,
+          },
+        });
+        
+        return order;
       }),
     
     // Get order by ID

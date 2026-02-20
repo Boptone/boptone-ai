@@ -25,6 +25,31 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 // ============================================================================
+// AUDIT LOGS
+// ============================================================================
+
+export const auditLogs = mysqlTable("audit_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id),
+  action: varchar("action", { length: 100 }).notNull(), // e.g., "order.created", "profile.updated"
+  entityType: varchar("entityType", { length: 50 }).notNull(), // e.g., "order", "product", "user"
+  entityId: int("entityId"), // ID of the affected entity
+  changes: json("changes").$type<Record<string, any>>(), // Before/after values
+  metadata: json("metadata").$type<Record<string, any>>(), // Additional context
+  ipAddress: varchar("ipAddress", { length: 45 }), // IPv4 or IPv6
+  userAgent: text("userAgent"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  actionIdx: index("action_idx").on(table.action),
+  entityIdx: index("entity_idx").on(table.entityType, table.entityId),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type AuditLog = typeof auditLogs.$inferSelect;
+export type InsertAuditLog = typeof auditLogs.$inferInsert;
+
+// ============================================================================
 // ARTIST PROFILES
 // ============================================================================
 
