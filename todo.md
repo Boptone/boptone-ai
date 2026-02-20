@@ -2352,3 +2352,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Test BopShop browse page with masonry layout (navigated to product detail instead)
 - [x] Test product quick view modals with dummy data (modal opens correctly with URL routing)
 - [ ] Save checkpoint with populated BopShop
+
+## Fix BopShop Masonry Layout - Match Gem's Clean Design (User Feedback)
+- [x] Visit Gem's actual search page to analyze masonry implementation
+- [x] Document Gem's card sizing, spacing, and layout patterns
+- [x] Reduce BopShop product card sizes to match Gem's compact design
+- [x] Fix stretched cards and excessive white space
+- [x] Ensure mobile-ready formatting for future app
+- [x] Test browse page with cleaner, tighter layout
+- [ ] Save checkpoint with professional masonry layout

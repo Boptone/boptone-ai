@@ -86,15 +86,15 @@ export default function BopShopBrowse() {
     new Set(products?.map((p: any) => p.category).filter(Boolean))
   );
 
-  // Assign varying size classes for Pinterest-style layout
-  const getSizeClass = (index: number) => {
+  // Assign aspect ratio classes for natural Gem-style layout
+  const getAspectClass = (index: number) => {
     const patterns = [
-      'item-small',        // 40%
-      'item-small',
-      'item-medium',       // 25%
-      'item-tall',         // 10%
-      'item-large-portrait', // 15%
-      'item-large-landscape', // 10%
+      'aspect-square',
+      'aspect-portrait',
+      'aspect-square',
+      'aspect-landscape',
+      'aspect-square',
+      'aspect-tall',
     ];
     return patterns[index % patterns.length];
   };
@@ -267,7 +267,7 @@ export default function BopShopBrowse() {
                 <button
                   key={product.id}
                   onClick={() => handleProductClick(product)}
-                  className={`masonry-item ${getSizeClass(index)} group cursor-pointer w-full text-left`}
+                  className={`masonry-item ${getAspectClass(index)} group cursor-pointer w-full text-left`}
                 >
                   <div>
                     {/* Product Image Container */}
