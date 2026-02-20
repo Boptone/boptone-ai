@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import { Link, useLocation } from "wouter";
 import { Search, SlidersHorizontal, ShoppingCart, X } from "lucide-react";
-import Masonry from "react-masonry-css";
 import "./BopShopBrowse.css";
 import { ProductQuickView } from "@/components/ProductQuickView";
 
@@ -87,12 +86,17 @@ export default function BopShopBrowse() {
     new Set(products?.map((p: any) => p.category).filter(Boolean))
   );
 
-  // Masonry breakpoints
-  const breakpointColumns = {
-    default: 4,
-    1280: 3,
-    768: 2,
-    640: 1,
+  // Assign varying size classes for Pinterest-style layout
+  const getSizeClass = (index: number) => {
+    const patterns = [
+      'item-small',        // 40%
+      'item-small',
+      'item-medium',       // 25%
+      'item-tall',         // 10%
+      'item-large-portrait', // 15%
+      'item-large-landscape', // 10%
+    ];
+    return patterns[index % patterns.length];
   };
 
   return (
@@ -257,17 +261,13 @@ export default function BopShopBrowse() {
               </p>
             </div>
 
-            {/* Masonry Grid */}
-            <Masonry
-              breakpointCols={breakpointColumns}
-              className="bopshop-masonry-grid"
-              columnClassName="bopshop-masonry-grid_column"
-            >
-              {filteredProducts.map((product: any) => (
+            {/* Pinterest-Style Masonry Grid */}
+            <div className="masonry-grid">
+              {filteredProducts.map((product: any, index: number) => (
                 <button
                   key={product.id}
                   onClick={() => handleProductClick(product)}
-                  className="group cursor-pointer mb-4 w-full text-left"
+                  className={`masonry-item ${getSizeClass(index)} group cursor-pointer w-full text-left`}
                 >
                   <div>
                     {/* Product Image Container */}
@@ -330,7 +330,7 @@ export default function BopShopBrowse() {
                   </div>
                 </button>
               ))}
-            </Masonry>
+            </div>
           </>        )}
       </div>
 
