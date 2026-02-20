@@ -9,6 +9,10 @@ import { getLoginUrl } from "./const";
 import "./index.css";
 import "./i18n/config";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
+import { initSentry } from "./lib/sentry";
+
+// Initialize Sentry for error tracking
+initSentry();
 
 const queryClient = new QueryClient();
 

@@ -238,12 +238,14 @@ export const products = mysqlTable("products", {
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  deletedAt: timestamp("deletedAt"), // Soft delete - null means not deleted
 }, (table) => ({
   artistIdIdx: index("artist_id_idx").on(table.artistId),
   statusIdx: index("status_idx").on(table.status),
   typeIdx: index("type_idx").on(table.type),
   slugIdx: index("slug_idx").on(table.slug),
   artistStatusIdx: index("artist_status_idx").on(table.artistId, table.status), // Composite index for artist product queries
+  deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
 }));
 
 export type Product = typeof products.$inferSelect;
@@ -292,9 +294,11 @@ export const cartItems = mysqlTable("cart_items", {
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  deletedAt: timestamp("deletedAt"), // Soft delete - null means not deleted
 }, (table) => ({
   userIdIdx: index("user_id_idx").on(table.userId),
   userProductIdx: index("user_product_idx").on(table.userId, table.productId), // Composite index for cart queries
+  deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
 }));
 
 export type CartItem = typeof cartItems.$inferSelect;
@@ -379,6 +383,7 @@ export const orders = mysqlTable("orders", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   cancelledAt: timestamp("cancelledAt"),
   cancellationReason: text("cancellationReason"),
+  deletedAt: timestamp("deletedAt"), // Soft delete - null means not deleted
 }, (table) => ({
   customerIdIdx: index("customer_id_idx").on(table.customerId),
   artistIdIdx: index("artist_id_idx").on(table.artistId),
@@ -386,6 +391,7 @@ export const orders = mysqlTable("orders", {
   paymentStatusIdx: index("payment_status_idx").on(table.paymentStatus),
   fulfillmentStatusIdx: index("fulfillment_status_idx").on(table.fulfillmentStatus),
   artistPaymentStatusIdx: index("artist_payment_status_idx").on(table.artistId, table.paymentStatus), // Composite index for artist order queries
+  deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
 }));
 
 export type Order = typeof orders.$inferSelect;
@@ -887,10 +893,12 @@ export const bapTracks = mysqlTable("bap_tracks", {
   releasedAt: timestamp("releasedAt"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  deletedAt: timestamp("deletedAt"), // Soft delete - null means not deleted
 }, (table) => ({
   artistIdIdx: index("artist_id_idx").on(table.artistId),
   statusIdx: index("status_idx").on(table.status),
   releasedAtIdx: index("released_at_idx").on(table.releasedAt),
+  deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
 }));
 
 export type BapTrack = typeof bapTracks.$inferSelect;
