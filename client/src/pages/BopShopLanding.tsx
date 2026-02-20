@@ -61,7 +61,7 @@ export default function BopShopLanding() {
               Where artists sell direct. Where fans buy authentic.
             </p>
 
-            {/* Search Bar */}
+            {/* Search Bar - BAP Protocol */}
             <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -70,7 +70,7 @@ export default function BopShopLanding() {
                   placeholder="Search for artists, products, or categories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-6 text-lg border-2 border-gray-300 rounded-xl focus:border-cyan-500 focus:ring-0"
+                  className="pl-12 pr-4 py-6 text-lg border-2 border-gray-200 rounded-xl focus:border-gray-400 focus:ring-0 hover:border-gray-400 transition-colors"
                 />
               </div>
             </form>
@@ -81,7 +81,7 @@ export default function BopShopLanding() {
                 <Link key={cat.name} href={cat.link}>
                   <Button
                     variant="outline"
-                    className="rounded-full border-2 border-gray-300 hover:border-gray-400 px-6 py-2"
+                    className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2 transition-colors"
                   >
                     <cat.icon className="h-4 w-4 mr-2" />
                     {cat.name}

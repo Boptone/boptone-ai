@@ -264,16 +264,16 @@ export default function BopShopBrowse() {
                           </div>
                         )}
 
-                        {/* Price Badge Overlay */}
-                        <div className="absolute top-3 right-3 bg-white px-4 py-2 rounded-lg border-2 border-gray-200 shadow-sm">
+                        {/* Price Badge Overlay - BAP Protocol */}
+                        <div className="absolute top-3 right-3 bg-white px-4 py-2 rounded-xl border-2 border-gray-200 shadow-sm">
                           <span className="text-lg font-bold">
                             ${(product.price / 100).toFixed(2)}
                           </span>
                         </div>
 
-                        {/* Featured Badge */}
+                        {/* Featured Badge - BAP Protocol */}
                         {product.featured && (
-                          <div className="absolute top-3 left-3 bg-black text-white px-3 py-1 rounded-lg text-sm font-medium">
+                          <div className="absolute top-3 left-3 bg-black text-white px-3 py-1 rounded-xl text-sm font-medium">
                             Featured
                           </div>
                         )}

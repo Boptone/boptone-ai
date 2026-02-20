@@ -139,8 +139,8 @@ export default function Cart() {
                   className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-gray-400 transition-colors"
                 >
                   <div className="flex gap-6">
-                    {/* Product Image */}
-                    <div className="w-32 h-32 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
+                    {/* Product Image - BAP Protocol */}
+                    <div className="w-32 h-32 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden border-2 border-gray-200">
                       {item.product?.primaryImageUrl ? (
                         <img
                           src={item.product.primaryImageUrl}
@@ -176,7 +176,7 @@ export default function Cart() {
                               });
                             }
                           }}
-                          className="border-2 border-gray-200 rounded-lg hover:border-gray-400 transition-colors"
+                          className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
@@ -192,7 +192,7 @@ export default function Cart() {
                               quantity: item.quantity + 1,
                             });
                           }}
-                          className="border-2 border-gray-200 rounded-lg hover:border-gray-400 transition-colors"
+                          className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                         >
                           <Plus className="h-4 w-4" />
                         </Button>

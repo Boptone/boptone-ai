@@ -2311,4 +2311,17 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Create modern, text-forward category design
 - [x] Align with brutalist utility aesthetic
 - [x] Test redesigned category section
-- [ ] Save checkpoint with redesigned categories
+- [x] Save checkpoint with redesigned categories
+
+## Apply BAP Protocol to Entire BopShop Storefront (User Request)
+- [x] Audit all BopShop pages for BAP Protocol compliance
+- [x] Apply BAP Protocol to BopShop landing page (2px borders, rounded-xl, cyan shadows)
+- [x] Apply BAP Protocol to product catalog/browse page
+- [x] Apply BAP Protocol to product detail pages
+- [x] Apply BAP Protocol to shopping cart page
+- [x] Apply BAP Protocol to checkout page
+- [x] Ensure consistent 2px gray-200 borders across all elements
+- [x] Ensure rounded-xl corners on all cards and containers
+- [x] Ensure cyan button shadows on all primary CTAs
+- [ ] Test complete BopShop storefront with BAP Protocol
+- [ ] Save checkpoint with BAP Protocol applied to BopShop

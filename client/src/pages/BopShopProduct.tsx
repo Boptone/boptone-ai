@@ -116,9 +116,9 @@ export default function BopShopProduct() {
                 </div>
               )}
 
-              {/* Featured Badge */}
+              {/* Featured Badge - BAP Protocol */}
               {product.featured && (
-                <div className="absolute top-4 left-4 bg-black text-white px-4 py-2 rounded-lg text-base font-medium">
+                <div className="absolute top-4 left-4 bg-black text-white px-4 py-2 rounded-xl text-base font-medium">
                   Featured
                 </div>
               )}
