@@ -99,8 +99,8 @@ export default function BopShopProduct() {
       </div>
 
       {/* Product Content */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Image */}
           <div className="space-y-4">
             <div className="relative aspect-square bg-white border-2 border-gray-200 rounded-xl overflow-hidden">
@@ -141,12 +141,12 @@ export default function BopShopProduct() {
               {product.category && (
                 <p className="text-lg text-gray-500 mb-2">{product.category}</p>
               )}
-              <h1 className="text-5xl font-bold mb-4">{product.name}</h1>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{product.name}</h1>
             </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-4">
-              <span className="text-4xl font-bold">
+              <span className="text-3xl md:text-4xl font-bold">
                 ${(product.price / 100).toFixed(2)}
               </span>
               {product.compareAtPrice && product.compareAtPrice > product.price && (
