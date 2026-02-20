@@ -19,13 +19,14 @@ import {
 import { Link } from "wouter";
 import { Search, SlidersHorizontal, ShoppingCart, X } from "lucide-react";
 import Masonry from "react-masonry-css";
-import "./BopShop.css";
+import "./BopShopBrowse.css";
+
 
 /**
  * BopShop - Public Storefront
  * Gem-inspired masonry layout with BAP Protocol aesthetic
  */
-export default function BopShop() {
+export default function BopShopBrowse() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
