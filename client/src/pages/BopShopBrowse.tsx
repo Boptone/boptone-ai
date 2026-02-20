@@ -86,18 +86,7 @@ export default function BopShopBrowse() {
     new Set(products?.map((p: any) => p.category).filter(Boolean))
   );
 
-  // Assign aspect ratio classes for natural Gem-style layout
-  const getAspectClass = (index: number) => {
-    const patterns = [
-      'aspect-square',
-      'aspect-portrait',
-      'aspect-square',
-      'aspect-landscape',
-      'aspect-square',
-      'aspect-tall',
-    ];
-    return patterns[index % patterns.length];
-  };
+  // Uniform card sizing - no aspect ratio variations
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -267,7 +256,7 @@ export default function BopShopBrowse() {
                 <button
                   key={product.id}
                   onClick={() => handleProductClick(product)}
-                  className={`masonry-item ${getAspectClass(index)} group cursor-pointer w-full text-left`}
+                  className="masonry-item group cursor-pointer w-full text-left"
                 >
                   <div>
                     {/* Product Image Container */}

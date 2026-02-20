@@ -1,30 +1,29 @@
-/* Gem-Style Compact Masonry Grid */
+/* Gem-Style Uniform Compact Grid */
 .masonry-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-auto-rows: 10px; /* Small row height for tight packing */
-  grid-auto-flow: dense;
   gap: 12px;
 }
 
-/* All items use natural image height - no size classes */
+/* All cards uniform height - no aspect ratio variations */
 .masonry-item {
-  /* Height determined by image aspect ratio */
   display: flex;
   flex-direction: column;
 }
 
-/* Make images fill naturally without stretching */
+/* Uniform card container */
 .masonry-item > div {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+/* Image container with fixed aspect ratio */
 .masonry-item > div > div {
   position: relative;
-  flex: 1;
-  min-height: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Square cards like Gem */
+  overflow: hidden;
 }
 
 .masonry-item img {
@@ -32,23 +31,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-/* Calculate grid row span based on image aspect ratio */
-.masonry-item.aspect-square {
-  grid-row: span 22; /* ~220px */
-}
-
-.masonry-item.aspect-portrait {
-  grid-row: span 30; /* ~300px */
-}
-
-.masonry-item.aspect-landscape {
-  grid-row: span 16; /* ~160px */
-}
-
-.masonry-item.aspect-tall {
-  grid-row: span 35; /* ~350px */
 }
 
 /* Responsive breakpoints */
