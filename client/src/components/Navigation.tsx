@@ -18,6 +18,7 @@ import {
   MessageCircle
 } from "lucide-react";
 import { SearchAIOverlay } from "@/components/SearchAIOverlay";
+import { SearchBar } from "@/components/SearchBar";
 
 export function Navigation() {
   const { isAuthenticated, user } = useAuth();
@@ -125,7 +126,9 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation - Center */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
+            {/* Search Bar */}
+            <SearchBar />
             {/* Platform Mega Menu */}
             <div className="relative group">
               <button 
