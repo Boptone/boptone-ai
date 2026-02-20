@@ -2296,4 +2296,12 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Reorganize routes: landing at /bopshop, catalog at /bopshop/browse
 - [x] Update navigation links across site
 - [x] Test complete BopShop user flow
-- [ ] Save checkpoint with BopShop landing page
+- [x] Save checkpoint with BopShop landing page
+
+## Rebrand BopShop Landing Page (User Request)
+- [x] Design new BopShop brand messaging and positioning
+- [x] Create compelling hero copy that's distinctive and exciting
+- [x] Update tagline to position BopShop as standalone brand
+- [x] Revise collection section headers with better branding
+- [x] Test rebranded landing page
+- [ ] Save checkpoint with rebranded BopShop
