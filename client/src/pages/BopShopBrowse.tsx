@@ -16,10 +16,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Search, SlidersHorizontal, ShoppingCart, X } from "lucide-react";
 import Masonry from "react-masonry-css";
 import "./BopShopBrowse.css";
+import { ProductQuickView } from "@/components/ProductQuickView";
 
 
 /**
@@ -31,11 +32,28 @@ export default function BopShopBrowse() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [location, setLocation] = useLocation();
+  const [selectedProduct, setSelectedProduct] = useState<{ id: number; slug: string } | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Fetch all active products
   const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
     limit: 100,
   });
+
+  const handleProductClick = (product: any) => {
+    setSelectedProduct({ id: product.id, slug: product.slug });
+    setModalOpen(true);
+    setLocation(`/bopshop/browse/${product.slug}`);
+  };
+
+  const handleModalClose = (open: boolean) => {
+    setModalOpen(open);
+    if (!open) {
+      setLocation("/bopshop/browse");
+      setSelectedProduct(null);
+    }
+  };
 
   // Filter and sort products
   const filteredProducts = products
@@ -246,8 +264,12 @@ export default function BopShopBrowse() {
               columnClassName="bopshop-masonry-grid_column"
             >
               {filteredProducts.map((product: any) => (
-                <Link key={product.id} href={`/bopshop/${product.slug}`}>
-                  <div className="group cursor-pointer mb-4">
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="group cursor-pointer mb-4 w-full text-left"
+                >
+                  <div>
                     {/* Product Image Container */}
                     <div className="relative overflow-hidden rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white">
                       {/* Image */}
@@ -306,12 +328,21 @@ export default function BopShopBrowse() {
                       </div>
                     </div>
                   </div>
-                </Link>
+                </button>
               ))}
             </Masonry>
-          </>
-        )}
+          </>        )}
       </div>
+
+      {/* Product Quick View Modal */}
+      {selectedProduct && (
+        <ProductQuickView
+          productId={selectedProduct.id}
+          productSlug={selectedProduct.slug}
+          open={modalOpen}
+          onOpenChange={handleModalClose}
+        />
+      )}
     </div>
   );
 }

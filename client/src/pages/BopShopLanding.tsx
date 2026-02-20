@@ -1,9 +1,10 @@
 import { Search, TrendingUp, Sparkles, DollarSign, Shirt, Headphones, Palette, ShoppingBag } from "lucide-react";
-import { Link } from "wouter";
-import { useState } from "react";
+import { Link, useLocation } from "wouter";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ProductQuickView } from "@/components/ProductQuickView";
 
 /**
  * BopShop Landing Page
@@ -12,9 +13,40 @@ import { Input } from "@/components/ui/input";
  */
 export default function BopShopLanding() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [location, setLocation] = useLocation();
+  const [selectedProduct, setSelectedProduct] = useState<{ id: number; slug: string } | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   
   // Fetch products for curated collections
   const { data: allProducts = [] } = trpc.ecommerce.products.getAllActive.useQuery({ limit: 100 });
+
+  // Handle URL-based product modal
+  useEffect(() => {
+    const match = location.match(/^\/bopshop\/([^/]+)$/);
+    if (match && match[1] !== "browse") {
+      const slug = match[1];
+      // Find product by slug
+      const product = allProducts.find((p: any) => p.slug === slug);
+      if (product) {
+        setSelectedProduct({ id: product.id, slug: product.slug });
+        setModalOpen(true);
+      }
+    }
+  }, [location, allProducts]);
+
+  const handleProductClick = (product: any) => {
+    setSelectedProduct({ id: product.id, slug: product.slug });
+    setModalOpen(true);
+    setLocation(`/bopshop/${product.slug}`);
+  };
+
+  const handleModalClose = (open: boolean) => {
+    setModalOpen(open);
+    if (!open) {
+      setLocation("/bopshop");
+      setSelectedProduct(null);
+    }
+  };
   
   // Curated collections logic
   const newThisWeek = allProducts
@@ -111,8 +143,12 @@ export default function BopShopLanding() {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {newThisWeek.map((product: any) => (
-                <Link key={product.id} href={`/bopshop/product/${product.id}`}>
-                  <div className="group cursor-pointer">
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="group cursor-pointer w-full text-left"
+                >
+                  <div>
                     <div className="relative aspect-square bg-gray-100 rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
@@ -133,7 +169,7 @@ export default function BopShopLanding() {
                       {product.name}
                     </h3>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -158,8 +194,12 @@ export default function BopShopLanding() {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {trendingNow.map((product: any) => (
-                <Link key={product.id} href={`/bopshop/product/${product.id}`}>
-                  <div className="group cursor-pointer">
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="group cursor-pointer w-full text-left"
+                >
+                  <div>
                     <div className="relative aspect-square bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
@@ -180,7 +220,7 @@ export default function BopShopLanding() {
                       {product.name}
                     </h3>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -205,8 +245,12 @@ export default function BopShopLanding() {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {limitedEdition.map((product: any) => (
-                <Link key={product.id} href={`/bopshop/product/${product.id}`}>
-                  <div className="group cursor-pointer">
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="group cursor-pointer w-full text-left"
+                >
+                  <div>
                     <div className="relative aspect-square bg-gray-100 rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
@@ -230,7 +274,7 @@ export default function BopShopLanding() {
                       {product.name}
                     </h3>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -255,8 +299,12 @@ export default function BopShopLanding() {
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {underFifty.map((product: any) => (
-                <Link key={product.id} href={`/bopshop/product/${product.id}`}>
-                  <div className="group cursor-pointer">
+                <button
+                  key={product.id}
+                  onClick={() => handleProductClick(product)}
+                  className="group cursor-pointer w-full text-left"
+                >
+                  <div>
                     <div className="relative aspect-square bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
@@ -277,7 +325,7 @@ export default function BopShopLanding() {
                       {product.name}
                     </h3>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -301,9 +349,9 @@ export default function BopShopLanding() {
                     <div className="text-4xl font-black text-gray-300 group-hover:text-black group-hover:translate-x-2 transition-all">
                       →
                     </div>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
             ))}
           </div>
 
@@ -320,6 +368,16 @@ export default function BopShopLanding() {
           </div>
         </div>
       </section>
+
+      {/* Product Quick View Modal */}
+      {selectedProduct && (
+        <ProductQuickView
+          productId={selectedProduct.id}
+          productSlug={selectedProduct.slug}
+          open={modalOpen}
+          onOpenChange={handleModalClose}
+        />
+      )}
     </div>
   );
 }

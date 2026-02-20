@@ -107,9 +107,21 @@ export default function ProductForm() {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
+    // Enforce 10 image limit
+    const remainingSlots = 10 - images.length;
+    if (remainingSlots <= 0) {
+      toast.error("Maximum 10 images allowed per product");
+      return;
+    }
+
+    const filesToUpload = Array.from(files).slice(0, remainingSlots);
+    if (files.length > remainingSlots) {
+      toast.info(`Only uploading ${remainingSlots} images (10 image limit)`);
+    }
+
     setUploading(true);
     try {
-      for (const file of Array.from(files)) {
+      for (const file of filesToUpload) {
         // Upload to S3
         const fileKey = `products/${Date.now()}-${file.name}`;
         const { url } = await storagePut(fileKey, file, file.type);
@@ -136,11 +148,23 @@ export default function ProductForm() {
     }
   };
 
+  const handleAltTextChange = (index: number, altText: string) => {
+    setImages((prev) =>
+      prev.map((img, i) => (i === index ? { ...img, alt: altText } : img))
+    );
+  };
+
   const handleRemoveImage = (index: number) => {
-    const newImages = images.filter((_, i) => i !== index);
-    setImages(newImages);
-    if (primaryImageUrl === images[index].url) {
-      setPrimaryImageUrl(newImages[0]?.url || "");
+    setImages((prev) => {
+      const newImages = prev.filter((_, i) => i !== index);
+      // Update positions
+      return newImages.map((img, i) => ({ ...img, position: i }));
+    });
+    // Update primary image if removed
+    if (images[index].url === primaryImageUrl && images.length > 1) {
+      setPrimaryImageUrl(images[0].url !== images[index].url ? images[0].url : images[1]?.url || "");
+    } else if (images.length === 1) {
+      setPrimaryImageUrl("");
     }
   };
 
