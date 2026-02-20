@@ -1,0 +1,527 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - navigation [ref=e3]:
+    - generic [ref=e5]:
+      - link "Boptone" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "Boptone" [ref=e8]
+      - generic [ref=e9]:
+        - generic [ref=e11]:
+          - img [ref=e12]
+          - textbox "Search products and music..." [ref=e15]
+        - button "Platform ▼" [ref=e17] [cursor=pointer]:
+          - text: Platform
+          - generic [ref=e18]: ▼
+        - button "Resources ▼" [ref=e20] [cursor=pointer]:
+          - text: Resources
+          - generic [ref=e21]: ▼
+        - link "Pricing" [ref=e22] [cursor=pointer]:
+          - /url: /signup
+      - generic [ref=e23]:
+        - button "AI Chat" [ref=e24] [cursor=pointer]:
+          - img
+        - link "Log In" [ref=e25] [cursor=pointer]:
+          - /url: https://manus.im/app-auth?appId=nTbKjjzazhRpeJn9kKuXdQ&redirectUri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Foauth%2Fcallback&state=aHR0cDovL2xvY2FsaG9zdDozMDAwL2FwaS9vYXV0aC9jYWxsYmFjaw%3D%3D&type=signIn
+        - link "Get Started" [ref=e26] [cursor=pointer]:
+          - /url: https://manus.im/app-auth?appId=nTbKjjzazhRpeJn9kKuXdQ&redirectUri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Foauth%2Fcallback&state=aHR0cDovL2xvY2FsaG9zdDozMDAwL2FwaS9vYXV0aC9jYWxsYmFjaw%3D%3D&type=signIn
+  - generic [ref=e27]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - heading "BopShop" [level=1] [ref=e32]
+          - paragraph [ref=e33]: Official artist merchandise
+        - link "Cart" [ref=e34] [cursor=pointer]:
+          - /url: /cart
+          - button "Cart" [ref=e35]:
+            - img
+            - text: Cart
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - img [ref=e38]
+          - textbox "Search products..." [ref=e41]
+        - button "Filter" [ref=e42] [cursor=pointer]:
+          - img
+          - text: Filter
+        - combobox [ref=e44] [cursor=pointer]:
+          - generic: Newest First
+          - img
+    - generic [ref=e45]:
+      - paragraph [ref=e47]: 46 results
+      - generic [ref=e48]:
+        - button "No Image $0.15 Out of Stock Test Mug accessories" [ref=e49] [cursor=pointer]:
+          - generic [ref=e51]:
+            - generic [ref=e52]:
+              - generic [ref=e53]: No Image
+              - generic [ref=e55]: $0.15
+              - generic [ref=e57]: Out of Stock
+            - generic [ref=e58]:
+              - heading "Test Mug" [level=3] [ref=e59]
+              - paragraph [ref=e60]: accessories
+        - button "No Image $0.35 Out of Stock Test Vinyl Record music" [ref=e61] [cursor=pointer]:
+          - generic [ref=e63]:
+            - generic [ref=e64]:
+              - generic [ref=e65]: No Image
+              - generic [ref=e67]: $0.35
+              - generic [ref=e69]: Out of Stock
+            - generic [ref=e70]:
+              - heading "Test Vinyl Record" [level=3] [ref=e71]
+              - paragraph [ref=e72]: music
+        - button "No Image $0.20 Out of Stock Test Poster art" [ref=e73] [cursor=pointer]:
+          - generic [ref=e75]:
+            - generic [ref=e76]:
+              - generic [ref=e77]: No Image
+              - generic [ref=e79]: $0.20
+              - generic [ref=e81]: Out of Stock
+            - generic [ref=e82]:
+              - heading "Test Poster" [level=3] [ref=e83]
+              - paragraph [ref=e84]: art
+        - button "No Image $0.50 Out of Stock Test Hoodie apparel" [ref=e85] [cursor=pointer]:
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - generic [ref=e89]: No Image
+              - generic [ref=e91]: $0.50
+              - generic [ref=e93]: Out of Stock
+            - generic [ref=e94]:
+              - heading "Test Hoodie" [level=3] [ref=e95]
+              - paragraph [ref=e96]: apparel
+        - button "No Image $0.30 Out of Stock Test T-Shirt apparel" [ref=e97] [cursor=pointer]:
+          - generic [ref=e99]:
+            - generic [ref=e100]:
+              - generic [ref=e101]: No Image
+              - generic [ref=e103]: $0.30
+              - generic [ref=e105]: Out of Stock
+            - generic [ref=e106]:
+              - heading "Test T-Shirt" [level=3] [ref=e107]
+              - paragraph [ref=e108]: apparel
+        - button "No Image $0.15 Out of Stock Test Mug accessories" [ref=e109] [cursor=pointer]:
+          - generic [ref=e111]:
+            - generic [ref=e112]:
+              - generic [ref=e113]: No Image
+              - generic [ref=e115]: $0.15
+              - generic [ref=e117]: Out of Stock
+            - generic [ref=e118]:
+              - heading "Test Mug" [level=3] [ref=e119]
+              - paragraph [ref=e120]: accessories
+        - button "No Image $0.35 Out of Stock Test Vinyl Record music" [ref=e121] [cursor=pointer]:
+          - generic [ref=e123]:
+            - generic [ref=e124]:
+              - generic [ref=e125]: No Image
+              - generic [ref=e127]: $0.35
+              - generic [ref=e129]: Out of Stock
+            - generic [ref=e130]:
+              - heading "Test Vinyl Record" [level=3] [ref=e131]
+              - paragraph [ref=e132]: music
+        - button "No Image $0.20 Out of Stock Test Poster art" [ref=e133] [cursor=pointer]:
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - generic [ref=e137]: No Image
+              - generic [ref=e139]: $0.20
+              - generic [ref=e141]: Out of Stock
+            - generic [ref=e142]:
+              - heading "Test Poster" [level=3] [ref=e143]
+              - paragraph [ref=e144]: art
+        - button "No Image $0.50 Out of Stock Test Hoodie apparel" [ref=e145] [cursor=pointer]:
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]: No Image
+              - generic [ref=e151]: $0.50
+              - generic [ref=e153]: Out of Stock
+            - generic [ref=e154]:
+              - heading "Test Hoodie" [level=3] [ref=e155]
+              - paragraph [ref=e156]: apparel
+        - button "No Image $0.30 Out of Stock Test T-Shirt apparel" [ref=e157] [cursor=pointer]:
+          - generic [ref=e159]:
+            - generic [ref=e160]:
+              - generic [ref=e161]: No Image
+              - generic [ref=e163]: $0.30
+              - generic [ref=e165]: Out of Stock
+            - generic [ref=e166]:
+              - heading "Test T-Shirt" [level=3] [ref=e167]
+              - paragraph [ref=e168]: apparel
+        - button "Limited Edition Tour Snapback $42.00 Featured Limited Edition Tour Snapback apparel" [ref=e169] [cursor=pointer]:
+          - generic [ref=e171]:
+            - generic [ref=e172]:
+              - img "Limited Edition Tour Snapback" [ref=e173]
+              - generic [ref=e175]: $42.00
+              - generic [ref=e176]: Featured
+            - generic [ref=e177]:
+              - heading "Limited Edition Tour Snapback" [level=3] [ref=e178]
+              - paragraph [ref=e179]: apparel
+        - button "Pink Floyd Classic Dad Hat $28.00 Featured Pink Floyd Classic Dad Hat apparel" [ref=e180] [cursor=pointer]:
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - img "Pink Floyd Classic Dad Hat" [ref=e184]
+              - generic [ref=e186]: $28.00
+              - generic [ref=e187]: Featured
+            - generic [ref=e188]:
+              - heading "Pink Floyd Classic Dad Hat" [level=3] [ref=e189]
+              - paragraph [ref=e190]: apparel
+        - button "Suede Bill Snapback $46.00 Suede Bill Snapback apparel" [ref=e191] [cursor=pointer]:
+          - generic [ref=e193]:
+            - generic [ref=e194]:
+              - img "Suede Bill Snapback" [ref=e195]
+              - generic [ref=e197]: $46.00
+            - generic [ref=e198]:
+              - heading "Suede Bill Snapback" [level=3] [ref=e199]
+              - paragraph [ref=e200]: apparel
+        - button "Reflective Safety Cap $28.00 Reflective Safety Cap apparel" [ref=e201] [cursor=pointer]:
+          - generic [ref=e203]:
+            - generic [ref=e204]:
+              - img "Reflective Safety Cap" [ref=e205]
+              - generic [ref=e207]: $28.00
+            - generic [ref=e208]:
+              - heading "Reflective Safety Cap" [level=3] [ref=e209]
+              - paragraph [ref=e210]: apparel
+        - button "Vintage Denim Dad Hat $34.00 Vintage Denim Dad Hat apparel" [ref=e211] [cursor=pointer]:
+          - generic [ref=e213]:
+            - generic [ref=e214]:
+              - img "Vintage Denim Dad Hat" [ref=e215]
+              - generic [ref=e217]: $34.00
+            - generic [ref=e218]:
+              - heading "Vintage Denim Dad Hat" [level=3] [ref=e219]
+              - paragraph [ref=e220]: apparel
+        - button "Neon Embroidered Cap $32.00 Neon Embroidered Cap apparel" [ref=e221] [cursor=pointer]:
+          - generic [ref=e223]:
+            - generic [ref=e224]:
+              - img "Neon Embroidered Cap" [ref=e225]
+              - generic [ref=e227]: $32.00
+            - generic [ref=e228]:
+              - heading "Neon Embroidered Cap" [level=3] [ref=e229]
+              - paragraph [ref=e230]: apparel
+        - button "Leather Patch Trucker $44.00 Leather Patch Trucker apparel" [ref=e231] [cursor=pointer]:
+          - generic [ref=e233]:
+            - generic [ref=e234]:
+              - img "Leather Patch Trucker" [ref=e235]
+              - generic [ref=e237]: $44.00
+            - generic [ref=e238]:
+              - heading "Leather Patch Trucker" [level=3] [ref=e239]
+              - paragraph [ref=e240]: apparel
+        - button "Tie-Dye Festival Hat $38.00 Tie-Dye Festival Hat apparel" [ref=e241] [cursor=pointer]:
+          - generic [ref=e243]:
+            - generic [ref=e244]:
+              - img "Tie-Dye Festival Hat" [ref=e245]
+              - generic [ref=e247]: $38.00
+            - generic [ref=e248]:
+              - heading "Tie-Dye Festival Hat" [level=3] [ref=e249]
+              - paragraph [ref=e250]: apparel
+        - button "Minimalist Logo Cap - Black $29.00 Minimalist Logo Cap - Black apparel" [ref=e251] [cursor=pointer]:
+          - generic [ref=e253]:
+            - generic [ref=e254]:
+              - img "Minimalist Logo Cap - Black" [ref=e255]
+              - generic [ref=e257]: $29.00
+            - generic [ref=e258]:
+              - heading "Minimalist Logo Cap - Black" [level=3] [ref=e259]
+              - paragraph [ref=e260]: apparel
+        - button "Camo Pattern Snapback $30.00 Camo Pattern Snapback apparel" [ref=e261] [cursor=pointer]:
+          - generic [ref=e263]:
+            - generic [ref=e264]:
+              - img "Camo Pattern Snapback" [ref=e265]
+              - generic [ref=e267]: $30.00
+            - generic [ref=e268]:
+              - heading "Camo Pattern Snapback" [level=3] [ref=e269]
+              - paragraph [ref=e270]: apparel
+        - button "Retro Visor - Summer Collection $18.00 Retro Visor - Summer Collection apparel" [ref=e271] [cursor=pointer]:
+          - generic [ref=e273]:
+            - generic [ref=e274]:
+              - img "Retro Visor - Summer Collection" [ref=e275]
+              - generic [ref=e277]: $18.00
+            - generic [ref=e278]:
+              - heading "Retro Visor - Summer Collection" [level=3] [ref=e279]
+              - paragraph [ref=e280]: apparel
+        - button "Unstructured Low Profile Hat $22.00 Unstructured Low Profile Hat apparel" [ref=e281] [cursor=pointer]:
+          - generic [ref=e283]:
+            - generic [ref=e284]:
+              - img "Unstructured Low Profile Hat" [ref=e285]
+              - generic [ref=e287]: $22.00
+            - generic [ref=e288]:
+              - heading "Unstructured Low Profile Hat" [level=3] [ref=e289]
+              - paragraph [ref=e290]: apparel
+        - button "Corduroy Five-Panel Cap $36.00 Corduroy Five-Panel Cap apparel" [ref=e291] [cursor=pointer]:
+          - generic [ref=e293]:
+            - generic [ref=e294]:
+              - img "Corduroy Five-Panel Cap" [ref=e295]
+              - generic [ref=e297]: $36.00
+            - generic [ref=e298]:
+              - heading "Corduroy Five-Panel Cap" [level=3] [ref=e299]
+              - paragraph [ref=e300]: apparel
+        - button "Bucket Hat - Festival Edition $34.00 Bucket Hat - Festival Edition apparel" [ref=e301] [cursor=pointer]:
+          - generic [ref=e303]:
+            - generic [ref=e304]:
+              - img "Bucket Hat - Festival Edition" [ref=e305]
+              - generic [ref=e307]: $34.00
+            - generic [ref=e308]:
+              - heading "Bucket Hat - Festival Edition" [level=3] [ref=e309]
+              - paragraph [ref=e310]: apparel
+        - button "Embroidered Logo Beanie $26.00 Embroidered Logo Beanie apparel" [ref=e311] [cursor=pointer]:
+          - generic [ref=e313]:
+            - generic [ref=e314]:
+              - img "Embroidered Logo Beanie" [ref=e315]
+              - generic [ref=e317]: $26.00
+            - generic [ref=e318]:
+              - heading "Embroidered Logo Beanie" [level=3] [ref=e319]
+              - paragraph [ref=e320]: apparel
+        - button "Premium Wool Blend Cap $48.00 Premium Wool Blend Cap apparel" [ref=e321] [cursor=pointer]:
+          - generic [ref=e323]:
+            - generic [ref=e324]:
+              - img "Premium Wool Blend Cap" [ref=e325]
+              - generic [ref=e327]: $48.00
+            - generic [ref=e328]:
+              - heading "Premium Wool Blend Cap" [level=3] [ref=e329]
+              - paragraph [ref=e330]: apparel
+        - button "Vintage Wash Baseball Cap $32.00 Vintage Wash Baseball Cap apparel" [ref=e331] [cursor=pointer]:
+          - generic [ref=e333]:
+            - generic [ref=e334]:
+              - img "Vintage Wash Baseball Cap" [ref=e335]
+              - generic [ref=e337]: $32.00
+            - generic [ref=e338]:
+              - heading "Vintage Wash Baseball Cap" [level=3] [ref=e339]
+              - paragraph [ref=e340]: apparel
+        - button "Classic Rock Trucker Hat $24.00 Classic Rock Trucker Hat apparel" [ref=e341] [cursor=pointer]:
+          - generic [ref=e343]:
+            - generic [ref=e344]:
+              - img "Classic Rock Trucker Hat" [ref=e345]
+              - generic [ref=e347]: $24.00
+            - generic [ref=e348]:
+              - heading "Classic Rock Trucker Hat" [level=3] [ref=e349]
+              - paragraph [ref=e350]: apparel
+        - button "Limited Edition Tour Snapback $42.00 Featured Limited Edition Tour Snapback apparel" [ref=e351] [cursor=pointer]:
+          - generic [ref=e353]:
+            - generic [ref=e354]:
+              - img "Limited Edition Tour Snapback" [ref=e355]
+              - generic [ref=e357]: $42.00
+              - generic [ref=e358]: Featured
+            - generic [ref=e359]:
+              - heading "Limited Edition Tour Snapback" [level=3] [ref=e360]
+              - paragraph [ref=e361]: apparel
+        - button "Pink Floyd Classic Dad Hat $28.00 Featured Pink Floyd Classic Dad Hat apparel" [ref=e362] [cursor=pointer]:
+          - generic [ref=e364]:
+            - generic [ref=e365]:
+              - img "Pink Floyd Classic Dad Hat" [ref=e366]
+              - generic [ref=e368]: $28.00
+              - generic [ref=e369]: Featured
+            - generic [ref=e370]:
+              - heading "Pink Floyd Classic Dad Hat" [level=3] [ref=e371]
+              - paragraph [ref=e372]: apparel
+        - button "Suede Bill Snapback $46.00 Suede Bill Snapback apparel" [ref=e373] [cursor=pointer]:
+          - generic [ref=e375]:
+            - generic [ref=e376]:
+              - img "Suede Bill Snapback" [ref=e377]
+              - generic [ref=e379]: $46.00
+            - generic [ref=e380]:
+              - heading "Suede Bill Snapback" [level=3] [ref=e381]
+              - paragraph [ref=e382]: apparel
+        - button "Reflective Safety Cap $28.00 Reflective Safety Cap apparel" [ref=e383] [cursor=pointer]:
+          - generic [ref=e385]:
+            - generic [ref=e386]:
+              - img "Reflective Safety Cap" [ref=e387]
+              - generic [ref=e389]: $28.00
+            - generic [ref=e390]:
+              - heading "Reflective Safety Cap" [level=3] [ref=e391]
+              - paragraph [ref=e392]: apparel
+        - button "Vintage Denim Dad Hat $34.00 Vintage Denim Dad Hat apparel" [ref=e393] [cursor=pointer]:
+          - generic [ref=e395]:
+            - generic [ref=e396]:
+              - img "Vintage Denim Dad Hat" [ref=e397]
+              - generic [ref=e399]: $34.00
+            - generic [ref=e400]:
+              - heading "Vintage Denim Dad Hat" [level=3] [ref=e401]
+              - paragraph [ref=e402]: apparel
+        - button "Neon Embroidered Cap $32.00 Neon Embroidered Cap apparel" [ref=e403] [cursor=pointer]:
+          - generic [ref=e405]:
+            - generic [ref=e406]:
+              - img "Neon Embroidered Cap" [ref=e407]
+              - generic [ref=e409]: $32.00
+            - generic [ref=e410]:
+              - heading "Neon Embroidered Cap" [level=3] [ref=e411]
+              - paragraph [ref=e412]: apparel
+        - button "Leather Patch Trucker $44.00 Leather Patch Trucker apparel" [ref=e413] [cursor=pointer]:
+          - generic [ref=e415]:
+            - generic [ref=e416]:
+              - img "Leather Patch Trucker" [ref=e417]
+              - generic [ref=e419]: $44.00
+            - generic [ref=e420]:
+              - heading "Leather Patch Trucker" [level=3] [ref=e421]
+              - paragraph [ref=e422]: apparel
+        - button "Tie-Dye Festival Hat $38.00 Tie-Dye Festival Hat apparel" [ref=e423] [cursor=pointer]:
+          - generic [ref=e425]:
+            - generic [ref=e426]:
+              - img "Tie-Dye Festival Hat" [ref=e427]
+              - generic [ref=e429]: $38.00
+            - generic [ref=e430]:
+              - heading "Tie-Dye Festival Hat" [level=3] [ref=e431]
+              - paragraph [ref=e432]: apparel
+        - button "Minimalist Logo Cap - Black $29.00 Minimalist Logo Cap - Black apparel" [ref=e433] [cursor=pointer]:
+          - generic [ref=e435]:
+            - generic [ref=e436]:
+              - img "Minimalist Logo Cap - Black" [ref=e437]
+              - generic [ref=e439]: $29.00
+            - generic [ref=e440]:
+              - heading "Minimalist Logo Cap - Black" [level=3] [ref=e441]
+              - paragraph [ref=e442]: apparel
+        - button "Camo Pattern Snapback $30.00 Camo Pattern Snapback apparel" [ref=e443] [cursor=pointer]:
+          - generic [ref=e445]:
+            - generic [ref=e446]:
+              - img "Camo Pattern Snapback" [ref=e447]
+              - generic [ref=e449]: $30.00
+            - generic [ref=e450]:
+              - heading "Camo Pattern Snapback" [level=3] [ref=e451]
+              - paragraph [ref=e452]: apparel
+        - button "Retro Visor - Summer Collection $18.00 Retro Visor - Summer Collection apparel" [ref=e453] [cursor=pointer]:
+          - generic [ref=e455]:
+            - generic [ref=e456]:
+              - img "Retro Visor - Summer Collection" [ref=e457]
+              - generic [ref=e459]: $18.00
+            - generic [ref=e460]:
+              - heading "Retro Visor - Summer Collection" [level=3] [ref=e461]
+              - paragraph [ref=e462]: apparel
+        - button "Unstructured Low Profile Hat $22.00 Unstructured Low Profile Hat apparel" [ref=e463] [cursor=pointer]:
+          - generic [ref=e465]:
+            - generic [ref=e466]:
+              - img "Unstructured Low Profile Hat" [ref=e467]
+              - generic [ref=e469]: $22.00
+            - generic [ref=e470]:
+              - heading "Unstructured Low Profile Hat" [level=3] [ref=e471]
+              - paragraph [ref=e472]: apparel
+        - button "Corduroy Five-Panel Cap $36.00 Corduroy Five-Panel Cap apparel" [ref=e473] [cursor=pointer]:
+          - generic [ref=e475]:
+            - generic [ref=e476]:
+              - img "Corduroy Five-Panel Cap" [ref=e477]
+              - generic [ref=e479]: $36.00
+            - generic [ref=e480]:
+              - heading "Corduroy Five-Panel Cap" [level=3] [ref=e481]
+              - paragraph [ref=e482]: apparel
+        - button "Bucket Hat - Festival Edition $34.00 Bucket Hat - Festival Edition apparel" [ref=e483] [cursor=pointer]:
+          - generic [ref=e485]:
+            - generic [ref=e486]:
+              - img "Bucket Hat - Festival Edition" [ref=e487]
+              - generic [ref=e489]: $34.00
+            - generic [ref=e490]:
+              - heading "Bucket Hat - Festival Edition" [level=3] [ref=e491]
+              - paragraph [ref=e492]: apparel
+        - button "Embroidered Logo Beanie $26.00 Embroidered Logo Beanie apparel" [ref=e493] [cursor=pointer]:
+          - generic [ref=e495]:
+            - generic [ref=e496]:
+              - img "Embroidered Logo Beanie" [ref=e497]
+              - generic [ref=e499]: $26.00
+            - generic [ref=e500]:
+              - heading "Embroidered Logo Beanie" [level=3] [ref=e501]
+              - paragraph [ref=e502]: apparel
+        - button "Premium Wool Blend Cap $48.00 Premium Wool Blend Cap apparel" [ref=e503] [cursor=pointer]:
+          - generic [ref=e505]:
+            - generic [ref=e506]:
+              - img "Premium Wool Blend Cap" [ref=e507]
+              - generic [ref=e509]: $48.00
+            - generic [ref=e510]:
+              - heading "Premium Wool Blend Cap" [level=3] [ref=e511]
+              - paragraph [ref=e512]: apparel
+        - button "Vintage Wash Baseball Cap $32.00 Vintage Wash Baseball Cap apparel" [ref=e513] [cursor=pointer]:
+          - generic [ref=e515]:
+            - generic [ref=e516]:
+              - img "Vintage Wash Baseball Cap" [ref=e517]
+              - generic [ref=e519]: $32.00
+            - generic [ref=e520]:
+              - heading "Vintage Wash Baseball Cap" [level=3] [ref=e521]
+              - paragraph [ref=e522]: apparel
+        - button "Classic Rock Trucker Hat $24.00 Classic Rock Trucker Hat apparel" [ref=e523] [cursor=pointer]:
+          - generic [ref=e525]:
+            - generic [ref=e526]:
+              - img "Classic Rock Trucker Hat" [ref=e527]
+              - generic [ref=e529]: $24.00
+            - generic [ref=e530]:
+              - heading "Classic Rock Trucker Hat" [level=3] [ref=e531]
+              - paragraph [ref=e532]: apparel
+      - generic [ref=e533]:
+        - paragraph [ref=e534]: You've reached the end!
+        - paragraph [ref=e535]: That's all the products we have right now.
+  - contentinfo [ref=e536]:
+    - generic [ref=e537]:
+      - generic [ref=e538]:
+        - generic [ref=e539]:
+          - heading "Platform" [level=3] [ref=e540]
+          - list [ref=e541]:
+            - listitem [ref=e542]:
+              - link "Features" [ref=e543] [cursor=pointer]:
+                - /url: /features
+            - listitem [ref=e544]:
+              - link "BopAudio" [ref=e545] [cursor=pointer]:
+                - /url: /bap-protocol
+            - listitem [ref=e546]:
+              - link "How It Works" [ref=e547] [cursor=pointer]:
+                - /url: /how-it-works
+            - listitem [ref=e548]:
+              - link "Discover Music" [ref=e549] [cursor=pointer]:
+                - /url: /discover
+            - listitem [ref=e550]:
+              - link "BopShop" [ref=e551] [cursor=pointer]:
+                - /url: /shop
+        - generic [ref=e552]:
+          - heading "Resources" [level=3] [ref=e553]
+          - list [ref=e554]:
+            - listitem [ref=e555]:
+              - link "About Us" [ref=e556] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e557]:
+              - link "Contact" [ref=e558] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e559]:
+              - link "Blog" [ref=e560] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e561]:
+              - link "FAQ" [ref=e562] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e563]:
+              - link "Help Center" [ref=e564] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e565]:
+          - heading "For Artists" [level=3] [ref=e566]
+          - list [ref=e567]:
+            - listitem [ref=e568]:
+              - link "Dashboard" [ref=e569] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=e570]:
+              - link "Upload Music" [ref=e571] [cursor=pointer]:
+                - /url: /upload
+            - listitem [ref=e572]:
+              - link "Analytics" [ref=e573] [cursor=pointer]:
+                - /url: /analytics
+            - listitem [ref=e574]:
+              - link "Revenue" [ref=e575] [cursor=pointer]:
+                - /url: /revenue
+            - listitem [ref=e576]:
+              - link "Audience" [ref=e577] [cursor=pointer]:
+                - /url: /audience
+        - generic [ref=e578]:
+          - heading "Legal" [level=3] [ref=e579]
+          - list [ref=e580]:
+            - listitem [ref=e581]:
+              - link "Terms of Service" [ref=e582] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e583]:
+              - link "Privacy Policy" [ref=e584] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e585]:
+              - link "California Notice" [ref=e586] [cursor=pointer]:
+                - /url: /california-notice
+            - listitem [ref=e587]:
+              - link "Opt-Out Choices" [ref=e588] [cursor=pointer]:
+                - /url: /opt-out
+      - img "Boptone" [ref=e590]
+    - generic [ref=e593]:
+      - generic [ref=e594]: © 2026 Boptone, Inc. All rights reserved.
+      - generic [ref=e595]:
+        - generic [ref=e596]:
+          - generic [ref=e597]: "Language:"
+          - combobox [ref=e598] [cursor=pointer]:
+            - generic: English
+            - img
+        - generic [ref=e600]:
+          - generic [ref=e601]: "Currency:"
+          - combobox [ref=e602] [cursor=pointer]:
+            - generic: USD ($)
+            - img
+  - button [ref=e604] [cursor=pointer]:
+    - img
+```

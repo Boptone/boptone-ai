@@ -1,0 +1,152 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications alt+T"
+  - navigation [ref=e3]:
+    - generic [ref=e5]:
+      - link "Boptone" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "Boptone" [ref=e8]
+      - generic [ref=e9]:
+        - generic [ref=e11]:
+          - img [ref=e12]
+          - textbox "Search products and music..." [ref=e15]
+        - button "Platform ▼" [ref=e17] [cursor=pointer]:
+          - text: Platform
+          - generic [ref=e18]: ▼
+        - button "Resources ▼" [ref=e20] [cursor=pointer]:
+          - text: Resources
+          - generic [ref=e21]: ▼
+        - link "Pricing" [ref=e22] [cursor=pointer]:
+          - /url: /signup
+      - generic [ref=e23]:
+        - button "AI Chat" [ref=e24] [cursor=pointer]:
+          - img
+        - link "Log In" [ref=e25] [cursor=pointer]:
+          - /url: https://manus.im/app-auth?appId=nTbKjjzazhRpeJn9kKuXdQ&redirectUri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Foauth%2Fcallback&state=aHR0cDovL2xvY2FsaG9zdDozMDAwL2FwaS9vYXV0aC9jYWxsYmFjaw%3D%3D&type=signIn
+        - link "Get Started" [ref=e26] [cursor=pointer]:
+          - /url: https://manus.im/app-auth?appId=nTbKjjzazhRpeJn9kKuXdQ&redirectUri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Foauth%2Fcallback&state=aHR0cDovL2xvY2FsaG9zdDozMDAwL2FwaS9vYXV0aC9jYWxsYmFjaw%3D%3D&type=signIn
+  - generic [ref=e27]:
+    - generic [ref=e29]:
+      - img "Boptone" [ref=e31]
+      - generic [ref=e32]:
+        - heading "404" [level=1] [ref=e33]
+        - heading "Page Not Found" [level=2] [ref=e34]
+        - paragraph [ref=e35]: The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+      - generic [ref=e36]:
+        - link "HOME Back to homepage" [ref=e37] [cursor=pointer]:
+          - /url: /
+          - button "HOME Back to homepage" [ref=e38]:
+            - generic [ref=e39]: HOME
+            - generic [ref=e40]: Back to homepage
+        - link "EXPLORE See what we offer" [ref=e41] [cursor=pointer]:
+          - /url: /features
+          - button "EXPLORE See what we offer" [ref=e42]:
+            - generic [ref=e43]: EXPLORE
+            - generic [ref=e44]: See what we offer
+        - link "DASHBOARD View your account" [ref=e45] [cursor=pointer]:
+          - /url: /dashboard
+          - button "DASHBOARD View your account" [ref=e46]:
+            - generic [ref=e47]: DASHBOARD
+            - generic [ref=e48]: View your account
+        - link "HELP Contact support" [ref=e49] [cursor=pointer]:
+          - /url: /contact
+          - button "HELP Contact support" [ref=e50]:
+            - generic [ref=e51]: HELP
+            - generic [ref=e52]: Contact support
+      - paragraph [ref=e53]:
+        - text: If you believe this is an error, please
+        - link "contact our support team" [ref=e54] [cursor=pointer]:
+          - /url: /contact
+        - text: .
+    - paragraph [ref=e56]: © 2026 Boptone, Inc. All rights reserved.
+  - contentinfo [ref=e57]:
+    - generic [ref=e58]:
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - heading "Platform" [level=3] [ref=e61]
+          - list [ref=e62]:
+            - listitem [ref=e63]:
+              - link "Features" [ref=e64] [cursor=pointer]:
+                - /url: /features
+            - listitem [ref=e65]:
+              - link "BopAudio" [ref=e66] [cursor=pointer]:
+                - /url: /bap-protocol
+            - listitem [ref=e67]:
+              - link "How It Works" [ref=e68] [cursor=pointer]:
+                - /url: /how-it-works
+            - listitem [ref=e69]:
+              - link "Discover Music" [ref=e70] [cursor=pointer]:
+                - /url: /discover
+            - listitem [ref=e71]:
+              - link "BopShop" [ref=e72] [cursor=pointer]:
+                - /url: /shop
+        - generic [ref=e73]:
+          - heading "Resources" [level=3] [ref=e74]
+          - list [ref=e75]:
+            - listitem [ref=e76]:
+              - link "About Us" [ref=e77] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e78]:
+              - link "Contact" [ref=e79] [cursor=pointer]:
+                - /url: /contact
+            - listitem [ref=e80]:
+              - link "Blog" [ref=e81] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e82]:
+              - link "FAQ" [ref=e83] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e84]:
+              - link "Help Center" [ref=e85] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e86]:
+          - heading "For Artists" [level=3] [ref=e87]
+          - list [ref=e88]:
+            - listitem [ref=e89]:
+              - link "Dashboard" [ref=e90] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=e91]:
+              - link "Upload Music" [ref=e92] [cursor=pointer]:
+                - /url: /upload
+            - listitem [ref=e93]:
+              - link "Analytics" [ref=e94] [cursor=pointer]:
+                - /url: /analytics
+            - listitem [ref=e95]:
+              - link "Revenue" [ref=e96] [cursor=pointer]:
+                - /url: /revenue
+            - listitem [ref=e97]:
+              - link "Audience" [ref=e98] [cursor=pointer]:
+                - /url: /audience
+        - generic [ref=e99]:
+          - heading "Legal" [level=3] [ref=e100]
+          - list [ref=e101]:
+            - listitem [ref=e102]:
+              - link "Terms of Service" [ref=e103] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e104]:
+              - link "Privacy Policy" [ref=e105] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e106]:
+              - link "California Notice" [ref=e107] [cursor=pointer]:
+                - /url: /california-notice
+            - listitem [ref=e108]:
+              - link "Opt-Out Choices" [ref=e109] [cursor=pointer]:
+                - /url: /opt-out
+      - img "Boptone" [ref=e111]
+    - generic [ref=e114]:
+      - generic [ref=e115]: © 2026 Boptone, Inc. All rights reserved.
+      - generic [ref=e116]:
+        - generic [ref=e117]:
+          - generic [ref=e118]: "Language:"
+          - combobox [ref=e119] [cursor=pointer]:
+            - generic: English
+            - img
+        - generic [ref=e121]:
+          - generic [ref=e122]: "Currency:"
+          - combobox [ref=e123] [cursor=pointer]:
+            - generic: USD ($)
+            - img
+  - button [ref=e125] [cursor=pointer]:
+    - img
+```
