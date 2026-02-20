@@ -69,6 +69,23 @@ export default function Checkout() {
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.priceAtAdd * item.quantity, 0);
 
+  // Create checkout mutation
+  const createCheckout = trpc.payment.createBopShopCheckout.useMutation({
+    onSuccess: (data) => {
+      if (data.checkoutUrl) {
+        // Redirect to Stripe checkout
+        window.location.href = data.checkoutUrl;
+      } else {
+        toast.error("Failed to create checkout session");
+        setIsProcessing(false);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to process checkout");
+      setIsProcessing(false);
+    },
+  });
+
   const handleCheckout = async () => {
     // Validate form
     if (!shippingForm.name || !shippingForm.email || !shippingForm.line1 || 
@@ -79,38 +96,16 @@ export default function Checkout() {
 
     setIsProcessing(true);
 
-    try {
-      // For now, we'll use the first cart item's product for checkout
-      // In a real implementation, you'd want to handle multiple items
-      const firstItem = cartItems[0];
-      
-      // Create Stripe checkout session
-      const response = await fetch("/api/payment/create-bopshop-checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: firstItem.productId,
-          variantId: firstItem.variantId,
-          quantity: firstItem.quantity,
-          currency: currency,
-          shippingAddress: shippingForm,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.url) {
-        // Redirect to Stripe checkout
-        window.location.href = data.url;
-      } else {
-        toast.error("Failed to create checkout session");
-        setIsProcessing(false);
-      }
-    } catch (error) {
-      console.error("Checkout error:", error);
-      toast.error("Failed to process checkout");
-      setIsProcessing(false);
-    }
+    // For now, we'll use the first cart item's product for checkout
+    // In a real implementation, you'd want to handle multiple items
+    const firstItem = cartItems[0];
+    
+    createCheckout.mutate({
+      productId: firstItem.productId,
+      variantId: firstItem.variantId,
+      quantity: firstItem.quantity,
+      currency: currency,
+    });
   };
 
   return (

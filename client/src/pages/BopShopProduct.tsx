@@ -6,6 +6,8 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { ArrowLeft, ShoppingCart, Minus, Plus, Package, Ruler, Weight } from "lucide-react";
 import { toast } from "sonner";
+import { CurrencySelector } from "@/components/CurrencySelector";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 /**
  * BopShop Product Detail Page
@@ -15,6 +17,7 @@ export default function BopShopProduct() {
   const { slug } = useParams();
   const [, setLocation] = useLocation();
   const { user, isAuthenticated } = useAuth();
+  const { currency, formatPrice } = useCurrency();
   const [quantity, setQuantity] = useState(1);
 
   // Fetch product by slug
@@ -144,16 +147,22 @@ export default function BopShopProduct() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{product.name}</h1>
             </div>
 
-            {/* Price */}
-            <div className="flex items-baseline gap-4">
-              <span className="text-3xl md:text-4xl font-bold">
-                ${(product.price / 100).toFixed(2)}
-              </span>
-              {product.compareAtPrice && product.compareAtPrice > product.price && (
-                <span className="text-2xl text-gray-400 line-through">
-                  ${(product.compareAtPrice / 100).toFixed(2)}
+            {/* Price & Currency Selector */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                <label className="text-lg font-medium">Currency:</label>
+                <CurrencySelector />
+              </div>
+              <div className="flex items-baseline gap-4">
+                <span className="text-3xl md:text-4xl font-bold">
+                  {formatPrice(product.price / 100)}
                 </span>
-              )}
+                {product.compareAtPrice && product.compareAtPrice > product.price && (
+                  <span className="text-2xl text-gray-400 line-through">
+                    {formatPrice(product.compareAtPrice / 100)}
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Stock Status */}
