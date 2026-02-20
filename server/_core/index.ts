@@ -47,8 +47,17 @@ async function startServer() {
   // Stricter rate limiting for authentication endpoints
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 10, // Only 10 auth requests per 15 minutes
+    max: 5, // Only 5 auth requests per 15 minutes (prevents brute force)
     message: 'Too many authentication attempts, please try again later.',
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+  
+  // Rate limiting for cart and checkout operations
+  const checkoutLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 minute
+    max: 10, // 10 requests per minute
+    message: 'Too many checkout attempts, please slow down.',
     standardHeaders: true,
     legacyHeaders: false,
   });
@@ -56,6 +65,10 @@ async function startServer() {
   // Apply rate limiting
   app.use('/api/trpc', apiLimiter);
   app.use('/api/oauth', authLimiter);
+  
+  // Apply stricter limits to sensitive ecommerce endpoints
+  app.use('/api/trpc/ecommerce.cart', checkoutLimiter);
+  app.use('/api/trpc/ecommerce.orders', checkoutLimiter);
   
   // Stripe webhook needs raw body for signature verification
   app.post(

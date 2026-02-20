@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import * as ecommerceDb from "./ecommerceDb";
+import * as wishlistDb from "./wishlistDb";
 import * as db from "./db";
 
 /**
@@ -18,31 +19,31 @@ export const ecommerceRouter = router({
     create: protectedProcedure
       .input(z.object({
         type: z.enum(["physical", "digital", "experience"]),
-        name: z.string().min(1).max(255),
-        description: z.string().optional(),
-        price: z.number().int(), // in cents
-        compareAtPrice: z.number().int().optional(),
-        sku: z.string().optional(),
-        inventoryQuantity: z.number().int().default(0),
+        name: z.string().min(1).max(255).trim(),
+        description: z.string().max(5000).optional(),
+        price: z.number().int().min(0).max(10000000), // $0 to $100,000 in cents
+        compareAtPrice: z.number().int().min(0).max(10000000).optional(),
+        sku: z.string().max(100).optional(),
+        inventoryQuantity: z.number().int().min(0).max(1000000).default(0),
         trackInventory: z.boolean().default(true),
         allowBackorder: z.boolean().default(false),
-        digitalFileUrl: z.string().optional(),
-        digitalFileSize: z.number().int().optional(),
-        downloadLimit: z.number().int().optional(),
+        digitalFileUrl: z.string().url().max(500).optional(),
+        digitalFileSize: z.number().int().min(0).max(5368709120).optional(), // Max 5GB
+        downloadLimit: z.number().int().min(0).max(1000).optional(),
         eventDate: z.date().optional(),
-        eventLocation: z.string().optional(),
-        maxAttendees: z.number().int().optional(),
+        eventLocation: z.string().max(500).optional(),
+        maxAttendees: z.number().int().min(1).max(1000000).optional(),
         images: z.array(z.object({
-          url: z.string(),
-          alt: z.string().optional(),
-          position: z.number().int(),
-        })).optional(),
-        primaryImageUrl: z.string().optional(),
-        slug: z.string().min(1),
-        tags: z.array(z.string()).optional(),
-        category: z.string().optional(),
+          url: z.string().url().max(500),
+          alt: z.string().max(200).optional(),
+          position: z.number().int().min(0).max(9), // Max 10 images (0-9)
+        })).max(10).optional(), // Enforce 10 image limit
+        primaryImageUrl: z.string().url().max(500).optional(),
+        slug: z.string().min(1).max(255).regex(/^[a-z0-9-]+$/, "Slug must contain only lowercase letters, numbers, and hyphens"),
+        tags: z.array(z.string().max(50)).max(20).optional(), // Max 20 tags
+        category: z.string().max(100).optional(),
         requiresShipping: z.boolean().default(false),
-        weight: z.string().optional(), // Decimal as string
+        weight: z.string().max(20).optional(), // Decimal as string
         status: z.enum(["draft", "active", "archived"]).default("draft"),
         featured: z.boolean().default(false),
       }))
@@ -106,31 +107,31 @@ export const ecommerceRouter = router({
       .input(z.object({
         id: z.number().int(),
         type: z.enum(["physical", "digital", "experience"]).optional(),
-        name: z.string().optional(),
-        description: z.string().optional(),
-        price: z.number().int().optional(),
-        compareAtPrice: z.number().int().optional(),
-        sku: z.string().optional(),
-        inventoryQuantity: z.number().int().optional(),
+        name: z.string().min(1).max(255).trim().optional(),
+        description: z.string().max(5000).optional(),
+        price: z.number().int().min(0).max(10000000).optional(),
+        compareAtPrice: z.number().int().min(0).max(10000000).optional(),
+        sku: z.string().max(100).optional(),
+        inventoryQuantity: z.number().int().min(0).max(1000000).optional(),
         trackInventory: z.boolean().optional(),
         allowBackorder: z.boolean().optional(),
-        digitalFileUrl: z.string().optional(),
-        digitalFileSize: z.number().int().optional(),
-        downloadLimit: z.number().int().optional(),
+        digitalFileUrl: z.string().url().max(500).optional(),
+        digitalFileSize: z.number().int().min(0).max(5368709120).optional(),
+        downloadLimit: z.number().int().min(0).max(1000).optional(),
         eventDate: z.date().optional(),
-        eventLocation: z.string().optional(),
-        maxAttendees: z.number().int().optional(),
+        eventLocation: z.string().max(500).optional(),
+        maxAttendees: z.number().int().min(1).max(1000000).optional(),
         images: z.array(z.object({
-          url: z.string(),
-          alt: z.string().optional(),
-          position: z.number().int(),
-        })).optional(),
-        primaryImageUrl: z.string().optional(),
-        slug: z.string().optional(),
-        tags: z.array(z.string()).optional(),
-        category: z.string().optional(),
+          url: z.string().url().max(500),
+          alt: z.string().max(200).optional(),
+          position: z.number().int().min(0).max(9),
+        })).max(10).optional(),
+        primaryImageUrl: z.string().url().max(500).optional(),
+        slug: z.string().min(1).max(255).regex(/^[a-z0-9-]+$/).optional(),
+        tags: z.array(z.string().max(50)).max(20).optional(),
+        category: z.string().max(100).optional(),
         requiresShipping: z.boolean().optional(),
-        weight: z.string().optional(), // Decimal as string
+        weight: z.string().max(20).optional(),
         status: z.enum(["draft", "active", "archived"]).optional(),
         featured: z.boolean().optional(),
       }))
@@ -551,6 +552,47 @@ export const ecommerceRouter = router({
       }))
       .query(async ({ input }) => {
         return await ecommerceDb.getReviewsByProduct(input.productId, input.status);
+      }),
+  }),
+  
+  // ============================================================================
+  // WISHLIST
+  // ============================================================================
+  
+  wishlist: router({
+    // Add to wishlist
+    add: protectedProcedure
+      .input(z.object({ productId: z.number().int() }))
+      .mutation(async ({ ctx, input }) => {
+        await wishlistDb.addToWishlist(ctx.user.id, input.productId);
+        return { success: true };
+      }),
+    
+    // Remove from wishlist
+    remove: protectedProcedure
+      .input(z.object({ productId: z.number().int() }))
+      .mutation(async ({ ctx, input }) => {
+        await wishlistDb.removeFromWishlist(ctx.user.id, input.productId);
+        return { success: true };
+      }),
+    
+    // Get user's wishlist
+    getAll: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await wishlistDb.getWishlistByUser(ctx.user.id);
+      }),
+    
+    // Check if product is in wishlist
+    isInWishlist: protectedProcedure
+      .input(z.object({ productId: z.number().int() }))
+      .query(async ({ ctx, input }) => {
+        return await wishlistDb.isInWishlist(ctx.user.id, input.productId);
+      }),
+    
+    // Get wishlist count
+    getCount: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await wishlistDb.getWishlistCount(ctx.user.id);
       }),
   }),
 });

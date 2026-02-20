@@ -50,6 +50,36 @@ export function ProductQuickView({
       toast.error(error.message || "Failed to add to cart");
     },
   });
+  
+  // Check if product is in wishlist
+  const { data: isInWishlist } = trpc.ecommerce.wishlist.isInWishlist.useQuery(
+    { productId },
+    { enabled: open && isAuthenticated && !!productId }
+  );
+  
+  // Wishlist mutations
+  const utils = trpc.useUtils();
+  const addToWishlist = trpc.ecommerce.wishlist.add.useMutation({
+    onSuccess: () => {
+      toast.success("Saved to wishlist!");
+      utils.ecommerce.wishlist.isInWishlist.invalidate({ productId });
+      utils.ecommerce.wishlist.getAll.invalidate();
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to save to wishlist");
+    },
+  });
+  
+  const removeFromWishlist = trpc.ecommerce.wishlist.remove.useMutation({
+    onSuccess: () => {
+      toast.success("Removed from wishlist");
+      utils.ecommerce.wishlist.isInWishlist.invalidate({ productId });
+      utils.ecommerce.wishlist.getAll.invalidate();
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to remove from wishlist");
+    },
+  });
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
@@ -93,8 +123,18 @@ export function ProductQuickView({
   };
 
   const handleSave = () => {
-    // TODO: Implement wishlist functionality
-    toast.success("Saved to wishlist!");
+    if (!isAuthenticated) {
+      window.location.href = getLoginUrl();
+      return;
+    }
+    
+    if (!product) return;
+    
+    if (isInWishlist) {
+      removeFromWishlist.mutate({ productId: product.id });
+    } else {
+      addToWishlist.mutate({ productId: product.id });
+    }
   };
 
   if (!product && !isLoading) {
@@ -280,10 +320,17 @@ export function ProductQuickView({
                 <Button
                   variant="outline"
                   onClick={handleSave}
-                  className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                  disabled={addToWishlist.isPending || removeFromWishlist.isPending}
+                  className={`border-2 rounded-xl transition-colors ${
+                    isInWishlist 
+                      ? "border-red-500 bg-red-50 hover:bg-red-100" 
+                      : "border-gray-200 hover:border-gray-400"
+                  }`}
                 >
-                  <Heart className="mr-2 h-4 w-4" />
-                  Save
+                  <Heart className={`mr-2 h-4 w-4 ${
+                    isInWishlist ? "fill-red-500 text-red-500" : ""
+                  }`} />
+                  {isInWishlist ? "Saved" : "Save"}
                 </Button>
               </div>
             </div>

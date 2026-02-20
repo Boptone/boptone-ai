@@ -1,137 +1,156 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
-import Onboarding from "@/pages/Onboarding";
 import { Route, Switch } from "wouter";
+import { lazy, Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { DemoProvider } from "./contexts/DemoContext";
 import { Navigation } from "./components/Navigation";
 import { ToneyChatbot } from "./components/ToneyChatbot";
 import Footer from "./components/Footer";
+
+// Eager load only Home page for fast initial load
 import Home from "./pages/Home";
-import ArtistProfile from "./pages/ArtistProfile";
-import DemoArtistProfile from "./pages/DemoArtistProfile";
-import Terms from "./pages/Terms";
-import Privacy from "./pages/Privacy";
-import ProductManagement from "./pages/ProductManagement";
-import ProductForm from "./pages/ProductForm";
-import BopShopLanding from "./pages/BopShopLanding";
-import BopShopBrowse from "./pages/BopShopBrowse";
-import BopShopProduct from "./pages/BopShopProduct";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Features from "./pages/Features";
-import Demo from "./pages/Demo";
-import Explainer from "./pages/Explainer";
-import Dashboard from "./pages/Dashboard";
-import AIAdvisor from "./pages/AIAdvisor";
-import Store from "./pages/Store";
-import Financials from "./pages/Financials";
-import IPProtection from "./pages/IPProtection";
-import Tours from "./pages/Tours";
-import Healthcare from "./pages/Healthcare";
-import Admin from "./pages/Admin";
-import Signup from "./pages/Signup";
-import ProfileSettings from "./pages/ProfileSettings";
-import Analytics from "./pages/Analytics";
-import BAP from "./pages/BAP";
-import Upload from "./pages/Upload";
-import Discover from "./pages/Discover";
-import Earnings from "./pages/Earnings";
-import ToneRewards from "./pages/ToneRewards";
-import Microloans from "./pages/Microloans";
-import Money from "./pages/Money";
-import Fans from "./pages/Fans";
-import MyMusic from "./pages/MyMusic";
-import Shop from "./pages/Shop";
-import ProductDetail from "./pages/ProductDetail";
-import MyStore from "./pages/MyStore";
-import MyStoreOrders from "./pages/MyStoreOrders";
-import AuthSignup from "./pages/AuthSignup";
-import ForgotPassword from "./pages/ForgotPassword";
-import HowItWorks from "./pages/HowItWorks";
-import WriterInvite from "./pages/WriterInvite";
-import WriterProfile from "./pages/WriterProfile";
-import WriterEarnings from "./pages/WriterEarnings";
-import PayoutSettings from "./pages/PayoutSettings";
-import PayoutHistory from "./pages/PayoutHistory";
-import Workflows from "./pages/Workflows";
-import WorkflowSettings from "./pages/WorkflowSettings";
-import Listen from "./pages/Listen";
-import PricingDashboard from "./pages/PricingDashboard";
-import Transparency from "./pages/Transparency";
+
+// Lazy load all other pages
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
+const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
+const DemoArtistProfile = lazy(() => import("./pages/DemoArtistProfile"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const ProductManagement = lazy(() => import("./pages/ProductManagement"));
+const ProductForm = lazy(() => import("./pages/ProductForm"));
+const BopShopLanding = lazy(() => import("./pages/BopShopLanding"));
+const BopShopBrowse = lazy(() => import("./pages/BopShopBrowse"));
+const BopShopProduct = lazy(() => import("./pages/BopShopProduct"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Features = lazy(() => import("./pages/Features"));
+const Demo = lazy(() => import("./pages/Demo"));
+const Explainer = lazy(() => import("./pages/Explainer"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const AIAdvisor = lazy(() => import("./pages/AIAdvisor"));
+const Store = lazy(() => import("./pages/Store"));
+const Financials = lazy(() => import("./pages/Financials"));
+const IPProtection = lazy(() => import("./pages/IPProtection"));
+const Tours = lazy(() => import("./pages/Tours"));
+const Healthcare = lazy(() => import("./pages/Healthcare"));
+const Admin = lazy(() => import("./pages/Admin"));
+const Signup = lazy(() => import("./pages/Signup"));
+const ProfileSettings = lazy(() => import("./pages/ProfileSettings"));
+const Analytics = lazy(() => import("./pages/Analytics"));
+const BAP = lazy(() => import("./pages/BAP"));
+const Upload = lazy(() => import("./pages/Upload"));
+const Discover = lazy(() => import("./pages/Discover"));
+const Earnings = lazy(() => import("./pages/Earnings"));
+const ToneRewards = lazy(() => import("./pages/ToneRewards"));
+const Microloans = lazy(() => import("./pages/Microloans"));
+const Money = lazy(() => import("./pages/Money"));
+const Fans = lazy(() => import("./pages/Fans"));
+const MyMusic = lazy(() => import("./pages/MyMusic"));
+const Shop = lazy(() => import("./pages/Shop"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const MyStore = lazy(() => import("./pages/MyStore"));
+const MyStoreOrders = lazy(() => import("./pages/MyStoreOrders"));
+const AuthSignup = lazy(() => import("./pages/AuthSignup"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const HowItWorks = lazy(() => import("./pages/HowItWorks"));
+const WriterInvite = lazy(() => import("./pages/WriterInvite"));
+const WriterProfile = lazy(() => import("./pages/WriterProfile"));
+const WriterEarnings = lazy(() => import("./pages/WriterEarnings"));
+const PayoutSettings = lazy(() => import("./pages/PayoutSettings"));
+const PayoutHistory = lazy(() => import("./pages/PayoutHistory"));
+const Workflows = lazy(() => import("./pages/Workflows"));
+const WorkflowSettings = lazy(() => import("./pages/WorkflowSettings"));
+const Listen = lazy(() => import("./pages/Listen"));
+const PricingDashboard = lazy(() => import("./pages/PricingDashboard"));
+const Transparency = lazy(() => import("./pages/Transparency"));
+const Wishlist = lazy(() => import("./pages/Wishlist"));
+
+// Loading fallback component
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center space-y-4">
+        <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-cyan-500 border-r-transparent"></div>
+        <p className="text-gray-600 font-medium">Loading...</p>
+      </div>
+    </div>
+  );
+}
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/auth-signup"} component={AuthSignup} />
-      <Route path={"/forgot-password"} component={ForgotPassword} />
-      <Route path={"/how-it-works"} component={HowItWorks} />
-      <Route path={"/writer-invite"} component={WriterInvite} />
-      <Route path={"/writer-profile"} component={WriterProfile} />
-      <Route path={"/writer-earnings"} component={WriterEarnings} />
-      <Route path="/onboarding" component={Onboarding} />
-      <Route path={"/@:username"} component={ArtistProfile} />
-      <Route path="/bopshop" component={BopShopLanding} />
-      <Route path="/bopshop/browse" component={BopShopBrowse} />
-      <Route path="/bopshop/:slug" component={BopShopProduct} />
-      <Route path="/cart" component={Cart} />
-      <Route path="/checkout" component={Checkout} />
-      <Route path="/shop" component={Shop} />
-      <Route path="/product/:productId" component={ProductDetail} />
-      <Route path="/store" component={MyStore} />
-      <Route path="/store/orders" component={MyStoreOrders} />
-      <Route path="/demo-profile" component={DemoArtistProfile} />
-      <Route path={"/profile-settings"} component={ProfileSettings} />
-      <Route path={"/404"} component={NotFound} />
-      <Route path={"/terms"} component={Terms} />
-      <Route path={"/privacy"} component={Privacy} />
-      <Route path="/products" component={ProductManagement} />
-      <Route path="/products/new" component={ProductForm} />
-      <Route path="/products/edit/:id" component={ProductForm} />
-      <Route path={"/about"} component={About} />
-      <Route path={"/contact"} component={Contact} />
-      <Route path={"/features"} component={Features} />
-      <Route path={"/demo"} component={Demo} />
-      <Route path={"/explainer"} component={Explainer} />
-      <Route path={"/dashboard"} component={Dashboard} />
-      <Route path={"/ai-advisor"} component={AIAdvisor} />
-      <Route path={"/store"} component={Store} />
-      <Route path={"/financials"} component={Financials} />
-      <Route path={"/ip-protection"} component={IPProtection} />
-      <Route path={"/tours"} component={Tours} />
-      <Route path={"/healthcare"} component={Healthcare} />
-      <Route path={"/analytics"} component={Analytics} />
-      <Route path={"/bap"} component={BAP} />
-      <Route path={"/protocol"} component={BAP} />
-      <Route path={"/bap-protocol"} component={BAP} />
-      <Route path={"/upload"} component={Upload} />
-      <Route path={"/discover"} component={Discover} />
-      <Route path={"/music"} component={Discover} />
-      <Route path="/earnings" component={Earnings} />
-      <Route path="/tone-rewards" component={ToneRewards} />
-      <Route path="/microloans" component={Microloans} />
-      <Route path="/revenue" component={Money} />
-      <Route path="/audience" component={Fans} />
-      <Route path="/releases" component={MyMusic} />
-      <Route path="/settings/payouts" component={PayoutSettings} />
-      <Route path="/payouts/history" component={PayoutHistory} />
-      <Route path="/workflows" component={Workflows} />
-      <Route path="/workflows/settings" component={WorkflowSettings} />
-      <Route path="/listen/:trackId" component={Listen} />
-      <Route path="/pricing-dashboard" component={PricingDashboard} />
-      <Route path="/transparency" component={Transparency} />
-      <Route path={"/admin"} component={Admin} />
-      <Route path={"/signup"} component={Signup} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path={"/"} component={Home} />
+        <Route path={"/auth-signup"} component={AuthSignup} />
+        <Route path={"/forgot-password"} component={ForgotPassword} />
+        <Route path={"/how-it-works"} component={HowItWorks} />
+        <Route path={"/writer-invite"} component={WriterInvite} />
+        <Route path={"/writer-profile"} component={WriterProfile} />
+        <Route path={"/writer-earnings"} component={WriterEarnings} />
+        <Route path="/onboarding" component={Onboarding} />
+        <Route path={"/@:username"} component={ArtistProfile} />
+        <Route path="/bopshop" component={BopShopLanding} />
+        <Route path="/bopshop/browse" component={BopShopBrowse} />
+        <Route path="/bopshop/:slug" component={BopShopProduct} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/wishlist" component={Wishlist} />
+        <Route path="/shop" component={Shop} />
+        <Route path="/product/:productId" component={ProductDetail} />
+        <Route path="/store" component={MyStore} />
+        <Route path="/store/orders" component={MyStoreOrders} />
+        <Route path="/demo-profile" component={DemoArtistProfile} />
+        <Route path={"/profile-settings"} component={ProfileSettings} />
+        <Route path={"/404"} component={NotFound} />
+        <Route path={"/terms"} component={Terms} />
+        <Route path={"/privacy"} component={Privacy} />
+        <Route path="/products" component={ProductManagement} />
+        <Route path="/products/new" component={ProductForm} />
+        <Route path="/products/edit/:id" component={ProductForm} />
+        <Route path={"/about"} component={About} />
+        <Route path={"/contact"} component={Contact} />
+        <Route path={"/features"} component={Features} />
+        <Route path={"/demo"} component={Demo} />
+        <Route path={"/explainer"} component={Explainer} />
+        <Route path={"/dashboard"} component={Dashboard} />
+        <Route path={"/ai-advisor"} component={AIAdvisor} />
+        <Route path={"/financials"} component={Financials} />
+        <Route path={"/ip-protection"} component={IPProtection} />
+        <Route path={"/tours"} component={Tours} />
+        <Route path={"/healthcare"} component={Healthcare} />
+        <Route path={"/analytics"} component={Analytics} />
+        <Route path={"/bap"} component={BAP} />
+        <Route path={"/protocol"} component={BAP} />
+        <Route path={"/bap-protocol"} component={BAP} />
+        <Route path={"/upload"} component={Upload} />
+        <Route path={"/discover"} component={Discover} />
+        <Route path={"/music"} component={Discover} />
+        <Route path="/earnings" component={Earnings} />
+        <Route path="/tone-rewards" component={ToneRewards} />
+        <Route path="/microloans" component={Microloans} />
+        <Route path="/revenue" component={Money} />
+        <Route path="/audience" component={Fans} />
+        <Route path="/releases" component={MyMusic} />
+        <Route path="/settings/payouts" component={PayoutSettings} />
+        <Route path="/payouts/history" component={PayoutHistory} />
+        <Route path="/workflows" component={Workflows} />
+        <Route path="/workflows/settings" component={WorkflowSettings} />
+        <Route path="/listen/:trackId" component={Listen} />
+        <Route path="/pricing-dashboard" component={PricingDashboard} />
+        <Route path="/transparency" component={Transparency} />
+        <Route path={"/admin"} component={Admin} />
+        <Route path={"/signup"} component={Signup} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

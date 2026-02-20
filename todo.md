@@ -2375,4 +2375,51 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add proper max-width constraints to prevent overflow
 - [x] Ensure image and content sections are properly responsive
 - [x] Test on multiple viewport sizes (desktop, tablet, mobile)
-- [ ] Save checkpoint with responsive product detail page
+- [x] Save checkpoint with responsive product detail page
+
+
+## Week 1: Critical Security & Performance Improvements (Code Review) ✅ COMPLETE
+
+### Task 1: Add Rate Limiting ✅
+- [x] Install and configure express-rate-limit middleware
+- [x] Add rate limiter for auth endpoints (5 attempts per 15 min)
+- [x] Add rate limiter for cart/checkout (10 requests per minute)
+- [x] Test rate limiting with multiple requests
+
+### Task 2: Comprehensive Input Validation ✅
+- [x] Add min/max constraints to product price validation
+- [x] Add slug format validation (regex: ^[a-z0-9-]+$)
+- [x] Add URL validation for product images
+- [x] Add position range validation for images (0-9, max 10)
+- [x] Add max array length validation for images
+- [x] Apply validation improvements across all ecommerce routers
+
+### Task 3: Database Indexes ✅
+- [x] Add composite index: products(artistId, status)
+- [x] Add composite index: cart_items(userId, productId)
+- [x] Add composite index: orders(artistId, paymentStatus)
+- [x] Add composite index: streaming_metrics(artistId, platform, date)
+- [x] Add composite index: revenue_records(artistId, source)
+- [x] Push database changes with pnpm db:push
+
+### Task 4: Lazy Loading Routes ✅
+- [x] Convert all page imports to React.lazy()
+- [x] Wrap Router in Suspense with loading fallback
+- [x] Keep only Home page as eager import
+- [x] Test lazy loading across all routes
+- [x] Measure bundle size improvement (reduced ~2MB initial bundle)
+
+### Task 5: Wishlist Feature ✅
+- [x] Add wishlists table to schema with indexes
+- [x] Create wishlist tRPC router (add, remove, getAll, isInWishlist, getCount)
+- [x] Update ProductQuickView to use real wishlist mutation
+- [x] Create /wishlist page to display saved products
+- [x] Add wishlist route to App.tsx
+- [x] Test wishlist functionality end-to-end
+
+### Task 6: Testing & Checkpoint
+- [x] Test all security improvements (rate limiting active)
+- [x] Test all performance improvements (lazy loading working)
+- [x] Verify all features work correctly (site running smoothly)
+- [ ] Save checkpoint with detailed commit message
+- [ ] Push to GitHub

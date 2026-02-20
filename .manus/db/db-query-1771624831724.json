@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `wishlists` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int NOT NULL,\n  `productId` int NOT NULL,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `wishlists_id` PRIMARY KEY(`id`),\n  CONSTRAINT `wishlists_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`),\n  CONSTRAINT `wishlists_productId_products_id_fk` FOREIGN KEY (`productId`) REFERENCES `products`(`id`)\n);\n\nCREATE INDEX IF NOT EXISTS `user_id_idx` ON `wishlists` (`userId`);\nCREATE INDEX IF NOT EXISTS `user_product_idx` ON `wishlists` (`userId`, `productId`);\nCREATE UNIQUE INDEX IF NOT EXISTS `unique_user_product` ON `wishlists` (`userId`, `productId`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `wishlists` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int NOT NULL,\n  `productId` int NOT NULL,\n  `createdAt` timestamp NOT NULL DEFAULT (now()),\n  CONSTRAINT `wishlists_id` PRIMARY KEY(`id`),\n  CONSTRAINT `wishlists_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`),\n  CONSTRAINT `wishlists_productId_products_id_fk` FOREIGN KEY (`productId`) REFERENCES `products`(`id`)\n);\n\nCREATE INDEX IF NOT EXISTS `user_id_idx` ON `wishlists` (`userId`);\nCREATE INDEX IF NOT EXISTS `user_product_idx` ON `wishlists` (`userId`, `productId`);\nCREATE UNIQUE INDEX IF NOT EXISTS `unique_user_product` ON `wishlists` (`userId`, `productId`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1710
+}

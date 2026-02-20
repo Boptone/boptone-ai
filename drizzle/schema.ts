@@ -82,6 +82,7 @@ export const streamingMetrics = mysqlTable("streaming_metrics", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 }, (table) => ({
   artistDateIdx: index("artist_date_idx").on(table.artistId, table.date),
+  artistPlatformDateIdx: index("artist_platform_date_idx").on(table.artistId, table.platform, table.date), // Composite index for platform-specific queries
 }));
 
 export type StreamingMetric = typeof streamingMetrics.$inferSelect;
@@ -128,6 +129,7 @@ export const revenueRecords = mysqlTable("revenue_records", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   artistIdIdx: index("artist_id_idx").on(table.artistId),
+  artistSourceIdx: index("artist_source_idx").on(table.artistId, table.source), // Composite index for revenue source queries
 }));
 
 export type RevenueRecord = typeof revenueRecords.$inferSelect;
@@ -216,6 +218,7 @@ export const products = mysqlTable("products", {
   statusIdx: index("status_idx").on(table.status),
   typeIdx: index("type_idx").on(table.type),
   slugIdx: index("slug_idx").on(table.slug),
+  artistStatusIdx: index("artist_status_idx").on(table.artistId, table.status), // Composite index for artist product queries
 }));
 
 export type Product = typeof products.$inferSelect;
@@ -266,10 +269,26 @@ export const cartItems = mysqlTable("cart_items", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   userIdIdx: index("user_id_idx").on(table.userId),
+  userProductIdx: index("user_product_idx").on(table.userId, table.productId), // Composite index for cart queries
 }));
 
 export type CartItem = typeof cartItems.$inferSelect;
 export type InsertCartItem = typeof cartItems.$inferInsert;
+
+// Wishlists
+export const wishlists = mysqlTable("wishlists", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+  productId: int("productId").notNull().references(() => products.id),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  userProductIdx: index("user_product_idx").on(table.userId, table.productId), // Composite index for wishlist queries
+  uniqueUserProduct: index("unique_user_product").on(table.userId, table.productId), // Prevent duplicate wishlist entries
+}));
+
+export type Wishlist = typeof wishlists.$inferSelect;
+export type InsertWishlist = typeof wishlists.$inferInsert;
 
 // Orders
 export const orders = mysqlTable("orders", {
@@ -341,6 +360,7 @@ export const orders = mysqlTable("orders", {
   orderNumberIdx: index("order_number_idx").on(table.orderNumber),
   paymentStatusIdx: index("payment_status_idx").on(table.paymentStatus),
   fulfillmentStatusIdx: index("fulfillment_status_idx").on(table.fulfillmentStatus),
+  artistPaymentStatusIdx: index("artist_payment_status_idx").on(table.artistId, table.paymentStatus), // Composite index for artist order queries
 }));
 
 export type Order = typeof orders.$inferSelect;
