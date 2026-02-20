@@ -1,0 +1,8 @@
+{
+  "query": "-- Add FULLTEXT index to products table for search\nALTER TABLE products ADD FULLTEXT INDEX products_search_idx (name, description, tags);\n\n-- Add FULLTEXT index to bap_tracks table for search\nALTER TABLE bap_tracks ADD FULLTEXT INDEX bap_tracks_search_idx (title, artist, genre);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute -- Add FULLTEXT index to products table for search\nALTER TABLE products ADD FULLTEXT INDEX products_search_idx (name, description, tags);\n\n-- Add FULLTEXT index to bap_tracks table for search\nALTER TABLE bap_tracks ADD FULLTEXT INDEX bap_tracks_search_idx (title, artist, genre);",
+  "returncode": 1,
+  "logs": [
+    "ERROR 8200 (HY000) at line 2: Unsupported FULLTEXT index"
+  ]
+}

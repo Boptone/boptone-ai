@@ -69,6 +69,10 @@ const Listen = lazy(() => import("./pages/Listen"));
 const PricingDashboard = lazy(() => import("./pages/PricingDashboard"));
 const Transparency = lazy(() => import("./pages/Transparency"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
+const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
+const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
+const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
+const AdminRevenue = lazy(() => import("./pages/admin/AdminRevenue"));
 
 // Loading fallback component
 function PageLoader() {
@@ -102,6 +106,10 @@ function Router() {
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/wishlist" component={Wishlist} />
+        <Route path="/admin" component={AdminOverview} />
+        <Route path="/admin/orders" component={AdminOrders} />
+        <Route path="/admin/products" component={AdminProducts} />
+        <Route path="/admin/revenue" component={AdminRevenue} />
         <Route path="/shop" component={Shop} />
         <Route path="/product/:productId" component={ProductDetail} />
         <Route path="/store" component={MyStore} />

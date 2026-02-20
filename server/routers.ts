@@ -22,6 +22,7 @@ import { aiChatRouter } from "./routers/aiChat";
 import { taskContractRouter } from "./routers/taskContract";
 import { paymentRouter } from "./routers/payment";
 import { artistNotificationsRouter } from "./routers/artistNotifications";
+import { searchRouter } from "./searchRouter";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -564,6 +565,7 @@ const notificationsRouter = router({
 // ============================================================================
 
 export const appRouter = router({
+  search: searchRouter,
   system: systemRouter,
   taskContract: taskContractRouter,
   
