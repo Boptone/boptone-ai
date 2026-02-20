@@ -1,4 +1,4 @@
-import { eq, and, desc, sql, inArray } from "drizzle-orm";
+import { eq, and, desc, sql, inArray, lt } from "drizzle-orm";
 import { getDb } from "./db";
 import {
   products,
@@ -81,6 +81,40 @@ export async function getAllActiveProducts(limit: number = 50): Promise<Product[
     .where(eq(products.status, "active"))
     .orderBy(desc(products.featured), desc(products.createdAt))
     .limit(limit);
+}
+
+/**
+ * Get active products with cursor-based pagination for infinite scroll
+ * Returns products and next cursor for loading more
+ */
+export async function getActiveProductsPaginated(
+  limit: number = 20,
+  cursor?: number
+): Promise<{ products: Product[]; nextCursor: number | null }> {
+  const db = await getDb();
+  if (!db) return { products: [], nextCursor: null };
+  
+  const conditions = [eq(products.status, "active")];
+  if (cursor) {
+    conditions.push(lt(products.id, cursor));
+  }
+  
+  // Fetch limit + 1 to determine if there are more products
+  const results = await db.select().from(products)
+    .where(and(...conditions))
+    .orderBy(desc(products.featured), desc(products.id))
+    .limit(limit + 1);
+  
+  const hasMore = results.length > limit;
+  const productsToReturn = hasMore ? results.slice(0, limit) : results;
+  const nextCursor = hasMore && productsToReturn.length > 0 
+    ? productsToReturn[productsToReturn.length - 1].id 
+    : null;
+  
+  return {
+    products: productsToReturn,
+    nextCursor,
+  };
 }
 
 export async function updateProduct(id: number, updates: Partial<InsertProduct>): Promise<void> {

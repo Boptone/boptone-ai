@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,10 +35,48 @@ export default function BopShopBrowse() {
   const [selectedProduct, setSelectedProduct] = useState<{ id: number; slug: string } | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Fetch all active products
-  const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
-    limit: 100,
-  });
+  // Infinite scroll state
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [cursor, setCursor] = useState<number | undefined>(undefined);
+  const [hasMore, setHasMore] = useState(true);
+  
+  // Fetch first page
+  const { data: firstPage, isLoading } = trpc.ecommerce.products.getPaginated.useQuery(
+    { limit: 24, cursor: undefined },
+    { enabled: allProducts.length === 0 }
+  );
+  
+  // Fetch next page (triggered by Load More button)
+  const { data: nextPage, isLoading: isLoadingMore, refetch: loadMore } = trpc.ecommerce.products.getPaginated.useQuery(
+    { limit: 24, cursor },
+    { enabled: false } // Manual trigger only
+  );
+  
+  // Initialize with first page
+  useEffect(() => {
+    if (firstPage && allProducts.length === 0) {
+      setAllProducts(firstPage.products);
+      setCursor(firstPage.nextCursor ?? undefined);
+      setHasMore(firstPage.nextCursor !== null);
+    }
+  }, [firstPage]);
+  
+  // Append next page when loaded
+  useEffect(() => {
+    if (nextPage && nextPage.products.length > 0) {
+      setAllProducts(prev => [...prev, ...nextPage.products]);
+      setCursor(nextPage.nextCursor ?? undefined);
+      setHasMore(nextPage.nextCursor !== null);
+    }
+  }, [nextPage]);
+  
+  const handleLoadMore = () => {
+    if (hasMore && !isLoadingMore) {
+      loadMore();
+    }
+  };
+  
+  const products = allProducts;
 
   const handleProductClick = (product: any) => {
     setSelectedProduct({ id: product.id, slug: product.slug });
@@ -246,7 +284,7 @@ export default function BopShopBrowse() {
             {/* Results Count */}
             <div className="mb-6">
               <p className="text-xl text-gray-600">
-                {filteredProducts.length.toLocaleString()}+ results
+                {filteredProducts.length.toLocaleString()} results {hasMore && "(loading more...)"}
               </p>
             </div>
 
@@ -317,10 +355,37 @@ export default function BopShopBrowse() {
                       </div>
                     </div>
                   </div>
-                </button>
-              ))}
+                </button>              ))}
             </div>
-          </>        )}
+            
+            {/* Load More Button */}
+            {hasMore && (
+              <div className="flex justify-center mt-12">
+                <Button
+                  onClick={handleLoadMore}
+                  disabled={isLoadingMore}
+                  size="lg"
+                  className="px-8 py-6 text-lg font-bold bg-black text-white rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all"
+                >
+                  {isLoadingMore ? (
+                    <>
+                      <span className="animate-pulse">Loading More Products...</span>
+                    </>
+                  ) : (
+                    "Load More Products"
+                  )}
+                </Button>
+              </div>
+            )}
+            
+            {!hasMore && filteredProducts.length > 0 && (
+              <div className="text-center mt-12 text-gray-600">
+                <p className="text-2xl font-bold mb-2">You've reached the end!</p>
+                <p className="text-lg">That's all the products we have right now.</p>
+              </div>
+            )}
+          </>
+        )}
       </div>
 
       {/* Product Quick View Modal */}

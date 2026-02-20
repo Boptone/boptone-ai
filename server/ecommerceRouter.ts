@@ -103,6 +103,16 @@ export const ecommerceRouter = router({
         return await ecommerceDb.getAllActiveProducts(input.limit);
       }),
     
+    // Get active products with cursor pagination (infinite scroll)
+    getPaginated: publicProcedure
+      .input(z.object({
+        limit: z.number().int().min(1).max(100).default(20),
+        cursor: z.number().int().optional(),
+      }))
+      .query(async ({ input }) => {
+        return await ecommerceDb.getActiveProductsPaginated(input.limit, input.cursor);
+      }),
+    
     // Update product
     update: protectedProcedure
       .input(z.object({

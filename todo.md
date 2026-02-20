@@ -2460,5 +2460,41 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Verified audit logs table created and integrated
 - [x] Verified connection pooling implemented
 - [x] Server running smoothly with all improvements
+- [x] Save checkpoint with detailed commit message (version: 45342f31)
+- [x] Push to GitHub (successfully pushed to Boptone/boptone-ai)
+
+
+## Week 2 Continued: Infinite Scroll & E2E Testing
+
+### Task 1: Resend Email Integration (Deferred)
+- [ ] Install Resend SDK
+- [ ] Configure Resend API key
+- [ ] Create email templates (order confirmation, shipping notification, password reset)
+- [ ] Integrate into order creation flow
+- [ ] Test email delivery
+
+### Task 2: Infinite Scroll for BopShop
+- [ ] Implement cursor-based pagination backend
+- [ ] Update products.getAll procedure with cursor parameter
+- [ ] Add limit and cursor to response
+- [ ] Update BopShopLanding frontend with infinite scroll
+- [ ] Add loading states and "Load More" button
+- [ ] Test with large product datasets
+- [ ] Verify performance with 1000+ products
+
+### Task 3: E2E Tests for Checkout Flow
+- [ ] Install Playwright
+- [ ] Configure Playwright for project
+- [ ] Write test: Browse products on BopShop
+- [ ] Write test: Add product to cart
+- [ ] Write test: View cart and update quantities
+- [ ] Write test: Proceed to checkout
+- [ ] Write test: Complete payment (test mode)
+- [ ] Run all E2E tests
+- [ ] Fix any failing tests
+
+### Task 4: Testing & Checkpoint
+- [ ] Verify infinite scroll works smoothly
+- [ ] Verify all E2E tests pass
 - [ ] Save checkpoint with detailed commit message
 - [ ] Push to GitHub
