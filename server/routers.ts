@@ -27,6 +27,7 @@ import { shippingRouter } from "./routers/shipping";
 import { sitemapRouter } from "./routers/sitemap";
 import { agentApiRouter } from "./routers/agentApi";
 import { aeoRouter } from "./routers/aeo";
+import { reviewRouter } from "./routers/reviews";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -718,6 +719,9 @@ export const appRouter = router({
 
   // Answer Engine Optimization (AEO)
   aeo: aeoRouter,
+
+  // Product Review System (BopShop)
+  reviews: reviewRouter,
 });
 
 export type AppRouter = typeof appRouter;

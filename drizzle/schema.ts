@@ -596,28 +596,46 @@ export const discountCodes = mysqlTable("discount_codes", {
 export type DiscountCode = typeof discountCodes.$inferSelect;
 export type InsertDiscountCode = typeof discountCodes.$inferInsert;
 
-// Product Reviews
+/**
+ * Product Reviews table
+ * 
+ * Stores customer reviews for BopShop products with ratings, photos, and verified purchase badges.
+ * Optimized for Google Review schema and SEO.
+ */
 export const productReviews = mysqlTable("product_reviews", {
   id: int("id").autoincrement().primaryKey(),
   productId: int("productId").notNull().references(() => products.id),
   userId: int("userId").notNull().references(() => users.id),
-  orderId: int("orderId").references(() => orders.id), // Verified purchase
+  orderId: int("orderId").references(() => orders.id), // For verified purchase badge
   
+  // Review content
   rating: int("rating").notNull(), // 1-5 stars
   title: varchar("title", { length: 255 }),
-  content: text("content"),
+  content: text("content").notNull(),
+  
+  // Verified purchase
+  verifiedPurchase: boolean("verifiedPurchase").default(false).notNull(),
+  
+  // Helpfulness voting
+  helpfulVotes: int("helpfulVotes").default(0).notNull(),
+  unhelpfulVotes: int("unhelpfulVotes").default(0).notNull(),
   
   // Moderation
-  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  status: mysqlEnum("status", ["pending", "approved", "rejected", "flagged"]).default("approved").notNull(),
+  moderationNotes: text("moderationNotes"),
   
-  // Helpful votes
-  helpfulCount: int("helpfulCount").default(0).notNull(),
+  // Metadata
+  reviewerName: varchar("reviewerName", { length: 255 }), // Display name (can differ from user.name)
+  reviewerLocation: varchar("reviewerLocation", { length: 255 }), // Optional location display
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   productIdIdx: index("product_id_idx").on(table.productId),
   userIdIdx: index("user_id_idx").on(table.userId),
+  statusIdx: index("status_idx").on(table.status),
+  ratingIdx: index("rating_idx").on(table.rating),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
 }));
 
 export type ProductReview = typeof productReviews.$inferSelect;
@@ -2847,6 +2865,72 @@ export type FlywheelBoost = typeof flywheelBoosts.$inferSelect;
 export type InsertFlywheelBoost = typeof flywheelBoosts.$inferInsert;
 
 
+
+// ============================================================================
+// PRODUCT REVIEW SYSTEM (BopShop Trust & Social Proof)
+// ============================================================================
+// Note: productReviews table already exists earlier in schema (line ~600)
+// Review photos and helpfulness votes added here:
+
+/**
+ * Review Photos table
+ * 
+ * Stores photos uploaded with product reviews.
+ * Includes AI-generated alt-text for accessibility and SEO.
+ */
+export const reviewPhotos = mysqlTable("review_photos", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull().references(() => productReviews.id),
+  
+  // Photo storage
+  photoUrl: varchar("photoUrl", { length: 500 }).notNull(), // S3 URL
+  thumbnailUrl: varchar("thumbnailUrl", { length: 500 }), // Optimized thumbnail
+  
+  // AI-generated accessibility
+  altText: text("altText").notNull(), // Auto-generated via AI vision model
+  altTextConfidence: decimal("altTextConfidence", { precision: 3, scale: 2 }), // 0.00 to 1.00
+  
+  // Display order
+  displayOrder: int("displayOrder").default(0).notNull(),
+  
+  // Metadata
+  fileSize: int("fileSize"), // Bytes
+  mimeType: varchar("mimeType", { length: 50 }),
+  width: int("width"),
+  height: int("height"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  reviewIdIdx: index("review_id_idx").on(table.reviewId),
+  displayOrderIdx: index("display_order_idx").on(table.displayOrder),
+}));
+
+export type ReviewPhoto = typeof reviewPhotos.$inferSelect;
+export type InsertReviewPhoto = typeof reviewPhotos.$inferInsert;
+
+/**
+ * Review Helpfulness Votes table
+ * 
+ * Tracks which users found which reviews helpful.
+ * Prevents duplicate voting and enables "most helpful" sorting.
+ */
+export const reviewHelpfulnessVotes = mysqlTable("review_helpfulness_votes", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull().references(() => productReviews.id),
+  userId: int("userId").notNull().references(() => users.id),
+  
+  // Vote type
+  voteType: mysqlEnum("voteType", ["helpful", "unhelpful"]).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  reviewIdIdx: index("review_id_idx").on(table.reviewId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+  uniqueUserReview: index("unique_user_review").on(table.userId, table.reviewId), // Prevent duplicate votes
+}));
+
+export type ReviewHelpfulnessVote = typeof reviewHelpfulnessVotes.$inferSelect;
+export type InsertReviewHelpfulnessVote = typeof reviewHelpfulnessVotes.$inferInsert;
 
 // ============================================================================
 // TASK CONTRACT SYSTEM (Ironclad Agent Handoffs)

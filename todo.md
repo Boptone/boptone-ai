@@ -3639,3 +3639,125 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Verify all new schemas with Google Rich Results Test
 - [ ] Save checkpoint
 - [ ] Push to GitHub
+
+
+## Connect AEO Router to Real Data (DEFERRED)
+
+- [ ] Replace mock data in server/routers/aeo.ts with actual database queries
+- [ ] Connect getArtistAEO to real artist data
+- [ ] Connect getProductAEO to real product data
+- [ ] Connect getTrackAEO to real track data (BopAudio)
+- [ ] Connect getAlbumAEO to real album data (BopAudio)
+- [ ] Connect getPlaylistAEO to real playlist data (BopAudio)
+- [ ] Connect getGenreAEO to real genre aggregation
+- [ ] Connect getLocationAEO to real location aggregation
+- [ ] Connect getPlatformAEO to real platform stats
+- [ ] Test AEO with ChatGPT citations
+- [ ] Validate FAQPage schema with Google Rich Results Test
+
+## Build Buyer Review System for BopShop (User Request - HIGH PRIORITY)
+
+### Strategic Context
+- Increase platform trust and social proof
+- Push BopShop from 72/100 → 85/100 on e-commerce maturity scale
+- Drive SEO with Google Review schema
+- Enable photo reviews with auto-generated alt-text for accessibility
+
+### Phase 1: Database Schema
+- [ ] Create productReviews table (rating, title, content, verified purchase, helpful votes)
+- [ ] Create reviewPhotos table (S3 URL, alt-text, display order)
+- [ ] Add review aggregation fields to products table (average rating, review count)
+- [ ] Create reviewHelpfulness table (user votes on helpful reviews)
+- [ ] Push database schema to production
+
+### Phase 2: Backend Infrastructure
+- [ ] Create review submission tRPC procedure with photo upload
+- [ ] Build S3 photo upload with validation (max 5 photos, 10MB each)
+- [ ] Implement review moderation flags (pending, approved, rejected)
+- [ ] Add review CRUD operations (create, read, update, delete)
+- [ ] Build review aggregation queries (average rating, distribution)
+- [ ] Add verified purchase badge logic (check order history)
+- [ ] Implement review helpfulness voting procedures
+
+### Phase 3: Auto Alt-Text Generation
+- [ ] Integrate AI vision model for photo analysis
+- [ ] Build alt-text generation procedure using LLM
+- [ ] Add alt-text to reviewPhotos table on upload
+- [ ] Implement fallback alt-text for failed generation
+- [ ] Test alt-text quality and accuracy
+
+### Phase 4: Review UI Components
+- [ ] Create StarRating component (display + input)
+- [ ] Build ReviewForm component with photo upload
+- [ ] Create ReviewCard component with photos, rating, verified badge
+- [ ] Build ReviewPhotoGallery component with lightbox
+- [ ] Add ReviewList component with filtering (most helpful, recent, highest/lowest rating)
+- [ ] Create ReviewSummary component (average rating, distribution chart)
+- [ ] Add "Write a Review" button to product pages
+
+### Phase 5: Google Review Schema
+- [ ] Generate Review schema for each product review
+- [ ] Generate AggregateRating schema for products
+- [ ] Add schema to product pages
+- [ ] Test schema with Google Rich Results Test
+- [ ] Verify review stars appear in Google search results
+
+### Phase 6: Testing & Deployment
+- [ ] Test review submission flow
+- [ ] Test photo upload and alt-text generation
+- [ ] Test verified purchase badge logic
+- [ ] Test review helpfulness voting
+- [ ] Test Google Review schema validation
+- [ ] Save checkpoint
+- [ ] Push to GitHub
+
+
+## Build Buyer Review System for BopShop (User Request - HIGH PRIORITY) ✅ INFRASTRUCTURE COMPLETE
+
+### Phase 1: Database Schema
+- [x] Design product_reviews table with ratings, verified purchase, moderation
+- [x] Design review_photos table with AI alt-text support
+- [x] Design review_helpfulness_votes table
+- [x] Deploy schema to database
+
+### Phase 2: Backend Infrastructure
+- [x] Create review router (server/routers/reviews.ts)
+- [x] Implement submitReview mutation with photo uploads
+- [x] Implement getProductReviews query with sorting
+- [x] Implement getProductReviewStats query
+- [x] Implement voteHelpful mutation
+- [x] Add S3 photo upload integration
+- [x] Add review router to main routers.ts
+
+### Phase 3: Auto Alt-Text Generation
+- [x] Implement generateAltText function using AI vision model
+- [x] Integrate alt-text generation into photo upload flow
+- [x] Store alt-text with confidence scores
+
+### Phase 4: UI Components
+- [x] Create StarRating component (interactive + display)
+- [x] Create ReviewCard component with photo gallery
+- [x] Create ReviewForm component with photo uploads
+- [x] Create ProductReviews component (stats + list + form)
+
+### Phase 5: Google Review Schema
+- [x] Create reviewSchema.ts utility
+- [x] Implement generateProductReviewSchema function
+- [ ] Add schema to product pages (requires integration)
+- [ ] Verify with Google Rich Results Test (after integration)
+
+### Phase 6: Integration & Testing
+- [ ] Integrate ProductReviews component into product pages
+- [ ] Test review submission with photos
+- [ ] Test helpfulness voting
+- [ ] Test review sorting
+- [ ] Verify alt-text generation
+- [ ] Verify verified purchase badges
+- [ ] Test Google schema rendering
+- [ ] Save checkpoint
+- [ ] Push to GitHub
+
+### Next Steps
+- Connect review system to existing product pages in BopShop
+- Test complete flow from purchase → review → display
+- Verify Google Rich Results Test passes
