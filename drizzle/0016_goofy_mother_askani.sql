@@ -1,0 +1,1 @@
+ALTER TABLE `ai_detection_results` MODIFY COLUMN `apiProvider` varchar(50) NOT NULL DEFAULT 'huggingface';

@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useLocation } from "wouter";
+import { SEOHead } from "@/components/SEOHead";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -84,8 +86,55 @@ export default function ProductDetail() {
     );
   }
 
+  // Generate SEO metadata
+  const seoData = useMemo(() => ({
+    title: `${product.name} | BopShop`,
+    description: product.description || `Buy ${product.name} on BopShop. ${product.type} for ${product.price}.`,
+    image: product.images && product.images.length > 0 
+      ? (typeof product.images[0] === 'string' ? product.images[0] : product.images[0].url)
+      : undefined,
+    url: `${window.location.origin}/shop/product/${productId}`,
+    type: 'product' as const,
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: product.name,
+      description: product.description || undefined,
+      image: product.images && product.images.length > 0
+        ? (typeof product.images[0] === 'string' ? product.images[0] : product.images[0].url)
+        : undefined,
+      offers: {
+        "@type": "Offer",
+        price: product.price,
+        priceCurrency: "USD",
+        availability: product.status === 'active' 
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+        url: `${window.location.origin}/shop/product/${productId}`
+      },
+      aggregateRating: reviews && reviews.length > 0 ? {
+        "@type": "AggregateRating",
+        ratingValue: averageRating,
+        reviewCount: reviews.length
+      } : undefined
+    }
+  }), [product, productId, reviews, averageRating]);
+
+  const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'BopShop', href: '/shop' },
+    { label: product.type, href: `/shop?type=${product.type}` },
+    { label: product.name }
+  ];
+
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead {...seoData} />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="container mx-auto px-4 pt-4">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       {/* Header */}
       <div className="border-b-2 border-black">
         <div className="container mx-auto px-4 py-6">

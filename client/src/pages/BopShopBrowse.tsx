@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
+import { SEOHead } from "@/components/SEOHead";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -126,8 +128,34 @@ export default function BopShopBrowse() {
 
   // Uniform card sizing - no aspect ratio variations
 
+  // Generate SEO metadata
+  const seoData = useMemo(() => ({
+    title: 'BopShop | Official Artist Merchandise',
+    description: 'Shop official merchandise from independent artists. Vinyl, apparel, accessories, and more. Support artists directly.',
+    url: `${window.location.origin}/bopshop/browse`,
+    type: 'website' as const,
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Store",
+      name: "BopShop",
+      description: "Official artist merchandise marketplace",
+      url: `${window.location.origin}/bopshop/browse`
+    }
+  }), []);
+
+  const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'BopShop' }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEOHead {...seoData} />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="max-w-[1600px] mx-auto px-4 pt-4">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       {/* Sticky Header */}
       <div className="sticky top-0 z-40 bg-white border-b-2 border-gray-200">
         <div className="max-w-[1600px] mx-auto px-4 py-6">

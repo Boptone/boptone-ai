@@ -8,6 +8,7 @@ import { DemoProvider } from "./contexts/DemoContext";
 import { Navigation } from "./components/Navigation";
 import { ToneyChatbot } from "./components/ToneyChatbot";
 import Footer from "./components/Footer";
+import { CookieConsentBanner } from "./components/CookieConsentBanner";
 
 // Eager load only Home page for fast initial load
 import Home from "./pages/Home";
@@ -39,6 +40,8 @@ const IPProtection = lazy(() => import("./pages/IPProtection"));
 const Tours = lazy(() => import("./pages/Tours"));
 const Healthcare = lazy(() => import("./pages/Healthcare"));
 const Admin = lazy(() => import("./pages/Admin"));
+const ReviewModeration = lazy(() => import("./pages/ReviewModeration"));
+const ReviewAnalyticsDashboard = lazy(() => import("./pages/ReviewAnalyticsDashboard"));
 const Signup = lazy(() => import("./pages/Signup"));
 const ProfileSettings = lazy(() => import("./pages/ProfileSettings"));
 const Analytics = lazy(() => import("./pages/Analytics"));
@@ -110,6 +113,8 @@ function Router() {
         <Route path="/admin/orders" component={AdminOrders} />
         <Route path="/admin/products" component={AdminProducts} />
         <Route path="/admin/revenue" component={AdminRevenue} />
+        <Route path="/admin/reviews" component={ReviewModeration} />
+        <Route path="/analytics/reviews" component={ReviewAnalyticsDashboard} />
         <Route path="/shop" component={Shop} />
         <Route path="/product/:productId" component={ProductDetail} />
         <Route path="/store" component={MyStore} />
@@ -181,6 +186,7 @@ function App() {
             <Router />
             <Footer />
             <ToneyChatbot />
+            <CookieConsentBanner />
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>

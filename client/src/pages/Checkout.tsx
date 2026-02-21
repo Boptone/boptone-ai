@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -13,7 +14,7 @@ import {
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Link, useLocation } from "wouter";
-import { ArrowLeft, CreditCard, Lock } from "lucide-react";
+import { ArrowLeft, CreditCard, Lock, Package, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 /**
@@ -25,6 +26,9 @@ export default function Checkout() {
   const { user, isAuthenticated } = useAuth();
   const [currency, setCurrency] = useState("USD");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedShippingRate, setSelectedShippingRate] = useState<string | null>(null);
+  const [shippingRates, setShippingRates] = useState<any[]>([]);
+  const [isCalculatingRates, setIsCalculatingRates] = useState(false);
 
   // Shipping form state
   const [shippingForm, setShippingForm] = useState({
@@ -48,6 +52,80 @@ export default function Checkout() {
   // Get supported currencies
   const { data: currencies } = trpc.payment.getCurrencies.useQuery();
 
+  // Calculate shipping rates mutation
+  const calculateRatesMutation = trpc.shipping.calculateRates.useMutation({
+    onSuccess: (data) => {
+      setShippingRates(data.rates);
+      setIsCalculatingRates(false);
+      if (data.rates.length > 0) {
+        // Auto-select cheapest rate
+        const cheapest = data.rates.reduce((prev, curr) =>
+          curr.amount < prev.amount ? curr : prev
+        );
+        setSelectedShippingRate(cheapest.rateId);
+        toast.success(`Found ${data.rates.length} shipping options`);
+      } else {
+        toast.error("No shipping rates available for this address");
+      }
+    },
+    onError: (error) => {
+      setIsCalculatingRates(false);
+      toast.error(error.message || "Failed to calculate shipping rates");
+    },
+  });
+
+  // Auto-calculate rates when address is complete
+  useEffect(() => {
+    const isAddressComplete =
+      shippingForm.line1 &&
+      shippingForm.city &&
+      shippingForm.state &&
+      shippingForm.zip &&
+      shippingForm.country;
+
+    if (isAddressComplete && cartItems && cartItems.length > 0 && !isCalculatingRates) {
+      // Debounce rate calculation
+      const timer = setTimeout(() => {
+        handleCalculateRates();
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [shippingForm.line1, shippingForm.city, shippingForm.state, shippingForm.zip, shippingForm.country, cartItems]);
+
+  const handleCalculateRates = () => {
+    if (!cartItems || cartItems.length === 0) return;
+
+    setIsCalculatingRates(true);
+
+    // TODO: Get actual product dimensions from cart items
+    // For now, use default parcel size
+    const parcel = {
+      length: 12, // inches
+      width: 9,
+      height: 3,
+      weight: 2, // pounds
+    };
+
+    // Use first cart item's order ID (or create a temporary one)
+    const orderId = 1; // TODO: Get from cart or create pending order
+
+    calculateRatesMutation.mutate({
+      orderId,
+      addressTo: {
+        name: shippingForm.name,
+        street1: shippingForm.line1,
+        street2: shippingForm.line2,
+        city: shippingForm.city,
+        state: shippingForm.state,
+        zip: shippingForm.zip,
+        country: shippingForm.country,
+        phone: shippingForm.phone,
+      },
+      parcel,
+    });
+  };
+
   if (!isAuthenticated) {
     window.location.href = getLoginUrl();
     return null;
@@ -69,6 +147,11 @@ export default function Checkout() {
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.priceAtAdd * item.quantity, 0);
 
+  // Get selected shipping rate details
+  const selectedRate = shippingRates.find((rate) => rate.rateId === selectedShippingRate);
+  const shippingCost = selectedRate ? selectedRate.amount * 100 : 0; // Convert to cents
+  const total = subtotal + shippingCost;
+
   // Create checkout mutation
   const createCheckout = trpc.payment.createBopShopCheckout.useMutation({
     onSuccess: (data) => {
@@ -88,9 +171,14 @@ export default function Checkout() {
 
   const handleCheckout = async () => {
     // Validate form
-    if (!shippingForm.name || !shippingForm.email || !shippingForm.line1 || 
+    if (!shippingForm.name || !shippingForm.email || !shippingForm.line1 ||
         !shippingForm.city || !shippingForm.state || !shippingForm.zip) {
       toast.error("Please fill in all required shipping fields");
+      return;
+    }
+
+    if (!selectedShippingRate) {
+      toast.error("Please select a shipping method");
       return;
     }
 
@@ -99,7 +187,7 @@ export default function Checkout() {
     // For now, we'll use the first cart item's product for checkout
     // In a real implementation, you'd want to handle multiple items
     const firstItem = cartItems[0];
-    
+
     createCheckout.mutate({
       productId: firstItem.productId,
       variantId: firstItem.variantId,
@@ -254,6 +342,62 @@ export default function Checkout() {
               </div>
             </div>
 
+            {/* Shipping Method */}
+            {shippingRates.length > 0 && (
+              <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <Truck className="h-8 w-8" />
+                  <h2 className="text-3xl font-bold">Shipping Method</h2>
+                </div>
+
+                <RadioGroup value={selectedShippingRate || ""} onValueChange={setSelectedShippingRate}>
+                  <div className="space-y-3">
+                    {shippingRates.map((rate) => (
+                      <div
+                        key={rate.rateId}
+                        className={`flex items-center space-x-3 border-2 rounded-xl p-4 cursor-pointer transition-all ${
+                          selectedShippingRate === rate.rateId
+                            ? "border-black bg-gray-50"
+                            : "border-gray-200 hover:border-gray-400"
+                        }`}
+                        onClick={() => setSelectedShippingRate(rate.rateId)}
+                      >
+                        <RadioGroupItem value={rate.rateId} id={rate.rateId} />
+                        <Label
+                          htmlFor={rate.rateId}
+                          className="flex-1 cursor-pointer flex items-center justify-between"
+                        >
+                          <div>
+                            <div className="font-bold text-lg">
+                              {rate.carrier} - {rate.service}
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              {rate.estimatedDays > 0
+                                ? `Estimated ${rate.estimatedDays} business days`
+                                : "Standard delivery"}
+                            </div>
+                          </div>
+                          <div className="font-bold text-xl">
+                            ${rate.amount.toFixed(2)}
+                          </div>
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+            )}
+
+            {/* Loading Rates */}
+            {isCalculatingRates && (
+              <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+                <div className="flex items-center gap-3">
+                  <Package className="h-6 w-6 animate-pulse" />
+                  <p className="text-lg text-gray-600">Calculating shipping rates...</p>
+                </div>
+              </div>
+            )}
+
             {/* Currency Selection */}
             <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
               <h2 className="text-3xl font-bold mb-6">Payment Currency</h2>
@@ -313,12 +457,18 @@ export default function Checkout() {
                 </div>
                 <div className="flex justify-between text-lg">
                   <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium">Calculated next</span>
+                  {selectedRate ? (
+                    <span className="font-bold">${selectedRate.amount.toFixed(2)}</span>
+                  ) : (
+                    <span className="font-medium text-gray-500">
+                      {isCalculatingRates ? "Calculating..." : "Enter address"}
+                    </span>
+                  )}
                 </div>
                 <div className="border-t-2 border-gray-200 pt-3">
                   <div className="flex justify-between text-2xl">
                     <span className="font-bold">Total</span>
-                    <span className="font-bold">${(subtotal / 100).toFixed(2)}</span>
+                    <span className="font-bold">${(total / 100).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -327,7 +477,7 @@ export default function Checkout() {
               <Button
                 size="lg"
                 onClick={handleCheckout}
-                disabled={isProcessing}
+                disabled={isProcessing || !selectedShippingRate}
                 className="w-full bg-black text-white text-xl py-6 rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all disabled:opacity-50"
               >
                 <Lock className="mr-2 h-5 w-5" />

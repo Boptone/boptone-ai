@@ -23,6 +23,15 @@ import { taskContractRouter } from "./routers/taskContract";
 import { paymentRouter } from "./routers/payment";
 import { artistNotificationsRouter } from "./routers/artistNotifications";
 import { searchRouter } from "./searchRouter";
+import { shippingRouter } from "./routers/shipping";
+import { sitemapRouter } from "./routers/sitemap";
+import { agentApiRouter } from "./routers/agentApi";
+import { aeoRouter } from "./routers/aeo";
+import { reviewRouter } from "./routers/reviews";
+import { gdprRouter } from "./routers/gdpr";
+import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
+import { stripeConnectRouter } from "./routers/stripeConnect";
+import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -51,10 +60,15 @@ const artistProfileRouter = router({
       }).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      return await db.createArtistProfile({
+      const profile = await db.createArtistProfile({
         userId: ctx.user.id,
         ...input,
       });
+      
+      // Auto-generate SEO/GEO data
+      await autoPopulateSEO(ctx.user.id);
+      
+      return profile;
     }),
 
   // Update artist profile
@@ -86,6 +100,10 @@ const artistProfileRouter = router({
       if (!profile) throw new Error("Artist profile not found");
       
       await db.updateArtistProfile(profile.id, input);
+      
+      // Auto-generate SEO/GEO data
+      await autoPopulateSEO(ctx.user.id);
+      
       return { success: true };
     }),
 
@@ -568,6 +586,9 @@ export const appRouter = router({
   search: searchRouter,
   system: systemRouter,
   taskContract: taskContractRouter,
+  agentApi: agentApiRouter,
+  stripeConnect: stripeConnectRouter,
+  gdpr: gdprRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -650,6 +671,8 @@ export const appRouter = router({
   loans: loansRouter,
   // products: productsRouter, // Replaced by ecommerce router
   ecommerce: ecommerceRouter,
+  shipping: shippingRouter,
+  sitemap: sitemapRouter,
   pod: podRouter,
   releases: releasesRouter,
   stripe: stripeRouter,
@@ -698,6 +721,13 @@ export const appRouter = router({
 
   // Public AI Chat (no login required)
   aiChat: aiChatRouter,
+
+  // Answer Engine Optimization (AEO)
+  aeo: aeoRouter,
+
+  // Product Review System (BopShop)
+  reviews: reviewRouter,
+  reviewAnalytics: reviewAnalyticsRouter,
 });
 
 export type AppRouter = typeof appRouter;

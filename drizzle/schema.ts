@@ -16,6 +16,11 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["artist", "manager", "admin"]).default("artist").notNull(),
+  // Stripe Connect fields for artist payouts
+  stripeConnectAccountId: varchar("stripe_connect_account_id", { length: 255 }),
+  stripeConnectOnboardingComplete: int("stripe_connect_onboarding_complete").default(0).notNull(), // 0 = not started, 1 = complete
+  stripeConnectChargesEnabled: int("stripe_connect_charges_enabled").default(0).notNull(),
+  stripeConnectPayoutsEnabled: int("stripe_connect_payouts_enabled").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -331,6 +336,7 @@ export const orders = mysqlTable("orders", {
   // Pricing (all in cents)
   subtotal: int("subtotal").notNull(),
   taxAmount: int("taxAmount").default(0).notNull(),
+  taxJurisdiction: varchar("taxJurisdiction", { length: 100 }), // State/country where tax was collected (e.g., "US-CA", "GB")
   shippingAmount: int("shippingAmount").default(0).notNull(),
   discountAmount: int("discountAmount").default(0).notNull(),
   total: int("total").notNull(),
@@ -396,6 +402,98 @@ export const orders = mysqlTable("orders", {
 
 export type Order = typeof orders.$inferSelect;
 export type InsertOrder = typeof orders.$inferInsert;
+
+// ============================================================================
+// SHIPPING LABELS & TRACKING
+// ============================================================================
+
+export const shippingLabels = mysqlTable("shipping_labels", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  
+  // Shippo IDs
+  shipmentId: varchar("shipmentId", { length: 255 }).notNull(), // Shippo shipment object_id
+  rateId: varchar("rateId", { length: 255 }).notNull(), // Selected rate object_id
+  transactionId: varchar("transactionId", { length: 255 }), // Shippo transaction object_id (after purchase)
+  
+  // Carrier info
+  carrier: varchar("carrier", { length: 100 }), // USPS, FedEx, UPS, DHL
+  service: varchar("service", { length: 100 }), // Priority Mail, Ground, etc.
+  
+  // Tracking
+  trackingNumber: varchar("trackingNumber", { length: 255 }),
+  trackingUrl: text("trackingUrl"),
+  
+  // Label
+  labelUrl: text("labelUrl"), // URL to PDF label
+  
+  // Cost
+  cost: decimal("cost", { precision: 10, scale: 2 }), // Shipping cost
+  currency: varchar("currency", { length: 3 }).default("USD"),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "purchased", "printed", "shipped", "delivered", "failed"]).default("pending").notNull(),
+  
+  // Addresses and parcel (stored for reference)
+  addressFrom: json("addressFrom").$type<{
+    name: string;
+    street1: string;
+    street2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  }>(),
+  addressTo: json("addressTo").$type<{
+    name: string;
+    street1: string;
+    street2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  }>(),
+  parcel: json("parcel").$type<{
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+    distanceUnit: string;
+    massUnit: string;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  trackingNumberIdx: index("tracking_number_idx").on(table.trackingNumber),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type ShippingLabel = typeof shippingLabels.$inferSelect;
+export type InsertShippingLabel = typeof shippingLabels.$inferInsert;
+
+export const trackingEvents = mysqlTable("tracking_events", {
+  id: int("id").autoincrement().primaryKey(),
+  shippingLabelId: int("shippingLabelId").notNull().references(() => shippingLabels.id, { onDelete: "cascade" }),
+  
+  status: varchar("status", { length: 50 }), // TRANSIT, OUT_FOR_DELIVERY, DELIVERED, etc.
+  statusDetails: text("statusDetails"),
+  location: json("location").$type<{
+    city?: string;
+    state?: string;
+    country?: string;
+  }>(),
+  eventDate: timestamp("eventDate"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  shippingLabelIdIdx: index("shipping_label_id_idx").on(table.shippingLabelId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type TrackingEvent = typeof trackingEvents.$inferSelect;
+export type InsertTrackingEvent = typeof trackingEvents.$inferInsert;
 
 // Order Items
 export const orderItems = mysqlTable("order_items", {
@@ -504,32 +602,93 @@ export const discountCodes = mysqlTable("discount_codes", {
 export type DiscountCode = typeof discountCodes.$inferSelect;
 export type InsertDiscountCode = typeof discountCodes.$inferInsert;
 
-// Product Reviews
+/**
+ * Product Reviews table
+ * 
+ * Stores customer reviews for BopShop products with ratings, photos, and verified purchase badges.
+ * Optimized for Google Review schema and SEO.
+ */
 export const productReviews = mysqlTable("product_reviews", {
   id: int("id").autoincrement().primaryKey(),
   productId: int("productId").notNull().references(() => products.id),
   userId: int("userId").notNull().references(() => users.id),
-  orderId: int("orderId").references(() => orders.id), // Verified purchase
+  orderId: int("orderId").references(() => orders.id), // For verified purchase badge
   
+  // Review content
   rating: int("rating").notNull(), // 1-5 stars
   title: varchar("title", { length: 255 }),
-  content: text("content"),
+  content: text("content").notNull(),
+  
+  // Verified purchase
+  verifiedPurchase: boolean("verifiedPurchase").default(false).notNull(),
+  
+  // Helpfulness voting
+  helpfulVotes: int("helpfulVotes").default(0).notNull(),
+  unhelpfulVotes: int("unhelpfulVotes").default(0).notNull(),
   
   // Moderation
-  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  status: mysqlEnum("status", ["pending", "approved", "rejected", "flagged"]).default("approved").notNull(),
+  moderationNotes: text("moderationNotes"),
   
-  // Helpful votes
-  helpfulCount: int("helpfulCount").default(0).notNull(),
+  // Metadata
+  reviewerName: varchar("reviewerName", { length: 255 }), // Display name (can differ from user.name)
+  reviewerLocation: varchar("reviewerLocation", { length: 255 }), // Optional location display
   
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   productIdIdx: index("product_id_idx").on(table.productId),
   userIdIdx: index("user_id_idx").on(table.userId),
+  statusIdx: index("status_idx").on(table.status),
+  ratingIdx: index("rating_idx").on(table.rating),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
 }));
 
 export type ProductReview = typeof productReviews.$inferSelect;
 export type InsertProductReview = typeof productReviews.$inferInsert;
+
+/**
+ * Review Responses table
+ * 
+ * Stores seller/artist responses to customer reviews.
+ * Builds trust and engagement through public dialogue.
+ */
+export const reviewResponses = mysqlTable("review_responses", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull().references(() => productReviews.id),
+  userId: int("userId").notNull().references(() => users.id), // Artist/seller who responded
+  content: text("content").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  reviewIdIdx: index("review_id_idx").on(table.reviewId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+}));
+
+export type ReviewResponse = typeof reviewResponses.$inferSelect;
+export type InsertReviewResponse = typeof reviewResponses.$inferInsert;
+
+/**
+ * Review Reminder Log table
+ * 
+ * Tracks sent review reminder emails to prevent duplicates.
+ * Automated system sends reminders 7 days after purchase.
+ */
+export const reviewReminderLog = mysqlTable("review_reminder_log", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull().references(() => orders.id),
+  userId: int("userId").notNull().references(() => users.id),
+  productId: int("productId").notNull().references(() => products.id),
+  sentAt: timestamp("sentAt").defaultNow().notNull(),
+  emailStatus: mysqlEnum("emailStatus", ["sent", "failed", "bounced"]).default("sent").notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+  productIdIdx: index("product_id_idx").on(table.productId),
+}));
+
+export type ReviewReminderLog = typeof reviewReminderLog.$inferSelect;
+export type InsertReviewReminderLog = typeof reviewReminderLog.$inferInsert;
 
 // ============================================================================
 // DISTRIBUTION RELEASES
@@ -2757,6 +2916,72 @@ export type InsertFlywheelBoost = typeof flywheelBoosts.$inferInsert;
 
 
 // ============================================================================
+// PRODUCT REVIEW SYSTEM (BopShop Trust & Social Proof)
+// ============================================================================
+// Note: productReviews table already exists earlier in schema (line ~600)
+// Review photos and helpfulness votes added here:
+
+/**
+ * Review Photos table
+ * 
+ * Stores photos uploaded with product reviews.
+ * Includes AI-generated alt-text for accessibility and SEO.
+ */
+export const reviewPhotos = mysqlTable("review_photos", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull().references(() => productReviews.id),
+  
+  // Photo storage
+  photoUrl: varchar("photoUrl", { length: 500 }).notNull(), // S3 URL
+  thumbnailUrl: varchar("thumbnailUrl", { length: 500 }), // Optimized thumbnail
+  
+  // AI-generated accessibility
+  altText: text("altText").notNull(), // Auto-generated via AI vision model
+  altTextConfidence: decimal("altTextConfidence", { precision: 3, scale: 2 }), // 0.00 to 1.00
+  
+  // Display order
+  displayOrder: int("displayOrder").default(0).notNull(),
+  
+  // Metadata
+  fileSize: int("fileSize"), // Bytes
+  mimeType: varchar("mimeType", { length: 50 }),
+  width: int("width"),
+  height: int("height"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  reviewIdIdx: index("review_id_idx").on(table.reviewId),
+  displayOrderIdx: index("display_order_idx").on(table.displayOrder),
+}));
+
+export type ReviewPhoto = typeof reviewPhotos.$inferSelect;
+export type InsertReviewPhoto = typeof reviewPhotos.$inferInsert;
+
+/**
+ * Review Helpfulness Votes table
+ * 
+ * Tracks which users found which reviews helpful.
+ * Prevents duplicate voting and enables "most helpful" sorting.
+ */
+export const reviewHelpfulnessVotes = mysqlTable("review_helpfulness_votes", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull().references(() => productReviews.id),
+  userId: int("userId").notNull().references(() => users.id),
+  
+  // Vote type
+  voteType: mysqlEnum("voteType", ["helpful", "unhelpful"]).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  reviewIdIdx: index("review_id_idx").on(table.reviewId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+  uniqueUserReview: index("unique_user_review").on(table.userId, table.reviewId), // Prevent duplicate votes
+}));
+
+export type ReviewHelpfulnessVote = typeof reviewHelpfulnessVotes.$inferSelect;
+export type InsertReviewHelpfulnessVote = typeof reviewHelpfulnessVotes.$inferInsert;
+
+// ============================================================================
 // TASK CONTRACT SYSTEM (Ironclad Agent Handoffs)
 // ============================================================================
 
@@ -2818,3 +3043,144 @@ export const contractAuditLog = mysqlTable("contract_audit_log", {
 
 export type ContractAuditLog = typeof contractAuditLog.$inferSelect;
 export type InsertContractAuditLog = typeof contractAuditLog.$inferInsert;
+
+// ============================================================================
+// AI CONTENT DETECTION & MODERATION
+// ============================================================================
+
+/**
+ * AI Detection Results
+ * Stores results from AI detection API (Hive AI) for uploaded tracks
+ */
+export const aiDetectionResults = mysqlTable("ai_detection_results", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  
+  // Detection results
+  isAiGenerated: boolean("isAiGenerated"), // null = not yet analyzed
+  confidenceScore: decimal("confidenceScore", { precision: 5, scale: 2 }), // 0.00 to 100.00
+  detectedEngine: varchar("detectedEngine", { length: 100 }), // e.g., "Suno AI", "Udio AI", "Unknown"
+  
+  // Audio analysis
+  musicIsAi: boolean("musicIsAi"), // Is the music AI-generated?
+  musicConfidence: decimal("musicConfidence", { precision: 5, scale: 2 }),
+  vocalsAreAi: boolean("vocalsAreAi"), // Are the vocals AI-generated?
+  vocalsConfidence: decimal("vocalsConfidence", { precision: 5, scale: 2 }),
+  
+  // API response metadata
+  apiProvider: varchar("apiProvider", { length: 50 }).default("huggingface").notNull(), // "huggingface", "manual", etc.
+  rawResponse: json("rawResponse").$type<Record<string, any>>(), // Full API response for debugging
+  
+  // Timestamps
+  analyzedAt: timestamp("analyzedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  isAiGeneratedIdx: index("is_ai_generated_idx").on(table.isAiGenerated),
+  analyzedAtIdx: index("analyzed_at_idx").on(table.analyzedAt),
+}));
+
+export type AiDetectionResult = typeof aiDetectionResults.$inferSelect;
+export type InsertAiDetectionResult = typeof aiDetectionResults.$inferInsert;
+
+/**
+ * Content Moderation Queue
+ * Tracks content flagged for manual review by admins
+ */
+export const contentModerationQueue = mysqlTable("content_moderation_queue", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Flagging reason
+  flagReason: mysqlEnum("flagReason", [
+    "ai_detection_high_confidence", // AI detection score > 80%
+    "ai_detection_medium_confidence", // AI detection score 50-80%
+    "prohibited_tool_disclosed", // Artist disclosed Suno/Udio in upload form
+    "manual_report", // User reported the track
+    "copyright_claim", // DMCA/copyright claim
+    "other"
+  ]).notNull(),
+  flagDetails: text("flagDetails"), // Additional context
+  
+  // AI detection link
+  aiDetectionId: int("aiDetectionId").references(() => aiDetectionResults.id),
+  
+  // Moderation status
+  status: mysqlEnum("status", [
+    "pending", // Awaiting review
+    "under_review", // Admin is reviewing
+    "approved", // Content is legitimate
+    "removed", // Content removed for policy violation
+    "appealed", // Artist appealed the decision
+    "appeal_approved", // Appeal was successful
+    "appeal_rejected" // Appeal was rejected
+  ]).default("pending").notNull(),
+  
+  // Moderation decision
+  reviewedBy: int("reviewedBy").references(() => users.id), // Admin who reviewed
+  reviewNotes: text("reviewNotes"), // Admin's notes
+  reviewedAt: timestamp("reviewedAt"),
+  
+  // Strike tracking (TOS Section 9.12.6)
+  strikeIssued: boolean("strikeIssued").default(false).notNull(),
+  strikeNumber: int("strikeNumber"), // 1, 2, or 3
+  
+  // Timestamps
+  flaggedAt: timestamp("flaggedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  flaggedAtIdx: index("flagged_at_idx").on(table.flaggedAt),
+}));
+
+export type ContentModerationQueue = typeof contentModerationQueue.$inferSelect;
+export type InsertContentModerationQueue = typeof contentModerationQueue.$inferInsert;
+
+/**
+ * Artist Strike History
+ * Tracks AI policy violations per artist (TOS Section 9.12.6: 3-Strike Policy)
+ */
+export const artistStrikeHistory = mysqlTable("artist_strike_history", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Strike details
+  strikeNumber: int("strikeNumber").notNull(), // 1, 2, or 3
+  reason: text("reason").notNull(), // Why the strike was issued
+  trackId: int("trackId").references(() => bapTracks.id), // Related track (if applicable)
+  moderationQueueId: int("moderationQueueId").references(() => contentModerationQueue.id),
+  
+  // Penalty
+  penalty: mysqlEnum("penalty", [
+    "warning", // 1st strike: warning
+    "suspension", // 2nd strike: 30-day suspension
+    "permanent_ban" // 3rd strike: permanent ban + funds forfeiture
+  ]).notNull(),
+  suspensionEndsAt: timestamp("suspensionEndsAt"), // For 2nd strike
+  
+  // Strike issued by
+  issuedBy: int("issuedBy").notNull().references(() => users.id), // Admin who issued strike
+  issuedAt: timestamp("issuedAt").defaultNow().notNull(),
+  
+  // Appeal
+  appealStatus: mysqlEnum("appealStatus", ["none", "pending", "approved", "rejected"]).default("none").notNull(),
+  appealReason: text("appealReason"),
+  appealedAt: timestamp("appealedAt"),
+  appealReviewedBy: int("appealReviewedBy").references(() => users.id),
+  appealReviewedAt: timestamp("appealReviewedAt"),
+  appealNotes: text("appealNotes"), // Admin's notes on appeal decision
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  strikeNumberIdx: index("strike_number_idx").on(table.strikeNumber),
+  issuedAtIdx: index("issued_at_idx").on(table.issuedAt),
+}));
+
+export type ArtistStrikeHistory = typeof artistStrikeHistory.$inferSelect;
+export type InsertArtistStrikeHistory = typeof artistStrikeHistory.$inferInsert;

@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { useRoute } from "wouter";
+import { SEOHead } from "@/components/SEOHead";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -104,11 +106,47 @@ export default function ArtistProfile() {
     (tour: any) => new Date(tour.startDate) > new Date()
   );
 
+  // Generate SEO metadata
+  const seoData = useMemo(() => ({
+    title: `${profile.stageName} | Boptone`,
+    description: profile.bio || `Listen to ${profile.stageName} on Boptone. ${profile.genre ? `${profile.genre} artist` : 'Independent artist'} ${profile.location ? `from ${profile.location}` : ''}.`,
+    image: profile.avatarUrl || undefined,
+    url: `${window.location.origin}/@${username}`,
+    type: 'profile' as const,
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "MusicGroup",
+      name: profile.stageName,
+      description: profile.bio || undefined,
+      image: profile.avatarUrl || undefined,
+      genre: profile.genre || undefined,
+      url: `${window.location.origin}/@${username}`,
+      sameAs: [
+        profile.instagramUrl,
+        profile.twitterUrl,
+        profile.youtubeUrl,
+        profile.websiteUrl
+      ].filter(Boolean)
+    }
+  }), [profile, username]);
+
+  const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Artists', href: '/discover' },
+    { label: profile.stageName }
+  ];
+
   return (
     <div 
       className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20"
       style={{ fontFamily }}
     >
+      <SEOHead {...seoData} />
+      
+      {/* Breadcrumb Navigation */}
+      <div className="container mx-auto px-4 pt-4">
+        <Breadcrumb items={breadcrumbItems} />
+      </div>
       {/* Hero Section */}
       <div
         className="relative h-64 md:h-80"

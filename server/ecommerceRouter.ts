@@ -560,7 +560,7 @@ export const ecommerceRouter = router({
         orderId: z.number().int().optional(),
         rating: z.number().int().min(1).max(5),
         title: z.string().optional(),
-        content: z.string().optional(),
+        content: z.string().min(10), // Required, minimum 10 characters
       }))
       .mutation(async ({ ctx, input }) => {
         return await ecommerceDb.createProductReview({

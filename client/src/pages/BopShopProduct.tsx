@@ -8,6 +8,8 @@ import { ArrowLeft, ShoppingCart, Minus, Plus, Package, Ruler, Weight } from "lu
 import { toast } from "sonner";
 import { CurrencySelector } from "@/components/CurrencySelector";
 import { useCurrency } from "@/contexts/CurrencyContext";
+import { ProductReviews } from "@/components/reviews/ProductReviews";
+import { generateProductReviewSchema } from "../../../server/reviewSchema";
 
 /**
  * BopShop Product Detail Page
@@ -265,6 +267,11 @@ export default function BopShopProduct() {
               )}
             </div>
           </div>
+        </div>
+
+        {/* Customer Reviews Section */}
+        <div className="mt-16">
+          <ProductReviews productId={product.id} />
         </div>
       </div>
     </div>
