@@ -85,6 +85,13 @@
       "when": 1771688999378,
       "tag": "0011_narrow_the_liberteens",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1771690533665,
+      "tag": "0012_lean_celestials",
+      "breakpoints": true
     }
   ]
 }

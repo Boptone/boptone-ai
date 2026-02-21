@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { ReviewResponseForm } from "./ReviewResponseForm";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 interface ReviewPhoto {
   id: number;
@@ -45,6 +47,16 @@ interface ReviewCardProps {
  */
 export function ReviewCard({ review, onVoteSuccess }: ReviewCardProps) {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+  const { user } = useAuth();
+
+  // Fetch seller response
+  const { data: response } = trpc.reviews.getResponse.useQuery({
+    reviewId: review.id,
+  });
+
+  // Check if current user is the seller (can respond)
+  // TODO: Add artistId to review query for proper ownership check
+  const isProductOwner = false; // Placeholder until we add product owner info to review
   const voteHelpful = trpc.reviews.voteHelpful.useMutation({
     onSuccess: () => {
       toast.success("Thanks for your feedback!");
@@ -155,6 +167,23 @@ export function ReviewCard({ review, onVoteSuccess }: ReviewCardProps) {
             </Button>
           </div>
         </div>
+
+        {/* Seller Response */}
+        {response && (
+          <div className="mt-4">
+            <ReviewResponseForm
+              reviewId={review.id}
+              existingResponse={response}
+            />
+          </div>
+        )}
+
+        {/* Response Form for Product Owner */}
+        {!response && isProductOwner && (
+          <div className="mt-4">
+            <ReviewResponseForm reviewId={review.id} />
+          </div>
+        )}
       </Card>
 
       {/* Photo Lightbox */}

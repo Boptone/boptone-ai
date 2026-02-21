@@ -28,6 +28,7 @@ import { sitemapRouter } from "./routers/sitemap";
 import { agentApiRouter } from "./routers/agentApi";
 import { aeoRouter } from "./routers/aeo";
 import { reviewRouter } from "./routers/reviews";
+import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -722,6 +723,7 @@ export const appRouter = router({
 
   // Product Review System (BopShop)
   reviews: reviewRouter,
+  reviewAnalytics: reviewAnalyticsRouter,
 });
 
 export type AppRouter = typeof appRouter;

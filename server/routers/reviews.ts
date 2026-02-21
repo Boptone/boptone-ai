@@ -3,7 +3,7 @@ import { eq, and, desc, sql } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { publicProcedure, protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { productReviews, reviewPhotos, reviewHelpfulnessVotes, orders, products } from "../../drizzle/schema";
+import { productReviews, reviewPhotos, reviewHelpfulnessVotes, reviewResponses, orders, products, artistProfiles, users } from "../../drizzle/schema";
 import { storagePut } from "../storage";
 import { invokeLLM } from "../_core/llm";
 import { notifyArtistOfReview } from "../reviewNotifications";
@@ -441,6 +441,96 @@ export const reviewRouter = router({
         .where(eq(productReviews.id, input.reviewId));
 
       return { success: true };
+    }),
+
+  /**
+   * Submit seller response to review
+   */
+  submitResponse: protectedProcedure
+    .input(z.object({
+      reviewId: z.number(),
+      content: z.string().min(10).max(2000),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
+      // Verify user owns the product being reviewed
+      const [review] = await db
+        .select({
+          reviewId: productReviews.id,
+          productId: productReviews.productId,
+          artistId: products.artistId,
+          artistUserId: artistProfiles.userId,
+        })
+        .from(productReviews)
+        .leftJoin(products, eq(productReviews.productId, products.id))
+        .leftJoin(artistProfiles, eq(products.artistId, artistProfiles.id))
+        .where(eq(productReviews.id, input.reviewId))
+        .limit(1);
+
+      if (!review || review.artistUserId !== ctx.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN", message: "You can only respond to reviews on your own products" });
+      }
+
+      // Check if response already exists
+      const [existingResponse] = await db
+        .select()
+        .from(reviewResponses)
+        .where(eq(reviewResponses.reviewId, input.reviewId))
+        .limit(1);
+
+      if (existingResponse) {
+        // Update existing response
+        await db
+          .update(reviewResponses)
+          .set({
+            content: input.content,
+            updatedAt: new Date(),
+          })
+          .where(eq(reviewResponses.id, existingResponse.id));
+
+        return { success: true, responseId: existingResponse.id };
+      } else {
+        // Create new response
+        const response = await db.insert(reviewResponses).values({
+          reviewId: input.reviewId,
+          userId: ctx.user.id,
+          content: input.content,
+        });
+
+        return { success: true, responseId: Number((response as any).insertId) };
+      }
+    }),
+
+  /**
+   * Get response for a review
+   */
+  getResponse: publicProcedure
+    .input(z.object({
+      reviewId: z.number(),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) return null;
+
+      const [response] = await db
+        .select({
+          id: reviewResponses.id,
+          content: reviewResponses.content,
+          createdAt: reviewResponses.createdAt,
+          updatedAt: reviewResponses.updatedAt,
+          seller: {
+            id: users.id,
+            name: users.name,
+          },
+        })
+        .from(reviewResponses)
+        .leftJoin(users, eq(reviewResponses.userId, users.id))
+        .where(eq(reviewResponses.reviewId, input.reviewId))
+        .limit(1);
+
+      return response || null;
     }),
 });
 

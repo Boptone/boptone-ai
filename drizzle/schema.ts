@@ -641,6 +641,49 @@ export const productReviews = mysqlTable("product_reviews", {
 export type ProductReview = typeof productReviews.$inferSelect;
 export type InsertProductReview = typeof productReviews.$inferInsert;
 
+/**
+ * Review Responses table
+ * 
+ * Stores seller/artist responses to customer reviews.
+ * Builds trust and engagement through public dialogue.
+ */
+export const reviewResponses = mysqlTable("review_responses", {
+  id: int("id").autoincrement().primaryKey(),
+  reviewId: int("reviewId").notNull().references(() => productReviews.id),
+  userId: int("userId").notNull().references(() => users.id), // Artist/seller who responded
+  content: text("content").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  reviewIdIdx: index("review_id_idx").on(table.reviewId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+}));
+
+export type ReviewResponse = typeof reviewResponses.$inferSelect;
+export type InsertReviewResponse = typeof reviewResponses.$inferInsert;
+
+/**
+ * Review Reminder Log table
+ * 
+ * Tracks sent review reminder emails to prevent duplicates.
+ * Automated system sends reminders 7 days after purchase.
+ */
+export const reviewReminderLog = mysqlTable("review_reminder_log", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull().references(() => orders.id),
+  userId: int("userId").notNull().references(() => users.id),
+  productId: int("productId").notNull().references(() => products.id),
+  sentAt: timestamp("sentAt").defaultNow().notNull(),
+  emailStatus: mysqlEnum("emailStatus", ["sent", "failed", "bounced"]).default("sent").notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  userIdIdx: index("user_id_idx").on(table.userId),
+  productIdIdx: index("product_id_idx").on(table.productId),
+}));
+
+export type ReviewReminderLog = typeof reviewReminderLog.$inferSelect;
+export type InsertReviewReminderLog = typeof reviewReminderLog.$inferInsert;
+
 // ============================================================================
 // DISTRIBUTION RELEASES
 // ============================================================================
