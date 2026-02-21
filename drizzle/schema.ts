@@ -16,6 +16,11 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["artist", "manager", "admin"]).default("artist").notNull(),
+  // Stripe Connect fields for artist payouts
+  stripeConnectAccountId: varchar("stripe_connect_account_id", { length: 255 }),
+  stripeConnectOnboardingComplete: int("stripe_connect_onboarding_complete").default(0).notNull(), // 0 = not started, 1 = complete
+  stripeConnectChargesEnabled: int("stripe_connect_charges_enabled").default(0).notNull(),
+  stripeConnectPayoutsEnabled: int("stripe_connect_payouts_enabled").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

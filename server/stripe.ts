@@ -115,6 +115,9 @@ export type SupportedCurrency = typeof POPULAR_CURRENCIES[number]['code'];
 
 /**
  * Create a Stripe Checkout Session for one-time product purchase
+ * 
+ * ENTERPRISE COMPLIANCE: Uses Stripe Connect destination charges to route payments
+ * directly to artists, eliminating money transmitter licensing requirements.
  */
 export async function createProductCheckoutSession(params: {
   userId: number;
@@ -124,8 +127,15 @@ export async function createProductCheckoutSession(params: {
   quantity: number;
   successUrl: string;
   cancelUrl: string;
+  artistStripeAccountId?: string; // Stripe Connect account ID for direct-to-artist payments
+  platformFeePercentage?: number; // Platform fee (12% Free, 5% Pro, 2% Enterprise)
 }) {
-  const session = await stripe.checkout.sessions.create({
+  // Calculate platform fee if using Stripe Connect
+  const platformFeeAmount = params.artistStripeAccountId && params.platformFeePercentage
+    ? Math.round(params.amount * params.quantity * (params.platformFeePercentage / 100))
+    : 0;
+
+  const sessionConfig: any = {
     mode: 'payment',
     customer_email: params.userEmail,
     line_items: [
@@ -145,7 +155,22 @@ export async function createProductCheckoutSession(params: {
     metadata: {
       userId: params.userId.toString(),
     },
-  });
+  };
+
+  // Use Stripe Connect destination charges if artist has Connect account
+  // This routes payment directly to artist's Stripe account with platform fee deducted
+  if (params.artistStripeAccountId && platformFeeAmount > 0) {
+    sessionConfig.payment_intent_data = {
+      application_fee_amount: platformFeeAmount,
+      transfer_data: {
+        destination: params.artistStripeAccountId,
+      },
+    };
+    sessionConfig.metadata.platform_fee_amount = platformFeeAmount.toString();
+    sessionConfig.metadata.artist_stripe_account_id = params.artistStripeAccountId;
+  }
+
+  const session = await stripe.checkout.sessions.create(sessionConfig);
 
   return session;
 }

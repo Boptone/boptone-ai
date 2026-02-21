@@ -3856,3 +3856,118 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Test review reminder automation
 - [ ] Save checkpoint
 - [ ] Push to GitHub
+
+
+## Global Legal Compliance Audit (User Request - CRITICAL PRIORITY)
+
+### Strategic Context
+- Boptone operates globally with e-commerce, payments, music distribution, and financial services
+- MUST comply with all local, state, country, and international laws
+- Non-compliance risks: fines, lawsuits, platform shutdown, criminal liability
+- Compliance is a foundational requirement for every feature
+
+### Phase 1: E-Commerce & Payment Processing Compliance
+- [ ] Audit BopShop against consumer protection laws (US FTC, EU Consumer Rights Directive)
+- [ ] Verify refund policy compliance (14-day EU right of withdrawal, state-specific US laws)
+- [ ] Check product liability disclosures (warnings, age restrictions, prohibited products)
+- [ ] Audit payment processing (PCI-DSS compliance via Stripe)
+- [ ] Verify AML/KYC requirements for payouts (FinCEN, EU 5AMLD)
+- [ ] Check sales tax collection requirements (US state nexus, EU VAT, GST)
+- [ ] Audit shipping and delivery terms (Incoterms, international shipping regulations)
+
+### Phase 2: Data Privacy & User Rights Compliance
+- [ ] Audit GDPR compliance (EU) - consent, data portability, right to erasure
+- [ ] Audit CCPA compliance (California) - opt-out, data sale disclosures
+- [ ] Audit PIPEDA compliance (Canada)
+- [ ] Check cookie consent requirements (EU ePrivacy Directive)
+- [ ] Verify data breach notification procedures (72-hour GDPR requirement)
+- [ ] Audit data retention policies
+- [ ] Check age verification (COPPA for under-13, GDPR for under-16)
+- [ ] Verify Privacy Policy completeness and accessibility
+
+### Phase 3: Music Distribution & Copyright Compliance
+- [ ] Audit DMCA safe harbor compliance (takedown procedures, repeat infringer policy)
+- [ ] Verify mechanical license requirements (Harry Fox Agency, MLC in US)
+- [ ] Check performance rights compliance (ASCAP, BMI, SESAC)
+- [ ] Audit international copyright compliance (Berne Convention, WIPO)
+- [ ] Verify sync licensing disclosures
+- [ ] Check sampling and derivative works policies
+- [ ] Audit content ID and fingerprinting requirements
+
+### Phase 4: Financial Services & Payout Compliance
+- [ ] Check if payouts trigger money transmitter licenses (state-by-state US, EU PSD2)
+- [ ] Audit microloan feature against lending regulations (Truth in Lending Act, state usury laws)
+- [ ] Verify revenue sharing compliance (securities law implications)
+- [ ] Check tax reporting requirements (1099-K thresholds, international tax treaties)
+- [ ] Audit anti-fraud measures (chargebacks, dispute resolution)
+- [ ] Verify escrow requirements for marketplace transactions
+
+### Phase 5: Additional Compliance Areas
+- [ ] Audit accessibility compliance (WCAG 2.1 AA, ADA Title III, EU Web Accessibility Directive)
+- [ ] Check email marketing compliance (CAN-SPAM Act, GDPR consent)
+- [ ] Verify Terms of Service enforceability (jurisdiction clauses, arbitration agreements)
+- [ ] Audit content moderation policies (hate speech, illegal content, harmful content)
+- [ ] Check age-restricted content handling (mature content, explicit lyrics)
+- [ ] Verify export control compliance (OFAC sanctions, embargoed countries)
+
+### Phase 6: Documentation & Implementation
+- [ ] Create compliance roadmap with priority levels (critical, high, medium, low)
+- [ ] Identify immediate compliance gaps requiring urgent fixes
+- [ ] Document required policy updates (TOS, Privacy Policy, Refund Policy, etc.)
+- [ ] Create compliance checklist for new features
+- [ ] Establish ongoing compliance monitoring process
+- [ ] Deliver comprehensive audit report to user
+
+
+## Implement Stripe Connect (CRITICAL COMPLIANCE - $2M SAVINGS)
+
+### Strategic Context
+- Eliminates money transmitter licensing requirement ($500k-$2M saved)
+- Stripe handles all KYC/AML compliance and tax reporting (1099-K)
+- Artists receive payments directly from Stripe (faster payouts)
+- Boptone takes platform fee automatically (aligned with Shopify model)
+- Reduces regulatory burden from "money transmitter" to "marketplace facilitator"
+
+### Phase 1: Database Schema
+- [x] Add stripe_connect_account_id to users table
+- [x] Add stripe_connect_onboarding_complete to users table
+- [x] Add stripe_connect_charges_enabled to users table
+- [x] Add stripe_connect_payouts_enabled to users table
+- [ ] Add platform_fee_percentage to products table (default based on tier)
+- [x] Deploy schema changes
+
+### Phase 2: Artist Onboarding Flow
+- [x] Create Stripe Connect account creation endpoint
+- [x] Build onboarding UI component (Stripe Connect Onboarding)
+- [x] Implement OAuth return handler
+- [x] Add onboarding status tracking
+- [x] Create "Complete Payout Setup" CTA for artists without Connect accounts
+- [x] Replace old PayoutSettings page with Stripe Connect version
+
+### Phase 3: Direct-to-Artist Payment Routing
+- [ ] Update checkout session creation to use destination charges
+- [ ] Calculate platform fees based on subscription tier (12% Free, 5% Pro, 2% Enterprise)
+- [ ] Add application_fee_amount to payment intents
+- [ ] Route payments to artist's Connect account
+- [ ] Handle payment failures and refunds
+
+### Phase 4: Update BopShop Checkout
+- [ ] Modify product checkout to require artist has Connect account
+- [ ] Add platform fee disclosure at checkout
+- [ ] Update order confirmation to show artist receives payment directly
+- [ ] Handle split payments for multi-artist orders
+
+### Phase 5: Artist Payout Dashboard
+- [ ] Create payout settings page
+- [ ] Display Connect account status
+- [ ] Show payout schedule (instant, daily, weekly, monthly)
+- [ ] Display platform fees and net earnings
+- [ ] Add Stripe Dashboard link for detailed analytics
+
+### Phase 6: Testing & Deployment
+- [ ] Test Connect account creation flow
+- [ ] Test payment routing to artist accounts
+- [ ] Test platform fee collection
+- [ ] Verify tax reporting (1099-K) handled by Stripe
+- [ ] Save checkpoint
+- [ ] Push to GitHub

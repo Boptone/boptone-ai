@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE users \nADD COLUMN stripe_connect_account_id VARCHAR(255),\nADD COLUMN stripe_connect_onboarding_complete INT NOT NULL DEFAULT 0,\nADD COLUMN stripe_connect_charges_enabled INT NOT NULL DEFAULT 0,\nADD COLUMN stripe_connect_payouts_enabled INT NOT NULL DEFAULT 0;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE users \nADD COLUMN stripe_connect_account_id VARCHAR(255),\nADD COLUMN stripe_connect_onboarding_complete INT NOT NULL DEFAULT 0,\nADD COLUMN stripe_connect_charges_enabled INT NOT NULL DEFAULT 0,\nADD COLUMN stripe_connect_payouts_enabled INT NOT NULL DEFAULT 0;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1307
+}

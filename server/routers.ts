@@ -29,6 +29,7 @@ import { agentApiRouter } from "./routers/agentApi";
 import { aeoRouter } from "./routers/aeo";
 import { reviewRouter } from "./routers/reviews";
 import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
+import { stripeConnectRouter } from "./routers/stripeConnect";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -585,6 +586,7 @@ export const appRouter = router({
   system: systemRouter,
   taskContract: taskContractRouter,
   agentApi: agentApiRouter,
+  stripeConnect: stripeConnectRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

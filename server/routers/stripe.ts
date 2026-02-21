@@ -51,6 +51,9 @@ export const stripeRouter = router({
 
   /**
    * Create checkout session for merchandise purchase
+   * 
+   * ENTERPRISE COMPLIANCE: Routes payment directly to artist via Stripe Connect
+   * with platform fee deducted automatically. Eliminates money transmitter licensing.
    */
   createProductCheckout: protectedProcedure
     .input(z.object({
@@ -58,8 +61,29 @@ export const stripeRouter = router({
       productName: z.string(),
       amount: z.number(), // in cents
       quantity: z.number().default(1),
+      artistId: z.number(), // Artist who owns the product
     }))
     .mutation(async ({ ctx, input }) => {
+      // Fetch artist's Stripe Connect account ID
+      const { getDb } = await import("../db");
+      const { users } = await import("../../drizzle/schema");
+      const { eq } = await import("drizzle-orm");
+      
+      const db = await getDb();
+      if (!db) throw new Error("Database unavailable");
+      
+      const artist = await db.select().from(users).where(eq(users.id, input.artistId)).limit(1);
+      if (!artist || artist.length === 0) {
+        throw new Error("Artist not found");
+      }
+      
+      const artistData = artist[0];
+      
+      // Determine platform fee based on artist's subscription tier
+      // TODO: Fetch actual subscription tier from database
+      // For now, default to Free tier (12%)
+      const platformFeePercentage = 12; // 12% Free, 5% Pro, 2% Enterprise
+      
       const session = await createProductCheckoutSession({
         userId: ctx.user.id,
         userEmail: ctx.user.email || "",
@@ -68,6 +92,8 @@ export const stripeRouter = router({
         quantity: input.quantity,
         successUrl: `${process.env.VITE_APP_URL || "http://localhost:3000"}/store?payment=success`,
         cancelUrl: `${process.env.VITE_APP_URL || "http://localhost:3000"}/store?payment=canceled`,
+        artistStripeAccountId: artistData.stripeConnectAccountId || undefined,
+        platformFeePercentage: artistData.stripeConnectAccountId ? platformFeePercentage : undefined,
       });
 
       return { sessionId: session.id, url: session.url };
