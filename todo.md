@@ -4652,3 +4652,21 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Implement backend integration with Hugging Face Inference API
 - [ ] Test AI detection with sample audio files
 - [x] Save checkpoint
+
+
+## Hugging Face API Key Setup (Future Implementation)
+
+### Context
+- Hugging Face Inference API requires API key for AI detection
+- Free tier: 1,000 requests/month
+- Pro tier: $9/month for 10,000 requests/month
+
+### Implementation Tasks
+- [ ] Create Hugging Face account at https://huggingface.co
+- [ ] Generate API token at https://huggingface.co/settings/tokens (Read permission)
+- [ ] Add HUGGINGFACE_API_KEY to environment via Settings → Secrets
+- [ ] Implement backend `server/aiDetection.ts` with `detectAIMusic()` function
+- [ ] Create background job to process AI detection queue (every 5 minutes)
+- [ ] Test with sample AI-generated tracks (Suno, Udio) and human-created tracks
+- [ ] Monitor false positive rate and adjust confidence thresholds if needed
+- [ ] Build admin moderation page at `/admin/content-moderation`

@@ -1144,6 +1144,15 @@ export default function Terms() {
                 <p className="mb-4">
                   If Boptone partners with licensed AI music platforms in the future (similar to UMG/Warner partnerships with Udio/Suno), we will offer artists the opportunity to opt-in to license their works for AI training in exchange for compensation. Participation will always be voluntary and opt-in, never opt-out or automatic.
                 </p>
+                <p className="mb-4">
+                  <strong>9.12.10 AI Detection Methodology</strong>
+                </p>
+                <p className="mb-4">
+                  Boptone uses <strong>MelodyMachine/Deepfake-audio-detection-V2</strong>, an open-source AI detection model (99.73% accuracy, Apache 2.0 license) to identify potentially AI-generated content. This model is publicly available on Hugging Face and can be independently verified at <a href="https://huggingface.co/MelodyMachine/Deepfake-audio-detection-V2" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">huggingface.co/MelodyMachine/Deepfake-audio-detection-V2</a>.
+                </p>
+                <p className="mb-4">
+                  <strong>Transparency Commitment:</strong> All detection results are reviewed by human moderators before any enforcement action is taken. Artists may request the specific detection results for their content during the appeal process. We believe in transparent, auditable AI moderation rather than "black box" systems.
+                </p>
               </section>
 
               <section className="mb-8">
