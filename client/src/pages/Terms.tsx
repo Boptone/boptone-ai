@@ -42,7 +42,7 @@ export default function Terms() {
                   Boptone is not a record label. We are not a distributor. We are not a platform that extracts value from your creativity. We are an <strong>autonomous operating system</strong> built to protect your sovereignty, amplify your voice, and ensure you capture the full value of your work.
                 </p>
                 <p className="mb-4">
-                  The rights enumerated below are not "granted" by Boptone. They are not privileges we bestow upon you. They are <strong>inherent to your creative work</strong> and fundamental to our relationship. We recognize these rights as constitutional principles that govern every aspect of this platform.
+                  The rights enumerated below are not "granted" by Boptone. They are not privileges we bestow upon you. They are <strong>inherent to your creative work</strong> and fundamental to our relationship. We recognize these rights as foundational principles that govern every aspect of this platform.
                 </p>
                 <p className="mb-4">
                   If we violate these rights, you have recourse. If we change these commitments, you have the power to reject those changes. If we fail you, you can leave—with your data, your works, and your dignity intact.
@@ -253,7 +253,7 @@ export default function Terms() {
                 </p>
 
                 <p className="mb-4 mt-6 text-sm italic">
-                  This Artist Bill of Rights is a binding constitutional framework that governs every aspect of Boptone's relationship with artists. If we violate these rights, you have recourse—legal, financial, and reputational. If we weaken these commitments, you have the power to reject those changes. If we fail you, you can leave with your data, your works, and your dignity intact. <strong>We exist to serve you. This document holds us accountable.</strong>
+                  This Artist Bill of Rights is a binding foundational framework that governs every aspect of Boptone's relationship with artists. If we violate these rights, you have recourse—legal, financial, and reputational. If we weaken these commitments, you have the power to reject those changes. If we fail you, you can leave with your data, your works, and your dignity intact. <strong>We exist to serve you. This document holds us accountable.</strong>
                 </p>
               </section>
 
@@ -524,7 +524,7 @@ export default function Terms() {
                   <strong>Enforcement:</strong> Violation of this policy may result in immediate removal of listings, forfeiture of funds, account suspension or termination, and potential legal action. You are solely responsible for ensuring your products comply with all applicable laws and these Terms.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">7.11 Settlement Guarantees (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">7.11 Settlement Guarantees (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article VII of the Artist Bill of Rights, Boptone commits to the following settlement guarantees:
                 </p>
@@ -532,15 +532,15 @@ export default function Terms() {
                   <strong>48-Hour Settlement:</strong> Payments owed to you are settled within forty-eight (48) hours of transaction completion, subject to fraud screening (completed within 24 hours for 99% of transactions), payment processor settlement times (Stripe settles daily), and your chosen payout schedule (daily, weekly, or monthly). This commitment supersedes any longer settlement periods mentioned elsewhere in these Terms.
                 </p>
                 <p className="mb-4">
-                  <strong>Reserve Limitations:</strong> Payment reserves are capped at 10% of transaction value and held only for fraud protection purposes, not as working capital. Reserves exceeding this cap or held for purposes other than fraud protection violate this constitutional commitment and entitle you to immediate release of excess funds plus interest at the federal funds rate plus 2%.
+                  <strong>Reserve Limitations:</strong> Payment reserves are capped at 10% of transaction value and held only for fraud protection purposes, not as working capital. Reserves exceeding this cap or held for purposes other than fraud protection violate this core commitment and entitle you to immediate release of excess funds plus interest at the federal funds rate plus 2%.
                 </p>
                 <p className="mb-4">
                   <strong>Payout Hold Limitations:</strong> The 30-day payout hold mentioned in Section 7.6 applies only to cases of proven fraud, chargebacks, or legal disputes. For all other situations, payout holds are limited to fourteen (14) business days maximum. Human review is mandatory within 72 hours for accounts with more than $1,000 in held funds. Interest accrues on held funds beyond 14 days at the federal funds rate plus 2%.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">7.12 Bankruptcy Protection (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">7.12 Bankruptcy Protection (Core Commitment)</h3>
                 <p className="mb-4">
-                  In accordance with Article VII of the Artist Bill of Rights, your funds receive constitutional protection in the event of Boptone's financial distress:
+                  In accordance with Article VII of the Artist Bill of Rights, your funds receive permanent protection in the event of Boptone's financial distress:
                 </p>
                 <p className="mb-4">
                   <strong>Segregated Trust Accounts:</strong> Your funds are held in segregated trust accounts maintained by our payment processor (Stripe), separate from Boptone's operating capital. These funds are not commingled with company assets and are not available to satisfy Boptone's debts or obligations to other creditors.
@@ -555,7 +555,7 @@ export default function Terms() {
                   <strong>Stripe Connect Protection:</strong> Because payments are routed directly from customers to your connected Stripe account (as described in Section 7.7), your funds are already protected from Boptone's bankruptcy. Stripe holds your funds independently, and Boptone has no legal claim to them in bankruptcy proceedings.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">7.13 Fraud Chargeback Allocation (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">7.13 Fraud Chargeback Allocation (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article VII of the Artist Bill of Rights, Boptone commits to fair allocation of chargeback risk:
                 </p>
@@ -572,7 +572,7 @@ export default function Terms() {
                   <strong>Liability Limitations:</strong> You are liable for chargebacks only in the following circumstances: (1) Proven fraud (you knowingly processed fraudulent transactions or colluded with customers to defraud payment processors); (2) Material misrepresentation (you sold counterfeit goods, misrepresented product features, or failed to deliver products as described); (3) Gross negligence (you ignored obvious red flags, failed to verify high-risk orders, or systematically violated payment processing best practices).
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">7.14 Currency Conversion Transparency (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">7.14 Currency Conversion Transparency (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article VII of the Artist Bill of Rights, currency conversion is calculated with full transparency:
                 </p>
@@ -714,7 +714,7 @@ export default function Terms() {
                   We may terminate the accounts of repeat infringers in appropriate circumstances.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">9.5 AI Training Prohibition (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.5 AI Training Prohibition (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article III of the Artist Bill of Rights, your creative works will <strong>never</strong> be used to train artificial intelligence models, machine learning systems, or algorithmic tools without your separate, explicit, and revocable consent.
                 </p>
@@ -734,7 +734,7 @@ export default function Terms() {
                   <strong>Permanent Commitment:</strong> This prohibition on AI training is a permanent commitment, honored in perpetuity. It cannot be modified, weakened, or removed through unilateral changes to these Terms of Service. Any amendment to this Section 9.5 requires 180 days' advance notice, approval by the Artist Policy Council (see Section 1, Article IX), and opt-out rights allowing you to reject the change and continue under the original terms.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">9.6 Content Deletion Timeline (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.6 Content Deletion Timeline (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article VI of the Artist Bill of Rights, when you delete content from Boptone, we commit to the following deletion timeline:
                 </p>
@@ -757,7 +757,7 @@ export default function Terms() {
                   <strong>Verification:</strong> Upon request, we will provide written confirmation that your content has been deleted, including specific deletion dates for each system (public pages, CDN, backups, databases), confirmation that backups have been purged, confirmation that third-party distribution partners have been notified, and a list of any legal retention exceptions and their expiration dates.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">9.7 Non-Exclusivity Guarantee (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.7 Non-Exclusivity Guarantee (Core Commitment)</h3>
                 <p className="mb-4">
                   The license grant in Section 9.3 is <strong>non-exclusive</strong>. You retain the right to:
                 </p>
@@ -772,7 +772,7 @@ export default function Terms() {
                   Boptone will never require exclusivity, territorial restrictions, or first-refusal rights as a condition of using the Service. You are free to distribute your works however you choose.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">9.8 License Scope Limitation (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.8 License Scope Limitation (Core Commitment)</h3>
                 <p className="mb-4">
                   The license grant in Section 9.3 is limited to <strong>operational purposes only</strong>. "Operational purposes" means activities necessary to provide the Service to you, including:
                 </p>
@@ -969,7 +969,7 @@ export default function Terms() {
                   SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO SOME OF THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. YOU MAY ALSO HAVE OTHER LEGAL RIGHTS THAT VARY BY JURISDICTION.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">15.1 Service Commitments (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">15.1 Service Commitments (Core Commitment)</h3>
                 <p className="mb-4">
                   While the above disclaimers remain in effect for legal protection, in accordance with Article V of the Artist Bill of Rights, Boptone commits to the following service level standards:
                 </p>
@@ -1067,7 +1067,7 @@ export default function Terms() {
                   SOME JURISDICTIONS DO NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">16.1 Tiered Liability Caps (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">16.1 Tiered Liability Caps (Core Commitment)</h3>
                 <p className="mb-4">
                   While the above liability limitations remain in effect for legal protection, in accordance with the Artist Bill of Rights, Boptone commits to the following tiered liability structure that scales with your platform usage:
                 </p>
@@ -1087,7 +1087,7 @@ export default function Terms() {
                   <strong>Rationale:</strong> Artists who generate significant revenue through Boptone deserve liability protection commensurate with their platform usage. A flat $100 cap is unconscionable for artists earning $50,000/year through the platform. These tiered caps ensure fair risk allocation while maintaining platform viability.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">16.2 Carve-Outs from Liability Limitations (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">16.2 Carve-Outs from Liability Limitations (Core Commitment)</h3>
                 <p className="mb-4">
                   The liability limitations in Section 16 do <strong>not</strong> apply to the following categories of claims:
                 </p>
@@ -1110,7 +1110,7 @@ export default function Terms() {
                   <strong>Death or Personal Injury:</strong> Boptone remains fully liable for death or personal injury caused by our negligence or defective products/services. This carve-out is required by law in most jurisdictions.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">16.3 Mutual Limitation (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">16.3 Mutual Limitation (Core Commitment)</h3>
                 <p className="mb-4">
                   The liability limitations in Section 16 apply equally to both parties. Just as Boptone's liability is capped, your liability to Boptone is also capped at the same amounts (subject to the same carve-outs for fraud, gross negligence, and IP violations). This ensures mutual fairness and prevents one-sided risk allocation.
                 </p>
@@ -1170,7 +1170,7 @@ export default function Terms() {
                   These Terms and any action related thereto will be governed by the laws of the State of California, without regard to its conflict of laws provisions. The exclusive jurisdiction for any dispute not subject to arbitration shall be the state and federal courts located in Los Angeles County, California, and you consent to personal jurisdiction in those courts.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">18.1 Opt-Out Right (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">18.1 Opt-Out Right (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article IV of the Artist Bill of Rights and to comply with AT&T Mobility v. Concepcion, you have the right to opt out of the arbitration agreement within thirty (30) days of account creation or acceptance of these Terms.
                 </p>
@@ -1184,7 +1184,7 @@ export default function Terms() {
                   <strong>No Retaliation:</strong> Opting out of arbitration will not affect your access to the Service, your subscription tier, your eligibility for features, or any other aspect of your account. We will not retaliate against users who opt out.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">18.2 Small Claims Exception (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">18.2 Small Claims Exception (Core Commitment)</h3>
                 <p className="mb-4">
                   Notwithstanding the arbitration agreement, either party may bring an individual action in small claims court for disputes under $10,000 USD. Small claims court provides a faster, less expensive forum for resolving minor disputes without the formality of arbitration or full litigation.
                 </p>
@@ -1195,7 +1195,7 @@ export default function Terms() {
                   <strong>Procedure:</strong> Small claims actions may be filed in the small claims court in your county of residence or in Los Angeles County, California. You are not required to attempt informal resolution before filing in small claims court, though we encourage it.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">18.3 Class Action Carve-Out for Bill of Rights Violations (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">18.3 Class Action Carve-Out for Bill of Rights Violations (Core Commitment)</h3>
                 <p className="mb-4">
                   The class action waiver in Section 18.3 does <strong>not</strong> apply to violations of the Artist Bill of Rights (Section 1) that affect more than 1,000 users. In accordance with Article X of the Artist Bill of Rights, you retain the right to bring class action lawsuits for:
                 </p>
@@ -1208,10 +1208,10 @@ export default function Terms() {
                   <li>Any other systematic violation of the Artist Bill of Rights affecting more than 1,000 users</li>
                 </ul>
                 <p className="mb-4">
-                  <strong>Rationale:</strong> Class actions are the only practical remedy for systematic violations affecting thousands of artists. Individual arbitration is insufficient when the platform violates constitutional commitments at scale. This carve-out ensures accountability for widespread abuses.
+                  <strong>Rationale:</strong> Class actions are the only practical remedy for systematic violations affecting thousands of artists. Individual arbitration is insufficient when the platform violates core commitments at scale. This carve-out ensures accountability for widespread abuses.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">18.4 Cost-Shifting for Frivolous Claims (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">18.4 Cost-Shifting for Frivolous Claims (Core Commitment)</h3>
                 <p className="mb-4">
                   To prevent abuse of the dispute resolution process, either party may seek recovery of attorneys' fees and costs for frivolous claims:
                 </p>
@@ -1225,7 +1225,7 @@ export default function Terms() {
                   <strong>Protection for Good Faith Claims:</strong> A claim is not frivolous merely because it is unsuccessful. You will not be penalized for bringing a good faith claim that ultimately fails on the merits. Cost-shifting applies only to claims brought in bad faith or with no reasonable basis.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">18.5 Human Review Triggers (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">18.5 Human Review Triggers (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article IV of the Artist Bill of Rights, certain disputes trigger mandatory human review before arbitration or litigation:
                 </p>
@@ -1252,25 +1252,25 @@ export default function Terms() {
                   It is your responsibility to review these Terms periodically. If you do not agree to the modified Terms, you must stop using the Service.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">19.1 Constitutional Amendment Process (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">19.1 Core Amendment Process (Core Commitment)</h3>
                 <p className="mb-4">
-                  While Boptone retains the right to modify these Terms, amendments to the Artist Bill of Rights (Section 1) and related constitutional commitments require a heightened amendment process to protect artist sovereignty:
+                  While Boptone retains the right to modify these Terms, amendments to the Artist Bill of Rights (Section 1) and related core commitments require a heightened amendment process to protect artist sovereignty:
                 </p>
                 <p className="mb-4">
-                  <strong>Ordinary Amendments (Non-Constitutional):</strong> Changes to non-constitutional provisions (eligibility, prohibited activities, account security, etc.) require thirty (30) days' advance notice via email and prominent notice on the Service. Continued use of the Service after the effective date constitutes acceptance.
+                  <strong>Ordinary Amendments (Non-Core):</strong> Changes to non-core provisions (eligibility, prohibited activities, account security, etc.) require thirty (30) days' advance notice via email and prominent notice on the Service. Continued use of the Service after the effective date constitutes acceptance.
                 </p>
                 <p className="mb-4">
-                  <strong>Constitutional Amendments (Bill of Rights):</strong> Changes to the Artist Bill of Rights (Section 1) or related constitutional commitments (Sections 7.11-7.14, 9.5-9.8, 15.1, 16.1-16.3, 18.1-18.5, 19.1-19.3) require:
+                  <strong>Core Amendments (Bill of Rights):</strong> Changes to the Artist Bill of Rights (Section 1) or related core commitments (Sections 7.11-7.14, 9.5-9.8, 15.1, 16.1-16.3, 18.1-18.5, 19.1-19.3) require:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
-                  <li><strong>180 Days' Advance Notice:</strong> Proposed constitutional amendments must be announced 180 days before the effective date, giving artists time to review, comment, and decide whether to opt out.</li>
-                  <li><strong>Policy Council Approval:</strong> Proposed constitutional amendments must be submitted to the Artist Policy Council (see Article IX of the Artist Bill of Rights) for review and approval. The Policy Council has sixty (60) days to review and vote on the proposed amendment.</li>
+                  <li><strong>180 Days' Advance Notice:</strong> Proposed core amendments must be announced 180 days before the effective date, giving artists time to review, comment, and decide whether to opt out.</li>
+                  <li><strong>Policy Council Approval:</strong> Proposed core amendments must be submitted to the Artist Policy Council (see Article IX of the Artist Bill of Rights) for review and approval. The Policy Council has sixty (60) days to review and vote on the proposed amendment.</li>
                   <li><strong>Public Comment Period:</strong> A thirty (30) day public comment period allows all users to submit feedback on the proposed amendment. Boptone must publish a summary of comments received and explain how they were addressed (or why they were not addressed).</li>
-                  <li><strong>Supermajority Approval:</strong> Constitutional amendments require approval by at least two-thirds (2/3) of the Artist Policy Council. Simple majority is insufficient for changes to foundational rights.</li>
-                  <li><strong>Opt-Out Rights:</strong> Artists may opt out of constitutional amendments and continue under the original terms for twelve (12) months. After twelve months, artists who have not opted in to the new terms may export their data and close their accounts without penalty.</li>
+                  <li><strong>Supermajority Approval:</strong> Core amendments require approval by at least two-thirds (2/3) of the Artist Policy Council. Simple majority is insufficient for changes to foundational rights.</li>
+                  <li><strong>Opt-Out Rights:</strong> Artists may opt out of core amendments and continue under the original terms for twelve (12) months. After twelve months, artists who have not opted in to the new terms may export their data and close their accounts without penalty.</li>
                 </ul>
                 <p className="mb-4">
-                  <strong>Prohibited Amendments:</strong> Certain constitutional commitments cannot be amended or weakened under any circumstances:
+                  <strong>Prohibited Amendments:</strong> Certain core commitments cannot be amended or weakened under any circumstances:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
                   <li>AI training prohibition (Section 9.5) - This is a permanent commitment</li>
@@ -1280,15 +1280,15 @@ export default function Terms() {
                   <li>Human review rights (Article IV) - Cannot be eliminated or weakened</li>
                 </ul>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">19.2 Grandfathering and Opt-Out (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">19.2 Grandfathering and Opt-Out (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article IX of the Artist Bill of Rights, artists have the right to reject amendments and continue under the original terms:
                 </p>
                 <p className="mb-4">
-                  <strong>Grandfathering Period:</strong> For constitutional amendments, artists who joined before the amendment's effective date may continue under the original terms for twelve (12) months. This grandfathering period allows artists to evaluate the amendment's impact before deciding whether to accept it.
+                  <strong>Grandfathering Period:</strong> For core amendments, artists who joined before the amendment's effective date may continue under the original terms for twelve (12) months. This grandfathering period allows artists to evaluate the amendment's impact before deciding whether to accept it.
                 </p>
                 <p className="mb-4">
-                  <strong>Opt-Out Mechanism:</strong> To opt out of a constitutional amendment, send an email to hello@boptone.com with the subject line "Constitutional Amendment Opt-Out" and include: (1) Your account email address; (2) The specific amendment you are opting out of; (3) A statement that you wish to continue under the original terms.
+                  <strong>Opt-Out Mechanism:</strong> To opt out of a core amendment, send an email to hello@boptone.com with the subject line "Core Amendment Opt-Out" and include: (1) Your account email address; (2) The specific amendment you are opting out of; (3) A statement that you wish to continue under the original terms.
                 </p>
                 <p className="mb-4">
                   <strong>Effect of Opt-Out:</strong> If you opt out, you will continue under the original terms for twelve (12) months. After twelve months, you must either accept the new terms or export your data and close your account. Boptone will not force you to accept amendments you find unacceptable.
@@ -1297,7 +1297,7 @@ export default function Terms() {
                   <strong>No Retaliation:</strong> Opting out of amendments will not affect your access to the Service, your subscription tier, your eligibility for features, or any other aspect of your account during the grandfathering period. We will not retaliate against users who opt out.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">19.3 Service Discontinuation Protections (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">19.3 Service Discontinuation Protections (Core Commitment)</h3>
                 <p className="mb-4">
                   While Boptone retains the right to discontinue the Service, we commit to the following protections to minimize harm to artists who depend on the platform for their livelihood:
                 </p>

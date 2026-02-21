@@ -169,7 +169,7 @@ export default function Privacy() {
                   We use the information we collect for various business and operational purposes. The specific purposes depend on how you interact with our Service and the features you use. Our uses of your information include:
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">3.1 AI Training Prohibition (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">3.1 AI Training Prohibition (Core Commitment)</h3>
                 <p className="mb-4">
                   In accordance with Article III of the Artist Bill of Rights (Section 1 of our Terms of Service), your creative works will <strong>never</strong> be used to train artificial intelligence models, machine learning systems, or algorithmic tools without your separate, explicit, and revocable consent.
                 </p>
@@ -301,7 +301,7 @@ export default function Privacy() {
                   We may share your information with third parties when you provide explicit consent for specific sharing purposes, such as featuring your success story in our marketing materials or participating in co-marketing campaigns with partners.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">5.10 Algorithm Transparency (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">5.10 Algorithm Transparency (Core Commitment)</h3>
                 <p className="mb-4">
                   <strong>Your Right to Explanation:</strong> You have the right to understand how our algorithms affect your visibility, recommendations, and revenue. We commit to providing transparency into algorithmic decisions that impact your livelihood.
                 </p>
@@ -324,7 +324,7 @@ export default function Privacy() {
                   <strong>Algorithm Audits:</strong> We commit to conducting annual independent audits of our algorithms to identify and mitigate bias, discrimination, or unfair outcomes. Audit results will be published in summary form to the Artist Policy Council.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">5.11 Bankruptcy Protection (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">5.11 Bankruptcy Protection (Core Commitment)</h3>
                 <p className="mb-4">
                   <strong>Your Data Will Not Be Sold:</strong> In the event that Boptone, Acid Bird, Inc., or any successor entity enters bankruptcy, receivership, or similar insolvency proceedings, your personal data and User Content will be deleted, not sold as a corporate asset.
                 </p>
@@ -572,7 +572,7 @@ export default function Privacy() {
                   For more information about cookies and how to manage them, visit www.allaboutcookies.org.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">11.5 Do Not Track Support (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">11.5 Do Not Track Support (Core Commitment)</h3>
                 <p className="mb-4">
                   <strong>We Honor Do Not Track Signals:</strong> Unlike most platforms, Boptone respects browser Do Not Track (DNT) signals. When your browser sends a DNT signal, we will disable all non-essential tracking technologies, including analytics cookies, marketing cookies, and third-party advertising pixels.
                 </p>

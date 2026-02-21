@@ -4478,3 +4478,26 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Remove "constitutional" language from Privacy Policy preamble (replaced with "foundational commitments")
 - [x] Update todo.md
 - [x] Save checkpoint
+
+
+## Remove ALL "Constitutional" Language (User Report - HIGH PRIORITY) ✅ COMPLETE
+
+### Issue
+- "Constitutional" and "Constitution" are politically charged, hot-button words
+- Will trigger negative emotional reactions from artists
+- Need emotionally neutral alternatives
+
+### Implementation
+- [x] Search TOS for all instances of "constitutional" or "constitution" (found 35 instances)
+- [x] Search Privacy Policy for all instances of "constitutional" or "constitution" (found 4 instances)
+- [x] Replace with neutral alternatives:
+  - "(Constitutional Commitment)" → "(Core Commitment)" (20+ instances)
+  - "constitutional principles" → "foundational principles"
+  - "constitutional framework" → "foundational framework"
+  - "constitutional protection" → "permanent protection"
+  - "constitutional commitments" → "core commitments"
+  - "constitutional amendment" → "core amendment"
+  - "Non-Constitutional" → "Non-Core"
+- [x] Verify no constitutional language remains (0 instances found)
+- [x] Update todo.md
+- [ ] Save checkpoint
