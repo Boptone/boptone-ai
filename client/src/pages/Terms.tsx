@@ -272,12 +272,39 @@ export default function Terms() {
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">4. Eligibility</h2>
+                
+                <h3 className="text-xl font-semibold mb-3 mt-6">4.1 General Age Requirement</h3>
                 <p className="mb-4">
                   You must be at least 13 years old to use the Service. If you are between 13 and 18 years old (or the age of majority in your jurisdiction), you may only use the Service under the supervision of a parent or legal guardian who agrees to be bound by these Terms. By using the Service, you represent and warrant that you meet these age requirements and that your use of the Service does not violate any applicable laws or regulations.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">4.2 Age Requirement for Payment Processing (Core Commitment)</h3>
+                <p className="mb-4">
+                  You must be at least eighteen (18) years of age, or the age of majority in your jurisdiction (whichever is greater), to use Boptone's payment processing features, including BopShop e-commerce, Creator Monetization, royalty-backed micro-loans, and any other features that involve receiving payments or connecting a Stripe account.
+                </p>
+                <p className="mb-4">
+                  If you are under 18, you may use Boptone's non-commercial features (profile creation, content uploads, social features, analytics) but you cannot:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Connect a Stripe account or receive payments</li>
+                  <li>Sell products through BopShop</li>
+                  <li>Monetize your content or receive royalties</li>
+                  <li>Apply for royalty-backed micro-loans</li>
+                  <li>Participate in any revenue-generating features</li>
+                </ul>
+                <p className="mb-4">
+                  Minors who wish to monetize their creative work must have a parent or legal guardian create an account and manage all payment processing on their behalf. The adult account holder will be solely responsible for all tax obligations, legal compliance, and contractual obligations under these Terms.
+                </p>
+                <p className="mb-4">
+                  We reserve the right to request government-issued identification to verify your age at any time. Failure to provide verification may result in account suspension or termination. Misrepresenting your age to access payment features is a violation of these Terms and may result in immediate account termination and forfeiture of any pending payments.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">4.3 Entity Accounts</h3>
                 <p className="mb-4">
                   If you are using the Service on behalf of a company, organization, label, management company, or other entity, you represent and warrant that you have the legal authority to bind that entity to these Terms, and you agree to be bound by these Terms on behalf of such entity.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">4.4 Right to Refuse Service</h3>
                 <p>
                   We reserve the right to refuse service, terminate accounts, or remove or edit Content in our sole discretion, including if we believe you do not meet the eligibility requirements.
                 </p>
@@ -797,6 +824,58 @@ export default function Terms() {
                 </ul>
                 <p className="mb-4">
                   If we ever wish to use your works for purposes beyond operational use, we will request your separate, explicit, written consent and compensate you fairly.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.9 Copyright Registration and Performance Rights Organization (PRO) Obligations (Core Commitment)</h3>
+                <p className="mb-4">
+                  <strong>Your Responsibility:</strong> You are solely responsible for registering your musical works, compositions, sound recordings, and other creative works with the appropriate government copyright offices (such as the U.S. Copyright Office, UK Intellectual Property Office, or equivalent authorities in your jurisdiction) and for joining and registering your works with a Performance Rights Organization (PRO) such as ASCAP, BMI, SESAC, PRS, SOCAN, SACEM, GEMA, or equivalent organizations in your territory.
+                </p>
+                <p className="mb-4">
+                  <strong>What This Means:</strong> Boptone provides tools to distribute, monetize, and protect your creative works, but we do not register copyrights or collect performance royalties on your behalf. You must:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Register your copyrights with the appropriate government office to establish legal ownership and enable enforcement of your rights</li>
+                  <li>Join a PRO (ASCAP, BMI, PRS, SOCAN, etc.) and register your musical compositions to collect performance royalties when your works are publicly performed, streamed, or broadcast</li>
+                  <li>Obtain mechanical licenses (through Harry Fox Agency, MLC, or equivalent) if you are distributing cover songs or compositions you do not own</li>
+                  <li>Clear all samples, interpolations, and third-party content before uploading to Boptone to avoid copyright infringement claims</li>
+                  <li>Obtain synchronization licenses if you use third-party music in videos or multimedia works</li>
+                  <li>Ensure you have written permission from all collaborators, co-writers, featured artists, and producers before uploading works to Boptone</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Boptone's Role:</strong> Boptone will:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Provide educational resources and guidance on copyright registration and PRO membership</li>
+                  <li>Offer tools to help you track and manage your copyrights and registrations</li>
+                  <li>Integrate with PROs where technically feasible to streamline royalty collection</li>
+                  <li>Provide DMCA takedown tools to protect your registered copyrights from infringement</li>
+                  <li>Report usage data to PROs when required for performance royalty calculations</li>
+                </ul>
+                <p className="mb-4">
+                  However, Boptone does <strong>not</strong>:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Register copyrights on your behalf with government copyright offices</li>
+                  <li>Join PROs on your behalf or collect performance royalties (you must join a PRO separately)</li>
+                  <li>Obtain mechanical licenses for cover songs (you must obtain these independently)</li>
+                  <li>Clear samples or obtain synchronization licenses (you are responsible for all clearances)</li>
+                  <li>Verify that you have obtained all necessary permissions from collaborators and rights holders</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Indemnification:</strong> You agree to indemnify, defend, and hold harmless Boptone, Acid Bird, Inc., and our officers, directors, employees, and agents from any claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Your failure to register copyrights or obtain necessary licenses</li>
+                  <li>Your failure to join a PRO or register your works with a PRO</li>
+                  <li>Copyright infringement claims resulting from uncleared samples, cover songs, or third-party content in your works</li>
+                  <li>Claims by collaborators, co-writers, or featured artists that you uploaded works without their permission</li>
+                  <li>Any other intellectual property infringement claims related to your User Content</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Disclaimer:</strong> Boptone provides this platform "as is" with respect to copyright registration and PRO obligations. We make no representations or warranties that your use of the Service will result in copyright protection, royalty collection, or legal ownership of your works. You are solely responsible for protecting your intellectual property rights and complying with all applicable copyright laws and regulations.
+                </p>
+                <p className="mb-4">
+                  <strong>Educational Resources:</strong> Boptone will provide links to copyright offices, PRO registration portals, mechanical licensing agencies, and educational materials to help you understand and fulfill your obligations. However, we strongly recommend consulting with an entertainment attorney or music rights specialist to ensure full compliance with copyright law in your jurisdiction.
                 </p>
               </section>
 

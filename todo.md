@@ -4500,4 +4500,25 @@ Apply the visually stunning design style from the explainer component across ALL
   - "Non-Constitutional" → "Non-Core"
 - [x] Verify no constitutional language remains (0 instances found)
 - [x] Update todo.md
+- [x] Save checkpoint
+
+
+## Age Restrictions & Copyright/PRO Obligations (User Request - HIGH PRIORITY)
+
+### Issue #1: Age Restrictions for Payment Processing
+- Minors cannot have bank accounts to connect with Stripe Connect
+- Need to research how YouTube, Spotify, Shopify handle this
+- Determine standard age restriction for payment-enabled accounts
+
+### Issue #2: Copyright Registration & PRO Obligations
+- Artists are responsible for copyright registration with government entities
+- Artists are responsible for registering songs with PROs (ASCAP, BMI, PRS, SOCAN, SACEM, etc.)
+- Need legal wording to add to TOS
+
+### Implementation
+- [ ] Research age restrictions: YouTube, Spotify, Shopify, Stripe Connect policies
+- [ ] Research copyright registration and PRO obligations legal language
+- [ ] Draft age restriction policy for TOS Section 2 (Eligibility)
+- [ ] Draft copyright/PRO registration obligations for TOS Section 9 (Intellectual Property)
+- [ ] Update todo.md
 - [ ] Save checkpoint
