@@ -6,6 +6,7 @@ import { getDb } from "../db";
 import { productReviews, reviewPhotos, reviewHelpfulnessVotes, orders, products } from "../../drizzle/schema";
 import { storagePut } from "../storage";
 import { invokeLLM } from "../_core/llm";
+import { notifyArtistOfReview } from "../reviewNotifications";
 
 /**
  * Review Router
@@ -70,6 +71,20 @@ export const reviewRouter = router({
       });
 
       const reviewId = review.insertId;
+
+      // Send notification to artist (non-blocking)
+      notifyArtistOfReview({
+        productId: input.productId,
+        productName: "Product", // Will be fetched in notification service
+        rating: input.rating,
+        reviewerName: input.reviewerName || ctx.user.name || "Anonymous",
+        reviewTitle: input.title,
+        reviewContent: input.content,
+        reviewId: Number(reviewId),
+      }).catch((error) => {
+        console.error("[Review Submission] Failed to send artist notification:", error);
+        // Don't fail the review submission if notification fails
+      });
 
       // Process photo uploads if provided
       if (input.photos && input.photos.length > 0) {
