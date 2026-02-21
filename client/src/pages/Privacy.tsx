@@ -297,8 +297,57 @@ export default function Privacy() {
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.9 With Your Consent</h3>
-                <p>
+                <p className="mb-4">
                   We may share your information with third parties when you provide explicit consent for specific sharing purposes, such as featuring your success story in our marketing materials or participating in co-marketing campaigns with partners.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">5.10 Algorithm Transparency (Constitutional Commitment)</h3>
+                <p className="mb-4">
+                  <strong>Your Right to Explanation:</strong> You have the right to understand how our algorithms affect your visibility, recommendations, and revenue. We commit to providing transparency into algorithmic decisions that impact your livelihood.
+                </p>
+                <p className="mb-4">
+                  <strong>What We Disclose:</strong>
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Recommendation Algorithms:</strong> We will publish plain-language explanations of how our recommendation systems work, including the factors that influence which content is shown to users (e.g., listening history, genre preferences, engagement metrics, recency).</li>
+                  <li><strong>Search Ranking:</strong> We will explain how search results are ranked and what factors influence your position in search results (e.g., relevance, popularity, metadata quality, user engagement).</li>
+                  <li><strong>Revenue Allocation:</strong> We will provide clear documentation of how revenue is calculated and allocated, including platform fees, payment processing fees, tax calculations, and any algorithmic adjustments.</li>
+                  <li><strong>Content Moderation:</strong> We will disclose the criteria used by automated content moderation systems to flag or remove content, and provide human review rights for disputed decisions.</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Individual Explanations:</strong> Upon request, we will provide you with a personalized explanation of how algorithmic decisions have affected your account, including why specific content was or was not recommended, why your account was flagged for review, or how your revenue was calculated for a specific period.
+                </p>
+                <p className="mb-4">
+                  <strong>No Shadow Bans:</strong> We do not engage in "shadow banning" or secretly limiting your reach without notification. If your content is restricted or your account is subject to limitations, you will receive explicit notification with an explanation and appeal process.
+                </p>
+                <p className="mb-4">
+                  <strong>Algorithm Audits:</strong> We commit to conducting annual independent audits of our algorithms to identify and mitigate bias, discrimination, or unfair outcomes. Audit results will be published in summary form to the Artist Policy Council.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">5.11 Bankruptcy Protection (Constitutional Commitment)</h3>
+                <p className="mb-4">
+                  <strong>Your Data Will Not Be Sold:</strong> In the event that Boptone, Acid Bird, Inc., or any successor entity enters bankruptcy, receivership, or similar insolvency proceedings, your personal data and User Content will be deleted, not sold as a corporate asset.
+                </p>
+                <p className="mb-4">
+                  <strong>Segregated Data Architecture:</strong> We maintain a technical architecture that allows for rapid deletion of user data independently from business-critical systems. Your data is logically segregated to enable deletion without disrupting ongoing business operations or creditor claims.
+                </p>
+                <p className="mb-4">
+                  <strong>Deletion Timeline:</strong> Within thirty (30) days of any bankruptcy filing, we will:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Notify all users via email of the bankruptcy filing and their data deletion rights</li>
+                  <li>Provide a 90-day window for users to export their data via our data portability tools</li>
+                  <li>Automatically delete all user personal data and User Content after the 90-day export window closes</li>
+                  <li>Provide written confirmation of deletion to any user who requests it</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Bankruptcy Court Notification:</strong> We will file a motion with the bankruptcy court explicitly excluding user personal data and User Content from the bankruptcy estate and requesting court approval for deletion. We will oppose any creditor or trustee attempts to claim user data as a corporate asset.
+                </p>
+                <p className="mb-4">
+                  <strong>Financial Data Exception:</strong> Transaction records, payment history, and tax-related data may be retained as required by law for accounting, tax compliance, and creditor claims, but will be anonymized to remove personally identifiable information where legally permissible.
+                </p>
+                <p>
+                  <strong>Enforcement:</strong> This commitment is enforceable under the Artist Bill of Rights (Section 1 of our Terms of Service) and provides a private right of action for users to seek injunctive relief to prevent sale of their data in bankruptcy proceedings.
                 </p>
               </section>
 
@@ -519,15 +568,47 @@ export default function Privacy() {
                 <p className="mb-4">
                   <strong>Opt-Out of Interest-Based Advertising:</strong> You can opt out of interest-based advertising by visiting the Digital Advertising Alliance opt-out page at www.aboutads.info/choices or the Network Advertising Initiative opt-out page at www.networkadvertising.org/choices.
                 </p>
-                <p>
+                <p className="mb-4">
                   For more information about cookies and how to manage them, visit www.allaboutcookies.org.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">11.5 Do Not Track Support (Constitutional Commitment)</h3>
+                <p className="mb-4">
+                  <strong>We Honor Do Not Track Signals:</strong> Unlike most platforms, Boptone respects browser Do Not Track (DNT) signals. When your browser sends a DNT signal, we will disable all non-essential tracking technologies, including analytics cookies, marketing cookies, and third-party advertising pixels.
+                </p>
+                <p className="mb-4">
+                  <strong>What DNT Means on Boptone:</strong> When DNT is enabled, we will:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Disable Analytics:</strong> We will not collect usage data via Google Analytics, Mixpanel, or similar analytics platforms. Your browsing behavior on Boptone will not be tracked or analyzed.</li>
+                  <li><strong>Disable Marketing Pixels:</strong> We will not load Facebook Pixel, Google Ads conversion tracking, or other advertising technologies that track you across websites.</li>
+                  <li><strong>Block Third-Party Trackers:</strong> We will prevent third-party cookies and tracking scripts from loading on Boptone pages, except those strictly necessary for payment processing or security.</li>
+                  <li><strong>Maintain Functionality:</strong> Necessary cookies required for authentication, security, and core site functionality will continue to work. Your ability to use Boptone will not be impaired.</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>How to Enable DNT:</strong> You can enable Do Not Track in your browser settings:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Chrome:</strong> Settings → Privacy and security → Cookies and other site data → "Send a 'Do Not Track' request with your browsing traffic"</li>
+                  <li><strong>Firefox:</strong> Settings → Privacy & Security → "Send websites a 'Do Not Track' signal"</li>
+                  <li><strong>Safari:</strong> Preferences → Privacy → "Ask websites not to track me"</li>
+                  <li><strong>Edge:</strong> Settings → Privacy, search, and services → "Send 'Do Not Track' requests"</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>DNT Status Indicator:</strong> When DNT is active, you will see a privacy indicator in your Profile Settings confirming that tracking is disabled. You can verify that DNT is working by checking your browser's developer tools (Network tab) to confirm that analytics and marketing scripts are not loading.
+                </p>
+                <p>
+                  <strong>Why We Support DNT:</strong> Most platforms ignore DNT signals because there is "no uniform standard." We reject this excuse. DNT is a clear expression of user intent, and respecting it is fundamental to our commitment to data sovereignty. This commitment is enforceable under the Artist Bill of Rights (Section 1 of our Terms of Service).
                 </p>
               </section>
 
               <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">12. Do Not Track Signals</h2>
+                <h2 className="text-2xl font-semibold mb-4">12. Global Privacy Control (GPC)</h2>
                 <p className="mb-4">
-                  Some web browsers have a "Do Not Track" (DNT) feature that signals to websites that you do not want to have your online activity tracked. Because there is no uniform standard for recognizing and implementing DNT signals, we do not currently respond to DNT browser signals. However, you can manage cookies and tracking technologies through your browser settings and opt-out mechanisms as described in Section 11 above.
+                  In addition to Do Not Track (DNT), we also honor Global Privacy Control (GPC) signals. GPC is a newer privacy standard that allows you to opt out of the sale or sharing of your personal information across all websites you visit. When your browser sends a GPC signal, we will treat it as a legally binding request to opt out of data sales and sharing under applicable privacy laws (CCPA, GDPR, etc.).
+                </p>
+                <p className="mb-4">
+                  <strong>How to Enable GPC:</strong> GPC is supported by privacy-focused browsers like Brave, Firefox (with Privacy Badger extension), and DuckDuckGo. You can also install the Global Privacy Control browser extension from globalprivacycontrol.org.
                 </p>
               </section>
 

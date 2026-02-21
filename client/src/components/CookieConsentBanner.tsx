@@ -101,7 +101,7 @@ export function CookieConsentBanner() {
   return (
     <>
       {/* Cookie Consent Banner */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t">
         <Card className="max-w-4xl mx-auto p-6">
           <div className="flex items-start gap-4">
             <div className="flex-1">

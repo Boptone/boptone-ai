@@ -4393,4 +4393,14 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Remove any "this is not a TOS" disclaimers
 - [x] Simplify introduction to straightforward "Terms of Service" language
 - [x] Let Artist Bill of Rights (Section 1) do the trust-building work
+- [x] Save checkpoint
+
+
+## Fix GDPR Banner Background & Complete Privacy Policy
+- [x] Fix CookieConsentBanner background to solid white (currently transparent)
+- [x] Add Privacy Policy Section 5.10: Algorithm Transparency (Constitutional Commitment)
+- [x] Add Privacy Policy Section 5.11: Bankruptcy Protection (Constitutional Commitment)
+- [x] Add Privacy Policy Section 11.5: Do Not Track Support (Constitutional Commitment)
+- [x] Add Section 12: Global Privacy Control (GPC) Support
+- [x] Update todo.md
 - [ ] Save checkpoint
