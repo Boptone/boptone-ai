@@ -369,3 +369,337 @@ export function generateBoptoneGlossarySchemas(baseUrl: string) {
     generateDefinedTermSchema(term, definition, glossaryUrl)
   );
 }
+
+// ============================================================================
+// BOPAUDIO SCHEMAS
+// ============================================================================
+
+import type { TrackAEOData, AlbumAEOData, PlaylistAEOData, GenreAEOData, LocationAEOData, PlatformAEOData } from "./aeo";
+
+/**
+ * Generate enhanced MusicRecording schema for tracks
+ */
+export function generateTrackSchema(track: TrackAEOData, baseUrl: string) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "MusicRecording",
+    "@id": `${baseUrl}/audio/${track.artist.username}/${encodeURIComponent(track.name.toLowerCase().replace(/\s+/g, "-"))}`,
+    name: track.name,
+    byArtist: {
+      "@type": "MusicGroup",
+      name: track.artist.name,
+      url: `${baseUrl}/artist/${track.artist.username}`
+    },
+    duration: `PT${Math.floor(track.duration / 60)}M${track.duration % 60}S`,
+    datePublished: track.releaseDate,
+    genre: track.genre,
+    isrcCode: track.isrc,
+    inLanguage: "en",
+    isFamilyFriendly: !track.isExplicit
+  };
+  
+  // Add album if present
+  if (track.album) {
+    schema.inAlbum = {
+      "@type": "MusicAlbum",
+      name: track.album.name,
+      datePublished: track.album.releaseDate
+    };
+  }
+  
+  // Add aggregated rating if streams available
+  if (track.streams) {
+    // Estimate rating based on streams (simplified)
+    const estimatedRating = Math.min(5, 3 + (track.streams / 50000));
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: estimatedRating.toFixed(1),
+      ratingCount: Math.floor(track.streams / 100),
+      bestRating: 5,
+      worstRating: 1
+    };
+  }
+  
+  // Add temporal metadata
+  schema.dateModified = new Date().toISOString();
+  
+  // Add semantic relationships
+  if (track.genre) {
+    schema.about = {
+      "@type": "DefinedTerm",
+      name: track.genre,
+      inDefinedTermSet: `${baseUrl}/genres/${track.genre.toLowerCase().replace(/\s+/g, "-")}`
+    };
+  }
+  
+  return schema;
+}
+
+/**
+ * Generate enhanced MusicAlbum schema
+ */
+export function generateAlbumSchema(album: AlbumAEOData, baseUrl: string) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "MusicAlbum",
+    "@id": `${baseUrl}/audio/${album.artist.username}/${encodeURIComponent(album.name.toLowerCase().replace(/\s+/g, "-"))}`,
+    name: album.name,
+    byArtist: {
+      "@type": "MusicGroup",
+      name: album.artist.name,
+      url: `${baseUrl}/artist/${album.artist.username}`
+    },
+    datePublished: album.releaseDate,
+    numTracks: album.trackCount,
+    genre: album.genres,
+    image: album.coverArt,
+    recordLabel: album.label,
+    catalogNumber: album.upc
+  };
+  
+  // Add track listing
+  if (album.tracks && album.tracks.length > 0) {
+    schema.track = album.tracks.map(track => ({
+      "@type": "MusicRecording",
+      name: track.name,
+      position: track.trackNumber,
+      duration: `PT${Math.floor(track.duration / 60)}M${track.duration % 60}S`
+    }));
+  }
+  
+  // Add aggregated rating if streams available
+  if (album.streams) {
+    const estimatedRating = Math.min(5, 3 + (album.streams / 100000));
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: estimatedRating.toFixed(1),
+      ratingCount: Math.floor(album.streams / 100),
+      bestRating: 5,
+      worstRating: 1
+    };
+  }
+  
+  // Add temporal metadata
+  schema.dateModified = new Date().toISOString();
+  
+  return schema;
+}
+
+/**
+ * Generate enhanced MusicPlaylist schema
+ */
+export function generatePlaylistSchema(playlist: PlaylistAEOData, baseUrl: string) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "MusicPlaylist",
+    "@id": `${baseUrl}/playlists/${encodeURIComponent(playlist.name.toLowerCase().replace(/\s+/g, "-"))}`,
+    name: playlist.name,
+    description: playlist.description,
+    numTracks: playlist.trackCount,
+    genre: playlist.genres,
+    creator: {
+      "@type": "Person",
+      name: playlist.curator.name,
+      url: `${baseUrl}/artist/${playlist.curator.username}`
+    },
+    dateModified: playlist.lastUpdated.toISOString(),
+    datePublished: playlist.lastUpdated.toISOString()
+  };
+  
+  // Add track listing (sample)
+  if (playlist.tracks && playlist.tracks.length > 0) {
+    schema.track = playlist.tracks.slice(0, 10).map((track, index) => ({
+      "@type": "MusicRecording",
+      name: track.name,
+      byArtist: {
+        "@type": "MusicGroup",
+        name: track.artist
+      },
+      position: index + 1
+    }));
+  }
+  
+  // Add interaction stats
+  if (playlist.followers) {
+    schema.interactionStatistic = {
+      "@type": "InteractionCounter",
+      interactionType: "https://schema.org/FollowAction",
+      userInteractionCount: playlist.followers
+    };
+  }
+  
+  return schema;
+}
+
+// ============================================================================
+// GENRE & LOCATION SCHEMAS
+// ============================================================================
+
+/**
+ * Generate DefinedTerm schema for music genres
+ */
+export function generateGenreSchema(genre: GenreAEOData, baseUrl: string) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "@id": `${baseUrl}/genres/${genre.name.toLowerCase().replace(/\s+/g, "-")}`,
+    name: genre.name,
+    description: genre.description,
+    inDefinedTermSet: {
+      "@type": "DefinedTermSet",
+      name: "Music Genres",
+      url: `${baseUrl}/genres`
+    }
+  };
+  
+  // Add related genres
+  if (genre.relatedGenres && genre.relatedGenres.length > 0) {
+    schema.sameAs = genre.relatedGenres.map(relatedGenre => 
+      `${baseUrl}/genres/${relatedGenre.toLowerCase().replace(/\s+/g, "-")}`
+    );
+  }
+  
+  // Add characteristics as additional properties
+  if (genre.characteristics && genre.characteristics.length > 0) {
+    schema.additionalProperty = genre.characteristics.map(char => ({
+      "@type": "PropertyValue",
+      name: "Characteristic",
+      value: char
+    }));
+  }
+  
+  return schema;
+}
+
+/**
+ * Generate Place schema for location pages with music scene context
+ */
+export function generateLocationSchema(location: LocationAEOData, baseUrl: string) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "Place",
+    "@id": `${baseUrl}/locations/${location.city.toLowerCase().replace(/\s+/g, "-")}`,
+    name: `${location.city}, ${location.state}`,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: location.city,
+      addressRegion: location.state,
+      addressCountry: location.country
+    },
+    description: location.description
+  };
+  
+  // Add music scene as special event/cultural aspect
+  if (location.musicScene) {
+    schema.event = {
+      "@type": "Event",
+      name: `${location.city} Music Scene`,
+      description: location.musicScene,
+      location: {
+        "@type": "Place",
+        name: location.city
+      }
+    };
+  }
+  
+  // Add top artists as notable people from location
+  if (location.topArtists && location.topArtists.length > 0) {
+    schema.knowsAbout = location.topArtists.map(artist => ({
+      "@type": "MusicGroup",
+      name: artist.name,
+      url: `${baseUrl}/artist/${artist.username}`,
+      genre: artist.genres
+    }));
+  }
+  
+  return schema;
+}
+
+// ============================================================================
+// PLATFORM SCHEMAS
+// ============================================================================
+
+/**
+ * Generate SoftwareApplication schema for platform pages
+ */
+export function generatePlatformSchema(platform: PlatformAEOData, baseUrl: string) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": baseUrl,
+    name: platform.name,
+    description: platform.description,
+    applicationCategory: "MultimediaApplication",
+    operatingSystem: "Web",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD"
+    }
+  };
+  
+  // Add features
+  if (platform.keyFeatures && platform.keyFeatures.length > 0) {
+    schema.featureList = platform.keyFeatures;
+  }
+  
+  // Add pricing if paid tier exists
+  if (platform.pricing?.paid) {
+    schema.offers = [
+      {
+        "@type": "Offer",
+        name: "Free Plan",
+        price: "0",
+        priceCurrency: "USD",
+        description: platform.pricing.free.join(", ")
+      },
+      {
+        "@type": "Offer",
+        name: "Premium Plan",
+        price: platform.pricing.paid.price.toString(),
+        priceCurrency: "USD",
+        description: platform.pricing.paid.features.join(", ")
+      }
+    ];
+  }
+  
+  // Add aggregated rating if stats available
+  if (platform.stats.artists) {
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      ratingCount: platform.stats.artists,
+      bestRating: 5,
+      worstRating: 1
+    };
+  }
+  
+  return schema;
+}
+
+/**
+ * Generate comparison table schema for platform comparisons
+ */
+export function generateComparisonSchema(
+  platform1: { name: string; features: string[] },
+  platform2: { name: string; features: string[] },
+  baseUrl: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Table",
+    about: `Comparison between ${platform1.name} and ${platform2.name}`,
+    mainEntity: [
+      {
+        "@type": "SoftwareApplication",
+        name: platform1.name,
+        featureList: platform1.features
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: platform2.name,
+        featureList: platform2.features
+      }
+    ]
+  };
+}

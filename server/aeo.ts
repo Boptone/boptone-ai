@@ -542,3 +542,645 @@ export function generateQuestionHeader(topic: string, entityName: string): strin
   
   return templates[topic] || `${topic}`;
 }
+
+
+// ============================================================================
+// BOPAUDIO CONTENT AEO
+// ============================================================================
+
+export interface TrackAEOData {
+  id: number;
+  name: string;
+  artist: {
+    name: string;
+    username: string;
+  };
+  album?: {
+    name: string;
+    releaseDate: string;
+  };
+  duration: number; // in seconds
+  genre?: string;
+  releaseDate: string;
+  streams?: number;
+  lyrics?: string;
+  isExplicit: boolean;
+  isrc?: string; // International Standard Recording Code
+}
+
+export interface AlbumAEOData {
+  id: number;
+  name: string;
+  artist: {
+    name: string;
+    username: string;
+  };
+  releaseDate: string;
+  trackCount: number;
+  totalDuration: number; // in seconds
+  genres?: string[];
+  streams?: number;
+  tracks: Array<{
+    id: number;
+    name: string;
+    duration: number;
+    trackNumber: number;
+  }>;
+  coverArt?: string;
+  label?: string;
+  upc?: string; // Universal Product Code
+}
+
+export interface PlaylistAEOData {
+  id: number;
+  name: string;
+  description?: string;
+  curator: {
+    name: string;
+    username: string;
+  };
+  trackCount: number;
+  totalDuration: number;
+  genres?: string[];
+  followers?: number;
+  isPublic: boolean;
+  lastUpdated: Date;
+  tracks: Array<{
+    id: number;
+    name: string;
+    artist: string;
+  }>;
+}
+
+/**
+ * Generate direct answer for music tracks
+ */
+export function generateTrackDirectAnswer(track: TrackAEOData): DirectAnswer {
+  const parts: string[] = [];
+  
+  // Core identity
+  parts.push(`"${track.name}" is a ${track.genre || "music"} track by ${track.artist.name}`);
+  
+  // Album context
+  if (track.album) {
+    const year = new Date(track.album.releaseDate).getFullYear();
+    parts.push(` from the album ${track.album.name} (${year})`);
+  } else {
+    const year = new Date(track.releaseDate).getFullYear();
+    parts.push(`, released in ${year}`);
+  }
+  
+  // Duration and stats
+  const durationMin = Math.floor(track.duration / 60);
+  const durationSec = track.duration % 60;
+  parts.push(`. The track runs ${durationMin}:${durationSec.toString().padStart(2, '0')}`);
+  
+  if (track.streams) {
+    parts.push(` and has ${formatNumber(track.streams)} streams on BopAudio`);
+  }
+  
+  // Explicit content warning
+  if (track.isExplicit) {
+    parts.push(". Contains explicit content");
+  }
+  
+  const answer = parts.join("") + ".";
+  const wordCount = answer.split(/\s+/).length;
+  
+  return {
+    question: `What is "${track.name}" by ${track.artist.name}?`,
+    answer,
+    wordCount,
+    confidence: 0.95,
+    lastVerified: new Date()
+  };
+}
+
+/**
+ * Generate direct answer for albums
+ */
+export function generateAlbumDirectAnswer(album: AlbumAEOData): DirectAnswer {
+  const parts: string[] = [];
+  
+  // Core identity
+  const year = new Date(album.releaseDate).getFullYear();
+  const genreText = album.genres && album.genres.length > 0 
+    ? album.genres.slice(0, 2).join(" and ")
+    : "music";
+  
+  parts.push(`${album.name} is a ${genreText} album by ${album.artist.name}, released in ${year}`);
+  
+  // Track count and duration
+  const totalMin = Math.floor(album.totalDuration / 60);
+  parts.push(`. The album features ${album.trackCount} tracks with a total runtime of ${totalMin} minutes`);
+  
+  // Streaming stats
+  if (album.streams) {
+    parts.push(` and has accumulated ${formatNumber(album.streams)} streams on BopAudio`);
+  }
+  
+  // Label info
+  if (album.label) {
+    parts.push(`. Released under ${album.label}`);
+  }
+  
+  const answer = parts.join("") + ".";
+  const wordCount = answer.split(/\s+/).length;
+  
+  return {
+    question: `What is ${album.name} by ${album.artist.name}?`,
+    answer,
+    wordCount,
+    confidence: 0.95,
+    lastVerified: new Date()
+  };
+}
+
+/**
+ * Generate direct answer for playlists
+ */
+export function generatePlaylistDirectAnswer(playlist: PlaylistAEOData): DirectAnswer {
+  const parts: string[] = [];
+  
+  // Core identity
+  const genreText = playlist.genres && playlist.genres.length > 0
+    ? ` featuring ${playlist.genres.slice(0, 2).join(" and ")} music`
+    : "";
+  
+  parts.push(`${playlist.name} is a ${playlist.isPublic ? "public" : "private"} playlist curated by ${playlist.curator.name}${genreText}`);
+  
+  // Track count and duration
+  const totalMin = Math.floor(playlist.totalDuration / 60);
+  parts.push(`. The playlist contains ${playlist.trackCount} tracks with a total runtime of ${totalMin} minutes`);
+  
+  // Followers
+  if (playlist.followers) {
+    parts.push(` and has ${formatNumber(playlist.followers)} followers on BopAudio`);
+  }
+  
+  // Last updated
+  const daysSinceUpdate = Math.floor(
+    (new Date().getTime() - playlist.lastUpdated.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  
+  if (daysSinceUpdate < 7) {
+    parts.push(`. Last updated ${daysSinceUpdate} days ago`);
+  }
+  
+  const answer = parts.join("") + ".";
+  const wordCount = answer.split(/\s+/).length;
+  
+  return {
+    question: `What is the ${playlist.name} playlist?`,
+    answer,
+    wordCount,
+    confidence: 0.90,
+    lastVerified: playlist.lastUpdated
+  };
+}
+
+/**
+ * Generate FAQs for music tracks
+ */
+export function generateTrackFAQs(track: TrackAEOData): FAQItem[] {
+  const faqs: FAQItem[] = [];
+  
+  // What is this track?
+  faqs.push({
+    question: `What is "${track.name}" by ${track.artist.name}?`,
+    answer: generateTrackDirectAnswer(track).answer
+  });
+  
+  // Genre
+  if (track.genre) {
+    faqs.push({
+      question: `What genre is "${track.name}"?`,
+      answer: `"${track.name}" is a ${track.genre} track.`
+    });
+  }
+  
+  // Duration
+  const durationMin = Math.floor(track.duration / 60);
+  const durationSec = track.duration % 60;
+  faqs.push({
+    question: `How long is "${track.name}"?`,
+    answer: `"${track.name}" has a runtime of ${durationMin}:${durationSec.toString().padStart(2, '0')}.`
+  });
+  
+  // Where to listen
+  faqs.push({
+    question: `Where can I listen to "${track.name}"?`,
+    answer: `You can stream "${track.name}" on BopAudio at boptone.com/audio/${track.artist.username}/${encodeURIComponent(track.name.toLowerCase().replace(/\s+/g, "-"))}.`
+  });
+  
+  // Support artist
+  faqs.push({
+    question: `How can I support ${track.artist.name}?`,
+    answer: `Stream "${track.name}" on BopAudio where ${track.artist.name} earns 90% of streaming revenue, or purchase their music and merch on BopShop.`
+  });
+  
+  return faqs;
+}
+
+/**
+ * Generate FAQs for albums
+ */
+export function generateAlbumFAQs(album: AlbumAEOData): FAQItem[] {
+  const faqs: FAQItem[] = [];
+  
+  // What is this album?
+  faqs.push({
+    question: `What is ${album.name} by ${album.artist.name}?`,
+    answer: generateAlbumDirectAnswer(album).answer
+  });
+  
+  // How many tracks?
+  faqs.push({
+    question: `How many tracks are on ${album.name}?`,
+    answer: `${album.name} contains ${album.trackCount} tracks.`
+  });
+  
+  // When was it released?
+  const releaseDate = new Date(album.releaseDate);
+  faqs.push({
+    question: `When was ${album.name} released?`,
+    answer: `${album.name} was released on ${releaseDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}.`
+  });
+  
+  // Track listing
+  if (album.tracks && album.tracks.length > 0) {
+    const trackList = album.tracks
+      .sort((a, b) => a.trackNumber - b.trackNumber)
+      .slice(0, 5)
+      .map(t => t.name)
+      .join(", ");
+    
+    faqs.push({
+      question: `What are the tracks on ${album.name}?`,
+      answer: `${album.name} includes tracks such as ${trackList}${album.tracks.length > 5 ? ", and more" : ""}.`
+    });
+  }
+  
+  // Where to listen
+  faqs.push({
+    question: `Where can I listen to ${album.name}?`,
+    answer: `You can stream ${album.name} on BopAudio at boptone.com/audio/${album.artist.username}/${encodeURIComponent(album.name.toLowerCase().replace(/\s+/g, "-"))}.`
+  });
+  
+  return faqs;
+}
+
+/**
+ * Generate FAQs for playlists
+ */
+export function generatePlaylistFAQs(playlist: PlaylistAEOData): FAQItem[] {
+  const faqs: FAQItem[] = [];
+  
+  // What is this playlist?
+  faqs.push({
+    question: `What is the ${playlist.name} playlist?`,
+    answer: generatePlaylistDirectAnswer(playlist).answer
+  });
+  
+  // Who curated it?
+  faqs.push({
+    question: `Who created the ${playlist.name} playlist?`,
+    answer: `The ${playlist.name} playlist was curated by ${playlist.curator.name}.`
+  });
+  
+  // How many tracks?
+  faqs.push({
+    question: `How many songs are in ${playlist.name}?`,
+    answer: `${playlist.name} contains ${playlist.trackCount} tracks.`
+  });
+  
+  // Sample tracks
+  if (playlist.tracks && playlist.tracks.length > 0) {
+    const sampleTracks = playlist.tracks
+      .slice(0, 3)
+      .map(t => `"${t.name}" by ${t.artist}`)
+      .join(", ");
+    
+    faqs.push({
+      question: `What songs are in ${playlist.name}?`,
+      answer: `${playlist.name} features tracks like ${sampleTracks}, and ${playlist.trackCount - 3} more.`
+    });
+  }
+  
+  // Where to listen
+  faqs.push({
+    question: `Where can I listen to ${playlist.name}?`,
+    answer: `You can stream ${playlist.name} on BopAudio at boptone.com/playlists/${encodeURIComponent(playlist.name.toLowerCase().replace(/\s+/g, "-"))}.`
+  });
+  
+  return faqs;
+}
+
+// ============================================================================
+// GENRE PAGES AEO
+// ============================================================================
+
+export interface GenreAEOData {
+  name: string;
+  description: string;
+  characteristics: string[];
+  topArtists: Array<{
+    name: string;
+    username: string;
+    streams: number;
+  }>;
+  totalArtists: number;
+  totalTracks: number;
+  relatedGenres: string[];
+}
+
+/**
+ * Generate direct answer for genre pages
+ */
+export function generateGenreDirectAnswer(genre: GenreAEOData): DirectAnswer {
+  const parts: string[] = [];
+  
+  // Core definition
+  parts.push(`${genre.name} is a music genre ${genre.description}`);
+  
+  // Characteristics
+  if (genre.characteristics && genre.characteristics.length > 0) {
+    parts.push(`, characterized by ${genre.characteristics.slice(0, 2).join(" and ")}`);
+  }
+  
+  // Platform stats
+  parts.push(`. On Boptone, ${genre.name} features ${genre.totalArtists} independent artists with ${formatNumber(genre.totalTracks)} tracks available on BopAudio`);
+  
+  // Top artists
+  if (genre.topArtists && genre.topArtists.length > 0) {
+    const topArtistNames = genre.topArtists.slice(0, 2).map(a => a.name).join(" and ");
+    parts.push(`. Top ${genre.name} artists include ${topArtistNames}`);
+  }
+  
+  const answer = parts.join("") + ".";
+  const wordCount = answer.split(/\s+/).length;
+  
+  return {
+    question: `What is ${genre.name} music?`,
+    answer,
+    wordCount,
+    confidence: 0.92,
+    lastVerified: new Date()
+  };
+}
+
+/**
+ * Generate FAQs for genre pages
+ */
+export function generateGenreFAQs(genre: GenreAEOData): FAQItem[] {
+  const faqs: FAQItem[] = [];
+  
+  // What is this genre?
+  faqs.push({
+    question: `What is ${genre.name} music?`,
+    answer: generateGenreDirectAnswer(genre).answer
+  });
+  
+  // Who are top artists?
+  if (genre.topArtists && genre.topArtists.length > 0) {
+    const topArtistsList = genre.topArtists.slice(0, 5).map(a => a.name).join(", ");
+    faqs.push({
+      question: `Who are the top ${genre.name} artists on Boptone?`,
+      answer: `Top ${genre.name} artists on Boptone include ${topArtistsList}.`
+    });
+  }
+  
+  // Related genres
+  if (genre.relatedGenres && genre.relatedGenres.length > 0) {
+    faqs.push({
+      question: `What genres are similar to ${genre.name}?`,
+      answer: `Genres similar to ${genre.name} include ${genre.relatedGenres.slice(0, 3).join(", ")}.`
+    });
+  }
+  
+  // Where to discover
+  faqs.push({
+    question: `Where can I discover ${genre.name} music?`,
+    answer: `Discover ${genre.name} music on BopAudio at boptone.com/genres/${genre.name.toLowerCase().replace(/\s+/g, "-")}, featuring ${genre.totalArtists} independent artists.`
+  });
+  
+  return faqs;
+}
+
+// ============================================================================
+// LOCATION PAGES AEO
+// ============================================================================
+
+export interface LocationAEOData {
+  city: string;
+  state: string;
+  country: string;
+  description: string;
+  musicScene: string;
+  topArtists: Array<{
+    name: string;
+    username: string;
+    genres: string[];
+    streams: number;
+  }>;
+  totalArtists: number;
+  topGenres: string[];
+}
+
+/**
+ * Generate direct answer for location pages
+ */
+export function generateLocationDirectAnswer(location: LocationAEOData): DirectAnswer {
+  const parts: string[] = [];
+  
+  const locationName = `${location.city}, ${location.state}`;
+  
+  // Core description
+  parts.push(`${locationName} ${location.description}`);
+  
+  // Music scene
+  if (location.musicScene) {
+    parts.push(`. ${location.musicScene}`);
+  }
+  
+  // Platform stats
+  parts.push(` On Boptone, ${locationName} is home to ${location.totalArtists} independent artists`);
+  
+  // Top genres
+  if (location.topGenres && location.topGenres.length > 0) {
+    parts.push(`, primarily creating ${location.topGenres.slice(0, 2).join(" and ")} music`);
+  }
+  
+  // Notable artists
+  if (location.topArtists && location.topArtists.length > 0) {
+    const topArtist = location.topArtists[0];
+    parts.push(`. Notable artists include ${topArtist.name}`);
+  }
+  
+  const answer = parts.join("") + ".";
+  const wordCount = answer.split(/\s+/).length;
+  
+  return {
+    question: `What is the music scene in ${locationName}?`,
+    answer,
+    wordCount,
+    confidence: 0.88,
+    lastVerified: new Date()
+  };
+}
+
+/**
+ * Generate FAQs for location pages
+ */
+export function generateLocationFAQs(location: LocationAEOData): FAQItem[] {
+  const faqs: FAQItem[] = [];
+  
+  const locationName = `${location.city}, ${location.state}`;
+  
+  // What is the music scene?
+  faqs.push({
+    question: `What is the music scene in ${locationName}?`,
+    answer: generateLocationDirectAnswer(location).answer
+  });
+  
+  // Who are top artists?
+  if (location.topArtists && location.topArtists.length > 0) {
+    const topArtistsList = location.topArtists.slice(0, 5).map(a => a.name).join(", ");
+    faqs.push({
+      question: `Who are the top artists from ${locationName}?`,
+      answer: `Top independent artists from ${locationName} on Boptone include ${topArtistsList}.`
+    });
+  }
+  
+  // What genres?
+  if (location.topGenres && location.topGenres.length > 0) {
+    faqs.push({
+      question: `What music genres are popular in ${locationName}?`,
+      answer: `${locationName} artists primarily create ${location.topGenres.join(", ")} music.`
+    });
+  }
+  
+  // Where to discover
+  faqs.push({
+    question: `Where can I discover artists from ${locationName}?`,
+    answer: `Discover ${location.totalArtists} independent artists from ${locationName} on Boptone at boptone.com/locations/${location.city.toLowerCase().replace(/\s+/g, "-")}.`
+  });
+  
+  return faqs;
+}
+
+// ============================================================================
+// PLATFORM PAGES AEO
+// ============================================================================
+
+export interface PlatformAEOData {
+  name: string;
+  tagline: string;
+  description: string;
+  keyFeatures: string[];
+  revenueShare?: number; // For BopAudio
+  pricing?: {
+    free: string[];
+    paid?: {
+      price: number;
+      features: string[];
+    };
+  };
+  stats: {
+    artists?: number;
+    tracks?: number;
+    products?: number;
+  };
+  competitors?: Array<{
+    name: string;
+    differentiator: string;
+  }>;
+}
+
+/**
+ * Generate direct answer for platform pages
+ */
+export function generatePlatformDirectAnswer(platform: PlatformAEOData): DirectAnswer {
+  const parts: string[] = [];
+  
+  // Core identity
+  parts.push(`${platform.name} is ${platform.description}`);
+  
+  // Key differentiator
+  if (platform.revenueShare) {
+    parts.push(`, where artists retain ${platform.revenueShare}% of streaming revenue`);
+  }
+  
+  // Platform stats
+  const stats = [];
+  if (platform.stats.artists) stats.push(`${formatNumber(platform.stats.artists)} artists`);
+  if (platform.stats.tracks) stats.push(`${formatNumber(platform.stats.tracks)} tracks`);
+  if (platform.stats.products) stats.push(`${formatNumber(platform.stats.products)} products`);
+  
+  if (stats.length > 0) {
+    parts.push(`. The platform features ${stats.join(", ")}`);
+  }
+  
+  // Top features
+  if (platform.keyFeatures && platform.keyFeatures.length > 0) {
+    parts.push(`. Key features include ${platform.keyFeatures.slice(0, 2).join(" and ")}`);
+  }
+  
+  const answer = parts.join("") + ".";
+  const wordCount = answer.split(/\s+/).length;
+  
+  return {
+    question: `What is ${platform.name}?`,
+    answer,
+    wordCount,
+    confidence: 0.98,
+    lastVerified: new Date()
+  };
+}
+
+/**
+ * Generate FAQs for platform pages
+ */
+export function generatePlatformFAQs(platform: PlatformAEOData): FAQItem[] {
+  const faqs: FAQItem[] = [];
+  
+  // What is this platform?
+  faqs.push({
+    question: `What is ${platform.name}?`,
+    answer: generatePlatformDirectAnswer(platform).answer
+  });
+  
+  // How does it work?
+  if (platform.keyFeatures && platform.keyFeatures.length > 0) {
+    faqs.push({
+      question: `How does ${platform.name} work?`,
+      answer: `${platform.name} provides ${platform.keyFeatures.join(", ")} to help independent artists grow their careers.`
+    });
+  }
+  
+  // Revenue/pricing
+  if (platform.revenueShare) {
+    faqs.push({
+      question: `How much do artists earn on ${platform.name}?`,
+      answer: `Artists on ${platform.name} retain ${platform.revenueShare}% of streaming revenue, compared to 10-15% on traditional platforms like Spotify.`
+    });
+  }
+  
+  if (platform.pricing) {
+    faqs.push({
+      question: `How much does ${platform.name} cost?`,
+      answer: `${platform.name} offers ${platform.pricing.free.join(", ")} for free${platform.pricing.paid ? `, with premium features available for $${platform.pricing.paid.price}/month` : ""}.`
+    });
+  }
+  
+  // vs Competitors
+  if (platform.competitors && platform.competitors.length > 0) {
+    const competitor = platform.competitors[0];
+    faqs.push({
+      question: `How is ${platform.name} different from ${competitor.name}?`,
+      answer: `Unlike ${competitor.name}, ${platform.name} ${competitor.differentiator}.`
+    });
+  }
+  
+  return faqs;
+}

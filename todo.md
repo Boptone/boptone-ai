@@ -3581,5 +3581,61 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Verify audio snippets render correctly (when TTS integrated)
 - [ ] Test temporal metadata display
 - [ ] Verify semantic graph linking
+- [x] Save checkpoint
+- [x] Push to GitHub
+
+
+## Expand AEO to 100% Coverage (User Request - HIGHEST PRIORITY)
+
+### Strategic Goal
+- Achieve complete AI citation dominance across entire Boptone ecosystem
+- Cover BopAudio (tracks, albums, playlists), genre pages, location pages, platform pages
+- Target: Every major page type optimized for ChatGPT/Perplexity/Google AI citations
+
+### Phase 1: BopAudio Content AEO
+- [ ] Create track AEO utilities (generateTrackDirectAnswer, generateTrackFAQs)
+- [ ] Create album AEO utilities (generateAlbumDirectAnswer, generateAlbumFAQs)
+- [ ] Create playlist AEO utilities (generatePlaylistDirectAnswer, generatePlaylistFAQs)
+- [ ] Add MusicRecording schema with AEO enhancements
+- [ ] Add MusicAlbum schema with AEO enhancements
+- [ ] Add MusicPlaylist schema with AEO enhancements
+- [ ] Create tRPC procedures for track/album/playlist AEO
+
+### Phase 2: Genre Pages AEO
+- [ ] Create genre AEO utilities (generateGenreDirectAnswer, generateGenreFAQs)
+- [ ] Add genre characteristics and top artists to answers
+- [ ] Create genre comparison matrices (Hip Hop vs R&B, etc.)
+- [ ] Add DefinedTerm schema for music genres
+- [ ] Create tRPC procedure for genre AEO
+
+### Phase 3: Location Pages AEO
+- [ ] Create location AEO utilities (generateLocationDirectAnswer, generateLocationFAQs)
+- [ ] Add local music scene descriptions
+- [ ] Add top artists from location to answers
+- [ ] Create location schema with artist aggregation
+- [ ] Create tRPC procedure for location AEO
+
+### Phase 4: Platform Pages AEO
+- [ ] Create BopAudio platform page AEO ("What is BopAudio?")
+- [ ] Create BopShop platform page AEO ("What is BopShop?")
+- [ ] Create Boptone platform page AEO ("What is Boptone?")
+- [ ] Add comparison matrices (BopAudio vs Spotify, BopShop vs Bandcamp)
+- [ ] Add pricing/revenue share FAQs
+- [ ] Create DefinedTerm schemas for all proprietary terms
+- [ ] Create tRPC procedures for platform page AEO
+
+### Phase 5: React Components
+- [ ] Create TrackAEOPage.tsx component
+- [ ] Create AlbumAEOPage.tsx component
+- [ ] Create PlaylistAEOPage.tsx component
+- [ ] Create GenreAEOPage.tsx component
+- [ ] Create LocationAEOPage.tsx component
+- [ ] Create PlatformAEOPage.tsx component
+
+### Phase 6: Documentation & Testing
+- [ ] Update AEO_STRATEGY.md with new coverage areas
+- [ ] Update AEO_IMPLEMENTATION.md with new examples
+- [ ] Test all new AEO endpoints with mock data
+- [ ] Verify all new schemas with Google Rich Results Test
 - [ ] Save checkpoint
 - [ ] Push to GitHub
