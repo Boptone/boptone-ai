@@ -3358,5 +3358,7 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Fix Shippo SDK imports in server/shipping.ts
 - [x] Use explicit file paths instead of directory imports
 - [x] Test server startup locally
-- [ ] Test shipping functionality
+- [x] Search entire codebase for all Shippo imports
+- [x] Fix all Shippo directory imports in all files
+- [x] Test production build locally
 - [ ] Save checkpoint and verify deployment

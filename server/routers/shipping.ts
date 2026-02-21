@@ -14,7 +14,6 @@ import {
 import { getDb } from "../db";
 import { shippingLabels, trackingEvents, orders } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
-import * as ShippoSDK from "shippo/models/components";
 
 export const shippingRouter = router({
   /**
@@ -138,7 +137,7 @@ export const shippingRouter = router({
       // Purchase label
       const labelResponse = await purchaseShippingLabel(
         input.rateId,
-        ShippoSDK.LabelFileTypeEnum.Pdf
+        "PDF"
       );
 
       // Store shipping label in database
