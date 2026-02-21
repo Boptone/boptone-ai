@@ -43,6 +43,7 @@ const Admin = lazy(() => import("./pages/Admin"));
 const ReviewModeration = lazy(() => import("./pages/ReviewModeration"));
 const ReviewAnalyticsDashboard = lazy(() => import("./pages/ReviewAnalyticsDashboard"));
 const Signup = lazy(() => import("./pages/Signup"));
+const MultiStepSignup = lazy(() => import("./pages/MultiStepSignup"));
 const ProfileSettings = lazy(() => import("./pages/ProfileSettings"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const BAP = lazy(() => import("./pages/BAP"));
@@ -95,7 +96,7 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path={"/"} component={Home} />
-        <Route path={"/auth-signup"} component={AuthSignup} />
+        <Route path={"/auth-signup"} component={MultiStepSignup} />
         <Route path={"/forgot-password"} component={ForgotPassword} />
         <Route path={"/how-it-works"} component={HowItWorks} />
         <Route path={"/writer-invite"} component={WriterInvite} />
@@ -159,7 +160,7 @@ function Router() {
         <Route path="/pricing-dashboard" component={PricingDashboard} />
         <Route path="/transparency" component={Transparency} />
         <Route path={"/admin"} component={Admin} />
-        <Route path={"/signup"} component={Signup} />
+        <Route path={"/signup"} component={MultiStepSignup} />
         {/* Final fallback route */}
         <Route component={NotFound} />
       </Switch>
