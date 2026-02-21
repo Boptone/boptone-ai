@@ -3453,3 +3453,36 @@ Apply the visually stunning design style from the explainer component across ALL
   - [ ] Write vitest tests for purchase endpoint
   - [ ] Test rate limiting behavior
   - [ ] Validate error responses
+
+
+## Legal Infrastructure Audit & Updates (IN PROGRESS)
+
+### Forensic Audit of Today's Work
+- [ ] Audit Shippo shipping integration for legal implications
+- [ ] Audit SEO/GEO system for data collection and privacy concerns
+- [ ] Audit Agent API for third-party access and liability issues
+- [ ] Identify all new data collection points
+- [ ] Identify all new third-party integrations
+- [ ] Identify all new user-generated content areas
+
+### TOS Updates Required
+- [ ] Add shipping terms (liability, tracking, lost packages, returns)
+- [ ] Add Agent API terms (OAuth, third-party access, rate limits)
+- [ ] Add structured data terms (SEO/GEO, LLM citation rights)
+- [ ] Add international shipping terms (customs, duties, taxes)
+- [ ] Update intellectual property section for AI agent access
+
+### Privacy Policy Updates Required
+- [ ] Add shipping data collection (addresses, phone numbers, tracking)
+- [ ] Add SEO/GEO data usage (structured data, meta tags, sitemaps)
+- [ ] Add Agent API data sharing (OAuth tokens, purchase data)
+- [ ] Add third-party service disclosure (Shippo, Google, LLMs)
+- [ ] Update data retention policies for shipping/tracking data
+
+### Implementation
+- [ ] Read existing TOS and Privacy Policy
+- [ ] Draft comprehensive TOS additions
+- [ ] Draft comprehensive Privacy Policy additions
+- [ ] Update TOS document
+- [ ] Update Privacy Policy document
+- [ ] Save checkpoint
