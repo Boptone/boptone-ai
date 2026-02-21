@@ -1,4 +1,5 @@
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { TOSAdditions2026 } from "@/components/TOSAdditions2026";
 
 export default function Terms() {
   return (
@@ -682,6 +683,9 @@ export default function Terms() {
                   We will make every effort to resolve your concerns promptly and fairly.
                 </p>
               </section>
+
+              {/* New Sections: Shipping, SEO/GEO, AI Agent Integration (February 2026) */}
+              <TOSAdditions2026 />
 
               <div className="mt-12 pt-8 border-t-4 border-black">
                 <p className="text-sm text-gray-700 text-center">

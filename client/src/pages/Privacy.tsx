@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { PrivacyAdditions2026 } from "@/components/PrivacyAdditions2026";
 
 export default function Privacy() {
   const [, setLocation] = useLocation();
@@ -518,6 +519,9 @@ export default function Privacy() {
                   <strong>For California Users:</strong> California residents may contact us with privacy inquiries at hello@boptone.com or through the California Attorney General's Office at https://oag.ca.gov/contact/consumer-complaint-against-business-or-company.
                 </p>
               </section>
+
+              {/* New Sections: Shipping, SEO/GEO, AI Agent Data Collection (February 2026) */}
+              <PrivacyAdditions2026 />
 
               <div className="mt-12 pt-8 border-t">
                 <p className="text-sm text-muted-foreground text-center">
