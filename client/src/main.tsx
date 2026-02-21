@@ -10,6 +10,7 @@ import "./index.css";
 import "./i18n/config";
 import { CurrencyProvider } from "./contexts/CurrencyContext";
 import { initSentry } from "./lib/sentry";
+import { HelmetProvider } from "react-helmet-async";
 
 // Initialize Sentry for error tracking
 initSentry();
@@ -59,11 +60,13 @@ const trpcClient = trpc.createClient({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <trpc.Provider client={trpcClient} queryClient={queryClient}>
-    <QueryClientProvider client={queryClient}>
-      <CurrencyProvider>
-        <App />
-      </CurrencyProvider>
-    </QueryClientProvider>
-  </trpc.Provider>
+  <HelmetProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <CurrencyProvider>
+          <App />
+        </CurrencyProvider>
+      </QueryClientProvider>
+    </trpc.Provider>
+  </HelmetProvider>
 );

@@ -149,6 +149,38 @@ async function startServer() {
   }
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+
+  // Sitemap and robots.txt routes
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      const caller = appRouter.createCaller({ req, res, user: null });
+      const { urls } = await caller.sitemap.generateSitemap();
+      
+      res.setHeader("Content-Type", "application/xml");
+      res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((url) => `  <url>
+    <loc>${url.loc}</loc>
+${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq ? `    <changefreq>${url.changefreq}</changefreq>\n` : ""}${url.priority ? `    <priority>${url.priority}</priority>\n` : ""}  </url>`).join("\n")}
+</urlset>`);
+    } catch (error) {
+      console.error("[Sitemap] Error generating sitemap:", error);
+      res.status(500).send("Error generating sitemap");
+    }
+  });
+
+  app.get("/robots.txt", async (req, res) => {
+    try {
+      const caller = appRouter.createCaller({ req, res, user: null });
+      const { content } = await caller.sitemap.generateRobotsTxt();
+      
+      res.setHeader("Content-Type", "text/plain");
+      res.send(content);
+    } catch (error) {
+      console.error("[Robots.txt] Error generating robots.txt:", error);
+      res.status(500).send("Error generating robots.txt");
+    }
+  });
   // tRPC API
   app.use(
     "/api/trpc",

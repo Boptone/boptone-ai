@@ -24,6 +24,8 @@ import { paymentRouter } from "./routers/payment";
 import { artistNotificationsRouter } from "./routers/artistNotifications";
 import { searchRouter } from "./searchRouter";
 import { shippingRouter } from "./routers/shipping";
+import { sitemapRouter } from "./routers/sitemap";
+import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -52,10 +54,15 @@ const artistProfileRouter = router({
       }).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
-      return await db.createArtistProfile({
+      const profile = await db.createArtistProfile({
         userId: ctx.user.id,
         ...input,
       });
+      
+      // Auto-generate SEO/GEO data
+      await autoPopulateSEO(ctx.user.id);
+      
+      return profile;
     }),
 
   // Update artist profile
@@ -87,6 +94,10 @@ const artistProfileRouter = router({
       if (!profile) throw new Error("Artist profile not found");
       
       await db.updateArtistProfile(profile.id, input);
+      
+      // Auto-generate SEO/GEO data
+      await autoPopulateSEO(ctx.user.id);
+      
       return { success: true };
     }),
 
@@ -652,6 +663,7 @@ export const appRouter = router({
   // products: productsRouter, // Replaced by ecommerce router
   ecommerce: ecommerceRouter,
   shipping: shippingRouter,
+  sitemap: sitemapRouter,
   pod: podRouter,
   releases: releasesRouter,
   stripe: stripeRouter,
