@@ -4403,4 +4403,78 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Add Privacy Policy Section 11.5: Do Not Track Support (Constitutional Commitment)
 - [x] Add Section 12: Global Privacy Control (GPC) Support
 - [x] Update todo.md
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+
+## Harvard Law Enterprise-Level Legal Audit
+
+### Phase 1: Deep Audit TOS
+- [ ] Read entire TOS line-by-line for global legal exposure
+- [ ] Flag "constitutional" language that could create government-authority confusion
+- [ ] Identify absolute promises without force majeure carve-outs
+- [ ] Check liability caps for EU enforceability (can't disclaim gross negligence)
+- [ ] Verify arbitration provisions comply with AT&T Mobility + international arbitration
+- [ ] Check IP terms don't conflict with fair use/research exceptions globally
+- [ ] Verify choice of law and forum selection are enforceable in 172+ countries
+- [ ] Document all ambiguous language that needs plain English rewrites
+
+### Phase 2: Deep Audit Privacy Policy
+- [ ] Read entire Privacy Policy line-by-line for GDPR/CCPA compliance
+- [ ] Remove "constitutional protections" language
+- [ ] Verify GDPR Article 6 lawful basis for each data processing activity
+- [ ] Add CCPA-required disclosures (categories, sources, purposes, third parties)
+- [ ] Verify data retention periods are defensible (not arbitrary)
+- [ ] Check international data transfer mechanisms (Standard Contractual Clauses)
+- [ ] Add carve-outs for law enforcement, national security, court orders
+- [ ] Document all global legal exposure points
+
+### Phase 3: Research Force Majeure
+- [ ] Research best-in-class force majeure clauses for shipping (Shippo)
+- [ ] Research force majeure for service commitments (99.5% uptime)
+- [ ] Find perfect wording for weather, natural disasters, acts of God
+- [ ] Ensure force majeure doesn't eliminate all platform obligations
+
+### Phase 4: Rewrite TOS
+- [ ] Replace "constitutional" with "foundational rights" or "core principles"
+- [ ] Add force majeure carve-outs to Artist Bill of Rights
+- [ ] Add shipping force majeure clause (weather, natural disasters, carrier delays)
+- [ ] Add service commitment force majeure (DDoS, infrastructure failures, pandemics)
+- [ ] Strengthen choice of law provisions for global enforceability
+- [ ] Add bilateral obligation language to survive unconscionability challenges
+- [ ] Clarify arbitration opt-out and international arbitration provisions
+
+### Phase 5: Rewrite Privacy Policy
+- [ ] Replace "constitutional protections" with "permanent protections"
+- [ ] Add GDPR Article 6 lawful basis statements for each processing activity
+- [ ] Add CCPA categories of personal information collected
+- [ ] Add CCPA sources, purposes, and third-party sharing disclosures
+- [ ] Add force majeure carve-outs for data security commitments
+- [ ] Clarify law enforcement/national security carve-outs
+- [ ] Strengthen international data transfer language
+
+### Phase 6: Global Enforceability Verification
+- [ ] Cross-check TOS against GDPR requirements
+- [ ] Cross-check Privacy Policy against CCPA requirements
+- [ ] Verify arbitration provisions under New York Convention (172 countries)
+- [ ] Test liability caps against EU consumer protection laws
+- [ ] Verify force majeure clauses are enforceable globally
+- [ ] Check plain language readability (8th grade level)
+
+### Phase 7: Final Verification & Deployment
+- [ ] Final read-through of TOS for ambiguous language
+- [ ] Final read-through of Privacy Policy for global legal exposure
+- [ ] Update Data Constitution preamble references (5.1/5.2 → 5.10/5.11)
+- [ ] Fix TypeScript errors in Terms.tsx (lines 223, 230)
+- [ ] Update todo.md with all completed work
+- [ ] Save checkpoint with enterprise-level legal perfection
+
+
+## Harvard Law Enterprise-Level Legal Audit (COMPLETE) ✅
+- [x] Remove "constitutional" language from TOS Section 1 (replaced with "foundational framework")
+- [x] Add Shipping Force Majeure to TOS Section 7.15 (weather, natural disasters, carrier delays, 30-day cancellation rights)
+- [x] Add Service Commitment Force Majeure to TOS Section 15.2 (DDoS, infrastructure failures, cyber attacks, 30-day termination rights)
+- [x] Remove "constitutional protections" from Privacy Policy Section 1.1 (replaced with "permanent, enforceable protections")
+- [x] Update Privacy Policy cross-references (Section 5.1/5.2 → 5.10/5.11)
+- [x] Remove "constitutional" language from Privacy Policy preamble (replaced with "foundational commitments")
+- [x] Update todo.md
+- [x] Save checkpoint

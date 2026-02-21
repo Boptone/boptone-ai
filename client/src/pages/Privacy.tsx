@@ -30,21 +30,21 @@ export default function Privacy() {
                   This Privacy Policy should be read in conjunction with our Terms of Service, which govern your use of the Service. Capitalized terms not defined in this Privacy Policy have the meanings given in our Terms of Service.
                 </p>
 
-                <h3 className="text-xl font-semibold mb-3 mt-6">1.1 Data Constitution (Constitutional Commitment)</h3>
+                <h3 className="text-xl font-semibold mb-3 mt-6">1.1 Data Bill of Rights (Foundational Commitment)</h3>
                 <p className="mb-4">
-                  This Privacy Policy is governed by the <strong>Artist Bill of Rights</strong> (Section 1 of our Terms of Service), which establishes constitutional protections for your data sovereignty. Key principles:
+                  This Privacy Policy is governed by the <strong>Artist Bill of Rights</strong> (Section 1 of our Terms of Service), which establishes permanent, enforceable protections for your data sovereignty. Key principles:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">
                   <li><strong>You Own Your Data:</strong> All personal data, creative works, and content you provide to Boptone remain your property. We are stewards, not owners.</li>
                   <li><strong>AI Training Prohibition:</strong> Your creative works will never be used to train AI models without your separate, explicit, and revocable consent (see Section 3.1 below).</li>
-                  <li><strong>Algorithm Transparency:</strong> You have the right to understand how our algorithms affect your visibility, recommendations, and revenue (see Section 5.1 below).</li>
+                  <li><strong>Algorithm Transparency:</strong> You have the right to understand how our algorithms affect your visibility, recommendations, and revenue (see Section 5.10 below).</li>
                   <li><strong>True Portability:</strong> You can export all your data in machine-readable format and delete your account with verified deletion within 90 days (see Section 9 below).</li>
-                  <li><strong>Bankruptcy Protection:</strong> Your data will be deleted (not sold) if Boptone enters bankruptcy (see Section 5.2 below).</li>
+                  <li><strong>Bankruptcy Protection:</strong> Your data will be deleted (not sold) if Boptone enters bankruptcy (see Section 5.11 below).</li>
                   <li><strong>Human Review Rights:</strong> Automated decisions affecting your livelihood trigger mandatory human review (see Section 10 below).</li>
                   <li><strong>Do Not Track Support:</strong> We honor browser Do Not Track signals (see Section 11.5 below).</li>
                 </ul>
                 <p className="mb-4">
-                  These constitutional commitments are permanent and cannot be weakened through unilateral changes to this Privacy Policy. Any amendment to these protections requires 180 days' advance notice, Artist Policy Council approval, and opt-out rights. See Section 19 of our Terms of Service for the constitutional amendment process.
+                  These foundational commitments are permanent and cannot be weakened through unilateral changes to this Privacy Policy. Any amendment to these protections requires 180 days' advance notice, Artist Policy Council approval, and opt-out rights. See Section 19 of our Terms of Service for the amendment process.
                 </p>
               </section>
 

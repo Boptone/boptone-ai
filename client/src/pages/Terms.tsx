@@ -28,7 +28,7 @@ export default function Terms() {
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">1. Artist Bill of Rights</h2>
                 <p className="mb-4 text-lg font-semibold italic">
-                  A Constitutional Framework for Creative Sovereignty
+                  A Foundational Framework for Creative Sovereignty
                 </p>
                 
                 <h3 className="text-xl font-semibold mb-3 mt-6">Preamble</h3>
@@ -591,6 +591,44 @@ export default function Terms() {
                 <p className="mb-4">
                   <strong>No Hidden Fees:</strong> The 1% markup is the only currency conversion fee charged by Boptone. We do not impose additional "foreign transaction fees," "cross-border fees," or "international processing fees." Any additional fees charged by your bank or payment provider are disclosed separately and are not controlled by Boptone.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">7.15 Shipping Force Majeure</h3>
+                <p className="mb-4">
+                  Boptone and its shipping carriers (including Shippo and third-party carriers such as USPS, FedEx, UPS, DHL) shall not be liable for any delay, failure to deliver, or damage to shipped products caused by events beyond our reasonable control. This force majeure provision applies specifically to BopShop physical product shipments.
+                </p>
+                <p className="mb-4">
+                  <strong>Force Majeure Events:</strong> The following events qualify as force majeure for shipping purposes:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Natural Disasters:</strong> Floods, fires, earthquakes, hurricanes, tornadoes, tsunamis, volcanic eruptions, or other acts of God that disrupt shipping infrastructure or make delivery unsafe or impossible</li>
+                  <li><strong>Severe Weather:</strong> Blizzards, ice storms, extreme heat or cold, severe storms, or other weather conditions that prevent safe transportation or delivery</li>
+                  <li><strong>Carrier Operational Disruptions:</strong> Delays caused by shipping carriers due to volume surges (e.g., holiday peaks), equipment failures, facility closures, labor disputes, or operational disruptions beyond Boptone's control</li>
+                  <li><strong>Government Actions:</strong> Quarantines, border closures, customs delays, import/export restrictions, embargoes, travel bans, or other governmental orders that prevent or delay shipments</li>
+                  <li><strong>Civil Unrest:</strong> Strikes, labor disputes, riots, protests, civil commotion, acts of terrorism, or other events that disrupt transportation networks or make delivery unsafe</li>
+                  <li><strong>Infrastructure Failures:</strong> Power outages, telecommunications failures, transportation facility closures, road closures, port closures, airport closures, or other infrastructure disruptions that prevent shipment processing or delivery</li>
+                  <li><strong>Public Health Emergencies:</strong> Epidemics, pandemics, or public health emergencies declared by governmental authorities that restrict movement, close facilities, or otherwise prevent normal shipping operations</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Mitigation Obligations:</strong> When a force majeure event affects shipping, Boptone will:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Notify affected customers via email within three (3) business days of becoming aware of the delay</li>
+                  <li>Provide estimated delivery timelines based on available information from carriers</li>
+                  <li>Use commercially reasonable efforts to find alternative shipping methods where feasible and cost-effective</li>
+                  <li>Process refunds for undelivered orders if delays exceed sixty (60) days from the original estimated delivery date</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>No Liability for Force Majeure Delays:</strong> Neither Boptone nor artists/sellers shall be liable for any direct, indirect, incidental, consequential, or punitive damages arising from shipping delays or failures caused by force majeure events. This includes but is not limited to lost profits, lost revenue, costs of substitute goods, or any other commercial losses.
+                </p>
+                <p className="mb-4">
+                  <strong>Customer Rights:</strong> If a force majeure event delays shipping for more than thirty (30) days beyond the original estimated delivery date, customers may cancel their order and receive a full refund of the purchase price (including shipping fees). Refund requests must be submitted to hello@boptone.com with the order number and reason for cancellation.
+                </p>
+                <p className="mb-4">
+                  <strong>Seller Obligations:</strong> Artists/sellers using BopShop remain responsible for fulfilling orders in good faith, providing accurate estimated delivery timelines, communicating proactively with customers about delays, and processing refunds in accordance with their stated refund policies. Force majeure does not excuse sellers from these obligations, but it does limit liability for delays caused by events beyond their control.
+                </p>
+                <p className="mb-4">
+                  <strong>Insurance and Tracking:</strong> Boptone strongly recommends that sellers purchase shipping insurance and tracking for all orders, particularly high-value items. While force majeure events limit liability for delays, insurance provides additional protection for lost or damaged shipments. Sellers may pass reasonable insurance costs to customers as part of shipping fees.
+                </p>
               </section>
 
               <section className="mb-8">
@@ -954,7 +992,53 @@ export default function Terms() {
                   <strong>Platform Obligations:</strong> These commitments represent Boptone's obligations to you and are enforceable under the Artist Bill of Rights. Failure to meet these commitments entitles you to remedies including pro-rated refunds, expedited human review, compensation for losses caused by our negligence (subject to Section 16 liability limitations), and termination without penalty with full data export.
                 </p>
                 <p className="mb-4">
-                  <strong>Exclusions:</strong> These commitments do not apply to: (1) Third-party services beyond our control (Stripe payment processing, Instagram/TikTok integrations, etc.); (2) AI-generated recommendations or predictions (which remain "as is" and should not be relied upon as professional advice); (3) Force majeure events (natural disasters, pandemics, government actions, internet infrastructure failures); (4) Downtime caused by your actions (DDoS attacks, abuse of service, violation of Terms).
+                  <strong>Exclusions:</strong> These commitments do not apply to: (1) Third-party services beyond our control (Stripe payment processing, Instagram/TikTok integrations, etc.); (2) AI-generated recommendations or predictions (which remain "as is" and should not be relied upon as professional advice); (3) Force majeure events as defined in Section 15.2 below; (4) Downtime caused by your actions (DDoS attacks, abuse of service, violation of Terms).
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">15.2 Service Commitment Force Majeure</h3>
+                <p className="mb-4">
+                  The service commitments outlined in Section 15.1 (99.5% uptime, 48-hour settlement, human review response times, security measures, data backup) may be suspended or delayed due to force majeure events beyond Boptone's reasonable control. This provision protects both Boptone and artists from liability for service disruptions caused by extraordinary circumstances.
+                </p>
+                <p className="mb-4">
+                  <strong>Force Majeure Events for Service Commitments:</strong> The following events qualify as force majeure:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Infrastructure Failures:</strong> Distributed denial-of-service (DDoS) attacks, data center outages, cloud provider failures (AWS, Google Cloud, Azure), internet backbone disruptions, DNS failures, or other infrastructure events that prevent access to core services</li>
+                  <li><strong>Natural Disasters:</strong> Earthquakes, floods, fires, hurricanes, tornadoes, or other natural disasters affecting our data centers, service providers, or personnel</li>
+                  <li><strong>Cyber Attacks:</strong> Hacking attempts, malware infections, ransomware attacks, or other cybersecurity incidents that require taking systems offline for remediation or investigation</li>
+                  <li><strong>Third-Party Service Failures:</strong> Failures by critical third-party service providers (Stripe for payments, Shippo for shipping, email providers, authentication services, CDN providers) that prevent us from fulfilling our obligations</li>
+                  <li><strong>Government Actions:</strong> Court orders, law enforcement requests, regulatory actions, or governmental orders that require us to suspend or modify services</li>
+                  <li><strong>Public Health Emergencies:</strong> Epidemics, pandemics, or public health emergencies that prevent our personnel from accessing facilities, performing essential functions, or maintaining normal operations</li>
+                  <li><strong>Telecommunications Failures:</strong> Internet service provider outages, fiber optic cable cuts, routing failures, or other telecommunications disruptions beyond our control</li>
+                  <li><strong>Power Outages:</strong> Electrical grid failures, rolling blackouts, or power supply disruptions affecting data centers or critical infrastructure</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Mitigation Obligations:</strong> When a force majeure event affects service commitments, Boptone will:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Post a status update on our website and send email notifications to affected users within two (2) hours of identifying the issue</li>
+                  <li>Provide regular updates (at least every 12 hours) on remediation progress and estimated time to resolution</li>
+                  <li>Use commercially reasonable efforts to restore services as quickly as possible, including activating backup systems, engaging third-party support, and implementing emergency procedures</li>
+                  <li>Implement redundant systems and failover mechanisms to minimize future occurrences of similar events</li>
+                  <li>Conduct post-incident reviews and publish findings to improve transparency and prevent recurrence</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>No Liability for Force Majeure:</strong> Boptone shall not be liable for any breach of service commitments (including 99.5% uptime, 48-hour settlement, human review response times, or security measures) to the extent caused by force majeure events. However, force majeure does not excuse:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Payment Obligations:</strong> Boptone's obligation to remit artist earnings already collected (though settlement timeline may be extended during force majeure)</li>
+                  <li><strong>Data Security:</strong> Boptone's obligation to maintain reasonable security measures (though specific security incidents caused by force majeure may qualify as excused events)</li>
+                  <li><strong>Gross Negligence:</strong> Failures caused by Boptone's gross negligence, willful misconduct, or failure to implement industry-standard redundancy and disaster recovery systems</li>
+                  <li><strong>Data Backup:</strong> Boptone's obligation to maintain redundant backups (force majeure may delay restoration but does not excuse failure to maintain backups)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Extended Force Majeure:</strong> If a force majeure event prevents Boptone from providing core services (user authentication, content hosting, payment processing) for more than thirty (30) consecutive days, users may terminate their accounts without penalty and request immediate data export. Boptone will provide data export tools within 48 hours of termination request, even during force majeure events.
+                </p>
+                <p className="mb-4">
+                  <strong>Compensation and Refunds:</strong> Force majeure events do not entitle users to pro-rated refunds of subscription fees for the affected period. However, if force majeure causes service disruptions exceeding seven (7) consecutive days, Boptone will extend subscription periods by the duration of the outage at no additional cost.
+                </p>
+                <p className="mb-4">
+                  <strong>Notice and Documentation:</strong> Boptone will provide written notice of force majeure events within two (2) hours of identification, including description of the event, expected duration, affected services, and mitigation steps being taken. Upon request, Boptone will provide documentation supporting the force majeure claim, including third-party incident reports, government orders, or other evidence demonstrating the event was beyond our reasonable control.
                 </p>
               </section>
 
