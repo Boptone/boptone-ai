@@ -4558,3 +4558,39 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Add seller responsibility for clearances
 - [ ] Update todo.md
 - [ ] Save checkpoint
+
+
+## AI-Generated Music Content Legal Protections (User Request - CRITICAL)
+
+### Strategic Context
+- AI music companies (Suno, Udio, Boomy) training on copyrighted works without licenses
+- Major labels (UMG, Sony, Warner) filing lawsuits against AI music platforms
+- Boptone could face contributory infringement liability for hosting AI-generated content
+- Need ironclad fortress to protect against copyright claims
+
+### Phase 1: Legal Research
+- [ ] Research UMG v. Suno lawsuit (training on copyrighted works)
+- [ ] Research RIAA v. Udio lawsuit (derivative works claims)
+- [ ] Research current AI music legal landscape
+- [ ] Research industry responses (SoundCloud, DistroKid, Spotify policies)
+- [ ] Create comprehensive AI music legal research document
+
+### Phase 2: Draft TOS Section 9.12 - AI-Generated Content Policy
+- [ ] Add AI-Generated Content Disclosure Requirement
+- [ ] Add AI Training Data Warranty (artists warrant AI tools used licensed data)
+- [ ] Add Prohibited AI Tools List (Suno, Udio if they lose lawsuits)
+- [ ] Add mechanism to update prohibited tools list
+- [ ] Add Enhanced Indemnification for AI-generated content
+- [ ] Add Content Moderation Rights (AI detection, removal)
+- [ ] Add Stricter Repeat Infringer Policy for AI violations
+- [ ] Add educational resources about AI music copyright
+
+### Phase 3: Upload Flow Requirements
+- [ ] Add AI content certification checkbox to upload flow
+- [ ] Add optional AI tool disclosure field
+- [ ] Add warning about prohibited AI tools
+- [ ] Add link to AI content policy
+
+### Phase 4: Deployment
+- [ ] Update todo.md
+- [ ] Save checkpoint

@@ -1017,6 +1017,133 @@ export default function Terms() {
                 <p className="mb-4">
                   <strong>Approved Design Library (Optional):</strong> Boptone may offer a library of pre-licensed images, graphics, and designs that you can use on your merchandise without additional licensing. These approved designs are clearly marked in the BopShop design tool.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.12 AI-Generated Content Policy (Core Commitment)</h3>
+                <p className="mb-4">
+                  Artificial intelligence (AI) music generation tools pose unprecedented copyright infringement risks. Major record labels have filed lawsuits against AI music companies (Suno, Udio) for training on copyrighted works without permission, resulting in settlements exceeding $1.5 billion. To protect Boptone from contributory infringement liability and to protect artists from AI-generated competition, we enforce strict requirements for AI-generated content.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.1 Disclosure Requirement</strong>
+                </p>
+                <p className="mb-4">
+                  If you upload music created using artificial intelligence (AI) tools, you MUST disclose this during the upload process. You must specify which AI tools were used and certify that those tools were trained only on licensed, authorized, or public domain works.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.2 Training Data Warranty</strong>
+                </p>
+                <p className="mb-4">
+                  You warrant and represent that any AI tools used to create music uploaded to Boptone were trained on:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Fully licensed and authorized copyrighted works with permission from copyright owners, OR</li>
+                  <li>Public domain works, OR</li>
+                  <li>Original works created by you or for which you hold all necessary rights</li>
+                </ul>
+                <p className="mb-4">
+                  You acknowledge that using AI tools trained on copyrighted works without permission constitutes copyright infringement, and you will be solely liable for any resulting claims.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.3 Prohibited AI Tools</strong>
+                </p>
+                <p className="mb-4">
+                  You may NOT upload music created using the following AI tools, which have been found to infringe copyrights or are subject to pending copyright infringement lawsuits:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Suno AI (until licensed model launches)</li>
+                  <li>Udio AI (until licensed model launches)</li>
+                  <li>Any AI tool trained on pirated datasets (Library Genesis, Pirate Library Mirror, etc.)</li>
+                </ul>
+                <p className="mb-4">
+                  Boptone reserves the right to update this list at any time. We will provide 30 days' notice before adding new tools to the prohibited list, except in cases of court orders or emergency legal threats.
+                </p>
+                <p className="mb-4">
+                  If you have already uploaded music created using a newly prohibited tool, you must remove it within 30 days of notice or your account will be suspended.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.4 Enhanced Indemnification for AI Content</strong>
+                </p>
+                <p className="mb-4">
+                  In addition to the indemnification obligations in Section 9.9, you specifically indemnify Boptone for ALL claims, damages, losses, and expenses (including attorney fees) arising from your upload or distribution of AI-generated content, including but not limited to:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Copyright infringement claims related to AI training data</li>
+                  <li>Derivative works claims for AI-generated outputs</li>
+                  <li>Trademark infringement claims for AI-generated artist names, voices, or likenesses</li>
+                  <li>Publicity rights violations for AI-generated celebrity voices or personas</li>
+                  <li>Unfair competition claims from artists whose works were used to train AI without permission</li>
+                </ul>
+                <p className="mb-4">
+                  This indemnification applies even if you were unaware that the AI tool was trained on copyrighted works without permission. It is YOUR responsibility to verify that any AI tools you use comply with copyright law.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.5 Content Moderation and AI Detection</strong>
+                </p>
+                <p className="mb-4">
+                  Boptone reserves the right to:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Use AI detection tools to identify AI-generated music</li>
+                  <li>Request proof that AI tools used were trained on licensed/authorized data</li>
+                  <li>Remove content suspected of being created using prohibited AI tools</li>
+                  <li>Suspend or terminate accounts for repeated AI content violations</li>
+                </ul>
+                <p className="mb-4">
+                  If we request proof of AI tool licensing/authorization, you must provide it within 14 days or your content will be removed.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.6 Repeat Infringer Policy for AI Content</strong>
+                </p>
+                <p className="mb-4">
+                  Due to the severe legal risks posed by AI-generated content trained on copyrighted works, we enforce a stricter repeat infringer policy:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>1st violation:</strong> Warning + immediate content removal + 14-day period to provide proof of licensing</li>
+                  <li><strong>2nd violation:</strong> 30-day account suspension + removal of ALL AI-generated content</li>
+                  <li><strong>3rd violation:</strong> Permanent account termination + forfeiture of any pending payments + permanent ban from Boptone</li>
+                </ul>
+
+                <p className="mb-4">
+                  <strong>9.12.7 No Liability for AI Detection Errors</strong>
+                </p>
+                <p className="mb-4">
+                  While we use commercially reasonable efforts to detect AI-generated content, we are not liable for:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>False positives (human-created music incorrectly identified as AI-generated)</li>
+                  <li>False negatives (AI-generated music not detected)</li>
+                  <li>Damages resulting from removal of content suspected of being AI-generated</li>
+                </ul>
+                <p className="mb-4">
+                  If your human-created music is incorrectly identified as AI-generated, you may appeal by providing evidence of your creative process (session files, stems, recording documentation, etc.).
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.8 Educational Resources</strong>
+                </p>
+                <p className="mb-4">
+                  Boptone provides educational resources to help you understand AI music copyright issues:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Guide: "AI Music Tools: What's Legal?"</li>
+                  <li>List of approved AI tools (licensed models only)</li>
+                  <li>Alternatives to AI music generation (AI mastering, AI mixing, AI stem separation)</li>
+                </ul>
+                <p className="mb-4">
+                  These resources are for informational purposes only and do not constitute legal advice. Consult a copyright attorney if you have questions about AI-generated content.
+                </p>
+
+                <p className="mb-4">
+                  <strong>9.12.9 Future Licensing Opportunities</strong>
+                </p>
+                <p className="mb-4">
+                  If Boptone partners with licensed AI music platforms in the future (similar to UMG/Warner partnerships with Udio/Suno), we will offer artists the opportunity to opt-in to license their works for AI training in exchange for compensation. Participation will always be voluntary and opt-in, never opt-out or automatic.
+                </p>
               </section>
 
               <section className="mb-8">

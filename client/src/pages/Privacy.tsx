@@ -280,6 +280,31 @@ export default function Privacy() {
                 <p className="mb-4">
                   We may disclose your information only when absolutely necessary to enforce our Terms of Service and other agreements, to protect our rights, property, and safety and those of our users and the public, to detect, prevent, or investigate fraud and security breaches, in connection with legal proceedings or disputes, and to comply with copyright law, including DMCA takedown notices and counter-notices. We prioritize protecting your privacy and will challenge any requests for your data that we believe are overbroad or unjustified.
                 </p>
+                <p className="mb-4">
+                  <strong>Law Enforcement and Government Requests:</strong> We may disclose your information to law enforcement agencies, government authorities, regulatory bodies, or courts when we are legally required to do so, including:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Valid Court Orders:</strong> When we receive a valid subpoena, court order, search warrant, or other legal process issued by a court of competent jurisdiction, we will comply with the order to the extent required by law.</li>
+                  <li><strong>National Security Requests:</strong> When we receive a valid National Security Letter (NSL), Foreign Intelligence Surveillance Act (FISA) order, or other national security request authorized under U.S. law, we will comply to the extent required by law. We will seek to narrow the scope of such requests and will notify affected users unless legally prohibited from doing so.</li>
+                  <li><strong>Emergency Situations:</strong> When we have a good faith belief that disclosure is necessary to prevent imminent harm to life, safety, or property, we may disclose information to law enforcement or emergency services without a court order. Examples include credible threats of violence, suicide prevention, child endangerment, or active criminal activity.</li>
+                  <li><strong>Tax and Financial Reporting:</strong> We are required to report certain financial information to tax authorities, including IRS Form 1099-K for payment transactions exceeding $600 annually, and to comply with anti-money laundering (AML) and know-your-customer (KYC) regulations enforced by FinCEN and other financial regulators.</li>
+                  <li><strong>Copyright Enforcement:</strong> We may disclose information to copyright owners or their authorized representatives in response to valid DMCA subpoenas or court orders related to copyright infringement claims.</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Transparency and User Notification:</strong> Whenever legally permissible, we will:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Notify affected users before disclosing their information to law enforcement or government authorities</li>
+                  <li>Provide users with a copy of the legal request (subpoena, court order, etc.) so they can seek legal counsel and challenge the request if desired</li>
+                  <li>Challenge overbroad or legally deficient requests for user data</li>
+                  <li>Publish a Transparency Report annually disclosing the number and types of government requests we receive</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Limitations on Disclosure:</strong> We will only disclose the minimum information necessary to comply with a legal request. We will not provide blanket access to our databases or systems. We will not voluntarily share user data with law enforcement without a valid legal process, except in emergency situations as described above.
+                </p>
+                <p className="mb-4">
+                  <strong>International Requests:</strong> For requests from non-U.S. law enforcement or government authorities, we require that the request be made through established mutual legal assistance treaty (MLAT) procedures or other internationally recognized legal processes. We will not comply with direct requests from foreign governments unless required by applicable law or treaty obligations.
+                </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.6 Business Transfers</h3>
                 <p className="mb-4">
