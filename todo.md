@@ -4670,3 +4670,20 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Test with sample AI-generated tracks (Suno, Udio) and human-created tracks
 - [ ] Monitor false positive rate and adjust confidence thresholds if needed
 - [ ] Build admin moderation page at `/admin/content-moderation`
+
+
+## Redesign Terms of Service and Privacy Policy Pages ✅ COMPLETE
+
+### Context
+- User dislikes current layout: fonts look odd and not clean
+- User wants "super clean and tidy" legal pages
+- Reference design: https://boptone.com/terms_of_service.html (white layout with light gray background)
+- Must be visually perfect for desktop AND mobile
+
+### Design Requirements
+- [x] Clean white content container with light gray background (bg-gray-50 + white rounded card)
+- [x] Professional, readable typography (text-gray-700, leading-relaxed, proper heading hierarchy)
+- [x] Consistent with Boptone's softened brutalist design philosophy
+- [x] Responsive design for desktop and mobile (sm: breakpoints, responsive padding)
+- [x] Apply same design to both Terms and Privacy pages for consistency
+- [x] Preserve all content (non-destructive update)
