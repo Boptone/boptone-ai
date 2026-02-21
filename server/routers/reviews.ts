@@ -302,6 +302,131 @@ export const reviewRouter = router({
 
       return { success: true };
     }),
+
+  /**
+   * Get all reviews (admin only)
+   * For moderation dashboard
+   */
+  getAllReviews: protectedProcedure
+    .input(
+      z.object({
+        status: z.enum(["pending", "approved", "rejected", "flagged"]).optional(),
+        limit: z.number().min(1).max(200).default(50),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      // Check if user is admin
+      if (ctx.user.role !== "admin") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Admin access required",
+        });
+      }
+
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database unavailable",
+        });
+      }
+
+      // Build query
+      let query = db
+        .select({
+          id: productReviews.id,
+          productId: productReviews.productId,
+          rating: productReviews.rating,
+          title: productReviews.title,
+          content: productReviews.content,
+          reviewerName: productReviews.reviewerName,
+          reviewerLocation: productReviews.reviewerLocation,
+          verifiedPurchase: productReviews.verifiedPurchase,
+          moderationStatus: productReviews.status,
+          helpfulVotes: productReviews.helpfulVotes,
+          unhelpfulVotes: productReviews.unhelpfulVotes,
+          createdAt: productReviews.createdAt,
+          product: {
+            id: products.id,
+            name: products.name,
+            slug: products.slug,
+          },
+        })
+        .from(productReviews)
+        .leftJoin(products, eq(productReviews.productId, products.id))
+        .orderBy(desc(productReviews.createdAt))
+        .limit(input.limit);
+
+      // Filter by status if provided
+      if (input.status) {
+        query = query.where(eq(productReviews.status, input.status)) as any;
+      }
+
+      const reviews = await query;
+
+      // Fetch photos for each review
+      const reviewsWithPhotos = await Promise.all(
+        reviews.map(async (review) => {
+          const photos = await db
+            .select()
+            .from(reviewPhotos)
+            .where(eq(reviewPhotos.reviewId, review.id));
+
+          return {
+            ...review,
+            photos,
+          };
+        })
+      );
+
+      return reviewsWithPhotos;
+    }),
+
+  /**
+   * Moderate review (admin only)
+   * Approve, reject, or flag a review
+   */
+  moderateReview: protectedProcedure
+    .input(
+      z.object({
+        reviewId: z.number(),
+        action: z.enum(["approve", "reject", "flag"]),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      // Check if user is admin
+      if (ctx.user.role !== "admin") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Admin access required",
+        });
+      }
+
+      const db = await getDb();
+      if (!db) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Database unavailable",
+        });
+      }
+
+      // Map action to status
+      const statusMap = {
+        approve: "approved" as const,
+        reject: "rejected" as const,
+        flag: "flagged" as const,
+      };
+
+      // Update review status
+      await db
+        .update(productReviews)
+        .set({
+          status: statusMap[input.action],
+        })
+        .where(eq(productReviews.id, input.reviewId));
+
+      return { success: true };
+    }),
 });
 
 /**

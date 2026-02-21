@@ -3761,3 +3761,38 @@ Apply the visually stunning design style from the explainer component across ALL
 - Connect review system to existing product pages in BopShop
 - Test complete flow from purchase → review → display
 - Verify Google Rich Results Test passes
+
+
+## Integrate Review System & Build Moderation Dashboard (User Request - HIGH PRIORITY)
+
+### Phase 1: Find Existing Product Pages
+- [x] Locate BopShop product page components
+- [x] Analyze current product page structure
+- [x] Identify integration points for ProductReviews component
+
+### Phase 2: Integrate ProductReviews Component
+- [x] Add ProductReviews component to product pages
+- [x] Connect to product data (productId)
+- [ ] Add Google Review schema to page head (infrastructure ready)
+- [ ] Test review display on product pages (requires testing)
+
+### Phase 3: Build Admin Moderation Dashboard
+- [x] Create ReviewModeration.tsx page component
+- [x] Build review list with filtering (pending, approved, flagged)
+- [x] Add approve/reject/flag actions
+- [x] Create moderation stats dashboard
+
+### Phase 4: Backend Moderation Procedures
+- [x] Add moderateReview mutation (approve/reject/flag)
+- [x] Add getAllReviews query (covers pending/flagged/all)
+- [x] Add review moderation logging (via status updates)
+
+### Phase 5: Testing
+- [ ] Test review submission flow (requires real product data)
+- [ ] Test review display on product pages (requires real product data)
+- [ ] Test moderation dashboard (requires admin login)
+- [ ] Verify Google Rich Results Test (after integration)
+
+### Phase 6: Deployment
+- [ ] Save checkpoint
+- [ ] Push to GitHub
