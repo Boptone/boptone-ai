@@ -3423,3 +3423,33 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Design "Boptone Assistant" (fan discovery agent)
 - [ ] Build agent marketplace infrastructure
 - [ ] Launch beta agent program
+
+
+## Agent API Implementation (IN PROGRESS)
+
+### Phase 1: Core Endpoints
+- [x] Build `/api/v1/agents/search` endpoint
+  - [x] Create agentApi router in server/routers/
+  - [x] Implement natural language query parsing
+  - [x] Add structured filter support (genre, price, format)
+  - [x] Return artist + product data with URLs
+  - [x] Add pagination (limit, offset)
+- [x] Build `/api/v1/agents/purchase` endpoint (OAuth stub - requires OAuth implementation)
+  - [ ] Validate user OAuth token (TODO: Implement OAuth validation)
+  - [ ] Integrate with existing checkout flow (TODO: Connect to ecommerceRouter)
+  - [ ] Call Shippo for shipping rates (TODO: Integrate shipping helper)
+  - [ ] Process payment via Stripe (TODO: Create PaymentIntent)
+  - [ ] Return order confirmation with tracking (TODO: Complete flow)
+- [x] Add rate limiting middleware
+  - [x] Implement token bucket algorithm
+  - [x] Set tier limits (search: 1000/hr, purchase: 100/hr)
+  - [x] Add rate limit headers to responses
+- [ ] Add error handling and logging
+  - [ ] Standardize error response format
+  - [ ] Log all agent requests with request_id
+  - [ ] Monitor error rates
+- [ ] Test Agent API endpoints
+  - [ ] Write vitest tests for search endpoint
+  - [ ] Write vitest tests for purchase endpoint
+  - [ ] Test rate limiting behavior
+  - [ ] Validate error responses

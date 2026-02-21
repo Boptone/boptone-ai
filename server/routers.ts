@@ -25,6 +25,7 @@ import { artistNotificationsRouter } from "./routers/artistNotifications";
 import { searchRouter } from "./searchRouter";
 import { shippingRouter } from "./routers/shipping";
 import { sitemapRouter } from "./routers/sitemap";
+import { agentApiRouter } from "./routers/agentApi";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -580,6 +581,7 @@ export const appRouter = router({
   search: searchRouter,
   system: systemRouter,
   taskContract: taskContractRouter,
+  agentApi: agentApiRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
