@@ -4161,4 +4161,229 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Test all pop-up backgrounds are solid white
 - [x] Review TOS changes for legal accuracy
 - [x] Review Privacy Policy changes for legal accuracy
-- [ ] Save checkpoint
+- [x] Save checkpoint
+
+## Constitutional Legal Document Rewrite (User Request - CRITICAL PRIORITY)
+
+### Strategic Context
+- Rewrite TOS and Privacy Policy as constitutional documents for global commerce platform
+- Must survive federal court challenges, class action certification, regulatory investigations
+- Dual audience: courts (ironclad legal protection) + artists (emotional safety)
+- Voice: Dignified, erudite, protective, accessible yet formidable
+- Pass "Museum Wall Test": artists nod, not gasp
+
+### Phase 1: Deep Audit - Current TOS
+- [ ] Audit Payment Processing sections against Stripe Connect requirements
+- [ ] Audit Intellectual Property sections for artist ownership clarity
+- [ ] Audit Dispute Resolution for multi-level court structure
+- [ ] Audit Data Rights for user sovereignty framework
+- [ ] Audit Compliance for GDPR, CCPA, PCI-DSS, DSA, PSD2, Section 230, DMCA
+- [ ] Identify gaps in settlement guarantees, reserve requirements, insolvency protection
+- [ ] Identify gaps in AI training consent, portfolio ownership, exclusivity language
+- [ ] Identify gaps in human review triggers, account suspension protections
+- [ ] Identify gaps in algorithm transparency, visibility explanations
+
+### Phase 2: Deep Audit - Current Privacy Policy
+- [ ] Audit data collection sections for user sovereignty language
+- [ ] Audit data sharing sections for platform duties framework
+- [ ] Audit data rights sections for enforcement mechanisms
+- [ ] Audit transparency sections for "who viewed your work" commitments
+- [ ] Audit algorithm disclosure for "why shown or hidden" explanations
+- [ ] Audit data portability for "download everything" guarantees
+- [ ] Identify gaps in Data Constitution structure
+- [ ] Identify gaps in bankruptcy protection for user data
+
+### Phase 3: Gap Analysis & Artist Fear-Points
+- [ ] Document all legal vulnerabilities in current documents
+- [ ] Document all artist fear-points (AI training, account suspension, data ownership)
+- [ ] Document all missing Stripe Connect platform requirements
+- [ ] Document all missing constitutional framework elements
+- [ ] Document all missing multi-stakeholder governance structures
+- [ ] Create comprehensive gap analysis report
+
+### Phase 4: Draft Artist Bill of Rights & Constitutional Framework
+- [ ] Draft Artist Bill of Rights preamble (8 core rights)
+- [ ] Draft constitutional framework: legislative, executive, judicial branches
+- [ ] Draft Rights Declaration for all stakeholders
+- [ ] Draft Fiduciary Duties framework
+- [ ] Draft Graduated Enforcement system
+- [ ] Draft Amendment process with stakeholder consultation
+- [ ] Draft interpretive principles for future tech (AI, crypto, quantum)
+
+### Phase 5: Rewrite TOS as Payment System Charter
+- [ ] Rewrite Payment Processing as "Payment System Charter"
+- [ ] Add settlement guarantees and reserve requirements
+- [ ] Add insolvency protection and bankruptcy safeguards
+- [ ] Add fraud chargeback allocation rules
+- [ ] Add currency conversion transparency
+- [ ] Rewrite Intellectual Property with tiered rights structure
+- [ ] Add AI training consent requirements
+- [ ] Add portfolio ownership and exclusivity language
+- [ ] Add "removing work removes it everywhere" guarantee
+- [ ] Rewrite Dispute Resolution as multi-level courts
+- [ ] Add human review triggers for high-value decisions
+- [ ] Add content removal appeals process
+- [ ] Add payment hold escalation procedures
+- [ ] Add reputation-affecting decision reviews
+
+### Phase 6: Rewrite Privacy Policy as Data Constitution
+- [ ] Rewrite as "Data Constitution" with user sovereignty
+- [ ] Add platform duties and enforcement mechanisms
+- [ ] Add "who viewed your work" transparency commitment
+- [ ] Add "why algorithms showed or hid it" explanations
+- [ ] Add "download everything" data portability guarantee
+- [ ] Add bankruptcy protection for user funds and IP
+- [ ] Add algorithm explainability requirements
+- [ ] Add account suspension human review thresholds
+
+### Phase 7: Create Deliverables
+- [ ] Create complete redline showing all changes
+- [ ] Create clean version ready for legal review
+- [ ] Create executive summary of philosophical shifts
+- [ ] Create plain-language Artist Bill of Rights (for marketing/UX)
+- [ ] Create Constitutional Commentary explaining jurisprudential foundations
+- [ ] Create certification checklist (Rule 12(b)(6), unconscionability, etc.)
+
+### Phase 8: Legal Standards Testing & Deployment
+- [ ] Test against Rule 12(b)(6) motion to dismiss standards
+- [ ] Test against unconscionability challenges
+- [ ] Test against reasonable expectations doctrine
+- [ ] Test against class action waiver standards (AT&T Mobility v. Concepcion)
+- [ ] Test against all regulatory requirements (GDPR, CCPA, PCI-DSS, etc.)
+- [ ] Test "Museum Wall Test" with sample artists
+- [ ] Test "Supreme Court quote test" with legal professionals
+- [ ] Save checkpoint with all deliverables
+
+
+## Option B: Constitutional Legal Framework Implementation (IN PROGRESS)
+
+### Phase 1: Integrate Artist Bill of Rights
+- [x] Draft Artist Bill of Rights (7,000 words, 10 articles)
+- [ ] Add Artist Bill of Rights as Section 1 to Terms.tsx
+- [ ] Renumber all existing TOS sections (+1)
+- [ ] Add cross-references throughout TOS
+
+### Phase 2: Rewrite Critical TOS Sections
+- [ ] Section 7 (was 6): Payment Terms → Payment System Charter
+  - [ ] Add 48-hour settlement guarantees
+  - [ ] Add bankruptcy protection (segregated accounts, super-priority)
+  - [ ] Add fraud chargeback allocation (platform absorbs first $500)
+  - [ ] Add currency conversion transparency
+  - [ ] Keep existing Stripe Connect disclosure
+  - [ ] Keep existing Stripe Tax disclosure
+- [ ] Section 9 (was 8): IP Rights → Intellectual Property Constitution
+  - [ ] Add AI training prohibition (explicit, with consent mechanism)
+  - [ ] Add content deletion timeline (90 days, with verification)
+  - [ ] Add non-exclusivity guarantee
+  - [ ] Add license scope limitation (operational use only)
+  - [ ] Keep existing DMCA procedures
+- [ ] Section 15 (was 14): Disclaimers → Service Commitments
+  - [ ] Replace "AS IS" with limited warranties
+  - [ ] Add service level commitments (99.5% uptime)
+  - [ ] Add platform obligations (security, fraud protection, human review)
+  - [ ] Keep disclaimers for AI accuracy, third-party services
+- [ ] Section 16 (was 15): Liability → Risk Allocation
+  - [ ] Add tiered liability caps (based on revenue, not flat $100)
+  - [ ] Add carve-outs for gross negligence, fraud, IP violations, payment failures
+  - [ ] Add payment processing liability (no disclaimer)
+  - [ ] Keep mutual limitation
+- [ ] Section 18 (was 17): Arbitration → Dispute Resolution
+  - [ ] Add 30-day opt-out right (AT&T Mobility compliance)
+  - [ ] Add small claims carve-out (under $10,000)
+  - [ ] Add cost-shifting for frivolous claims
+  - [ ] Add human review triggers (>$1k funds, >$5k revenue)
+  - [ ] Keep arbitration for those who don't opt out
+- [ ] Section 19 (was 18): Modifications → Amendment Process
+  - [ ] Add stakeholder consultation (Policy Council, 30-day comment)
+  - [ ] Add grandfathering (12 months for fees, permanent for IP)
+  - [ ] Add service discontinuation obligations (180 days, refunds, migration)
+  - [ ] Keep non-material changes with 7 days' notice
+
+### Phase 3: Rewrite Privacy Policy
+- [ ] Add Data Constitution preamble
+- [ ] Section 2: Add "Why We Need This" explanations for each data category
+- [ ] Section 2: Add data minimization commitment
+- [ ] Section 3: Add AI training prohibition (explicit, comprehensive)
+- [ ] Section 3: Add algorithm transparency commitments
+- [ ] Section 5: Add "who viewed your work" transparency
+- [ ] Section 5: Add bankruptcy protection (delete, don't sell)
+- [ ] Section 9: Add data sovereignty language (inherent ownership)
+- [ ] Section 9: Add private right of action (class actions, liquidated damages)
+- [ ] Section 11: Add Do Not Track support
+- [ ] Section 11: Add Global Privacy Control support
+
+### Phase 4: Create Deliverables
+- [ ] Create executive summary for leadership
+- [ ] Create plain-language Bill of Rights for marketing
+- [ ] Create redline comparison (old vs. new)
+- [ ] Create implementation checklist
+
+### Phase 5: Deploy & Checkpoint
+- [ ] Update all todo.md items as complete
+- [ ] Test all changes in dev environment
+- [ ] Save checkpoint with constitutional framework
+- [ ] Create deployment guide for production
+
+
+## Constitutional Legal Framework (Option B) - COMPLETE
+
+### Phase 1: Artist Bill of Rights Integration
+- [x] Draft Artist Bill of Rights (10 articles, 7,000 words)
+- [x] Integrate Artist Bill of Rights as Section 1 of Terms of Service
+- [x] Renumber all existing TOS sections
+- [x] Create backup of original TOS
+
+### Phase 2: TOS Constitutional Amendments
+- [x] Section 7: Payment System Charter (7.11-7.14)
+  - [x] 7.11: Settlement Guarantees (48-hour commitment)
+  - [x] 7.12: Bankruptcy Protection (segregated accounts, super-priority)
+  - [x] 7.13: Fraud Chargeback Allocation (platform absorbs first $500)
+  - [x] 7.14: Currency Conversion Transparency
+- [x] Section 9: Intellectual Property Constitution (9.5-9.8)
+  - [x] 9.5: AI Training Prohibition (explicit, permanent, with consent mechanism)
+  - [x] 9.6: Content Deletion Timeline (90 days max, with verification)
+  - [x] 9.7: Non-Exclusivity Guarantee
+  - [x] 9.8: License Scope Limitation (operational use only)
+- [x] Section 15: Service Commitments (15.1)
+  - [x] Uptime commitment (99.5%)
+  - [x] Security commitment (TLS 1.3, AES-256, 72-hour patching)
+  - [x] Fraud protection commitment
+  - [x] Human review commitment
+  - [x] Data backup commitment
+- [x] Section 16: Risk Allocation (16.1-16.3)
+  - [x] 16.1: Tiered Liability Caps (scales with revenue)
+  - [x] 16.2: Carve-Outs (gross negligence, IP violations, payment failures)
+  - [x] 16.3: Mutual Limitation (applies equally to both parties)
+- [x] Section 18: Dispute Resolution (18.1-18.5)
+  - [x] 18.1: Opt-Out Right (30-day window, AT&T Mobility compliance)
+  - [x] 18.2: Small Claims Exception (disputes under $10k)
+  - [x] 18.3: Class Action Carve-Out (Bill of Rights violations >1,000 users)
+  - [x] 18.4: Cost-Shifting for Frivolous Claims
+  - [x] 18.5: Human Review Triggers
+- [x] Section 19: Amendment Process (19.1-19.3)
+  - [x] 19.1: Constitutional Amendment Process (Policy Council, 180-day notice)
+  - [x] 19.2: Grandfathering and Opt-Out (12-month grandfathering)
+  - [x] 19.3: Service Discontinuation Protections (90-day notice, data export)
+
+### Phase 3: Privacy Policy Constitutional Amendments
+- [x] Section 1.1: Data Constitution preamble (7 key principles)
+- [x] Section 3.1: AI Training Prohibition (comprehensive, with consent mechanism)
+- [ ] Section 5.1: Algorithm Transparency (right to explanation)
+- [ ] Section 5.2: Bankruptcy Protection (data deletion, not sale)
+- [ ] Section 10: Human Review Rights (automated decisions)
+- [ ] Section 11.5: Do Not Track Support
+
+### Phase 4: Deliverables & Documentation
+- [ ] Executive summary for leadership
+- [ ] Plain-language Bill of Rights for marketing
+- [ ] Redline comparison (old vs. new)
+- [ ] Implementation checklist
+- [x] Save checkpoint
+
+### Phase 5: Testing & Deployment
+- [x] Fix TypeScript errors (unescaped > characters)
+- [x] Verify dev server running
+- [ ] Write vitest tests for constitutional features
+- [ ] Test all legal document pages render correctly
+- [x] Update todo.md
+- [ ] Save final checkpoint

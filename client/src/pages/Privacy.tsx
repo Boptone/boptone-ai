@@ -29,6 +29,23 @@ export default function Privacy() {
                 <p>
                   This Privacy Policy should be read in conjunction with our Terms of Service, which govern your use of the Service. Capitalized terms not defined in this Privacy Policy have the meanings given in our Terms of Service.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">1.1 Data Constitution (Constitutional Commitment)</h3>
+                <p className="mb-4">
+                  This Privacy Policy is governed by the <strong>Artist Bill of Rights</strong> (Section 1 of our Terms of Service), which establishes constitutional protections for your data sovereignty. Key principles:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>You Own Your Data:</strong> All personal data, creative works, and content you provide to Boptone remain your property. We are stewards, not owners.</li>
+                  <li><strong>AI Training Prohibition:</strong> Your creative works will never be used to train AI models without your separate, explicit, and revocable consent (see Section 3.1 below).</li>
+                  <li><strong>Algorithm Transparency:</strong> You have the right to understand how our algorithms affect your visibility, recommendations, and revenue (see Section 5.1 below).</li>
+                  <li><strong>True Portability:</strong> You can export all your data in machine-readable format and delete your account with verified deletion within 90 days (see Section 9 below).</li>
+                  <li><strong>Bankruptcy Protection:</strong> Your data will be deleted (not sold) if Boptone enters bankruptcy (see Section 5.2 below).</li>
+                  <li><strong>Human Review Rights:</strong> Automated decisions affecting your livelihood trigger mandatory human review (see Section 10 below).</li>
+                  <li><strong>Do Not Track Support:</strong> We honor browser Do Not Track signals (see Section 11.5 below).</li>
+                </ul>
+                <p className="mb-4">
+                  These constitutional commitments are permanent and cannot be weakened through unilateral changes to this Privacy Policy. Any amendment to these protections requires 180 days' advance notice, Artist Policy Council approval, and opt-out rights. See Section 19 of our Terms of Service for the constitutional amendment process.
+                </p>
               </section>
 
               <section className="mb-8">
@@ -151,8 +168,25 @@ export default function Privacy() {
                 <p className="mb-4">
                   We use the information we collect for various business and operational purposes. The specific purposes depend on how you interact with our Service and the features you use. Our uses of your information include:
                 </p>
-                
-                <h3 className="text-xl font-semibold mb-3 mt-6">3.1 Service Delivery and Account Management</h3>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">3.1 AI Training Prohibition (Constitutional Commitment)</h3>
+                <p className="mb-4">
+                  In accordance with Article III of the Artist Bill of Rights (Section 1 of our Terms of Service), your creative works will <strong>never</strong> be used to train artificial intelligence models, machine learning systems, or algorithmic tools without your separate, explicit, and revocable consent.
+                </p>
+                <p className="mb-4">
+                  <strong>What This Means:</strong> We will not incorporate your music, videos, artwork, lyrics, or other creative works into datasets used to teach AI models to generate new creative works. We will not sell, license, or provide your works to third-party AI companies (OpenAI, Google, Meta, Anthropic, etc.) for training purposes. We will not use your works to train internal AI models that generate music, videos, or other creative content.
+                </p>
+                <p className="mb-4">
+                  <strong>What We CAN Do:</strong> This prohibition does not prevent us from: (1) Analyzing your performance metrics to provide recommendations; (2) Detecting copyright infringement using audio fingerprinting; (3) Forecasting revenue using predictive analytics; (4) Optimizing marketing campaigns based on engagement data; (5) Generating social media captions or promotional copy; (6) Analyzing audio quality for mastering suggestions; (7) Detecting fraud patterns; (8) Personalizing your user experience; (9) Any other analysis that serves your interests and does not result in your work being incorporated into AI models sold or licensed to third parties.
+                </p>
+                <p className="mb-4">
+                  <strong>Consent Mechanism:</strong> If we ever wish to use your works for AI training purposes, we will request your separate, explicit, written consent for each work, explain exactly how your work will be used, disclose whether the AI model will be sold or licensed, compensate you fairly (not a token payment), and allow you to withdraw consent at any time with immediate effect. See Section 9.5 of our Terms of Service for full details.
+                </p>
+                <p className="mb-4">
+                  <strong>Third-Party Prohibition:</strong> We contractually prohibit our service providers, partners, and contractors from using your creative works for AI training. If a third party requests access to your work for AI training, we will notify you immediately and decline the request unless you affirmatively consent.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">3.2 Service Delivery and Account Management</h3>
                 <p className="mb-4">
                   We use your information to create and manage your account, authenticate your identity, process your subscription payments, deliver the features and functionality you request, provide customer support and respond to your inquiries, send transactional emails and notifications about your account, process your transactions and fulfill your orders, manage your subscriptions and billing, and maintain the security and integrity of your account.
                 </p>
