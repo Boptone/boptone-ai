@@ -195,10 +195,10 @@ export default function Terms() {
                   <strong>Velocity Limits and Transaction Monitoring:</strong> To prevent money laundering and fraud, we impose the following limits on Kick-in tips: (1) $500 maximum per transaction, (2) $1,000 maximum per day, (3) $2,500 maximum per week, (4) $10,000 maximum per month, and (5) $19,000 maximum per year. We monitor all transactions for suspicious activity and may hold, delay, or refuse transactions that violate these limits or appear fraudulent.
                 </p>
                 <p className="mb-4">
-                  <strong>Suspicious Activity Reporting:</strong> We reserve the right to report suspicious transactions to law enforcement and regulatory authorities as required by law. We may freeze accounts, hold funds, or terminate access to payment services if we suspect fraudulent activity, money laundering, or violations of these Terms.
+                  <strong>Suspicious Activity Reporting:</strong> We may freeze accounts, hold funds, or terminate access to payment services if we suspect fraudulent activity, money laundering, or violations of these Terms. We take fraud prevention seriously to protect all artists on the platform.
                 </p>
                 <p className="mb-4">
-                  <strong>Fraud Warning:</strong> Use of Boptone's payment services to perform fraudulent activities or transactions may result in the permanent loss of funds with no recourse, immediate account termination, and referral to law enforcement. Do not attempt to structure transactions to evade reporting requirements or circumvent velocity limits—doing so is illegal and will result in account termination.
+                  <strong>Fraud Warning:</strong> Use of Boptone's payment services to perform fraudulent activities or transactions may result in the permanent loss of funds with no recourse and immediate account termination. Do not attempt to structure transactions to evade reporting requirements or circumvent velocity limits—doing so will result in account termination.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.10 Tax Obligations and Reporting</h3>
@@ -470,7 +470,7 @@ export default function Terms() {
                   <li>Fraudulent, abusive, or illegal activity</li>
                   <li>Non-payment of fees</li>
                   <li>Prolonged inactivity</li>
-                  <li>Requests by law enforcement or government agencies</li>
+
                   <li>Unexpected technical or security issues</li>
                   <li>Discontinuation or material modification of the Service</li>
                 </ul>

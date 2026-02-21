@@ -3486,3 +3486,19 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Update TOS document
 - [ ] Update Privacy Policy document
 - [ ] Save checkpoint
+
+
+## Remove Law Enforcement Language from Legal Documents (User Request - CRITICAL FOR ARTIST TRUST)
+
+### Issue
+- TOS and Privacy Policy contain language about "law enforcement" and "government agencies"
+- This language kills artist trust and prevents signups
+- Need to remove or replace with artist-friendly alternatives
+
+### Implementation
+- [x] Search for all instances of "law enforcement" in TOS and Privacy
+- [x] Search for all instances of "government" in TOS and Privacy
+- [x] Remove or replace hostile language with trust-building alternatives
+- [x] Emphasize data protection and transparency
+- [ ] Test legal pages for rendering
+- [ ] Save checkpoint

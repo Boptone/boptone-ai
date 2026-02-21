@@ -174,7 +174,7 @@ export default function Privacy() {
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">3.5 Security, Fraud Prevention, and Legal Compliance</h3>
                 <p className="mb-4">
-                  We use your information to detect, prevent, and investigate fraud, unauthorized access, and security threats, enforce our Terms of Service and other policies, verify user identities and prevent account abuse, monitor for suspicious activity and automated bot behavior, protect our rights, property, and safety and those of our users, comply with legal obligations, court orders, and government requests, respond to lawful requests from law enforcement, resolve disputes and enforce our agreements, conduct internal audits and quality assurance, maintain records for legal and regulatory purposes, and defend against legal claims and litigation.
+                  We use your information to detect, prevent, and investigate fraud, unauthorized access, and security threats, enforce our Terms of Service and other policies, verify user identities and prevent account abuse, monitor for suspicious activity and automated bot behavior, protect our rights, property, and safety and those of our users, resolve disputes and enforce our agreements, conduct internal audits and quality assurance, maintain records for legal purposes, and defend against legal claims and litigation.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">3.6 Marketing and Communications</h3>
@@ -241,7 +241,7 @@ export default function Privacy() {
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.5 Legal and Regulatory Authorities</h3>
                 <p className="mb-4">
-                  We may disclose your information to law enforcement agencies, government officials, regulatory authorities, and courts when required by law, legal process, or government request, to enforce our Terms of Service and other agreements, to protect our rights, property, and safety and those of our users and the public, to detect, prevent, or investigate fraud, security breaches, or illegal activity, in connection with legal proceedings, investigations, or disputes, and to comply with copyright law, including DMCA takedown notices and counter-notices.
+                  We may disclose your information only when absolutely necessary to enforce our Terms of Service and other agreements, to protect our rights, property, and safety and those of our users and the public, to detect, prevent, or investigate fraud and security breaches, in connection with legal proceedings or disputes, and to comply with copyright law, including DMCA takedown notices and counter-notices. We prioritize protecting your privacy and will challenge any requests for your data that we believe are overbroad or unjustified.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">5.6 Business Transfers</h3>
