@@ -877,6 +877,146 @@ export default function Terms() {
                 <p className="mb-4">
                   <strong>Educational Resources:</strong> Boptone will provide links to copyright offices, PRO registration portals, mechanical licensing agencies, and educational materials to help you understand and fulfill your obligations. However, we strongly recommend consulting with an entertainment attorney or music rights specialist to ensure full compliance with copyright law in your jurisdiction.
                 </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.10 BopAudio Cover Songs and Mechanical Licenses (Core Commitment)</h3>
+                <p className="mb-4">
+                  <strong>Definition:</strong> A "cover song" is a new recording of a previously released musical composition where you perform the song yourself (not a remix, sample, or derivative work).
+                </p>
+                <p className="mb-4">
+                  <strong>Mechanical License Requirement:</strong> If you upload a cover song to BopAudio, you MUST obtain a valid mechanical license before distribution. Uploading songwriter metadata alone does NOT grant you legal right to distribute the composition.
+                </p>
+                <p className="mb-4">
+                  <strong>Your Options:</strong>
+                </p>
+                <ol className="list-decimal pl-6 space-y-2 mb-4">
+                  <li><strong>Boptone Licensing Service (Optional):</strong> We partner with the Mechanical Licensing Collective (MLC) to obtain mechanical licenses on your behalf for $12/year per cover song. We automatically deduct the statutory mechanical royalty (currently 12.7¢ per U.S. sale) and remit to the original songwriter(s).</li>
+                  <li><strong>Self-Obtained License:</strong> You may obtain your own mechanical license from Harry Fox Agency, MLC, or directly from the copyright owner and upload proof of license.</li>
+                </ol>
+                <p className="mb-4">
+                  <strong>Cover Song Eligibility:</strong> Compulsory mechanical licenses ONLY apply if:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>The original song was previously released as a standalone recording in the United States</li>
+                  <li>Your version does NOT fundamentally alter the original lyrics, melody, or title</li>
+                  <li>Your version does NOT contain samples from the original recording</li>
+                  <li>Your version is NOT a remix, mashup, medley, or derivative work</li>
+                  <li>Your version does NOT translate lyrics to another language</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Songs That Cannot Be Licensed:</strong>
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Songs that have never been released as standalone recordings (film scores, video game soundtracks)</li>
+                  <li>Songs in the public domain (no license available or needed)</li>
+                  <li>Remixes or mashups (require permission from original artist)</li>
+                  <li>Songs with samples (require permission from original recording owner)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Your Responsibilities:</strong>
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>You warrant that your cover song qualifies for a compulsory mechanical license</li>
+                  <li>You are responsible for ensuring songwriter metadata is accurate and complete</li>
+                  <li>You will obtain all necessary permissions for any elements not covered by mechanical license (e.g., samples, derivative works)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Indemnification:</strong> You agree to indemnify, defend, and hold harmless Boptone from any claims, damages, losses, liabilities, and expenses (including reasonable attorneys' fees) arising from:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Your upload or distribution of unlicensed cover songs</li>
+                  <li>Your misrepresentation that a song qualifies for compulsory mechanical license</li>
+                  <li>Any copyright infringement claims related to your cover songs</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Educational Resources:</strong> We provide educational resources about mechanical licensing, cover song requirements, and how to obtain licenses. These resources are for informational purposes only and do not constitute legal advice.
+                </p>
+
+                <h3 className="text-xl font-semibold mb-3 mt-6">9.11 BopShop Merchandise Copyright and Trademark Compliance (Core Commitment)</h3>
+                <p className="mb-4">
+                  <strong>Your Responsibility:</strong> You are solely responsible for ensuring that all designs, images, text, and other content you use on BopShop merchandise ("Merchandise Content") do NOT infringe any third-party copyright, trademark, publicity rights, or other intellectual property rights.
+                </p>
+                <p className="mb-4">
+                  <strong>Prohibited Content:</strong> You may NOT use Merchandise Content that includes:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Copyrighted images, artwork, photographs, or graphics without permission from the copyright owner</li>
+                  <li>Trademarked logos, brand names, slogans, or designs without permission from the trademark owner</li>
+                  <li>Celebrity names, likenesses, or images without permission (right of publicity)</li>
+                  <li>Sports team logos, league logos, or player likenesses without license</li>
+                  <li>Movie characters, TV show characters, or video game characters without license</li>
+                  <li>Band logos, album artwork, or other music-related copyrighted content without permission</li>
+                  <li>Any other content you do not own or have explicit permission to use commercially</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Examples of Infringement:</strong>
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Printing a Grateful Dead skull logo on a t-shirt without permission</li>
+                  <li>Using a photo of a celebrity without their consent</li>
+                  <li>Reproducing copyrighted artwork found online</li>
+                  <li>Using a sports team logo without an official license</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Your Warranties:</strong> By uploading Merchandise Content to BopShop, you warrant that:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>You own all rights to the Merchandise Content OR have obtained all necessary permissions, licenses, and clearances</li>
+                  <li>Your Merchandise Content does not infringe any third-party intellectual property rights</li>
+                  <li>You have the legal right to use the Merchandise Content commercially on products sold through BopShop</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Indemnification:</strong> You agree to indemnify, defend, and hold harmless Boptone, our affiliates, officers, directors, employees, agents, and partners from any and all claims, demands, actions, damages, losses, liabilities, judgments, settlements, costs, and expenses (including reasonable attorneys' fees and court costs) arising from or related to:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Any copyright, trademark, or other intellectual property infringement by your Merchandise Content</li>
+                  <li>Any violation of third-party publicity rights, privacy rights, or other rights by your Merchandise Content</li>
+                  <li>Any misrepresentation or breach of warranty regarding your rights to Merchandise Content</li>
+                  <li>Any claims by your customers, rights holders, or other third parties related to your Merchandise Content</li>
+                </ul>
+                <p className="mb-4">
+                  This indemnification obligation survives termination of your account and continues for all products sold using your Merchandise Content.
+                </p>
+                <p className="mb-4">
+                  <strong>DMCA Takedown Process:</strong> Boptone complies with the Digital Millennium Copyright Act (DMCA). If we receive a valid DMCA takedown notice alleging that your Merchandise Content infringes copyright:
+                </p>
+                <ol className="list-decimal pl-6 space-y-2 mb-4">
+                  <li>We will promptly remove or disable access to the allegedly infringing content</li>
+                  <li>We will notify you of the takedown and provide a copy of the DMCA notice</li>
+                  <li>You may submit a DMCA counter-notice if you believe the takedown was erroneous</li>
+                  <li>If you do not submit a valid counter-notice within 10 business days, the content will remain removed</li>
+                </ol>
+                <p className="mb-4">
+                  <strong>Repeat Infringer Policy:</strong> We maintain a policy of terminating accounts of repeat infringers. If you receive:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>First violation:</strong> Warning and content removal</li>
+                  <li><strong>Second violation:</strong> 30-day account suspension and content removal</li>
+                  <li><strong>Third violation:</strong> Permanent account termination and forfeiture of pending funds (subject to legal obligations)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Content Moderation:</strong> Boptone reserves the right to:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Review Merchandise Content before allowing it to be sold</li>
+                  <li>Remove any Merchandise Content that we believe, in our sole discretion, may infringe third-party rights</li>
+                  <li>Suspend or terminate your account for uploading prohibited content</li>
+                  <li>Cooperate with rights holders and law enforcement regarding infringement claims</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Educational Resources:</strong> We provide educational resources about copyright, trademark, and licensing basics for merchandise sellers. These resources include:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>How to determine if content is copyrighted</li>
+                  <li>How to obtain licenses for copyrighted content</li>
+                  <li>Where to find royalty-free and licensed images</li>
+                  <li>Best practices for creating original designs</li>
+                </ul>
+                <p className="mb-4">
+                  These resources are for informational purposes only and do not constitute legal advice. You are responsible for consulting with an attorney if you have questions about intellectual property law.
+                </p>
+                <p className="mb-4">
+                  <strong>Approved Design Library (Optional):</strong> Boptone may offer a library of pre-licensed images, graphics, and designs that you can use on your merchandise without additional licensing. These approved designs are clearly marked in the BopShop design tool.
+                </p>
               </section>
 
               <section className="mb-8">

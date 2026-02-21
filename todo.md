@@ -4522,3 +4522,39 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Draft copyright/PRO registration obligations for TOS Section 9 (Intellectual Property)
 - [ ] Update todo.md
 - [ ] Save checkpoint
+
+
+## BopAudio Cover Songs & BopShop Merchandise Copyright Protection (User Request - CRITICAL LIABILITY)
+
+### Issue 1: BopAudio Cover Songs
+- Cover songs require mechanical licenses (Harry Fox Agency, MLC, etc.)
+- Metadata alone doesn't grant license - artist must obtain license separately
+- Need to shift liability to artist + provide educational resources
+- Research DistroKid, TuneCore cover song policies
+
+### Issue 2: BopShop Copyrighted Merchandise
+- Artists may sell merch with copyrighted images (e.g., Grateful Dead skull)
+- Boptone exposed to contributory infringement claims
+- Need strong indemnification + DMCA safe harbor provisions
+- Research Printful, Printify, Redbubble copyright policies
+
+### Research Phase
+- [ ] Research cover song licensing requirements (mechanical licenses, compulsory licenses)
+- [ ] Research DistroKid/TuneCore TOS for cover song language
+- [ ] Research merchandise copyright law (contributory infringement, DMCA safe harbor)
+- [ ] Research Printful/Printify/Redbubble TOS for merchandise indemnification
+- [ ] Create comprehensive research document
+
+### Implementation Phase
+- [ ] Draft BopAudio cover song legal language for TOS Section 9
+- [ ] Add mechanical license requirement for cover songs
+- [ ] Add songwriter metadata requirement
+- [ ] Add indemnification for unlicensed covers
+- [ ] Add educational resources commitment
+- [ ] Draft BopShop merchandise copyright indemnification for TOS Section 9
+- [ ] Add prohibition on copyrighted/trademarked images without permission
+- [ ] Add DMCA takedown process for infringing merchandise
+- [ ] Add indemnification for copyright/trademark infringement
+- [ ] Add seller responsibility for clearances
+- [ ] Update todo.md
+- [ ] Save checkpoint
