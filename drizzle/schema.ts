@@ -3068,7 +3068,7 @@ export const aiDetectionResults = mysqlTable("ai_detection_results", {
   vocalsConfidence: decimal("vocalsConfidence", { precision: 5, scale: 2 }),
   
   // API response metadata
-  apiProvider: varchar("apiProvider", { length: 50 }).default("hive").notNull(), // "hive", "manual", etc.
+  apiProvider: varchar("apiProvider", { length: 50 }).default("huggingface").notNull(), // "huggingface", "manual", etc.
   rawResponse: json("rawResponse").$type<Record<string, any>>(), // Full API response for debugging
   
   // Timestamps
