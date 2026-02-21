@@ -393,3 +393,17 @@
 - [ ] Remove background colors for printing
 - [ ] Optimize margins for printed documents
 - [ ] Save checkpoint
+
+
+## Hugging Face AI Detection Implementation ⏸️ DEFERRED
+- [x] Add HUGGINGFACE_API_KEY to environment via webdev_request_secrets
+- [x] Create server/aiDetection.ts with detectAIMusic() function (placeholder mode)
+- [x] Discovered models not deployed on Inference Providers (HTTP 410 error)
+- [x] Implemented placeholder mode - returns manual review required (confidence 0.0)
+- [ ] **FUTURE:** Deploy model using Hugging Face Inference Endpoints ($0.60/hour)
+- [ ] **FUTURE:** OR run model locally using Transformers.js (~100MB deployment size)
+- [ ] **FUTURE:** Test detection with sample AI-generated audio
+- [ ] **FUTURE:** Test detection with sample human-created audio
+- [ ] Save checkpoint
+
+**Current Behavior:** All uploads marked for manual review. Legal protections remain active.
