@@ -4387,3 +4387,10 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Test all legal document pages render correctly
 - [x] Update todo.md
 - [ ] Save final checkpoint
+
+
+## TOS Introduction Cleanup
+- [x] Remove any "this is not a TOS" disclaimers
+- [x] Simplify introduction to straightforward "Terms of Service" language
+- [x] Let Artist Bill of Rights (Section 1) do the trust-building work
+- [ ] Save checkpoint

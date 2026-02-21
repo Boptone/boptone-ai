@@ -48,7 +48,7 @@ export default function Terms() {
                   If we violate these rights, you have recourse. If we change these commitments, you have the power to reject those changes. If we fail you, you can leave—with your data, your works, and your dignity intact.
                 </p>
                 <p className="mb-4">
-                  <strong>This is not a terms of service. This is a founding document.</strong>
+                  <strong>These rights are enforceable. They are permanent. They are the foundation of everything we build.</strong>
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">Article I: Your Work Is Yours</h3>
