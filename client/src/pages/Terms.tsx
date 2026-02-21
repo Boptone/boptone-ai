@@ -265,6 +265,32 @@ export default function Terms() {
               </section>
 
               <section className="mb-8">
+                <h3 className="text-xl font-semibold mb-3 mt-6">6.14 Prohibited Products on BopShop</h3>
+                <p className="mb-4">
+                  When you sell products through BopShop, you must comply with all applicable laws and regulations. The following product types are strictly prohibited on Boptone and may result in immediate listing removal, account suspension, or termination:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li>Age-restricted products such as alcohol, tobacco, or gambling</li>
+                  <li>Cannabis products</li>
+                  <li>Drugs and drug-related products</li>
+                  <li>Medication, medical devices and accessories</li>
+                  <li>Weapons, ammunition, explosives, or related accessories and combat equipments</li>
+                  <li>Hazardous and non-shippable materials</li>
+                  <li>Human body parts or body fluids</li>
+                  <li>Mature and adult content or services, or products that have nudity</li>
+                  <li>Endangered animal species or any form of animal abuse</li>
+                  <li>Digital currencies, securities and other investment related products</li>
+                  <li>Products promoting hateful content, violence, gore, profanity or offensive content</li>
+                </ul>
+                <p className="mb-4">
+                  This list is not exhaustive. We reserve the right to determine, in our sole discretion, whether a product violates this policy. If you are unsure whether a product is permitted, contact us at hello@boptone.com before listing it.
+                </p>
+                <p className="mb-4">
+                  <strong>Enforcement:</strong> Violation of this policy may result in immediate removal of listings, forfeiture of funds, account suspension or termination, and potential legal action. You are solely responsible for ensuring your products comply with all applicable laws and these Terms.
+                </p>
+              </section>
+
+              <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-4">7. Prohibited Activities</h2>
                 <p className="mb-2">You agree not to engage in any of the following prohibited activities:</p>
                 <ul className="list-disc pl-6 space-y-2 mb-4">

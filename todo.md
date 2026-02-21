@@ -3502,3 +3502,13 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Emphasize data protection and transparency
 - [ ] Test legal pages for rendering
 - [ ] Save checkpoint
+
+
+## Add Prohibited Products Policy to TOS (User Request)
+
+### Implementation
+- [x] Add Section 6.14 "Prohibited Products" to Terms.tsx
+- [x] Include all prohibited product categories from user's list
+- [x] Add enforcement language (account termination, listing removal)
+- [x] Test TOS page for rendering
+- [ ] Save checkpoint
