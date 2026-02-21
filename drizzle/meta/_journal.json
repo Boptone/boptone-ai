@@ -71,6 +71,13 @@
       "when": 1771627428971,
       "tag": "0009_short_spiral",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1771633729539,
+      "tag": "0010_lean_triton",
+      "breakpoints": true
     }
   ]
 }

@@ -211,6 +211,9 @@ importers:
       recharts:
         specifier: ^2.15.2
         version: 2.15.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      shippo:
+        specifier: ^2.18.0
+        version: 2.18.0
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -4070,6 +4073,9 @@ packages:
 
   shiki@3.14.0:
     resolution: {integrity: sha512-J0yvpLI7LSig3Z3acIuDLouV5UCKQqu8qOArwMx+/yPVC3WRMgrP67beaG8F+j4xfEWE0eVC4GeBCIXeOPra1g==}
+
+  shippo@2.18.0:
+    resolution: {integrity: sha512-cTSwKlH8IFrtuaH3X9iOPy+kG32KVegKkDmj+ICrkl+rpUPeKz4MKdSNUAQnxoP66ezIfj7Tnfv2+3hluUxh8g==}
 
   side-channel-list@1.0.0:
     resolution: {integrity: sha512-FCLHtRD/gnpCiCHEiJLOwdmFP+wzCmDEkc9y7NsYxeF4u7Btsn1ZuwgwJGxImImHicJArLP4R0yX4c2KCrMrTA==}
@@ -8920,6 +8926,10 @@ snapshots:
       '@shikijs/types': 3.14.0
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
+
+  shippo@2.18.0:
+    dependencies:
+      zod: 4.1.12
 
   side-channel-list@1.0.0:
     dependencies:

@@ -397,6 +397,98 @@ export const orders = mysqlTable("orders", {
 export type Order = typeof orders.$inferSelect;
 export type InsertOrder = typeof orders.$inferInsert;
 
+// ============================================================================
+// SHIPPING LABELS & TRACKING
+// ============================================================================
+
+export const shippingLabels = mysqlTable("shipping_labels", {
+  id: int("id").autoincrement().primaryKey(),
+  orderId: int("orderId").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  
+  // Shippo IDs
+  shipmentId: varchar("shipmentId", { length: 255 }).notNull(), // Shippo shipment object_id
+  rateId: varchar("rateId", { length: 255 }).notNull(), // Selected rate object_id
+  transactionId: varchar("transactionId", { length: 255 }), // Shippo transaction object_id (after purchase)
+  
+  // Carrier info
+  carrier: varchar("carrier", { length: 100 }), // USPS, FedEx, UPS, DHL
+  service: varchar("service", { length: 100 }), // Priority Mail, Ground, etc.
+  
+  // Tracking
+  trackingNumber: varchar("trackingNumber", { length: 255 }),
+  trackingUrl: text("trackingUrl"),
+  
+  // Label
+  labelUrl: text("labelUrl"), // URL to PDF label
+  
+  // Cost
+  cost: decimal("cost", { precision: 10, scale: 2 }), // Shipping cost
+  currency: varchar("currency", { length: 3 }).default("USD"),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "purchased", "printed", "shipped", "delivered", "failed"]).default("pending").notNull(),
+  
+  // Addresses and parcel (stored for reference)
+  addressFrom: json("addressFrom").$type<{
+    name: string;
+    street1: string;
+    street2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  }>(),
+  addressTo: json("addressTo").$type<{
+    name: string;
+    street1: string;
+    street2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  }>(),
+  parcel: json("parcel").$type<{
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+    distanceUnit: string;
+    massUnit: string;
+  }>(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  trackingNumberIdx: index("tracking_number_idx").on(table.trackingNumber),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type ShippingLabel = typeof shippingLabels.$inferSelect;
+export type InsertShippingLabel = typeof shippingLabels.$inferInsert;
+
+export const trackingEvents = mysqlTable("tracking_events", {
+  id: int("id").autoincrement().primaryKey(),
+  shippingLabelId: int("shippingLabelId").notNull().references(() => shippingLabels.id, { onDelete: "cascade" }),
+  
+  status: varchar("status", { length: 50 }), // TRANSIT, OUT_FOR_DELIVERY, DELIVERED, etc.
+  statusDetails: text("statusDetails"),
+  location: json("location").$type<{
+    city?: string;
+    state?: string;
+    country?: string;
+  }>(),
+  eventDate: timestamp("eventDate"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  shippingLabelIdIdx: index("shipping_label_id_idx").on(table.shippingLabelId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type TrackingEvent = typeof trackingEvents.$inferSelect;
+export type InsertTrackingEvent = typeof trackingEvents.$inferInsert;
+
 // Order Items
 export const orderItems = mysqlTable("order_items", {
   id: int("id").autoincrement().primaryKey(),

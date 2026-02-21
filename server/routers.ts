@@ -23,6 +23,7 @@ import { taskContractRouter } from "./routers/taskContract";
 import { paymentRouter } from "./routers/payment";
 import { artistNotificationsRouter } from "./routers/artistNotifications";
 import { searchRouter } from "./searchRouter";
+import { shippingRouter } from "./routers/shipping";
 
 // ============================================================================
 // ARTIST PROFILE ROUTER
@@ -650,6 +651,7 @@ export const appRouter = router({
   loans: loansRouter,
   // products: productsRouter, // Replaced by ecommerce router
   ecommerce: ecommerceRouter,
+  shipping: shippingRouter,
   pod: podRouter,
   releases: releasesRouter,
   stripe: stripeRouter,
