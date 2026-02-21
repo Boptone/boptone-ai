@@ -1,0 +1,1 @@
+ALTER TABLE `orders` ADD `taxJurisdiction` varchar(100);

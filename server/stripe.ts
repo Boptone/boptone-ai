@@ -155,6 +155,16 @@ export async function createProductCheckoutSession(params: {
     metadata: {
       userId: params.userId.toString(),
     },
+    // ENTERPRISE COMPLIANCE: Automatic sales tax/VAT calculation via Stripe Tax
+    automatic_tax: {
+      enabled: true,
+    },
+    // Collect billing address for tax jurisdiction determination
+    billing_address_collection: 'required',
+    // Collect shipping address for physical products (required for accurate tax calculation)
+    shipping_address_collection: {
+      allowed_countries: ['US', 'CA', 'GB', 'AU', 'NZ', 'DE', 'FR', 'ES', 'IT', 'NL', 'BE', 'AT', 'CH', 'SE', 'NO', 'DK', 'FI', 'IE', 'PT', 'PL', 'CZ', 'HU', 'RO', 'BG', 'GR', 'HR', 'SI', 'SK', 'LT', 'LV', 'EE', 'CY', 'MT', 'LU'],
+    },
   };
 
   // Use Stripe Connect destination charges if artist has Connect account
@@ -229,6 +239,12 @@ export async function createMultiCurrencyCheckout(params: {
     metadata: metadata as any,
     payment_method_types: paymentMethodTypes as any,
     allow_promotion_codes: allowPromotionCodes,
+    // ENTERPRISE COMPLIANCE: Automatic sales tax/VAT calculation via Stripe Tax
+    automatic_tax: {
+      enabled: true,
+    },
+    // Collect billing address for tax jurisdiction determination
+    billing_address_collection: 'required',
   });
 
   return session;

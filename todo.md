@@ -3971,3 +3971,37 @@ Apply the visually stunning design style from the explainer component across ALL
 - [ ] Verify tax reporting (1099-K) handled by Stripe
 - [ ] Save checkpoint
 - [ ] Push to GitHub
+
+
+## Implement Stripe Tax for Sales Tax/VAT Compliance
+
+**Goal:** Automatically calculate and collect sales tax/VAT for BopShop purchases across all global jurisdictions to eliminate legal exposure.
+
+### Phase 1: Enable Stripe Tax
+- [x] Document Stripe Tax activation instructions for user
+- [x] Configure tax settings (nexus registration, product tax codes)
+- [x] Set up automatic tax calculation
+
+### Phase 2: Update Checkout Session
+- [x] Enable automatic_tax in createProductCheckoutSession
+- [x] Enable automatic_tax in createMultiCurrencyCheckout
+- [ ] Add tax_id_collection for business purchases (future enhancement)
+
+### Phase 3: Customer Address Collection
+- [x] Enable billing_address_collection in checkout sessions
+- [x] Add shipping_address_collection for physical products
+- [ ] Update UI to inform customers about tax calculation (automatic)
+
+### Phase 4: Order Records
+- [x] Add tax_amount column to orders table (already exists)
+- [x] Add tax_jurisdiction column to orders table
+- [ ] Store tax details from Stripe webhook events (requires webhook integration)
+- [ ] Update order confirmation emails to show tax breakdown (future enhancement)
+
+### Phase 5: Testing & Deployment
+- [ ] Test tax calculation for US states (requires real checkout)
+- [ ] Test VAT calculation for EU countries (requires real checkout)
+- [ ] Test GST calculation for other jurisdictions (requires real checkout)
+- [ ] Verify tax amounts in Stripe Dashboard (after first sale)
+- [ ] Save checkpoint
+- [ ] Push to GitHub

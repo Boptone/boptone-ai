@@ -336,6 +336,7 @@ export const orders = mysqlTable("orders", {
   // Pricing (all in cents)
   subtotal: int("subtotal").notNull(),
   taxAmount: int("taxAmount").default(0).notNull(),
+  taxJurisdiction: varchar("taxJurisdiction", { length: 100 }), // State/country where tax was collected (e.g., "US-CA", "GB")
   shippingAmount: int("shippingAmount").default(0).notNull(),
   discountAmount: int("discountAmount").default(0).notNull(),
   total: int("total").notNull(),
