@@ -26,6 +26,7 @@ import { searchRouter } from "./searchRouter";
 import { shippingRouter } from "./routers/shipping";
 import { sitemapRouter } from "./routers/sitemap";
 import { agentApiRouter } from "./routers/agentApi";
+import { aeoRouter } from "./routers/aeo";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -714,6 +715,9 @@ export const appRouter = router({
 
   // Public AI Chat (no login required)
   aiChat: aiChatRouter,
+
+  // Answer Engine Optimization (AEO)
+  aeo: aeoRouter,
 });
 
 export type AppRouter = typeof appRouter;
