@@ -167,6 +167,9 @@ export default function Terms() {
                   <strong>Payment Processing Provider:</strong> All payment processing is handled by Stripe, Inc., a third-party payment processor. Your use of Stripe's services is subject to their terms of service and privacy policy. We do not store your full credit card information on our servers. By using our payment services, you authorize Stripe to process payments on your behalf.
                 </p>
                 <p className="mb-4">
+                  <strong>Stripe Connect Direct Payment Routing:</strong> Boptone uses Stripe Connect to facilitate direct payments from customers to artists. When a customer makes a purchase through BopShop, streams music via BopAudio, or sends a Kick-in tip, the payment is routed directly from the customer's payment method to the artist's connected Stripe account. Boptone acts as a platform facilitator and deducts the applicable platform fee (10% for BopShop, 10% for BopAudio, 0% for Kick-in) as a destination charge before the funds are deposited into the artist's account. This means artists receive payments directly from customers, not from Boptone. By using our payment services, you agree to create and maintain a Stripe Connect account and comply with Stripe's Connected Account Agreement and Services Agreement.
+                </p>
+                <p className="mb-4">
                   <strong>Platform Liability Limitations:</strong> We provide payment processing services "as is" and to the maximum extent permitted by law, disclaim all warranties, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We are not liable for any delays, failures, or problems inherent in the use of the internet, electronic communications, or payment processing systems outside our control. Our only responsibility is to facilitate payment transactions—we have no liability for the underlying goods, services, or content being purchased.
                 </p>
                 <p className="mb-4">
@@ -215,7 +218,7 @@ export default function Terms() {
                   <strong>Tax Documentation:</strong> We may provide tax documentation (such as IRS Form 1099-K for US users) as required by law when your annual transaction volume exceeds reporting thresholds. International users may need to provide tax identification numbers (TIN, VAT ID, etc.) to comply with local regulations. Failure to provide required tax information may result in withheld payouts or account suspension.
                 </p>
                 <p className="mb-4">
-                  <strong>Sales Tax Collection:</strong> For BopShop merchandise sales, you are responsible for determining whether sales tax applies and collecting the appropriate amount from customers. Boptone may provide sales tax calculation tools, but you remain solely responsible for compliance with all sales tax laws.
+                  <strong>Automatic Sales Tax Collection (Stripe Tax):</strong> For BopShop merchandise sales, Boptone automatically calculates and collects sales tax, VAT, and GST using Stripe Tax based on the customer's billing address and applicable tax jurisdictions. Tax amounts are determined by Stripe Tax's real-time tax calculation engine, which accounts for product taxability, customer location, and local tax rates. Collected taxes are remitted directly to tax authorities by Stripe on your behalf in supported jurisdictions. You remain responsible for tax compliance in jurisdictions not covered by Stripe Tax's automatic remittance. Boptone provides tax reporting data through your dashboard to assist with tax filing obligations.
                 </p>
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">6.11 Refund Policies</h3>

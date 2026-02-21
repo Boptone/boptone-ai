@@ -4128,3 +4128,37 @@ Apply the visually stunning design style from the explainer component across ALL
 - **After GDPR Implementation:** Full GDPR compliance, zero fine risk
 - **Artist Trust:** Demonstrates commitment to data privacy and transparency
 - **Competitive Advantage:** Most music platforms lack comprehensive GDPR compliance
+
+## Fix Pop-up Backgrounds & Legal Audit (User Request - URGENT)
+
+### Phase 1: Fix All Pop-up/Dialog Backgrounds
+- [x] Audit all dialog/modal components for transparent backgrounds
+- [x] Fix AlertDialog components to use solid white backgrounds
+- [x] Fix Dialog components to use solid white backgrounds
+- [x] Fix DropdownMenu components to use solid white backgrounds
+- [x] Fix Popover components to use solid white backgrounds
+- [x] Fix Select components to use solid white backgrounds
+- [x] Test all pop-ups across the site
+
+### Phase 2: Legal Audit - TOS
+- [x] Search TOS for Stripe Connect references
+- [x] Search TOS for payment routing/destination charges language
+- [x] Search TOS for platform fee language (12%/5%/2%)
+- [x] Search TOS for Stripe Tax references
+- [x] Search TOS for sales tax/VAT collection language
+- [x] Add missing Stripe Connect legal sections (Section 6.7)
+- [x] Add missing Stripe Tax legal sections (Section 6.10)
+
+### Phase 3: Legal Audit - Privacy Policy
+- [x] Search Privacy Policy for Stripe payment processing
+- [x] Search Privacy Policy for financial data collection (bank accounts, tax IDs)
+- [x] Search Privacy Policy for Stripe Connect data sharing
+- [x] Search Privacy Policy for tax jurisdiction tracking
+- [x] Add Stripe Connect data sharing disclosure (Section 5.1)
+- [x] Document tax ID collection and Stripe Tax usage
+
+### Phase 4: Testing & Deployment
+- [x] Test all pop-up backgrounds are solid white
+- [x] Review TOS changes for legal accuracy
+- [x] Review Privacy Policy changes for legal accuracy
+- [ ] Save checkpoint
