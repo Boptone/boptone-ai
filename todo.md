@@ -4,42 +4,40 @@
 
 ---
 
-## 🚨 HIGH PRIORITY - Legal Compliance (CRITICAL)
+## ✅ Legal Compliance (COMPLETE)
 
-### Age Restrictions & Payment Eligibility (TOS Section 2)
-- [ ] Research age restrictions: YouTube (18+), Spotify (18+), Shopify (18+), Stripe Connect (18+)
-- [ ] Draft TOS Section 2.2: Age Restrictions for Payment-Enabled Accounts
-- [ ] Add parental consent requirements for minors (if applicable)
-- [ ] Update signup flow with age verification
-- [ ] Save checkpoint
+### Age Restrictions & Payment Eligibility (TOS Section 2) ✅
+- [x] Research age restrictions: YouTube (18+), Spotify (18+), Shopify (18+), Stripe Connect (18+)
+- [x] Draft TOS Section 2.1: Age Requirements (13+ basic, 18+ payments)
+- [x] Draft TOS Section 2.2: Payment Processing Age Restrictions
+- [x] Draft TOS Section 2.3: Minors and Monetization (parental consent)
+- [x] Add ID verification rights
 
-### Copyright Registration & PRO Obligations (TOS Section 9)
-- [ ] Research copyright registration requirements (U.S. Copyright Office, CIPO, etc.)
-- [ ] Research PRO registration obligations (ASCAP, BMI, PRS, SOCAN, SACEM, etc.)
-- [ ] Draft TOS Section 9.13: Artist Responsibility for Copyright Registration
-- [ ] Draft TOS Section 9.14: Artist Responsibility for PRO Registration
-- [ ] Add educational resources about copyright/PRO registration
-- [ ] Save checkpoint
+### Copyright Registration & PRO Obligations (TOS Section 9) ✅
+- [x] Research copyright registration requirements
+- [x] Research PRO registration obligations (ASCAP, BMI, PRS, SOCAN, SACEM)
+- [x] Draft TOS Section 9.9: Copyright Registration & PRO Obligations
+- [x] Add educational resources links
+- [x] Add indemnification language
 
-### Cover Songs Legal Protection (TOS Section 9)
-- [ ] Research mechanical licensing requirements (Harry Fox Agency, MLC, etc.)
-- [ ] Research DistroKid/TuneCore TOS for cover song language
-- [ ] Draft TOS Section 9.15: Cover Song Licensing Requirements
-- [ ] Add mechanical license requirement for cover songs
-- [ ] Add songwriter metadata requirement (original songwriter info)
-- [ ] Add indemnification for unlicensed covers
-- [ ] Add educational resources about cover song licensing
-- [ ] Save checkpoint
+### Cover Songs Legal Protection (TOS Section 9) ✅
+- [x] Research mechanical licensing requirements (Harry Fox Agency, MLC)
+- [x] Research DistroKid/TuneCore TOS for cover song language
+- [x] Draft TOS Section 9.10: Cover Songs Licensing Requirements
+- [x] Add mechanical license requirement
+- [x] Add songwriter metadata requirement
+- [x] Add indemnification for unlicensed covers
+- [x] Add educational resources
 
-### Merchandise Copyright Protection (TOS Section 9)
-- [ ] Research merchandise copyright law (contributory infringement, DMCA safe harbor)
-- [ ] Research Printful/Printify/Redbubble TOS for merchandise indemnification
-- [ ] Draft TOS Section 9.16: BopShop Merchandise Copyright Policy
-- [ ] Add prohibition on copyrighted/trademarked images without permission
-- [ ] Add DMCA takedown process for infringing merchandise
-- [ ] Add indemnification for copyright/trademark infringement
-- [ ] Add seller responsibility for clearances
-- [ ] Save checkpoint
+### Merchandise Copyright Protection (TOS Section 9) ✅
+- [x] Research merchandise copyright law (contributory infringement, DMCA)
+- [x] Research Printful/Printify/Redbubble TOS
+- [x] Draft TOS Section 9.11: BopShop Merchandise Copyright Policy
+- [x] Add prohibition on copyrighted/trademarked images
+- [x] Add DMCA takedown process
+- [x] Add indemnification for infringement
+- [x] Add seller responsibility for clearances
+- [x] Add approved design library option
 
 ---
 
@@ -378,3 +376,20 @@
 
 **Last Checkpoint:** 3ce06781 (Terms & Privacy redesign)
 **Next Checkpoint:** After completing Week 1 priorities
+
+
+## 🎨 UX Improvements (IN PROGRESS)
+
+### Jump to Section Navigation ✅
+- [x] Add anchor link table of contents to Terms of Service page
+- [x] Add anchor link table of contents to Privacy Policy page
+- [x] Add smooth scroll behavior
+- [x] Test on desktop and mobile
+- [x] Save checkpoint
+
+### Print Stylesheets
+- [ ] Add print stylesheet for Terms of Service page
+- [ ] Add print stylesheet for Privacy Policy page
+- [ ] Remove background colors for printing
+- [ ] Optimize margins for printed documents
+- [ ] Save checkpoint

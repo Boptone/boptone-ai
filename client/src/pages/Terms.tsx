@@ -4,18 +4,46 @@ import { TOSAdditions2026 } from "@/components/TOSAdditions2026";
 export default function Terms() {
   return (
     <>
-    {/* Light gray background */}
-    <div className="min-h-screen bg-gray-50">
+    {/* Light gray background with smooth scroll */}
+    <div className="min-h-screen bg-gray-50 scroll-smooth">
       
       {/* White content container with max-width and padding */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
           {/* Centered heading */}
           <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Terms of Service</h1>
-          <p className="text-center text-base italic text-gray-600 mb-12">Last Updated: February 19, 2026</p>
+          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 19, 2026</p>
+          
+          {/* Table of Contents */}
+          <nav className="mb-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
+            <h2 className="text-lg font-semibold mb-4 text-gray-900">Table of Contents</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+              <a href="#introduction" className="text-blue-600 hover:text-blue-800 hover:underline">Introduction</a>
+              <a href="#artist-bill-of-rights" className="text-blue-600 hover:text-blue-800 hover:underline">1. Artist Bill of Rights</a>
+              <a href="#definitions" className="text-blue-600 hover:text-blue-800 hover:underline">2. Definitions</a>
+              <a href="#eligibility" className="text-blue-600 hover:text-blue-800 hover:underline">3. Eligibility</a>
+              <a href="#account-registration" className="text-blue-600 hover:text-blue-800 hover:underline">4. Account Registration</a>
+              <a href="#service-features" className="text-blue-600 hover:text-blue-800 hover:underline">5. Service Features</a>
+              <a href="#subscription-plans" className="text-blue-600 hover:text-blue-800 hover:underline">6. Subscription Plans</a>
+              <a href="#prohibited-activities" className="text-blue-600 hover:text-blue-800 hover:underline">7. Prohibited Activities</a>
+              <a href="#intellectual-property" className="text-blue-600 hover:text-blue-800 hover:underline">8. Intellectual Property</a>
+              <a href="#user-content" className="text-blue-600 hover:text-blue-800 hover:underline">9. User Content</a>
+              <a href="#third-party-services" className="text-blue-600 hover:text-blue-800 hover:underline">10. Third-Party Services</a>
+              <a href="#privacy" className="text-blue-600 hover:text-blue-800 hover:underline">11. Privacy & Data</a>
+              <a href="#ai-features" className="text-blue-600 hover:text-blue-800 hover:underline">12. AI-Powered Features</a>
+              <a href="#termination" className="text-blue-600 hover:text-blue-800 hover:underline">13. Termination</a>
+              <a href="#disclaimers" className="text-blue-600 hover:text-blue-800 hover:underline">14. Disclaimers</a>
+              <a href="#limitation-liability" className="text-blue-600 hover:text-blue-800 hover:underline">15. Limitation of Liability</a>
+              <a href="#indemnification" className="text-blue-600 hover:text-blue-800 hover:underline">16. Indemnification</a>
+              <a href="#dispute-resolution" className="text-blue-600 hover:text-blue-800 hover:underline">17. Dispute Resolution</a>
+              <a href="#modifications" className="text-blue-600 hover:text-blue-800 hover:underline">18. Modifications</a>
+              <a href="#general-provisions" className="text-blue-600 hover:text-blue-800 hover:underline">19. General Provisions</a>
+              <a href="#contact" className="text-blue-600 hover:text-blue-800 hover:underline">20. Contact Information</a>
+            </div>
+          </nav>
 
           <div className="space-y-8">
-              <section className="mb-10">
+              <section id="introduction" className="mb-10 scroll-mt-8">
                 <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">Introduction</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Welcome to Boptone. These Terms of Service ("Terms") govern your access to and use of the Boptone platform, website, services, and applications (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree to these Terms, you may not access or use the Service.
@@ -28,7 +56,7 @@ export default function Terms() {
                 </p>
               </section>
 
-              <section className="mb-10">
+              <section id="artist-bill-of-rights" className="mb-10 scroll-mt-8">
                 <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">1. Artist Bill of Rights</h2>
                 <p className="mb-4 text-lg font-semibold italic">
                   A Foundational Framework for Creative Sovereignty
@@ -261,7 +289,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">4. Definitions</h2>
+                <h2 id="definitions" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">2. Definitions</h2>
                 <p className="mb-2">Throughout these Terms, the following definitions apply:</p>
                 <ul className="list-disc pl-6 space-y-2">
                   <li><strong>"Service"</strong> refers to the Boptone platform, website, mobile applications, software, products, and all services provided by Acid Bird, Inc., including but not limited to intelligent career tools, distribution services, financial management, e-commerce, IP protection, healthcare integration, and tour management.</li>
@@ -274,7 +302,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">4. Eligibility</h2>
+                <h2 id="eligibility" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">3. Eligibility</h2>
                 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">4.1 General Age Requirement</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
@@ -314,7 +342,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">5. Account Registration and Security</h2>
+                <h2 id="account-registration" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">4. Account Registration and Security</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   To access certain features of the Service, you must create an account and provide certain information about yourself, including your name, email address, artist name, genre, and other profile information. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.
                 </p>
@@ -330,7 +358,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">6. Service Features and Functionality</h2>
+                <h2 id="service-features" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">5. Service Features and Functionality</h2>
                 <p className="mb-2">Boptone provides a comprehensive platform for artists and creators that includes the following services:</p>
                 <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
                   <li><strong>Autonomous Operating System:</strong> Tools to create, distribute, protect, and monetize creative works</li>
@@ -353,7 +381,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">7. Subscription Plans and Payment Terms</h2>
+                <h2 id="subscription-plans" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">6. Subscription Plans and Payment Terms</h2>
                 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">7.1 Subscription Tiers</h3>
                 <p className="mb-2">Boptone offers the following subscription tiers:</p>
@@ -662,7 +690,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">8. Prohibited Activities</h2>
+                <h2 id="prohibited-activities" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">7. Prohibited Activities</h2>
                 <p className="mb-2">You agree not to engage in any of the following prohibited activities:</p>
                 <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
                   <li>Violating any local, state, national, or international law or regulation</li>
@@ -688,7 +716,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">9. Intellectual Property Rights</h2>
+                <h2 id="intellectual-property" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">8. Intellectual Property Rights</h2>
                 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">9.1 Boptone's Intellectual Property</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
@@ -1159,7 +1187,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">10. User Content Responsibilities</h2>
+                <h2 id="user-content" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">9. User Content Responsibilities</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   You are solely responsible for your User Content and the consequences of posting, publishing, or distributing it through the Service. By making User Content available, you represent and warrant that:
                 </p>
@@ -1180,7 +1208,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">11. Third-Party Services and Integrations</h2>
+                <h2 id="third-party-services" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">10. Third-Party Services and Integrations</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   The Service integrates with and relies on various third-party services, including but not limited to:
                 </p>
@@ -1203,7 +1231,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">12. Privacy and Data Protection</h2>
+                <h2 id="privacy" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">11. Privacy and Data Protection</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Your privacy is important to us. Our collection, use, and disclosure of your personal information is governed by our Privacy Policy, which is incorporated into these Terms by reference. By using the Service, you consent to the collection, use, and disclosure of your information as outlined in our Privacy Policy.
                 </p>
@@ -1216,7 +1244,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">13. AI-Powered Features and Chatbot</h2>
+                <h2 id="ai-features" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">12. AI-Powered Features and Chatbot</h2>
                 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">13.1 AI Chatbot Service</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
@@ -1264,7 +1292,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">14. Termination</h2>
+                <h2 id="termination" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">13. Termination</h2>
                 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">14.1 Termination by You</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
@@ -1305,7 +1333,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">15. Disclaimers and Warranties</h2>
+                <h2 id="disclaimers" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">14. Disclaimers and Warranties</h2>
                 <p className="mb-2 font-semibold">
                   THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, BOPTONE PARTIES DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:
                 </p>
@@ -1401,7 +1429,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">16. Limitation of Liability</h2>
+                <h2 id="limitation-liability" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">15. Limitation of Liability</h2>
                 <p className="mb-2  font-semibold">
                   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL BOPTONE PARTIES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO:
                 </p>
@@ -1475,7 +1503,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">17. Indemnification</h2>
+                <h2 id="indemnification" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">16. Indemnification</h2>
                 <p className="mb-2">
                   You agree to defend, indemnify, and hold harmless Boptone Parties from and against any and all claims, liabilities, damages, losses, costs, expenses, and fees (including reasonable attorneys' fees and court costs) arising out of or in any way connected with:
                 </p>
@@ -1495,7 +1523,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">18. Dispute Resolution and Arbitration</h2>
+                <h2 id="dispute-resolution" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">17. Dispute Resolution and Arbitration</h2>
                 <p className="mb-4  font-semibold">
                   PLEASE READ THIS SECTION CAREFULLY AS IT AFFECTS YOUR RIGHTS AND REQUIRES BINDING ARBITRATION OF DISPUTES.
                 </p>
@@ -1599,7 +1627,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">19. Modifications to the Service and Terms</h2>
+                <h2 id="modifications" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">18. Modifications to the Service and Terms</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We reserve the right to modify, suspend, or discontinue the Service (or any part thereof) at any time, with or without notice, for any reason. We will not be liable to you or any third party for any modification, suspension, or discontinuation of the Service.
                 </p>
@@ -1680,7 +1708,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">20. General Provisions</h2>
+                <h2 id="general-provisions" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">19. General Provisions</h2>
                 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">20.1 Entire Agreement</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
@@ -1737,7 +1765,7 @@ export default function Terms() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">21. Contact Information</h2>
+                <h2 id="contact" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">20. Contact Information</h2>
                 <p className="mb-2">
                   If you have any questions, concerns, or complaints about these Terms or the Service, please contact us at:
                 </p>

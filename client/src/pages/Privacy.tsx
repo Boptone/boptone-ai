@@ -7,18 +7,40 @@ export default function Privacy() {
 
   return (
     <>
-    {/* Light gray background */}
-    <div className="min-h-screen bg-gray-50">
+    {/* Light gray background with smooth scroll */}
+    <div className="min-h-screen bg-gray-50 scroll-smooth">
 
       {/* White content container with max-width and padding */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
           {/* Centered heading */}
           <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Privacy Policy</h1>
-          <p className="text-center text-base italic text-gray-600 mb-12">Last Updated: February 19, 2026</p>
+          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 19, 2026</p>
+          
+          {/* Table of Contents */}
+          <nav className="mb-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
+            <h2 className="text-lg font-semibold mb-4 text-gray-900">Table of Contents</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+              <a href="#introduction" className="text-blue-600 hover:text-blue-800 hover:underline">1. Introduction</a>
+              <a href="#information-we-collect" className="text-blue-600 hover:text-blue-800 hover:underline">2. Information We Collect</a>
+              <a href="#how-we-use" className="text-blue-600 hover:text-blue-800 hover:underline">3. How We Use Your Information</a>
+              <a href="#legal-basis" className="text-blue-600 hover:text-blue-800 hover:underline">4. Legal Basis (GDPR)</a>
+              <a href="#how-we-share" className="text-blue-600 hover:text-blue-800 hover:underline">5. How We Share Information</a>
+              <a href="#international-transfers" className="text-blue-600 hover:text-blue-800 hover:underline">6. International Transfers</a>
+              <a href="#data-retention" className="text-blue-600 hover:text-blue-800 hover:underline">7. Data Retention</a>
+              <a href="#data-security" className="text-blue-600 hover:text-blue-800 hover:underline">8. Data Security</a>
+              <a href="#privacy-rights" className="text-blue-600 hover:text-blue-800 hover:underline">9. Your Privacy Rights</a>
+              <a href="#childrens-privacy" className="text-blue-600 hover:text-blue-800 hover:underline">10. Children's Privacy</a>
+              <a href="#cookies" className="text-blue-600 hover:text-blue-800 hover:underline">11. Cookies & Tracking</a>
+              <a href="#gpc" className="text-blue-600 hover:text-blue-800 hover:underline">12. Global Privacy Control</a>
+              <a href="#third-party-links" className="text-blue-600 hover:text-blue-800 hover:underline">13. Third-Party Links</a>
+              <a href="#changes" className="text-blue-600 hover:text-blue-800 hover:underline">14. Policy Changes</a>
+              <a href="#contact" className="text-blue-600 hover:text-blue-800 hover:underline">15. Contact Us</a>
+            </div>
+          </nav>
 
           <div className="space-y-8">
-              <section className="mb-10">
+              <section id="introduction" className="mb-10 scroll-mt-8">
                 <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">1. Introduction</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Acid Bird, Inc., doing business as Boptone ("Boptone," "Company," "we," "us," or "our"), is committed to protecting your privacy and personal information. This Privacy Policy describes how we collect, use, disclose, store, and protect your information when you access or use our website, platform, mobile applications, and services (collectively, the "Service").
@@ -52,7 +74,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">2. Information We Collect</h2>
+                <h2 id="information-we-collect" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">2. Information We Collect</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We collect several types of information from and about users of our Service. The specific information we collect depends on how you interact with our Service and the features you use.
                 </p>
@@ -167,7 +189,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">3. How We Use Your Information</h2>
+                <h2 id="how-we-use" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">3. How We Use Your Information</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We use the information we collect for various business and operational purposes. The specific purposes depend on how you interact with our Service and the features you use. Our uses of your information include:
                 </p>
@@ -226,7 +248,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">4. Legal Basis for Processing (GDPR)</h2>
+                <h2 id="legal-basis" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">4. Legal Basis for Processing (GDPR)</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   If you are located in the European Economic Area (EEA), United Kingdom, or Switzerland, we process your personal data only when we have a valid legal basis under the GDPR. Our legal bases for processing include:
                 </p>
@@ -251,7 +273,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">5. How We Share Your Information</h2>
+                <h2 id="how-we-share" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">5. How We Share Your Information</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We share your information with third parties only in the circumstances described below. We do not sell your personal information to third parties for their direct marketing purposes without your explicit consent.
                 </p>
@@ -380,7 +402,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">6. International Data Transfers</h2>
+                <h2 id="international-transfers" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">6. International Data Transfers</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Boptone is based in the United States, and our servers and service providers are located in the United States and other countries. If you access our Service from outside the United States, your information will be transferred to, stored in, and processed in the United States and other countries where data protection laws may differ from those in your jurisdiction.
                 </p>
@@ -393,7 +415,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">7. Data Retention</h2>
+                <h2 id="data-retention" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">7. Data Retention</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. The specific retention period depends on the type of information and the purposes for which we use it.
                 </p>
@@ -421,7 +443,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">8. Data Security</h2>
+                <h2 id="data-security" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">8. Data Security</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We implement industry-standard technical, administrative, and physical security measures designed to protect your information from unauthorized access, disclosure, alteration, and destruction. Our security measures include:
                 </p>
@@ -455,7 +477,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">9. Your Privacy Rights</h2>
+                <h2 id="privacy-rights" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">9. Your Privacy Rights</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Depending on your location and applicable laws, you may have certain rights regarding your personal information. This section describes your rights and how to exercise them.
                 </p>
@@ -536,7 +558,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">10. Children's Privacy</h2>
+                <h2 id="childrens-privacy" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">10. Children's Privacy</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Our Service is not directed to children under the age of thirteen (13) years, and we do not knowingly collect personal information from children under 13. If you are under 13 years old, you may not use the Service or provide any information to us. If you are between 13 and 18 years old (or the age of majority in your jurisdiction), you may only use the Service under the supervision of a parent or legal guardian who agrees to be bound by our Terms of Service and this Privacy Policy.
                 </p>
@@ -549,7 +571,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">11. Cookies and Tracking Technologies</h2>
+                <h2 id="cookies" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">11. Cookies and Tracking Technologies</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We use cookies, web beacons, pixels, local storage, and similar tracking technologies to collect information about your browsing activities and to provide, maintain, and improve our Service. This section provides detailed information about our use of these technologies.
                 </p>
@@ -631,7 +653,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">12. Global Privacy Control (GPC)</h2>
+                <h2 id="gpc" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">12. Global Privacy Control (GPC)</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   In addition to Do Not Track (DNT), we also honor Global Privacy Control (GPC) signals. GPC is a newer privacy standard that allows you to opt out of the sale or sharing of your personal information across all websites you visit. When your browser sends a GPC signal, we will treat it as a legally binding request to opt out of data sales and sharing under applicable privacy laws (CCPA, GDPR, etc.).
                 </p>
@@ -641,7 +663,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">13. Third-Party Links and Services</h2>
+                <h2 id="third-party-links" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">13. Third-Party Links and Services</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Our Service contains links to third-party websites, applications, and services that are not owned or controlled by Boptone, including streaming platforms, social media networks, payment processors, and other integrated services. This Privacy Policy applies only to information collected by Boptone. We are not responsible for the privacy practices of third-party websites or services.
                 </p>
@@ -654,7 +676,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">14. Changes to This Privacy Policy</h2>
+                <h2 id="changes" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">14. Changes to This Privacy Policy</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. When we make changes, we will update the "Effective Date" at the top of this Privacy Policy and post the revised version on our website.
                 </p>
@@ -667,7 +689,7 @@ export default function Privacy() {
               </section>
 
               <section className="mb-10">
-                <h2 className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0">15. Contact Us</h2>
+                <h2 id="contact" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">15. Contact Us</h2>
                 <p className="mb-2">
                   If you have any questions, concerns, or complaints about this Privacy Policy or our privacy practices, or if you wish to exercise your privacy rights, please contact us at:
                 </p>
