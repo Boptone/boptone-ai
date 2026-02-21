@@ -3362,3 +3362,31 @@ Apply the visually stunning design style from the explainer component across ALL
 - [x] Fix all Shippo directory imports in all files
 - [x] Test production build locally
 - [ ] Save checkpoint and verify deployment
+
+
+## SEO Component Integration (Google & LLM Discovery)
+
+### Phase 1: Artist Pages
+- [x] Add SEOHead component to ArtistProfile.tsx
+- [x] Add Breadcrumb component to ArtistProfile.tsx
+- [x] Add JSON-LD structured data (MusicGroup schema)
+- [ ] Test artist page SEO with Google Rich Results Test
+
+### Phase 2: Product Pages
+- [x] Add SEOHead component to ProductDetail.tsx
+- [x] Add Breadcrumb component to ProductDetail.tsx
+- [x] Add JSON-LD structured data (Product schema)
+- [ ] Test product page SEO with Google Rich Results Test
+
+### Phase 3: Store Pages
+- [x] Add SEOHead component to BopShopBrowse.tsx (public storefront)
+- [x] Add Breadcrumb component to BopShopBrowse.tsx
+- [x] Add JSON-LD structured data (Store schema)
+- [ ] Test store page SEO with Google Rich Results Test
+
+### Phase 4: Validation
+- [ ] Validate all structured data with schema.org validator
+- [ ] Test Open Graph tags with Facebook Debugger
+- [ ] Test Twitter Cards with Twitter Card Validator
+- [ ] Submit sitemap to Google Search Console
+- [ ] Save checkpoint and deploy
