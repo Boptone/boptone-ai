@@ -4,7 +4,6 @@
  */
 
 import { Shippo } from "shippo";
-import * as ShippoSDK from "shippo/models/components";
 
 // Initialize Shippo client
 const shippo = new Shippo({
@@ -65,7 +64,7 @@ export async function calculateShippingRates(
   parcel: Parcel
 ): Promise<ShipmentResponse> {
   try {
-    const shipmentRequest: ShippoSDK.ShipmentCreateRequest = {
+    const shipmentRequest = {
       addressFrom: {
         name: addressFrom.name,
         street1: addressFrom.street1,
@@ -93,9 +92,9 @@ export async function calculateShippingRates(
           length: parcel.length.toString(),
           width: parcel.width.toString(),
           height: parcel.height.toString(),
-          distanceUnit: ShippoSDK.DistanceUnitEnum.In,
+          distanceUnit: "in" as const,
           weight: parcel.weight.toString(),
-          massUnit: ShippoSDK.WeightUnitEnum.Lb,
+          massUnit: "lb" as const,
         },
       ],
       async: false,
@@ -105,7 +104,7 @@ export async function calculateShippingRates(
 
     // Extract rates from shipment
     const rates: ShippingRate[] = (shipment.rates || [])
-      .filter((rate): rate is ShippoSDK.Rate => typeof rate !== "string")
+      .filter((rate): rate is any => typeof rate !== "string")
       .map((rate) => ({
         rateId: rate.objectId || "",
         carrier: rate.provider || "",
@@ -134,10 +133,10 @@ export async function calculateShippingRates(
  */
 export async function purchaseShippingLabel(
   rateId: string,
-  labelFileType: ShippoSDK.LabelFileTypeEnum = ShippoSDK.LabelFileTypeEnum.Pdf
+  labelFileType: "PDF" | "PNG" | "ZPLII" = "PDF"
 ): Promise<LabelResponse> {
   try {
-    const transactionRequest: ShippoSDK.TransactionCreateRequest = {
+    const transactionRequest = {
       rate: rateId,
       labelFileType: labelFileType,
       async: false,
@@ -233,7 +232,7 @@ export async function validateAddress(address: Address): Promise<{
   messages?: string[];
 }> {
   try {
-    const addressRequest: ShippoSDK.AddressCreateRequest = {
+    const addressRequest = {
       name: address.name,
       street1: address.street1,
       street2: address.street2 || "",

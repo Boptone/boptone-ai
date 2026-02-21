@@ -3345,3 +3345,18 @@ Apply the visually stunning design style from the explainer component across ALL
 - Phase 6 (36 months): 1000/100, $1B GMV/month, 10M creators
 
 **Full roadmap document: /home/ubuntu/boptone/docs/bopshop-roadmap-1000.md**
+
+
+## Fix Shippo SDK Import Error (URGENT - Deployment Blocker) ✅ COMPLETE
+
+### Issue
+- Deployment failing with ERR_UNSUPPORTED_DIR_IMPORT error
+- Shippo SDK trying to import directory instead of specific files
+- Server crashes on startup in production
+
+### Implementation
+- [x] Fix Shippo SDK imports in server/shipping.ts
+- [x] Use explicit file paths instead of directory imports
+- [x] Test server startup locally
+- [ ] Test shipping functionality
+- [ ] Save checkpoint and verify deployment
