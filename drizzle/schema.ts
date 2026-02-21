@@ -3043,3 +3043,144 @@ export const contractAuditLog = mysqlTable("contract_audit_log", {
 
 export type ContractAuditLog = typeof contractAuditLog.$inferSelect;
 export type InsertContractAuditLog = typeof contractAuditLog.$inferInsert;
+
+// ============================================================================
+// AI CONTENT DETECTION & MODERATION
+// ============================================================================
+
+/**
+ * AI Detection Results
+ * Stores results from AI detection API (Hive AI) for uploaded tracks
+ */
+export const aiDetectionResults = mysqlTable("ai_detection_results", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  
+  // Detection results
+  isAiGenerated: boolean("isAiGenerated"), // null = not yet analyzed
+  confidenceScore: decimal("confidenceScore", { precision: 5, scale: 2 }), // 0.00 to 100.00
+  detectedEngine: varchar("detectedEngine", { length: 100 }), // e.g., "Suno AI", "Udio AI", "Unknown"
+  
+  // Audio analysis
+  musicIsAi: boolean("musicIsAi"), // Is the music AI-generated?
+  musicConfidence: decimal("musicConfidence", { precision: 5, scale: 2 }),
+  vocalsAreAi: boolean("vocalsAreAi"), // Are the vocals AI-generated?
+  vocalsConfidence: decimal("vocalsConfidence", { precision: 5, scale: 2 }),
+  
+  // API response metadata
+  apiProvider: varchar("apiProvider", { length: 50 }).default("hive").notNull(), // "hive", "manual", etc.
+  rawResponse: json("rawResponse").$type<Record<string, any>>(), // Full API response for debugging
+  
+  // Timestamps
+  analyzedAt: timestamp("analyzedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  isAiGeneratedIdx: index("is_ai_generated_idx").on(table.isAiGenerated),
+  analyzedAtIdx: index("analyzed_at_idx").on(table.analyzedAt),
+}));
+
+export type AiDetectionResult = typeof aiDetectionResults.$inferSelect;
+export type InsertAiDetectionResult = typeof aiDetectionResults.$inferInsert;
+
+/**
+ * Content Moderation Queue
+ * Tracks content flagged for manual review by admins
+ */
+export const contentModerationQueue = mysqlTable("content_moderation_queue", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Flagging reason
+  flagReason: mysqlEnum("flagReason", [
+    "ai_detection_high_confidence", // AI detection score > 80%
+    "ai_detection_medium_confidence", // AI detection score 50-80%
+    "prohibited_tool_disclosed", // Artist disclosed Suno/Udio in upload form
+    "manual_report", // User reported the track
+    "copyright_claim", // DMCA/copyright claim
+    "other"
+  ]).notNull(),
+  flagDetails: text("flagDetails"), // Additional context
+  
+  // AI detection link
+  aiDetectionId: int("aiDetectionId").references(() => aiDetectionResults.id),
+  
+  // Moderation status
+  status: mysqlEnum("status", [
+    "pending", // Awaiting review
+    "under_review", // Admin is reviewing
+    "approved", // Content is legitimate
+    "removed", // Content removed for policy violation
+    "appealed", // Artist appealed the decision
+    "appeal_approved", // Appeal was successful
+    "appeal_rejected" // Appeal was rejected
+  ]).default("pending").notNull(),
+  
+  // Moderation decision
+  reviewedBy: int("reviewedBy").references(() => users.id), // Admin who reviewed
+  reviewNotes: text("reviewNotes"), // Admin's notes
+  reviewedAt: timestamp("reviewedAt"),
+  
+  // Strike tracking (TOS Section 9.12.6)
+  strikeIssued: boolean("strikeIssued").default(false).notNull(),
+  strikeNumber: int("strikeNumber"), // 1, 2, or 3
+  
+  // Timestamps
+  flaggedAt: timestamp("flaggedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  flaggedAtIdx: index("flagged_at_idx").on(table.flaggedAt),
+}));
+
+export type ContentModerationQueue = typeof contentModerationQueue.$inferSelect;
+export type InsertContentModerationQueue = typeof contentModerationQueue.$inferInsert;
+
+/**
+ * Artist Strike History
+ * Tracks AI policy violations per artist (TOS Section 9.12.6: 3-Strike Policy)
+ */
+export const artistStrikeHistory = mysqlTable("artist_strike_history", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Strike details
+  strikeNumber: int("strikeNumber").notNull(), // 1, 2, or 3
+  reason: text("reason").notNull(), // Why the strike was issued
+  trackId: int("trackId").references(() => bapTracks.id), // Related track (if applicable)
+  moderationQueueId: int("moderationQueueId").references(() => contentModerationQueue.id),
+  
+  // Penalty
+  penalty: mysqlEnum("penalty", [
+    "warning", // 1st strike: warning
+    "suspension", // 2nd strike: 30-day suspension
+    "permanent_ban" // 3rd strike: permanent ban + funds forfeiture
+  ]).notNull(),
+  suspensionEndsAt: timestamp("suspensionEndsAt"), // For 2nd strike
+  
+  // Strike issued by
+  issuedBy: int("issuedBy").notNull().references(() => users.id), // Admin who issued strike
+  issuedAt: timestamp("issuedAt").defaultNow().notNull(),
+  
+  // Appeal
+  appealStatus: mysqlEnum("appealStatus", ["none", "pending", "approved", "rejected"]).default("none").notNull(),
+  appealReason: text("appealReason"),
+  appealedAt: timestamp("appealedAt"),
+  appealReviewedBy: int("appealReviewedBy").references(() => users.id),
+  appealReviewedAt: timestamp("appealReviewedAt"),
+  appealNotes: text("appealNotes"), // Admin's notes on appeal decision
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  strikeNumberIdx: index("strike_number_idx").on(table.strikeNumber),
+  issuedAtIdx: index("issued_at_idx").on(table.issuedAt),
+}));
+
+export type ArtistStrikeHistory = typeof artistStrikeHistory.$inferSelect;
+export type InsertArtistStrikeHistory = typeof artistStrikeHistory.$inferInsert;
