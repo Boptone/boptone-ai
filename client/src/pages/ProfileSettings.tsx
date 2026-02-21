@@ -15,6 +15,18 @@ import {
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
+import { Download, Trash2, AlertTriangle } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function ProfileSettings() {
   const { user, loading: authLoading } = useAuth();
@@ -255,6 +267,140 @@ export default function ProfileSettings() {
                     <SelectItem value="Lora" className="text-lg font-medium">Lora (Classic Serif)</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* GDPR Privacy Controls */}
+          <Card className="rounded-xl border-4 border-black bg-white">
+            <CardHeader className="pb-8 border-b-4 border-black">
+              <CardTitle className="text-3xl font-bold text-black">
+                Privacy & Data
+              </CardTitle>
+              <CardDescription className="text-lg font-medium text-gray-700">
+                Manage your personal data and privacy settings (GDPR compliant)
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6 pt-8">
+              {/* Download Data */}
+              <div className="p-6 rounded-xl border-2 border-gray-200 bg-gray-50">
+                <div className="flex items-start gap-4">
+                  <Download className="h-6 w-6 text-blue-600 mt-1" />
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      Download Your Data
+                    </h4>
+                    <p className="text-base text-gray-600 font-medium mb-4">
+                      Export all your personal data in JSON format. This includes your profile, products, orders, and reviews.
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-bold"
+                      onClick={async () => {
+                        try {
+                          const result = await trpc.gdpr.exportUserData.mutate();
+                          window.open(result.downloadUrl, '_blank');
+                          toast.success('Your data export is ready! Download will start shortly.');
+                        } catch (error: any) {
+                          toast.error(`Export failed: ${error.message}`);
+                        }
+                      }}
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Download My Data
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Delete Account */}
+              <div className="p-6 rounded-xl border-2 border-red-200 bg-red-50">
+                <div className="flex items-start gap-4">
+                  <AlertTriangle className="h-6 w-6 text-red-600 mt-1" />
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      Delete Account
+                    </h4>
+                    <p className="text-base text-gray-600 font-medium mb-4">
+                      Permanently delete your account and anonymize your personal data. This action cannot be undone.
+                    </p>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="destructive"
+                          className="rounded-xl bg-red-600 hover:bg-red-700 font-bold"
+                        >
+                          <Trash2 className="h-4 w-4 mr-2" />
+                          Delete My Account
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="rounded-xl border-4 border-black">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="text-2xl font-bold">
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription className="text-base font-medium">
+                            This action cannot be undone. This will:
+                            <ul className="list-disc list-inside mt-2 space-y-1">
+                              <li>Permanently delete your account</li>
+                              <li>Anonymize your personal information</li>
+                              <li>Remove your artist profile</li>
+                              <li>Preserve order/review history (required by law)</li>
+                            </ul>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="rounded-xl font-bold">
+                            Cancel
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            className="rounded-xl bg-red-600 hover:bg-red-700 font-bold"
+                            onClick={async () => {
+                              try {
+                                await trpc.gdpr.deleteAccount.mutate();
+                                toast.success('Account deleted successfully');
+                                // Redirect to home after short delay
+                                setTimeout(() => {
+                                  window.location.href = '/';
+                                }, 2000);
+                              } catch (error: any) {
+                                toast.error(`Deletion failed: ${error.message}`);
+                              }
+                            }}
+                          >
+                            Delete Account
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cookie Preferences */}
+              <div className="p-6 rounded-xl border-2 border-gray-200 bg-gray-50">
+                <div className="flex items-start gap-4">
+                  <span className="text-2xl mt-1">🍪</span>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      Cookie Preferences
+                    </h4>
+                    <p className="text-base text-gray-600 font-medium mb-4">
+                      Manage your cookie consent settings at any time.
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="rounded-xl border-2 border-gray-300 font-bold"
+                      onClick={() => {
+                        // Clear cookie consent to trigger banner again
+                        localStorage.removeItem('cookie-consent');
+                        toast.success('Cookie preferences reset. Refresh the page to see the consent banner.');
+                      }}
+                    >
+                      Manage Cookie Settings
+                    </Button>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>

@@ -8,6 +8,7 @@ import { DemoProvider } from "./contexts/DemoContext";
 import { Navigation } from "./components/Navigation";
 import { ToneyChatbot } from "./components/ToneyChatbot";
 import Footer from "./components/Footer";
+import { CookieConsentBanner } from "./components/CookieConsentBanner";
 
 // Eager load only Home page for fast initial load
 import Home from "./pages/Home";
@@ -185,6 +186,7 @@ function App() {
             <Router />
             <Footer />
             <ToneyChatbot />
+            <CookieConsentBanner />
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>

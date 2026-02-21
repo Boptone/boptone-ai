@@ -28,6 +28,7 @@ import { sitemapRouter } from "./routers/sitemap";
 import { agentApiRouter } from "./routers/agentApi";
 import { aeoRouter } from "./routers/aeo";
 import { reviewRouter } from "./routers/reviews";
+import { gdprRouter } from "./routers/gdpr";
 import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
 import { stripeConnectRouter } from "./routers/stripeConnect";
 import { autoPopulateSEO } from "./seoAutoPopulate";
@@ -587,6 +588,7 @@ export const appRouter = router({
   taskContract: taskContractRouter,
   agentApi: agentApiRouter,
   stripeConnect: stripeConnectRouter,
+  gdpr: gdprRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

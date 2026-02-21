@@ -403,7 +403,15 @@ export default function Privacy() {
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">9.3 How to Exercise Your Rights</h3>
                 <p className="mb-4">
-                  To exercise any of the rights described above, please contact us at hello@boptone.com with the subject line "Privacy Rights Request" or through your account settings where applicable. We will respond to your request within the timeframes required by applicable law (typically thirty (30) days for GDPR requests and forty-five (45) days for CCPA requests, with possible extensions).
+                  To exercise any of the rights described above, you can:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Account Settings:</strong> Visit your Profile Settings page to download your data (Right to Data Portability) or delete your account (Right to Erasure). These self-service tools allow you to exercise your rights immediately without contacting support.</li>
+                  <li><strong>Email Request:</strong> Contact us at hello@boptone.com with the subject line "Privacy Rights Request" for other privacy rights or if you need assistance.</li>
+                  <li><strong>Cookie Preferences:</strong> Manage your cookie consent settings through the cookie banner or in your Profile Settings to control analytics and marketing cookies.</li>
+                </ul>
+                <p className="mb-4">
+                  We will respond to your request within the timeframes required by applicable law (typically thirty (30) days for GDPR requests and forty-five (45) days for CCPA requests, with possible extensions).
                 </p>
                 <p className="mb-4">
                   To protect your privacy and security, we will verify your identity before processing your request. Verification may require you to provide your email address, account information, or other identifying details. For requests to access or delete sensitive information, we may require additional verification steps.
@@ -458,7 +466,21 @@ export default function Privacy() {
 
                 <h3 className="text-xl font-semibold mb-3 mt-6">11.4 Managing Cookies</h3>
                 <p className="mb-4">
-                  You can control and manage cookies through your browser settings. Most browsers allow you to block or delete cookies, or to receive a warning before a cookie is stored. However, if you block or delete cookies, some features of the Service may not function properly. You can also opt out of interest-based advertising by visiting the Digital Advertising Alliance opt-out page at www.aboutads.info/choices or the Network Advertising Initiative opt-out page at www.networkadvertising.org/choices.
+                  <strong>Cookie Consent Banner:</strong> When you first visit Boptone, you will see a cookie consent banner that allows you to accept all cookies, accept only necessary cookies, or customize your preferences. You can manage your cookie preferences at any time through your Profile Settings page.
+                </p>
+                <p className="mb-4">
+                  <strong>Granular Cookie Controls:</strong> Our cookie consent system provides granular controls for three categories of cookies:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  <li><strong>Necessary Cookies:</strong> Always active (required for site functionality)</li>
+                  <li><strong>Analytics Cookies:</strong> Optional (help us improve the Service)</li>
+                  <li><strong>Marketing Cookies:</strong> Optional (enable targeted advertising)</li>
+                </ul>
+                <p className="mb-4">
+                  <strong>Browser Settings:</strong> You can also control cookies through your browser settings. Most browsers allow you to block or delete cookies, or to receive a warning before a cookie is stored. However, if you block or delete cookies, some features of the Service may not function properly.
+                </p>
+                <p className="mb-4">
+                  <strong>Opt-Out of Interest-Based Advertising:</strong> You can opt out of interest-based advertising by visiting the Digital Advertising Alliance opt-out page at www.aboutads.info/choices or the Network Advertising Initiative opt-out page at www.networkadvertising.org/choices.
                 </p>
                 <p>
                   For more information about cookies and how to manage them, visit www.allaboutcookies.org.
