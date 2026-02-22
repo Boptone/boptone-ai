@@ -48,8 +48,8 @@ async function startServer() {
       return next();
     }
     
-    // Skip CSRF check for webhooks (verified by signature)
-    if (req.path === '/api/webhooks/stripe' || req.path === '/api/webhooks/shippo') {
+    // Skip CSRF check for webhooks (verified by signature) and BOPixel (CORS-enabled)
+    if (req.path === '/api/webhooks/stripe' || req.path === '/api/webhooks/shippo' || req.path === '/api/pixel/track') {
       return next();
     }
     
@@ -128,6 +128,28 @@ async function startServer() {
     async (req, res) => {
       const { handleShippoWebhook } = await import("../api/webhooks/shippo");
       return handleShippoWebhook(req, res);
+    }
+  );
+  
+  // BOPixel tracking endpoint (with CORS for external domains)
+  app.post(
+    "/api/pixel/track",
+    (req, res, next) => {
+      // Allow tracking from any domain (artists' external websites)
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      
+      if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+      }
+      
+      next();
+    },
+    express.json(),
+    async (req, res) => {
+      const { trackEvent } = await import("../api/pixel/track");
+      return trackEvent(req, res);
     }
   );
   

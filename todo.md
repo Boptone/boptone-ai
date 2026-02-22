@@ -697,3 +697,63 @@
 - [x] Test unsubscribe functionality (ready for integration)
 - [x] Generate screenshots of all 6 email templates for review
 - [x] Save checkpoint after compliance updates
+
+
+---
+
+## 📊 BOPixel™ - Enterprise Tracking System (IN PROGRESS)
+
+### Phase 1: Architecture & Design
+- [ ] Design BOPixel system architecture (tracking flow, data pipeline, privacy tiers)
+- [ ] Define database schema (events, users, sessions, audiences, consent)
+- [ ] Design JavaScript SDK API (event methods, configuration)
+- [ ] Plan privacy compliance system (geo-detection, consent management)
+
+### Phase 2: Database & Privacy Infrastructure
+- [x] Create pixel_events table (page views, custom events, conversions)
+- [x] Create pixel_users table (anonymous IDs, device fingerprints, consent status)
+- [x] Create pixel_sessions table (session tracking, attribution)
+- [x] Create pixel_audiences table (custom audience segments)
+- [x] Create pixel_consent table (GDPR/CCPA consent logs)
+- [x] Build GeoIP detection service for compliance tiers
+- [x] Implement consent management system (opt-in/opt-out logic)
+
+### Phase 3: JavaScript SDK & Tracking Endpoints
+- [x] Build BOPixel JavaScript SDK (bopixel.js)
+- [x] Implement automatic page view tracking
+- [x] Add custom event tracking API (track, identify, page)
+- [x] Create e-commerce event tracking (product view, add to cart, purchase)
+- [x] Build server-side tracking endpoint (/api/pixel/track)
+- [x] Implement cookie-based user identification
+- [x] Add device fingerprinting fallback (privacy-compliant)
+- [x] Configure CORS for external domain tracking
+- [x] Integrate privacy compliance (geo-detection, consent)
+- [ ] Build tRPC procedures for pixel management
+- [ ] Create pixel installation UI for artists
+
+### Phase 4: Artist Dashboard & Analytics
+- [ ] Build /artist/analytics page (traffic overview)
+- [ ] Create real-time event stream viewer
+- [ ] Build conversion funnel visualization
+- [ ] Add traffic source attribution reports
+- [ ] Create audience builder UI (segment creation)
+- [ ] Build pixel health monitoring (event volume, errors)
+- [ ] Add revenue attribution dashboard
+
+### Phase 5: Testing & Documentation
+- [ ] Write vitest tests for tracking endpoints
+- [ ] Test JavaScript SDK across browsers
+- [ ] Test privacy compliance (EU, California, global)
+- [ ] Create artist documentation (pixel installation guide)
+- [ ] Test cross-domain tracking
+- [ ] Save checkpoint
+
+---
+
+## 🎨 Email Design Improvements (FUTURE)
+- [ ] Redesign order confirmation email (more visual, branded)
+- [ ] Improve abandoned cart email design (urgency, scarcity)
+- [ ] Enhance shipping email templates (tracking visualization)
+- [ ] Redesign review request email (social proof, incentives)
+- [ ] Add mobile-responsive email testing
+- [ ] A/B test email designs for conversion rates

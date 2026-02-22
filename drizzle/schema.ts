@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, index } from "drizzle-orm/mysql-core";
+import { int, bigint, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, index } from "drizzle-orm/mysql-core";
 
 /**
  * BOPTONE DATABASE SCHEMA
@@ -3347,3 +3347,213 @@ export const scheduledJobs = mysqlTable("scheduled_jobs", {
 
 export type ScheduledJob = typeof scheduledJobs.$inferSelect;
 export type InsertScheduledJob = typeof scheduledJobs.$inferInsert;
+
+
+// ============================================================================
+// BOPIXEL™ - ENTERPRISE TRACKING SYSTEM
+// ============================================================================
+
+/**
+ * Pixel Events
+ * Raw tracking events from BOPixel JavaScript SDK
+ */
+export const pixelEvents = mysqlTable("pixel_events", {
+  id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
+  
+  // Event identification
+  eventId: varchar("eventId", { length: 64 }).notNull().unique(),
+  pixelUserId: varchar("pixelUserId", { length: 64 }).notNull(),
+  sessionId: varchar("sessionId", { length: 64 }).notNull(),
+  
+  // Artist association
+  artistId: int("artistId").references(() => artistProfiles.id),
+  
+  // Event details
+  eventType: varchar("eventType", { length: 50 }).notNull(), // page_view, product_viewed, purchase, etc.
+  eventName: varchar("eventName", { length: 100 }),
+  
+  // Page context
+  pageUrl: text("pageUrl"),
+  pageTitle: varchar("pageTitle", { length: 255 }),
+  referrer: text("referrer"),
+  
+  // UTM parameters
+  utmSource: varchar("utmSource", { length: 100 }),
+  utmMedium: varchar("utmMedium", { length: 100 }),
+  utmCampaign: varchar("utmCampaign", { length: 100 }),
+  utmContent: varchar("utmContent", { length: 100 }),
+  utmTerm: varchar("utmTerm", { length: 100 }),
+  
+  // Device & browser
+  deviceType: varchar("deviceType", { length: 20 }), // mobile, desktop, tablet
+  browser: varchar("browser", { length: 50 }),
+  os: varchar("os", { length: 50 }),
+  
+  // Location
+  country: varchar("country", { length: 2 }),
+  region: varchar("region", { length: 100 }),
+  city: varchar("city", { length: 100 }),
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  
+  // Technical
+  userAgent: text("userAgent"),
+  
+  // Custom data
+  customData: json("customData").$type<Record<string, any>>(),
+  
+  // E-commerce
+  revenue: decimal("revenue", { precision: 10, scale: 2 }),
+  currency: varchar("currency", { length: 3 }),
+  productId: int("productId").references(() => products.id),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  pixelUserIdx: index("pixel_user_idx").on(table.pixelUserId),
+  sessionIdx: index("session_idx").on(table.sessionId),
+  artistIdx: index("artist_idx").on(table.artistId),
+  eventTypeIdx: index("event_type_idx").on(table.eventType),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+  productIdx: index("product_idx").on(table.productId),
+}));
+
+export type PixelEvent = typeof pixelEvents.$inferSelect;
+export type InsertPixelEvent = typeof pixelEvents.$inferInsert;
+
+/**
+ * Pixel Users
+ * Anonymous user profiles tracked by BOPixel
+ */
+export const pixelUsers = mysqlTable("pixel_users", {
+  id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
+  
+  // User identification
+  pixelUserId: varchar("pixelUserId", { length: 64 }).notNull().unique(),
+  userId: int("userId").references(() => users.id), // Linked when user logs in
+  
+  // Activity tracking
+  firstSeen: timestamp("firstSeen").defaultNow().notNull(),
+  lastSeen: timestamp("lastSeen").defaultNow().notNull(),
+  totalEvents: int("totalEvents").default(0).notNull(),
+  totalSessions: int("totalSessions").default(0).notNull(),
+  totalRevenue: decimal("totalRevenue", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  
+  // Device fingerprint (privacy-compliant)
+  deviceFingerprint: varchar("deviceFingerprint", { length: 255 }),
+  
+  // Privacy & consent
+  consentStatus: mysqlEnum("consentStatus", ["unknown", "granted", "denied"]).default("unknown").notNull(),
+  consentTimestamp: timestamp("consentTimestamp"),
+  privacyTier: mysqlEnum("privacyTier", ["strict", "moderate", "permissive"]).default("permissive").notNull(),
+  
+  // Location (for privacy tier determination)
+  country: varchar("country", { length: 2 }),
+}, (table) => ({
+  userIdx: index("user_idx").on(table.userId),
+  consentIdx: index("consent_idx").on(table.consentStatus),
+  countryIdx: index("country_idx").on(table.country),
+}));
+
+export type PixelUser = typeof pixelUsers.$inferSelect;
+export type InsertPixelUser = typeof pixelUsers.$inferInsert;
+
+/**
+ * Pixel Sessions
+ * User sessions tracked by BOPixel
+ */
+export const pixelSessions = mysqlTable("pixel_sessions", {
+  id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
+  
+  // Session identification
+  sessionId: varchar("sessionId", { length: 64 }).notNull().unique(),
+  pixelUserId: varchar("pixelUserId", { length: 64 }).notNull(),
+  artistId: int("artistId").references(() => artistProfiles.id),
+  
+  // Session timing
+  startedAt: timestamp("startedAt").defaultNow().notNull(),
+  endedAt: timestamp("endedAt"),
+  durationSeconds: int("durationSeconds"),
+  
+  // Session activity
+  pageViews: int("pageViews").default(0).notNull(),
+  events: int("events").default(0).notNull(),
+  converted: int("converted").default(0).notNull(), // 0 = false, 1 = true
+  revenue: decimal("revenue", { precision: 10, scale: 2 }).default("0.00").notNull(),
+  
+  // Session context
+  landingPage: text("landingPage"),
+  exitPage: text("exitPage"),
+  referrer: text("referrer"),
+  
+  // UTM parameters
+  utmSource: varchar("utmSource", { length: 100 }),
+  utmMedium: varchar("utmMedium", { length: 100 }),
+  utmCampaign: varchar("utmCampaign", { length: 100 }),
+  
+  // Device & location
+  country: varchar("country", { length: 2 }),
+  deviceType: varchar("deviceType", { length: 20 }),
+}, (table) => ({
+  pixelUserIdx: index("pixel_user_idx").on(table.pixelUserId),
+  artistIdx: index("artist_idx").on(table.artistId),
+  startedAtIdx: index("started_at_idx").on(table.startedAt),
+  convertedIdx: index("converted_idx").on(table.converted),
+}));
+
+export type PixelSession = typeof pixelSessions.$inferSelect;
+export type InsertPixelSession = typeof pixelSessions.$inferInsert;
+
+/**
+ * Pixel Audiences
+ * Custom audience segments created by artists
+ */
+export const pixelAudiences = mysqlTable("pixel_audiences", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Audience details
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  
+  // Audience rules (JSON format)
+  rules: json("rules").$type<Record<string, any>>().notNull(),
+  
+  // Audience size
+  userCount: int("userCount").default(0).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdx: index("artist_idx").on(table.artistId),
+}));
+
+export type PixelAudience = typeof pixelAudiences.$inferSelect;
+export type InsertPixelAudience = typeof pixelAudiences.$inferInsert;
+
+/**
+ * Pixel Consent
+ * GDPR/CCPA consent logs for compliance
+ */
+export const pixelConsent = mysqlTable("pixel_consent", {
+  id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
+  
+  // User identification
+  pixelUserId: varchar("pixelUserId", { length: 64 }).notNull(),
+  
+  // Consent details
+  consentType: mysqlEnum("consentType", ["analytics", "marketing", "functional"]).notNull(),
+  consentStatus: mysqlEnum("consentStatus", ["granted", "denied"]).notNull(),
+  consentMethod: varchar("consentMethod", { length: 50 }), // banner, settings, api
+  
+  // Technical details
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  userAgent: text("userAgent"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  pixelUserIdx: index("pixel_user_idx").on(table.pixelUserId),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type PixelConsent = typeof pixelConsent.$inferSelect;
+export type InsertPixelConsent = typeof pixelConsent.$inferInsert;

@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS pixel_audiences (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  artistId INT NOT NULL,\n  name VARCHAR(255) NOT NULL,\n  description TEXT,\n  rules JSON NOT NULL,\n  userCount INT DEFAULT 0,\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX artist_idx (artistId)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS pixel_audiences (\n  id INT AUTO_INCREMENT PRIMARY KEY,\n  artistId INT NOT NULL,\n  name VARCHAR(255) NOT NULL,\n  description TEXT,\n  rules JSON NOT NULL,\n  userCount INT DEFAULT 0,\n  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  INDEX artist_idx (artistId)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 182
+}
