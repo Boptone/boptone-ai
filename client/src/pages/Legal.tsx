@@ -277,6 +277,12 @@ export default function Legal() {
                 >
                   Contact Legal Team
                 </a>
+                <Link
+                  href="/legal/changelog"
+                  className="inline-block bg-[#81e6fe] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#6dd5ed] transition-colors"
+                >
+                  View Change History
+                </Link>
                 <a
                   href="/cookie-settings"
                   className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold border-2 border-gray-900 hover:bg-gray-50 transition-colors"
