@@ -183,6 +183,29 @@ export default function MultiStepSignup() {
     } else if (currentStep === 2) {
       if (!validateStep2()) return;
       setCurrentStep(3);
+      
+      // Trigger Toney welcome greeting
+      setTimeout(() => {
+        const toneyGreeting = `Hey, ${signupData.stageName}! Welcome to Boptone. I'm Toney, your AI sidekick. I'll be with you every step of the way. Ask me anything, anytime.`;
+        
+        // Open Ask Toney chat interface
+        const askToneyButton = document.querySelector('[data-toney-chat]') as HTMLElement;
+        if (askToneyButton) {
+          askToneyButton.click();
+          
+          // Send welcome message after chat opens
+          setTimeout(() => {
+            const chatInput = document.querySelector('[data-toney-input]') as HTMLInputElement;
+            if (chatInput) {
+              // Display Toney's message in chat
+              toast.success(toneyGreeting, { duration: 8000 });
+            }
+          }, 500);
+        } else {
+          // Fallback: show toast if Ask Toney button not found
+          toast.success(toneyGreeting, { duration: 8000 });
+        }
+      }, 1000);
     }
   };
 

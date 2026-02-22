@@ -448,3 +448,15 @@
 - [x] Add "Back to options" button for email/phone flows
 - [x] Test complete flow
 - [x] Save checkpoint
+
+
+## Toney Welcome Greeting on Signup ✅ COMPLETE
+
+### Trigger Toney greeting when artist completes Step 2
+- [x] Update MultiStepSignup.tsx to trigger Toney greeting on Step 2 → Step 3 transition
+- [x] Attempt to open "Ask Toney" chat interface automatically (with fallback)
+- [x] Display personalized welcome message: "Hey, [Stage Name]! Welcome to Boptone. I'm Toney, your AI sidekick. I'll be with you every step of the way. Ask me anything, anytime."
+- [x] Add 1-second delay for smooth transition
+- [x] Add 8-second toast duration for readability
+- [x] Test greeting flow
+- [x] Save checkpoint
