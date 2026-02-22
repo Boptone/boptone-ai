@@ -839,3 +839,44 @@
 - [ ] Distribute events realistically across time periods
 - [ ] Test Insights dashboard with dummy data
 - [ ] Save checkpoint
+
+
+---
+
+## 📊 Insights Dashboard Design Update (IN PROGRESS)
+
+### Brutalist Design Application
+- [ ] Update color palette to match Boptone homepage (black, white, accent colors)
+- [ ] Apply bold typography (large headings, strong contrast)
+- [ ] Add thick borders and geometric shapes
+- [ ] Update card designs to match homepage rounded cards
+- [ ] Ensure font consistency with rest of site
+- [ ] Remove generic gray/blue palette
+- [ ] Test responsive design on mobile
+
+### Navigation Integration
+- [ ] Add "Insights" link to artist navigation menu
+- [ ] Ensure navigation is accessible from all artist pages
+- [ ] Test navigation flow
+- [ ] Save checkpoint
+
+
+---
+
+## 📊 Artist Insights Dashboard - BAP Design ✅ COMPLETE
+
+### Design Updates
+- [x] Apply BAP Protocol design to Insights Dashboard (match homepage aesthetic)
+- [x] Update colors, typography, and layout
+- [x] Use rounded cards (rounded-xl) with 2px borders
+- [x] Apply pill-shaped buttons with cyan shadow accent (#81e6fe)
+- [x] Ensure generous spacing and padding
+- [x] Add hover states on cards
+- [x] Match hero section style from homepage
+
+### Navigation Integration
+- [x] Add "Artist Insights" link to Platform mega menu in Navigation.tsx
+- [x] Add TrendingUp icon import
+- [x] Position as second item in Platform menu (after Distribution)
+- [ ] Test navigation flow
+- [ ] Save checkpoint

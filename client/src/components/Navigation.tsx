@@ -15,7 +15,8 @@ import {
   FileText,
   Lock,
   UserX,
-  MessageCircle
+  MessageCircle,
+  TrendingUp
 } from "lucide-react";
 import { SearchAIOverlay } from "@/components/SearchAIOverlay";
 import { SearchBar } from "@/components/SearchBar";
@@ -32,6 +33,12 @@ export function Navigation() {
       href: "/features", 
       label: "Distribution", 
       description: "Distribute music to all major streaming platforms" 
+    },
+    { 
+      icon: TrendingUp, 
+      href: "/insights", 
+      label: "Artist Insights", 
+      description: "Real-time traffic, conversions, and revenue analytics" 
     },
     { 
       icon: BarChart3, 

@@ -1,446 +1,447 @@
 import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Eye, TrendingUp, ShoppingBag, DollarSign, Users, Activity } from "lucide-react";
-import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Pie, Bar } from 'react-chartjs-2';
+  Chart as ChartJS,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+import { Eye, TrendingUp, ShoppingCart, DollarSign } from "lucide-react";
 
-// Register Chart.js components
-ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-/**
- * Artist Insights Dashboard
- * 
- * Powered by BOPixel (invisible to artists)
- * Shows real-time traffic, conversions, and revenue attribution
- */
+type DateRange = "7d" | "30d" | "90d" | "all";
+
 export default function ArtistInsights() {
-  const { user } = useAuth();
-  const [dateRange, setDateRange] = useState("30d");
-  const [artistId, setArtistId] = useState<number | null>(null);
+  const [dateRange, setDateRange] = useState<DateRange>("30d");
+  const [realtimeCount, setRealtimeCount] = useState(0);
 
-  // Get artist profile to extract artistId
-  const { data: profile } = trpc.artistProfile.getMyProfile.useQuery();
+  // Fetch analytics data (using demo artist Luna Waves ID: 180008)
+  const { data: overview, isLoading: overviewLoading } = trpc.analytics.getOverview.useQuery({
+    dateRange,
+    artistId: 180008
+  });
 
+  const { data: trafficSources, isLoading: trafficLoading } = trpc.analytics.getTrafficSources.useQuery({
+    dateRange,
+    artistId: 180008
+  });
+
+  const { data: productPerformance, isLoading: productsLoading } = trpc.analytics.getProductPerformance.useQuery({
+    dateRange,
+    artistId: 180008
+  });
+
+  const { data: revenueAttribution, isLoading: revenueLoading } = trpc.analytics.getRevenueAttribution.useQuery({
+    dateRange,
+    artistId: 180008
+  });
+
+  const { data: conversionFunnel, isLoading: funnelLoading } = trpc.analytics.getConversionFunnel.useQuery({
+    dateRange,
+    artistId: 180008
+  });
+
+  const { data: realtimeVisitors } = trpc.analytics.getRealtimeVisitors.useQuery({
+    artistId: 180008
+  });
+
+  // Update realtime counter
   useEffect(() => {
-    if (profile) {
-      setArtistId(profile.id);
+    if (realtimeVisitors) {
+      setRealtimeCount(realtimeVisitors.count);
     }
-  }, [profile]);
+  }, [realtimeVisitors]);
 
-  // Calculate date range
-  const getDateRange = () => {
-    const end = new Date();
-    const start = new Date();
-
-    switch (dateRange) {
-      case "7d":
-        start.setDate(end.getDate() - 7);
-        break;
-      case "30d":
-        start.setDate(end.getDate() - 30);
-        break;
-      case "90d":
-        start.setDate(end.getDate() - 90);
-        break;
-      case "all":
-        start.setFullYear(2020); // Start of Boptone
-        break;
-    }
-
-    return {
-      startDate: start.toISOString(),
-      endDate: end.toISOString(),
-    };
+  // Chart data - using BAP Protocol colors
+  const trafficSourcesChartData = {
+    labels: trafficSources?.map(s => s.source) || [],
+    datasets: [{
+      data: trafficSources?.map(s => s.visitors) || [],
+      backgroundColor: [
+        "#000000", // Black
+        "#81e6fe", // Cyan accent
+        "#4b5563", // Gray-600
+        "#9ca3af", // Gray-400
+        "#d1d5db"  // Gray-300
+      ],
+      borderWidth: 0
+    }]
   };
 
-  const { startDate, endDate } = getDateRange();
-
-  // Fetch analytics data
-  const { data: overview, isLoading: overviewLoading } = trpc.analytics.getOverview.useQuery(
-    { artistId: artistId!, startDate, endDate },
-    { enabled: !!artistId, refetchInterval: 30000 } // Refresh every 30 seconds
-  );
-
-  const { data: trafficSources, isLoading: trafficLoading } = trpc.analytics.getTrafficSources.useQuery(
-    { artistId: artistId!, startDate, endDate },
-    { enabled: !!artistId }
-  );
-
-  const { data: productPerformance, isLoading: productsLoading } = trpc.analytics.getProductPerformance.useQuery(
-    { artistId: artistId!, startDate, endDate },
-    { enabled: !!artistId }
-  );
-
-  const { data: revenueAttribution, isLoading: revenueLoading } = trpc.analytics.getRevenueAttribution.useQuery(
-    { artistId: artistId!, startDate, endDate },
-    { enabled: !!artistId }
-  );
-
-  const { data: conversionFunnel, isLoading: funnelLoading } = trpc.analytics.getConversionFunnel.useQuery(
-    { artistId: artistId!, startDate, endDate },
-    { enabled: !!artistId }
-  );
-
-  const { data: realtimeVisitors } = trpc.analytics.getRealtimeVisitors.useQuery(
-    { artistId: artistId! },
-    { enabled: !!artistId, refetchInterval: 5000 } // Refresh every 5 seconds
-  );
-
-  // Prepare traffic sources chart data
-  const trafficChartData = {
-    labels: trafficSources?.map((s) => s.category) || [],
-    datasets: [
-      {
-        data: trafficSources?.map((s) => s.visits) || [],
-        backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#4BC0C0",
-          "#9966FF",
-          "#FF9F40",
-          "#FF6384",
-          "#C9CBCF",
-        ],
-      },
-    ],
+  const revenueAttributionChartData = {
+    labels: revenueAttribution?.map(r => r.source) || [],
+    datasets: [{
+      label: "Revenue ($)",
+      data: revenueAttribution?.map(r => r.revenue) || [],
+      backgroundColor: "#000000",
+      borderWidth: 0,
+      borderRadius: 8
+    }]
   };
 
-  // Prepare revenue attribution chart data
-  const revenueChartData = {
-    labels: revenueAttribution?.map((r) => r.category) || [],
-    datasets: [
-      {
-        label: "Revenue ($)",
-        data: revenueAttribution?.map((r) => r.revenue) || [],
-        backgroundColor: "#36A2EB",
-      },
-    ],
-  };
+  const isLoading = overviewLoading || trafficLoading || productsLoading || revenueLoading || funnelLoading;
 
-  if (!artistId) {
+  if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Artist Profile Required</h1>
-          <p className="text-gray-600">
-            Please create an artist profile to view insights.
-          </p>
-        </div>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-2xl font-bold">Loading insights...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold">Insights</h1>
-              <p className="text-gray-600 mt-1">
-                Track your traffic, conversions, and revenue
-              </p>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section - BAP Protocol */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl">
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+              Artist Insights
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
+              Real-time analytics showing where your fans come from and what drives sales.
+            </p>
+
+            {/* Date Range Selector */}
+            <div className="flex flex-wrap gap-3">
+              {(["7d", "30d", "90d", "all"] as DateRange[]).map((range) => (
+                <Button
+                  key={range}
+                  onClick={() => setDateRange(range)}
+                  size="lg"
+                  className={`rounded-full h-12 px-6 text-base font-bold transition-all ${
+                    dateRange === range
+                      ? "bg-black text-white hover:bg-gray-800"
+                      : "bg-white text-black border-2 border-gray-300 hover:border-black"
+                  }`}
+                  style={dateRange === range ? { boxShadow: "4px 4px 0px #81e6fe" } : {}}
+                >
+                  {range === "7d" && "7 Days"}
+                  {range === "30d" && "30 Days"}
+                  {range === "90d" && "90 Days"}
+                  {range === "all" && "All Time"}
+                </Button>
+              ))}
             </div>
-            <Select value={dateRange} onValueChange={setDateRange}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="7d">Last 7 days</SelectItem>
-                <SelectItem value="30d">Last 30 days</SelectItem>
-                <SelectItem value="90d">Last 90 days</SelectItem>
-                <SelectItem value="all">All time</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Real-time Visitors */}
-        <Card className="mb-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0">
-          <CardContent className="pt-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-100 text-sm font-medium">
-                  LIVE VISITORS
-                </p>
-                <p className="text-4xl font-bold mt-2">
-                  {realtimeVisitors?.count || 0}
-                </p>
-                <p className="text-blue-100 text-sm mt-1">
-                  Active in the last 5 minutes
-                </p>
-              </div>
-              <Activity className="h-16 w-16 text-blue-200" />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Overview Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Page Views
-              </CardTitle>
-              <Eye className="h-4 w-4 text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {overviewLoading ? "..." : overview?.totalPageViews.toLocaleString()}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Conversions
-              </CardTitle>
-              <ShoppingBag className="h-4 w-4 text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {overviewLoading ? "..." : overview?.totalConversions.toLocaleString()}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Revenue
-              </CardTitle>
-              <DollarSign className="h-4 w-4 text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                ${overviewLoading ? "..." : overview?.totalRevenue.toFixed(2)}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Conversion Rate
-              </CardTitle>
-              <TrendingUp className="h-4 w-4 text-gray-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {overviewLoading || !overview
-                  ? "..."
-                  : overview.totalPageViews > 0
-                  ? ((overview.totalConversions / overview.totalPageViews) * 100).toFixed(2)
-                  : "0.00"}
-                %
-              </div>
-            </CardContent>
-          </Card>
+      {/* Real-time Visitors - BAP Protocol */}
+      <section className="py-8 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+            <span className="text-xl md:text-2xl font-bold">
+              {realtimeCount} {realtimeCount === 1 ? "visitor" : "visitors"} online now
+            </span>
+          </div>
         </div>
+      </section>
 
-        {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Traffic Sources */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Traffic Sources</CardTitle>
-              <p className="text-sm text-gray-600">
+      {/* Overview Stats - BAP Protocol Design */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Page Views */}
+            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+              <div className="flex items-start justify-between mb-4">
+                <Eye className="w-8 h-8" />
+                <TrendingUp className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="text-4xl font-extrabold mb-2">
+                {overview?.pageViews.toLocaleString() || 0}
+              </div>
+              <div className="text-lg text-gray-700">Page Views</div>
+            </div>
+
+            {/* Unique Visitors */}
+            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+              <div className="flex items-start justify-between mb-4">
+                <Eye className="w-8 h-8" />
+                <TrendingUp className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="text-4xl font-extrabold mb-2">
+                {overview?.uniqueVisitors.toLocaleString() || 0}
+              </div>
+              <div className="text-lg text-gray-700">Unique Visitors</div>
+            </div>
+
+            {/* Conversions */}
+            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+              <div className="flex items-start justify-between mb-4">
+                <ShoppingCart className="w-8 h-8" />
+                <div className="text-sm font-bold text-green-600">
+                  {overview?.conversionRate.toFixed(1)}%
+                </div>
+              </div>
+              <div className="text-4xl font-extrabold mb-2">
+                {overview?.conversions.toLocaleString() || 0}
+              </div>
+              <div className="text-lg text-gray-700">Conversions</div>
+            </div>
+
+            {/* Revenue */}
+            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+              <div className="flex items-start justify-between mb-4">
+                <DollarSign className="w-8 h-8" />
+                <TrendingUp className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="text-4xl font-extrabold mb-2">
+                ${overview?.revenue.toFixed(2) || "0.00"}
+              </div>
+              <div className="text-lg text-gray-700">Total Revenue</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Traffic Sources & Revenue Attribution - BAP Protocol */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12">
+            Traffic & Revenue
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Traffic Sources */}
+            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
+              <h3 className="text-2xl font-bold mb-6">Traffic Sources</h3>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 Where your visitors come from
               </p>
-            </CardHeader>
-            <CardContent>
-              {trafficLoading ? (
-                <div className="h-64 flex items-center justify-center">
-                  <p className="text-gray-400">Loading...</p>
-                </div>
-              ) : trafficSources && trafficSources.length > 0 ? (
-                <div className="h-64">
+              <div className="h-80 flex items-center justify-center">
+                {trafficSources && trafficSources.length > 0 ? (
                   <Pie
-                    data={trafficChartData}
+                    data={trafficSourcesChartData}
                     options={{
                       responsive: true,
                       maintainAspectRatio: false,
                       plugins: {
                         legend: {
                           position: "bottom",
-                        },
-                      },
+                          labels: {
+                            font: { size: 14, weight: "600" },
+                            padding: 16
+                          }
+                        }
+                      }
                     }}
                   />
-                </div>
-              ) : (
-                <div className="h-64 flex items-center justify-center">
-                  <p className="text-gray-400">No traffic data yet</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                ) : (
+                  <div className="text-gray-500 text-lg">No traffic data yet</div>
+                )}
+              </div>
+            </div>
 
-          {/* Revenue Attribution */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Revenue by Channel</CardTitle>
-              <p className="text-sm text-gray-600">
-                Which traffic sources drive sales
+            {/* Revenue Attribution */}
+            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
+              <h3 className="text-2xl font-bold mb-6">Revenue by Source</h3>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                Which channels drive the most sales
               </p>
-            </CardHeader>
-            <CardContent>
-              {revenueLoading ? (
-                <div className="h-64 flex items-center justify-center">
-                  <p className="text-gray-400">Loading...</p>
-                </div>
-              ) : revenueAttribution && revenueAttribution.length > 0 ? (
-                <div className="h-64">
+              <div className="h-80">
+                {revenueAttribution && revenueAttribution.length > 0 ? (
                   <Bar
-                    data={revenueChartData}
+                    data={revenueAttributionChartData}
                     options={{
                       responsive: true,
                       maintainAspectRatio: false,
                       plugins: {
-                        legend: {
-                          display: false,
-                        },
+                        legend: { display: false }
                       },
                       scales: {
                         y: {
                           beginAtZero: true,
+                          ticks: {
+                            callback: (value) => `$${value}`,
+                            font: { size: 12, weight: "600" }
+                          }
                         },
-                      },
+                        x: {
+                          ticks: {
+                            font: { size: 12, weight: "600" }
+                          }
+                        }
+                      }
+                    }}
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500 text-lg">
+                    No revenue data yet
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Product Performance - BAP Protocol */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Product Performance
+          </h2>
+          <p className="text-xl text-gray-700 mb-12 leading-relaxed">
+            Your top-selling products and conversion rates
+          </p>
+          <div className="border-2 border-gray-200 rounded-xl overflow-hidden bg-white">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b-2 border-gray-200">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-base font-bold">Product</th>
+                    <th className="px-6 py-4 text-right text-base font-bold">Views</th>
+                    <th className="px-6 py-4 text-right text-base font-bold">Purchases</th>
+                    <th className="px-6 py-4 text-right text-base font-bold">Conv. Rate</th>
+                    <th className="px-6 py-4 text-right text-base font-bold">Revenue</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {productPerformance && productPerformance.length > 0 ? (
+                    productPerformance.map((product, index) => (
+                      <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="px-6 py-4 font-bold text-base">{product.productName}</td>
+                        <td className="px-6 py-4 text-right">{product.views}</td>
+                        <td className="px-6 py-4 text-right">{product.purchases}</td>
+                        <td className="px-6 py-4 text-right font-bold">{product.conversionRate.toFixed(1)}%</td>
+                        <td className="px-6 py-4 text-right font-bold">${product.revenue.toFixed(2)}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-12 text-center text-gray-500 text-lg">
+                        No product data yet
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Conversion Funnel - BAP Protocol */}
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Conversion Funnel
+          </h2>
+          <p className="text-xl text-gray-700 mb-12 leading-relaxed">
+            Track visitor journey from view to purchase
+          </p>
+          <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
+            {conversionFunnel ? (
+              <div className="space-y-6">
+                {/* Visitors */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xl font-bold">Visitors</span>
+                    <span className="text-2xl font-extrabold">{conversionFunnel.visitors}</span>
+                  </div>
+                  <div className="w-full h-12 bg-black rounded-lg" />
+                </div>
+
+                {/* Product Views */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xl font-bold">Product Views</span>
+                    <div className="text-right">
+                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.productViews}</span>
+                      <span className="text-base text-gray-600">
+                        ({((conversionFunnel.productViews / conversionFunnel.visitors) * 100).toFixed(1)}%)
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className="h-12 bg-gray-700 rounded-lg"
+                    style={{
+                      width: `${(conversionFunnel.productViews / conversionFunnel.visitors) * 100}%`
                     }}
                   />
                 </div>
-              ) : (
-                <div className="h-64 flex items-center justify-center">
-                  <p className="text-gray-400">No revenue data yet</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Product Performance Table */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Product Performance</CardTitle>
-            <p className="text-sm text-gray-600">
-              Your top-selling products and conversion rates
-            </p>
-          </CardHeader>
-          <CardContent>
-            {productsLoading ? (
-              <div className="text-center py-8">
-                <p className="text-gray-400">Loading...</p>
-              </div>
-            ) : productPerformance && productPerformance.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left py-3 px-4">Product</th>
-                      <th className="text-right py-3 px-4">Views</th>
-                      <th className="text-right py-3 px-4">Purchases</th>
-                      <th className="text-right py-3 px-4">Revenue</th>
-                      <th className="text-right py-3 px-4">Conv. Rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {productPerformance.map((product, index) => (
-                      <tr key={index} className="border-b hover:bg-gray-50">
-                        <td className="py-3 px-4 font-medium">
-                          {product.productName}
-                        </td>
-                        <td className="text-right py-3 px-4">
-                          {product.views.toLocaleString()}
-                        </td>
-                        <td className="text-right py-3 px-4">
-                          {product.purchases.toLocaleString()}
-                        </td>
-                        <td className="text-right py-3 px-4">
-                          ${product.revenue.toFixed(2)}
-                        </td>
-                        <td className="text-right py-3 px-4">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            {product.conversionRate}%
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-400">No product data yet</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Conversion Funnel */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Conversion Funnel</CardTitle>
-            <p className="text-sm text-gray-600">
-              Track visitor journey from view to purchase
-            </p>
-          </CardHeader>
-          <CardContent>
-            {funnelLoading ? (
-              <div className="text-center py-8">
-                <p className="text-gray-400">Loading...</p>
-              </div>
-            ) : conversionFunnel && conversionFunnel.stages ? (
-              <div className="space-y-4">
-                {conversionFunnel.stages.map((stage, index) => (
-                  <div key={index}>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">{stage.name}</span>
-                      <span className="text-sm text-gray-600">
-                        {stage.count.toLocaleString()} ({stage.percentage}%)
+                {/* Add to Cart */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xl font-bold">Add to Cart</span>
+                    <div className="text-right">
+                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.addToCart}</span>
+                      <span className="text-base text-gray-600">
+                        ({((conversionFunnel.addToCart / conversionFunnel.visitors) * 100).toFixed(1)}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                      <div
-                        className="bg-blue-600 h-3 rounded-full transition-all"
-                        style={{ width: `${stage.percentage}%` }}
-                      />
+                  </div>
+                  <div
+                    className="h-12 bg-gray-500 rounded-lg"
+                    style={{
+                      width: `${(conversionFunnel.addToCart / conversionFunnel.visitors) * 100}%`
+                    }}
+                  />
+                </div>
+
+                {/* Checkout Started */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xl font-bold">Checkout Started</span>
+                    <div className="text-right">
+                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.checkoutStarted}</span>
+                      <span className="text-base text-gray-600">
+                        ({((conversionFunnel.checkoutStarted / conversionFunnel.visitors) * 100).toFixed(1)}%)
+                      </span>
                     </div>
                   </div>
-                ))}
-                <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <p className="text-sm font-medium text-blue-900">
-                    Overall Conversion Rate: {conversionFunnel.overallConversionRate}%
-                  </p>
-                  <p className="text-xs text-blue-700 mt-1">
-                    {conversionFunnel.overallConversionRate > 2
-                      ? "Great job! Your conversion rate is above average."
-                      : "Tip: Optimize your product pages and checkout flow to increase conversions."}
-                  </p>
+                  <div
+                    className="h-12 bg-gray-300 rounded-lg"
+                    style={{
+                      width: `${(conversionFunnel.checkoutStarted / conversionFunnel.visitors) * 100}%`
+                    }}
+                  />
+                </div>
+
+                {/* Purchases */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xl font-bold">Purchases</span>
+                    <div className="text-right">
+                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.purchases}</span>
+                      <span className="text-base text-green-600 font-bold">
+                        ({((conversionFunnel.purchases / conversionFunnel.visitors) * 100).toFixed(1)}%)
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className="h-12 bg-black rounded-lg"
+                    style={{
+                      width: `${(conversionFunnel.purchases / conversionFunnel.visitors) * 100}%`
+                    }}
+                  />
                 </div>
               </div>
             ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-400">No funnel data yet</p>
+              <div className="text-center text-gray-500 text-lg py-12">
+                No funnel data yet
               </div>
             )}
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
