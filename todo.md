@@ -520,3 +520,13 @@
 - [ ] Update Table of Contents with new sections
 - [x] Update "Last Updated" date to February 22, 2026
 - [ ] Test all internal anchor links
+
+
+## Privacy Policy Tier 2 Enhancements (Transparency & User Experience) - Feb 22, 2026
+
+- [x] Add Section 3.8 - Machine Learning and AI Operational Disclosure (fraud detection, recommendations, content moderation)
+- [x] Add Section 2.8 - Multi-Stakeholder Privacy Structure (data collection by user role: artists, fans, buyers, sellers, loan applicants)
+- [x] Add Section 11.6 - Cookie Consent Management (granular control, opt-out options)
+- [x] Add Section 11.7 - Detailed Cookie List
+- [ ] Update Table of Contents with new sections
+- [ ] Test all internal anchor links
