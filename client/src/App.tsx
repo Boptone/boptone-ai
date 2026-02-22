@@ -74,6 +74,7 @@ const PricingDashboard = lazy(() => import("./pages/PricingDashboard"));
 const Transparency = lazy(() => import("./pages/Transparency"));
 const CookieSettings = lazy(() => import("./pages/CookieSettings"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const Legal = lazy(() => import("./pages/Legal"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
 const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
@@ -129,6 +130,7 @@ function Router() {
         <Route path={"/privacy"} component={Privacy} />
         <Route path={"/cookie-settings"} component={CookieSettings} />
         <Route path={"/cookie-policy"} component={CookiePolicy} />
+        <Route path={"/legal"} component={Legal} />
         <Route path="/products" component={ProductManagement} />
         <Route path="/products/new" component={ProductForm} />
         <Route path="/products/edit/:id" component={ProductForm} />
