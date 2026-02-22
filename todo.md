@@ -493,3 +493,11 @@
 - [x] Test color changes on signup flow
 - [x] Test Toney chat button appearance
 - [x] Save checkpoint
+
+
+## Fix Signup Progress Indicator Layout ✅ COMPLETE
+- [x] Change current step bubble color from white/black border to #81e6fe (step <= currentStep)
+- [x] Restructure layout so labels sit directly below their respective bubbles (flex-col items-center)
+- [x] Ensure proper alignment and spacing (mt-2 for labels)
+- [x] Test on signup page
+- [x] Save checkpoint
