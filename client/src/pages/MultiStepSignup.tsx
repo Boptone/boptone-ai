@@ -263,40 +263,43 @@ export default function MultiStepSignup() {
   };
 
   // Progress indicator
-  const ProgressIndicator = () => (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-2">
-        {[1, 2, 3, 4].map((step) => (
-          <div key={step} className="flex items-center flex-1">
-            <div
-              className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
-                step < currentStep
-                  ? "border-[#81e6fe] text-white"
-                  : step === currentStep
-                  ? "bg-white border-black text-black"
-                  : "bg-gray-100 border-gray-300 text-gray-400"
-              }`}
-              style={step < currentStep ? { backgroundColor: '#81e6fe' } : {}}
-            >
-              {step < currentStep ? <Check className="w-5 h-5" /> : step}
+  const ProgressIndicator = () => {
+    const stepLabels = ['Account', 'Profile', 'Preferences', 'Picture'];
+    
+    return (
+      <div className="mb-8">
+        <div className="flex items-start justify-between">
+          {[1, 2, 3, 4].map((step, index) => (
+            <div key={step} className="flex flex-col items-center" style={{ flex: step < 4 ? '1 1 0%' : '0 0 auto' }}>
+              {/* Bubble and connecting line container */}
+              <div className="flex items-center w-full">
+                <div
+                  className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
+                    step <= currentStep
+                      ? "border-[#81e6fe] text-white"
+                      : "bg-gray-100 border-gray-300 text-gray-400"
+                  }`}
+                  style={step <= currentStep ? { backgroundColor: '#81e6fe' } : {}}
+                >
+                  {step < currentStep ? <Check className="w-5 h-5" /> : step}
+                </div>
+                {step < 4 && (
+                  <div
+                    className={`flex-1 h-0.5 mx-2 transition-all`}
+                    style={{ backgroundColor: step < currentStep ? '#81e6fe' : '#d1d5db' }}
+                  />
+                )}
+              </div>
+              {/* Label below bubble */}
+              <span className={`text-sm mt-2 ${step === currentStep ? "font-semibold" : "text-gray-500"}`}>
+                {stepLabels[index]}
+              </span>
             </div>
-            {step < 4 && (
-              <div
-                className={`flex-1 h-0.5 mx-2 transition-all`}
-                style={{ backgroundColor: step < currentStep ? '#81e6fe' : '#d1d5db' }}
-              />
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-      <div className="flex justify-between text-sm">
-        <span className={currentStep === 1 ? "font-semibold" : "text-gray-500"}>Account</span>
-        <span className={currentStep === 2 ? "font-semibold" : "text-gray-500"}>Profile</span>
-        <span className={currentStep === 3 ? "font-semibold" : "text-gray-500"}>Preferences</span>
-        <span className={currentStep === 4 ? "font-semibold" : "text-gray-500"}>Picture</span>
-      </div>
-    </div>
-  );
+    );
+  };
 
   // Redirect if already authenticated
   if (isAuthenticated && !authLoading) {
