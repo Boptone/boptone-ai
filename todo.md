@@ -484,3 +484,12 @@
 - [x] Ensure all Toney pop-ups have solid backgrounds
 - [x] Test chat window appearance
 - [x] Save checkpoint
+
+
+## Update Signup Progress Bubbles and Toney Chat Button Colors ✅ COMPLETE
+- [x] Update MultiStepSignup.tsx progress bubbles to turn solid #81e6fe as steps are completed
+- [x] Update connecting lines between bubbles to #81e6fe for completed steps
+- [x] Update ToneyChatbot.tsx button color from #4A90E2 to #81e6fe
+- [x] Test color changes on signup flow
+- [x] Test Toney chat button appearance
+- [x] Save checkpoint
