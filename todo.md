@@ -817,3 +817,25 @@
 - [x] Integrate with analytics tRPC procedures
 - [ ] Test dashboard with real artist data
 - [ ] Save checkpoint
+
+
+---
+
+## Dummy Artist Data for Insights Dashboard (IN PROGRESS)
+
+### Artist Profile & Products
+- [ ] Create dummy artist profile (stage name, bio, avatar)
+- [ ] Create 5-10 dummy products with realistic pricing
+- [ ] Link products to dummy artist
+
+### BOPixel Tracking Data Generation
+- [ ] Generate 500+ page view events (last 30 days)
+- [ ] Generate diverse traffic sources (Instagram, TikTok, Google, Direct, etc.)
+- [ ] Generate product view events (100+ views across products)
+- [ ] Generate add-to-cart events (50+ carts)
+- [ ] Generate checkout started events (30+ checkouts)
+- [ ] Generate purchase events (15-20 purchases with revenue)
+- [ ] Create pixel_users and pixel_sessions for events
+- [ ] Distribute events realistically across time periods
+- [ ] Test Insights dashboard with dummy data
+- [ ] Save checkpoint
