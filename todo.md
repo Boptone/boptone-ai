@@ -798,3 +798,22 @@
 - [ ] Verify analytics data accuracy
 - [ ] Test dashboard with real artist data
 - [ ] Save checkpoint
+
+
+---
+
+## Artist Insights Dashboard UI (COMPLETE)
+
+### Dashboard Page Creation
+- [x] Create /insights page component
+- [x] Add route to App.tsx
+- [x] Build real-time visitor counter widget (updates every 5s)
+- [x] Build traffic sources pie chart (Chart.js)
+- [x] Build product performance table (sortable, with conversion rates)
+- [x] Build revenue attribution bar chart (Chart.js)
+- [x] Build conversion funnel visualization
+- [x] Add date range selector (7d, 30d, 90d, all time)
+- [x] Install Chart.js dependencies
+- [x] Integrate with analytics tRPC procedures
+- [ ] Test dashboard with real artist data
+- [ ] Save checkpoint

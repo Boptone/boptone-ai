@@ -17,6 +17,7 @@ import Home from "./pages/Home";
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
 const ArtistProfile = lazy(() => import("./pages/ArtistProfile"));
+const ArtistInsights = lazy(() => import("./pages/ArtistInsights"));
 const DemoArtistProfile = lazy(() => import("./pages/DemoArtistProfile"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -147,7 +148,8 @@ function Router() {
         <Route path={"/ip-protection"} component={IPProtection} />
         <Route path={"/tours"} component={Tours} />
         <Route path={"/healthcare"} component={Healthcare} />
-        <Route path={"/analytics"} component={Analytics} />
+         <Route path="/analytics" component={Analytics} />
+        <Route path="/insights" component={ArtistInsights} />
         <Route path={"/bap"} component={BAP} />
         <Route path={"/protocol"} component={BAP} />
         <Route path={"/bap-protocol"} component={BAP} />
