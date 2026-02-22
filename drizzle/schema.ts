@@ -3215,3 +3215,135 @@ export const userCookiePreferences = mysqlTable("user_cookie_preferences", {
 
 export type UserCookiePreferences = typeof userCookiePreferences.$inferSelect;
 export type InsertUserCookiePreferences = typeof userCookiePreferences.$inferInsert;
+
+// ============================================================================
+// POST-PURCHASE AUTOMATION
+// ============================================================================
+
+/**
+ * Cart Events
+ * Tracks cart interactions for abandoned cart detection
+ */
+export const cartEvents = mysqlTable("cart_events", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // User identification (null for guests)
+  userId: int("userId").references(() => users.id),
+  sessionId: varchar("sessionId", { length: 255 }).notNull(), // For guest tracking
+  
+  // Event details
+  eventType: mysqlEnum("eventType", ["cart_viewed", "item_added", "item_removed", "checkout_started", "checkout_abandoned", "checkout_completed"]).notNull(),
+  productId: int("productId").references(() => products.id),
+  variantId: int("variantId").references(() => productVariants.id),
+  quantity: int("quantity"),
+  
+  // Cart snapshot (for abandoned cart emails)
+  cartSnapshot: json("cartSnapshot").$type<{
+    items: Array<{
+      productId: number;
+      variantId?: number;
+      name: string;
+      imageUrl?: string;
+      price: number;
+      quantity: number;
+    }>;
+    subtotal: number;
+    currency: string;
+  }>(),
+  
+  // Metadata
+  userAgent: text("userAgent"),
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  referrer: text("referrer"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  sessionIdIdx: index("session_id_idx").on(table.sessionId),
+  eventTypeIdx: index("event_type_idx").on(table.eventType),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type CartEvent = typeof cartEvents.$inferSelect;
+export type InsertCartEvent = typeof cartEvents.$inferInsert;
+
+/**
+ * Email Logs
+ * Complete audit trail of all transactional emails sent
+ */
+export const emailLogs = mysqlTable("email_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Email details
+  emailType: mysqlEnum("emailType", [
+    "order_confirmation",
+    "abandoned_cart",
+    "shipping_in_transit",
+    "shipping_out_for_delivery",
+    "shipping_delivered",
+    "review_request",
+  ]).notNull(),
+  recipientEmail: varchar("recipientEmail", { length: 320 }).notNull(),
+  recipientName: varchar("recipientName", { length: 255 }),
+  subject: varchar("subject", { length: 500 }).notNull(),
+  
+  // Status tracking
+  status: mysqlEnum("status", ["queued", "sent", "failed"]).notNull(),
+  messageId: varchar("messageId", { length: 255 }), // From email provider
+  errorMessage: text("errorMessage"),
+  retryCount: int("retryCount").default(0).notNull(),
+  
+  // Metadata
+  metadata: json("metadata").$type<Record<string, any>>(), // Order ID, cart ID, etc.
+  
+  // Timestamps
+  queuedAt: timestamp("queuedAt"),
+  sentAt: timestamp("sentAt"),
+  failedAt: timestamp("failedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  emailTypeIdx: index("email_type_idx").on(table.emailType),
+  recipientEmailIdx: index("recipient_email_idx").on(table.recipientEmail),
+  statusIdx: index("status_idx").on(table.status),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type EmailLog = typeof emailLogs.$inferSelect;
+export type InsertEmailLog = typeof emailLogs.$inferInsert;
+
+/**
+ * Scheduled Jobs
+ * Background job queue for timed emails and automation
+ */
+export const scheduledJobs = mysqlTable("scheduled_jobs", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Job details
+  jobType: mysqlEnum("jobType", [
+    "send_order_confirmation",
+    "send_abandoned_cart",
+    "send_shipping_update",
+    "send_review_request",
+  ]).notNull(),
+  scheduledFor: timestamp("scheduledFor").notNull(),
+  payload: json("payload").$type<Record<string, any>>().notNull(),
+  
+  // Status tracking
+  status: mysqlEnum("status", ["pending", "processing", "completed", "failed"]).default("pending").notNull(),
+  attempts: int("attempts").default(0).notNull(),
+  maxAttempts: int("maxAttempts").default(3).notNull(),
+  lastAttemptAt: timestamp("lastAttemptAt"),
+  errorMessage: text("errorMessage"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+}, (table) => ({
+  jobTypeIdx: index("job_type_idx").on(table.jobType),
+  statusIdx: index("status_idx").on(table.status),
+  scheduledForIdx: index("scheduled_for_idx").on(table.scheduledFor),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type ScheduledJob = typeof scheduledJobs.$inferSelect;
+export type InsertScheduledJob = typeof scheduledJobs.$inferInsert;

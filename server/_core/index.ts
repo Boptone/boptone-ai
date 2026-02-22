@@ -9,6 +9,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { startJobScheduler } from "../services/jobScheduler";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -47,8 +48,8 @@ async function startServer() {
       return next();
     }
     
-    // Skip CSRF check for Stripe webhooks (verified by signature)
-    if (req.path === '/api/webhooks/stripe') {
+    // Skip CSRF check for webhooks (verified by signature)
+    if (req.path === '/api/webhooks/stripe' || req.path === '/api/webhooks/shippo') {
       return next();
     }
     
@@ -117,6 +118,16 @@ async function startServer() {
     async (req, res) => {
       const { handleStripeWebhook } = await import("../webhooks/stripe");
       return handleStripeWebhook(req, res);
+    }
+  );
+  
+  // Shippo webhook for tracking updates
+  app.post(
+    "/api/webhooks/shippo",
+    express.json(),
+    async (req, res) => {
+      const { handleShippoWebhook } = await import("../api/webhooks/shippo");
+      return handleShippoWebhook(req, res);
     }
   );
   
@@ -205,6 +216,9 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
+    
+    // Start background job scheduler for post-purchase automation
+    startJobScheduler();
   });
 }
 

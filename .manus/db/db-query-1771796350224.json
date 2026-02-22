@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `cart_events` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int,\n  `sessionId` varchar(255) NOT NULL,\n  `eventType` enum('cart_viewed','item_added','item_removed','checkout_started','checkout_abandoned','checkout_completed') NOT NULL,\n  `productId` int,\n  `variantId` int,\n  `quantity` int,\n  `cartSnapshot` json,\n  `userAgent` text,\n  `ipAddress` varchar(45),\n  `referrer` text,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  CONSTRAINT `cart_events_id` PRIMARY KEY(`id`),\n  KEY `user_id_idx` (`userId`),\n  KEY `session_id_idx` (`sessionId`),\n  KEY `event_type_idx` (`eventType`),\n  KEY `created_at_idx` (`createdAt`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `cart_events` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int,\n  `sessionId` varchar(255) NOT NULL,\n  `eventType` enum('cart_viewed','item_added','item_removed','checkout_started','checkout_abandoned','checkout_completed') NOT NULL,\n  `productId` int,\n  `variantId` int,\n  `quantity` int,\n  `cartSnapshot` json,\n  `userAgent` text,\n  `ipAddress` varchar(45),\n  `referrer` text,\n  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  CONSTRAINT `cart_events_id` PRIMARY KEY(`id`),\n  KEY `user_id_idx` (`userId`),\n  KEY `session_id_idx` (`sessionId`),\n  KEY `event_type_idx` (`eventType`),\n  KEY `created_at_idx` (`createdAt`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 583
+}

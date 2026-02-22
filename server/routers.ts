@@ -31,6 +31,7 @@ import { reviewRouter } from "./routers/reviews";
 import { gdprRouter } from "./routers/gdpr";
 import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
 import { stripeConnectRouter } from "./routers/stripeConnect";
+import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -589,6 +590,7 @@ export const appRouter = router({
   agentApi: agentApiRouter,
   stripeConnect: stripeConnectRouter,
   gdpr: gdprRouter,
+  postPurchase: postPurchaseAutomationRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

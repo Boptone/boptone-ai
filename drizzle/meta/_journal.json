@@ -127,6 +127,13 @@
       "when": 1771778176532,
       "tag": "0017_dazzling_night_thrasher",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1771796287708,
+      "tag": "0018_legal_iron_patriot",
+      "breakpoints": true
     }
   ]
 }
