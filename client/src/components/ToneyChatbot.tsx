@@ -134,7 +134,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
             data-toney-trigger
             onClick={() => setIsOpen(true)}
             className="h-14 w-14 rounded-full shadow-lg"
-            style={{ backgroundColor: '#4A90E2', color: 'white' }}
+            style={{ backgroundColor: '#81e6fe', color: 'white' }}
             size="icon"
           >
             <MessageCircle className="h-6 w-6" />
