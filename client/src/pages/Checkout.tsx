@@ -16,12 +16,14 @@ import { getLoginUrl } from "@/const";
 import { Link, useLocation } from "wouter";
 import { ArrowLeft, CreditCard, Lock, Package, Truck } from "lucide-react";
 import { toast } from "sonner";
+import { useBOPixel } from "@/hooks/useBOPixel";
 
 /**
  * Checkout Page
  * Collects shipping info and processes BopShop orders via Stripe
  */
 export default function Checkout() {
+  const { trackCheckoutStarted } = useBOPixel();
   const [, setLocation] = useLocation();
   const { user, isAuthenticated } = useAuth();
   const [currency, setCurrency] = useState("USD");
@@ -156,6 +158,19 @@ export default function Checkout() {
   const createCheckout = trpc.payment.createBopShopCheckout.useMutation({
     onSuccess: (data) => {
       if (data.checkoutUrl) {
+        // Track checkout started (invisible to artist)
+        if (cartItems) {
+          const items = cartItems.map(item => ({
+            productId: item.productId,
+            productName: item.product?.name || 'Unknown',
+            price: item.priceAtAdd,
+            quantity: item.quantity,
+            artistId: item.product?.artistId
+          }));
+          
+          trackCheckoutStarted(total / 100, cartItems.length, items);
+        }
+        
         // Redirect to Stripe checkout
         window.location.href = data.checkoutUrl;
       } else {

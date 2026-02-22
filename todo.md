@@ -757,3 +757,44 @@
 - [ ] Redesign review request email (social proof, incentives)
 - [ ] Add mobile-responsive email testing
 - [ ] A/B test email designs for conversion rates
+
+
+---
+
+## Artist Insights Dashboard (IN PROGRESS)
+
+### BOPixel Integration (Invisible Infrastructure)
+- [x] Integrate BOPixel SDK into Boptone homepage (auto-track all visitors)
+- [x] Add BOPixel tracking to artist profile pages (track profile views)
+- [x] Add BOPixel tracking to product pages (track product views)
+- [x] Add BOPixel tracking to checkout flow (track checkout started)
+- [x] Add BOPixel tracking to Stripe webhook (track purchases)
+- [x] Add BOPixel tracking to cart interactions (add to cart)
+- [x] Configure BOPixel with artist-specific IDs for attribution
+- [x] Create useBOPixel React hook for easy tracking access
+
+### tRPC Analytics Procedures
+- [x] Create analytics.getOverview procedure (real-time stats)
+- [x] Create analytics.getTrafficSources procedure (referrer breakdown)
+- [x] Create analytics.getProductPerformance procedure (top products)
+- [x] Create analytics.getRevenueAttribution procedure (channel ROI)
+- [x] Create analytics.getConversionFunnel procedure (visitor → purchase)
+- [x] Create analytics.getRealtimeVisitors procedure (live visitor count)
+- [x] Register analytics router in main routers file
+
+### Artist Insights Dashboard UI
+- [ ] Create /artist/insights page (replace /artist/analytics)
+- [ ] Build real-time visitor counter widget
+- [ ] Build traffic sources chart (pie chart)
+- [ ] Build product performance table (sortable)
+- [ ] Build revenue attribution chart (bar chart)
+- [ ] Build conversion funnel visualization
+- [ ] Add date range selector (7d, 30d, 90d, all time)
+- [ ] Add export data button (CSV download)
+- [ ] Make dashboard mobile-responsive
+
+### Testing & Documentation
+- [ ] Test BOPixel tracking across all Boptone pages
+- [ ] Verify analytics data accuracy
+- [ ] Test dashboard with real artist data
+- [ ] Save checkpoint

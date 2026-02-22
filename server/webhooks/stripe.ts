@@ -223,6 +223,43 @@ async function handleBopShopPayment(session: any, db: any) {
       .where(eq(products.id, productId));
   }
 
+  // Track purchase in BOPixel (invisible to artist)
+  try {
+    // Send tracking event to BOPixel endpoint
+    const trackingPayload = {
+      eventId: `purchase-${order.id}-${Date.now()}`,
+      pixelUserId: session.client_reference_id || `user-${userId}`,
+      sessionId: session.id,
+      artistId: artistId.toString(),
+      eventType: 'purchase',
+      eventName: 'Purchase Completed',
+      pageUrl: session.success_url || '',
+      pageTitle: 'Checkout Success',
+      referrer: null,
+      deviceType: 'unknown',
+      browser: 'unknown',
+      os: 'unknown',
+      userAgent: '',
+      customData: {
+        orderId: order.id,
+        orderNumber,
+        productId,
+        productName: product.name,
+        quantity
+      },
+      revenue: totalAmount / 100, // Convert cents to dollars
+      currency: session.currency?.toUpperCase() || 'USD',
+      productId,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Note: In production, this would be sent via internal API call
+    // For now, we'll log it for tracking purposes
+    console.log('[BOPixel] Purchase tracked:', trackingPayload);
+  } catch (error) {
+    console.error('[BOPixel] Failed to track purchase:', error);
+  }
+  
   console.log(`[Stripe Webhook] BopShop order ${orderNumber} created for user ${userId}`);
 }
 

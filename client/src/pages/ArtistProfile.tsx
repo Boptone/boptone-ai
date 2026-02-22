@@ -29,8 +29,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
+import { useBOPixel } from "@/hooks/useBOPixel";
 
 export default function ArtistProfile() {
+  const { trackArtistView } = useBOPixel();
   const [, params] = useRoute("/@:username");
   const username = params?.username;
   const [copiedLink, setCopiedLink] = useState(false);
@@ -65,6 +67,13 @@ export default function ArtistProfile() {
     { username: username || "" },
     { enabled: !!username }
   );
+  
+  // Track artist profile view (invisible to artist)
+  useEffect(() => {
+    if (profile) {
+      trackArtistView(profile.id, profile.stageName || profile.username);
+    }
+  }, [profile, trackArtistView]);
 
   // Products and tours will be added in future iterations
   const products: any[] = [];

@@ -10,12 +10,14 @@ import { CurrencySelector } from "@/components/CurrencySelector";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
 import { generateProductReviewSchema } from "../../../server/reviewSchema";
+import { useBOPixel } from "@/hooks/useBOPixel";
 
 /**
  * BopShop Product Detail Page
  * Gem-inspired layout with BAP Protocol aesthetic
  */
 export default function BopShopProduct() {
+  const { trackProductView, trackAddToCart } = useBOPixel();
   const { slug } = useParams();
   const [, setLocation] = useLocation();
   const { user, isAuthenticated } = useAuth();
@@ -27,6 +29,18 @@ export default function BopShopProduct() {
     { slug: slug! },
     { enabled: !!slug }
   );
+  
+  // Track product view (invisible to artist)
+  useEffect(() => {
+    if (product) {
+      trackProductView(
+        product.id,
+        product.name,
+        product.price,
+        product.artistId
+      );
+    }
+  }, [product, trackProductView]);
 
   // Add to cart mutation
   const addToCart = trpc.ecommerce.cart.add.useMutation({
@@ -53,6 +67,15 @@ export default function BopShopProduct() {
       return;
     }
 
+    // Track add to cart (invisible to artist)
+    trackAddToCart(
+      product.id,
+      product.name,
+      product.price,
+      quantity,
+      product.artistId
+    );
+    
     addToCart.mutate({
       productId: product.id,
       priceAtAdd: product.price,
