@@ -303,7 +303,7 @@ export default function MultiStepSignup() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold">Join {APP_TITLE}</CardTitle>
+          <CardTitle className="text-3xl font-bold">Join Boptone and Own Your Tone.</CardTitle>
           <CardDescription>
             {currentStep === 1 && "Create your account to get started"}
             {currentStep === 2 && "Tell us about yourself"}
