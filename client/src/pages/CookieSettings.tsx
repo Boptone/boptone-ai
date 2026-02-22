@@ -255,6 +255,12 @@ export default function CookieSettings() {
                   Privacy Policy
                 </a>
               </li>
+              <li>
+                • Questions about cookies? Contact us at{" "}
+                <a href="mailto:privacy@boptone.com" className="text-blue-600 hover:underline font-medium">
+                  privacy@boptone.com
+                </a>
+              </li>
             </ul>
           </div>
         </div>

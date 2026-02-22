@@ -374,6 +374,16 @@ export default function CookiePolicy() {
               Go to Cookie Settings
             </a>
           </div>
+
+          {/* Contact Information */}
+          <div className="mt-8 p-6 bg-gray-50 border border-gray-200 rounded-lg">
+            <p className="text-gray-700 leading-relaxed">
+              Questions about this Cookie Policy or our cookie practices? Contact us at{" "}
+              <a href="mailto:privacy@boptone.com" className="text-blue-600 hover:underline font-medium">
+                privacy@boptone.com
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
