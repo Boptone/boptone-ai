@@ -14,7 +14,7 @@ import { useLocation } from "wouter";
 import { Mail, Phone, ArrowRight, ArrowLeft, Check, Upload } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-type SignupStep = 1 | 2 | 3;
+type SignupStep = 1 | 2 | 3 | 4;
 type AuthMethod = "select" | "email" | "phone";
 
 interface SignupData {
@@ -45,6 +45,7 @@ export default function MultiStepSignup() {
   const [authMethod, setAuthMethod] = useState<AuthMethod>("select");
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [profilePicturePreview, setProfilePicturePreview] = useState<string | null>(null);
   
   const [signupData, setSignupData] = useState<SignupData>({
     authMethod: "select",
@@ -206,6 +207,9 @@ export default function MultiStepSignup() {
           toast.success(toneyGreeting, { duration: 8000 });
         }
       }, 1000);
+    } else if (currentStep === 3) {
+      if (!validateStep3()) return;
+      setCurrentStep(4);
     }
   };
 
@@ -262,7 +266,7 @@ export default function MultiStepSignup() {
   const ProgressIndicator = () => (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-2">
-        {[1, 2, 3].map((step) => (
+        {[1, 2, 3, 4].map((step) => (
           <div key={step} className="flex items-center flex-1">
             <div
               className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
@@ -275,7 +279,7 @@ export default function MultiStepSignup() {
             >
               {step < currentStep ? <Check className="w-5 h-5" /> : step}
             </div>
-            {step < 3 && (
+            {step < 4 && (
               <div
                 className={`flex-1 h-0.5 mx-2 transition-all ${
                   step < currentStep ? "bg-black" : "bg-gray-300"
@@ -289,6 +293,7 @@ export default function MultiStepSignup() {
         <span className={currentStep === 1 ? "font-semibold" : "text-gray-500"}>Account</span>
         <span className={currentStep === 2 ? "font-semibold" : "text-gray-500"}>Profile</span>
         <span className={currentStep === 3 ? "font-semibold" : "text-gray-500"}>Preferences</span>
+        <span className={currentStep === 4 ? "font-semibold" : "text-gray-500"}>Picture</span>
       </div>
     </div>
   );
@@ -308,6 +313,7 @@ export default function MultiStepSignup() {
             {currentStep === 1 && "Create your account to get started"}
             {currentStep === 2 && "Tell us about yourself"}
             {currentStep === 3 && "Customize your experience"}
+            {currentStep === 4 && "Add your profile picture"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -611,6 +617,103 @@ export default function MultiStepSignup() {
                     </Label>
                   </div>
                 </div>
+              </div>
+
+              <div className="flex justify-between items-center pt-4">
+                <Button
+                  variant="outline"
+                  onClick={handlePreviousStep}
+                  className="gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </Button>
+                <Button
+                  onClick={handleNextStep}
+                  disabled={isLoading}
+                  className="gap-2 bg-black text-white hover:bg-gray-800"
+                >
+                  Next
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Profile Picture */}
+          {currentStep === 4 && (
+            <div className="space-y-6">
+              <div className="flex flex-col items-center space-y-4">
+                {/* Profile Picture Preview */}
+                <div className="w-40 h-40 rounded-full border-4 border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center">
+                  {profilePicturePreview ? (
+                    <img
+                      src={profilePicturePreview}
+                      alt="Profile preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Upload className="w-16 h-16 text-gray-400" />
+                  )}
+                </div>
+
+                {/* Upload Button */}
+                <div className="flex flex-col items-center space-y-2">
+                  <Label
+                    htmlFor="profilePicture"
+                    className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
+                  >
+                    <Upload className="w-4 h-4" />
+                    {profilePicturePreview ? "Change Picture" : "Upload Picture"}
+                  </Label>
+                  <Input
+                    id="profilePicture"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        // Validate file size (max 5MB)
+                        if (file.size > 5 * 1024 * 1024) {
+                          toast.error("Image must be less than 5MB");
+                          return;
+                        }
+                        
+                        // Validate file type
+                        if (!file.type.startsWith("image/")) {
+                          toast.error("Please upload an image file");
+                          return;
+                        }
+                        
+                        // Create preview
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setProfilePicturePreview(reader.result as string);
+                        };
+                        reader.readAsDataURL(file);
+                        
+                        // Update signup data
+                        updateSignupData("profilePicture", file);
+                        toast.success("Picture uploaded successfully!");
+                      }
+                    }}
+                  />
+                  <p className="text-sm text-gray-500 text-center">
+                    JPG, PNG or GIF (max 5MB)
+                  </p>
+                </div>
+
+                {/* Skip Option */}
+                {!profilePicturePreview && (
+                  <Button
+                    variant="ghost"
+                    onClick={handleCompleteSignup}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    Skip for now
+                  </Button>
+                )}
               </div>
 
               <div className="flex justify-between items-center pt-4">
