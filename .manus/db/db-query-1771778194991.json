@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE IF NOT EXISTS `user_cookie_preferences` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int NOT NULL,\n  `analyticsCookies` int NOT NULL DEFAULT 0,\n  `marketingCookies` int NOT NULL DEFAULT 0,\n  `consentGivenAt` timestamp NOT NULL DEFAULT (now()),\n  `lastUpdatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n  `userAgent` text,\n  `ipAddress` varchar(45),\n  CONSTRAINT `user_cookie_preferences_id` PRIMARY KEY(`id`),\n  CONSTRAINT `user_cookie_preferences_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE\n);\n\nCREATE INDEX IF NOT EXISTS `user_id_idx` ON `user_cookie_preferences` (`userId`);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute CREATE TABLE IF NOT EXISTS `user_cookie_preferences` (\n  `id` int AUTO_INCREMENT NOT NULL,\n  `userId` int NOT NULL,\n  `analyticsCookies` int NOT NULL DEFAULT 0,\n  `marketingCookies` int NOT NULL DEFAULT 0,\n  `consentGivenAt` timestamp NOT NULL DEFAULT (now()),\n  `lastUpdatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n  `userAgent` text,\n  `ipAddress` varchar(45),\n  CONSTRAINT `user_cookie_preferences_id` PRIMARY KEY(`id`),\n  CONSTRAINT `user_cookie_preferences_userId_users_id_fk` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE\n);\n\nCREATE INDEX IF NOT EXISTS `user_id_idx` ON `user_cookie_preferences` (`userId`);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 780
+}

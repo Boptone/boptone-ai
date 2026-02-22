@@ -128,6 +128,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/cookie-settings" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Cookie Settings
+                </Link>
+              </li>
+              <li>
                 <Link href="/california-notice" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   California Notice
                 </Link>

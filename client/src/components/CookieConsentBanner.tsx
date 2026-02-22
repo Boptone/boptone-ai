@@ -77,22 +77,93 @@ export function CookieConsentBanner() {
     if (prefs.analytics) {
       // Enable analytics (e.g., Google Analytics, Plausible)
       console.log("[Cookie Consent] Analytics enabled");
-      // TODO: Initialize analytics scripts
+      
+      // Initialize analytics scripts dynamically
+      if (typeof window !== 'undefined' && !document.querySelector('script[data-analytics="true"]')) {
+        // Example: Google Analytics
+        // const script = document.createElement('script');
+        // script.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+        // script.async = true;
+        // script.setAttribute('data-analytics', 'true');
+        // document.head.appendChild(script);
+        
+        // Example: Plausible Analytics
+        // const plausible = document.createElement('script');
+        // plausible.src = 'https://plausible.io/js/script.js';
+        // plausible.setAttribute('data-domain', 'boptone.com');
+        // plausible.setAttribute('data-analytics', 'true');
+        // plausible.defer = true;
+        // document.head.appendChild(plausible);
+      }
     } else {
       // Disable analytics
       console.log("[Cookie Consent] Analytics disabled");
-      // TODO: Remove analytics cookies
+      
+      // Remove analytics scripts
+      const analyticsScripts = document.querySelectorAll('script[data-analytics="true"]');
+      analyticsScripts.forEach(script => script.remove());
+      
+      // Remove analytics cookies
+      const analyticsCookies = ['_ga', '_gid', '_gat', '_gat_gtag'];
+      analyticsCookies.forEach(cookieName => {
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      });
     }
 
     // Block/unblock marketing cookies
     if (prefs.marketing) {
       // Enable marketing pixels (e.g., Facebook Pixel, Google Ads)
       console.log("[Cookie Consent] Marketing enabled");
-      // TODO: Initialize marketing scripts
+      
+      // Initialize marketing scripts dynamically
+      if (typeof window !== 'undefined' && !document.querySelector('script[data-marketing="true"]')) {
+        // Example: Facebook Pixel
+        // const fbPixel = document.createElement('script');
+        // fbPixel.innerHTML = `
+        //   !function(f,b,e,v,n,t,s)
+        //   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        //   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        //   if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        //   n.queue=[];t=b.createElement(e);t.async=!0;
+        //   t.src=v;s=b.getElementsByTagName(e)[0];
+        //   s.parentNode.insertBefore(t,s)}(window, document,'script',
+        //   'https://connect.facebook.net/en_US/fbevents.js');
+        //   fbq('init', 'YOUR_PIXEL_ID');
+        //   fbq('track', 'PageView');
+        // `;
+        // fbPixel.setAttribute('data-marketing', 'true');
+        // document.head.appendChild(fbPixel);
+      }
     } else {
       // Disable marketing
       console.log("[Cookie Consent] Marketing disabled");
-      // TODO: Remove marketing cookies
+      
+      // Remove marketing scripts
+      const marketingScripts = document.querySelectorAll('script[data-marketing="true"]');
+      marketingScripts.forEach(script => script.remove());
+      
+      // Remove marketing cookies
+      const marketingCookies = ['_fbp', '_fbc', 'fr'];
+      marketingCookies.forEach(cookieName => {
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      });
+    }
+    
+    // Respect Do Not Track (DNT) and Global Privacy Control (GPC) signals
+    if (typeof navigator !== 'undefined') {
+      const dnt = navigator.doNotTrack || (window as any).doNotTrack || (navigator as any).msDoNotTrack;
+      const gpc = (navigator as any).globalPrivacyControl;
+      
+      if (dnt === '1' || gpc === true) {
+        console.log('[Cookie Consent] DNT/GPC signal detected - blocking non-essential cookies');
+        // Override preferences to respect user's browser-level privacy settings
+        const restrictedPrefs = {
+          necessary: true,
+          analytics: false,
+          marketing: false,
+        };
+        localStorage.setItem('cookie-consent', JSON.stringify(restrictedPrefs));
+      }
     }
   };
 

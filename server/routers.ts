@@ -728,6 +728,49 @@ export const appRouter = router({
   // Product Review System (BopShop)
   reviews: reviewRouter,
   reviewAnalytics: reviewAnalyticsRouter,
+
+  // Cookie Preferences Management
+  cookiePreferences: router({
+    // Get user's cookie preferences
+    get: protectedProcedure.query(async ({ ctx }) => {
+      const prefs = await db.getUserCookiePreferences(ctx.user.id);
+      
+      // Return default values if no preferences saved
+      if (!prefs) {
+        return {
+          analyticsCookies: false,
+          marketingCookies: false,
+        };
+      }
+      
+      return {
+        analyticsCookies: prefs.analyticsCookies === 1,
+        marketingCookies: prefs.marketingCookies === 1,
+      };
+    }),
+
+    // Save user's cookie preferences
+    save: protectedProcedure
+      .input(z.object({
+        analyticsCookies: z.boolean(),
+        marketingCookies: z.boolean(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Get user agent and IP from request
+        const userAgent = ctx.req.headers['user-agent'];
+        const ipAddress = ctx.req.ip || ctx.req.connection.remoteAddress;
+        
+        const success = await db.saveUserCookiePreferences(
+          ctx.user.id,
+          input.analyticsCookies,
+          input.marketingCookies,
+          userAgent,
+          ipAddress
+        );
+        
+        return { success };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

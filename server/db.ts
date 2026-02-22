@@ -1099,3 +1099,89 @@ export async function deleteToneyConversation(conversationId: number, userId: nu
     return false;
   }
 }
+
+
+// ============================================================================
+// COOKIE PREFERENCES
+// ============================================================================
+
+/**
+ * Get user's cookie preferences
+ * Returns null if user has never set preferences
+ */
+export async function getUserCookiePreferences(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get cookie preferences: database not available");
+    return null;
+  }
+
+  try {
+    const { userCookiePreferences } = await import("../drizzle/schema");
+    const result = await db
+      .select()
+      .from(userCookiePreferences)
+      .where(eq(userCookiePreferences.userId, userId))
+      .limit(1);
+
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to get cookie preferences:", error);
+    return null;
+  }
+}
+
+/**
+ * Save or update user's cookie preferences
+ * Creates new record if doesn't exist, updates if exists
+ */
+export async function saveUserCookiePreferences(
+  userId: number,
+  analyticsCookies: boolean,
+  marketingCookies: boolean,
+  userAgent?: string,
+  ipAddress?: string
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot save cookie preferences: database not available");
+    return false;
+  }
+
+  try {
+    const { userCookiePreferences } = await import("../drizzle/schema");
+    
+    // Check if preferences already exist
+    const existing = await getUserCookiePreferences(userId);
+
+    if (existing) {
+      // Update existing preferences
+      await db
+        .update(userCookiePreferences)
+        .set({
+          analyticsCookies: analyticsCookies ? 1 : 0,
+          marketingCookies: marketingCookies ? 1 : 0,
+          lastUpdatedAt: new Date(),
+          userAgent,
+          ipAddress,
+        })
+        .where(eq(userCookiePreferences.userId, userId));
+    } else {
+      // Insert new preferences
+      await db.insert(userCookiePreferences).values({
+        userId,
+        analyticsCookies: analyticsCookies ? 1 : 0,
+        marketingCookies: marketingCookies ? 1 : 0,
+        consentGivenAt: new Date(),
+        lastUpdatedAt: new Date(),
+        userAgent,
+        ipAddress,
+      });
+    }
+
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to save cookie preferences:", error);
+    return false;
+  }
+}

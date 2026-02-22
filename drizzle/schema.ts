@@ -3184,3 +3184,34 @@ export const artistStrikeHistory = mysqlTable("artist_strike_history", {
 
 export type ArtistStrikeHistory = typeof artistStrikeHistory.$inferSelect;
 export type InsertArtistStrikeHistory = typeof artistStrikeHistory.$inferInsert;
+
+// ============================================================================
+// COOKIE PREFERENCES
+// ============================================================================
+
+/**
+ * User Cookie Preferences
+ * Stores cookie consent preferences for logged-in users
+ * Syncs across devices for consistent privacy settings
+ */
+export const userCookiePreferences = mysqlTable("user_cookie_preferences", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  
+  // Cookie categories (essential cookies are always enabled)
+  analyticsCookies: int("analyticsCookies").default(0).notNull(), // 0 = disabled, 1 = enabled
+  marketingCookies: int("marketingCookies").default(0).notNull(), // 0 = disabled, 1 = enabled
+  
+  // Metadata
+  consentGivenAt: timestamp("consentGivenAt").defaultNow().notNull(),
+  lastUpdatedAt: timestamp("lastUpdatedAt").defaultNow().onUpdateNow().notNull(),
+  
+  // Device/browser info (for audit purposes)
+  userAgent: text("userAgent"),
+  ipAddress: varchar("ipAddress", { length: 45 }), // IPv4 or IPv6
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+}));
+
+export type UserCookiePreferences = typeof userCookiePreferences.$inferSelect;
+export type InsertUserCookiePreferences = typeof userCookiePreferences.$inferInsert;

@@ -4,25 +4,44 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { CheckCircle2, Cookie } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function CookieSettings() {
+  const { isAuthenticated } = useAuth();
   const [analyticsCookies, setAnalyticsCookies] = useState(true);
   const [marketingCookies, setMarketingCookies] = useState(true);
   const [hasChanges, setHasChanges] = useState(false);
 
+  // Fetch preferences from database if logged in
+  const { data: dbPreferences, isLoading } = trpc.cookiePreferences.get.useQuery(
+    undefined,
+    { enabled: isAuthenticated }
+  );
+
+  // Save preferences mutation
+  const saveMutation = trpc.cookiePreferences.save.useMutation();
+
   // Load saved preferences on mount
   useEffect(() => {
-    const savedPreferences = localStorage.getItem("boptone_cookie_preferences");
-    if (savedPreferences) {
-      try {
-        const prefs = JSON.parse(savedPreferences);
-        setAnalyticsCookies(prefs.analytics ?? true);
-        setMarketingCookies(prefs.marketing ?? true);
-      } catch (error) {
-        console.error("Failed to parse cookie preferences:", error);
+    if (isAuthenticated && dbPreferences) {
+      // Use database preferences for logged-in users
+      setAnalyticsCookies(dbPreferences.analyticsCookies);
+      setMarketingCookies(dbPreferences.marketingCookies);
+    } else {
+      // Use localStorage for guests
+      const savedPreferences = localStorage.getItem("boptone_cookie_preferences");
+      if (savedPreferences) {
+        try {
+          const prefs = JSON.parse(savedPreferences);
+          setAnalyticsCookies(prefs.analytics ?? true);
+          setMarketingCookies(prefs.marketing ?? true);
+        } catch (error) {
+          console.error("Failed to parse cookie preferences:", error);
+        }
       }
     }
-  }, []);
+  }, [isAuthenticated, dbPreferences]);
 
   const handleAnalyticsToggle = (checked: boolean) => {
     setAnalyticsCookies(checked);
@@ -34,7 +53,7 @@ export default function CookieSettings() {
     setHasChanges(true);
   };
 
-  const handleSavePreferences = () => {
+  const handleSavePreferences = async () => {
     const preferences = {
       essential: true, // Always true
       analytics: analyticsCookies,
@@ -42,15 +61,32 @@ export default function CookieSettings() {
       timestamp: new Date().toISOString(),
     };
 
+    // Always save to localStorage
     localStorage.setItem("boptone_cookie_preferences", JSON.stringify(preferences));
     
-    // TODO: If user is logged in, also save to database via tRPC
-    // trpc.user.updateCookiePreferences.mutate(preferences);
-
-    toast.success("Cookie preferences saved successfully", {
-      description: "Your preferences have been updated and will take effect immediately.",
-      icon: <CheckCircle2 className="h-5 w-5 text-green-600" />,
-    });
+    // If user is logged in, also save to database via tRPC
+    if (isAuthenticated) {
+      try {
+        await saveMutation.mutateAsync({
+          analyticsCookies,
+          marketingCookies,
+        });
+        
+        toast.success("Cookie preferences saved successfully", {
+          description: "Your preferences have been synced across all your devices.",
+          icon: <CheckCircle2 className="h-5 w-5 text-green-600" />,
+        });
+      } catch (error) {
+        toast.error("Failed to save preferences", {
+          description: "Your local preferences were saved, but we couldn't sync them to your account.",
+        });
+      }
+    } else {
+      toast.success("Cookie preferences saved successfully", {
+        description: "Your preferences have been updated and will take effect immediately.",
+        icon: <CheckCircle2 className="h-5 w-5 text-green-600" />,
+      });
+    }
 
     setHasChanges(false);
 
