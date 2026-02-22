@@ -118,6 +118,11 @@ export default function Footer() {
             <h3 className="text-foreground font-semibold text-sm uppercase tracking-wide mb-6">Legal</h3>
             <ul className="space-y-4">
               <li>
+                <Link href="/legal" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Legal
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Terms of Service
                 </Link>
