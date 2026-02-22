@@ -109,22 +109,18 @@ export default function CookieSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+    {/* Light gray background with smooth scroll - matches TOS/Privacy pages */}
+    <div className="min-h-screen bg-gray-50 scroll-smooth">
+      {/* White content container with max-width and padding - matches TOS/Privacy pages */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Cookie className="h-8 w-8 text-[#81e6fe]" />
-              <h1 className="text-4xl sm:text-5xl font-bold text-gray-900">Cookie Settings</h1>
-            </div>
-            <p className="text-lg text-gray-600">
-              Manage your cookie preferences and control how we use cookies on Boptone. Your choices will be saved and applied across all your devices when you're logged in.
-            </p>
-          </div>
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
+          {/* Centered heading - matches TOS/Privacy pages */}
+          <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Cookie Settings</h1>
+          <p className="text-center text-base italic text-gray-600 mb-8">Manage your cookie preferences and control how we use cookies on Boptone.</p>
 
           {/* Quick Actions */}
-          <div className="flex flex-wrap gap-4 mb-8">
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
             <Button onClick={handleAcceptAll} variant="default">
               Accept All Cookies
             </Button>
@@ -134,24 +130,15 @@ export default function CookieSettings() {
           </div>
 
           {/* Cookie Categories */}
-          <div className="space-y-6">
+          <div className="space-y-8 mt-12">
             {/* Essential Cookies */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-2xl">Essential Cookies</CardTitle>
-                    <CardDescription className="mt-2">
-                      Required for the website to function properly
-                    </CardDescription>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-600">Always Active</span>
-                    <Switch checked={true} disabled className="opacity-50" />
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
+            <section className="mb-10">
+              <h2 className="text-3xl font-bold mb-5 text-gray-900">Essential Cookies</h2>
+              <div className="flex items-center justify-end mb-4">
+                <span className="text-sm font-medium text-gray-600 mr-2">Always Active</span>
+                <Switch checked={true} disabled className="opacity-50" />
+              </div>
+
                 <p className="text-gray-700 leading-relaxed">
                   Essential cookies are strictly necessary for the operation of our Service and cannot be disabled. These cookies enable core functionality such as:
                 </p>
@@ -165,26 +152,18 @@ export default function CookieSettings() {
                 <p className="text-gray-700 leading-relaxed mt-3">
                   Without essential cookies, our Service would not function properly.
                 </p>
-              </CardContent>
-            </Card>
+            </section>
 
             {/* Analytics Cookies */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-2xl">Analytics Cookies</CardTitle>
-                    <CardDescription className="mt-2">
-                      Help us understand how you use our website
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={analyticsCookies}
-                    onCheckedChange={handleAnalyticsToggle}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent>
+            <section className="mb-10">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-3xl font-bold text-gray-900">Analytics Cookies</h2>
+                <Switch
+                  checked={analyticsCookies}
+                  onCheckedChange={handleAnalyticsToggle}
+                />
+              </div>
+
                 <p className="text-gray-700 leading-relaxed">
                   Analytics cookies help us understand how you use our Service so we can improve performance, identify bugs, and enhance user experience. These cookies collect information about:
                 </p>
@@ -205,26 +184,17 @@ export default function CookieSettings() {
                     </p>
                   </div>
                 )}
-              </CardContent>
-            </Card>
+            </section>
 
             {/* Marketing Cookies */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-2xl">Marketing Cookies</CardTitle>
-                    <CardDescription className="mt-2">
-                      Used for personalized advertising and retargeting
-                    </CardDescription>
-                  </div>
-                  <Switch
-                    checked={marketingCookies}
-                    onCheckedChange={handleMarketingToggle}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent>
+            <section className="mb-10">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-3xl font-bold text-gray-900">Marketing Cookies</h2>
+                <Switch
+                  checked={marketingCookies}
+                  onCheckedChange={handleMarketingToggle}
+                />
+              </div>
                 <p className="text-gray-700 leading-relaxed">
                   Marketing cookies are used for personalized advertising, retargeting campaigns, social media integration, and measuring advertising effectiveness. These cookies:
                 </p>
@@ -245,8 +215,7 @@ export default function CookieSettings() {
                     </p>
                   </div>
                 )}
-              </CardContent>
-            </Card>
+            </section>
           </div>
 
           {/* Save Button */}
@@ -291,5 +260,6 @@ export default function CookieSettings() {
         </div>
       </div>
     </div>
+    </>
   );
 }

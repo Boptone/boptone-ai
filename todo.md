@@ -571,3 +571,12 @@
   - [x] Test preference persistence across devices
   - [x] Test script blocking functionality
 - [x] Save checkpoint and push to GitHub
+
+
+## Cookie Pages Styling Consistency - Feb 22, 2026
+
+- [x] Analyze TOS and Privacy pages styling (background, fonts, spacing, layout)
+- [x] Update CookieSettings.tsx to match TOS/Privacy page design
+- [x] Update CookiePolicy.tsx to match TOS/Privacy page design
+- [ ] Test visual consistency across all legal pages
+- [ ] Save checkpoint

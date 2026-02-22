@@ -2,22 +2,19 @@ import { Cookie } from "lucide-react";
 
 export default function CookiePolicy() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+    {/* Light gray background with smooth scroll - matches TOS/Privacy pages */}
+    <div className="min-h-screen bg-gray-50 scroll-smooth">
+      {/* White content container with max-width and padding - matches TOS/Privacy pages */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Cookie className="h-8 w-8 text-[#81e6fe]" />
-              <h1 className="text-4xl sm:text-5xl font-bold text-gray-900">Cookie Policy</h1>
-            </div>
-            <p className="text-lg text-gray-600 mb-4">
-              Last Updated: February 22, 2026
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              This Cookie Policy provides a comprehensive list of all cookies used on the Boptone platform. We maintain this list to ensure full transparency about how we collect and use information through cookies and similar tracking technologies.
-            </p>
-          </div>
+        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
+          {/* Centered heading - matches TOS/Privacy pages */}
+          <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Cookie Policy</h1>
+          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 22, 2026</p>
+          
+          <p className="mb-5 text-gray-700 leading-relaxed">
+            This Cookie Policy provides a comprehensive list of all cookies used on the Boptone platform. We maintain this list to ensure full transparency about how we collect and use information through cookies and similar tracking technologies.
+          </p>
 
           {/* Quick Links */}
           <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
@@ -380,5 +377,6 @@ export default function CookiePolicy() {
         </div>
       </div>
     </div>
+    </>
   );
 }
