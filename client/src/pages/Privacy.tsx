@@ -15,7 +15,7 @@ export default function Privacy() {
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
           {/* Centered heading */}
           <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Privacy Policy</h1>
-          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 19, 2026</p>
+          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 22, 2026</p>
           
           {/* Table of Contents */}
           <nav className="mb-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
@@ -412,6 +412,26 @@ export default function Privacy() {
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   By using our Service, you acknowledge and consent to the transfer of your information to the United States and other countries for the purposes described in this Privacy Policy. If you do not consent to such transfers, you should not use our Service.
                 </p>
+
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">6.3 Legal Mechanisms for International Transfers</h3>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  When we transfer your personal data from the European Economic Area (EEA), United Kingdom (UK), or Switzerland to the United States or other countries that do not provide an adequate level of data protection as determined by the European Commission or UK Information Commissioner's Office (ICO), we rely on approved legal mechanisms to ensure your data receives adequate protection.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Standard Contractual Clauses (SCCs):</strong> We use Standard Contractual Clauses approved by the European Commission (for EEA transfers) and the UK ICO (for UK transfers) to govern international data transfers. These SCCs are legally binding contractual commitments between Boptone and our service providers that require data recipients to implement appropriate technical and organizational measures to protect your personal data in accordance with EU and UK data protection standards.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  The SCCs include obligations to implement security measures, respond to data subject rights requests, notify us of government data requests, and cooperate with data protection authorities. They also provide you with third-party beneficiary rights, meaning you can enforce the SCCs directly against our service providers if your rights are violated.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Supplementary Measures:</strong> In addition to SCCs, we implement supplementary technical and organizational measures to protect international data transfers, including end-to-end encryption for data in transit, pseudonymization and anonymization where appropriate, strict access controls limiting who can access your data, data minimization to transfer only necessary information, and contractual restrictions on government access to data.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Access Your SCCs:</strong> You may request a copy of the Standard Contractual Clauses we use for international transfers by contacting us at privacy@boptone.com. We will provide a copy with commercially sensitive information redacted.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Your Rights:</strong> If you are located in the EEA, UK, or Switzerland, you have the right to object to international transfers of your personal data. However, refusing international transfers may prevent you from using certain features of our Service that rely on US-based infrastructure or service providers. You also have the right to lodge a complaint with your local data protection supervisory authority if you believe your data has been transferred unlawfully.
+                </p>
               </section>
 
               <section className="mb-10">
@@ -471,8 +491,37 @@ export default function Privacy() {
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   Despite our security measures, no method of transmission over the Internet or electronic storage is one hundred percent (100%) secure. We cannot guarantee absolute security of your information. If you have reason to believe that your account credentials have been compromised or that your information has been accessed without authorization, you must immediately notify us at hello@boptone.com.
                 </p>
-                <p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
                   In the event of a data breach that affects your personal information, we will notify you and applicable regulatory authorities in accordance with applicable data breach notification laws, including GDPR requirements (within 72 hours of discovery) and California breach notification laws (without unreasonable delay).
+                </p>
+
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">8.6 Data Breach Notification and Response</h3>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Despite our comprehensive security measures, no system is completely immune to security incidents. In the unlikely event of a data breach that affects your personal information, we have established procedures to detect, respond to, and notify affected parties promptly.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Breach Detection and Assessment:</strong> We maintain continuous security monitoring systems that detect anomalous activity, unauthorized access attempts, and potential data breaches in real-time. When a potential breach is detected, our security team immediately investigates to determine the scope, nature, and impact of the incident. We assess whether personal data was accessed, acquired, disclosed, or compromised, and evaluate the risk to affected individuals.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Notification to Supervisory Authorities:</strong> If we determine that a data breach has occurred and it is likely to result in a risk to the rights and freedoms of individuals, we will notify the relevant data protection supervisory authorities within seventy-two (72) hours of becoming aware of the breach, as required by the General Data Protection Regulation (GDPR) and other applicable data protection laws. Our notification will include a description of the nature of the breach, categories and approximate number of affected individuals, categories and approximate number of affected personal data records, contact information for our Data Protection Officer, likely consequences of the breach, and measures taken or proposed to address the breach and mitigate harm.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Notification to Affected Users:</strong> If the data breach is likely to result in a high risk to your rights and freedoms, we will notify you without undue delay. Our notification will be sent to the email address associated with your account and will include a clear and plain language description of the breach, categories of personal data affected, likely consequences, measures we have taken to address the breach, recommendations for steps you can take to protect yourself (such as changing passwords or monitoring financial accounts), and contact information for questions or concerns.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Timing of User Notification:</strong> We will notify affected users as soon as reasonably possible after confirming the breach and assessing its impact, typically within seventy-two (72) hours of discovery. In cases where immediate notification would interfere with law enforcement investigations or compromise security measures to contain the breach, we may delay user notification with approval from relevant authorities.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Remediation and Support:</strong> Depending on the nature and severity of the breach, we may offer affected users remediation measures such as complimentary credit monitoring services, identity theft protection, fraud alerts, account security enhancements (such as mandatory password resets or two-factor authentication), dedicated support hotline for breach-related questions, or reimbursement for documented losses resulting from the breach.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Incident Response Plan:</strong> We maintain a comprehensive incident response plan that defines roles and responsibilities, escalation procedures, communication protocols, forensic investigation procedures, and post-incident review processes. We conduct regular security drills and tabletop exercises to test our breach response capabilities and ensure our team is prepared to respond effectively.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Transparency and Accountability:</strong> Following a significant data breach, we will publish a public incident report (with sensitive details redacted) describing what happened, what data was affected, what we did to respond, and what steps we are taking to prevent future incidents. We believe transparency builds trust and holds us accountable to our community.
+                </p>
+                <p>
+                  <strong>Your Rights Following a Breach:</strong> If your personal data is compromised in a breach, you have the right to lodge a complaint with your local data protection authority, request additional information about the breach and our response, request deletion of compromised data (subject to legal retention requirements), and seek compensation for damages resulting from the breach if we failed to comply with applicable data protection laws.
                 </p>
               </section>
 

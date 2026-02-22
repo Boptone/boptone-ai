@@ -511,3 +511,12 @@
 - [x] Add whitespace-nowrap to prevent label wrapping
 - [x] Test alignment on signup page
 - [x] Save checkpoint
+
+
+## Privacy Policy Tier 1 Enhancements (Enterprise-Grade Compliance) - Feb 22, 2026
+
+- [x] Add Section 6.3 - Standard Contractual Clauses (SCCs) disclosure for international transfers
+- [x] Add Section 8.6 - Data Breach Notification Timeline (72-hour GDPR requirement)
+- [ ] Update Table of Contents with new sections
+- [x] Update "Last Updated" date to February 22, 2026
+- [ ] Test all internal anchor links
