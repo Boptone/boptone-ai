@@ -277,7 +277,7 @@ export default function MultiStepSignup() {
                 <div
                   className={`flex items-center justify-center w-10 h-10 rounded-full border-2 border-black transition-all ${
                     step <= currentStep
-                      ? "text-white"
+                      ? "text-black"
                       : "bg-gray-100 text-gray-400"
                   }`}
                   style={step <= currentStep ? { backgroundColor: '#81e6fe' } : {}}
