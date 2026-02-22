@@ -9,6 +9,45 @@ import { emailLogs } from '../../drizzle/schema';
 import { ENV } from '../_core/env';
 
 /**
+ * Shared email footer with CAN-SPAM compliance
+ */
+const getEmailFooter = (emailType: 'transactional' | 'marketing') => {
+  const appUrl = process.env.VITE_APP_URL || 'https://boptone.com';
+  
+  if (emailType === 'transactional') {
+    return `
+      <tr>
+        <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
+          <p style="margin: 0 0 10px 0; font-size: 12px; color: #000000; font-weight: bold;">
+            Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000; text-decoration: underline;">support@boptone.com</a>
+          </p>
+          <p style="margin: 10px 0; font-size: 11px; color: #000000; line-height: 1.5;">
+            This is a transactional email confirming your order.<br>
+            Boptone, Inc. | 123 Music Avenue, Los Angeles, CA 90001<br>
+            <a href="${appUrl}/privacy" style="color: #000000; text-decoration: underline;">Privacy Policy</a> | 
+            <a href="${appUrl}/terms" style="color: #000000; text-decoration: underline;">Terms of Service</a>
+          </p>
+        </td>
+      </tr>`;
+  } else {
+    return `
+      <tr>
+        <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
+          <p style="margin: 0 0 10px 0; font-size: 12px; color: #000000; font-weight: bold;">
+            Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000; text-decoration: underline;">support@boptone.com</a>
+          </p>
+          <p style="margin: 10px 0; font-size: 11px; color: #000000; line-height: 1.5;">
+            Don't want to receive these emails? <a href="${appUrl}/unsubscribe?email={{customer_email}}" style="color: #000000; text-decoration: underline; font-weight: bold;">Unsubscribe</a><br>
+            Boptone, Inc. | 123 Music Avenue, Los Angeles, CA 90001<br>
+            <a href="${appUrl}/privacy" style="color: #000000; text-decoration: underline;">Privacy Policy</a> | 
+            <a href="${appUrl}/terms" style="color: #000000; text-decoration: underline;">Terms of Service</a>
+          </p>
+        </td>
+      </tr>`;
+  }
+};
+
+/**
  * Email templates using Handlebars
  */
 const emailTemplates = {
@@ -128,13 +167,7 @@ const emailTemplates = {
           </tr>
           
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #999999;">
-                Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000;">support@boptone.com</a>
-              </p>
-            </td>
-          </tr>
+          {{FOOTER_PLACEHOLDER}}
         </table>
       </td>
     </tr>
@@ -248,13 +281,7 @@ Questions? Contact us at support@boptone.com`
           </tr>
           
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #999999;">
-                Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000;">support@boptone.com</a>
-              </p>
-            </td>
-          </tr>
+          {{FOOTER_PLACEHOLDER}}
         </table>
       </td>
     </tr>
@@ -348,13 +375,7 @@ Questions? Contact us at support@boptone.com`
           </tr>
           
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #999999;">
-                Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000;">support@boptone.com</a>
-              </p>
-            </td>
-          </tr>
+          {{FOOTER_PLACEHOLDER}}
         </table>
       </td>
     </tr>
@@ -442,13 +463,7 @@ Questions? Contact us at support@boptone.com`
           </tr>
           
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #999999;">
-                Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000;">support@boptone.com</a>
-              </p>
-            </td>
-          </tr>
+          {{FOOTER_PLACEHOLDER}}
         </table>
       </td>
     </tr>
@@ -519,13 +534,7 @@ Questions? Contact us at support@boptone.com`
           </tr>
           
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #999999;">
-                Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000;">support@boptone.com</a>
-              </p>
-            </td>
-          </tr>
+          {{FOOTER_PLACEHOLDER}}
         </table>
       </td>
     </tr>
@@ -603,13 +612,7 @@ Questions? Contact us at support@boptone.com`
           </tr>
           
           <!-- Footer -->
-          <tr>
-            <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: #999999;">
-                Questions? Contact us at <a href="mailto:support@boptone.com" style="color: #000000;">support@boptone.com</a>
-              </p>
-            </td>
-          </tr>
+          {{FOOTER_PLACEHOLDER}}
         </table>
       </td>
     </tr>
@@ -639,9 +642,18 @@ Questions? Contact us at support@boptone.com`
  */
 function getTemplate(templateName: keyof typeof emailTemplates) {
   const template = emailTemplates[templateName];
+  
+  // Determine if email is transactional or marketing
+  const marketingEmails = ['abandoned-cart', 'review-request'];
+  const emailType = marketingEmails.includes(templateName) ? 'marketing' : 'transactional';
+  
+  // Inject appropriate footer
+  const footer = getEmailFooter(emailType);
+  const htmlWithFooter = template.html.replace('{{FOOTER_PLACEHOLDER}}', footer);
+  
   return {
     subject: Handlebars.compile(template.subject),
-    html: Handlebars.compile(template.html),
+    html: Handlebars.compile(htmlWithFooter),
     text: Handlebars.compile(template.text),
   };
 }

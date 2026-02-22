@@ -184,4 +184,126 @@ export const postPurchaseAutomationRouter = router({
 
       return jobs;
     }),
+
+  /**
+   * Get email template preview (for visual review)
+   */
+  getEmailPreview: publicProcedure
+    .input(z.object({
+      templateType: z.enum(['order-confirmation', 'abandoned-cart', 'shipping-in-transit', 'shipping-out-for-delivery', 'shipping-delivered', 'review-request']),
+    }))
+    .query(async ({ input }) => {
+      // Import email service to access templates
+      const Handlebars = (await import('handlebars')).default;
+      
+      // Sample data for each template type
+      const sampleData: Record<string, any> = {
+        'order-confirmation': {
+          order_number: 'BO-2026-001234',
+          customer_name: 'Jordan Rivers',
+          customer_email: 'artist@example.com',
+          items: [
+            {
+              name: 'Limited Edition Vinyl - Midnight Dreams',
+              artistName: 'Luna Eclipse',
+              imageUrl: 'https://images.unsplash.com/photo-1619983081563-430f63602796?w=400',
+              quantity: 1,
+              formatted_price: '$29.99',
+              formatted_total: '$29.99',
+            },
+            {
+              name: 'Tour T-Shirt - Black',
+              artistName: 'Luna Eclipse',
+              imageUrl: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400',
+              quantity: 2,
+              formatted_price: '$25.00',
+              formatted_total: '$50.00',
+            },
+          ],
+          subtotal: '$79.99',
+          shipping_amount: '$7.99',
+          tax_amount: '$7.20',
+          total: '$95.18',
+          shipping_address_name: 'Jordan Rivers',
+          shipping_address_line1: '123 Music Lane',
+          shipping_address_line2: 'Apt 4B',
+          shipping_city: 'Nashville',
+          shipping_state: 'TN',
+          shipping_postal_code: '37201',
+          shipping_country: 'United States',
+          tracking_url: 'https://boptone.com/orders/BO-2026-001234/track',
+        },
+        'abandoned-cart': {
+          customer_name: 'Jordan Rivers',
+          customer_email: 'artist@example.com',
+          items: [
+            {
+              name: 'Limited Edition Vinyl - Midnight Dreams',
+              artistName: 'Luna Eclipse',
+              imageUrl: 'https://images.unsplash.com/photo-1619983081563-430f63602796?w=400',
+              quantity: 1,
+              formatted_price: '$29.99',
+            },
+          ],
+          subtotal: '$29.99',
+          checkout_url: 'https://boptone.com/checkout/resume?session=abc123',
+        },
+        'shipping-in-transit': {
+          order_number: 'BO-2026-001234',
+          customer_name: 'Jordan Rivers',
+          customer_email: 'artist@example.com',
+          tracking_number: '1Z999AA10123456784',
+          tracking_url: 'https://www.ups.com/track?tracknum=1Z999AA10123456784',
+          carrier: 'UPS',
+          service_level: 'Ground',
+          estimated_delivery_date: 'Tuesday, February 25, 2026',
+          shipping_name: 'Jordan Rivers',
+          shipping_address_line1: '123 Music Lane',
+          shipping_address_line2: 'Apt 4B',
+          shipping_city: 'Nashville',
+          shipping_state: 'TN',
+          shipping_postal_code: '37201',
+        },
+        'shipping-out-for-delivery': {
+          order_number: 'BO-2026-001234',
+          customer_name: 'Jordan Rivers',
+          customer_email: 'artist@example.com',
+          tracking_number: '1Z999AA10123456784',
+          tracking_url: 'https://www.ups.com/track?tracknum=1Z999AA10123456784',
+        },
+        'shipping-delivered': {
+          order_number: 'BO-2026-001234',
+          customer_name: 'Jordan Rivers',
+          customer_email: 'artist@example.com',
+          tracking_number: '1Z999AA10123456784',
+        },
+        'review-request': {
+          order_number: 'BO-2026-001234',
+          customer_name: 'Jordan Rivers',
+          customer_email: 'artist@example.com',
+          items: [
+            {
+              name: 'Limited Edition Vinyl - Midnight Dreams',
+              artistName: 'Luna Eclipse',
+              imageUrl: 'https://images.unsplash.com/photo-1619983081563-430f63602796?w=400',
+              review_url: 'https://boptone.com/products/101/review',
+            },
+            {
+              name: 'Tour T-Shirt - Black',
+              artistName: 'Luna Eclipse',
+              imageUrl: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400',
+              review_url: 'https://boptone.com/products/102/review',
+            },
+          ],
+        },
+      };
+      
+      // For now, return a simple response indicating preview is available
+      // In production, we'd render the actual template here
+      return {
+        templateType: input.templateType,
+        sampleData: sampleData[input.templateType],
+        message: 'Email preview endpoint ready. Template rendering requires accessing emailService.',
+      };
+    }),
 });
