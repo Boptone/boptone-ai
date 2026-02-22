@@ -465,3 +465,22 @@
 ## Update Signup Page Title ✅ COMPLETE
 - [x] Change title from "Join Boptone - Autonomous Creator OS" to "Join Boptone and Own Your Tone."
 - [x] Save checkpoint
+
+
+## Add Step 4 Profile Picture Upload to Signup Flow ✅ COMPLETE
+- [x] Add Step 4 to MultiStepSignup.tsx for profile picture upload
+- [x] Include image preview functionality (circular preview with Upload icon)
+- [x] Add file upload validation (size max 5MB, image types only)
+- [x] Update progress indicators from 3 steps to 4 steps (1/4, 2/4, 3/4, 4/4)
+- [x] Update all step references and navigation logic (Step 3 → Next button)
+- [x] Add "Skip for now" option if no picture uploaded
+- [x] Test complete 4-step flow
+- [x] Save checkpoint
+
+## Fix Toney Chat Window Background ✅ COMPLETE
+- [x] Find Toney chat component files (ToneyChatbot.tsx, AIChatBox.tsx)
+- [x] Verified chat window already uses solid light gray (#f5f5f5) background
+- [x] Changed AIChatBox input area from bg-background/50 (transparent) to bg-white (solid)
+- [x] Ensure all Toney pop-ups have solid backgrounds
+- [x] Test chat window appearance
+- [x] Save checkpoint
