@@ -501,3 +501,13 @@
 - [x] Ensure proper alignment and spacing (mt-2 for labels)
 - [x] Test on signup page
 - [x] Save checkpoint
+
+
+## Fix Progress Indicator Alignment and Borders ✅ COMPLETE
+- [x] Center labels directly under each bubble using flex-col items-center
+- [x] Add thin black border (border-2 border-black) around ALL bubbles
+- [x] Keep #81e6fe background color for current/completed steps (step <= currentStep)
+- [x] Use React.Fragment to properly structure bubbles and connecting lines
+- [x] Add whitespace-nowrap to prevent label wrapping
+- [x] Test alignment on signup page
+- [x] Save checkpoint

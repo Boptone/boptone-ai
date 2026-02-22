@@ -268,33 +268,34 @@ export default function MultiStepSignup() {
     
     return (
       <div className="mb-8">
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between gap-2">
           {[1, 2, 3, 4].map((step, index) => (
-            <div key={step} className="flex flex-col items-center" style={{ flex: step < 4 ? '1 1 0%' : '0 0 auto' }}>
-              {/* Bubble and connecting line container */}
-              <div className="flex items-center w-full">
+            <React.Fragment key={step}>
+              <div className="flex flex-col items-center">
+                {/* Bubble */}
                 <div
-                  className={`flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all ${
+                  className={`flex items-center justify-center w-10 h-10 rounded-full border-2 border-black transition-all ${
                     step <= currentStep
-                      ? "border-[#81e6fe] text-white"
-                      : "bg-gray-100 border-gray-300 text-gray-400"
+                      ? "text-white"
+                      : "bg-gray-100 text-gray-400"
                   }`}
                   style={step <= currentStep ? { backgroundColor: '#81e6fe' } : {}}
                 >
                   {step < currentStep ? <Check className="w-5 h-5" /> : step}
                 </div>
-                {step < 4 && (
-                  <div
-                    className={`flex-1 h-0.5 mx-2 transition-all`}
-                    style={{ backgroundColor: step < currentStep ? '#81e6fe' : '#d1d5db' }}
-                  />
-                )}
+                {/* Label below bubble */}
+                <span className={`text-sm mt-2 whitespace-nowrap ${step === currentStep ? "font-semibold" : "text-gray-500"}`}>
+                  {stepLabels[index]}
+                </span>
               </div>
-              {/* Label below bubble */}
-              <span className={`text-sm mt-2 ${step === currentStep ? "font-semibold" : "text-gray-500"}`}>
-                {stepLabels[index]}
-              </span>
-            </div>
+              {/* Connecting line */}
+              {step < 4 && (
+                <div
+                  className={`flex-1 h-0.5 transition-all`}
+                  style={{ backgroundColor: step < currentStep ? '#81e6fe' : '#d1d5db', marginTop: '-20px' }}
+                />
+              )}
+            </React.Fragment>
           ))}
         </div>
       </div>
