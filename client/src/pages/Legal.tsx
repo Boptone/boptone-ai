@@ -208,7 +208,7 @@ export default function Legal() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    🎨 Artist Bill of Rights
+                    Artist Bill of Rights
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
                     Unique foundational framework that protects your creative sovereignty. You retain 100% ownership of your work, with enforceable rights that cannot be weakened.
@@ -217,7 +217,7 @@ export default function Legal() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    🤖 AI Training Prohibition
+                    AI Training Prohibition
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
                     Your creative works will never be used to train AI models without your separate, explicit, and revocable consent. Industry-leading protection.
@@ -226,7 +226,7 @@ export default function Legal() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    🔒 Enterprise-Grade Privacy
+                    Enterprise-Grade Privacy
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
                     GDPR, CCPA/CPRA, and UK GDPR compliant. Includes Standard Contractual Clauses, 72-hour breach notification, and multi-stakeholder privacy protections.
@@ -235,7 +235,7 @@ export default function Legal() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    📊 Algorithm Transparency
+                    Algorithm Transparency
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
                     Unprecedented commitment to transparency about how our algorithms affect your visibility, recommendations, and revenue. Human review rights for automated decisions.
@@ -244,7 +244,7 @@ export default function Legal() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    💾 Bankruptcy Protection
+                    Bankruptcy Protection
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
                     If Boptone enters bankruptcy, your data will be deleted—not sold. Unique protection that ensures your information never becomes an asset in liquidation.
@@ -253,7 +253,7 @@ export default function Legal() {
 
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                    ⏰ 180-Day Amendment Notice
+                    180-Day Amendment Notice
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
                     Industry-leading 180-day advance notice for any changes to core protections, with Artist Policy Council approval and opt-out rights.
