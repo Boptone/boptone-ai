@@ -460,3 +460,8 @@
 - [x] Add 8-second toast duration for readability
 - [x] Test greeting flow
 - [x] Save checkpoint
+
+
+## Update Signup Page Title ✅ COMPLETE
+- [x] Change title from "Join Boptone - Autonomous Creator OS" to "Join Boptone and Own Your Tone."
+- [x] Save checkpoint
