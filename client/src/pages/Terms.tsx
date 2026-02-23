@@ -723,7 +723,50 @@ export default function Terms() {
                   The Service and its original content, features, functionality, software, code, design, graphics, user interface, and all intellectual property therein are and will remain the exclusive property of Acid Bird, Inc. and its licensors. The Service is protected by copyright, trademark, patent, trade secret, and other intellectual property laws of the United States and foreign countries.
                 </p>
                 <p className="mb-5 text-gray-700 leading-relaxed">
-                  Our trademarks, service marks, logos, and trade dress (including "Boptone" and "Own Your Tone") may not be used in connection with any product or service without our prior written consent. All other trademarks, service marks, and logos used on the Service are the property of their respective owners.
+                  <strong>Trademarks and Service Marks:</strong> Acid Bird, Inc. owns and operates the following registered trademarks, pending trademarks, and service marks (collectively, "Boptone Marks"):
+                </p>
+                <ul className="list-disc pl-7 space-y-2 mb-5 text-gray-700">
+                  <li><strong>Boptone®</strong> — Registered trademark of Acid Bird, Inc.</li>
+                  <li><strong>BopAudio℠</strong> — Service mark of Acid Bird, Inc.</li>
+                  <li><strong>BOPixel℠</strong> — Service mark of Acid Bird, Inc.</li>
+                  <li><strong>BOPT</strong> — Trademark pending with the United States Patent and Trademark Office (USPTO)</li>
+                  <li><strong>BOPT-ONE</strong> — Trademark pending with the USPTO</li>
+                  <li><strong>BOPT-ONE.COM</strong> — Trademark pending with the USPTO</li>
+                  <li><strong>BOPT-ONE.IO</strong> — Trademark pending with the USPTO</li>
+                  <li><strong>"Own Your Tone"</strong> — Slogan and trade dress of Acid Bird, Inc.</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  The Boptone Marks, along with our logos, product names, feature names, and trade dress, may not be used in connection with any product, service, or activity without our prior written consent. Unauthorized use of the Boptone Marks may constitute trademark infringement, unfair competition, or dilution under United States and international trademark laws and may subject you to civil and criminal penalties.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Prohibited Uses of Boptone Marks:</strong> You may not use the Boptone Marks in any manner that implies sponsorship, endorsement, or affiliation with Boptone without our express written permission. Specifically, you may not:
+                </p>
+                <ul className="list-disc pl-7 space-y-2 mb-5 text-gray-700">
+                  <li>Use the Boptone Marks in your business name, product name, domain name, social media handle, or any other identifier</li>
+                  <li>Register domain names, social media accounts, or business entities containing the Boptone Marks or confusingly similar variations</li>
+                  <li>Use the Boptone Marks in advertising, marketing materials, or promotional content without authorization</li>
+                  <li>Create merchandise (t-shirts, stickers, posters, etc.) featuring the Boptone Marks without a license</li>
+                  <li>Modify, alter, or create derivative works of the Boptone Marks or logos</li>
+                  <li>Use the Boptone Marks in a manner that disparages, tarnishes, or dilutes the Boptone brand</li>
+                  <li>Use the Boptone Marks in connection with illegal, offensive, or objectionable content or activities</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Permitted Nominative Fair Use:</strong> You may use the Boptone Marks for nominative fair use purposes, such as truthfully referring to Boptone or our services in news articles, blog posts, reviews, or comparative advertising, provided that such use:
+                </p>
+                <ul className="list-disc pl-7 space-y-2 mb-5 text-gray-700">
+                  <li>Uses only as much of the mark as is necessary to identify Boptone or our services</li>
+                  <li>Does not imply sponsorship, endorsement, or affiliation with Boptone</li>
+                  <li>Does not create confusion about the source of your products or services</li>
+                  <li>Includes a disclaimer clarifying that you are not affiliated with Boptone (e.g., "Boptone is a registered trademark of Acid Bird, Inc. This [article/review/product] is not affiliated with or endorsed by Boptone.")</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Trademark Licensing:</strong> If you wish to use the Boptone Marks for commercial purposes, you must obtain a written trademark license from Acid Bird, Inc. To inquire about licensing opportunities, contact us at hello@boptone.com with the subject line "Trademark License Inquiry." Licensing decisions are made at our sole discretion, and we reserve the right to deny any license request.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Reporting Trademark Infringement:</strong> If you become aware of any unauthorized use of the Boptone Marks, please report it to us immediately at hello@boptone.com with the subject line "Trademark Infringement Report." Include details about the infringing use, including URLs, screenshots, product listings, or other evidence. We take trademark protection seriously and will investigate all reports.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Other Intellectual Property:</strong> All other trademarks, service marks, logos, and trade names appearing on the Service are the property of their respective owners. Nothing in these Terms grants you any right or license to use any third-party trademarks without the express permission of the trademark owner.
                 </p>
 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">9.2 Your Intellectual Property</h3>

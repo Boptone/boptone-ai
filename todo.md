@@ -1254,3 +1254,25 @@
 6. Optimize images (WebP, lazy loading, compression)
 7. Implement code splitting for routes
 8. Add comprehensive error boundaries
+
+
+## Legal Document Updates - BOPixel & Trademarks ✅ COMPLETE
+
+### Update TOS and Privacy Policy for BOPixel tracking and trademark information
+- [x] Review current Privacy Policy to identify sections needing BOPixel disclosures
+- [x] Review current Terms of Service to identify sections needing updates
+- [x] Add comprehensive BOPixel℠ tracking disclosure to Privacy Policy (Section 2.2.1)
+- [x] Detail what data BOPixel collects (page views, events, device info, session data, etc.)
+- [x] Explain how BOPixel data is used (analytics, artist insights, fraud detection, etc.)
+- [x] Add user rights regarding BOPixel data (opt-out via cookies, DNT, GPC)
+- [x] Add privacy safeguards (IP anonymization, no cross-site tracking, 24-month deletion)
+- [x] Add GDPR and CCPA/CPRA compliance details for BOPixel
+- [x] Update trademark section in TOS with Boptone® (registered trademark)
+- [x] Add BopAudio℠ (service mark) to trademark section
+- [x] Add BOPixel℠ (service mark) to trademark section
+- [x] Add pending trademarks: BOPT, BOPT-ONE, BOPT-ONE.COM, BOPT-ONE.IO
+- [x] Add prohibited uses of Boptone Marks section
+- [x] Add permitted nominative fair use guidelines
+- [x] Add trademark licensing and infringement reporting procedures
+- [x] Ensure consistent trademark usage throughout both documents
+- [x] Save checkpoint with updated legal documents

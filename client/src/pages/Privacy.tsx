@@ -139,6 +139,71 @@ export default function Privacy() {
                   <strong>Cookies and Similar Technologies:</strong> We use cookies (small text files stored on your device), web beacons (transparent graphic images), local storage, session storage, and similar tracking technologies to recognize you, remember your preferences, authenticate your sessions, analyze usage patterns, and deliver targeted content. For detailed information about our use of cookies, please see Section 11 below.
                 </p>
 
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">2.2.1 BOPixel℠ Analytics Technology</h3>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  BOPixel℠ is Boptone's proprietary analytics and tracking technology designed to provide artists with detailed insights into how fans discover, engage with, and support their work. BOPixel collects anonymized behavioral data across the Boptone platform to help artists understand their audience, optimize their content strategy, and maximize revenue opportunities.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>What BOPixel Collects:</strong> BOPixel automatically collects the following information when you interact with Boptone:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>Page Views and Navigation:</strong> Which pages you visit, how you navigate through the platform, time spent on each page, scroll depth, and referral sources (where you came from before visiting Boptone)</li>
+                  <li><strong>Content Engagement:</strong> Which songs you play, playlists you create, artists you follow, merchandise you view, products you add to cart, and content you share or save</li>
+                  <li><strong>Event Tracking:</strong> Specific actions you take such as clicking play buttons, adding items to cart, completing purchases, sending Kick-in tips, downloading content, or submitting forms</li>
+                  <li><strong>Session Data:</strong> Unique session identifiers, session duration, timestamp of each interaction, and sequence of actions within a session</li>
+                  <li><strong>Device and Technical Information:</strong> Browser type and version, operating system, screen resolution, device type (desktop, mobile, tablet), IP address (anonymized), and approximate geographic location (city/region level, not precise GPS)</li>
+                  <li><strong>Performance Metrics:</strong> Page load times, error messages, feature usage statistics, and technical diagnostic data to improve platform performance</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>How BOPixel Works:</strong> BOPixel uses a combination of first-party cookies, local storage, and server-side event tracking to collect data. When you visit Boptone, a small JavaScript snippet loads and begins tracking your interactions. Each event (page view, button click, song play, etc.) is logged with a timestamp and session identifier. This data is transmitted to Boptone's analytics servers where it is processed, anonymized, and aggregated to generate insights for artists.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>How We Use BOPixel Data:</strong> The data collected by BOPixel is used exclusively for the following purposes:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>Artist Analytics Dashboards:</strong> Providing artists with real-time insights into listener demographics, geographic distribution, listening patterns, engagement trends, revenue sources, and content performance</li>
+                  <li><strong>Platform Optimization:</strong> Identifying technical issues, improving page load times, optimizing user experience, and enhancing feature usability</li>
+                  <li><strong>Personalized Recommendations:</strong> Suggesting relevant music, artists, and merchandise based on your listening history and engagement patterns (you can opt out of personalized recommendations in your account settings)</li>
+                  <li><strong>Revenue Attribution:</strong> Tracking which marketing channels, referral sources, or content discovery methods lead to purchases, streams, or tips so artists can optimize their promotional strategies</li>
+                  <li><strong>Fraud Detection and Security:</strong> Identifying suspicious activity patterns, preventing bot traffic, detecting payment fraud, and protecting against account takeovers</li>
+                  <li><strong>Aggregated Industry Insights:</strong> Creating anonymized, aggregated reports about music industry trends, genre popularity, regional listening patterns, and platform-wide statistics (no individual user data is included in these reports)</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Data Sharing with Artists:</strong> Artists can view aggregated analytics about their fans and listeners through their Boptone dashboard. This includes demographic breakdowns (age range, gender, location), listening statistics (total plays, unique listeners, average listen duration), engagement metrics (followers gained, playlist adds, shares), and revenue attribution (which songs or products generate the most income). Artists do NOT have access to personally identifiable information about individual fans unless you explicitly provide it (e.g., by sending a Kick-in tip with your name or purchasing merchandise).
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>BOPixel and Privacy:</strong> BOPixel is designed with privacy-first principles. We implement the following safeguards:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>IP Address Anonymization:</strong> IP addresses are anonymized before storage by removing the last octet (e.g., 192.168.1.XXX becomes 192.168.1.0), preventing identification of individual users</li>
+                  <li><strong>No Cross-Site Tracking:</strong> BOPixel only tracks activity on Boptone-owned domains and does not follow you across other websites</li>
+                  <li><strong>Respect for Do Not Track:</strong> When your browser sends a Do Not Track (DNT) signal, BOPixel is automatically disabled except for essential analytics required for security and fraud prevention (see Section 11.5)</li>
+                  <li><strong>Respect for Global Privacy Control:</strong> When your browser sends a Global Privacy Control (GPC) signal, BOPixel analytics are disabled in accordance with your opt-out preference (see Section 12)</li>
+                  <li><strong>Data Minimization:</strong> We collect only the data necessary to provide artist insights and improve the Service. We do not collect sensitive personal information (health data, financial details, biometric data) through BOPixel</li>
+                  <li><strong>Automatic Data Deletion:</strong> BOPixel event data is automatically deleted after 24 months, except for aggregated statistics which are retained indefinitely in anonymized form</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Opting Out of BOPixel:</strong> You have several options to control BOPixel tracking:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>Cookie Settings:</strong> Adjust your cookie preferences through the cookie banner or in your Profile Settings to disable analytics cookies, which will stop BOPixel from tracking your activity</li>
+                  <li><strong>Do Not Track:</strong> Enable Do Not Track in your browser settings to automatically disable BOPixel analytics (see Section 11.5 for instructions)</li>
+                  <li><strong>Global Privacy Control:</strong> Use a GPC-enabled browser or browser extension to opt out of data collection across all websites, including Boptone (see Section 12)</li>
+                  <li><strong>Account Settings:</strong> Logged-in users can disable personalized recommendations in their Profile Settings, which limits how BOPixel data is used (tracking continues for security and artist analytics, but your data is not used for content recommendations)</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Third-Party Access:</strong> BOPixel data is never sold to third parties. We do not share BOPixel data with advertisers, data brokers, or marketing companies. The only third parties with access to BOPixel data are our trusted service providers who help us operate the analytics infrastructure (cloud hosting providers, database services) and are bound by strict confidentiality agreements and data protection requirements.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Legal Basis for BOPixel Processing:</strong> For users in the European Economic Area (EEA), United Kingdom, and Switzerland, we process BOPixel data based on your consent (for analytics and personalized recommendations) and our legitimate interests (for fraud detection, security, and platform optimization). You can withdraw consent at any time by adjusting your cookie settings or enabling Do Not Track.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>BOPixel and CCPA/CPRA:</strong> For California residents, BOPixel data collection may constitute "sharing" of personal information for analytics purposes under the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA). You have the right to opt out of this sharing by adjusting your cookie preferences, enabling Global Privacy Control, or contacting us at hello@boptone.com. We do not "sell" BOPixel data as defined by the CCPA.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Questions About BOPixel:</strong> If you have questions about how BOPixel works, what data is collected, or how to opt out, please contact us at hello@boptone.com with the subject line "BOPixel Privacy Inquiry." We will respond within 30 days.
+                </p>
+
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">2.3 Information from Third-Party Sources</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   We receive information about you from third-party sources, which we combine with information we collect directly from you. These third-party sources include:
