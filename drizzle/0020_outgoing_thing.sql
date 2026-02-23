@@ -1,0 +1,1 @@
+ALTER TABLE `orders` ADD `customerName` varchar(255) NOT NULL;

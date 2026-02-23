@@ -378,6 +378,7 @@ export const orders = mysqlTable("orders", {
   }>(),
   
   // Customer info
+  customerName: varchar("customerName", { length: 255 }).notNull(),
   customerEmail: varchar("customerEmail", { length: 320 }).notNull(),
   customerPhone: varchar("customerPhone", { length: 50 }),
   

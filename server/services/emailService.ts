@@ -761,7 +761,7 @@ export async function sendOrderConfirmationEmail(params: {
   taxAmount: number;
   total: number;
   currency: string;
-  shippingAddress: {
+  shippingAddress?: {
     name: string;
     line1: string;
     line2?: string;
@@ -786,13 +786,13 @@ export async function sendOrderConfirmationEmail(params: {
     shipping_amount: formatCurrency(params.shippingAmount, params.currency),
     tax_amount: formatCurrency(params.taxAmount, params.currency),
     total: formatCurrency(params.total, params.currency),
-    shipping_name: params.shippingAddress.name,
-    shipping_address_line1: params.shippingAddress.line1,
-    shipping_address_line2: params.shippingAddress.line2,
-    shipping_city: params.shippingAddress.city,
-    shipping_state: params.shippingAddress.state,
-    shipping_postal_code: params.shippingAddress.zip,
-    shipping_country: params.shippingAddress.country,
+    shipping_name: params.shippingAddress?.name || '',
+    shipping_address_line1: params.shippingAddress?.line1 || '',
+    shipping_address_line2: params.shippingAddress?.line2 || '',
+    shipping_city: params.shippingAddress?.city || '',
+    shipping_state: params.shippingAddress?.state || '',
+    shipping_postal_code: params.shippingAddress?.zip || '',
+    shipping_country: params.shippingAddress?.country || '',
   };
 
   const html = template.html(templateData);

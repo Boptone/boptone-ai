@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
+import { trpc } from "@/lib/trpc";
+import { User } from "lucide-react";
 import { 
   Music, 
   BarChart3, 
@@ -26,6 +28,11 @@ export function Navigation() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
+  
+  // Fetch artist profile to get avatar
+  const { data: artistProfile } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
 
   const platformItems = [
     { 
@@ -245,7 +252,18 @@ export function Navigation() {
                   <Button variant="ghost" className="text-sm font-medium hover:bg-gray-100">Dashboard</Button>
                 </Link>
                 <Link href="/profile-settings">
-                  <Button variant="outline" className="text-sm font-medium rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black">Profile</Button>
+                  <Button variant="outline" className="text-sm font-medium rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black flex items-center gap-2">
+                    {artistProfile?.avatarUrl ? (
+                      <img 
+                        src={artistProfile.avatarUrl} 
+                        alt="Profile" 
+                        className="w-6 h-6 rounded-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-4 h-4" />
+                    )}
+                    Profile
+                  </Button>
                 </Link>
               </>
             ) : (

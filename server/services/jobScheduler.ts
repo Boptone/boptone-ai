@@ -198,8 +198,8 @@ async function handleOrderConfirmation(payload: any) {
   const orderData = await db
     .select({
       orderNumber: orders.orderNumber,
-      customerEmail: users.email,
-      customerName: users.name,
+      customerEmail: orders.customerEmail,
+      customerName: orders.customerName,
       subtotal: orders.subtotal,
       shippingAmount: orders.shippingAmount,
       taxAmount: orders.taxAmount,
@@ -208,7 +208,6 @@ async function handleOrderConfirmation(payload: any) {
       shippingAddress: orders.shippingAddress,
     })
     .from(orders)
-    .innerJoin(users, eq(orders.customerId, users.id))
     .where(eq(orders.id, payload.orderId))
     .limit(1);
 
@@ -291,8 +290,8 @@ async function handleShippingUpdate(payload: any) {
   const orderData = await db
     .select({
       orderNumber: orders.orderNumber,
-      customerEmail: users.email,
-      customerName: users.name,
+      customerEmail: orders.customerEmail,
+      customerName: orders.customerName,
       trackingNumber: orders.trackingNumber,
       trackingUrl: orders.trackingUrl,
       carrier: orders.shippingMethod,
@@ -301,7 +300,6 @@ async function handleShippingUpdate(payload: any) {
       shippingAddress: orders.shippingAddress,
     })
     .from(orders)
-    .innerJoin(users, eq(orders.customerId, users.id))
     .where(eq(orders.id, payload.orderId))
     .limit(1);
 
