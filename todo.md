@@ -1702,3 +1702,35 @@
 - [x] Remove "video game website" aesthetic (no more excessive shadows)
 - [x] Focus on typography and spacing over decorative elements
 - [x] Ensure sophisticated, premium appearance
+
+
+## 🧹 Clean 2026 Discover Redesign (IN PROGRESS)
+
+### Hero Section Cleanup ✅
+- [x] Reduce album artwork from 600x600px to 320px (reasonable size)
+- [x] Reduce song title from text-8xl to text-4xl (readable, not screaming)
+- [x] Remove excessive padding and spacing
+- [x] Match Boptone homepage typography and sizing
+
+### Remove Marketing Fluff ✅
+- [x] Delete "The hottest tracks on BopAudio right now. See what everyone's listening to."
+- [x] Delete "Fresh releases from artists around the world. Discover your next favorite track."
+- [x] Keep ONLY section headers: "Trending Now", "New Music"
+- [x] No cheesy marketing copy anywhere
+
+### Player Controls Cleanup ✅
+- [x] Remove ALL drop shadows from player controls (23 instances removed)
+- [x] Simplify player bar styling (removed shadows, kept 2px borders)
+- [x] Clean, minimal control buttons (hover changes border to cyan-500)
+
+### Track Cards Simplification ✅
+- [x] Remove blue genre pills from all track cards
+- [x] Simplify to: artwork, title, artist, play button ONLY
+- [x] Clean card design with subtle 2px borders
+- [x] No visual clutter (hover state changes border to cyan-500)
+
+### BAP Protocol Minimalism ✅
+- [x] Apply Boptone homepage aesthetic throughout
+- [x] 2px borders, shadows removed from 90% of elements
+- [x] Generous white space maintained
+- [x] Clean, modern 2026 look (NOT 2009 SonicBids)

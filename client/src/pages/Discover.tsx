@@ -179,7 +179,7 @@ export default function Discover() {
               {/* Left: Album Artwork */}
               <div className="flex justify-center lg:justify-start">
                 <div className="relative group">
-                  <div className="w-[400px] h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] rounded-2xl border-4 border-white shadow-[12px_12px_0px_0px_rgba(6,182,212,1)] overflow-hidden">
+                  <div className="w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-lg border-2 border-white/20 overflow-hidden">
                     {spotlightTrack.coverArtUrl ? (
                       <img
                         src={spotlightTrack.coverArtUrl}
@@ -218,7 +218,7 @@ export default function Discover() {
                   FEATURED NOW
                 </div>
                 
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none">
+                <h1 className="text-3xl md:text-4xl font-bold leading-tight">
                   {spotlightTrack.title}
                 </h1>
                 
@@ -287,7 +287,7 @@ export default function Discover() {
                 placeholder="Search tracks, artists, albums..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full shadow-[4px_4px_0px_0px_black] focus:shadow-[2px_2px_0px_0px_black] transition-all"
+                className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full focus:border-cyan-500 transition-all"
               />
             </div>
 
@@ -298,7 +298,7 @@ export default function Discover() {
                   key={genre}
                   onClick={() => setSelectedGenre(genre)}
                   variant={selectedGenre === genre ? "default" : "outline"}
-                  className={`rounded-full px-6 py-3 font-bold text-sm whitespace-nowrap border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all ${
+                  className={`rounded-full px-6 py-3 font-bold text-sm whitespace-nowrap border-2 border-black hover:border-cyan-500 transition-all ${
                     selectedGenre === genre
                       ? "bg-cyan-500 text-black"
                       : "bg-white text-black hover:bg-gray-50"
@@ -383,7 +383,7 @@ export default function Discover() {
                         onClick={() => handleLike(editorsPicks[0].id)}
                         variant="outline"
                         size="sm"
-                        className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                        className="rounded-full border-2 border-black hover:border-cyan-500 transition-all"
                       >
                         <Heart className="w-4 h-4 mr-2" />
                         Like
@@ -392,7 +392,7 @@ export default function Discover() {
                         onClick={() => handleShare(editorsPicks[0].id)}
                         variant="outline"
                         size="sm"
-                        className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                        className="rounded-full border-2 border-black hover:border-cyan-500 transition-all"
                       >
                         <Share2 className="w-4 h-4 mr-2" />
                         Share
@@ -408,7 +408,7 @@ export default function Discover() {
               {editorsPicks.slice(1, 5).map((track) => (
                 <div
                   key={track.id}
-                  className="relative group bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                  className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all"
                 >
                   <div className="aspect-square relative overflow-hidden">
                     {track.coverArtUrl ? (
@@ -425,7 +425,7 @@ export default function Discover() {
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <button
                         onClick={() => handlePlayTrack(track.id)}
-                        className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                        className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white flex items-center justify-center hover:scale-110 transition-transform"
                       >
                         <Play className="w-6 h-6 text-black ml-0.5" />
                       </button>
@@ -470,15 +470,13 @@ export default function Discover() {
             <TrendingUp className="w-10 h-10 text-cyan-500" />
             <h2 className="text-5xl md:text-6xl font-bold">Trending Now</h2>
           </div>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl">
-            The hottest tracks on BopAudio right now. See what everyone's listening to.
-          </p>
+
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {trendingTracksDisplay.map((track) => (
               <div
                 key={track.id}
-                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all"
               >
                 <div className="aspect-square relative overflow-hidden">
                   {track.coverArtUrl ? (
@@ -495,7 +493,7 @@ export default function Discover() {
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <button
                       onClick={() => handlePlayTrack(track.id)}
-                      className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                      className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white flex items-center justify-center hover:scale-110 transition-transform"
                     >
                       <Play className="w-6 h-6 text-black ml-0.5" />
                     </button>
@@ -529,15 +527,13 @@ export default function Discover() {
             <Music className="w-10 h-10 text-cyan-500" />
             <h2 className="text-5xl md:text-6xl font-bold">New Music</h2>
           </div>
-          <p className="text-xl text-gray-600 mb-12 max-w-3xl">
-            Fresh releases from artists around the world. Discover your next favorite track.
-          </p>
+
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {newReleasesDisplay.map((track) => (
               <div
                 key={track.id}
-                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all"
               >
                 <div className="aspect-square relative overflow-hidden">
                   {track.coverArtUrl ? (
@@ -554,7 +550,7 @@ export default function Discover() {
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <button
                       onClick={() => handlePlayTrack(track.id)}
-                      className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                      className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white flex items-center justify-center hover:scale-110 transition-transform"
                     >
                       <Play className="w-6 h-6 text-black ml-0.5" />
                     </button>
@@ -563,11 +559,6 @@ export default function Discover() {
                 <div className="p-4">
                   <h4 className="font-bold text-base line-clamp-1 mb-1">{track.title}</h4>
                   <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
-                  {track.genre && (
-                    <span className="inline-block mt-2 px-2 py-1 bg-cyan-500 text-black font-bold text-xs rounded-full border border-black">
-                      {track.genre.toUpperCase()}
-                    </span>
-                  )}
                 </div>
               </div>
             ))}
@@ -577,7 +568,7 @@ export default function Discover() {
 
       {/* FIXED PLAYER BAR AT BOTTOM */}
       {currentTrack && (
-        <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-black shadow-[0_-8px_0px_0px_rgba(0,0,0,0.1)] transition-all duration-300 ${playerCollapsed ? 'translate-y-0' : 'translate-y-0'}`}>
+        <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-black transition-all duration-300 ${playerCollapsed ? 'translate-y-0' : 'translate-y-0'}`}>
           {/* Collapse/Expand Button */}
           <button
             onClick={togglePlayerCollapsed}
@@ -596,7 +587,7 @@ export default function Discover() {
               <div className="flex items-center gap-4">
                 {/* Track Info */}
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="w-12 h-12 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_black] flex-shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 rounded-lg border-2 border-black flex-shrink-0 overflow-hidden">
                     {currentTrack.coverArtUrl ? (
                       <img
                         src={currentTrack.coverArtUrl}
@@ -618,7 +609,7 @@ export default function Discover() {
                 {/* Compact Play Button */}
                 <Button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                  className="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black transition-all"
                 >
                   {isPlaying ? (
                     <Pause className="w-4 h-4 text-black" />
@@ -634,7 +625,7 @@ export default function Discover() {
             <div className="flex items-center gap-6">
               {/* Track Info */}
               <div className="flex items-center gap-4 flex-1 min-w-0">
-                <div className="w-16 h-16 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_black] flex-shrink-0 overflow-hidden">
+                <div className="w-16 h-16 rounded-lg border-2 border-black flex-shrink-0 overflow-hidden">
                   {currentTrack.coverArtUrl ? (
                     <img
                       src={currentTrack.coverArtUrl}
@@ -658,14 +649,14 @@ export default function Discover() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                  className="rounded-full border-2 border-black hover:border-cyan-500 transition-all"
                 >
                   <SkipBack className="w-5 h-5" />
                 </Button>
                 
                 <Button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black transition-all"
                 >
                   {isPlaying ? (
                     <Pause className="w-6 h-6 text-black" />
@@ -677,7 +668,7 @@ export default function Discover() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                  className="rounded-full border-2 border-black hover:border-cyan-500 transition-all"
                 >
                   <SkipForward className="w-5 h-5" />
                 </Button>
@@ -708,7 +699,7 @@ export default function Discover() {
                   onClick={() => handleLike(currentTrack.id)}
                   variant="outline"
                   size="icon"
-                  className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                  className="rounded-full border-2 border-black hover:border-cyan-500 transition-all"
                 >
                   <Heart className="w-5 h-5" />
                 </Button>
