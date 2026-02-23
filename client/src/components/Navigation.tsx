@@ -1,19 +1,34 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { APP_LOGO, getLoginUrl } from "@/const";
+import { getLoginUrl } from "@/const";
 import { useState } from "react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
-import { User, MessageCircle, Menu, X } from "lucide-react";
+import { 
+  User, 
+  MessageCircle, 
+  Menu, 
+  X,
+  Music,
+  ShoppingBag,
+  BarChart3,
+  TrendingUp,
+  BookOpen,
+  HelpCircle,
+  FileText,
+  DollarSign,
+  Zap
+} from "lucide-react";
 import { SearchAIOverlay } from "@/components/SearchAIOverlay";
 
 /**
- * Enterprise-Grade Navigation Component
+ * Enterprise-Grade Navigation Component with Mega Menus
  * 
  * Design Principles:
  * - Crystal clear hierarchy: Logo → Primary Nav → AI Chat → Auth/Profile
+ * - Hover mega menus with icons and descriptions
  * - Optimal spacing: Perfect breathing room for logo and all elements
- * - Professional polish: Subtle interactions, perfect alignment
+ * - Professional polish: Smooth animations, perfect alignment
  * - Mobile-first responsive: Flawless across all devices
  * - Accessibility: WCAG 2.1 AA compliant
  */
@@ -21,6 +36,7 @@ export function Navigation() {
   const { isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
+  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
   
   // Fetch artist profile to get avatar
   const { data: artistProfile } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
@@ -29,6 +45,76 @@ export function Navigation() {
 
   // Close mobile menu when clicking a link
   const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  // Mega menu content
+  const platformItems = [
+    {
+      icon: Music,
+      title: "BopAudio",
+      description: "Your own streaming platform with 90/10 revenue split",
+      href: "/features"
+    },
+    {
+      icon: ShoppingBag,
+      title: "BopShop",
+      description: "Sell merchandise and digital products directly to fans",
+      href: "/bopshop"
+    },
+    {
+      icon: BarChart3,
+      title: "Analytics",
+      description: "Track performance across all platforms in real-time",
+      href: "/insights"
+    },
+    {
+      icon: TrendingUp,
+      title: "Distribution",
+      description: "Distribute music to all major streaming platforms",
+      href: "/features"
+    }
+  ];
+
+  const resourcesItems = [
+    {
+      icon: BookOpen,
+      title: "How It Works",
+      description: "Learn how Boptone helps you grow your music career",
+      href: "/how-it-works"
+    },
+    {
+      icon: FileText,
+      title: "Blog",
+      description: "Tips, guides, and industry insights for artists",
+      href: "/blog"
+    },
+    {
+      icon: HelpCircle,
+      title: "Help Center",
+      description: "Get answers to your questions and technical support",
+      href: "/help"
+    }
+  ];
+
+  const pricingItems = [
+    {
+      icon: Zap,
+      title: "Free Plan",
+      description: "Start building your audience with our free tier",
+      href: "/signup#free"
+    },
+    {
+      icon: TrendingUp,
+      title: "Pro Plan",
+      description: "Unlock unlimited uploads and advanced features",
+      href: "/signup#pro"
+    },
+    {
+      icon: DollarSign,
+      title: "Enterprise",
+      description: "Custom solutions for teams and labels",
+      href: "/signup#enterprise"
+    }
+  ];
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b-2 border-black bg-white">
@@ -48,26 +134,107 @@ export function Navigation() {
 
           {/* Desktop Navigation - Center */}
           <div className="hidden lg:flex items-center gap-8 flex-1 justify-center">
-            {/* Platform */}
-            <Link href="/features">
-              <a className="text-base font-medium text-gray-700 hover:text-black transition-colors">
+            {/* Platform with Mega Menu */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMegaMenu('platform')}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <button 
+                className="text-base font-medium text-gray-700 hover:text-black transition-colors"
+                onClick={() => setActiveMegaMenu(activeMegaMenu === 'platform' ? null : 'platform')}
+              >
                 Platform
-              </a>
-            </Link>
+              </button>
+              
+              {activeMegaMenu === 'platform' && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[500px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
+                  <div className="grid grid-cols-1 gap-4">
+                    {platformItems.map((item) => (
+                      <Link key={item.href} href={item.href}>
+                        <a className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-100 transition-colors group">
+                          <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                            <item.icon className="w-5 h-5 text-gray-700" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 mb-1">{item.title}</div>
+                            <div className="text-sm text-gray-600">{item.description}</div>
+                          </div>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
-            {/* Resources */}
-            <Link href="/how-it-works">
-              <a className="text-base font-medium text-gray-700 hover:text-black transition-colors">
+            {/* Resources with Mega Menu */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMegaMenu('resources')}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <button 
+                className="text-base font-medium text-gray-700 hover:text-black transition-colors"
+                onClick={() => setActiveMegaMenu(activeMegaMenu === 'resources' ? null : 'resources')}
+              >
                 Resources
-              </a>
-            </Link>
+              </button>
+              
+              {activeMegaMenu === 'resources' && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[450px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
+                  <div className="grid grid-cols-1 gap-4">
+                    {resourcesItems.map((item) => (
+                      <Link key={item.href} href={item.href}>
+                        <a className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-100 transition-colors group">
+                          <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                            <item.icon className="w-5 h-5 text-gray-700" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 mb-1">{item.title}</div>
+                            <div className="text-sm text-gray-600">{item.description}</div>
+                          </div>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
-            {/* Pricing */}
-            <Link href="/signup">
-              <a className="text-base font-medium text-gray-700 hover:text-black transition-colors">
+            {/* Pricing with Mega Menu */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMegaMenu('pricing')}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <button 
+                className="text-base font-medium text-gray-700 hover:text-black transition-colors"
+                onClick={() => setActiveMegaMenu(activeMegaMenu === 'pricing' ? null : 'pricing')}
+              >
                 Pricing
-              </a>
-            </Link>
+              </button>
+              
+              {activeMegaMenu === 'pricing' && (
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[450px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
+                  <div className="grid grid-cols-1 gap-4">
+                    {pricingItems.map((item) => (
+                      <Link key={item.href} href={item.href}>
+                        <a className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-100 transition-colors group">
+                          <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                            <item.icon className="w-5 h-5 text-gray-700" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 mb-1">{item.title}</div>
+                            <div className="text-sm text-gray-600">{item.description}</div>
+                          </div>
+                        </a>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Desktop Right Side - AI Chat + Auth */}
