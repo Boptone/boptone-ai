@@ -1324,3 +1324,15 @@
 - [x] Test Resources mega menu hover behavior - SUCCESS (verified structure)
 - [x] Test Pricing mega menu hover behavior - SUCCESS (verified structure)
 - [x] Save checkpoint
+
+
+## Add Own Your Tone Trademark ✅ COMPLETE
+
+### Add "Own Your Tone" to trademark section of Terms of Service
+- [x] Read current Terms of Service trademark section (Section 9.1)
+- [x] Add "Own Your Tone" to pending trademarks list
+- [x] Note the associated domain: www.ownyourtone.com
+- [x] Ensure consistent formatting with other pending marks
+- [x] Listed between BOPT-ONE.IO and the slogan entry
+- [ ] Save checkpoint
+- [ ] Push updated code to GitHub

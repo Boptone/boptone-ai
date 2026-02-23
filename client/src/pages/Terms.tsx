@@ -733,6 +733,7 @@ export default function Terms() {
                   <li><strong>BOPT-ONE</strong> — Trademark pending with the USPTO</li>
                   <li><strong>BOPT-ONE.COM</strong> — Trademark pending with the USPTO</li>
                   <li><strong>BOPT-ONE.IO</strong> — Trademark pending with the USPTO</li>
+                  <li><strong>Own Your Tone</strong> — Trademark pending (associated domain: www.ownyourtone.com)</li>
                   <li><strong>"Own Your Tone"</strong> — Slogan and trade dress of Acid Bird, Inc.</li>
                 </ul>
                 <p className="mb-5 text-gray-700 leading-relaxed">
