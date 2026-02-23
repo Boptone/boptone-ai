@@ -11,6 +11,17 @@ import { getDb } from "../db";
 import { pixelEvents, pixelSessions, pixelUsers } from "../../drizzle/schema";
 import { eq, and, gte, lte, desc, sql, count } from "drizzle-orm";
 
+// Helper function to calculate date range
+function getDateRange(dateRange: "7d" | "30d" | "90d" | "all") {
+  const end = new Date();
+  let start = new Date();
+  if (dateRange === "7d") start.setDate(end.getDate() - 7);
+  else if (dateRange === "30d") start.setDate(end.getDate() - 30);
+  else if (dateRange === "90d") start.setDate(end.getDate() - 90);
+  else start = new Date(0); // all time
+  return { start, end };
+}
+
 export const analyticsRouter = router({
   /**
    * Get overview stats for artist dashboard
@@ -20,17 +31,23 @@ export const analyticsRouter = router({
     .input(
       z.object({
         artistId: z.number(),
-        startDate: z.string(),
-        endDate: z.string(),
+        dateRange: z.enum(["7d", "30d", "90d", "all"]),
       })
     )
     .query(async ({ input }) => {
+      console.log('[Analytics] getOverview called with:', JSON.stringify(input));
       const db = await getDb();
       if (!db) throw new Error("Database not available");
 
-      const { artistId, startDate, endDate } = input;
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const { artistId, dateRange } = input;
+      
+      // Calculate date range
+      const end = new Date();
+      let start = new Date();
+      if (dateRange === "7d") start.setDate(end.getDate() - 7);
+      else if (dateRange === "30d") start.setDate(end.getDate() - 30);
+      else if (dateRange === "90d") start.setDate(end.getDate() - 90);
+      else start = new Date(0); // all time
 
       // Real-time visitors (last 30 minutes)
       const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
@@ -39,7 +56,7 @@ export const analyticsRouter = router({
         .from(pixelSessions)
         .where(
           and(
-            eq(pixelSessions.artistId, artistId.toString()),
+            eq(pixelSessions.artistId, artistId),
             gte(pixelSessions.lastActivityAt, thirtyMinutesAgo)
           )
         );
@@ -50,12 +67,13 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "page_view"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
+      console.log('[Analytics] Page views query result:', pageViewsResult, 'for artistId:', artistId, 'dateRange:', dateRange);
 
       // Total conversions (purchases)
       const [conversionsResult] = await db
@@ -63,10 +81,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "purchase"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -76,10 +94,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "purchase"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -99,17 +117,15 @@ export const analyticsRouter = router({
     .input(
       z.object({
         artistId: z.number(),
-        startDate: z.string(),
-        endDate: z.string(),
+        dateRange: z.enum(["7d", "30d", "90d", "all"]),
       })
     )
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
 
-      const { artistId, startDate, endDate } = input;
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const { artistId, dateRange } = input;
+      const { start, end } = getDateRange(dateRange);
 
       // Group by referrer
       const sources = await db
@@ -120,10 +136,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "page_view"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         )
         .groupBy(pixelEvents.referrer)
@@ -162,17 +178,15 @@ export const analyticsRouter = router({
     .input(
       z.object({
         artistId: z.number(),
-        startDate: z.string(),
-        endDate: z.string(),
+        dateRange: z.enum(["7d", "30d", "90d", "all"]),
       })
     )
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
 
-      const { artistId, startDate, endDate } = input;
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const { artistId, dateRange } = input;
+      const { start, end } = getDateRange(dateRange);
 
       // Get product views
       const productViews = await db
@@ -184,10 +198,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventName, "Product Viewed"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         )
         .groupBy(pixelEvents.productId)
@@ -204,10 +218,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "purchase"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         )
         .groupBy(pixelEvents.productId);
@@ -247,17 +261,15 @@ export const analyticsRouter = router({
     .input(
       z.object({
         artistId: z.number(),
-        startDate: z.string(),
-        endDate: z.string(),
+        dateRange: z.enum(["7d", "30d", "90d", "all"]),
       })
     )
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
 
-      const { artistId, startDate, endDate } = input;
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const { artistId, dateRange } = input;
+      const { start, end } = getDateRange(dateRange);
 
       // Get purchases with session data (to get referrer)
       const purchases = await db
@@ -268,10 +280,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "purchase"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -338,17 +350,15 @@ export const analyticsRouter = router({
     .input(
       z.object({
         artistId: z.number(),
-        startDate: z.string(),
-        endDate: z.string(),
+        dateRange: z.enum(["7d", "30d", "90d", "all"]),
       })
     )
     .query(async ({ input }) => {
       const db = await getDb();
       if (!db) throw new Error("Database not available");
 
-      const { artistId, startDate, endDate } = input;
-      const start = new Date(startDate);
-      const end = new Date(endDate);
+      const { artistId, dateRange } = input;
+      const { start, end } = getDateRange(dateRange);
 
       // Count each funnel stage
       const [productViews] = await db
@@ -356,10 +366,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventName, "Product Viewed"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -368,10 +378,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventName, "Add to Cart"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -380,10 +390,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventName, "Checkout Started"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -392,10 +402,10 @@ export const analyticsRouter = router({
         .from(pixelEvents)
         .where(
           and(
-            eq(pixelEvents.artistId, artistId.toString()),
+            eq(pixelEvents.artistId, artistId),
             eq(pixelEvents.eventType, "purchase"),
-            gte(pixelEvents.timestamp, start),
-            lte(pixelEvents.timestamp, end)
+            gte(pixelEvents.createdAt, start),
+            lte(pixelEvents.createdAt, end)
           )
         );
 
@@ -455,7 +465,7 @@ export const analyticsRouter = router({
         .from(pixelSessions)
         .where(
           and(
-            eq(pixelSessions.artistId, artistId.toString()),
+            eq(pixelSessions.artistId, artistId),
             gte(pixelSessions.lastActivityAt, fiveMinutesAgo)
           )
         );

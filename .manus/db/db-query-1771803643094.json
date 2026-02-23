@@ -1,0 +1,15 @@
+{
+  "query": "SELECT MIN(createdAt) as earliest, MAX(createdAt) as latest, COUNT(*) as total FROM pixel_events WHERE artistId = 180001;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT MIN(createdAt) as earliest, MAX(createdAt) as latest, COUNT(*) as total FROM pixel_events WHERE artistId = 180001;",
+  "rows": [
+    {
+      "earliest": "2026-02-22 23:37:05",
+      "latest": "2026-02-22 23:37:12",
+      "total": "562"
+    }
+  ],
+  "messages": [],
+  "stdout": "earliest\tlatest\ttotal\n2026-02-22 23:37:05\t2026-02-22 23:37:12\t562\n",
+  "stderr": "",
+  "execution_time_ms": 59
+}

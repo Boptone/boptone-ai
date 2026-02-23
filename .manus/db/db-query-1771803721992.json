@@ -1,0 +1,40 @@
+{
+  "query": "SELECT * FROM pixel_events WHERE artistId = 180001 LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT * FROM pixel_events WHERE artistId = 180001 LIMIT 1;",
+  "rows": [
+    {
+      "id": "699",
+      "eventId": "event_c77b1d24-5ea0-4a82-9a1e-0ed89e6831d0",
+      "pixelUserId": "user_9c479a04-7c16-4184-9bac-2153ad59dd91",
+      "sessionId": "session_8196ace6-38e6-4a74-86a8-4d09e1fe3162",
+      "artistId": "180001",
+      "eventType": "page_view",
+      "eventName": "Page Viewed",
+      "pageUrl": "https://boptone.com/artist/luna-waves",
+      "pageTitle": "Luna Waves - Boptone",
+      "referrer": "https://instagram.com",
+      "utmSource": "NULL",
+      "utmMedium": "NULL",
+      "utmCampaign": "NULL",
+      "utmContent": "NULL",
+      "utmTerm": "NULL",
+      "deviceType": "mobile",
+      "browser": "Safari",
+      "os": "Android",
+      "country": "NULL",
+      "region": "NULL",
+      "city": "NULL",
+      "ipAddress": "NULL",
+      "userAgent": "NULL",
+      "customData": "NULL",
+      "revenue": "NULL",
+      "currency": "NULL",
+      "productId": "NULL",
+      "createdAt": "2026-02-22 23:37:05"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\teventId\tpixelUserId\tsessionId\tartistId\teventType\teventName\tpageUrl\tpageTitle\treferrer\tutmSource\tutmMedium\tutmCampaign\tutmContent\tutmTerm\tdeviceType\tbrowser\tos\tcountry\tregion\tcity\tipAddress\tuserAgent\tcustomData\trevenue\tcurrency\tproductId\tcreatedAt\n699\tevent_c77b1d24-5ea0-4a82-9a1e-0ed89e6831d0\tuser_9c479a04-7c16-4184-9bac-2153ad59dd91\tsession_8196ace6-38e6-4a74-86a8-4d09e1fe3162\t180001\tpage_view\tPage Viewed\thttps://boptone.com/artist/luna-waves\tLuna Waves - Boptone\thttps://instagram.com\tNULL\tNULL\tNULL\tNULL\tNULL\tmobile\tSafari\tAndroid\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\t2026-02-22 23:37:05\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

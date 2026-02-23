@@ -1,0 +1,9 @@
+{
+  "query": "SELECT artistId, eventType, COUNT(*) as count FROM pixel_events WHERE artistId = 180001 GROUP BY artistId, eventType;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT artistId, eventType, COUNT(*) as count FROM pixel_events WHERE artistId = 180001 GROUP BY artistId, eventType;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 52
+}

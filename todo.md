@@ -880,3 +880,20 @@
 - [x] Position as second item in Platform menu (after Distribution)
 - [ ] Test navigation flow
 - [ ] Save checkpoint
+
+
+---
+
+## 🐛 Fix Insights Page Loading Issue (IN PROGRESS)
+
+### Root Cause
+- [ ] Insights page stuck on "Loading insights..." because no artist ID is passed to analytics queries
+- [ ] Need to detect which artist's data to show (logged-in user's artist profile)
+
+### Fix Implementation
+- [ ] Add tRPC procedure to get artist profile for logged-in user
+- [ ] Update ArtistInsights.tsx to fetch user's artist profile first
+- [ ] Pass artist ID to all analytics queries
+- [ ] Show "Create Artist Profile" message if user has no artist profile
+- [ ] Test with dummy artist data (Luna Waves, ID: 180001)
+- [ ] Save checkpoint

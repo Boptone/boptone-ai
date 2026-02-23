@@ -30,34 +30,40 @@ export default function ArtistInsights() {
   const [dateRange, setDateRange] = useState<DateRange>("30d");
   const [realtimeCount, setRealtimeCount] = useState(0);
 
-  // Fetch analytics data (using demo artist Luna Waves ID: 180008)
-  const { data: overview, isLoading: overviewLoading } = trpc.analytics.getOverview.useQuery({
+  // Fetch analytics data (using demo artist Luna Waves ID: 180001)
+  const { data: overview, isLoading: overviewLoading, error: overviewError } = trpc.analytics.getOverview.useQuery({
     dateRange,
-    artistId: 180008
+    artistId: 180001
   });
+
+  useEffect(() => {
+    console.log('[ArtistInsights] Overview data:', overview);
+    console.log('[ArtistInsights] Overview loading:', overviewLoading);
+    console.log('[ArtistInsights] Overview error:', overviewError);
+  }, [overview, overviewLoading, overviewError]);
 
   const { data: trafficSources, isLoading: trafficLoading } = trpc.analytics.getTrafficSources.useQuery({
     dateRange,
-    artistId: 180008
+    artistId: 180001
   });
 
   const { data: productPerformance, isLoading: productsLoading } = trpc.analytics.getProductPerformance.useQuery({
     dateRange,
-    artistId: 180008
+    artistId: 180001
   });
 
   const { data: revenueAttribution, isLoading: revenueLoading } = trpc.analytics.getRevenueAttribution.useQuery({
     dateRange,
-    artistId: 180008
+    artistId: 180001
   });
 
   const { data: conversionFunnel, isLoading: funnelLoading } = trpc.analytics.getConversionFunnel.useQuery({
     dateRange,
-    artistId: 180008
+    artistId: 180001
   });
 
   const { data: realtimeVisitors } = trpc.analytics.getRealtimeVisitors.useQuery({
-    artistId: 180008
+    artistId: 180001
   });
 
   // Update realtime counter
@@ -71,7 +77,7 @@ export default function ArtistInsights() {
   const trafficSourcesChartData = {
     labels: trafficSources?.map(s => s.source) || [],
     datasets: [{
-      data: trafficSources?.map(s => s.visitors) || [],
+      data: trafficSources?.map(s => s.visits) || [],
       backgroundColor: [
         "#000000", // Black
         "#81e6fe", // Cyan accent
@@ -165,7 +171,7 @@ export default function ArtistInsights() {
                 <TrendingUp className="w-5 h-5 text-green-600" />
               </div>
               <div className="text-4xl font-extrabold mb-2">
-                {overview?.pageViews.toLocaleString() || 0}
+                {overview?.totalPageViews.toLocaleString() || 0}
               </div>
               <div className="text-lg text-gray-700">Page Views</div>
             </div>
@@ -177,7 +183,7 @@ export default function ArtistInsights() {
                 <TrendingUp className="w-5 h-5 text-green-600" />
               </div>
               <div className="text-4xl font-extrabold mb-2">
-                {overview?.uniqueVisitors.toLocaleString() || 0}
+                {overview?.totalPageViews.toLocaleString() || 0}
               </div>
               <div className="text-lg text-gray-700">Unique Visitors</div>
             </div>
@@ -187,11 +193,11 @@ export default function ArtistInsights() {
               <div className="flex items-start justify-between mb-4">
                 <ShoppingCart className="w-8 h-8" />
                 <div className="text-sm font-bold text-green-600">
-                  {overview?.conversionRate.toFixed(1)}%
+                  {overview && overview.totalPageViews > 0 ? ((overview.totalConversions / overview.totalPageViews) * 100).toFixed(1) : '0.0'}%
                 </div>
               </div>
               <div className="text-4xl font-extrabold mb-2">
-                {overview?.conversions.toLocaleString() || 0}
+                {overview?.totalConversions.toLocaleString() || 0}
               </div>
               <div className="text-lg text-gray-700">Conversions</div>
             </div>
@@ -203,7 +209,7 @@ export default function ArtistInsights() {
                 <TrendingUp className="w-5 h-5 text-green-600" />
               </div>
               <div className="text-4xl font-extrabold mb-2">
-                ${overview?.revenue.toFixed(2) || "0.00"}
+                ${overview?.totalRevenue.toFixed(2) || "0.00"}
               </div>
               <div className="text-lg text-gray-700">Total Revenue</div>
             </div>
@@ -347,92 +353,34 @@ export default function ArtistInsights() {
             Track visitor journey from view to purchase
           </p>
           <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
-            {conversionFunnel ? (
+            {conversionFunnel && conversionFunnel.stages.length > 0 ? (
               <div className="space-y-6">
-                {/* Visitors */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xl font-bold">Visitors</span>
-                    <span className="text-2xl font-extrabold">{conversionFunnel.visitors}</span>
-                  </div>
-                  <div className="w-full h-12 bg-black rounded-lg" />
-                </div>
-
-                {/* Product Views */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xl font-bold">Product Views</span>
-                    <div className="text-right">
-                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.productViews}</span>
-                      <span className="text-base text-gray-600">
-                        ({((conversionFunnel.productViews / conversionFunnel.visitors) * 100).toFixed(1)}%)
-                      </span>
+                {conversionFunnel.stages.map((stage, index) => (
+                  <div key={stage.name}>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xl font-bold">{stage.name}</span>
+                      <div className="text-right">
+                        <span className="text-2xl font-extrabold mr-3">{stage.count.toLocaleString()}</span>
+                        <span className={`text-base font-bold ${
+                          index === conversionFunnel.stages.length - 1 ? 'text-green-600' : 'text-gray-600'
+                        }`}>
+                          ({stage.percentage.toFixed(1)}%)
+                        </span>
+                      </div>
                     </div>
+                    <div
+                      className={`h-12 rounded-lg ${
+                        index === 0 ? 'bg-black' :
+                        index === conversionFunnel.stages.length - 1 ? 'bg-black' :
+                        index === 1 ? 'bg-gray-700' :
+                        index === 2 ? 'bg-gray-500' : 'bg-gray-300'
+                      }`}
+                      style={{
+                        width: index === 0 ? '100%' : `${stage.percentage}%`
+                      }}
+                    />
                   </div>
-                  <div
-                    className="h-12 bg-gray-700 rounded-lg"
-                    style={{
-                      width: `${(conversionFunnel.productViews / conversionFunnel.visitors) * 100}%`
-                    }}
-                  />
-                </div>
-
-                {/* Add to Cart */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xl font-bold">Add to Cart</span>
-                    <div className="text-right">
-                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.addToCart}</span>
-                      <span className="text-base text-gray-600">
-                        ({((conversionFunnel.addToCart / conversionFunnel.visitors) * 100).toFixed(1)}%)
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className="h-12 bg-gray-500 rounded-lg"
-                    style={{
-                      width: `${(conversionFunnel.addToCart / conversionFunnel.visitors) * 100}%`
-                    }}
-                  />
-                </div>
-
-                {/* Checkout Started */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xl font-bold">Checkout Started</span>
-                    <div className="text-right">
-                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.checkoutStarted}</span>
-                      <span className="text-base text-gray-600">
-                        ({((conversionFunnel.checkoutStarted / conversionFunnel.visitors) * 100).toFixed(1)}%)
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className="h-12 bg-gray-300 rounded-lg"
-                    style={{
-                      width: `${(conversionFunnel.checkoutStarted / conversionFunnel.visitors) * 100}%`
-                    }}
-                  />
-                </div>
-
-                {/* Purchases */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xl font-bold">Purchases</span>
-                    <div className="text-right">
-                      <span className="text-2xl font-extrabold mr-3">{conversionFunnel.purchases}</span>
-                      <span className="text-base text-green-600 font-bold">
-                        ({((conversionFunnel.purchases / conversionFunnel.visitors) * 100).toFixed(1)}%)
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className="h-12 bg-black rounded-lg"
-                    style={{
-                      width: `${(conversionFunnel.purchases / conversionFunnel.visitors) * 100}%`
-                    }}
-                  />
-                </div>
+                ))}
               </div>
             ) : (
               <div className="text-center text-gray-500 text-lg py-12">

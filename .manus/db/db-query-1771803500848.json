@@ -1,0 +1,15 @@
+{
+  "query": "SELECT artistId, COUNT(*) as count, SUM(revenue) as total_revenue FROM pixel_events WHERE artistId = 180001 GROUP BY artistId;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT artistId, COUNT(*) as count, SUM(revenue) as total_revenue FROM pixel_events WHERE artistId = 180001 GROUP BY artistId;",
+  "rows": [
+    {
+      "artistId": "180001",
+      "count": "562",
+      "total_revenue": "499.82"
+    }
+  ],
+  "messages": [],
+  "stdout": "artistId\tcount\ttotal_revenue\n180001\t562\t499.82\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}

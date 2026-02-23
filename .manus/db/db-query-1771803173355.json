@@ -1,0 +1,40 @@
+{
+  "query": "SELECT * FROM pixel_events LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT * FROM pixel_events LIMIT 1;",
+  "rows": [
+    {
+      "id": "1",
+      "eventId": "evt_2s6eirhiabkvq7jfh9asr",
+      "pixelUserId": "user_nxdwgnfvtdi",
+      "sessionId": "sess_ppyvu2tl3qtugobw6konp",
+      "artistId": "180008",
+      "eventType": "page_view",
+      "eventName": "Page Viewed",
+      "pageUrl": "https://boptone.com/@lunawaves",
+      "pageTitle": "NULL",
+      "referrer": "https://www.google.com/",
+      "utmSource": "NULL",
+      "utmMedium": "NULL",
+      "utmCampaign": "NULL",
+      "utmContent": "NULL",
+      "utmTerm": "NULL",
+      "deviceType": "NULL",
+      "browser": "NULL",
+      "os": "NULL",
+      "country": "NULL",
+      "region": "NULL",
+      "city": "NULL",
+      "ipAddress": "NULL",
+      "userAgent": "NULL",
+      "customData": "NULL",
+      "revenue": "NULL",
+      "currency": "NULL",
+      "productId": "NULL",
+      "createdAt": "2026-02-09 07:33:12"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\teventId\tpixelUserId\tsessionId\tartistId\teventType\teventName\tpageUrl\tpageTitle\treferrer\tutmSource\tutmMedium\tutmCampaign\tutmContent\tutmTerm\tdeviceType\tbrowser\tos\tcountry\tregion\tcity\tipAddress\tuserAgent\tcustomData\trevenue\tcurrency\tproductId\tcreatedAt\n1\tevt_2s6eirhiabkvq7jfh9asr\tuser_nxdwgnfvtdi\tsess_ppyvu2tl3qtugobw6konp\t180008\tpage_view\tPage Viewed\thttps://boptone.com/@lunawaves\tNULL\thttps://www.google.com/\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\t2026-02-09 07:33:12\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

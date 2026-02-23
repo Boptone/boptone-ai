@@ -1,0 +1,25 @@
+{
+  "query": "SELECT artistId, eventType, COUNT(*) as count FROM pixel_events GROUP BY artistId, eventType LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT artistId, eventType, COUNT(*) as count FROM pixel_events GROUP BY artistId, eventType LIMIT 10;",
+  "rows": [
+    {
+      "artistId": "180008",
+      "eventType": "page_view",
+      "count": "500"
+    },
+    {
+      "artistId": "180008",
+      "eventType": "custom",
+      "count": "180"
+    },
+    {
+      "artistId": "180008",
+      "eventType": "purchase",
+      "count": "18"
+    }
+  ],
+  "messages": [],
+  "stdout": "artistId\teventType\tcount\n180008\tpage_view\t500\n180008\tcustom\t180\n180008\tpurchase\t18\n",
+  "stderr": "",
+  "execution_time_ms": 56
+}
