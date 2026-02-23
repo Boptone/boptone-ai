@@ -25,7 +25,8 @@ const redirectToLoginIfUnauthorized = (error: unknown) => {
 
   if (!isUnauthorized) return;
 
-  window.location.href = getLoginUrl();
+  // Redirect to /login page where user can choose "Remember me" option
+  window.location.href = "/login";
 };
 
 queryClient.getQueryCache().subscribe(event => {

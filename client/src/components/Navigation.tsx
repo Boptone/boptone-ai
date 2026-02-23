@@ -251,12 +251,12 @@ export function Navigation() {
             ) : (
               <>
                 <Button variant="ghost" asChild className="text-sm font-medium hover:bg-gray-100">
-                  <a href={getLoginUrl()}>Log In</a>
+                  <Link href="/login">Log In</Link>
                 </Button>
                 <Button variant="outline" asChild className="text-sm font-medium px-6 rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black">
-                  <a href={getLoginUrl()}>
+                  <Link href="/login">
                     Get Started
-                  </a>
+                  </Link>
                 </Button>
               </>
             )}
@@ -385,12 +385,12 @@ export function Navigation() {
               ) : (
                 <>
                   <Button variant="ghost" className="w-full justify-start text-base hover:bg-gray-100" asChild>
-                    <a href={getLoginUrl()}>Log In</a>
+                    <Link href="/login">Log In</Link>
                   </Button>
                   <Button className="w-full rounded-full bg-black hover:bg-gray-800 text-white font-semibold" asChild>
-                    <a href={getLoginUrl()}>
+                    <Link href="/login">
                       Get Started
-                    </a>
+                    </Link>
                   </Button>
                 </>
               )}

@@ -903,3 +903,12 @@
 - [x] Fix authentication redirect - users kicked to login then redirected to homepage instead of intended page
 - [x] Preserve return URL during OAuth flow
 - [x] Test redirect behavior on all protected pages (/insights, /analytics, /dashboard, etc.)
+
+## Remember Me Feature
+
+- [x] Update OAuth login URL to support rememberMe parameter
+- [x] Modify OAuth callback to read rememberMe from state and set extended session cookie (30 days)
+- [x] Add "Remember this device" checkbox to login portal UI
+- [x] Update all getLoginUrl() calls to redirect to /login page
+- [x] Test remember me checkbox interaction and dynamic text
+- [x] Save checkpoint

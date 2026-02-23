@@ -135,8 +135,8 @@ export default function BoptoneExplainer({
     } else {
       // Last step
       if (mode === "public") {
-        // Redirect to signup
-        window.location.href = getLoginUrl();
+        // Redirect to login page
+        window.location.href = "/login";
       } else {
         // Private mode: call onComplete to continue onboarding
         onComplete?.();

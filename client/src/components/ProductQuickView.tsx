@@ -83,7 +83,7 @@ export function ProductQuickView({
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      window.location.href = getLoginUrl();
+      window.location.href = "/login";
       return;
     }
 
@@ -124,7 +124,7 @@ export function ProductQuickView({
 
   const handleSave = () => {
     if (!isAuthenticated) {
-      window.location.href = getLoginUrl();
+      window.location.href = "/login";
       return;
     }
     

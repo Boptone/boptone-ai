@@ -36,24 +36,34 @@ export function registerOAuthRoutes(app: Express) {
         lastSignedIn: new Date(),
       });
 
-      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
-        name: userInfo.name || "",
-        expiresInMs: ONE_YEAR_MS,
-      });
-
-      const cookieOptions = getSessionCookieOptions(req);
-      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
-
-      // Extract returnUrl from state parameter
+      // Extract returnUrl and rememberMe from state parameter
       let returnUrl = "/";
+      let rememberMe = false;
       try {
         const stateData = JSON.parse(atob(state));
         if (stateData.returnUrl && typeof stateData.returnUrl === "string") {
           returnUrl = stateData.returnUrl;
         }
+        if (stateData.rememberMe === true) {
+          rememberMe = true;
+        }
       } catch (error) {
-        console.warn("[OAuth] Failed to parse state for returnUrl, redirecting to /", error);
+        console.warn("[OAuth] Failed to parse state, using defaults", error);
       }
+
+      // Set session duration: 30 days if rememberMe, otherwise 1 year (default)
+      const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+      const sessionDuration = rememberMe ? THIRTY_DAYS_MS : ONE_YEAR_MS;
+
+      const sessionToken = await sdk.createSessionToken(userInfo.openId, {
+        name: userInfo.name || "",
+        expiresInMs: sessionDuration,
+      });
+
+      const cookieOptions = getSessionCookieOptions(req);
+      res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: sessionDuration });
+
+      console.log(`[OAuth] Session created with duration: ${rememberMe ? '30 days (remember me)' : '1 year (default)'}`);
 
       res.redirect(302, returnUrl);
     } catch (error) {

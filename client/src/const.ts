@@ -8,14 +8,15 @@ export const APP_LOGO =
 
 // Generate login URL at runtime so redirect URI reflects the current origin.
 // Preserves the current page URL so users are redirected back after login.
-export const getLoginUrl = () => {
+// Supports "Remember this device" option for extended session duration.
+export const getLoginUrl = (rememberMe: boolean = false) => {
   const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
   const appId = import.meta.env.VITE_APP_ID;
   const redirectUri = `${window.location.origin}/api/oauth/callback`;
   
-  // Encode both redirectUri and returnUrl in state
+  // Encode redirectUri, returnUrl, and rememberMe preference in state
   const returnUrl = window.location.pathname + window.location.search;
-  const stateData = JSON.stringify({ redirectUri, returnUrl });
+  const stateData = JSON.stringify({ redirectUri, returnUrl, rememberMe });
   const state = btoa(stateData);
 
   const url = new URL(`${oauthPortalUrl}/app-auth`);

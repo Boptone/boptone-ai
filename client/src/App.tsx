@@ -45,6 +45,7 @@ const ReviewModeration = lazy(() => import("./pages/ReviewModeration"));
 const ReviewAnalyticsDashboard = lazy(() => import("./pages/ReviewAnalyticsDashboard"));
 const Signup = lazy(() => import("./pages/Signup"));
 const MultiStepSignup = lazy(() => import("./pages/MultiStepSignup"));
+const Login = lazy(() => import("./pages/Login"));
 const ProfileSettings = lazy(() => import("./pages/ProfileSettings"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const BAP = lazy(() => import("./pages/BAP"));
@@ -101,6 +102,7 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path={"/"} component={Home} />
+        <Route path={"/login"} component={Login} />
         <Route path={"/auth-signup"} component={MultiStepSignup} />
         <Route path={"/forgot-password"} component={ForgotPassword} />
         <Route path={"/how-it-works"} component={HowItWorks} />
