@@ -1762,3 +1762,26 @@
 - [ ] Apply mobile-first icon design patterns from research
 - [ ] Test on mobile viewport for touch optimization
 - [ ] Ensure clean, focused, minimal design throughout
+
+
+## BopAudio Branded Marketplace Transformation
+
+### Branding
+- [x] Add BopAudio logo/wordmark at top of Discover page (bold, prominent)
+- [x] Position BopAudio as Tidal/Spotify/Apple Music competitor
+- [x] Ensure listeners know where they are (clear branding)
+
+### Button Styling
+- [x] Remove white border from "Play Now" button (keep cyan-500 only)
+- [x] Remove black border from play button in player bar (keep cyan-500 only)
+- [x] Clean, borderless cyan-500 buttons throughout
+
+### Top Bops Section
+- [x] Rename "Trending Now" to "Top Bops" (on-brand naming)
+- [x] Create 3-4 track card grid layout (2 cols mobile, 3 cols tablet, 4 cols desktop)
+- [x] Ensure marketplace feel with multiple cards across screen
+
+### Marketplace Positioning
+- [x] Design for scalability (1000s of artists) - Database seeded with 202 tracks, 20 artists
+- [x] Grid layout that can handle massive catalog - 2/3/4 column responsive grid
+- [x] Position as world-class streaming marketplace - BopAudio branding, Top Bops section, clean design

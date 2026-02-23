@@ -70,8 +70,8 @@ export default function Discover() {
   // Get featured/spotlight track (first trending track)
   const spotlightTrack = trendingTracks?.[0];
   
-  // Get trending tracks for display (first 6)
-  const trendingTracksDisplay = trendingTracks?.slice(0, 6) || [];
+  // Get trending tracks for display (first 8 for 2x4 grid)
+  const trendingTracksDisplay = trendingTracks?.slice(0, 8) || [];
   
   // Get new releases for display (first 12)
   const newReleasesDisplay = newReleases?.slice(0, 12) || [];
@@ -153,6 +153,16 @@ export default function Discover() {
   return (
     <div className="min-h-screen bg-white pb-32">
       
+      {/* BOPAUDIO BRANDING HEADER */}
+      <div className="bg-black border-b-2 border-cyan-500">
+        <div className="container py-8">
+          <h1 className="text-6xl md:text-7xl font-black text-white tracking-tight">
+            BOP<span className="text-cyan-500">AUDIO</span>
+          </h1>
+          <p className="text-lg text-gray-400 mt-2">Stream music. Support artists. Keep 90%.</p>
+        </div>
+      </div>
+
       {/* IMMERSIVE HERO SECTION - Full-screen featured artist spotlight */}
       {spotlightTrack && (
         <div className="relative h-screen min-h-[600px] max-h-[900px] bg-black overflow-hidden border-b-2 border-black">
@@ -224,7 +234,7 @@ export default function Discover() {
 
                 <Button
                   onClick={() => handlePlayTrack(spotlightTrack.id)}
-                  className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold transition-all"
                 >
                   <Play className="w-6 h-6 mr-3" />
                   Play Now
@@ -414,11 +424,11 @@ export default function Discover() {
         <section className="container py-16 border-b-2 border-black">
           <div className="flex items-center gap-4 mb-8">
             <TrendingUp className="w-10 h-10 text-cyan-500" />
-            <h2 className="text-5xl md:text-6xl font-bold">Trending Now</h2>
+            <h2 className="text-5xl md:text-6xl font-bold">Top Bops</h2>
           </div>
 
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {trendingTracksDisplay.map((track) => (
               <div
                 key={track.id}
@@ -602,7 +612,7 @@ export default function Discover() {
                 
                 <Button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black transition-all"
+                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 transition-all"
                 >
                   {isPlaying ? (
                     <Pause className="w-6 h-6 text-black" />
