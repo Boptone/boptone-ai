@@ -371,18 +371,20 @@ async function handleReviewRequest(payload: any) {
     .innerJoin(artistProfiles, eq(products.artistId, artistProfiles.id))
     .where(eq(orderItems.orderId, payload.orderId));
 
-  // Send email
-  await sendReviewRequestEmail({
-    orderNumber: order.orderNumber,
-    customerEmail: order.customerEmail,
-    customerName: order.customerName,
-    items: items.map(item => ({
-      productId: item.productId,
-      name: item.name,
-      artistName: item.artistName,
-      imageUrl: item.imageUrl ?? undefined,
-    })),
-  });
+  // Send email (only if customer email is available)
+  if (order.customerEmail && order.customerName) {
+    await sendReviewRequestEmail({
+      orderNumber: order.orderNumber,
+      customerEmail: order.customerEmail,
+      customerName: order.customerName,
+      items: items.map(item => ({
+        productId: item.productId,
+        name: item.name,
+        artistName: item.artistName,
+        imageUrl: item.imageUrl ?? undefined,
+      })),
+    });
+  }
 }
 
 /**

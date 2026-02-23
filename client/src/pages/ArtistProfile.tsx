@@ -347,7 +347,7 @@ export default function ArtistProfile() {
                         <p className="text-2xl font-bold" style={{ color: themeColor }}>
                           ${product.price}
                         </p>
-                        <Button className="rounded-full w-full mt-4" style={{ backgroundColor: themeColor }}>
+                        <Button variant="bap" className="rounded-full w-full mt-4" style={{ backgroundColor: themeColor }}>
                           Buy Now
                         </Button>
                       </CardContent>
@@ -379,7 +379,7 @@ export default function ArtistProfile() {
                           {new Date(tour.endDate).toLocaleDateString()}
                         </p>
                       </div>
-                      <Button className="rounded-full" variant="outline" style={{ borderColor: themeColor, color: themeColor }}>
+                      <Button variant="bap" className="rounded-full" style={{ borderColor: themeColor, color: themeColor }}>
                         Get Tickets
                       </Button>
                     </div>
@@ -399,7 +399,7 @@ export default function ArtistProfile() {
               <p className="text-muted-foreground mb-6">
                 Interested in booking, collaborations, or just want to say hi? Drop a message!
               </p>
-              <Button className="rounded-full" size="lg" style={{ backgroundColor: themeColor }}>
+              <Button variant="bap" className="rounded-full" size="lg" style={{ backgroundColor: themeColor }}>
                 <Mail className="h-5 w-5 mr-2" />
                 Contact {profile.stageName}
               </Button>

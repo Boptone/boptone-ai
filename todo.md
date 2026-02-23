@@ -966,3 +966,29 @@
 - [x] Update Dashboard.tsx with cyan shadow buttons and rounded-3xl cards
 - [x] Test dashboard for visual consistency
 - [x] Save checkpoint
+
+## Critical Next Steps
+
+### Database Schema Fixes
+- [x] Fix payouts table schema - added missing `amount` and `fee` columns
+- [x] Fix TypeScript errors in jobScheduler.ts (null check for customerEmail/customerName)
+- [x] Verify database queries work correctly
+
+### BAP Aesthetic Rollout
+- [x] Update Analytics/ArtistInsights page (already has cyan shadows)
+- [x] Update Profile/ArtistProfile page buttons to use variant="bap"
+- [x] Update base Button component with bap variant
+- [x] Update base Card component to rounded-3xl
+- [x] Update base Input component to rounded-full
+
+### Profile Picture Upload
+- [ ] Design profile picture upload UI component
+- [ ] Implement S3 upload functionality for avatars
+- [ ] Add avatar display to profile page
+- [ ] Add avatar to navigation/header
+- [ ] Test upload flow end-to-end
+
+### Final Testing & Checkpoint
+- [ ] Test all updated pages for consistency
+- [ ] Verify database errors are resolved
+- [ ] Save checkpoint

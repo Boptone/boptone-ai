@@ -1,0 +1,8 @@
+{
+  "query": "ALTER TABLE payouts \nADD COLUMN amount INT NOT NULL DEFAULT 0 AFTER payoutAccountId,\nADD COLUMN currency VARCHAR(3) NOT NULL DEFAULT 'USD' AFTER amount,\nADD COLUMN payoutType ENUM('standard', 'instant') NOT NULL DEFAULT 'standard' AFTER currency,\nADD COLUMN fee INT NOT NULL DEFAULT 0 AFTER payoutType,\nADD COLUMN netAmount INT NOT NULL DEFAULT 0 AFTER fee;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE payouts \nADD COLUMN amount INT NOT NULL DEFAULT 0 AFTER payoutAccountId,\nADD COLUMN currency VARCHAR(3) NOT NULL DEFAULT 'USD' AFTER amount,\nADD COLUMN payoutType ENUM('standard', 'instant') NOT NULL DEFAULT 'standard' AFTER currency,\nADD COLUMN fee INT NOT NULL DEFAULT 0 AFTER payoutType,\nADD COLUMN netAmount INT NOT NULL DEFAULT 0 AFTER fee;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1060 (42S21) at line 1: Duplicate column name 'currency'"
+  ]
+}
