@@ -228,10 +228,10 @@ export default function Discover() {
                 
                 {spotlightTrack.genre && (
                   <div className="flex gap-3">
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm border-2 border-white rounded-full text-white font-bold text-lg">
+                    <span className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 font-medium text-base">
                       {spotlightTrack.genre.toUpperCase()}
                     </span>
-                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm border-2 border-white rounded-full text-white font-bold text-lg">
+                    <span className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 font-medium text-base">
                       {formatDuration(spotlightTrack.duration)}
                     </span>
                   </div>
@@ -249,7 +249,7 @@ export default function Discover() {
                   <Button
                     onClick={() => handleLike(spotlightTrack.id)}
                     variant="outline"
-                    className="rounded-full text-xl px-8 py-8 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                    className="rounded-full text-xl px-8 py-8 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-medium border border-white/30 hover:border-white/50 transition-all"
                   >
                     <Heart className="w-6 h-6" />
                   </Button>
@@ -257,7 +257,7 @@ export default function Discover() {
                   <Button
                     onClick={() => handleShare(spotlightTrack.id)}
                     variant="outline"
-                    className="rounded-full text-xl px-8 py-8 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                    className="rounded-full text-xl px-8 py-8 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-medium border border-white/30 hover:border-white/50 transition-all"
                   >
                     <Share2 className="w-6 h-6" />
                   </Button>
