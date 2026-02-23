@@ -16,6 +16,7 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { Download, Trash2, AlertTriangle } from "lucide-react";
+import { AvatarUpload } from "@/components/AvatarUpload";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -129,6 +130,21 @@ export default function ProfileSettings() {
         </div>
 
         <div className="grid gap-8">
+          {/* Avatar Upload */}
+          <Card className="rounded-xl border-4 border-black bg-white">
+            <CardHeader className="pb-8 border-b-4 border-black">
+              <CardTitle className="text-3xl font-bold text-black">
+                Profile Picture
+              </CardTitle>
+              <CardDescription className="text-lg font-medium text-gray-700">
+                Upload your profile picture (automatically optimized to 512x512)
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-8">
+              <AvatarUpload currentAvatarUrl={profile?.avatarUrl || undefined} />
+            </CardContent>
+          </Card>
+
           {/* Color Customization */}
           <Card className="rounded-xl border-4 border-black bg-white">
             <CardHeader className="pb-8 border-b-4 border-black">

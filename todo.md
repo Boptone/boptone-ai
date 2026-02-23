@@ -992,3 +992,14 @@
 - [ ] Test all updated pages for consistency
 - [ ] Verify database errors are resolved
 - [ ] Save checkpoint
+
+## Profile Picture Upload Feature
+
+- [x] Create tRPC procedure for avatar upload with S3 storage
+- [x] Add image optimization (resize to 512x512, compress with sharp library)
+- [x] Build AvatarUpload component with drag-and-drop UI
+- [x] Apply BAP Protocol aesthetic to upload component (cyan shadow button)
+- [x] Integrate avatar upload into ProfileSettings page
+- [x] Install sharp library for image processing
+- [x] Test component rendering on /profile-settings
+- [x] Save checkpoint

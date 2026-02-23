@@ -155,6 +155,42 @@ const artistProfileRouter = router({
       
       return { url: result.url, key: result.key };
     }),
+
+  // Upload avatar with automatic optimization
+  uploadAvatar: protectedProcedure
+    .input(z.object({
+      fileData: z.string(), // base64 encoded image
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { storagePut } = await import("./storage");
+      const sharp = (await import("sharp")).default;
+      
+      // Convert base64 to buffer
+      const base64Data = input.fileData.replace(/^data:image\/\w+;base64,/, "");
+      const buffer = Buffer.from(base64Data, "base64");
+      
+      // Optimize image: resize to 512x512, compress to <200KB
+      const optimizedBuffer = await sharp(buffer)
+        .resize(512, 512, { fit: "cover", position: "center" })
+        .jpeg({ quality: 85, progressive: true })
+        .toBuffer();
+      
+      // Generate unique filename
+      const timestamp = Date.now();
+      const randomSuffix = Math.random().toString(36).substring(2, 8);
+      const fileKey = `avatars/${ctx.user.id}/${timestamp}-${randomSuffix}.jpg`;
+      
+      // Upload to S3
+      const result = await storagePut(fileKey, optimizedBuffer, "image/jpeg");
+      
+      // Update artist profile with new avatar URL
+      const profile = await db.getArtistProfileByUserId(ctx.user.id);
+      if (profile) {
+        await db.updateArtistProfile(profile.id, { avatarUrl: result.url });
+      }
+      
+      return { url: result.url, key: result.key };
+    }),
 });
 
 // ============================================================================
