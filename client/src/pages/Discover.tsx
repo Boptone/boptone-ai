@@ -17,6 +17,7 @@ import {
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { PayToStreamButton } from "@/components/PayToStreamButton";
+import { AddToPlaylistModal } from "@/components/AddToPlaylistModal";
 
 export default function Discover() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,6 +28,8 @@ export default function Discover() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.7);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [playlistModalOpen, setPlaylistModalOpen] = useState(false);
+  const [selectedTrackForPlaylist, setSelectedTrackForPlaylist] = useState<{ id: number; title: string } | null>(null);
 
   const genres = [
     "ALL", "HIP-HOP", "POP", "ROCK", "ELECTRONIC", "R&B", 
@@ -410,18 +413,39 @@ export default function Discover() {
                       </button>
                     </div>
                   </div>
-                  <div className="p-4">
-                    <h4 className="font-bold text-lg line-clamp-1 mb-1">{track.title}</h4>
-                    <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
-                  </div>
+                   <div className="p-4">
+                  <h4 className="font-bold text-base line-clamp-1 mb-1">{track.title}</h4>
+                  <p className="text-sm text-gray-600 line-clamp-1 mb-3">{track.artist}</p>
+                  <Button
+                    onClick={() => {
+                      setSelectedTrackForPlaylist({ id: track.id, title: track.title });
+                      setPlaylistModalOpen(true);
+                    }}
+                    variant="outline"
+                    size="sm"
+                    className="w-full border-2 border-black rounded-full text-xs font-bold hover:bg-cyan-500 hover:text-white transition-colors"
+                  >
+                    + Playlist
+                  </Button>
                 </div>
-              ))}
+              </div>
+            ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* TRENDING NOW - Grid */}
+      {/* Add to Playlist Modal */}
+      {selectedTrackForPlaylist && (
+        <AddToPlaylistModal
+          open={playlistModalOpen}
+          onOpenChange={setPlaylistModalOpen}
+          trackId={selectedTrackForPlaylist.id}
+          trackTitle={selectedTrackForPlaylist.title}
+        />
+      )}
+
+      {/* FIXED PLAYER BAR */}  {/* TRENDING NOW - Grid */}
       {trendingTracksDisplay.length > 0 && (
         <section className="container py-16 border-b-2 border-black">
           <div className="flex items-center gap-4 mb-8">
@@ -461,7 +485,18 @@ export default function Discover() {
                 </div>
                 <div className="p-4">
                   <h4 className="font-bold text-base line-clamp-1 mb-1">{track.title}</h4>
-                  <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
+                  <p className="text-sm text-gray-600 line-clamp-1 mb-3">{track.artist}</p>
+                  <Button
+                    onClick={() => {
+                      setSelectedTrackForPlaylist({ id: track.id, title: track.title });
+                      setPlaylistModalOpen(true);
+                    }}
+                    variant="outline"
+                    size="sm"
+                    className="w-full border-2 border-black rounded-full text-xs font-bold hover:bg-cyan-500 hover:text-white transition-colors"
+                  >
+                    + Playlist
+                  </Button>
                 </div>
               </div>
             ))}

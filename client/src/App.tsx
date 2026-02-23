@@ -85,6 +85,8 @@ const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
 const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
 const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 const AdminRevenue = lazy(() => import("./pages/admin/AdminRevenue"));
+const Playlists = lazy(() => import("./pages/Playlists"));
+const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
 
 // Loading fallback component
 function PageLoader() {
@@ -162,6 +164,8 @@ function Router() {
         <Route path={"/upload"} component={Upload} />
         <Route path={"/discover"} component={Discover} />
         <Route path={"/music"} component={Discover} />
+        <Route path={"/playlists"} component={Playlists} />
+        <Route path={"/playlists/:id"} component={PlaylistDetail} />
         <Route path="/earnings" component={Earnings} />
         <Route path="/tone-rewards" component={ToneRewards} />
         <Route path="/microloans" component={Microloans} />

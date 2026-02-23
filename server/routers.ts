@@ -32,6 +32,7 @@ import { gdprRouter } from "./routers/gdpr";
 import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
 import { stripeConnectRouter } from "./routers/stripeConnect";
 import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
+import { playlistRouter } from "./routers/playlist";
 import { analyticsRouter } from "./routers/analytics";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
@@ -629,6 +630,7 @@ export const appRouter = router({
   gdpr: gdprRouter,
   postPurchase: postPurchaseAutomationRouter,
   analytics: analyticsRouter,
+  playlist: playlistRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

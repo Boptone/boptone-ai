@@ -1628,3 +1628,38 @@
 - [ ] Create clear visual hierarchy
 - [ ] Test emotional impact and "wow factor"
 - [ ] Verify it exceeds Spotify/Apple Music/Tidal quality
+
+
+## 🎵 Playlist Creation System (IN PROGRESS)
+
+### Database & Backend ✅
+- [x] Audit existing bapPlaylists schema in drizzle/schema.ts (uses trackIds JSON array)
+- [x] Create tRPC playlist router with 8 procedures:
+  - [x] createPlaylist (name, description, privacy, coverImage)
+  - [x] updatePlaylist (id, updates)
+  - [x] deletePlaylist (id)
+  - [x] addTrackToPlaylist (playlistId, trackId)
+  - [x] removeTrackFromPlaylist (playlistId, trackId)
+  - [x] reorderPlaylistTracks (playlistId, trackIds array)
+  - [x] getUserPlaylists (userId)
+  - [x] getPlaylist (playlistId) with tracks
+- [x] Register playlist router in routers.ts
+
+### UI Components ✅
+- [x] Create Playlists page (/playlists) with grid view of user's playlists
+- [x] Create PlaylistCard component with cover image, name, track count (integrated in Playlists page)
+- [x] Create CreatePlaylistModal with form (name, description, privacy toggle)
+- [x] Create PlaylistDetailPage (/playlists/:id) with track list
+- [x] Implement drag-drop reordering with @dnd-kit/core, @dnd-kit/sortable
+- [x] Add routes to App.tsx (/playlists, /playlists/:id)
+- [ ] Add "Add to Playlist" button to track cards on Discover page
+- [ ] Create AddToPlaylistModal with playlist selection
+- [ ] Add playlist cover image upload functionality
+
+### Integration
+- [ ] Add "Playlists" link to navigation/sidebar
+- [ ] Show user's playlists in sidebar (if using DashboardLayout)
+- [ ] Add "Play All" button to playlist detail page
+- [ ] Add share playlist functionality (public link)
+- [ ] Test complete workflow (create → add tracks → reorder → play)
+- [ ] Save checkpoint
