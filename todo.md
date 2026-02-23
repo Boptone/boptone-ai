@@ -897,3 +897,9 @@
 - [ ] Show "Create Artist Profile" message if user has no artist profile
 - [ ] Test with dummy artist data (Luna Waves, ID: 180001)
 - [ ] Save checkpoint
+
+## Authentication & Session Management
+
+- [x] Fix authentication redirect - users kicked to login then redirected to homepage instead of intended page
+- [x] Preserve return URL during OAuth flow
+- [x] Test redirect behavior on all protected pages (/insights, /analytics, /dashboard, etc.)
