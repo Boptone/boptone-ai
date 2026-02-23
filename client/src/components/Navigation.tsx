@@ -148,7 +148,8 @@ export function Navigation() {
               </button>
               
               {activeMegaMenu === 'platform' && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[500px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2">
+                  <div className="w-[500px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
                   <div className="grid grid-cols-1 gap-4">
                     {platformItems.map((item) => (
                       <Link key={item.href} href={item.href}>
@@ -163,6 +164,7 @@ export function Navigation() {
                         </a>
                       </Link>
                     ))}
+                  </div>
                   </div>
                 </div>
               )}
@@ -182,7 +184,8 @@ export function Navigation() {
               </button>
               
               {activeMegaMenu === 'resources' && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[450px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2">
+                  <div className="w-[450px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
                   <div className="grid grid-cols-1 gap-4">
                     {resourcesItems.map((item) => (
                       <Link key={item.href} href={item.href}>
@@ -197,6 +200,7 @@ export function Navigation() {
                         </a>
                       </Link>
                     ))}
+                  </div>
                   </div>
                 </div>
               )}
@@ -216,7 +220,8 @@ export function Navigation() {
               </button>
               
               {activeMegaMenu === 'pricing' && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[450px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2">
+                  <div className="w-[450px] bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-6 transition-opacity duration-200">
                   <div className="grid grid-cols-1 gap-4">
                     {pricingItems.map((item) => (
                       <Link key={item.href} href={item.href}>
@@ -231,6 +236,7 @@ export function Navigation() {
                         </a>
                       </Link>
                     ))}
+                  </div>
                   </div>
                 </div>
               )}
