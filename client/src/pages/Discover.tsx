@@ -1,544 +1,639 @@
-import { useEffect, useRef, useState, useMemo } from "react";
-import { Badge } from "@/components/ui/badge";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "sonner";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Link } from "wouter";
+import { 
+  Play, 
+  Pause, 
+  SkipBack, 
+  SkipForward, 
+  Volume2, 
+  Heart,
+  Share2,
+  Search,
+  Music,
+  TrendingUp,
+  Sparkles,
+} from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { Music, TrendingUp, Radio, Search, Heart, Share2, Play, Pause, SkipBack, SkipForward, Repeat, Shuffle, Volume2, Copy, Check } from "lucide-react";
-import SoundwavePlayer from "@/components/SoundwavePlayer";
+import { toast } from "sonner";
 import { PayToStreamButton } from "@/components/PayToStreamButton";
-
-const GENRES = [
-  "All", "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",
-  "Country", "Latin", "Indie", "Alternative"
-];
 
 export default function Discover() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("All");
-  const [currentTrack, setCurrentTrack] = useState<any>(null);
+  const [selectedGenre, setSelectedGenre] = useState("ALL");
+  const [currentTrackId, setCurrentTrackId] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(75);
-  const [copiedTrackId, setCopiedTrackId] = useState<number | null>(null);
+  const [volume, setVolume] = useState(0.7);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const getTrackUrl = (trackId: number) => {
-    return `${window.location.origin}/track/${trackId}`;
-  };
+  const genres = [
+    "ALL", "HIP-HOP", "POP", "ROCK", "ELECTRONIC", "R&B", 
+    "JAZZ", "COUNTRY", "LATIN", "INDIE", "ALTERNATIVE"
+  ];
 
-  const handleShare = (track: any, platform: string) => {
-    const trackUrl = getTrackUrl(track.id);
-    const text = `Check out "${track.title}" by ${track.artist} on Boptone`;
-    
-    let shareUrl = '';
-    
-    switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(trackUrl)}`;
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(trackUrl)}`;
-        break;
-      case 'copy':
-        navigator.clipboard.writeText(trackUrl);
-        setCopiedTrackId(track.id);
-        toast.success("Link copied to clipboard!");
-        setTimeout(() => setCopiedTrackId(null), 2000);
-        return;
-    }
-    
-    if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-    }
-  };
-
-  // Fetch tracks from BAP
-  const { data: trendingTracks } = trpc.bap.discover.trending.useQuery({ 
-    limit: 10
+  // Fetch tracks from BAP router
+  const { data: trendingTracks = [] } = trpc.bap.discover.trending.useQuery({ 
+    limit: 20
   });
-  const { data: newReleases } = trpc.bap.discover.newReleases.useQuery({ 
-    limit: 10
+  const { data: newReleases = [] } = trpc.bap.discover.newReleases.useQuery({ 
+    limit: 20
   });
-
-  // Select random track for spotlight (rotates on page load)
-  const spotlightTrack = useMemo(() => {
-    const allTracks = [...(trendingTracks || []), ...(newReleases || [])];
-    if (allTracks.length === 0) return null;
-    const randomIndex = Math.floor(Math.random() * allTracks.length);
-    return allTracks[randomIndex];
-  }, [trendingTracks, newReleases]);
-  // Rising artists feature not yet implemented
-  const risingArtists: any[] = [];
-  const { data: searchResults } = trpc.bap.discover.search.useQuery(
+  const { data: searchResults = [] } = trpc.bap.discover.search.useQuery(
     { query: searchQuery, limit: 20 },
     { enabled: searchQuery.length > 0 }
   );
 
+  // Combine all tracks for display
+  const allTracks = searchQuery 
+    ? searchResults 
+    : [...(trendingTracks || []), ...(newReleases || [])];
+
+  // Get featured/spotlight track (first trending track)
+  const spotlightTrack = trendingTracks?.[0];
+  
+  // Get trending tracks for display (first 6)
+  const trendingTracksDisplay = trendingTracks?.slice(0, 6) || [];
+  
+  // Get new releases for display (first 12)
+  const newReleasesDisplay = newReleases?.slice(0, 12) || [];
+
+  // Get editor's picks (curated selection from trending)
+  const editorsPicks = trendingTracks?.slice(6, 11) || []; // 1 large + 4 small = 5 total
+
   const likeTrackMutation = trpc.bap.social.likeTrack.useMutation();
-  const recordStreamMutation = trpc.bap.stream.record.useMutation();
+
+  const handlePlayTrack = (trackId: number) => {
+    if (currentTrackId === trackId) {
+      setIsPlaying(!isPlaying);
+    } else {
+      setCurrentTrackId(trackId);
+      setIsPlaying(true);
+    }
+  };
+
+  const handleLike = async (trackId: number) => {
+    try {
+      await likeTrackMutation.mutateAsync({ trackId });
+      toast.success("Added to your liked songs");
+    } catch (error) {
+      toast.error("Failed to like track");
+    }
+  };
+
+  const handleShare = (trackId: number) => {
+    const trackUrl = `${window.location.origin}/track/${trackId}`;
+    navigator.clipboard.writeText(trackUrl);
+    toast.success("Link copied to clipboard");
+  };
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const formatTime = (time: number) => {
+    const mins = Math.floor(time / 60);
+    const secs = Math.floor(time % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   // Audio player effects
   useEffect(() => {
-    if (!audioRef.current) return;
-    
     const audio = audioRef.current;
-    
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleLoadedMetadata = () => setDuration(audio.duration);
-    const handleEnded = () => setIsPlaying(false);
-    
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('ended', handleEnded);
-    
+    if (!audio) return;
+
+    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+
+    audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("loadedmetadata", updateDuration);
+
     return () => {
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener("timeupdate", updateTime);
+      audio.removeEventListener("loadedmetadata", updateDuration);
     };
   }, []);
 
-  // Handle play/pause
   useEffect(() => {
-    if (!audioRef.current) return;
-    
+    const audio = audioRef.current;
+    if (!audio) return;
+
     if (isPlaying) {
-      audioRef.current.play().catch(err => {
-        console.error('Failed to play audio:', err);
+      audio.play().catch(err => {
+        console.error("Failed to play audio:", err);
         setIsPlaying(false);
       });
     } else {
-      audioRef.current.pause();
+      audio.pause();
     }
   }, [isPlaying]);
 
-  // Load new track
-  useEffect(() => {
-    if (!audioRef.current || !currentTrack) return;
-    
-    audioRef.current.src = currentTrack.audioUrl;
-    audioRef.current.volume = volume / 100;
-    
-    if (isPlaying) {
-      audioRef.current.play();
-      // Record stream after 30 seconds of playback
-      const streamTimer = setTimeout(() => {
-        recordStreamMutation.mutate({ 
-          trackId: currentTrack.id,
-          durationPlayed: 30,
-          source: "feed" as const
-        });
-      }, 30000);
-      
-      return () => clearTimeout(streamTimer);
-    }
-  }, [currentTrack, volume]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const handlePlayTrack = (track: any) => {
-    if (currentTrack?.id === track.id) {
-      setIsPlaying(!isPlaying);
-    } else {
-      setCurrentTrack(track);
-      setIsPlaying(true);
-      setCurrentTime(0);
-    }
-  };
-
-  const handleLikeTrack = async (trackId: number) => {
-    try {
-      await likeTrackMutation.mutateAsync({ trackId });
-    } catch (error) {
-      console.error("Failed to like track:", error);
-    }
-  };
-
-  const TrackCard = ({ track }: { track: any }) => (
-    <Card className="rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all bg-white">
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4">
-          <div className="relative flex-shrink-0 group">
-            <img
-              src={track.artworkUrl || `https://via.placeholder.com/96x96?text=${encodeURIComponent(track.title)}`}
-              alt={track.title}
-              className="w-24 h-24 rounded-xl object-cover border-2 border-gray-200"
-            />
-            <Button 
-              className="rounded-full absolute inset-0 m-auto w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black]" 
-              size="icon"
-              onClick={() => handlePlayTrack(track)}
-            >
-              {currentTrack?.id === track.id && isPlaying ? (
-                <Pause className="h-5 w-5 text-black" />
-              ) : (
-                <Play className="h-5 w-5 text-black ml-0.5" />
-              )}
-            </Button>
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-xl text-black truncate">{track.title}</h3>
-            <p className="text-lg text-gray-600 font-medium truncate">{track.artist}</p>
-            <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 font-medium">
-              {track.genre && (
-                <Badge className="rounded-full border-2 border-black bg-cyan-500 text-black font-bold text-xs px-3 py-1 uppercase shadow-[2px_2px_0px_0px_black]">
-                  {track.genre}
-                </Badge>
-              )}
-              <span className="font-mono">{formatTime(track.duration)}</span>
-              {track.streamCount > 0 && (
-                <span className="font-medium">
-                  {track.streamCount.toLocaleString()} plays
-                </span>
-              )}
-            </div>
-          </div>
-          <PayToStreamButton
-            trackId={track.id}
-            trackTitle={track.title}
-            artistName={track.artist}
-            artistId={track.artistId || 1}
-            defaultPrice={3}
-          />
-          <Button 
-            className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" 
-            variant="outline"
-            onClick={() => handleLikeTrack(track.id)}
-          >
-            <Heart className="h-4 w-4 mr-2" />
-            <span className="text-sm font-bold">LIKE</span>
-          </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" variant="outline">
-                <Share2 className="h-4 w-4 mr-2" />
-                <span className="text-sm font-bold">SHARE</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleShare(track, 'twitter')}>
-                <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-                Share on Twitter
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleShare(track, 'facebook')}>
-                <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                Share on Facebook
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleShare(track, 'copy')}>
-                {copiedTrackId === track.id ? (
-                  <Check className="h-4 w-4 mr-2" />
-                ) : (
-                  <Copy className="h-4 w-4 mr-2" />
-                )}
-                Copy Link
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </CardContent>
-    </Card>
-  );
+  const currentTrack = allTracks.find(t => t.id === currentTrackId);
 
   return (
     <div className="min-h-screen bg-white pb-32">
-      {/* Header */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Left: Content */}
-          <div>
-            <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
-              Discover
-              <br />
-              New Music.
-            </h1>
-            <p className="text-2xl text-gray-600 mb-8">
-              Stream directly from artists. Every play supports creators through BopAudio.
-            </p>
+      
+      {/* IMMERSIVE HERO SECTION - Full-screen featured artist spotlight */}
+      {spotlightTrack && (
+        <div className="relative h-screen min-h-[600px] max-h-[900px] bg-black overflow-hidden border-b-2 border-black">
+          {/* Background Album Artwork with Gradient Overlay */}
+          <div className="absolute inset-0">
+            {spotlightTrack.coverArtUrl ? (
+              <img
+                src={spotlightTrack.coverArtUrl}
+                alt={spotlightTrack.title}
+                className="w-full h-full object-cover opacity-40 blur-sm scale-110"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 opacity-40" />
+            )}
+            {/* Gradient Overlays for Text Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
           </div>
 
-          {/* Right: Stats Card */}
-          <Card className="border-2 border-black shadow-[4px_4px_0px_0px_black] bg-white rounded-lg">
-            <CardContent className="p-10">
-              <div className="space-y-8">
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-lg bg-cyan-500 border-2 border-black shadow-[2px_2px_0px_0px_black] flex items-center justify-center flex-shrink-0">
-                    <Music className="h-7 w-7 text-black" />
+          {/* Hero Content */}
+          <div className="relative z-10 container h-full flex items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+              
+              {/* Left: Album Artwork */}
+              <div className="flex justify-center lg:justify-start">
+                <div className="relative group">
+                  <div className="w-[400px] h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] rounded-2xl border-4 border-white shadow-[12px_12px_0px_0px_rgba(6,182,212,1)] overflow-hidden">
+                    {spotlightTrack.coverArtUrl ? (
+                      <img
+                        src={spotlightTrack.coverArtUrl}
+                        alt={spotlightTrack.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                        <Music className="w-32 h-32 text-white opacity-50" />
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Total Tracks</p>
-                    <p className="text-3xl font-bold">{trendingTracks?.length || 0}+</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-lg bg-cyan-500 border-2 border-black shadow-[2px_2px_0px_0px_black] flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="h-7 w-7 text-black" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Trending Now</p>
-                    <p className="text-3xl font-bold">{trendingTracks?.length || 0}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <Radio className="h-7 w-7 text-black" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 font-medium uppercase tracking-wide">Live Streams</p>
-                    <p className="text-3xl font-bold">24/7</p>
-                  </div>
+                  {/* Play Button Overlay */}
+                  <button
+                    onClick={() => handlePlayTrack(spotlightTrack.id)}
+                    className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"
+                  >
+                    <div className="w-24 h-24 rounded-full bg-cyan-500 border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform">
+                      {currentTrackId === spotlightTrack.id && isPlaying ? (
+                        <Pause className="w-12 h-12 text-black" />
+                      ) : (
+                        <Play className="w-12 h-12 text-black ml-1" />
+                      )}
+                    </div>
+                  </button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Search Bar */}
-        <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white mb-12 rounded-xl">
-          <CardContent className="p-8">
-            <div className="relative">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-400" />
+              {/* Right: Track Info */}
+              <div className="text-white space-y-6 px-4 lg:px-0">
+                <div className="inline-block px-4 py-2 bg-cyan-500 text-black font-bold text-sm rounded-full border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
+                  FEATURED NOW
+                </div>
+                
+                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none">
+                  {spotlightTrack.title}
+                </h1>
+                
+                <p className="text-3xl md:text-4xl text-cyan-400 font-bold">
+                  {spotlightTrack.artist}
+                </p>
+                
+                {spotlightTrack.genre && (
+                  <div className="flex gap-3">
+                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm border-2 border-white rounded-full text-white font-bold text-lg">
+                      {spotlightTrack.genre.toUpperCase()}
+                    </span>
+                    <span className="px-4 py-2 bg-white/20 backdrop-blur-sm border-2 border-white rounded-full text-white font-bold text-lg">
+                      {formatDuration(spotlightTrack.duration)}
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-4 pt-4">
+                  <Button
+                    onClick={() => handlePlayTrack(spotlightTrack.id)}
+                    className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  >
+                    <Play className="w-6 h-6 mr-3" />
+                    Play Now
+                  </Button>
+                  
+                  <Button
+                    onClick={() => handleLike(spotlightTrack.id)}
+                    variant="outline"
+                    className="rounded-full text-xl px-8 py-8 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  >
+                    <Heart className="w-6 h-6" />
+                  </Button>
+                  
+                  <Button
+                    onClick={() => handleShare(spotlightTrack.id)}
+                    variant="outline"
+                    className="rounded-full text-xl px-8 py-8 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  >
+                    <Share2 className="w-6 h-6" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div className="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-2">
+              <div className="w-1 h-2 bg-white rounded-full" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SEARCH & GENRE FILTERS */}
+      <div className="sticky top-0 z-40 bg-white border-b-2 border-black shadow-lg">
+        <div className="container py-6">
+          <div className="flex flex-col md:flex-row gap-4 items-center">
+            {/* Search Bar */}
+            <div className="relative flex-1 w-full">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <Input
                 type="text"
                 placeholder="Search tracks, artists, albums..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-2xl py-8 pl-16 pr-6 border-2 border-gray-200 rounded-xl font-medium"
+                className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full shadow-[4px_4px_0px_0px_black] focus:shadow-[2px_2px_0px_0px_black] transition-all"
               />
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Genre Filter */}
-        <div className="flex flex-wrap gap-3 mb-12">
-          {GENRES.map((genre) => (
-            <Button
-              key={genre}
-              variant={selectedGenre === genre ? "default" : "outline"}
-              onClick={() => setSelectedGenre(genre)}
-              className={`rounded-full border-2 font-bold uppercase text-sm px-6 py-3 ${
-                selectedGenre === genre
-                  ? "border-black bg-black text-white"
-                  : "border-gray-200 bg-white text-black hover:border-gray-400"
-              }`}
-            >
-              {genre}
-            </Button>
-          ))}
+            {/* Genre Filters - Horizontal Scroll on Mobile */}
+            <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
+              {genres.map((genre) => (
+                <Button
+                  key={genre}
+                  onClick={() => setSelectedGenre(genre)}
+                  variant={selectedGenre === genre ? "default" : "outline"}
+                  className={`rounded-full px-6 py-3 font-bold text-sm whitespace-nowrap border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all ${
+                    selectedGenre === genre
+                      ? "bg-cyan-500 text-black"
+                      : "bg-white text-black hover:bg-gray-50"
+                  }`}
+                >
+                  {genre}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
-
-        {/* Search Results */}
-        {searchQuery && (
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-6">Search Results</h2>
-            {searchResults && searchResults.length > 0 ? (
-              <div className="space-y-4">
-                {searchResults.map((track: any) => (
-                  <TrackCard key={track.id} track={track} />
-                ))}
-              </div>
-            ) : (
-              <Card className="rounded-xl border-2 border-gray-200 bg-white">
-                <CardContent className="p-16 text-center">
-                  <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center mx-auto mb-6">
-                    <Search className="h-10 w-10 text-gray-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">No results found</h3>
-                  <p className="text-gray-600 text-lg">Try a different search term</p>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {/* Artist Spotlight with Soundwave Player */}
-        {!searchQuery && spotlightTrack && (
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-6">Artist Spotlight</h2>
-            <Card className="rounded-xl border-2 border-gray-200 bg-white hover:border-gray-400 hover:shadow-lg transition-all">
-              <CardContent className="p-0">
-                <SoundwavePlayer track={spotlightTrack} />
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        {/* Trending Tracks */}
-        {!searchQuery && trendingTracks && trendingTracks.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-6">Trending Now</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {trendingTracks.slice(0, 12).map((track: any) => (
-                <TrackCard key={track.id} track={track} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* New Releases */}
-        {!searchQuery && newReleases && newReleases.length > 0 && (
-          <div className="mb-12">
-            <h2 className="text-4xl font-bold mb-6">New Releases</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {newReleases.slice(0, 12).map((track: any) => (
-                <TrackCard key={track.id} track={track} />
-              ))}
-            </div>
-          </div>
-        )}
-
-
       </div>
 
-      {/* Music Player (Fixed Bottom) */}
-      {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black z-50 shadow-[0px_-4px_0px_0px_black]">
-          <div className="container mx-auto px-4 py-6">
-            {/* Track Info & Controls */}
-            <div className="flex items-center gap-6 mb-4">
-              <img
-                src={currentTrack.artworkUrl || `https://via.placeholder.com/80x80?text=${encodeURIComponent(currentTrack.title)}`}
-                alt={currentTrack.title}
-                className="w-20 h-20 rounded-lg object-cover flex-shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_black]"
-              />
-              <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-xl text-black truncate">{currentTrack.title}</h4>
-                <p className="text-lg text-gray-600 font-medium truncate">{currentTrack.artist}</p>
+      {/* EDITOR'S PICKS - Asymmetric Layout (1 Large + 4 Small) */}
+      {editorsPicks.length > 0 && (
+        <section className="container py-16 border-b-2 border-black">
+          <div className="flex items-center gap-4 mb-8">
+            <Sparkles className="w-10 h-10 text-cyan-500" />
+            <h2 className="text-5xl md:text-6xl font-bold">Editor's Picks</h2>
+          </div>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+            Hand-selected tracks that define the sound of right now. Curated by music lovers, for music lovers.
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Large Featured Card */}
+            {editorsPicks[0] && (
+              <div className="lg:col-span-2 lg:row-span-2">
+                <div className="relative group h-full bg-white border-2 border-black rounded-2xl overflow-hidden shadow-[8px_8px_0px_0px_black] hover:shadow-[4px_4px_0px_0px_black] transition-all">
+                  {/* Album Artwork */}
+                  <div className="aspect-square lg:aspect-video relative overflow-hidden">
+                    {editorsPicks[0].coverArtUrl ? (
+                      <img
+                        src={editorsPicks[0].coverArtUrl}
+                        alt={editorsPicks[0].title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                        <Music className="w-24 h-24 text-white opacity-50" />
+                      </div>
+                    )}
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button
+                        onClick={() => handlePlayTrack(editorsPicks[0].id)}
+                        className="w-20 h-20 rounded-full bg-cyan-500 border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                      >
+                        <Play className="w-10 h-10 text-black ml-1" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Track Info */}
+                  <div className="p-8">
+                    <div className="flex items-center gap-3 mb-4">
+                      {editorsPicks[0].genre && (
+                        <span className="px-3 py-1 bg-cyan-500 text-black font-bold text-xs rounded-full border border-black">
+                          {editorsPicks[0].genre.toUpperCase()}
+                        </span>
+                      )}
+                      <span className="text-gray-600 font-medium">
+                        {formatDuration(editorsPicks[0].duration)}
+                      </span>
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-bold mb-2 line-clamp-2">
+                      {editorsPicks[0].title}
+                    </h3>
+                    <p className="text-2xl text-gray-700 font-medium mb-6">
+                      {editorsPicks[0].artist}
+                    </p>
+                    
+                    <div className="flex gap-3 flex-wrap">
+                      <PayToStreamButton
+                        trackId={editorsPicks[0].id}
+                        trackTitle={editorsPicks[0].title}
+                        artistName={editorsPicks[0].artist}
+                        artistId={editorsPicks[0].artistId || 1}
+                        defaultPrice={3}
+                      />
+                      <Button
+                        onClick={() => handleLike(editorsPicks[0].id)}
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                      >
+                        <Heart className="w-4 h-4 mr-2" />
+                        Like
+                      </Button>
+                      <Button
+                        onClick={() => handleShare(editorsPicks[0].id)}
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                      >
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Share
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
-                  <Shuffle className="h-4 w-4" />
+            )}
+
+            {/* Small Cards Grid */}
+            <div className="lg:col-span-1 grid grid-cols-2 lg:grid-cols-1 gap-6">
+              {editorsPicks.slice(1, 5).map((track) => (
+                <div
+                  key={track.id}
+                  className="relative group bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                >
+                  <div className="aspect-square relative overflow-hidden">
+                    {track.coverArtUrl ? (
+                      <img
+                        src={track.coverArtUrl}
+                        alt={track.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                        <Music className="w-12 h-12 text-white opacity-50" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <button
+                        onClick={() => handlePlayTrack(track.id)}
+                        className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                      >
+                        <Play className="w-6 h-6 text-black ml-0.5" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h4 className="font-bold text-lg line-clamp-1 mb-1">{track.title}</h4>
+                    <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* TRENDING NOW - Grid */}
+      {trendingTracksDisplay.length > 0 && (
+        <section className="container py-16 border-b-2 border-black">
+          <div className="flex items-center gap-4 mb-8">
+            <TrendingUp className="w-10 h-10 text-cyan-500" />
+            <h2 className="text-5xl md:text-6xl font-bold">Trending Now</h2>
+          </div>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+            The hottest tracks on BopAudio right now. See what everyone's listening to.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {trendingTracksDisplay.map((track) => (
+              <div
+                key={track.id}
+                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              >
+                <div className="aspect-square relative overflow-hidden">
+                  {track.coverArtUrl ? (
+                    <img
+                      src={track.coverArtUrl}
+                      alt={track.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                      <Music className="w-12 h-12 text-white opacity-50" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <button
+                      onClick={() => handlePlayTrack(track.id)}
+                      className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                    >
+                      <Play className="w-6 h-6 text-black ml-0.5" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h4 className="font-bold text-base line-clamp-1 mb-1">{track.title}</h4>
+                  <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* NEW MUSIC - Grid Layout */}
+      {newReleasesDisplay.length > 0 && (
+        <section className="container py-16">
+          <div className="flex items-center gap-4 mb-8">
+            <Music className="w-10 h-10 text-cyan-500" />
+            <h2 className="text-5xl md:text-6xl font-bold">New Music</h2>
+          </div>
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl">
+            Fresh releases from artists around the world. Discover your next favorite track.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {newReleasesDisplay.map((track) => (
+              <div
+                key={track.id}
+                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              >
+                <div className="aspect-square relative overflow-hidden">
+                  {track.coverArtUrl ? (
+                    <img
+                      src={track.coverArtUrl}
+                      alt={track.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                      <Music className="w-12 h-12 text-white opacity-50" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <button
+                      onClick={() => handlePlayTrack(track.id)}
+                      className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform"
+                    >
+                      <Play className="w-6 h-6 text-black ml-0.5" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h4 className="font-bold text-base line-clamp-1 mb-1">{track.title}</h4>
+                  <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
+                  {track.genre && (
+                    <span className="inline-block mt-2 px-2 py-1 bg-cyan-500 text-black font-bold text-xs rounded-full border border-black">
+                      {track.genre.toUpperCase()}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* FIXED PLAYER BAR AT BOTTOM */}
+      {currentTrack && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-black shadow-[0_-8px_0px_0px_rgba(0,0,0,0.1)]">
+          <div className="container py-4">
+            <div className="flex items-center gap-6">
+              {/* Track Info */}
+              <div className="flex items-center gap-4 flex-1 min-w-0">
+                <div className="w-16 h-16 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_black] flex-shrink-0 overflow-hidden">
+                  {currentTrack.coverArtUrl ? (
+                    <img
+                      src={currentTrack.coverArtUrl}
+                      alt={currentTrack.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                      <Music className="w-6 h-6 text-white" />
+                    </div>
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-bold text-lg truncate">{currentTrack.title}</h4>
+                  <p className="text-sm text-gray-600 truncate">{currentTrack.artist}</p>
+                </div>
+              </div>
+
+              {/* Player Controls */}
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                >
+                  <SkipBack className="w-5 h-5" />
                 </Button>
-                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
-                  <SkipBack className="h-4 w-4" />
-                </Button>
-                <Button 
-                  className="rounded-full w-14 h-14 bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" 
-                  size="icon" 
+                
+                <Button
                   onClick={() => setIsPlaying(!isPlaying)}
+                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
                 >
                   {isPlaying ? (
-                    <Pause className="h-6 w-6 text-black" />
+                    <Pause className="w-6 h-6 text-black" />
                   ) : (
-                    <Play className="h-6 w-6 text-black ml-0.5" />
+                    <Play className="w-6 h-6 text-black ml-0.5" />
                   )}
                 </Button>
-                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
-                  <SkipForward className="h-4 w-4" />
-                </Button>
-                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
-                  <Repeat className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" 
+                
+                <Button
                   variant="outline"
-                  onClick={() => handleLikeTrack(currentTrack.id)}
+                  size="icon"
+                  className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
                 >
-                  <Heart className="h-4 w-4 mr-2" />
-                  <span className="text-sm font-bold">LIKE</span>
+                  <SkipForward className="w-5 h-5" />
                 </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" variant="outline">
-                      <Share2 className="h-4 w-4 mr-2" />
-                      <span className="text-sm font-bold">SHARE</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleShare(currentTrack, 'twitter')}>
-                      <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                      </svg>
-                      Share on Twitter
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleShare(currentTrack, 'facebook')}>
-                      <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                      </svg>
-                      Share on Facebook
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleShare(currentTrack, 'copy')}>
-                      {copiedTrackId === currentTrack.id ? (
-                        <Check className="h-4 w-4 mr-2" />
-                      ) : (
-                        <Copy className="h-4 w-4 mr-2" />
-                      )}
-                      Copy Link
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <div className="flex items-center gap-2">
-                  <Volume2 className="h-5 w-5 text-gray-600" />
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={volume}
-                    onChange={(e) => setVolume(parseInt(e.target.value))}
-                    className="w-24 h-2"
-                  />
-                </div>
               </div>
-            </div>
 
-            {/* Progress Bar */}
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600 font-mono w-12 text-right">
-                {formatTime(currentTime)}
-              </span>
-              <div className="flex-1">
-                <div className="relative">
-                  <div className="w-full h-3 bg-white border-2 border-black rounded-lg">
-                    <div
-                      className="h-full bg-cyan-500 rounded-lg transition-all"
-                      style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}
-                    />
-                  </div>
+              {/* Progress Bar */}
+              <div className="flex-1 hidden lg:flex items-center gap-4">
+                <span className="text-sm font-medium">{formatTime(currentTime)}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max={duration || 0}
+                  value={currentTime}
+                  onChange={(e) => {
+                    const audio = audioRef.current;
+                    if (audio) {
+                      audio.currentTime = Number(e.target.value);
+                    }
+                  }}
+                  className="flex-1 h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-cyan-500"
+                />
+                <span className="text-sm font-medium">{formatTime(duration)}</span>
+              </div>
+
+              {/* Volume & Actions */}
+              <div className="hidden md:flex items-center gap-3">
+                <Button
+                  onClick={() => handleLike(currentTrack.id)}
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                >
+                  <Heart className="w-5 h-5" />
+                </Button>
+                
+                <div className="flex items-center gap-2">
+                  <Volume2 className="w-5 h-5" />
                   <input
                     type="range"
                     min="0"
-                    max={duration || currentTrack.duration}
-                    value={currentTime}
+                    max="1"
+                    step="0.01"
+                    value={volume}
                     onChange={(e) => {
-                      const newTime = parseInt(e.target.value);
-                      setCurrentTime(newTime);
+                      const newVolume = Number(e.target.value);
+                      setVolume(newVolume);
                       if (audioRef.current) {
-                        audioRef.current.currentTime = newTime;
+                        audioRef.current.volume = newVolume;
                       }
                     }}
-                    className="absolute inset-0 w-full opacity-0 cursor-pointer"
+                    className="w-24 h-2 bg-gray-200 rounded-full appearance-none cursor-pointer accent-cyan-500"
                   />
                 </div>
               </div>
-              <span className="text-sm text-gray-600 font-mono w-12">
-                {formatTime(duration || currentTrack.duration)}
-              </span>
             </div>
           </div>
         </div>
       )}
-      
-      {/* Hidden audio element */}
-      <audio ref={audioRef} />
+
+      {/* Hidden Audio Element */}
+      <audio ref={audioRef} src={currentTrack?.audioUrl} />
     </div>
   );
 }

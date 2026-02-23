@@ -79,14 +79,14 @@ export default function BopAudio() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Button 
-                className="rounded-lg text-lg px-10 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-10 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 onClick={() => setLocation("/discover")}
               >
                 Start Listening Now
               </Button>
               <Button 
-                className="rounded-lg text-lg px-10 py-7 border-2 border-black hover:bg-gray-50 font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-10 py-7 border-2 border-black hover:bg-gray-50 font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/signup")}
@@ -199,7 +199,7 @@ export default function BopAudio() {
 
             <div className="text-center">
               <Button 
-                className="rounded-lg text-lg px-10 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-10 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
@@ -310,14 +310,14 @@ export default function BopAudio() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center pt-6">
               <Button 
-                className="rounded-lg text-lg px-12 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-12 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
                 Start Free Today
               </Button>
               <Button 
-                className="rounded-lg text-lg px-12 py-7 border-2 border-black hover:bg-white font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-12 py-7 border-2 border-black hover:bg-white font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/pricing")}

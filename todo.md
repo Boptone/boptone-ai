@@ -1587,3 +1587,44 @@
 - [x] Replace Spotify embed with BopAudio mini-player
 - [ ] Test on live artist profile (pending username setup)
 - [x] Mobile responsiveness testing - responsive breakpoints verified
+
+
+## 🔥 WORLD-CLASS /DISCOVER REDESIGN - MAKE ARTISTS SWITCH TO BOPTONE
+
+### Critical Fixes
+- [x] Fix /bopaudio page - make all buttons properly rounded (rounded-full)
+- [x] Fix /bopaudio page - ensure pill styling matches rest of site
+
+### Research Phase
+- [ ] Research Spotify's immersive hero sections and album artwork presentation
+- [ ] Analyze Apple Music's editorial curation and typography
+- [ ] Study Tidal's artist-first presentation and premium feel
+- [ ] Research Bandcamp's discovery-focused layout
+- [ ] Document world-class streaming design patterns
+
+### Hero Section Redesign
+- [ ] Create full-screen immersive hero with massive album artwork
+- [ ] Add gradient overlays for depth and readability
+- [ ] Implement bold typography (48px+ headlines)
+- [ ] Add emotional copy ("Your Next Obsession Starts Here")
+- [ ] Feature artist spotlight with large photos and bios
+
+### Curated Discovery Sections
+- [ ] Design "Editor's Picks" section with asymmetric layout
+- [ ] Create "Rising Stars" section highlighting new artists
+- [ ] Build "Genre Deep Dives" with immersive category exploration
+- [ ] Implement hover interactions (album art zoom, play button animations)
+- [ ] Add personality and storytelling to each section
+
+### Mobile Optimization
+- [ ] Create touch-optimized swipeable carousels
+- [ ] Ensure massive artwork looks stunning on mobile
+- [ ] Test gesture interactions (swipe, tap, hold)
+- [ ] Verify mobile-first responsive breakpoints
+
+### Visual Polish
+- [ ] Ensure BAP Protocol styling (2px borders, 4px shadows, cyan-500)
+- [ ] Add breathing room between sections
+- [ ] Create clear visual hierarchy
+- [ ] Test emotional impact and "wow factor"
+- [ ] Verify it exceeds Spotify/Apple Music/Tidal quality
