@@ -1,0 +1,110 @@
+{
+  "query": "SELECT id, title, genre FROM bap_tracks LIMIT 20;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT id, title, genre FROM bap_tracks LIMIT 20;",
+  "rows": [
+    {
+      "id": "1",
+      "title": "Midnight Dreams",
+      "genre": "Electronic"
+    },
+    {
+      "id": "30001",
+      "title": "Tonight (Scottie Diablo Edit)",
+      "genre": "ELECTRONIC"
+    },
+    {
+      "id": "60001",
+      "title": "Pulse",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60002",
+      "title": "Neon Nights",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60003",
+      "title": "Digital Dreams",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60004",
+      "title": "Synthwave",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60005",
+      "title": "Afterglow",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60006",
+      "title": "Voltage",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60007",
+      "title": "Circuit Breaker",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60008",
+      "title": "Frequency",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60009",
+      "title": "Hyperspace",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60010",
+      "title": "Wavelength",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60011",
+      "title": "Pulse (2)",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60012",
+      "title": "Neon Nights (2)",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60013",
+      "title": "Digital Dreams (2)",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60014",
+      "title": "Synthwave (2)",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60015",
+      "title": "Afterglow (2)",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60016",
+      "title": "Pulse",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60017",
+      "title": "Neon Nights",
+      "genre": "Electronic"
+    },
+    {
+      "id": "60018",
+      "title": "Digital Dreams",
+      "genre": "Electronic"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tgenre\n1\tMidnight Dreams\tElectronic\n30001\tTonight (Scottie Diablo Edit)\tELECTRONIC\n60001\tPulse\tElectronic\n60002\tNeon Nights\tElectronic\n60003\tDigital Dreams\tElectronic\n60004\tSynthwave\tElectronic\n60005\tAfterglow\tElectronic\n60006\tVoltage\tElectronic\n60007\tCircuit Breaker\tElectronic\n60008\tFrequency\tElectronic\n60009\tHyperspace\tElectronic\n60010\tWavelength\tElectronic\n60011\tPulse (2)\tElectronic\n60012\tNeon Nights (2)\tElectronic\n60013\tDigital Dreams (2)\tElectronic\n60014\tSynthwave (2)\tElectronic\n60015\tAfterglow (2)\tElectronic\n60016\tPulse\tElectronic\n60017\tNeon Nights\tElectronic\n60018\tDigital Dreams\tElectronic\n",
+  "stderr": "",
+  "execution_time_ms": 50
+}

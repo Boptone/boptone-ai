@@ -569,33 +569,37 @@ export async function getArtistPayments(artistId: number) {
 // DISCOVERY & FEEDS
 // ============================================================================
 
-export async function getTrendingTracks(limit = 50) {
+export async function getTrendingTracks(limit = 50, genre?: string) {
   const db = await getDb();
   if (!db) return [];
   
-  // Trending = highest play count in last 7 days
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  // Trending = highest play count (all time)
+  const conditions = [eq(bapTracks.status, "live")];
+  if (genre && genre !== "ALL") {
+    conditions.push(eq(bapTracks.genre, genre));
+  }
   
   return db
     .select()
     .from(bapTracks)
-    .where(and(
-      eq(bapTracks.status, "live"),
-      sql`${bapTracks.releasedAt} >= ${sevenDaysAgo}`
-    ))
+    .where(and(...conditions))
     .orderBy(desc(bapTracks.playCount))
     .limit(limit);
 }
 
-export async function getNewReleases(limit = 50) {
+export async function getNewReleases(limit = 50, genre?: string) {
   const db = await getDb();
   if (!db) return [];
+  
+  const conditions = [eq(bapTracks.status, "live")];
+  if (genre && genre !== "ALL") {
+    conditions.push(eq(bapTracks.genre, genre));
+  }
   
   return db
     .select()
     .from(bapTracks)
-    .where(eq(bapTracks.status, "live"))
+    .where(and(...conditions))
     .orderBy(desc(bapTracks.releasedAt))
     .limit(limit);
 }

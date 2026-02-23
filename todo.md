@@ -1785,3 +1785,40 @@
 - [x] Design for scalability (1000s of artists) - Database seeded with 202 tracks, 20 artists
 - [x] Grid layout that can handle massive catalog - 2/3/4 column responsive grid
 - [x] Position as world-class streaming marketplace - BopAudio branding, Top Bops section, clean design
+
+## BopAudio Discover Page Refinements (2026-02-23)
+
+### Branding Header
+- [x] Center "BOPAUDIO" text
+- [x] Use homepage hero font (text-6xl md:text-8xl font-extrabold)
+- [x] Use all caps for BOPAUDIO
+- [x] Remove tagline "Stream music. Support artists. Keep 90%."
+
+### Hero Music Player
+- [x] Remove white border from round play button inside album player
+- [x] Reposition song title tighter to right of album player (space-y-4 instead of space-y-8)
+- [x] Reposition artist name tighter to right of album player
+- [x] Clean, tight spacing for professional look
+
+### Top Bops Section
+- [x] Add more dummy demo cards - Fixed getTrendingTracks query, now shows 8 cards
+- [x] Ensure 8 cards display in grid (4-column layout on desktop)
+- [x] Verify responsive grid works correctly
+
+### Genre Filtering & Endless Scroll
+- [x] Implement genre selection from "Discover Other Genres" - Fixed genre format to match database
+- [x] Filter tracks by selected genre - tRPC queries updated with genre parameter
+- [x] Populate fresh artists/tracks/albums from selected genre - All sections filter correctly
+- [x] Implement endless scroll for genre-filtered views - IntersectionObserver loads 20 more tracks when scrolling
+
+### BAP Protocol Design Adherence
+- [x] Apply 2px black borders to ALL sections and cards
+- [x] Apply 4px brutalist shadows (shadow-[4px_4px_0px_0px_black]) to ALL interactive elements
+- [x] Use cyan-500 accents consistently throughout
+- [x] Hero section has BAP Protocol styling (album artwork border + shadow)
+- [x] Track cards have consistent 2px borders and 4px shadows
+- [x] Search bar has BAP Protocol styling (2px border + 4px shadow)
+- [x] Genre filter buttons have BAP Protocol styling (2px border + 4px shadow)
+- [x] Player bar buttons have BAP Protocol styling
+- [x] Removed soft shadows, using brutalist aesthetic
+- [x] Brutalist, bold aesthetic applied throughout entire page

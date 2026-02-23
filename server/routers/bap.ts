@@ -850,18 +850,24 @@ export const bapRouter = router({
      * Get trending tracks
      */
     trending: publicProcedure
-      .input(z.object({ limit: z.number().default(50) }))
+      .input(z.object({ 
+        limit: z.number().default(50),
+        genre: z.string().optional()
+      }))
       .query(async ({ input }) => {
-        return getTrendingTracks(input.limit);
+        return getTrendingTracks(input.limit, input.genre);
       }),
     
     /**
      * Get new releases
      */
     newReleases: publicProcedure
-      .input(z.object({ limit: z.number().default(50) }))
+      .input(z.object({ 
+        limit: z.number().default(50),
+        genre: z.string().optional()
+      }))
       .query(async ({ input }) => {
-        return getNewReleases(input.limit);
+        return getNewReleases(input.limit, input.genre);
       }),
     
     /**

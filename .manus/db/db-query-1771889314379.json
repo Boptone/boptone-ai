@@ -1,0 +1,62 @@
+{
+  "query": "SELECT genre, COUNT(*) as count FROM bap_tracks GROUP BY genre ORDER BY count DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT genre, COUNT(*) as count FROM bap_tracks GROUP BY genre ORDER BY count DESC;",
+  "rows": [
+    {
+      "genre": "Electronic",
+      "count": "99"
+    },
+    {
+      "genre": "Jazz",
+      "count": "85"
+    },
+    {
+      "genre": "Rock",
+      "count": "73"
+    },
+    {
+      "genre": "Indie",
+      "count": "57"
+    },
+    {
+      "genre": "Hip-Hop",
+      "count": "52"
+    },
+    {
+      "genre": "Country",
+      "count": "49"
+    },
+    {
+      "genre": "Latin",
+      "count": "47"
+    },
+    {
+      "genre": "Pop",
+      "count": "39"
+    },
+    {
+      "genre": "Alternative",
+      "count": "31"
+    },
+    {
+      "genre": "Soul",
+      "count": "27"
+    },
+    {
+      "genre": "Funk",
+      "count": "21"
+    },
+    {
+      "genre": "R&B",
+      "count": "20"
+    },
+    {
+      "genre": "ELECTRONIC",
+      "count": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "genre\tcount\nElectronic\t99\nJazz\t85\nRock\t73\nIndie\t57\nHip-Hop\t52\nCountry\t49\nLatin\t47\nPop\t39\nAlternative\t31\nSoul\t27\nFunk\t21\nR&B\t20\nELECTRONIC\t1\n",
+  "stderr": "",
+  "execution_time_ms": 48
+}

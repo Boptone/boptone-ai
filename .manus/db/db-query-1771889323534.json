@@ -1,0 +1,49 @@
+{
+  "query": "SELECT DISTINCT genre FROM bap_tracks ORDER BY genre;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SELECT DISTINCT genre FROM bap_tracks ORDER BY genre;",
+  "rows": [
+    {
+      "genre": "Alternative"
+    },
+    {
+      "genre": "Country"
+    },
+    {
+      "genre": "ELECTRONIC"
+    },
+    {
+      "genre": "Electronic"
+    },
+    {
+      "genre": "Funk"
+    },
+    {
+      "genre": "Hip-Hop"
+    },
+    {
+      "genre": "Indie"
+    },
+    {
+      "genre": "Jazz"
+    },
+    {
+      "genre": "Latin"
+    },
+    {
+      "genre": "Pop"
+    },
+    {
+      "genre": "R&B"
+    },
+    {
+      "genre": "Rock"
+    },
+    {
+      "genre": "Soul"
+    }
+  ],
+  "messages": [],
+  "stdout": "genre\nAlternative\nCountry\nELECTRONIC\nElectronic\nFunk\nHip-Hop\nIndie\nJazz\nLatin\nPop\nR&B\nRock\nSoul\n",
+  "stderr": "",
+  "execution_time_ms": 50
+}

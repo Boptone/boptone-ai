@@ -46,17 +46,44 @@ export default function Discover() {
   };
 
   const genres = [
-    "ALL", "HIP-HOP", "POP", "ROCK", "ELECTRONIC", "R&B", 
-    "JAZZ", "COUNTRY", "LATIN", "INDIE", "ALTERNATIVE"
+    "ALL", "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", 
+    "Jazz", "Country", "Latin", "Indie", "Alternative"
   ];
 
   // Fetch tracks from BAP router
   const { data: trendingTracks = [] } = trpc.bap.discover.trending.useQuery({ 
-    limit: 20
+    limit: selectedGenre === "ALL" ? 20 : 100,
+    genre: selectedGenre === "ALL" ? undefined : selectedGenre
   });
   const { data: newReleases = [] } = trpc.bap.discover.newReleases.useQuery({ 
-    limit: 20
+    limit: selectedGenre === "ALL" ? 20 : 100,
+    genre: selectedGenre === "ALL" ? undefined : selectedGenre
   });
+
+  const scrollObserverRef = useRef<HTMLDivElement>(null);
+  const [displayLimit, setDisplayLimit] = useState(20);
+
+  useEffect(() => {
+    setDisplayLimit(20); // Reset to 20 whenever genre changes
+    if (selectedGenre === "ALL") {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && displayLimit < 100) {
+          setDisplayLimit(prev => Math.min(prev + 20, 100));
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (scrollObserverRef.current) {
+      observer.observe(scrollObserverRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [selectedGenre, displayLimit]);
   const { data: searchResults = [] } = trpc.bap.discover.search.useQuery(
     { query: searchQuery, limit: 20 },
     { enabled: searchQuery.length > 0 }
@@ -70,11 +97,15 @@ export default function Discover() {
   // Get featured/spotlight track (first trending track)
   const spotlightTrack = trendingTracks?.[0];
   
-  // Get trending tracks for display (first 8 for 2x4 grid)
-  const trendingTracksDisplay = trendingTracks?.slice(0, 8) || [];
+  // Get trending tracks for display (first 8 for 2x4 grid when ALL, or displayLimit when genre selected)
+  const trendingTracksDisplay = selectedGenre === "ALL" 
+    ? trendingTracks?.slice(0, 8) || []
+    : trendingTracks?.slice(0, displayLimit) || [];
   
-  // Get new releases for display (first 12)
-  const newReleasesDisplay = newReleases?.slice(0, 12) || [];
+  // Get new releases for display (first 12 when ALL, or displayLimit when genre selected)
+  const newReleasesDisplay = selectedGenre === "ALL"
+    ? newReleases?.slice(0, 12) || []
+    : newReleases?.slice(0, displayLimit) || [];
 
   // Get editor's picks (curated selection from trending)
   const editorsPicks = trendingTracks?.slice(6, 11) || []; // 1 large + 4 small = 5 total
@@ -152,14 +183,13 @@ export default function Discover() {
 
   return (
     <div className="min-h-screen bg-white pb-32">
-      
       {/* BOPAUDIO BRANDING HEADER */}
-      <div className="bg-black border-b-2 border-cyan-500">
-        <div className="container py-8">
-          <h1 className="text-6xl md:text-7xl font-black text-white tracking-tight">
-            BOP<span className="text-cyan-500">AUDIO</span>
+      <div className="bg-black border-b-2 border-white py-12">
+        <div className="container">
+          <h1 className="text-6xl md:text-8xl font-extrabold text-center">
+            <span className="text-white">BOP</span>
+            <span className="text-cyan-500">AUDIO</span>
           </h1>
-          <p className="text-lg text-gray-400 mt-2">Stream music. Support artists. Keep 90%.</p>
         </div>
       </div>
 
@@ -189,7 +219,7 @@ export default function Discover() {
               {/* Left: Album Artwork */}
               <div className="flex justify-center lg:justify-start">
                 <div className="relative group">
-                  <div className="w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-lg border-2 border-white/20 overflow-hidden">
+                  <div className="w-[280px] h-[280px] md:w-[320px] md:h-[320px] rounded-lg border-2 border-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     {spotlightTrack.coverArtUrl ? (
                       <img
                         src={spotlightTrack.coverArtUrl}
@@ -211,7 +241,7 @@ export default function Discover() {
                     onClick={() => handlePlayTrack(spotlightTrack.id)}
                     className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"
                   >
-                    <div className="w-24 h-24 rounded-full bg-cyan-500 border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center hover:scale-110 transition-transform">
+                    <div className="w-24 h-24 rounded-full bg-cyan-500 flex items-center justify-center hover:scale-110 transition-transform">
                       {currentTrackId === spotlightTrack.id && isPlaying ? (
                         <Pause className="w-12 h-12 text-black" />
                       ) : (
@@ -223,7 +253,7 @@ export default function Discover() {
               </div>
 
               {/* Right: Track Info - Clean Playback Only */}
-              <div className="text-white space-y-8 px-4 lg:px-0">
+              <div className="text-white space-y-4 px-4 lg:px-0">
                 <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                   {spotlightTrack.title}
                 </h1>
@@ -234,7 +264,7 @@ export default function Discover() {
 
                 <Button
                   onClick={() => handlePlayTrack(spotlightTrack.id)}
-                  className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold transition-all"
+                  className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
                 >
                   <Play className="w-6 h-6 mr-3" />
                   Play Now
@@ -262,7 +292,7 @@ export default function Discover() {
               placeholder="Search tracks, artists, albums..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full focus:border-cyan-500 transition-all"
+              className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full focus:border-cyan-500 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
             />
           </div>
         </div>
@@ -364,7 +394,7 @@ export default function Discover() {
               {editorsPicks.slice(1, 5).map((track) => (
                 <div
                   key={track.id}
-                  className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all"
+                  className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 >
                   <div className="aspect-square relative overflow-hidden">
                     {track.coverArtUrl ? (
@@ -432,7 +462,7 @@ export default function Discover() {
             {trendingTracksDisplay.map((track) => (
               <div
                 key={track.id}
-                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all"
+                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 <div className="aspect-square relative overflow-hidden">
                   {track.coverArtUrl ? (
@@ -489,7 +519,7 @@ export default function Discover() {
             {newReleasesDisplay.map((track) => (
               <div
                 key={track.id}
-                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all"
+                className="relative group bg-white border-2 border-black rounded-xl overflow-hidden hover:border-cyan-500 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 <div className="aspect-square relative overflow-hidden">
                   {track.coverArtUrl ? (
@@ -519,6 +549,17 @@ export default function Discover() {
               </div>
             ))}
           </div>
+
+          {/* Scroll Observer for Endless Loading */}
+          {selectedGenre !== "ALL" && displayLimit < 100 && (
+            <div ref={scrollObserverRef} className="flex justify-center py-8">
+              <div className="flex items-center gap-2 text-gray-500">
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          )}
         </section>
       )}
 
@@ -565,7 +606,7 @@ export default function Discover() {
                 {/* Compact Play Button */}
                 <Button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black transition-all"
+                  className="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 >
                   {isPlaying ? (
                     <Pause className="w-4 h-4 text-black" />
@@ -612,7 +653,7 @@ export default function Discover() {
                 
                 <Button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 transition-all"
+                  className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-600 transition-all border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 >
                   {isPlaying ? (
                     <Pause className="w-6 h-6 text-black" />
@@ -694,7 +735,7 @@ export default function Discover() {
               key={genre}
               onClick={() => setSelectedGenre(genre)}
               variant={selectedGenre === genre ? "default" : "outline"}
-              className={`rounded-full px-8 py-4 font-bold text-base border-2 border-black hover:border-cyan-500 transition-all ${
+              className={`rounded-full px-8 py-4 font-bold text-base border-2 border-black hover:border-cyan-500 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
                 selectedGenre === genre
                   ? "bg-cyan-500 text-black"
                   : "bg-white text-black hover:bg-gray-50"
