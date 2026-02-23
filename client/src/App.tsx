@@ -63,6 +63,7 @@ const MyStore = lazy(() => import("./pages/MyStore"));
 const MyStoreOrders = lazy(() => import("./pages/MyStoreOrders"));
 const AuthSignup = lazy(() => import("./pages/AuthSignup"));
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
 const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const WriterInvite = lazy(() => import("./pages/WriterInvite"));
 const WriterProfile = lazy(() => import("./pages/WriterProfile"));
@@ -105,6 +106,7 @@ function Router() {
         <Route path={"/login"} component={Login} />
         <Route path={"/auth-signup"} component={MultiStepSignup} />
         <Route path={"/forgot-password"} component={ForgotPassword} />
+        <Route path={"/verify-email"} component={VerifyEmail} />
         <Route path={"/how-it-works"} component={HowItWorks} />
         <Route path={"/writer-invite"} component={WriterInvite} />
         <Route path={"/writer-profile"} component={WriterProfile} />

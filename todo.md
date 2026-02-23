@@ -920,3 +920,13 @@
 - [x] Ensure consistency with site-wide BAP aesthetic (cyan shadow, pill buttons, bold typography)
 - [x] Test redesigned login page and checkbox interaction
 - [x] Save checkpoint
+
+## Auth Pages BAP Protocol Design
+
+- [x] Audit existing auth pages (signup, password reset, email verification)
+- [x] Create/update signup page with BAP aesthetic (cyan shadow, pill buttons, bold typography)
+- [x] Create/update password reset page with BAP aesthetic
+- [x] Create/update email verification page with BAP aesthetic
+- [x] Ensure all auth pages have consistent design with /login
+- [x] Test all auth page flows
+- [x] Save checkpoint

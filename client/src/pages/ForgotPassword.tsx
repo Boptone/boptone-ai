@@ -170,7 +170,7 @@ export default function ForgotPassword() {
 
               <Button
                 type="submit"
-                className="w-full rounded-full font-bold bg-black hover:bg-gray-800 text-white"
+                className="w-full rounded-full font-bold bg-black hover:bg-gray-900 text-white shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none"
                 disabled={isLoading}
               >
                 {isLoading ? "Sending..." : "Send Reset Link"}
@@ -219,7 +219,7 @@ export default function ForgotPassword() {
 
               <Button
                 variant="outline"
-                className="w-full rounded-full font-bold border-2 border-gray-200 bg-white hover:bg-gray-100 text-black"
+                className="w-full rounded-full font-bold border-2 border-black bg-white hover:bg-gray-100 text-black shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all"
                 onClick={() => setStep("verify")}
               >
                 I have a verification code
@@ -267,7 +267,7 @@ export default function ForgotPassword() {
 
               <Button
                 type="submit"
-                className="w-full rounded-full font-bold bg-black hover:bg-gray-800 text-white"
+                className="w-full rounded-full font-bold bg-black hover:bg-gray-900 text-white shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none"
                 disabled={isLoading}
               >
                 {isLoading ? "Verifying..." : "Verify & Reset Password"}
@@ -304,7 +304,7 @@ export default function ForgotPassword() {
               </div>
 
               <Button
-                className="w-full rounded-full font-bold bg-black hover:bg-gray-800 text-white"
+                className="w-full rounded-full font-bold bg-black hover:bg-gray-900 text-white shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none"
                 onClick={() => window.location.href = getLoginUrl()}
               >
                 Continue to Sign In

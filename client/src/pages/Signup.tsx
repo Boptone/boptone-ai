@@ -185,7 +185,7 @@ export default function Signup() {
                 <div className="mb-6">
                   <Button
                     onClick={() => handleTierSelection(tier.id)}
-                    className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
+                    className="w-full rounded-full bg-black text-white hover:bg-gray-900 h-12 shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none font-bold"
                   >
                     {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                   </Button>
@@ -325,7 +325,7 @@ export default function Signup() {
 
             <Button
               type="submit"
-              className="w-full rounded-full bg-black hover:bg-gray-800 text-white"
+              className="w-full rounded-full bg-black hover:bg-gray-900 text-white shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none font-bold"
               size="lg"
               disabled={createProfile.isPending}
             >
