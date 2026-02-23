@@ -122,15 +122,6 @@ export default function VerifyEmail() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
       <div className="w-full max-w-md">
-        {/* Logo and Title */}
-        <div className="text-center mb-12">
-          <img
-            src={APP_LOGO}
-            alt={APP_TITLE}
-            className="w-24 h-24 mx-auto mb-6 border-4 border-black"
-          />
-        </div>
-
         {/* Main Card */}
         <div className="bg-white rounded-3xl p-8 border-2 border-gray-200">
           {/* Pending State (Auto-verifying) */}

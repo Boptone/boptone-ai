@@ -930,3 +930,12 @@
 - [x] Ensure all auth pages have consistent design with /login
 - [x] Test all auth page flows
 - [x] Save checkpoint
+
+## Auth Pages Icon Removal & Layout Fix
+
+- [x] Find all auth pages with large black icon/logo above cards
+- [x] Remove icon from Login page
+- [x] Remove icon from VerifyEmail page (ForgotPassword didn't have one)
+- [x] Adjust card positioning to move content higher on page
+- [x] Test all auth pages
+- [x] Save checkpoint

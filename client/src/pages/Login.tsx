@@ -25,13 +25,8 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
       <div className="w-full max-w-md">
-        {/* Logo and Title */}
-        <div className="text-center mb-12">
-          <img
-            src={APP_LOGO}
-            alt={APP_TITLE}
-            className="w-24 h-24 mx-auto mb-6 border-4 border-black"
-          />
+        {/* Title */}
+        <div className="text-center mb-8">
           <h1 className="text-5xl font-black text-black mb-4 leading-tight">
             Welcome Back
           </h1>
