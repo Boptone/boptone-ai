@@ -170,7 +170,7 @@ export default function Discover() {
   };
 
   const TrackCard = ({ track }: { track: any }) => (
-    <Card className="rounded-xl border-2 border-gray-200 hover:border-gray-400 hover:shadow-lg transition-all bg-white">
+    <Card className="rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all bg-white">
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
           <div className="relative flex-shrink-0 group">
@@ -180,14 +180,14 @@ export default function Discover() {
               className="w-24 h-24 rounded-xl object-cover border-2 border-gray-200"
             />
             <Button 
-              className="rounded-full absolute inset-0 m-auto w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity bg-black hover:bg-gray-800" 
+              className="rounded-full absolute inset-0 m-auto w-12 h-12 opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black]" 
               size="icon"
               onClick={() => handlePlayTrack(track)}
             >
               {currentTrack?.id === track.id && isPlaying ? (
-                <Pause className="h-5 w-5 text-white" />
+                <Pause className="h-5 w-5 text-black" />
               ) : (
-                <Play className="h-5 w-5 text-white ml-0.5" />
+                <Play className="h-5 w-5 text-black ml-0.5" />
               )}
             </Button>
           </div>
@@ -196,7 +196,7 @@ export default function Discover() {
             <p className="text-lg text-gray-600 font-medium truncate">{track.artist}</p>
             <div className="flex items-center gap-4 mt-2 text-sm text-gray-600 font-medium">
               {track.genre && (
-                <Badge className="rounded-full border-2 border-gray-200 bg-white text-black font-bold text-xs px-3 py-1 uppercase">
+                <Badge className="rounded-full border-2 border-black bg-cyan-500 text-black font-bold text-xs px-3 py-1 uppercase shadow-[2px_2px_0px_0px_black]">
                   {track.genre}
                 </Badge>
               )}
@@ -216,7 +216,7 @@ export default function Discover() {
             defaultPrice={3}
           />
           <Button 
-            className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" 
+            className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" 
             variant="outline"
             onClick={() => handleLikeTrack(track.id)}
           >
@@ -225,7 +225,7 @@ export default function Discover() {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" variant="outline">
+              <Button className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" variant="outline">
                 <Share2 className="h-4 w-4 mr-2" />
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
@@ -276,11 +276,11 @@ export default function Discover() {
           </div>
 
           {/* Right: Stats Card */}
-          <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white rounded-xl">
+          <Card className="border-2 border-black shadow-[4px_4px_0px_0px_black] bg-white rounded-lg">
             <CardContent className="p-10">
               <div className="space-y-8">
                 <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 rounded-lg bg-cyan-500 border-2 border-black shadow-[2px_2px_0px_0px_black] flex items-center justify-center flex-shrink-0">
                     <Music className="h-7 w-7 text-black" />
                   </div>
                   <div>
@@ -289,7 +289,7 @@ export default function Discover() {
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <div className="w-14 h-14 rounded-lg bg-cyan-500 border-2 border-black shadow-[2px_2px_0px_0px_black] flex items-center justify-center flex-shrink-0">
                     <TrendingUp className="h-7 w-7 text-black" />
                   </div>
                   <div>
@@ -381,51 +381,75 @@ export default function Discover() {
           </div>
         )}
 
+        {/* Trending Tracks */}
+        {!searchQuery && trendingTracks && trendingTracks.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold mb-6">Trending Now</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {trendingTracks.slice(0, 12).map((track: any) => (
+                <TrackCard key={track.id} track={track} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* New Releases */}
+        {!searchQuery && newReleases && newReleases.length > 0 && (
+          <div className="mb-12">
+            <h2 className="text-4xl font-bold mb-6">New Releases</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {newReleases.slice(0, 12).map((track: any) => (
+                <TrackCard key={track.id} track={track} />
+              ))}
+            </div>
+          </div>
+        )}
+
 
       </div>
 
       {/* Music Player (Fixed Bottom) */}
       {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 z-50 shadow-2xl">
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black z-50 shadow-[0px_-4px_0px_0px_black]">
           <div className="container mx-auto px-4 py-6">
             {/* Track Info & Controls */}
             <div className="flex items-center gap-6 mb-4">
               <img
                 src={currentTrack.artworkUrl || `https://via.placeholder.com/80x80?text=${encodeURIComponent(currentTrack.title)}`}
                 alt={currentTrack.title}
-                className="w-20 h-20 rounded-xl object-cover flex-shrink-0 border-2 border-gray-200"
+                className="w-20 h-20 rounded-lg object-cover flex-shrink-0 border-2 border-black shadow-[2px_2px_0px_0px_black]"
               />
               <div className="flex-1 min-w-0">
                 <h4 className="font-bold text-xl text-black truncate">{currentTrack.title}</h4>
                 <p className="text-lg text-gray-600 font-medium truncate">{currentTrack.artist}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
                   <Shuffle className="h-4 w-4" />
                 </Button>
-                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
                   <SkipBack className="h-4 w-4" />
                 </Button>
                 <Button 
-                  className="rounded-full w-14 h-14 bg-black hover:bg-gray-800 border-2 border-gray-200" 
+                  className="rounded-full w-14 h-14 bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" 
                   size="icon" 
                   onClick={() => setIsPlaying(!isPlaying)}
                 >
                   {isPlaying ? (
-                    <Pause className="h-6 w-6 text-white" />
+                    <Pause className="h-6 w-6 text-black" />
                   ) : (
-                    <Play className="h-6 w-6 text-white ml-0.5" />
+                    <Play className="h-6 w-6 text-black ml-0.5" />
                   )}
                 </Button>
-                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
                   <SkipForward className="h-4 w-4" />
                 </Button>
-                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400" size="icon" variant="outline">
+                <Button className="rounded-full border-2 border-black hover:bg-gray-50 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" size="icon" variant="outline">
                   <Repeat className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex items-center gap-3">
-                <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" 
+                <Button className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" 
                   variant="outline"
                   onClick={() => handleLikeTrack(currentTrack.id)}
                 >
@@ -434,7 +458,7 @@ export default function Discover() {
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2" variant="outline">
+                    <Button className="rounded-lg border-2 border-black hover:bg-gray-50 px-6 py-2 shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all" variant="outline">
                       <Share2 className="h-4 w-4 mr-2" />
                       <span className="text-sm font-bold">SHARE</span>
                     </Button>
@@ -483,9 +507,9 @@ export default function Discover() {
               </span>
               <div className="flex-1">
                 <div className="relative">
-                  <div className="w-full h-3 bg-white border-2 border-gray-200 rounded-xl">
+                  <div className="w-full h-3 bg-white border-2 border-black rounded-lg">
                     <div
-                      className="h-full bg-black rounded-xl transition-all"
+                      className="h-full bg-cyan-500 rounded-lg transition-all"
                       style={{ width: `${(currentTime / (duration || currentTrack.duration)) * 100}%` }}
                     />
                   </div>

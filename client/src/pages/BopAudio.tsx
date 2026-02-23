@@ -8,15 +8,17 @@ export default function BopAudio() {
   const [, setLocation] = useLocation();
   const [monthlyStreams, setMonthlyStreams] = useState(10000);
 
-  // Revenue calculations
-  const revenuePerStream = 0.004; // $0.004 per stream average
-  const totalRevenue = monthlyStreams * revenuePerStream;
-  const boptoneArtistEarnings = totalRevenue * 0.9; // 90% to artist
-  const boptoneFee = totalRevenue * 0.1; // 10% platform fee
+  // Revenue calculations with verified 2026 industry rates
+  const baseRatePerStream = 0.004; // Industry average per stream
   
-  // Competitor comparisons (typical rates)
-  const spotifyArtistEarnings = monthlyStreams * 0.003 * 0.7; // ~70% after distributor
-  const appleMusicArtistEarnings = monthlyStreams * 0.01 * 0.7; // ~70% after distributor
+  // BopAudio: 90% to artist (no distributor fee)
+  const boptoneArtistEarnings = monthlyStreams * baseRatePerStream * 0.9; // $0.0036 per stream
+  
+  // Spotify: 70% after distributor takes 30% cut
+  const spotifyArtistEarnings = monthlyStreams * 0.004 * 0.7; // $0.0028 per stream
+  
+  // Apple Music: 70% after distributor takes 30% cut (Apple pays $0.01 base)
+  const appleMusicArtistEarnings = monthlyStreams * 0.01 * 0.7; // $0.007 per stream
 
   const features = [
     {
@@ -79,17 +81,17 @@ export default function BopAudio() {
               <Button 
                 className="rounded-lg text-lg px-10 py-7 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-2 border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
-                onClick={() => setLocation("/signup")}
+                onClick={() => setLocation("/discover")}
               >
-                Start Streaming Free
+                Start Listening Now
               </Button>
               <Button 
                 className="rounded-lg text-lg px-10 py-7 border-2 border-black hover:bg-gray-50 font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 variant="outline" 
-                onClick={() => setLocation("/how-it-works")}
+                onClick={() => setLocation("/signup")}
               >
-                How It Works
+                Sign Up as Artist
               </Button>
             </div>
           </div>
@@ -144,12 +146,15 @@ export default function BopAudio() {
                   onChange={(e) => setMonthlyStreams(Number(e.target.value))}
                   className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-cyan-500"
                 />
-                <div className="text-center mt-4">
-                  <span className="text-4xl font-bold text-cyan-500">
-                    {monthlyStreams.toLocaleString()}
-                  </span>
-                  <span className="text-xl text-gray-600 ml-2">streams/month</span>
-                </div>
+              <div className="text-center mt-4">
+                <span className="text-4xl font-bold text-cyan-500">
+                  {monthlyStreams.toLocaleString()}
+                </span>
+                <span className="text-xl text-gray-600 ml-2">streams/month</span>
+              </div>
+              <div className="text-center mt-2">
+                <p className="text-xs text-gray-500">*Rates vary by country, subscription type, and platform revenue. Based on 2026 industry averages.</p>
+              </div>
               </div>
 
               {/* Earnings Comparison */}

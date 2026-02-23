@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { useBOPixel } from "@/hooks/useBOPixel";
+import { ArtistMiniPlayer } from "@/components/ArtistMiniPlayer";
 
 export default function ArtistProfile() {
   const { trackArtistView } = useBOPixel();
@@ -295,28 +296,10 @@ export default function ArtistProfile() {
             </CardContent>
           </Card>
 
-          {/* Featured Music Section */}
-          {profile.socialLinks?.spotify && (
-            <Card className="rounded-xl mb-8">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                  <Music className="h-6 w-6" style={{ color: themeColor }} />
-                  Featured Music
-                </h2>
-                <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                  <iframe
-                    src={`https://open.spotify.com/embed/artist/${profile.socialLinks.spotify}?utm_source=generator&theme=0`}
-                    width="100%"
-                    height="380"
-                    frameBorder="0"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
-                    className="rounded-lg"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          )}
+          {/* BopAudio Mini-Player */}
+          <div className="mb-8">
+            <ArtistMiniPlayer artistId={profile.id} themeColor={themeColor} />
+          </div>
 
           {/* Merchandise Section */}
           {products && products.length > 0 && (

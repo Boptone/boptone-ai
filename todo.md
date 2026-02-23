@@ -1447,3 +1447,143 @@
 - [x] All cards have 2px black borders and 4px brutalist shadows
 - [x] Tested on live site - VERIFIED PERFECT
 - [x] Ready for checkpoint
+
+
+## BopAudio Streaming Platform - Enterprise-Grade Build 🎵 (IN PROGRESS)
+
+### Phase 1: Marketing Page Fixes (CURRENT)
+- [ ] Fix revenue calculator math - verify real industry rates (Spotify $0.003-0.005, Apple Music $0.01)
+- [ ] Add proper mobile responsiveness testing (iOS Safari, Chrome, Samsung Internet)
+- [ ] Add "Start Listening" CTA button that links to streaming platform
+- [ ] Verify all BAP Protocol styling on mobile breakpoints
+- [ ] Test calculator slider on touch devices
+- [ ] Ensure all text is readable on small screens
+- [ ] Save checkpoint
+
+### Phase 2: Full Streaming Platform Interface
+- [ ] Create /listen or /discover page as main streaming platform
+- [ ] Build global music player component with:
+  - [ ] Play/pause controls
+  - [ ] Progress bar with seek functionality
+  - [ ] Volume control
+  - [ ] Next/previous track buttons
+  - [ ] Shuffle and repeat toggles
+  - [ ] Current track info (artwork, title, artist)
+  - [ ] Queue management
+- [ ] Implement search functionality:
+  - [ ] Search bar in header
+  - [ ] Real-time search results (tracks, artists, albums)
+  - [ ] Search history
+  - [ ] Trending searches
+- [ ] Build music discovery interface:
+  - [ ] Featured playlists section
+  - [ ] New releases grid
+  - [ ] Trending tracks list
+  - [ ] Genre browsing cards
+  - [ ] Recently played section
+  - [ ] Recommended for you (based on listening history)
+- [ ] Create track listing components:
+  - [ ] Track card with play button
+  - [ ] Album grid view
+  - [ ] Playlist view
+  - [ ] Artist discography view
+- [ ] Implement playback functionality:
+  - [ ] Audio streaming from S3
+  - [ ] Buffering and loading states
+  - [ ] Error handling for failed loads
+  - [ ] Background playback support
+- [ ] Add BAP Protocol styling to all components
+- [ ] Save checkpoint
+
+### Phase 3: Artist Mini-Player Integration
+- [ ] Read current ArtistProfile.tsx to understand structure
+- [ ] Create ArtistMiniPlayer component:
+  - [ ] Embedded player showing artist's tracks
+  - [ ] Play button on each track
+  - [ ] Full discography display
+  - [ ] Album/single organization
+  - [ ] BAP Protocol styling
+- [ ] Integrate mini-player with global player state
+- [ ] Ensure seamless playback between artist page and main platform
+- [ ] Test on multiple artist profiles
+- [ ] Save checkpoint
+
+### Phase 4: Mobile Responsiveness & Cross-Browser Testing
+- [ ] Test on iOS Safari (iPhone 12, 13, 14, 15)
+- [ ] Test on Chrome Mobile (Android)
+- [ ] Test on Samsung Internet (Samsung Galaxy)
+- [ ] Test on iPad Safari (tablet view)
+- [ ] Verify touch controls work perfectly:
+  - [ ] Slider controls
+  - [ ] Play/pause buttons
+  - [ ] Volume controls
+  - [ ] Search input
+- [ ] Test responsive breakpoints (sm, md, lg, xl)
+- [ ] Verify BAP Protocol styling on all screen sizes
+- [ ] Test audio playback on mobile browsers
+- [ ] Check for any layout breaks or overflow issues
+- [ ] Save checkpoint
+
+### Phase 5: Performance & Polish
+- [ ] Optimize audio loading and buffering
+- [ ] Add loading skeletons for music cards
+- [ ] Implement lazy loading for track lists
+- [ ] Add error boundaries for player failures
+- [ ] Test with slow network connections
+- [ ] Verify analytics tracking (BOPixel events)
+- [ ] Add keyboard shortcuts (spacebar = play/pause, arrow keys = seek)
+- [ ] Test accessibility (screen readers, keyboard navigation)
+- [ ] Final cross-browser verification
+- [ ] Save final checkpoint
+
+### Technical Requirements
+- [ ] Use existing bapTracks, bapAlbums, bapStreams tables
+- [ ] Integrate with existing music upload system (MyMusic.tsx)
+- [ ] Use S3 URLs for audio streaming
+- [ ] Track stream counts in bapStreams table
+- [ ] Update artist analytics in real-time
+- [ ] Ensure 90/10 revenue split calculations are accurate
+- [ ] Add rate limiting for API calls
+- [ ] Implement caching for frequently accessed tracks
+
+### Success Criteria
+- [ ] Marketing page loads in <2 seconds on 3G
+- [ ] Streaming platform loads in <3 seconds on 3G
+- [ ] Audio playback starts in <1 second after click
+- [ ] No layout shifts or jank on any device
+- [ ] All BAP Protocol styling consistent across pages
+- [ ] Revenue calculator shows accurate industry comparisons
+- [ ] Search returns results in <500ms
+- [ ] Player controls respond instantly to touch/click
+- [ ] Works perfectly on iOS Safari, Chrome, Samsung Internet
+- [ ] Zero console errors or warnings
+
+
+## BopAudio Streaming Platform ✅ COMPLETE (Phase 2)
+
+### Marketing Page (/bopaudio) ✅
+- [x] Fix revenue calculator with accurate 2026 industry rates
+- [x] Add disclaimer about rate variations
+- [x] Change primary CTA to "Start Listening Now" → /discover
+- [x] Add "Sign Up as Artist" as secondary CTA
+- [x] Verify mobile responsiveness
+
+### Streaming Platform (/discover) ✅
+- [x] Seed database with 20 artists, 40 albums, 201 tracks
+- [x] Apply BAP Protocol styling to all components (2px borders, 4px shadows, cyan-500 accents)
+- [x] Add Trending Tracks grid (3 columns, 12 tracks)
+- [x] Add New Releases grid (3 columns, 12 tracks)
+- [x] Fix track card rendering issue
+- [x] Verify BAP Protocol styling on track cards
+- [x] Test search functionality
+- [x] Test genre filtering
+- [x] Test spotlight player
+- [x] Test fixed player bar at bottom
+
+### Artist Mini-Players ✅
+- [x] Create ArtistMiniPlayer component with BAP Protocol styling
+- [x] Add getArtistTracks tRPC procedure to music router
+- [x] Integrate mini-player into ArtistProfile page
+- [x] Replace Spotify embed with BopAudio mini-player
+- [ ] Test on live artist profile (pending username setup)
+- [x] Mobile responsiveness testing - responsive breakpoints verified

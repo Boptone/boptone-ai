@@ -675,4 +675,35 @@ export const musicRouter = router({
 
       return { success: true };
     }),
+
+  /**
+   * Get tracks by artist ID for mini-player display
+   */
+  getArtistTracks: protectedProcedure
+    .input(z.object({
+      artistId: z.number(),
+      limit: z.number().default(10),
+    }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) return [];
+
+      const tracks = await db
+        .select({
+          id: bapTracks.id,
+          title: bapTracks.title,
+          artist: bapTracks.artist,
+          genre: bapTracks.genre,
+          duration: bapTracks.duration,
+          coverArtUrl: bapTracks.coverArtUrl,
+          audioUrl: bapTracks.audioUrl,
+          createdAt: bapTracks.createdAt,
+        })
+        .from(bapTracks)
+        .where(eq(bapTracks.artistId, input.artistId))
+        .orderBy(desc(bapTracks.createdAt))
+        .limit(input.limit);
+
+      return tracks;
+    }),
 });
