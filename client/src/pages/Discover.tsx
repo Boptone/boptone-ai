@@ -212,56 +212,23 @@ export default function Discover() {
                 </div>
               </div>
 
-              {/* Right: Track Info */}
-              <div className="text-white space-y-6 px-4 lg:px-0">
-                <div className="inline-block px-4 py-2 bg-cyan-500 text-black font-bold text-sm rounded-full border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]">
-                  FEATURED NOW
-                </div>
-                
-                <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+              {/* Right: Track Info - Clean Playback Only */}
+              <div className="text-white space-y-8 px-4 lg:px-0">
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight">
                   {spotlightTrack.title}
                 </h1>
                 
-                <p className="text-3xl md:text-4xl text-cyan-400 font-bold">
+                <p className="text-2xl md:text-3xl text-cyan-400 font-medium">
                   {spotlightTrack.artist}
                 </p>
-                
-                {spotlightTrack.genre && (
-                  <div className="flex gap-3">
-                    <span className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 font-medium text-base">
-                      {spotlightTrack.genre.toUpperCase()}
-                    </span>
-                    <span className="px-5 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 font-medium text-base">
-                      {formatDuration(spotlightTrack.duration)}
-                    </span>
-                  </div>
-                )}
 
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <Button
-                    onClick={() => handlePlayTrack(spotlightTrack.id)}
-                    className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
-                  >
-                    <Play className="w-6 h-6 mr-3" />
-                    Play Now
-                  </Button>
-                  
-                  <Button
-                    onClick={() => handleLike(spotlightTrack.id)}
-                    variant="outline"
-                    className="rounded-full text-xl px-8 py-8 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-medium border border-white/30 hover:border-white/50 transition-all"
-                  >
-                    <Heart className="w-6 h-6" />
-                  </Button>
-                  
-                  <Button
-                    onClick={() => handleShare(spotlightTrack.id)}
-                    variant="outline"
-                    className="rounded-full text-xl px-8 py-8 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-medium border border-white/30 hover:border-white/50 transition-all"
-                  >
-                    <Share2 className="w-6 h-6" />
-                  </Button>
-                </div>
+                <Button
+                  onClick={() => handlePlayTrack(spotlightTrack.id)}
+                  className="rounded-full text-xl px-12 py-8 bg-cyan-500 hover:bg-cyan-600 text-black font-bold border-4 border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                >
+                  <Play className="w-6 h-6 mr-3" />
+                  Play Now
+                </Button>
               </div>
             </div>
           </div>
@@ -275,39 +242,18 @@ export default function Discover() {
         </div>
       )}
 
-      {/* SEARCH & GENRE FILTERS */}
+      {/* SEARCH BAR ONLY */}
       <div className="sticky top-0 z-40 bg-white border-b-2 border-black shadow-lg">
         <div className="container py-6">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            {/* Search Bar */}
-            <div className="relative flex-1 w-full">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search tracks, artists, albums..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full focus:border-cyan-500 transition-all"
-              />
-            </div>
-
-            {/* Genre Filters - Horizontal Scroll on Mobile */}
-            <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide">
-              {genres.map((genre) => (
-                <Button
-                  key={genre}
-                  onClick={() => setSelectedGenre(genre)}
-                  variant={selectedGenre === genre ? "default" : "outline"}
-                  className={`rounded-full px-6 py-3 font-bold text-sm whitespace-nowrap border-2 border-black hover:border-cyan-500 transition-all ${
-                    selectedGenre === genre
-                      ? "bg-cyan-500 text-black"
-                      : "bg-white text-black hover:bg-gray-50"
-                  }`}
-                >
-                  {genre}
-                </Button>
-              ))}
-            </div>
+          <div className="relative w-full">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Input
+              type="text"
+              placeholder="Search tracks, artists, albums..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-12 pr-4 py-6 text-lg border-2 border-black rounded-full focus:border-cyan-500 transition-all"
+            />
           </div>
         </div>
       </div>
@@ -728,6 +674,27 @@ export default function Discover() {
           )}
         </div>
       )}
+
+      {/* DISCOVER OTHER GENRES - Above Footer */}
+      <section className="container py-16 border-t-2 border-black">
+        <h2 className="text-4xl md:text-5xl font-bold mb-8">Discover Other Genres</h2>
+        <div className="flex flex-wrap gap-3">
+          {genres.map((genre) => (
+            <Button
+              key={genre}
+              onClick={() => setSelectedGenre(genre)}
+              variant={selectedGenre === genre ? "default" : "outline"}
+              className={`rounded-full px-8 py-4 font-bold text-base border-2 border-black hover:border-cyan-500 transition-all ${
+                selectedGenre === genre
+                  ? "bg-cyan-500 text-black"
+                  : "bg-white text-black hover:bg-gray-50"
+              }`}
+            >
+              {genre}
+            </Button>
+          ))}
+        </div>
+      </section>
 
       {/* Hidden Audio Element */}
       <audio ref={audioRef} src={currentTrack?.audioUrl} />

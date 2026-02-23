@@ -1734,3 +1734,31 @@
 - [x] 2px borders, shadows removed from 90% of elements
 - [x] Generous white space maintained
 - [x] Clean, modern 2026 look (NOT 2009 SonicBids)
+
+
+## Mobile-First Streaming Platform Simplification
+
+### Research Phase
+- [ ] Research Bandcamp mobile app layout and design patterns
+- [ ] Research Tidal mobile app layout and icon designs
+- [ ] Research Spotify mobile app playback area and navigation
+- [ ] Document common patterns: clean playback areas, minimal buttons, icon usage
+- [ ] Save research findings to file
+
+### Hero Section Simplifi### Hero Section Cleanup ✅
+- [x] Remove "FEATURED NOW" pill from hero section
+- [x] Remove ELECTRONIC/4:00 genre/duration pills from hero
+- [x] Remove Like and Share buttons from hero section
+- [x] Simplify hero to playback-only: artwork + title + artist + play button
+
+### Genre Pills Relocation ✅
+- [x] Remove genre pills from top sticky header
+- [x] Create "Discover Other Genres" section above footer
+- [x] Move all genre filter buttons to bottom section
+- [x] Keep search bar at top (sticky)nre section to match mobile-first design
+
+### Overall Simplification
+- [ ] Reduce button/pill count across entire page
+- [ ] Apply mobile-first icon design patterns from research
+- [ ] Test on mobile viewport for touch optimization
+- [ ] Ensure clean, focused, minimal design throughout
