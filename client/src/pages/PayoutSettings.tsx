@@ -3,6 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2, CheckCircle2, AlertCircle, ExternalLink, CreditCard, Shield, Zap, DollarSign } from "lucide-react";
+import { UserAvatar } from "@/components/UserAvatar";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 
@@ -88,11 +89,14 @@ export default function PayoutSettings() {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Payout Settings</h1>
-          <p className="text-gray-600 mt-2">
-            Set up direct payouts powered by Stripe to receive earnings from BopShop sales, streaming, and fan support.
-          </p>
+        <div className="mb-8 flex items-start gap-6">
+          <UserAvatar size="lg" />
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-gray-900">Payout Settings</h1>
+            <p className="text-gray-600 mt-2">
+              Set up direct payouts powered by Stripe to receive earnings from BopShop sales, streaming, and fan support.
+            </p>
+          </div>
         </div>
 
         {/* Enterprise Compliance Badge */}

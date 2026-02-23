@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { PlanManagementSection } from "@/components/PlanManagementSection";
 import { EarningsWidget } from "@/components/EarningsWidget";
 import { AIRecommendations } from "@/components/AIRecommendations";
+import { UserAvatar } from "@/components/UserAvatar";
 
 export default function Dashboard() {
   const { user, isAuthenticated, loading } = useAuth();
@@ -131,21 +132,16 @@ export default function Dashboard() {
         <div className="border-b border-gray-200 bg-white">
           <div className="container py-20">
             <div className="flex items-start justify-between">
-              {/* Left: Massive Typography */}
-              <div className="flex-1">
-                <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
-                  Welcome back,
-                  <br />
-                  {effectiveProfile?.stageName || 'Artist'}.
-                </h1>
-                <p className="text-xl text-gray-600 font-normal">
-                  Career Phase: <span className="font-semibold text-gray-900 capitalize">{effectiveProfile?.careerPhase || 'Getting Started'}</span>
-                  {effectiveProfile?.priorityScore && (
-                    <span className="ml-4">
-                      • Priority Score: <span className="font-semibold text-gray-900">{effectiveProfile?.priorityScore}/10</span>
-                    </span>
-                  )}
-                </p>
+              {/* Left: Avatar + Massive Typography */}
+              <div className="flex-1 flex items-start gap-8">
+                <UserAvatar size="xl" />
+                <div className="flex-1">
+                  <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-6">
+                    Welcome back,
+                    <br />
+                    {effectiveProfile?.stageName || 'Artist'}.
+                  </h1>
+                </div>
               </div>
 
               {/* Right: Action Buttons */}
@@ -162,6 +158,18 @@ export default function Dashboard() {
                   AI Advisor
                 </Button>
               </div>
+            </div>
+            
+            {/* Career Phase Info - Moved below */}
+            <div className="mt-6 ml-32">
+              <p className="text-xl text-gray-600 font-normal">
+                Career Phase: <span className="font-semibold text-gray-900 capitalize">{effectiveProfile?.careerPhase || 'Getting Started'}</span>
+                {effectiveProfile?.priorityScore && (
+                  <span className="ml-4">
+                    • Priority Score: <span className="font-semibold text-gray-900">{effectiveProfile?.priorityScore}/10</span>
+                  </span>
+                )}
+              </p>
             </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { Download, Trash2, AlertTriangle } from "lucide-react";
 import { AvatarUpload } from "@/components/AvatarUpload";
+import { UserAvatar } from "@/components/UserAvatar";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -120,13 +121,16 @@ export default function ProfileSettings() {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-4 text-black">
-            Make It Your Own
-          </h1>
-          <p className="text-xl text-gray-700 font-medium">
-            Customize the look and feel of your public artist profile
-          </p>
+        <div className="mb-12 flex items-start gap-8">
+          <UserAvatar size="lg" />
+          <div className="flex-1">
+            <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-4 text-black">
+              Make It Your Own
+            </h1>
+            <p className="text-xl text-gray-700 font-medium">
+              Customize the look and feel of your public artist profile
+            </p>
+          </div>
         </div>
 
         <div className="grid gap-8">
