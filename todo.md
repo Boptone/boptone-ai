@@ -947,3 +947,12 @@
 - [x] Ensure consistent typography, spacing, button styles (cyan shadows, rounded-3xl cards, bold 5xl headings)
 - [x] Test redesigned page
 - [x] Save checkpoint
+
+## Auth-Signup Page Redesign
+
+- [x] Review current /auth-signup design and identify scrolling issues
+- [x] Redesign with BAP Protocol aesthetic (cyan shadows, pill buttons, bold typography)
+- [x] Ensure all content fits within viewport without scrolling (single-screen form)
+- [x] Apply viewport-constrained layout matching /login design
+- [x] Simplify multi-step form to essential fields (email + artist name)
+- [x] Save checkpoint
