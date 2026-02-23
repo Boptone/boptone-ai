@@ -13,6 +13,8 @@ import {
   Music,
   TrendingUp,
   Sparkles,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
@@ -30,6 +32,18 @@ export default function Discover() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playlistModalOpen, setPlaylistModalOpen] = useState(false);
   const [selectedTrackForPlaylist, setSelectedTrackForPlaylist] = useState<{ id: number; title: string } | null>(null);
+  const [playerCollapsed, setPlayerCollapsed] = useState(() => {
+    // Load collapsed state from localStorage
+    const saved = localStorage.getItem('boptone-player-collapsed');
+    return saved === 'true';
+  });
+
+  // Save collapsed state to localStorage
+  const togglePlayerCollapsed = () => {
+    const newState = !playerCollapsed;
+    setPlayerCollapsed(newState);
+    localStorage.setItem('boptone-player-collapsed', String(newState));
+  };
 
   const genres = [
     "ALL", "HIP-HOP", "POP", "ROCK", "ELECTRONIC", "R&B", 
@@ -173,8 +187,12 @@ export default function Discover() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                        <Music className="w-32 h-32 text-white opacity-50" />
+                      <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black flex flex-col items-center justify-center p-8 text-center">
+                        <div className="w-32 h-32 rounded-full bg-cyan-500/20 border-4 border-cyan-500 flex items-center justify-center mb-6">
+                          <Music className="w-16 h-16 text-cyan-500" />
+                        </div>
+                        <h3 className="text-3xl font-bold text-white mb-2 line-clamp-2">{spotlightTrack.title}</h3>
+                        <p className="text-xl text-cyan-400 font-medium">{spotlightTrack.artist}</p>
                       </div>
                     )}
                   </div>
@@ -559,8 +577,60 @@ export default function Discover() {
 
       {/* FIXED PLAYER BAR AT BOTTOM */}
       {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-black shadow-[0_-8px_0px_0px_rgba(0,0,0,0.1)]">
-          <div className="container py-4">
+        <div className={`fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-black shadow-[0_-8px_0px_0px_rgba(0,0,0,0.1)] transition-all duration-300 ${playerCollapsed ? 'translate-y-0' : 'translate-y-0'}`}>
+          {/* Collapse/Expand Button */}
+          <button
+            onClick={togglePlayerCollapsed}
+            className="absolute -top-10 right-4 bg-white border-4 border-black rounded-t-xl px-4 py-2 shadow-[4px_0px_0px_0px_black] hover:bg-cyan-50 transition-colors"
+          >
+            {playerCollapsed ? (
+              <ChevronUp className="w-5 h-5" />
+            ) : (
+              <ChevronDown className="w-5 h-5" />
+            )}
+          </button>
+
+          {/* Collapsed State - Compact Bar */}
+          {playerCollapsed ? (
+            <div className="container py-3">
+              <div className="flex items-center gap-4">
+                {/* Track Info */}
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="w-12 h-12 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_black] flex-shrink-0 overflow-hidden">
+                    {currentTrack.coverArtUrl ? (
+                      <img
+                        src={currentTrack.coverArtUrl}
+                        alt={currentTrack.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                        <Music className="w-5 h-5 text-white" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-bold text-sm truncate">{currentTrack.title}</h4>
+                    <p className="text-xs text-gray-600 truncate">{currentTrack.artist}</p>
+                  </div>
+                </div>
+
+                {/* Compact Play Button */}
+                <Button
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all"
+                >
+                  {isPlaying ? (
+                    <Pause className="w-4 h-4 text-black" />
+                  ) : (
+                    <Play className="w-4 h-4 text-black ml-0.5" />
+                  )}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            /* Expanded State - Full Player */
+            <div className="container py-4">
             <div className="flex items-center gap-6">
               {/* Track Info */}
               <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -664,6 +734,7 @@ export default function Discover() {
               </div>
             </div>
           </div>
+          )}
         </div>
       )}
 

@@ -1663,3 +1663,21 @@
 - [ ] Add share playlist functionality (public link)
 - [ ] Test complete workflow (create → add tracks → reorder → play)
 - [ ] Save checkpoint
+
+
+## 🎨 Hero Track & Collapsible Player Fixes (IN PROGRESS)
+
+### Hero Track Redesign ✅
+- [x] Improved fallback design with dark gradient background
+- [x] Added circular icon badge with cyan border
+- [x] Display track title and artist name in fallback
+- [x] Hero section has proper album artwork layout (600x600px)
+- [x] BAP Protocol styling maintained (white border, cyan shadow)
+
+### Collapsible Player ✅
+- [x] Add minimize/collapse button to bottom player bar (ChevronUp/Down)
+- [x] Implement collapsed state (compact 48px bar with track info + play button)
+- [x] Add expand button to restore full player
+- [x] Save player state (collapsed/expanded) in localStorage
+- [x] Smooth transitions between states (300ms)
+- [x] BAP Protocol styling in both states (2px borders, shadows)
