@@ -956,3 +956,13 @@
 - [x] Apply viewport-constrained layout matching /login design
 - [x] Simplify multi-step form to essential fields (email + artist name)
 - [x] Save checkpoint
+
+## Site-Wide BAP Protocol Aesthetic
+
+- [x] Audit all dashboard pages and identify components needing BAP aesthetic updates
+- [x] Add `bap` variant to Button component with cyan shadow effect
+- [x] Update Card component default to rounded-3xl styling
+- [x] Update Input component default to rounded-full (pill-shaped)
+- [x] Update Dashboard.tsx with cyan shadow buttons and rounded-3xl cards
+- [x] Test dashboard for visual consistency
+- [x] Save checkpoint
