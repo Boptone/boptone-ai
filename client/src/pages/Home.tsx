@@ -156,7 +156,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - KEEP INTACT */}
+      {/* Hero Section - ROTATING PHRASES INTACT */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
@@ -172,9 +172,9 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="rounded-full bg-black text-white hover:bg-gray-800 text-lg h-14 px-8 relative"
+                className="rounded-full bg-cyan-500 text-white hover:bg-cyan-600 text-lg h-14 px-8 border-2 border-black transition-colors"
                 style={{
-                  boxShadow: '4px 4px 0px #81e6fe'
+                  boxShadow: '4px 4px 0 0 black'
                 }}
                 onClick={() => window.location.href = getLoginUrl()}
               >
@@ -186,7 +186,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section - BAP Protocol Design */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      <section className="py-20 md:py-32 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
@@ -213,7 +213,13 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
-              <div key={index} className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+              <div 
+                key={index} 
+                className="border-2 border-black rounded-lg p-8 bg-white hover:bg-gray-50 transition-colors"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
+              >
                 <h4 className="text-xl font-bold mb-3">{feature.title}</h4>
                 <p className="text-lg text-gray-700 leading-relaxed">{feature.description}</p>
               </div>
@@ -238,7 +244,7 @@ export default function Home() {
               </span>
               <button
                 onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
               >
                 <span
                   className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
@@ -248,7 +254,7 @@ export default function Home() {
               </button>
               <span className={`text-base font-medium ${isAnnual ? 'text-black' : 'text-gray-500'}`}>
                 Annual
-                <span className="ml-2 text-black font-semibold">Save 20%</span>
+                <span className="ml-2 text-cyan-500 font-semibold">Save 20%</span>
               </span>
             </div>
           </div>
@@ -257,7 +263,10 @@ export default function Home() {
             {tiers.map((tier, index) => (
               <div 
                 key={index} 
-                className="relative border-2 border-gray-200 p-10 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
+                className="relative border-2 border-black p-10 flex flex-col hover:bg-white transition-colors bg-white rounded-lg"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
               >
                 {/* Tier Name */}
                 <div className="mb-4">
@@ -276,183 +285,73 @@ export default function Home() {
                         <span className="text-2xl text-gray-600 font-normal">/mo</span>
                       </div>
                       {isAnnual && savings(tier) > 0 && (
-                        <div className="text-sm text-gray-600 mt-2">
+                        <div className="text-sm text-cyan-500 font-semibold mt-1">
                           Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
                         </div>
                       )}
                     </div>
                   )}
-                  <div className="text-lg text-gray-600 mt-2">
-                    Platform fee: {tier.platformFee} on BopAudio streams
+                  <div className="text-base text-gray-600 mt-2">
+                    {tier.platformFee} platform fee on sales
                   </div>
                 </div>
 
-                {/* CTA Button */}
-                <div className="mb-6">
-                  {tier.name === "Enterprise" ? (
-                    <Button 
-                      className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
-                      style={{
-                        boxShadow: '4px 4px 0px #81e6fe'
-                      }}
-                      onClick={() => setLocation("/contact")}
-                    >
-                      {tier.cta}
-                    </Button>
-                  ) : tier.name === "Free" ? (
-                    <Button 
-                      className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
-                      style={{
-                        boxShadow: '4px 4px 0px #81e6fe'
-                      }}
-                      onClick={() => window.location.href = getLoginUrl()}
-                    >
-                      {tier.cta}
-                    </Button>
-                  ) : (
-                    <StripeCheckout 
-                      tier={tier.name.toLowerCase() as "pro"}
-                      buttonText={tier.cta}
-                      className="w-full rounded-full bg-black text-white hover:bg-gray-800 h-12"
-                      style={{
-                        boxShadow: '4px 4px 0px #81e6fe'
-                      }}
-                    />
-                  )}
-                </div>
-
-                {/* Features List */}
-                <ul className="space-y-3 flex-1">
+                {/* Features */}
+                <ul className="space-y-3 mb-8 flex-grow">
                   {tier.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-3">
-                      <span className="text-black font-bold mt-1">•</span>
-                      <span className="text-lg text-gray-700">{feature}</span>
+                    <li key={featureIndex} className="flex items-start gap-3 text-base">
+                      <span className="text-cyan-500 font-bold mt-0.5">✓</span>
+                      <span className="text-gray-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
+
+                {/* CTA Button */}
+                <Button
+                  size="lg"
+                  className="w-full rounded-full bg-cyan-500 text-white hover:bg-cyan-600 border-2 border-black transition-colors"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }}
+                  onClick={() => {
+                    if (tier.name === "Enterprise") {
+                      window.location.href = "/contact";
+                    } else {
+                      window.location.href = getLoginUrl();
+                    }
+                  }}
+                >
+                  {tier.cta}
+                </Button>
               </div>
             ))}
           </div>
-
-          {/* Pricing Info */}
-          <div className="mt-16 max-w-4xl mx-auto">
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-10 hover:border-gray-400 transition-colors">
-              <h3 className="text-3xl font-bold mb-6">Pricing Information</h3>
-              
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-xl font-bold mb-2">Platform Fee Structure</h4>
-                  <p className="text-lg text-gray-700">
-                    Boptone takes 10% of BopAudio streaming revenue across all plans. You keep 90% of every stream. 
-                    Tips received through "Kick In" have zero platform fees—you keep 100% (minus card processing fees).
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-bold mb-2">BopShop Commerce Fees</h4>
-                  <p className="text-lg text-gray-700">
-                    For merchandise and physical goods sold through BopShop, Boptone takes a small percentage 
-                    of each sale. Credit card processing fees are passed through to artists at cost.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-bold mb-2">Third-Party Distribution</h4>
-                  <p className="text-lg text-gray-700">
-                    Revenue from third-party streaming platforms is subject to their standard payout structures. 
-                    Boptone does not take additional fees on third-party revenue.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-bold mb-2">Payout Flexibility</h4>
-                  <p className="text-lg text-gray-700">
-                    Artists can withdraw earnings at any time, at any amount. Payouts are processed next-day 
-                    by default, with options for weekly or monthly schedules.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* FAQ Section - BAP Protocol Design */}
+      {/* CTA Section - BAP Protocol Design */}
       <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
-            
-            <div className="space-y-4">
-              {[
-                {
-                  question: "How does the 90/10 revenue split work?",
-                  answer: "For every stream on BopAudio (powered by the Boptone Artist Protocol), you keep 90% of the revenue and Boptone takes 10%. This applies to all plans. Revenue from third-party platforms follows their standard payout structures."
-                },
-                {
-                  question: "Can I upgrade or downgrade my plan anytime?",
-                  answer: "Yes, you can change your plan at any time. Upgrades take effect immediately. Downgrades take effect at the end of your current billing period."
-                },
-                {
-                  question: "What payment methods do you accept?",
-                  answer: "We accept all major credit cards (Visa, Mastercard, American Express, Discover) through Stripe. Annual plans can also be paid via invoice for Enterprise customers."
-                },
-                {
-                  question: "How quickly can I withdraw my earnings?",
-                  answer: "You can withdraw earnings at any time, at any amount. Payouts are processed next-day by default, similar to ride-sharing services. You can also choose weekly or monthly payout schedules."
-                },
-                {
-                  question: "Do you take a cut of merchandise sales?",
-                  answer: "Yes, Boptone takes a small percentage of BopShop sales (merchandise, vinyl, digital downloads). Credit card processing fees are passed through at cost. Tips received through 'Kick In' have zero platform fees."
-                },
-                {
-                  question: "Is there a storage limit?",
-                  answer: "Free plan includes 1GB of storage. Pro and Enterprise plans include unlimited storage for audio files, artwork, and other assets."
-                }
-              ].map((faq, index) => (
-                <div key={index} className="border-2 border-gray-200 rounded-xl bg-white overflow-hidden hover:border-gray-400 transition-colors">
-                  <button
-                    onClick={() => setFaqOpen(faqOpen === index ? null : index)}
-                    className="w-full text-left p-6 font-bold text-xl hover:bg-gray-50 transition-colors flex items-center justify-between"
-                  >
-                    {faq.question}
-                    <span className="text-2xl">{faqOpen === index ? '−' : '+'}</span>
-                  </button>
-                  {faqOpen === index && (
-                    <div className="px-6 pb-6 text-lg text-gray-700">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+              Ready to automate your tone?
+            </h2>
+            <p className="text-2xl text-gray-700 mb-8 leading-relaxed">
+              Join thousands of artists building sustainable careers on Boptone.
+            </p>
+            <Button
+              size="lg"
+              className="rounded-full bg-cyan-500 text-white hover:bg-cyan-600 text-lg h-14 px-8 border-2 border-black transition-colors"
+              style={{
+                boxShadow: '4px 4px 0 0 black'
+              }}
+              onClick={() => window.location.href = getLoginUrl()}
+            >
+              Get Started Free
+            </Button>
           </div>
         </div>
       </section>
-
-      {/* Final CTA */}
-      <section className="py-20 md:py-32 bg-black text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            Ready to own your tone?
-          </h2>
-          <p className="text-2xl mb-8 text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Join thousands of artists building sustainable careers on Boptone.
-          </p>
-          <Button 
-            size="lg" 
-            className="rounded-full bg-white text-black hover:bg-gray-100 text-xl h-14 px-10"
-            style={{
-              boxShadow: '4px 4px 0px #81e6fe'
-            }}
-            onClick={() => window.location.href = getLoginUrl()}
-          >
-            Get Started Free
-          </Button>
-        </div>
-      </section>
-
-
     </div>
   );
 }
