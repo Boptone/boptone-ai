@@ -31,6 +31,7 @@ const Checkout = lazy(() => import("./pages/Checkout"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Features = lazy(() => import("./pages/Features"));
+const BopAudio = lazy(() => import("./pages/BopAudio"));
 const Demo = lazy(() => import("./pages/Demo"));
 const Explainer = lazy(() => import("./pages/Explainer"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -144,6 +145,7 @@ function Router() {
         <Route path={"/about"} component={About} />
         <Route path={"/contact"} component={Contact} />
         <Route path={"/features"} component={Features} />
+        <Route path={"/bopaudio"} component={BopAudio} />
         <Route path={"/demo"} component={Demo} />
         <Route path={"/explainer"} component={Explainer} />
         <Route path={"/dashboard"} component={Dashboard} />
