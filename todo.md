@@ -2279,4 +2279,30 @@
 - [x] Remove shadow from hero artwork card (removed rounded-lg class)
 - [x] Test play button icons across all sections (verified - all white icons display correctly)
 - [x] Test hero artwork card without shadow (verified - no shadow on left side)
+- [x] Save checkpoint (version 9a136976)
+
+
+## Artist Action Buttons - Hero Section
+
+### User Request
+Add 4 small round grey icon buttons below artist name ("The Honky Tonk Heroes") for essential actions:
+- Link to artist page
+- Link to BopShop for merch
+- Add to playlist
+- Share button
+
+### Research: Most-Used Actions on Streaming Platforms
+Based on Spotify, Apple Music, SoundCloud, YouTube Music:
+1. **Artist Profile** (User/Person icon) - View artist page/bio
+2. **Add to Playlist** (Plus icon) - Save track to collection
+3. **Share** (Share/Arrow icon) - Share track/artist
+4. **Shop/Merch** (Shopping bag icon) - Buy merchandise
+
+### Implementation Tasks
+- [x] Design 4 small round grey icon buttons (consistent size: w-10 h-10)
+- [x] Add icons: User (artist profile), Plus (add to playlist), Share2 (share), ShoppingBag (merch)
+- [x] Position buttons below artist name in hero section (flex gap-3 mb-6)
+- [x] Make buttons hover-interactive (bg-gray-300 hover:bg-gray-400)
+- [x] Wire up click handlers with toast notifications ("coming soon" messages)
+- [x] Test all 4 buttons (verified - all display correctly with proper tooltips and click handlers)
 - [ ] Save checkpoint

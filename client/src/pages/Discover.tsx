@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { Play, Pause, ChevronDown, ChevronUp } from "lucide-react";
+import { Play, Pause, ChevronDown, ChevronUp, User, Plus, Share2, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
 
@@ -121,9 +121,41 @@ export default function Discover() {
                   {featuredTrack.title}
                 </h1>
                 
-                <p className="text-2xl md:text-3xl font-medium text-gray-800 mb-6">
+                <p className="text-2xl md:text-3xl font-medium text-gray-800 mb-4">
                   {featuredTrack.artist}
                 </p>
+                
+                {/* Artist Action Buttons */}
+                <div className="flex gap-3 mb-6">
+                  <button
+                    onClick={() => toast.info("Artist profile coming soon!")}
+                    className="w-10 h-10 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center transition-colors"
+                    title="View Artist Profile"
+                  >
+                    <User className="w-5 h-5 text-gray-700" />
+                  </button>
+                  <button
+                    onClick={() => toast.info("Add to playlist coming soon!")}
+                    className="w-10 h-10 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center transition-colors"
+                    title="Add to Playlist"
+                  >
+                    <Plus className="w-5 h-5 text-gray-700" />
+                  </button>
+                  <button
+                    onClick={() => toast.info("Share coming soon!")}
+                    className="w-10 h-10 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center transition-colors"
+                    title="Share"
+                  >
+                    <Share2 className="w-5 h-5 text-gray-700" />
+                  </button>
+                  <button
+                    onClick={() => toast.info("BopShop coming soon!")}
+                    className="w-10 h-10 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center transition-colors"
+                    title="Shop Merch"
+                  >
+                    <ShoppingBag className="w-5 h-5 text-gray-700" />
+                  </button>
+                </div>
                 
                 <p className="text-xl md:text-2xl text-gray-600">
                   {featuredTrack.genre}
