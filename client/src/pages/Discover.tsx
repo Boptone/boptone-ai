@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder, ShoppingBag, Shield, FileText, Mail } from "lucide-react";
+import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder, ShoppingBag, Shield, FileText, Mail, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { APP_LOGO } from "@/const";
 
 export default function Discover() {
@@ -118,16 +119,25 @@ export default function Discover() {
             Find Your Tone
           </h1>
           
-          {/* Larger Search Bar */}
-          <div className="relative max-w-4xl mb-8">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search for artists, albums, or tracks..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-16 pr-6 py-8 text-xl bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 rounded-full focus:ring-2 focus:ring-cyan-500 shadow-lg"
-            />
+          {/* Conversational AI Interface */}
+          <div className="max-w-4xl mb-8">
+            <div className="relative">
+              <Sparkles className="absolute left-6 top-6 w-6 h-6 text-cyan-400" />
+              <Textarea
+                placeholder="Ask me anything... Find artists, discover new music, get recommendations, learn about the platform..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-16 pr-6 py-6 text-lg bg-gray-800 border-2 border-gray-700 text-white placeholder:text-gray-500 rounded-3xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-lg resize-none min-h-[120px] leading-relaxed"
+                rows={3}
+              />
+              <div className="absolute bottom-4 right-4 flex items-center gap-2">
+                <span className="text-xs text-gray-500 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  Powered by Boptone AI
+                </span>
+              </div>
+            </div>
+            <p className="text-sm text-gray-400 mt-3 ml-2">Try: "Show me indie pop artists" or "What's trending in hip-hop?"</p>
           </div>
 
           {/* Action Buttons Row */}

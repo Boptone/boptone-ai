@@ -2573,3 +2573,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Style buttons to match dark immersive theme (cyan accents, hover effects)
 - [x] Test button functionality and layout - VERIFIED displays correctly
 - [ ] Save checkpoint
+
+## /music Conversational AI Interface
+- [x] Replace traditional search input with larger textarea-style conversational interface (Textarea component)
+- [x] Update placeholder text to be more conversational and AI-focused ("Ask me anything...")
+- [x] Adjust styling for chat-like appearance (min-h-[120px], rounded-3xl, multi-line support)
+- [x] Add subtle visual cues that this is an AI assistant (Sparkles icon, "Powered by Boptone AI" badge)
+- [x] Add example prompts below textarea ("Try: 'Show me indie pop artists'...")
+- [x] Test textarea functionality - VERIFIED displays correctly with conversational feel
+- [ ] Save checkpoint
