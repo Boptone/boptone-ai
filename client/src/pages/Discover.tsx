@@ -1,536 +1,165 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { Play, Pause, ChevronDown, ChevronUp, User, Plus, Share2, ShoppingBag } from "lucide-react";
+import { Send, Music2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { Streamdown } from "streamdown";
 
 export default function Discover() {
-  const [selectedGenre, setSelectedGenre] = useState<string>("ALL");
-  const [displayLimit, setDisplayLimit] = useState(12);
-  const [currentTrack, setCurrentTrack] = useState<any>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isPlayerMinimized, setIsPlayerMinimized] = useState(false);
-  const scrollObserverRef = useRef<HTMLDivElement>(null);
-  const genreScrollRef = useRef<HTMLDivElement>(null);
+  const [query, setQuery] = useState("");
+  const [messages, setMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
 
-  // tRPC queries
-  const { data: trendingTracks = [] } = trpc.bap.discover.trending.useQuery({
-    limit: 8,
-    genre: selectedGenre === "ALL" ? undefined : selectedGenre,
-  });
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  const { data: newReleases = [] } = trpc.bap.discover.newReleases.useQuery({
-    limit: 8,
-    genre: selectedGenre === "ALL" ? undefined : selectedGenre,
-  });
-
-  // Picks For You - based on user's genre preferences (mock for now)
-  const userGenres = user?.preferences?.genres || ["Hip-Hop", "Electronic"];
-  const { data: picksForYou = [] } = trpc.bap.discover.trending.useQuery({
-    limit: 8,
-    genre: userGenres[0], // Use first genre preference
-  });
-
-  // Endless scroll tracks (for bottom section)
-  const { data: endlessScrollTracks = [] } = trpc.bap.discover.trending.useQuery({
-    limit: displayLimit,
-    genre: selectedGenre === "ALL" ? undefined : selectedGenre,
-  });
-
-  // Reset display limit when genre changes
   useEffect(() => {
-    setDisplayLimit(12);
-  }, [selectedGenre]);
+    scrollToBottom();
+  }, [messages]);
 
-  // Endless scroll observer
-  useEffect(() => {
-    if (!scrollObserverRef.current) return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim() || isLoading) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && displayLimit < 100) {
-          setDisplayLimit((prev) => Math.min(prev + 12, 100));
-        }
-      },
-      { threshold: 0.1 }
-    );
+    const userMessage = query.trim();
+    setQuery("");
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setIsLoading(true);
 
-    observer.observe(scrollObserverRef.current);
-    return () => observer.disconnect();
-  }, [displayLimit]);
-
-  const handlePlayTrack = (trackId: number, trackList: any[]) => {
-    const track = trackList.find((t) => t.id === trackId);
-    if (track) {
-      setCurrentTrack(track);
-      setIsPlaying(true);
-      toast.success(`Now playing: ${track.title}`);
+    try {
+      // TODO: Implement AI music recommendation backend
+      // For now, show a placeholder response
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      
+      const aiResponse = `I understand you're looking for: "${userMessage}"\n\nHere are some recommendations:\n\n1. **Artist Name** - "Song Title" (Genre)\n2. **Artist Name** - "Song Title" (Genre)\n3. **Artist Name** - "Song Title" (Genre)\n\n*AI-powered music discovery coming soon!*`;
+      
+      setMessages((prev) => [...prev, { role: "assistant", content: aiResponse }]);
+    } catch (error) {
+      toast.error("Failed to get recommendations. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handlePauseTrack = () => {
-    setIsPlaying(false);
-  };
-
-  const genres = [
-    "ALL",
-    "Hip-Hop",
-    "Pop",
-    "Rock",
-    "Electronic",
-    "R&B",
-    "Jazz",
-    "Country",
-    "Latin",
-    "Indie",
-    "Alternative",
+  const exampleQueries = [
+    "I need 5 new artists to listen to",
+    "I feel like listening to jazz",
+    "Show me trending hip-hop tracks",
+    "Find me something relaxing",
   ];
 
-  // Smooth scroll carousel - no arrow buttons needed
-
-  // Featured track (first trending track)
-  const featuredTrack = trendingTracks[0];
-
   return (
-    <div className="min-h-screen bg-white">
-      {/* BopAudio Logo Header */}
-      <div className="py-8 md:py-12 bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 flex justify-center">
-          <img 
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/scmTXnouyohxCIHo.png" 
-            alt="BopAudio" 
-            className="h-20 md:h-28 w-auto"
-          />
-        </div>
-      </div>
-
-      {/* Hero Section - Featured Artist Spotlight */}
-      {featuredTrack && (
-        <section className="py-20 md:py-32 bg-white border-b border-gray-200">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-              {/* Left: MASSIVE Typography */}
-              <div className="lg:col-span-3">
-                <div className="inline-block px-4 py-2 bg-[#008B8B] text-white text-sm font-bold rounded-full mb-6">
-                  FEATURED ARTIST
-                </div>
-                
-                <h1 className="text-6xl md:text-8xl font-extrabold leading-none mb-4">
-                  {featuredTrack.title}
-                </h1>
-                
-                <p className="text-2xl md:text-3xl font-medium text-gray-800 mb-4">
-                  {featuredTrack.artist}
-                </p>
-                
-                {/* Artist Action Buttons */}
-                <div className="flex gap-3 mb-6">
-                  <button
-                    onClick={() => toast.info("Artist profile coming soon!")}
-                    className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                    title="View Artist Profile"
-                  >
-                    <User className="w-5 h-5 text-gray-700" />
-                  </button>
-                  <button
-                    onClick={() => toast.info("Add to playlist coming soon!")}
-                    className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                    title="Add to Playlist"
-                  >
-                    <Plus className="w-5 h-5 text-gray-700" />
-                  </button>
-                  <button
-                    onClick={() => toast.info("Share coming soon!")}
-                    className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                    title="Share"
-                  >
-                    <Share2 className="w-5 h-5 text-gray-700" />
-                  </button>
-                  <button
-                    onClick={() => toast.info("BopShop coming soon!")}
-                    className="w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                    title="Shop Merch"
-                  >
-                    <ShoppingBag className="w-5 h-5 text-gray-700" />
-                  </button>
-                </div>
-                
-                <p className="text-xl md:text-2xl text-gray-600">
-                  {featuredTrack.genre}
-                </p>
-              </div>
-
-              {/* Right: Album Artwork with Play Button Overlay */}
-              <div className="lg:col-span-2">
-                <div className="relative aspect-square border border-black overflow-hidden">
-                  <img
-                    src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png"
-                    alt={featuredTrack.title}
-                    className="w-full h-full object-cover"
-                  />
-                  
-                  {/* Play Button Overlay - Bottom Right Corner */}
-                  <button
-                    onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
-                    className="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 bg-[#008B8B] rounded-full flex items-center justify-center hover:bg-[#006666] transition-colors"
-                  >
-                    <Play className="w-8 h-8 md:w-10 md:h-10 text-white fill-white" />
-                  </button>
-                </div>
-              </div>
+    <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+      {/* Header */}
+      <header className="border-b border-gray-800 px-6 py-4">
+        <div className="container mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Music2 className="w-8 h-8 text-cyan-400" />
+            <h1 className="text-2xl font-bold">BopAudio</h1>
+          </div>
+          {user && (
+            <div className="text-sm text-gray-400">
+              Welcome, {user.name}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* Top Bops Section */}
-      <section className="py-20 md:py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-12">
-            Top Bops
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {trendingTracks.slice(1, 9).map((track) => (
-              <div
-                key={track.id}
-                className="bg-white border border-black rounded-lg p-8   hover:border-[#008B8B] transition-all"
-              >
-                <div className="flex gap-6">
-                  {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
-                    <svg
-                      className="w-12 h-12 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Track Info */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-bold mb-2 truncate">
-                      {track.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">{track.artist}</p>
-                    <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
-                      {track.genre}
-                    </span>
-                  </div>
-
-                  {/* Play Button */}
-                  <div className="flex items-center">
-                    <Button
-                      onClick={() => handlePlayTrack(track.id, trendingTracks)}
-                      className="bg-[#008B8B] hover:bg-[#006666] text-white rounded-full w-12 h-12 p-0"
-                    >
-                      <Play className="w-5 h-5 text-white fill-white" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          )}
         </div>
-      </section>
+      </header>
 
-      {/* Fresh Music Section */}
-      <section className="py-20 md:py-32 bg-gray-50 border-y border-gray-200">
-        <div className="container mx-auto px-4">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-12">
-            Fresh Music
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {newReleases.map((track) => (
-              <div
-                key={track.id}
-                className="bg-white border border-black rounded-lg p-8   hover:border-[#008B8B] transition-all"
-              >
-                <div className="flex gap-6">
-                  {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
-                    <svg
-                      className="w-12 h-12 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Track Info */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-bold mb-2 truncate">
-                      {track.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">{track.artist}</p>
-                    <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
-                      {track.genre}
-                    </span>
-                  </div>
-
-                  {/* Play Button */}
-                  <div className="flex items-center">
-                    <Button
-                      onClick={() => handlePlayTrack(track.id, newReleases)}
-                      className="bg-[#008B8B] hover:bg-[#006666] text-white rounded-full w-12 h-12 p-0"
-                    >
-                      <Play className="w-5 h-5 text-white fill-white" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Picks For You Section */}
-      <section className="py-20 md:py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-12">
-            Picks For You
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {picksForYou.map((track) => (
-              <div
-                key={track.id}
-                className="bg-white border border-black rounded-lg p-8   hover:border-[#008B8B] transition-all"
-              >
-                <div className="flex gap-6">
-                  {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
-                    <svg
-                      className="w-12 h-12 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Track Info */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-bold mb-2 truncate">
-                      {track.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">{track.artist}</p>
-                    <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
-                      {track.genre}
-                    </span>
-                  </div>
-
-                  {/* Play Button */}
-                  <div className="flex items-center">
-                    <Button
-                      onClick={() => handlePlayTrack(track.id, picksForYou)}
-                      className="bg-[#008B8B] hover:bg-[#006666] text-white rounded-full w-12 h-12 p-0"
-                    >
-                      <Play className="w-5 h-5 text-white fill-white" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Genre Picker + Endless Scroll Section */}
-      <section className="py-20 md:py-32 bg-gray-50 border-t border-gray-200">
-        <div className="container mx-auto px-4">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-8">
-            Explore by Genre
-          </h2>
-          
-          {/* Genre Carousel - World-Class Smooth Scroll */}
-          <div className="relative mb-12 -mx-4 md:mx-0">
-            {/* Fade-out edges to indicate scrollable content */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col">
+        {messages.length === 0 ? (
+          /* Empty State - Centered Welcome */
+          <div className="flex-1 flex flex-col items-center justify-center px-6 pb-32">
+            <div className="flex items-center gap-3 mb-6">
+              <Sparkles className="w-12 h-12 text-cyan-400" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+              How can I help you?
+            </h2>
+            <p className="text-gray-400 text-center mb-8 max-w-2xl">
+              Ask me anything about music. I'll help you discover new artists, find the perfect tracks for your mood, or explore genres you love.
+            </p>
             
-            {/* Genre Pills Container - Smooth Horizontal Scroll */}
-            <div
-              ref={genreScrollRef}
-              className="flex gap-3 overflow-x-auto px-4 md:px-0 scroll-smooth"
-              style={{ 
-                scrollbarWidth: 'none', 
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch',
-                scrollSnapType: 'x proximity'
-              }}
-            >
-              {genres.map((genre) => (
+            {/* Example Queries */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl mb-8">
+              {exampleQueries.map((example, i) => (
                 <button
-                  key={genre}
-                  onClick={() => setSelectedGenre(genre)}
-                  className={`px-6 py-3 rounded-full text-lg font-bold border border-black transition-all whitespace-nowrap flex-shrink-0 scroll-snap-align-start ${
-                    selectedGenre === genre
-                      ? "bg-[#008B8B] text-white border-[#008B8B]"
-                      : "bg-white text-black hover:bg-gray-100"
-                  }`}
-                  style={{ scrollSnapAlign: 'start' }}
+                  key={i}
+                  onClick={() => setQuery(example)}
+                  className="px-4 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-left text-sm text-gray-300 transition-colors border border-gray-700"
                 >
-                  {genre}
+                  {example}
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Endless Scroll Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {endlessScrollTracks.slice(0, displayLimit).map((track) => (
-              <div
-                key={track.id}
-                className="bg-white border border-black rounded-lg p-8   hover:border-[#008B8B] transition-all"
-              >
-                <div className="flex gap-6">
-                  {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
-                    <svg
-                      className="w-12 h-12 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                      />
-                    </svg>
-                  </div>
-
-                  {/* Track Info */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-bold mb-2 truncate">
-                      {track.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">{track.artist}</p>
-                    <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
-                      {track.genre}
-                    </span>
-                  </div>
-
-                  {/* Play Button */}
-                  <div className="flex items-center">
-                    <Button
-                      onClick={() => handlePlayTrack(track.id, endlessScrollTracks)}
-                      className="bg-[#008B8B] hover:bg-[#006666] text-white rounded-full w-12 h-12 p-0"
-                    >
-                      <Play className="w-5 h-5 text-white fill-white" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Loading Indicator */}
-          {displayLimit < endlessScrollTracks.length && (
-            <div ref={scrollObserverRef} className="flex justify-center mt-12">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 bg-[#008B8B] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                <div className="w-3 h-3 bg-[#008B8B] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                <div className="w-3 h-3 bg-[#008B8B] rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Mini-Player */}
-      {currentTrack && (
-        <div className={`fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black z-50 transition-all duration-300 ${
-          isPlayerMinimized ? 'h-16' : 'h-auto'
-        }`}>
-          <div className="container mx-auto px-4">
-            {!isPlayerMinimized ? (
-              /* Full Player */
-              <div className="flex items-center justify-between gap-4 py-4">
-                {/* Track Info */}
-                <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <div className="w-16 h-16 rounded-lg border border-black flex-shrink-0 overflow-hidden">
-                    <img
-                      src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png"
-                      alt={currentTrack.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-lg truncate">{currentTrack.title}</h4>
-                    <p className="text-gray-600 text-sm truncate">{currentTrack.artistName}</p>
-                  </div>
-                </div>
-
-                {/* Controls */}
-                <div className="flex items-center gap-4">
-                  <Button
-                    onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-[#008B8B] hover:bg-[#006666] text-white rounded-full w-12 h-12 p-0"
-                  >
-                    {isPlaying ? <Pause className="w-5 h-5 text-white fill-white" /> : <Play className="w-5 h-5 text-white fill-white" />}
-                  </Button>
-                  
-                  <Button
-                    onClick={() => setIsPlayerMinimized(true)}
-                    variant="outline"
-                    className="rounded-full w-10 h-10 p-0 border border-black"
-                  >
-                    <ChevronDown className="w-5 h-5" />
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              /* Minimized Player */
-              <div className="flex items-center justify-between gap-4 h-16">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <Button
-                    onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-[#008B8B] hover:bg-[#006666] text-white rounded-full w-10 h-10 p-0 flex-shrink-0"
-                  >
-                    {isPlaying ? <Pause className="w-4 h-4 text-white fill-white" /> : <Play className="w-4 h-4 text-white fill-white" />}
-                  </Button>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-sm truncate">{currentTrack.title}</p>
-                  </div>
-                </div>
-                <Button
-                  onClick={() => setIsPlayerMinimized(false)}
-                  variant="outline"
-                  className="rounded-full w-8 h-8 p-0 border border-black flex-shrink-0"
+        ) : (
+          /* Conversation View */
+          <div className="flex-1 overflow-y-auto px-6 py-8">
+            <div className="container mx-auto max-w-4xl space-y-6">
+              {messages.map((message, i) => (
+                <div
+                  key={i}
+                  className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <ChevronUp className="w-4 h-4" />
-                </Button>
-              </div>
-            )}
+                  <div
+                    className={`max-w-[80%] rounded-lg px-4 py-3 ${
+                      message.role === "user"
+                        ? "bg-cyan-600 text-white"
+                        : "bg-gray-800 text-gray-100"
+                    }`}
+                  >
+                    {message.role === "assistant" ? (
+                      <Streamdown>{message.content}</Streamdown>
+                    ) : (
+                      <p>{message.content}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-gray-800 rounded-lg px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                      <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+          </div>
+        )}
+
+        {/* Search Box - Fixed at Bottom */}
+        <div className="border-t border-gray-800 px-6 py-6 bg-[#1a1a1a]">
+          <div className="container mx-auto max-w-4xl">
+            <form onSubmit={handleSubmit} className="relative">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="...Find Your Tone"
+                className="w-full bg-gray-800 text-white rounded-full px-6 py-4 pr-14 focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500 text-lg"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={!query.trim() || isLoading}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-cyan-600 hover:bg-cyan-500 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-full p-3 transition-colors"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </form>
           </div>
         </div>
-      )}
+      </main>
     </div>
   );
 }
