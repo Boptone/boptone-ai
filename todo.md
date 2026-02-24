@@ -2142,4 +2142,14 @@
 - [x] Add logo to top center of /discover page header
 - [x] Ensure logo is responsive (h-12 md:h-16, scales on mobile)
 - [x] Test logo placement - SUCCESS (100/100 production-ready)
+- [x] Save checkpoint (version: e75c47a8)
+
+
+## BopAudio Logo Replacement (New Version)
+
+### Logo Upload and Update
+- [x] Upload BOP_AUDIO_LOGO_2.png (cyan accent on A) to S3 (CDN URL: https://files.manuscdn.com/user_upload_by_module/session_file/98208888/scmTXnouyohxCIHo.png)
+- [x] Replace logo URL in Discover.tsx
+- [x] Increase logo size to h-20 md:h-28 (bigger and bolder)
+- [x] Test new logo placement (verified in browser - displays correctly with cyan accent on A)
 - [ ] Save checkpoint

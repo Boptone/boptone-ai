@@ -129,9 +129,9 @@ export default function Discover() {
       <div className="py-8 md:py-12 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 flex justify-center">
           <img 
-            src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/rmZjWgpxxRytBjyS.png" 
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/scmTXnouyohxCIHo.png" 
             alt="BopAudio" 
-            className="h-12 md:h-16 w-auto"
+            className="h-20 md:h-28 w-auto"
           />
         </div>
       </div>
