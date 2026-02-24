@@ -2305,4 +2305,17 @@ Based on Spotify, Apple Music, SoundCloud, YouTube Music:
 - [x] Make buttons hover-interactive (bg-gray-300 hover:bg-gray-400)
 - [x] Wire up click handlers with toast notifications ("coming soon" messages)
 - [x] Test all 4 buttons (verified - all display correctly with proper tooltips and click handlers)
+- [x] Save checkpoint (version c512cf6d)
+
+
+## Lighten Artist Action Button Color - User Feedback
+
+### User Request
+- Current buttons are "a tad too dark"
+- Need 20% less gray color for softer appearance
+
+### Implementation
+- [x] Change bg-gray-300 to bg-gray-200 (lighter grey)
+- [x] Change hover:bg-gray-400 to hover:bg-gray-300 (lighter hover state)
+- [x] Test lighter button appearance (verified - buttons are 20% lighter, softer look)
 - [ ] Save checkpoint
