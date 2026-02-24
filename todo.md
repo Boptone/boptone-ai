@@ -2028,3 +2028,29 @@
 - [x] Test genre picker at bottom (Explore by Genre section)
 - [x] Test endless scroll (loads 12 more tracks)
 - [ ] Save checkpoint
+
+
+## BopAudio /discover UI Refinements (User Feedback Round 2)
+
+### Remove Drop Shadows
+- [x] Remove 4px shadows from all buttons (16 replacements)
+- [x] Remove 4px shadows from all track cards
+- [x] Keep 2px black borders only for BAP Protocol
+
+### Genre Pill Carousel
+- [x] Add left/right arrow navigation buttons (ChevronLeft, ChevronRight)
+- [x] Implement horizontal scrolling carousel with smooth scroll
+- [x] Match reference screenshot style (rounded pills with arrows)
+- [x] Tidy up real estate with carousel navigation
+
+### Minimizable Mini-Player
+- [x] Change close button to minimize button (ChevronDown icon)
+- [x] Shrink mini-player to compact bar (h-16) instead of disappearing
+- [x] Add expand button to restore full mini-player (ChevronUp icon)
+- [x] Maintain playback state when minimized
+
+### Testing
+- [x] Test drop shadow removal across all elements - SUCCESS
+- [x] Test genre carousel navigation (left/right arrows) - Visual structure confirmed
+- [x] Test mini-player minimize/expand functionality - SUCCESS (minimizes to h-16 compact bar)
+- [ ] Save checkpoint

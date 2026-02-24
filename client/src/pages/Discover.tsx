@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { Play, Pause, X } from "lucide-react";
+import { Play, Pause, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
 
@@ -10,7 +10,11 @@ export default function Discover() {
   const [displayLimit, setDisplayLimit] = useState(12);
   const [currentTrack, setCurrentTrack] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlayerMinimized, setIsPlayerMinimized] = useState(false);
   const scrollObserverRef = useRef<HTMLDivElement>(null);
+  const genreScrollRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
   const { user } = useAuth();
 
   // tRPC queries
@@ -86,6 +90,36 @@ export default function Discover() {
     "Alternative",
   ];
 
+  const scrollGenres = (direction: 'left' | 'right') => {
+    if (!genreScrollRef.current) return;
+    const scrollAmount = 300;
+    const newScrollLeft = direction === 'left'
+      ? genreScrollRef.current.scrollLeft - scrollAmount
+      : genreScrollRef.current.scrollLeft + scrollAmount;
+    genreScrollRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
+  };
+
+  const updateArrowVisibility = () => {
+    if (!genreScrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = genreScrollRef.current;
+    setShowLeftArrow(scrollLeft > 0);
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
+  useEffect(() => {
+    const scrollContainer = genreScrollRef.current;
+    if (!scrollContainer) return;
+    
+    updateArrowVisibility();
+    scrollContainer.addEventListener('scroll', updateArrowVisibility);
+    window.addEventListener('resize', updateArrowVisibility);
+    
+    return () => {
+      scrollContainer.removeEventListener('scroll', updateArrowVisibility);
+      window.removeEventListener('resize', updateArrowVisibility);
+    };
+  }, []);
+
   // Featured track (first trending track)
   const featuredTrack = trendingTracks[0];
 
@@ -113,7 +147,7 @@ export default function Discover() {
                 <div className="flex gap-4">
                   <Button
                     onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white text-lg px-8 py-6 rounded-full shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white text-lg px-8 py-6 rounded-full  border-2 border-black"
                   >
                     <Play className="w-6 h-6 mr-2" />
                     Play Now
@@ -123,7 +157,7 @@ export default function Discover() {
 
               {/* Right: Album Artwork */}
               <div className="lg:col-span-2">
-                <div className="aspect-square bg-gray-200 rounded-lg border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+                <div className="aspect-square bg-gray-200 rounded-lg border-2 border-black  flex items-center justify-center">
                   <svg
                     className="w-32 h-32 text-gray-400"
                     fill="none"
@@ -155,7 +189,7 @@ export default function Discover() {
             {trendingTracks.slice(1, 9).map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:border-cyan-500 transition-all"
+                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
@@ -190,7 +224,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, trendingTracks)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
                       <Play className="w-5 h-5" />
                     </Button>
@@ -213,7 +247,7 @@ export default function Discover() {
             {newReleases.map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:border-cyan-500 transition-all"
+                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
@@ -248,7 +282,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, newReleases)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
                       <Play className="w-5 h-5" />
                     </Button>
@@ -271,7 +305,7 @@ export default function Discover() {
             {picksForYou.map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:border-cyan-500 transition-all"
+                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
@@ -306,7 +340,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, picksForYou)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
                       <Play className="w-5 h-5" />
                     </Button>
@@ -325,21 +359,50 @@ export default function Discover() {
             Explore by Genre
           </h2>
           
-          {/* Genre Pills */}
-          <div className="flex flex-wrap gap-3 mb-12">
-            {genres.map((genre) => (
+          {/* Genre Carousel */}
+          <div className="relative mb-12">
+            {/* Left Arrow */}
+            {showLeftArrow && (
               <button
-                key={genre}
-                onClick={() => setSelectedGenre(genre)}
-                className={`px-6 py-3 rounded-full text-lg font-bold border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
-                  selectedGenre === genre
-                    ? "bg-cyan-500 text-white"
-                    : "bg-white text-black hover:bg-gray-100"
-                }`}
+                onClick={() => scrollGenres('left')}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition-all"
+                aria-label="Scroll left"
               >
-                {genre}
+                <ChevronLeft className="w-6 h-6" />
               </button>
-            ))}
+            )}
+            
+            {/* Genre Pills Container */}
+            <div
+              ref={genreScrollRef}
+              className="flex gap-3 overflow-x-auto scrollbar-hide px-12"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {genres.map((genre) => (
+                <button
+                  key={genre}
+                  onClick={() => setSelectedGenre(genre)}
+                  className={`px-6 py-3 rounded-full text-lg font-bold border-2 border-black transition-all whitespace-nowrap flex-shrink-0 ${
+                    selectedGenre === genre
+                      ? "bg-cyan-500 text-white"
+                      : "bg-white text-black hover:bg-gray-100"
+                  }`}
+                >
+                  {genre}
+                </button>
+              ))}
+            </div>
+            
+            {/* Right Arrow */}
+            {showRightArrow && (
+              <button
+                onClick={() => scrollGenres('right')}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition-all"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            )}
           </div>
 
           {/* Endless Scroll Grid */}
@@ -347,7 +410,7 @@ export default function Discover() {
             {endlessScrollTracks.slice(0, displayLimit).map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:border-cyan-500 transition-all"
+                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
@@ -382,7 +445,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, endlessScrollTracks)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
                       <Play className="w-5 h-5" />
                     </Button>
@@ -407,48 +470,77 @@ export default function Discover() {
 
       {/* Mini-Player */}
       {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black p-4 z-50">
-          <div className="container mx-auto flex items-center justify-between gap-4">
-            {/* Track Info */}
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <div className="w-16 h-16 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                  />
-                </svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-lg truncate">{currentTrack.title}</h4>
-                <p className="text-gray-600 text-sm truncate">{currentTrack.artistName}</p>
-              </div>
-            </div>
+        <div className={`fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black z-50 transition-all duration-300 ${
+          isPlayerMinimized ? 'h-16' : 'h-auto'
+        }`}>
+          <div className="container mx-auto px-4">
+            {!isPlayerMinimized ? (
+              /* Full Player */
+              <div className="flex items-center justify-between gap-4 py-4">
+                {/* Track Info */}
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="w-16 h-16 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
+                    <svg
+                      className="w-8 h-8 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                      />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-lg truncate">{currentTrack.title}</h4>
+                    <p className="text-gray-600 text-sm truncate">{currentTrack.artistName}</p>
+                  </div>
+                </div>
 
-            {/* Controls */}
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black"
-              >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-              </Button>
-              
-              <Button
-                onClick={() => setCurrentTrack(null)}
-                variant="outline"
-                className="rounded-full w-10 h-10 p-0 border-2 border-black"
-              >
-                <X className="w-5 h-5" />
-              </Button>
-            </div>
+                {/* Controls */}
+                <div className="flex items-center gap-4">
+                  <Button
+                    onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 border-2 border-black"
+                  >
+                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                  </Button>
+                  
+                  <Button
+                    onClick={() => setIsPlayerMinimized(true)}
+                    variant="outline"
+                    className="rounded-full w-10 h-10 p-0 border-2 border-black"
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              /* Minimized Player */
+              <div className="flex items-center justify-between gap-4 h-16">
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <Button
+                    onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-10 h-10 p-0 border-2 border-black flex-shrink-0"
+                  >
+                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                  </Button>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm truncate">{currentTrack.title}</p>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => setIsPlayerMinimized(false)}
+                  variant="outline"
+                  className="rounded-full w-8 h-8 p-0 border-2 border-black flex-shrink-0"
+                >
+                  <ChevronUp className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}
