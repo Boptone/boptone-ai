@@ -120,7 +120,7 @@ export function AddToPlaylistModal({
                 <Button
                   onClick={handleCreateAndAdd}
                   disabled={createPlaylistMutation.isPending}
-                  className="flex-1 bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full shadow-[2px_2px_0px_0px_black]"
+                  className="flex-1 bg-[#81e6ff] hover:bg-[#60d5ed] text-black border border-black rounded-full shadow-[2px_2px_0px_0px_black]"
                 >
                   {createPlaylistMutation.isPending ? "Creating..." : "Create & Add"}
                 </Button>

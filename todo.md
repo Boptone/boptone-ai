@@ -2215,4 +2215,20 @@
 - [x] Update: Icons (text-cyan-500 → text-[#81e6ff])
 - [x] Update: Any other blue elements (cyan-50 → [#e0f9ff] for backgrounds)
 - [x] Test color consistency across entire site (verified - perfect brand consistency with logo)
+- [x] Save checkpoint (version 4514e550)
+
+
+## Pill Text Color Audit - Improve Contrast with #81e6ff Background
+
+### Issue
+- [x] With lighter blue background (#81e6ff), white text has poor contrast
+- [x] Need to change all pill text from white to black for better readability
+
+### Audit and Update
+- [x] Find all pills with bg-[#81e6ff] and text-white across entire site (found 13 matches)
+- [x] Replace text-white with text-black in all pills
+- [x] Check "FEATURED ARTIST" badge (updated to text-black)
+- [x] Check genre filter pills (updated to text-black)
+- [x] Check any other pill elements site-wide (AddToPlaylistModal button updated)
+- [x] Test pill text contrast (verified - black text on #81e6ff has excellent readability)
 - [ ] Save checkpoint

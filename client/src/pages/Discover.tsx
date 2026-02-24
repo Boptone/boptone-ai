@@ -113,7 +113,7 @@ export default function Discover() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
               {/* Left: MASSIVE Typography */}
               <div className="lg:col-span-3">
-                <div className="inline-block px-4 py-2 bg-[#81e6ff] text-white text-sm font-bold rounded-full mb-6">
+                <div className="inline-block px-4 py-2 bg-[#81e6ff] text-black text-sm font-bold rounded-full mb-6">
                   FEATURED ARTIST
                 </div>
                 
@@ -199,7 +199,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, trendingTracks)}
-                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-black rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -257,7 +257,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, newReleases)}
-                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-black rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -315,7 +315,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, picksForYou)}
-                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-black rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -357,7 +357,7 @@ export default function Discover() {
                   onClick={() => setSelectedGenre(genre)}
                   className={`px-6 py-3 rounded-full text-lg font-bold border border-black transition-all whitespace-nowrap flex-shrink-0 scroll-snap-align-start ${
                     selectedGenre === genre
-                      ? "bg-[#81e6ff] text-white border-[#81e6ff]"
+                      ? "bg-[#81e6ff] text-black border-[#81e6ff]"
                       : "bg-white text-black hover:bg-gray-100"
                   }`}
                   style={{ scrollSnapAlign: 'start' }}
@@ -408,7 +408,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, endlessScrollTracks)}
-                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-black rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -459,7 +459,7 @@ export default function Discover() {
                 <div className="flex items-center gap-4">
                   <Button
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
+                    className="bg-[#81e6ff] hover:bg-[#60d5ed] text-black rounded-full w-12 h-12 p-0"
                   >
                     {isPlaying ? <Pause className="w-5 h-5 text-black fill-black" /> : <Play className="w-5 h-5 text-black fill-black" />}
                   </Button>
@@ -479,7 +479,7 @@ export default function Discover() {
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <Button
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-10 h-10 p-0 flex-shrink-0"
+                    className="bg-[#81e6ff] hover:bg-[#60d5ed] text-black rounded-full w-10 h-10 p-0 flex-shrink-0"
                   >
                     {isPlaying ? <Pause className="w-4 h-4 text-black fill-black" /> : <Play className="w-4 h-4 text-black fill-black" />}
                   </Button>
