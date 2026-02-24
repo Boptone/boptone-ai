@@ -117,9 +117,13 @@ export default function Discover() {
                   FEATURED ARTIST
                 </div>
                 
-                <h1 className="text-6xl md:text-8xl font-extrabold leading-none mb-6">
+                <h1 className="text-6xl md:text-8xl font-extrabold leading-none mb-4">
                   {featuredTrack.title}
                 </h1>
+                
+                <p className="text-2xl md:text-3xl font-medium text-gray-800 mb-6">
+                  {featuredTrack.artist}
+                </p>
                 
                 <p className="text-xl md:text-2xl text-gray-600">
                   {featuredTrack.genre}

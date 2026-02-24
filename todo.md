@@ -2173,4 +2173,14 @@
 - [x] Ensure touch-friendly mobile experience (touch scrolling enabled)
 - [x] Match Spotify/Apple Music/Netflix carousel quality
 - [x] Test on desktop and mobile (verified - smooth scrolling, fade-out edges, touch-friendly)
+- [x] Save checkpoint (version 58935d8f)
+
+
+## BopAudio Hero Section - Artist Name Display Fix
+
+### Issue
+- [x] Hero section shows song title "Small Town Saturday" but artist name is missing
+- [x] Need to verify artist name in database (artist field exists in featuredTrack object)
+- [x] Add artist name display below song title in hero section (added between title and genre)
+- [x] Test hero section display (verified - artist name "The Honky Tonk Heroes" displays correctly)
 - [ ] Save checkpoint
