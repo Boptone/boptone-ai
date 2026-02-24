@@ -14,6 +14,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 // Eager load only Home page and Landing page for fast initial load
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
+import PublicLanding from "./pages/PublicLanding";
 
 // Lazy load all other pages
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -108,6 +109,7 @@ function Router() {
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path={"/"} component={Landing} />
+        <Route path={"/welcome"} component={PublicLanding} />
         <Route path={"/home"} component={Home} />
         <Route path={"/login"} component={Login} />
         <Route path={"/auth-signup"} component={MultiStepSignup} />

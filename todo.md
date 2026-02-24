@@ -2455,4 +2455,22 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ## Landing Page Hero Message Update
 - [x] Update rotating phrases to include "Find Your Tone"
 - [x] Test hero rotation animation - VERIFIED showing "Find Your Tone"
+- [x] Save checkpoint
+
+## NEW Public Landing Page Creation (CRITICAL)
+- [x] Review Git repository to understand existing pages and design system
+- [x] Create NEW PublicLanding.tsx page for world-facing homepage
+- [x] Design PublicLanding with three main sections:
+  * Hero with "Find Your Tone" message
+  * Three experiences showcase (Artist Platform, BopAudio, BopShop)
+  * CTAs to each experience
+  * Stats section ($2.5M+ paid, 50K+ tracks, 10K+ artists, 180+ countries)
+  * Value proposition section (Own Your Work, Direct Connection, Transparent Platform)
+  * Final CTA section
+- [x] Apply BAP Protocol design system (4px color-coded borders, rounded-xl, cyan shadows)
+- [x] Test at /welcome route - VERIFIED working
+- [ ] Move current Home.tsx (artist signup) to /artists route
+- [ ] Update App.tsx routing: / → PublicLanding, /artists → Home
+- [ ] Update Navigation component to link to correct routes
+- [ ] Test all routes and navigation
 - [ ] Save checkpoint
