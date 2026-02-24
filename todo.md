@@ -2590,3 +2590,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Update icon for Shop button (ShoppingBag)
 - [x] Test navigation and button functionality - VERIFIED Shop button displays correctly
 - [ ] Save checkpoint
+
+## /music Placeholder & Action Buttons Reorganization
+- [x] Update textarea placeholder to "Search for artists, albums, tracks, or get recommendations..."
+- [x] Remove Privacy and Terms pill buttons from main content action row
+- [x] Keep BopShop and Newsletter pill buttons
+- [x] Add "Privacy | Terms" text links to bottom of left sidebar
+- [x] Remove example prompt helper text below textarea
+- [x] Test updated interface - VERIFIED cleaner layout, focused placeholder, legal links in sidebar footer
+- [ ] Save checkpoint

@@ -112,6 +112,17 @@ export default function Discover() {
             </>
           )}
         </nav>
+        
+        {/* Sidebar Footer - Legal Links */}
+        {!sidebarCollapsed && (
+          <div className="p-4 border-t border-gray-800">
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+              <a href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy</a>
+              <span>|</span>
+              <a href="/terms" className="hover:text-cyan-400 transition-colors">Terms</a>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main Content */}
@@ -127,7 +138,7 @@ export default function Discover() {
             <div className="relative">
               <Sparkles className="absolute left-6 top-6 w-6 h-6 text-cyan-400" />
               <Textarea
-                placeholder="Ask me anything... Find artists, discover new music, get recommendations, learn about the platform..."
+                placeholder="Search for artists, albums, tracks, or get recommendations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-16 pr-6 py-6 text-lg bg-gray-800 border-2 border-gray-700 text-white placeholder:text-gray-500 rounded-3xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-lg resize-none min-h-[120px] leading-relaxed"
@@ -140,7 +151,6 @@ export default function Discover() {
                 </span>
               </div>
             </div>
-            <p className="text-sm text-gray-400 mt-3 ml-2">Try: "Show me indie pop artists" or "What's trending in hip-hop?"</p>
           </div>
 
           {/* Action Buttons Row */}
@@ -151,22 +161,6 @@ export default function Discover() {
             >
               <ShoppingBag className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
               <span className="font-semibold text-sm">BopShop</span>
-            </button>
-            
-            <button
-              onClick={() => window.location.href = '/privacy'}
-              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              <Shield className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
-              <span className="font-semibold text-sm">Privacy</span>
-            </button>
-            
-            <button
-              onClick={() => window.location.href = '/terms'}
-              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
-            >
-              <FileText className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
-              <span className="font-semibold text-sm">Terms</span>
             </button>
             
             <button
