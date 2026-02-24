@@ -101,7 +101,7 @@ export default function Discover() {
         {/* Hero Section */}
         <div className="bg-gradient-to-b from-gray-900 to-[#1a1a1a] p-12">
           <h1 className="text-6xl font-black mb-6">
-            Find Your New Favorite Artist
+            Find Your Tone
           </h1>
           
           {/* Search Bar */}

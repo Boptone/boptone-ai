@@ -2533,4 +2533,9 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Use large square cards in horizontal rows
 - [x] Apply dark theme to all text (white/gray on black)
 - [x] Test dark theme layout - VERIFIED all requirements met
+- [x] Save checkpoint
+
+## BopAudio Hero Headline Update
+- [x] Change hero from "Find Your New Favorite Artist" to "Find Your Tone"
+- [x] Test change in browser - VERIFIED showing "Find Your Tone"
 - [ ] Save checkpoint
