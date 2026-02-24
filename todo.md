@@ -2231,4 +2231,15 @@
 - [x] Check genre filter pills (updated to text-black)
 - [x] Check any other pill elements site-wide (AddToPlaylistModal button updated)
 - [x] Test pill text contrast (verified - black text on #81e6ff has excellent readability)
+- [x] Save checkpoint (version 070f7ae3)
+
+
+## Fix Remaining Pills with White Text - User Report
+
+### Issue
+- [x] User reports still seeing white text inside pills
+- [x] Need to investigate which pills were missed (dev server needed restart)
+- [x] Check if changes were properly applied or if there are additional instances (code was correct, server needed restart)
+- [x] Fix all remaining white text instances (restarted dev server)
+- [x] Test thoroughly in browser (verified - Country pill shows BLACK text on #81e6ff)
 - [ ] Save checkpoint
