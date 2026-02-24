@@ -66,20 +66,20 @@ export default function BopAudio() {
       <div className="border-b-2 border-black bg-white">
         <div className="container py-24 md:py-32">
           <div className="max-w-5xl">
-            <div className="inline-block px-4 py-2 bg-[#81e6ff] text-black font-bold text-sm rounded-full mb-8 border border-black shadow-[4px_4px_0px_0px_black]">
+            <div className="inline-block px-4 py-2 bg-[#008B8B] text-white font-bold text-sm rounded-full mb-8 border border-black shadow-[4px_4px_0px_0px_black]">
               BOPAUDIO STREAMING PLATFORM
             </div>
             <h1 className="text-6xl md:text-8xl font-bold leading-none mb-8">
               Keep 90%.
               <br />
-              <span className="text-[#81e6ff]">Own Your Tone.</span>
+              <span className="text-[#008B8B]">Own Your Tone.</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-12 max-w-3xl">
               The streaming platform built for artists. Upload unlimited music, reach global audiences, and keep 90% of every dollar you earn. No middlemen, no hidden fees.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button 
-                className="rounded-full text-lg px-10 py-7 bg-[#81e6ff] hover:bg-[#60d5ed] text-black font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-10 py-7 bg-[#008B8B] hover:bg-[#006666] text-white font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 onClick={() => setLocation("/discover")}
               >
@@ -103,15 +103,15 @@ export default function BopAudio() {
         <div className="container py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center p-8 bg-white border border-black rounded-lg shadow-[4px_4px_0px_0px_black]">
-              <div className="text-5xl md:text-6xl font-bold mb-2 text-[#81e6ff]">90%</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-[#008B8B]">90%</div>
               <div className="text-lg font-bold text-gray-700">Artist Revenue Share</div>
             </div>
             <div className="text-center p-8 bg-white border border-black rounded-lg shadow-[4px_4px_0px_0px_black]">
-              <div className="text-5xl md:text-6xl font-bold mb-2 text-[#81e6ff]">∞</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-[#008B8B]">∞</div>
               <div className="text-lg font-bold text-gray-700">Unlimited Uploads</div>
             </div>
             <div className="text-center p-8 bg-white border border-black rounded-lg shadow-[4px_4px_0px_0px_black]">
-              <div className="text-5xl md:text-6xl font-bold mb-2 text-[#81e6ff]">24h</div>
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-[#008B8B]">24h</div>
               <div className="text-lg font-bold text-gray-700">Go Live Fast</div>
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function BopAudio() {
               <h2 className="text-5xl md:text-7xl font-bold mb-6">
                 Calculate Your
                 <br />
-                <span className="text-[#81e6ff]">Real Earnings</span>
+                <span className="text-[#008B8B]">Real Earnings</span>
               </h2>
               <p className="text-xl text-gray-700 max-w-3xl mx-auto">
                 See how much more you earn with BopAudio's 90/10 split compared to traditional streaming platforms.
@@ -144,10 +144,10 @@ export default function BopAudio() {
                   step="1000"
                   value={monthlyStreams}
                   onChange={(e) => setMonthlyStreams(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#81e6ff]"
+                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#008B8B]"
                 />
               <div className="text-center mt-4">
-                <span className="text-4xl font-bold text-[#81e6ff]">
+                <span className="text-4xl font-bold text-[#008B8B]">
                   {monthlyStreams.toLocaleString()}
                 </span>
                 <span className="text-xl text-gray-600 ml-2">streams/month</span>
@@ -160,9 +160,9 @@ export default function BopAudio() {
               {/* Earnings Comparison */}
               <div className="grid md:grid-cols-3 gap-6">
                 {/* BopAudio */}
-                <div className="bg-[#e0f9ff] border border-[#81e6ff] rounded-lg p-6 shadow-[4px_4px_0px_0px_rgb(6,182,212)]">
+                <div className="bg-[#e0f2f2] border border-[#008B8B] rounded-lg p-6 shadow-[4px_4px_0px_0px_rgb(6,182,212)]">
                   <div className="text-sm font-bold text-cyan-700 mb-2">BOPAUDIO (90%)</div>
-                  <div className="text-3xl font-bold text-[#60d5ed] mb-1">
+                  <div className="text-3xl font-bold text-[#006666] mb-1">
                     ${boptoneArtistEarnings.toFixed(2)}
                   </div>
                   <div className="text-xs text-gray-600">You Keep</div>
@@ -188,7 +188,7 @@ export default function BopAudio() {
               </div>
 
               {/* Difference Highlight */}
-              <div className="mt-8 p-6 bg-[#81e6ff] border border-black rounded-lg text-center">
+              <div className="mt-8 p-6 bg-[#008B8B] border border-black rounded-lg text-center">
                 <div className="text-sm font-bold text-black mb-2">YOU EARN MORE WITH BOPAUDIO</div>
                 <div className="text-4xl font-bold text-black">
                   +${(boptoneArtistEarnings - Math.max(spotifyArtistEarnings, appleMusicArtistEarnings)).toFixed(2)}
@@ -199,7 +199,7 @@ export default function BopAudio() {
 
             <div className="text-center">
               <Button 
-                className="rounded-full text-lg px-10 py-7 bg-[#81e6ff] hover:bg-[#60d5ed] text-black font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-10 py-7 bg-[#008B8B] hover:bg-[#006666] text-white font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
@@ -217,7 +217,7 @@ export default function BopAudio() {
             <h2 className="text-5xl md:text-7xl font-bold mb-6">
               Built For
               <br />
-              <span className="text-[#81e6ff]">Independent Artists</span>
+              <span className="text-[#008B8B]">Independent Artists</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Everything you need to distribute, monetize, and grow your music career.
@@ -232,7 +232,7 @@ export default function BopAudio() {
                   key={index}
                   className="bg-white border border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
                 >
-                  <div className="w-14 h-14 bg-[#81e6ff] border border-black rounded-lg flex items-center justify-center mb-6 shadow-[4px_4px_0px_0px_black]">
+                  <div className="w-14 h-14 bg-[#008B8B] border border-black rounded-lg flex items-center justify-center mb-6 shadow-[4px_4px_0px_0px_black]">
                     <Icon className="w-7 h-7 text-black" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
@@ -255,7 +255,7 @@ export default function BopAudio() {
             <div className="space-y-8">
               {/* Step 1 */}
               <div className="flex gap-6 items-start">
-                <div className="w-16 h-16 bg-[#81e6ff] border border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_0px_black]">
+                <div className="w-16 h-16 bg-[#008B8B] border border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_0px_black]">
                   <span className="text-3xl font-bold text-black">1</span>
                 </div>
                 <div className="flex-1 bg-white border border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_black]">
@@ -268,7 +268,7 @@ export default function BopAudio() {
 
               {/* Step 2 */}
               <div className="flex gap-6 items-start">
-                <div className="w-16 h-16 bg-[#81e6ff] border border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_0px_black]">
+                <div className="w-16 h-16 bg-[#008B8B] border border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_0px_black]">
                   <span className="text-3xl font-bold text-black">2</span>
                 </div>
                 <div className="flex-1 bg-white border border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_black]">
@@ -281,7 +281,7 @@ export default function BopAudio() {
 
               {/* Step 3 */}
               <div className="flex gap-6 items-start">
-                <div className="w-16 h-16 bg-[#81e6ff] border border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_0px_black]">
+                <div className="w-16 h-16 bg-[#008B8B] border border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_0px_black]">
                   <span className="text-3xl font-bold text-black">3</span>
                 </div>
                 <div className="flex-1 bg-white border border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_black]">
@@ -303,14 +303,14 @@ export default function BopAudio() {
             <h2 className="text-5xl md:text-7xl font-bold leading-tight">
               Ready to Keep
               <br />
-              <span className="text-[#81e6ff]">90% of Your Earnings?</span>
+              <span className="text-[#008B8B]">90% of Your Earnings?</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto">
               Join thousands of independent artists building sustainable careers on BopAudio.
             </p>
             <div className="flex flex-wrap gap-4 justify-center pt-6">
               <Button 
-                className="rounded-full text-lg px-12 py-7 bg-[#81e6ff] hover:bg-[#60d5ed] text-black font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
+                className="rounded-full text-lg px-12 py-7 bg-[#008B8B] hover:bg-[#006666] text-white font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
@@ -329,15 +329,15 @@ export default function BopAudio() {
             {/* Trust signals - BAP Protocol style */}
             <div className="flex flex-wrap items-center justify-center gap-8 pt-10">
               <div className="flex items-center gap-3 px-4 py-2 bg-white border border-black rounded-lg shadow-[2px_2px_0px_0px_black]">
-                <span className="text-[#81e6ff] font-bold text-xl">✓</span>
+                <span className="text-[#008B8B] font-bold text-xl">✓</span>
                 <span className="font-bold text-sm">No credit card required</span>
               </div>
               <div className="flex items-center gap-3 px-4 py-2 bg-white border border-black rounded-lg shadow-[2px_2px_0px_0px_black]">
-                <span className="text-[#81e6ff] font-bold text-xl">✓</span>
+                <span className="text-[#008B8B] font-bold text-xl">✓</span>
                 <span className="font-bold text-sm">14-day Pro trial</span>
               </div>
               <div className="flex items-center gap-3 px-4 py-2 bg-white border border-black rounded-lg shadow-[2px_2px_0px_0px_black]">
-                <span className="text-[#81e6ff] font-bold text-xl">✓</span>
+                <span className="text-[#008B8B] font-bold text-xl">✓</span>
                 <span className="font-bold text-sm">Cancel anytime</span>
               </div>
             </div>

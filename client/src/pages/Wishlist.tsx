@@ -83,7 +83,7 @@ export default function Wishlist() {
         {/* Loading State */}
         {isLoading && (
           <div className="text-center py-12">
-            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#81e6ff] border-r-transparent"></div>
+            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#008B8B] border-r-transparent"></div>
             <p className="mt-4 text-gray-600">Loading your wishlist...</p>
           </div>
         )}
@@ -148,7 +148,7 @@ export default function Wishlist() {
                   {/* Product Info */}
                   <div className="p-4 space-y-3">
                     <Link href={`/bopshop/${product.slug}`}>
-                      <h3 className="font-bold text-lg hover:text-[#60d5ed] transition-colors line-clamp-2">
+                      <h3 className="font-bold text-lg hover:text-[#006666] transition-colors line-clamp-2">
                         {product.name}
                       </h3>
                     </Link>

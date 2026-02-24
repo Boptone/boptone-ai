@@ -65,7 +65,7 @@ export default function Playlists() {
             </div>
             <Button
               onClick={() => setCreateModalOpen(true)}
-              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               <Plus className="w-6 h-6 mr-2" />
               Create Playlist
@@ -94,7 +94,7 @@ export default function Playlists() {
             </p>
             <Button
               onClick={() => setCreateModalOpen(true)}
-              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               <Plus className="w-5 h-5 mr-2" />
               Create Playlist
@@ -106,7 +106,7 @@ export default function Playlists() {
               <Link key={playlist.id} href={`/playlists/${playlist.id}`}>
                 <div className="group cursor-pointer bg-white border border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
                   {/* Cover Image */}
-                  <div className="aspect-square bg-gradient-to-br from-cyan-400 to-[#60d5ed] relative">
+                  <div className="aspect-square bg-gradient-to-br from-cyan-400 to-[#006666] relative">
                     {playlist.coverImageUrl ? (
                       <img
                         src={playlist.coverImageUrl}
@@ -134,7 +134,7 @@ export default function Playlists() {
 
                   {/* Info */}
                   <div className="p-4">
-                    <h3 className="font-bold text-lg mb-1 truncate group-hover:text-[#81e6ff] transition-colors">
+                    <h3 className="font-bold text-lg mb-1 truncate group-hover:text-[#008B8B] transition-colors">
                       {playlist.name}
                     </h3>
                     <p className="text-sm text-gray-600">
@@ -214,7 +214,7 @@ export default function Playlists() {
             <Button
               onClick={handleCreatePlaylist}
               disabled={createPlaylistMutation.isPending}
-              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-6 shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-6 shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               {createPlaylistMutation.isPending ? "Creating..." : "Create Playlist"}
             </Button>

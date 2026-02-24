@@ -54,7 +54,7 @@ export default function Dashboard() {
           <p className="text-lg text-gray-600 mb-8">
             Create your artist profile to take control of your career
           </p>
-          <Button onClick={() => setLocation("/onboarding")} className="w-full rounded-full h-14 text-lg bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
+          <Button onClick={() => setLocation("/onboarding")} className="w-full rounded-full h-14 text-lg bg-[#008B8B] hover:bg-[#006666] text-white border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
             Get Started
           </Button>
         </div>
@@ -149,12 +149,12 @@ export default function Dashboard() {
                 <Button variant="outline" size="lg" className="relative border border-black hover:border-black rounded-full shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
                   Notifications
                   {notifications && notifications.length > 0 && (
-                    <span className="ml-2 h-6 w-6 rounded-full bg-[#81e6ff] text-white text-xs flex items-center justify-center font-semibold">
+                    <span className="ml-2 h-6 w-6 rounded-full bg-[#008B8B] text-white text-xs flex items-center justify-center font-semibold">
                       {notifications.length}
                     </span>
                   )}
                 </Button>
-                <Button onClick={() => setLocation("/ai-advisor")} size="lg" className="gap-2 bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
+                <Button onClick={() => setLocation("/ai-advisor")} size="lg" className="gap-2 bg-[#008B8B] hover:bg-[#006666] text-white rounded-full border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
                   AI Advisor
                 </Button>
               </div>
@@ -182,7 +182,7 @@ export default function Dashboard() {
                 <div key={stat.title} className="border border-black hover:border-black transition-colors bg-white p-8 rounded-3xl shadow-[4px_4px_0px_0px_black]">
                   <p className="text-sm text-gray-500 font-medium uppercase tracking-wide mb-3">{stat.title}</p>
                   <p className="text-5xl font-bold text-gray-900 mb-2">{stat.value}</p>
-                  <p className={`text-sm font-medium ${stat.trend === "up" ? "text-[#81e6ff]" : stat.trend === "down" ? "text-gray-600" : "text-gray-500"}`}>
+                  <p className={`text-sm font-medium ${stat.trend === "up" ? "text-[#008B8B]" : stat.trend === "down" ? "text-gray-600" : "text-gray-500"}`}>
                     {stat.change}
                   </p>
                 </div>
@@ -263,7 +263,7 @@ export default function Dashboard() {
                     <span className="text-lg font-semibold text-gray-900">{goal.title}</span>
                     <span className="text-base text-gray-600">
                       {goal.current} / {goal.target}
-                      {goal.completed && <span className="ml-2 text-[#81e6ff] font-bold">✓ Complete</span>}
+                      {goal.completed && <span className="ml-2 text-[#008B8B] font-bold">✓ Complete</span>}
                     </span>
                   </div>
                   <Progress value={(goal.current / goal.target) * 100} className="h-3" />

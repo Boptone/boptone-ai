@@ -85,7 +85,7 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
       </div>
 
       {/* Cover Art */}
-      <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-[#60d5ed] rounded-lg border border-black flex-shrink-0">
+      <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-[#006666] rounded-lg border border-black flex-shrink-0">
         {track.coverArtUrl ? (
           <img
             src={track.coverArtUrl}
@@ -119,7 +119,7 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
           onClick={() => onPlay(track.id)}
           variant="outline"
           size="sm"
-          className="border border-black rounded-full hover:bg-[#81e6ff] hover:text-white transition-colors"
+          className="border border-black rounded-full hover:bg-[#008B8B] hover:text-white transition-colors"
         >
           <Play className="w-4 h-4" />
         </Button>
@@ -243,7 +243,7 @@ export default function PlaylistDetail() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#81e6ff] border-r-transparent mb-4"></div>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#008B8B] border-r-transparent mb-4"></div>
           <p className="text-gray-600 font-medium">Loading playlist...</p>
         </div>
       </div>
@@ -257,7 +257,7 @@ export default function PlaylistDetail() {
           <h2 className="text-3xl font-bold mb-4">Playlist not found</h2>
           <Button
             onClick={() => navigate("/playlists")}
-            className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-6"
+            className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-6"
           >
             Back to Playlists
           </Button>
@@ -269,11 +269,11 @@ export default function PlaylistDetail() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b-4 border-black bg-gradient-to-br from-[#e0f9ff] to-white">
+      <div className="border-b-4 border-black bg-gradient-to-br from-[#e0f2f2] to-white">
         <div className="container py-12">
           <div className="flex items-start gap-8">
             {/* Cover Image */}
-            <div className="w-64 h-64 bg-gradient-to-br from-cyan-400 to-[#60d5ed] rounded-xl border-4 border-black shadow-[8px_8px_0px_0px_black] flex-shrink-0">
+            <div className="w-64 h-64 bg-gradient-to-br from-cyan-400 to-[#006666] rounded-xl border-4 border-black shadow-[8px_8px_0px_0px_black] flex-shrink-0">
               {playlistData.coverImageUrl ? (
                 <img
                   src={playlistData.coverImageUrl}
@@ -320,7 +320,7 @@ export default function PlaylistDetail() {
                 <Button
                   onClick={() => handlePlayTrack(localTracks[0]?.id)}
                   disabled={localTracks.length === 0}
-                  className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                  className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
                 >
                   <Play className="w-6 h-6 mr-2" />
                   Play All
@@ -366,7 +366,7 @@ export default function PlaylistDetail() {
             </p>
             <Button
               onClick={() => navigate("/discover")}
-              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               Browse Music
             </Button>

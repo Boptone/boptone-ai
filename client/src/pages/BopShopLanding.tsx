@@ -131,7 +131,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-[#81e6ff]" />
+                <Sparkles className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">New This Week</h2>
               </div>
               <Link href="/bopshop/browse?sort=newest">
@@ -165,7 +165,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -182,7 +182,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <TrendingUp className="h-7 w-7 text-[#81e6ff]" />
+                <TrendingUp className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">Trending Now</h2>
               </div>
               <Link href="/bopshop/browse?sort=popular">
@@ -216,7 +216,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -233,7 +233,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-[#81e6ff]" />
+                <Sparkles className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">Limited Edition</h2>
               </div>
               <Link href="/bopshop/browse?stock=low">
@@ -270,7 +270,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -287,7 +287,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <DollarSign className="h-7 w-7 text-[#81e6ff]" />
+                <DollarSign className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">Under $50</h2>
               </div>
               <Link href="/bopshop/browse?maxPrice=50">
@@ -321,7 +321,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
                       {product.name}
                     </h3>
                   </div>

@@ -97,7 +97,7 @@ export function KickinTipWidget({ artistId, artistName, artistAvatar }: KickinTi
           id="currency"
           value={selectedCurrency}
           onChange={(e) => setSelectedCurrency(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-[#81e6ff] focus:outline-none transition-colors"
+          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-[#008B8B] focus:outline-none transition-colors"
         >
           {currencies?.map((curr) => (
             <option key={curr.code} value={curr.code}>
@@ -124,7 +124,7 @@ export function KickinTipWidget({ artistId, artistName, artistAvatar }: KickinTi
                 px-4 py-3 border rounded-xl font-semibold transition-all
                 ${
                   selectedAmount === amount
-                    ? "border-[#81e6ff] bg-[#e0f9ff] text-[#60d5ed] shadow-[0_0_0_3px_rgba(6,182,212,0.1)]"
+                    ? "border-[#008B8B] bg-[#e0f2f2] text-[#006666] shadow-[0_0_0_3px_rgba(6,182,212,0.1)]"
                     : "border-gray-200 text-black hover:border-gray-400"
                 }
               `}
@@ -153,7 +153,7 @@ export function KickinTipWidget({ artistId, artistName, artistAvatar }: KickinTi
               setSelectedAmount(null);
             }}
             placeholder="Enter amount"
-            className="pl-12 border border-gray-200 rounded-xl focus:border-[#81e6ff] hover:border-gray-400 transition-colors"
+            className="pl-12 border border-gray-200 rounded-xl focus:border-[#008B8B] hover:border-gray-400 transition-colors"
           />
         </div>
         {customAmount && !isValidAmount && (
@@ -201,7 +201,7 @@ export function KickinTipWidget({ artistId, artistName, artistAvatar }: KickinTi
           onChange={(e) => setMessage(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
           placeholder="Say something nice to the artist..."
           rows={3}
-          className="border border-gray-200 rounded-xl focus:border-[#81e6ff] hover:border-gray-400 transition-colors resize-none"
+          className="border border-gray-200 rounded-xl focus:border-[#008B8B] hover:border-gray-400 transition-colors resize-none"
         />
       </div>
 
@@ -211,7 +211,7 @@ export function KickinTipWidget({ artistId, artistName, artistAvatar }: KickinTi
           id="anonymous"
           checked={isAnonymous}
           onCheckedChange={(checked) => setIsAnonymous(checked as boolean)}
-          className="border border-gray-200 data-[state=checked]:bg-[#81e6ff] data-[state=checked]:border-[#81e6ff]"
+          className="border border-gray-200 data-[state=checked]:bg-[#008B8B] data-[state=checked]:border-[#008B8B]"
         />
         <Label
           htmlFor="anonymous"

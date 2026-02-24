@@ -39,7 +39,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
       <Card className="rounded-xl border border-black shadow-[4px_4px_0px_0px_black]">
         <CardContent className="p-8">
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#81e6ff]" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#008B8B]" />
           </div>
         </CardContent>
       </Card>
@@ -63,7 +63,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
     <Card className="rounded-xl border border-black shadow-[4px_4px_0px_0px_black]">
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Music className="h-6 w-6 text-[#81e6ff]" />
+          <Music className="h-6 w-6 text-[#008B8B]" />
           Tracks on BopAudio
         </h2>
         
@@ -98,7 +98,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
                 <h3 className="font-bold text-base truncate">{track.title}</h3>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   {track.genre && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#81e6ff] text-black text-xs font-bold border border-black">
+                    <span className="px-2 py-0.5 rounded-full bg-[#008B8B] text-white text-xs font-bold border border-black">
                       {track.genre.toUpperCase()}
                     </span>
                   )}
@@ -109,7 +109,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
               {/* Play Button */}
               <Button
                 size="icon"
-                className="rounded-full w-10 h-10 bg-[#81e6ff] hover:bg-[#60d5ed] border border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all flex-shrink-0"
+                className="rounded-full w-10 h-10 bg-[#008B8B] hover:bg-[#006666] border border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all flex-shrink-0"
                 onClick={() => handlePlayTrack(track.id)}
               >
                 {currentTrackId === track.id && isPlaying ? (

@@ -97,13 +97,13 @@ export function AddToPlaylistModal({
             <Button
               onClick={() => setShowCreateNew(true)}
               variant="outline"
-              className="w-full border border-black rounded-lg p-6 hover:bg-[#e0f9ff] transition-colors"
+              className="w-full border border-black rounded-lg p-6 hover:bg-[#e0f2f2] transition-colors"
             >
               <Plus className="w-5 h-5 mr-2" />
               <span className="font-bold">Create New Playlist</span>
             </Button>
           ) : (
-            <div className="space-y-3 p-4 bg-[#e0f9ff] border border-black rounded-lg">
+            <div className="space-y-3 p-4 bg-[#e0f2f2] border border-black rounded-lg">
               <Input
                 value={newPlaylistName}
                 onChange={(e) => setNewPlaylistName(e.target.value)}
@@ -120,7 +120,7 @@ export function AddToPlaylistModal({
                 <Button
                   onClick={handleCreateAndAdd}
                   disabled={createPlaylistMutation.isPending}
-                  className="flex-1 bg-[#81e6ff] hover:bg-[#60d5ed] text-black border border-black rounded-full shadow-[2px_2px_0px_0px_black]"
+                  className="flex-1 bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full shadow-[2px_2px_0px_0px_black]"
                 >
                   {createPlaylistMutation.isPending ? "Creating..." : "Create & Add"}
                 </Button>
@@ -154,7 +154,7 @@ export function AddToPlaylistModal({
                     className="w-full flex items-center gap-4 p-4 bg-white border border-black rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
                   >
                     {/* Cover */}
-                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-[#60d5ed] rounded-lg border border-black flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-[#006666] rounded-lg border border-black flex-shrink-0">
                       {playlist.coverImageUrl ? (
                         <img
                           src={playlist.coverImageUrl}
@@ -178,7 +178,7 @@ export function AddToPlaylistModal({
 
                     {/* Check if track is already in playlist */}
                     {playlist.trackIds && (playlist.trackIds as number[]).includes(trackId) && (
-                      <Check className="w-5 h-5 text-[#81e6ff]" />
+                      <Check className="w-5 h-5 text-[#008B8B]" />
                     )}
                   </button>
                 ))}
