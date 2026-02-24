@@ -2582,3 +2582,11 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Add example prompts below textarea ("Try: 'Show me indie pop artists'...")
 - [x] Test textarea functionality - VERIFIED displays correctly with conversational feel
 - [ ] Save checkpoint
+
+## /music Sidebar Navigation Update
+- [x] Remove "Upload" button from sidebar menu
+- [x] Add "Shop" button below "Music" button (second position)
+- [x] Link Shop button to /shop route (BopShop)
+- [x] Update icon for Shop button (ShoppingBag)
+- [x] Test navigation and button functionality - VERIFIED Shop button displays correctly
+- [ ] Save checkpoint

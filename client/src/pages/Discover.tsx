@@ -76,6 +76,14 @@ export default function Discover() {
             {!sidebarCollapsed && <span className="font-medium">Music</span>}
           </button>
           
+          <button 
+            onClick={() => window.location.href = '/shop'}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+          >
+            <ShoppingBag className="w-5 h-5" />
+            {!sidebarCollapsed && <span className="font-medium">Shop</span>}
+          </button>
+          
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
             <Globe className="w-5 h-5" />
             {!sidebarCollapsed && <span className="font-medium">Explore</span>}
@@ -84,11 +92,6 @@ export default function Discover() {
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
             <Bell className="w-5 h-5" />
             {!sidebarCollapsed && <span className="font-medium">Feed</span>}
-          </button>
-          
-          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
-            <Upload className="w-5 h-5" />
-            {!sidebarCollapsed && <span className="font-medium">Upload</span>}
           </button>
           
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
