@@ -2538,4 +2538,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ## BopAudio Hero Headline Update
 - [x] Change hero from "Find Your New Favorite Artist" to "Find Your Tone"
 - [x] Test change in browser - VERIFIED showing "Find Your Tone"
+- [x] Save checkpoint
+
+## BopAudio Immersive Navigation Update
+- [x] Hide top white navigation bar on /music page for full dark immersive experience
+- [x] Add Boptone logo placeholder at top of left sidebar ("BOPTONE" text)
+- [x] Test immersive dark experience - VERIFIED no white nav, full dark UI
+- [ ] Wait for user to upload white Boptone logo
+- [ ] Replace placeholder with actual white logo
 - [ ] Save checkpoint

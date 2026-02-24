@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { APP_LOGO } from "@/const";
 
 export default function Discover() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -40,6 +41,18 @@ export default function Discover() {
           sidebarCollapsed ? "w-16" : "w-64"
         } bg-black border-r border-gray-800 transition-all duration-300 flex flex-col`}
       >
+        {/* Logo Section */}
+        <div className="p-4 border-b border-gray-800">
+          {!sidebarCollapsed && (
+            <div className="flex items-center justify-center mb-2">
+              {/* Placeholder for white Boptone logo */}
+              <div className="text-white font-black text-2xl tracking-tight">
+                BOPTONE
+              </div>
+            </div>
+          )}
+        </div>
+        
         {/* Sidebar Toggle */}
         <div className="p-4 flex items-center justify-end">
           <button

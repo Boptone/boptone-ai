@@ -206,9 +206,11 @@ function App() {
         >
           <TooltipProvider>
             <Toaster />
-            <Navigation />
+            {/* Hide Navigation on /music page for immersive dark experience */}
+            {!window.location.pathname.startsWith('/music') && <Navigation />}
             <Router />
-            <Footer />
+            {/* Hide Footer on /music page for immersive dark experience */}
+            {!window.location.pathname.startsWith('/music') && <Footer />}
             <ToneyChatbot />
             <CookieConsentBanner />
           </TooltipProvider>
