@@ -45,10 +45,11 @@ export default function Discover() {
         <div className="p-4 border-b border-gray-800">
           {!sidebarCollapsed && (
             <div className="flex items-center justify-center mb-2">
-              {/* Placeholder for white Boptone logo */}
-              <div className="text-white font-black text-2xl tracking-tight">
-                BOPTONE
-              </div>
+              <img 
+                src="/boptone_main_logo_white.png" 
+                alt="Boptone" 
+                className="h-8 w-auto"
+              />
             </div>
           )}
         </div>

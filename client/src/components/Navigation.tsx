@@ -125,9 +125,9 @@ export function Navigation() {
           <Link href="/">
             <a className="flex-shrink-0 transition-opacity hover:opacity-80" aria-label="Boptone Home">
               <img 
-                src="/boptone-logo-transparent.png" 
+                src="/boptone_main_logo_black.png" 
                 alt="Boptone" 
-                className="h-16 w-auto"
+                className="h-12 w-auto"
               />
             </a>
           </Link>
