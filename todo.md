@@ -2622,3 +2622,19 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Position buttons alongside existing playback controls (shuffle left, repeat right)
 - [x] Test button interactions and visual feedback - VERIFIED buttons toggle cyan on click
 - [ ] Save checkpoint
+
+## Music Player - Cast/Connect Device Feature (Future)
+- [ ] Add Cast button icon to music player (Cast icon from lucide-react)
+- [ ] Create device selection modal UI
+- [ ] Integrate Google Cast API for Chromecast and compatible speakers
+- [ ] Add Web Bluetooth API support for Bluetooth speakers
+- [ ] Implement device connection state management
+- [ ] Add fallback messaging for unsupported devices (Sonos native, Alexa, AirPlay)
+- [ ] Test casting functionality with various device types
+- [ ] Add disconnect button and connection status indicator
+
+## Disable Auth Redirects for Development
+- [x] Comment out or remove auth guards from ProtectedRoute component
+- [x] Allow unrestricted access to all pages (/dashboard, /profile, etc.)
+- [x] Test page access without login - VERIFIED /dashboard loads without redirect
+- [ ] Save checkpoint
