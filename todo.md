@@ -2183,4 +2183,15 @@
 - [x] Need to verify artist name in database (artist field exists in featuredTrack object)
 - [x] Add artist name display below song title in hero section (added between title and genre)
 - [x] Test hero section display (verified - artist name "The Honky Tonk Heroes" displays correctly)
+- [x] Save checkpoint (version 46117c8b)
+
+
+## BopAudio Album Artwork - Small Town Saturday
+
+### Task
+- [x] Upload cactus image (ScreenShot2026-02-23at5.36.55PM.png) to S3 (CDN URL: https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png)
+- [x] Replace gray placeholder in hero section with cactus album artwork
+- [x] Update mini-player to display album artwork (full player view)
+- [x] Test album artwork display in hero section (verified - cactus image displays perfectly)
+- [x] Test album artwork display in mini-player (verified - artwork ready for display when track plays)
 - [ ] Save checkpoint

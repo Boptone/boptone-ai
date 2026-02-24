@@ -132,20 +132,12 @@ export default function Discover() {
 
               {/* Right: Album Artwork with Play Button Overlay */}
               <div className="lg:col-span-2">
-                <div className="relative aspect-square bg-gray-200 rounded-lg border-2 border-black flex items-center justify-center">
-                  <svg
-                    className="w-32 h-32 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                    />
-                  </svg>
+                <div className="relative aspect-square rounded-lg border-2 border-black overflow-hidden">
+                  <img
+                    src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png"
+                    alt={featuredTrack.title}
+                    className="w-full h-full object-cover"
+                  />
                   
                   {/* Play Button Overlay - Bottom Right Corner */}
                   <button
@@ -450,20 +442,12 @@ export default function Discover() {
               <div className="flex items-center justify-between gap-4 py-4">
                 {/* Track Info */}
                 <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <div className="w-16 h-16 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
-                    <svg
-                      className="w-8 h-8 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                      />
-                    </svg>
+                  <div className="w-16 h-16 rounded-lg border-2 border-black flex-shrink-0 overflow-hidden">
+                    <img
+                      src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png"
+                      alt={currentTrack.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-lg truncate">{currentTrack.title}</h4>
