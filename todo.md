@@ -2474,3 +2474,13 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Update Navigation component to link to correct routes
 - [ ] Test all routes and navigation
 - [ ] Save checkpoint
+
+## PublicLanding Redesign (Fix Design Issues)
+- [x] Change hero to ONLY say "Find Your Tone." (remove subheadline)
+- [x] Remove ALL color borders on cards (user hates them)
+- [x] Study Home.tsx and HowItWorks.tsx to understand correct BAP Protocol design
+- [x] Redesign layout to match world-class design from existing pages
+- [x] Use softened brutalist aesthetic: black borders, rounded-lg, 4px 4px 0 0 black shadows
+- [x] Ensure 100% font consistency across entire site
+- [x] Test redesigned page - VERIFIED clean BAP Protocol design
+- [ ] Save checkpoint

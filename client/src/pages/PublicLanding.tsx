@@ -7,10 +7,12 @@ import { Link } from "wouter";
  * This is the public marketing page that introduces Boptone to the world.
  * Goal: Visitors understand what Boptone is within 20 seconds.
  * 
- * Three core experiences:
- * 1. Artist Platform - Tools for artists to manage their career
- * 2. BopAudio - Decentralized music streaming
- * 3. BopShop - Direct-to-fan merchandise marketplace
+ * Design System: BAP Protocol (Softened Brutalist)
+ * - Black borders with 4px 4px 0 0 black shadow
+ * - Rounded-lg corners
+ * - Clean, bold typography
+ * - No color borders (user hates them)
+ * - Pill-shaped buttons
  */
 
 export default function PublicLanding() {
@@ -20,30 +22,21 @@ export default function PublicLanding() {
       subtitle: "Your Career Command Center",
       description: "Distribution, analytics, financial tools, and AI-powered guidance. Everything you need to build a sustainable music career in one place.",
       cta: "Explore Platform",
-      link: "/artists",
-      borderColor: "border-teal-500",
-      hoverBorder: "hover:border-teal-600",
-      shadowColor: "shadow-[4px_4px_0px_#14b8a6]"
+      link: "/artists"
     },
     {
       title: "BopAudio",
       subtitle: "Streaming. Reimagined.",
       description: "Discover music directly from artists. Pay-per-stream model that puts artists first. No subscriptions, no algorithms—just music.",
       cta: "Listen Now",
-      link: "/music",
-      borderColor: "border-purple-500",
-      hoverBorder: "hover:border-purple-600",
-      shadowColor: "shadow-[4px_4px_0px_#a855f7]"
+      link: "/music"
     },
     {
       title: "BopShop",
       subtitle: "Where Artists Sell Direct",
       description: "Buy authentic merchandise, digital downloads, and experiences directly from your favorite artists. No middlemen, just creators and fans.",
       cta: "Shop Now",
-      link: "/shop",
-      borderColor: "border-orange-500",
-      hoverBorder: "hover:border-orange-600",
-      shadowColor: "shadow-[4px_4px_0px_#f97316]"
+      link: "/shop"
     }
   ];
 
@@ -52,6 +45,21 @@ export default function PublicLanding() {
     { number: "50K+", label: "Tracks Distributed" },
     { number: "10K+", label: "Active Artists" },
     { number: "180+", label: "Countries" }
+  ];
+
+  const values = [
+    {
+      title: "Own Your Work",
+      description: "Keep your masters, control your data, and build your career on your terms."
+    },
+    {
+      title: "Direct Connection",
+      description: "Artists and fans connect directly—no gatekeepers, no algorithms deciding what you hear."
+    },
+    {
+      title: "Transparent Platform",
+      description: "See exactly where your money goes. Every transaction, every stream, fully transparent."
+    }
   ];
 
   return (
@@ -63,17 +71,13 @@ export default function PublicLanding() {
             <h1 className="text-7xl md:text-9xl font-extrabold mb-8 leading-none">
               Find Your Tone.
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed">
-              The platform where artists create, distribute, and sell—all in one place. 
-              Built for the next generation of music.
-            </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href="/artists">
                 <Button 
                   size="lg" 
-                  className="rounded-full bg-black text-white hover:bg-gray-800 text-xl h-16 px-10"
+                  className="rounded-full bg-[#008B8B] text-white hover:bg-[#006666] text-xl h-16 px-10 border border-black"
                   style={{
-                    boxShadow: '4px 4px 0px #81e6fe'
+                    boxShadow: '4px 4px 0 0 black'
                   }}
                 >
                   For Artists
@@ -83,7 +87,10 @@ export default function PublicLanding() {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="rounded-full border-2 border-black text-black hover:bg-gray-50 text-xl h-16 px-10"
+                  className="rounded-full border border-black text-black hover:bg-gray-50 text-xl h-16 px-10"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }}
                 >
                   Listen Now
                 </Button>
@@ -92,7 +99,10 @@ export default function PublicLanding() {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="rounded-full border-2 border-black text-black hover:bg-gray-50 text-xl h-16 px-10"
+                  className="rounded-full border border-black text-black hover:bg-gray-50 text-xl h-16 px-10"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }}
                 >
                   Shop Merch
                 </Button>
@@ -132,7 +142,10 @@ export default function PublicLanding() {
             {experiences.map((exp, index) => (
               <div 
                 key={index}
-                className={`border-4 ${exp.borderColor} rounded-xl p-10 bg-white ${exp.hoverBorder} transition-all hover:scale-105 ${exp.shadowColor}`}
+                className="border border-black rounded-lg p-10 bg-white hover:bg-gray-50 transition-colors"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
               >
                 <h3 className="text-4xl font-bold mb-3">{exp.title}</h3>
                 <p className="text-xl font-semibold text-gray-600 mb-6">{exp.subtitle}</p>
@@ -156,35 +169,32 @@ export default function PublicLanding() {
       {/* Value Proposition Section */}
       <section className="py-24 md:py-32 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-bold mb-8">
               Built for Artists. Made for Fans.
             </h2>
-            <p className="text-2xl text-gray-700 leading-relaxed mb-12">
+            <p className="text-2xl text-gray-700 leading-relaxed">
               Boptone is the ecosystem where music lives. Artists own their work, 
               fans discover authentic content, and everyone benefits from a transparent, 
               decentralized platform.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-              <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
-                <h4 className="text-2xl font-bold mb-4">Own Your Work</h4>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {values.map((value, index) => (
+              <div 
+                key={index}
+                className="border border-black rounded-lg p-8 bg-white hover:bg-gray-50 transition-colors"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
+              >
+                <h4 className="text-2xl font-bold mb-4">{value.title}</h4>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  Keep your masters, control your data, and build your career on your terms.
+                  {value.description}
                 </p>
               </div>
-              <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
-                <h4 className="text-2xl font-bold mb-4">Direct Connection</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Artists and fans connect directly—no gatekeepers, no algorithms deciding what you hear.
-                </p>
-              </div>
-              <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
-                <h4 className="text-2xl font-bold mb-4">Transparent Platform</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  See exactly where your money goes. Every transaction, every stream, fully transparent.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -202,9 +212,9 @@ export default function PublicLanding() {
             <Link href="/artists">
               <Button 
                 size="lg"
-                className="rounded-full bg-black text-white hover:bg-gray-800 text-xl h-16 px-12"
+                className="rounded-full bg-[#008B8B] text-white hover:bg-[#006666] text-xl h-16 px-12 border border-black"
                 style={{
-                  boxShadow: '4px 4px 0px #81e6fe'
+                  boxShadow: '4px 4px 0 0 black'
                 }}
               >
                 Get Started Free
