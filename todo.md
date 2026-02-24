@@ -2509,3 +2509,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Connect to actual track database for real recommendations
 - [ ] Display AI recommendations with playable music player
 - [ ] Save checkpoint
+
+## BopAudio Hybrid Redesign (LLM UX + Spotify Layout)
+- [x] Remove "BopAudio" branding → Use "Boptone" for brand consistency
+- [x] Change hero from "How can I help you?" to "Find Your New Favorite Artist"
+- [x] Move search bar directly beneath hero title (not at bottom)
+- [x] Create collapsible left sidebar menu with:
+  * "+ Create Playlist"
+  * "+ My Bops"
+- [x] Add Featured Artist module below search bar (cyan-blue gradient card)
+- [x] Add album/song covers grid below Featured Artist ("New Music" section)
+- [x] Add "Trending Tracks" section with list view
+- [x] Maintain BAP Protocol design (black borders, rounded-lg, 4px shadows)
+- [x] Test hybrid layout (LLM UX meets Spotify homepage) - VERIFIED working
+- [ ] Save checkpoint
