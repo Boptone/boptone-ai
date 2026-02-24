@@ -125,6 +125,17 @@ export default function Discover() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* BopAudio Logo Header */}
+      <div className="py-8 md:py-12 bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4 flex justify-center">
+          <img 
+            src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/rmZjWgpxxRytBjyS.png" 
+            alt="BopAudio" 
+            className="h-12 md:h-16 w-auto"
+          />
+        </div>
+      </div>
+
       {/* Hero Section - Featured Artist Spotlight */}
       {featuredTrack && (
         <section className="py-20 md:py-32 bg-white border-b border-gray-200">

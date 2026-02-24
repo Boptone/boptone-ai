@@ -2132,4 +2132,14 @@
 - [x] Change genre pill borders from 2px (border-2) to 1px (border) black
 - [x] Update "Explore by Genre" section pills
 - [x] Test all changes - SUCCESS (99/100 investor-grade)
+- [x] Save checkpoint (version: bb0221d2)
+
+
+## BopAudio /discover Logo Addition
+
+### Logo Upload and Placement
+- [x] Upload BOP_AUDIO_LOGO.png to S3 (CDN URL: https://files.manuscdn.com/user_upload_by_module/session_file/98208888/rmZjWgpxxRytBjyS.png)
+- [x] Add logo to top center of /discover page header
+- [x] Ensure logo is responsive (h-12 md:h-16, scales on mobile)
+- [x] Test logo placement - SUCCESS (100/100 production-ready)
 - [ ] Save checkpoint
