@@ -2004,3 +2004,27 @@
 - [ ] Add artist names to discovery cards
 - [ ] Implement social proof (play counts, supporter counts)
 - [ ] Connect Web Audio API for actual audio playback
+
+
+## BopAudio /discover Refinement (User Feedback)
+
+### Remove "Begging" Elements
+- [x] Remove "Support Artist" buttons (feels like begging)
+- [x] Remove play counts (unnecessary clutter)
+
+### Visual Updates
+- [x] Change album artwork from blue gradients → light gray backgrounds
+- [x] Keep BAP Protocol styling (2px borders, 4px shadows)
+
+### Layout Reorganization
+- [x] Add "Top Bops" section (trending tracks, 8 cards)
+- [x] Add "Fresh Music" section (new releases, 8 cards)
+- [x] Add "Picks For You" section (based on user's genre preferences)
+- [x] Move genre picker to bottom of page
+- [x] Implement endless scroll at bottom with genre picker
+
+### Testing
+- [x] Test all three sections display correctly (Top Bops, Fresh Music, Picks For You)
+- [x] Test genre picker at bottom (Explore by Genre section)
+- [x] Test endless scroll (loads 12 more tracks)
+- [ ] Save checkpoint
