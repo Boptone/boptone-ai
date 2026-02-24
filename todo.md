@@ -2152,4 +2152,25 @@
 - [x] Replace logo URL in Discover.tsx
 - [x] Increase logo size to h-20 md:h-28 (bigger and bolder)
 - [x] Test new logo placement (verified in browser - displays correctly with cyan accent on A)
+- [x] Save checkpoint (version 7b0340e4)
+
+
+## BopAudio Genre Carousel UX Redesign (World-Class)
+
+### Current Issues
+- [x] Clunky arrow button navigation (not smooth)
+- [x] Poor scrolling behavior
+- [x] Not touch-friendly on mobile
+- [x] Lacks momentum scrolling
+- [x] No visual indicators for more content
+
+### World-Class Carousel Requirements
+- [x] Remove arrow buttons completely
+- [x] Implement smooth horizontal scroll with momentum (scroll-smooth, WebkitOverflowScrolling: touch)
+- [x] Add drag-to-scroll functionality (native browser behavior with overflow-x-auto)
+- [x] Add snap-to-position for clean alignment (scrollSnapType: x proximity)
+- [x] Add fade-out edges to indicate scrollable content (gradient overlays left/right)
+- [x] Ensure touch-friendly mobile experience (touch scrolling enabled)
+- [x] Match Spotify/Apple Music/Netflix carousel quality
+- [x] Test on desktop and mobile (verified - smooth scrolling, fade-out edges, touch-friendly)
 - [ ] Save checkpoint

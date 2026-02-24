@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
-import { Play, Pause, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
+import { Play, Pause, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
 
@@ -13,8 +13,6 @@ export default function Discover() {
   const [isPlayerMinimized, setIsPlayerMinimized] = useState(false);
   const scrollObserverRef = useRef<HTMLDivElement>(null);
   const genreScrollRef = useRef<HTMLDivElement>(null);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
   const { user } = useAuth();
 
   // tRPC queries
@@ -90,35 +88,7 @@ export default function Discover() {
     "Alternative",
   ];
 
-  const scrollGenres = (direction: 'left' | 'right') => {
-    if (!genreScrollRef.current) return;
-    const scrollAmount = 300;
-    const newScrollLeft = direction === 'left'
-      ? genreScrollRef.current.scrollLeft - scrollAmount
-      : genreScrollRef.current.scrollLeft + scrollAmount;
-    genreScrollRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' });
-  };
-
-  const updateArrowVisibility = () => {
-    if (!genreScrollRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = genreScrollRef.current;
-    setShowLeftArrow(scrollLeft > 0);
-    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
-  };
-
-  useEffect(() => {
-    const scrollContainer = genreScrollRef.current;
-    if (!scrollContainer) return;
-    
-    updateArrowVisibility();
-    scrollContainer.addEventListener('scroll', updateArrowVisibility);
-    window.addEventListener('resize', updateArrowVisibility);
-    
-    return () => {
-      scrollContainer.removeEventListener('scroll', updateArrowVisibility);
-      window.removeEventListener('resize', updateArrowVisibility);
-    };
-  }, []);
+  // Smooth scroll carousel - no arrow buttons needed
 
   // Featured track (first trending track)
   const featuredTrack = trendingTracks[0];
@@ -368,50 +338,38 @@ export default function Discover() {
             Explore by Genre
           </h2>
           
-          {/* Genre Carousel */}
-          <div className="relative mb-12">
-            {/* Left Arrow */}
-            {showLeftArrow && (
-              <button
-                onClick={() => scrollGenres('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition-all"
-                aria-label="Scroll left"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-            )}
+          {/* Genre Carousel - World-Class Smooth Scroll */}
+          <div className="relative mb-12 -mx-4 md:mx-0">
+            {/* Fade-out edges to indicate scrollable content */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
             
-            {/* Genre Pills Container */}
+            {/* Genre Pills Container - Smooth Horizontal Scroll */}
             <div
               ref={genreScrollRef}
-              className="flex gap-3 overflow-x-auto scrollbar-hide px-12"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              className="flex gap-3 overflow-x-auto px-4 md:px-0 scroll-smooth"
+              style={{ 
+                scrollbarWidth: 'none', 
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch',
+                scrollSnapType: 'x proximity'
+              }}
             >
               {genres.map((genre) => (
                 <button
                   key={genre}
                   onClick={() => setSelectedGenre(genre)}
-                  className={`px-6 py-3 rounded-full text-lg font-bold border border-black transition-all whitespace-nowrap flex-shrink-0 ${
+                  className={`px-6 py-3 rounded-full text-lg font-bold border border-black transition-all whitespace-nowrap flex-shrink-0 scroll-snap-align-start ${
                     selectedGenre === genre
-                      ? "bg-cyan-500 text-white"
+                      ? "bg-cyan-500 text-white border-cyan-500"
                       : "bg-white text-black hover:bg-gray-100"
                   }`}
+                  style={{ scrollSnapAlign: 'start' }}
                 >
                   {genre}
                 </button>
               ))}
             </div>
-            
-            {/* Right Arrow */}
-            {showRightArrow && (
-              <button
-                onClick={() => scrollGenres('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition-all"
-                aria-label="Scroll right"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            )}
           </div>
 
           {/* Endless Scroll Grid */}
