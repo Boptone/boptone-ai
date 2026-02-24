@@ -99,7 +99,7 @@ export function Navigation() {
                 <Link href="/profile-settings">
                   <Button 
                     variant="outline" 
-                    className="rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black font-medium text-base px-5 py-2 h-11 flex items-center gap-2 transition-colors"
+                    className="rounded-full border border-black bg-white hover:bg-gray-100 text-black font-medium text-base px-5 py-2 h-11 flex items-center gap-2 transition-colors"
                   >
                     {artistProfile?.avatarUrl ? (
                       <img 
@@ -129,7 +129,7 @@ export function Navigation() {
                 <Button 
                   variant="outline" 
                   asChild 
-                  className="rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black font-medium text-base px-6 py-2 h-11 transition-colors"
+                  className="rounded-full border border-black bg-white hover:bg-gray-100 text-black font-medium text-base px-6 py-2 h-11 transition-colors"
                 >
                   <a href={getLoginUrl()}>Get Started</a>
                 </Button>
@@ -155,7 +155,7 @@ export function Navigation() {
               variant="outline"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-full border-2 border-black bg-white hover:bg-gray-100 w-12 h-12 transition-colors"
+              className="rounded-full border border-black bg-white hover:bg-gray-100 w-12 h-12 transition-colors"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {mobileMenuOpen ? (
@@ -223,7 +223,7 @@ export function Navigation() {
                   <Link href="/profile-settings">
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-base font-medium rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black py-3 px-4 flex items-center gap-2 transition-colors"
+                      className="w-full justify-start text-base font-medium rounded-full border border-black bg-white hover:bg-gray-100 text-black py-3 px-4 flex items-center gap-2 transition-colors"
                       onClick={closeMobileMenu}
                     >
                       {artistProfile?.avatarUrl ? (
@@ -253,7 +253,7 @@ export function Navigation() {
                   <Button
                     variant="outline"
                     asChild
-                    className="w-full justify-start text-base font-medium rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black py-3 px-4 transition-colors"
+                    className="w-full justify-start text-base font-medium rounded-full border border-black bg-white hover:bg-gray-100 text-black py-3 px-4 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     <a href={getLoginUrl()}>Get Started</a>

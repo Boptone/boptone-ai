@@ -263,7 +263,7 @@ export default function Legal() {
             </section>
 
             {/* Contact Section */}
-            <section className="bg-[#81e6fe] bg-opacity-10 border-2 border-[#81e6fe] rounded-lg p-8 text-center">
+            <section className="bg-[#81e6fe] bg-opacity-10 border border-[#81e6fe] rounded-lg p-8 text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Questions About Our Legal Policies?
               </h2>
@@ -285,7 +285,7 @@ export default function Legal() {
                 </Link>
                 <a
                   href="/cookie-settings"
-                  className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold border-2 border-gray-900 hover:bg-gray-50 transition-colors"
+                  className="inline-block bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold border border-gray-900 hover:bg-gray-50 transition-colors"
                 >
                   Manage Cookie Preferences
                 </a>

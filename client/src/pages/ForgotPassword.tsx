@@ -122,7 +122,7 @@ export default function ForgotPassword() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white rounded-3xl p-8 border-2 border-gray-200 mb-6">
+        <div className="bg-white rounded-3xl p-8 border border-gray-200 mb-6">
           {/* Email Entry Form */}
           {step === "email" && (
             <form onSubmit={handleEmailSubmit} className="space-y-6">
@@ -139,7 +139,7 @@ export default function ForgotPassword() {
                     setEmail(e.target.value);
                     setEmailError("");
                   }}
-                  className={`h-12 rounded-full border-2 ${
+                  className={`h-12 rounded-full border ${
                     emailError ? "border-red-500" : "border-gray-300"
                   } focus:border-black`}
                   required
@@ -231,7 +231,7 @@ export default function ForgotPassword() {
                     setVerificationCode(e.target.value);
                     setCodeError("");
                   }}
-                  className={`h-16 rounded-full border-2 text-center text-2xl tracking-widest ${
+                  className={`h-16 rounded-full border text-center text-2xl tracking-widest ${
                     codeError ? "border-red-500" : "border-gray-300"
                   } focus:border-black`}
                   maxLength={6}

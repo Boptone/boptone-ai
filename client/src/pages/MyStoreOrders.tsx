@@ -229,7 +229,7 @@ export default function MyStoreOrders() {
         {/* Header */}
         <div className="mb-12">
           <Link href="/my-store">
-            <Button variant="outline" className="rounded-full mb-6 border-2 border-gray-200 bg-white hover:bg-gray-100 text-black font-bold">
+            <Button variant="outline" className="rounded-full mb-6 border border-gray-200 bg-white hover:bg-gray-100 text-black font-bold">
               ← BACK TO STORE
             </Button>
           </Link>
@@ -268,7 +268,7 @@ export default function MyStoreOrders() {
                       <div className="text-4xl font-bold font-mono mb-3">
                         ${(order.total / 100).toFixed(2)}
                       </div>
-                      <div className="inline-flex items-center px-4 py-2 font-bold text-sm border-2 border-gray-200 bg-white rounded-none">
+                      <div className="inline-flex items-center px-4 py-2 font-bold text-sm border border-gray-200 bg-white rounded-none">
                         {getStatusLabel(order.fulfillmentStatus)}
                       </div>
                     </div>
@@ -302,7 +302,7 @@ export default function MyStoreOrders() {
 
                   {/* Tracking Info */}
                   {order.trackingNumber && (
-                    <div className="mb-8 p-6 bg-gray-50 border-2 border-gray-200 rounded-none">
+                    <div className="mb-8 p-6 bg-gray-50 border border-gray-200 rounded-none">
                       <div className="font-bold text-xs tracking-wider mb-3 text-gray-600">TRACKING INFORMATION</div>
                       <div className="font-mono text-lg font-bold mb-2">{order.trackingNumber}</div>
                       {order.trackingUrl && (
@@ -332,7 +332,7 @@ export default function MyStoreOrders() {
                               value={trackingNumber}
                               onChange={(e) => setTrackingNumber(e.target.value)}
                               placeholder="1Z999AA10123456784"
-                              className="border-2 border-gray-200 rounded-none h-12 text-base"
+                              className="border border-gray-200 rounded-none h-12 text-base"
                             />
                           </div>
                           <div>
@@ -344,7 +344,7 @@ export default function MyStoreOrders() {
                               value={trackingUrl}
                               onChange={(e) => setTrackingUrl(e.target.value)}
                               placeholder="https://www.ups.com/track?..."
-                              className="border-2 border-gray-200 rounded-none h-12 text-base"
+                              className="border border-gray-200 rounded-none h-12 text-base"
                             />
                           </div>
                           <div className="flex gap-4">
@@ -358,7 +358,7 @@ export default function MyStoreOrders() {
                             <Button
                               variant="outline"
                               onClick={() => setSelectedOrder(null)}
-                              className="rounded-full border-2 border-gray-200 bg-white hover:bg-gray-100 text-black font-bold px-6"
+                              className="rounded-full border border-gray-200 bg-white hover:bg-gray-100 text-black font-bold px-6"
                             >
                               CANCEL
                             </Button>
@@ -376,14 +376,14 @@ export default function MyStoreOrders() {
                           <Button
                             onClick={() => setSelectedOrder(order.id)}
                             variant="outline"
-                            className="rounded-full border-2 border-gray-200 bg-white hover:bg-gray-100 text-black font-bold px-6"
+                            className="rounded-full border border-gray-200 bg-white hover:bg-gray-100 text-black font-bold px-6"
                           >
                             ENTER TRACKING MANUALLY
                           </Button>
                           <Button
                             variant="outline"
                             onClick={() => handleCancelOrder(order.id)}
-                            className="rounded-full border-2 border-gray-200 bg-white hover:bg-gray-100 text-black font-bold px-6"
+                            className="rounded-full border border-gray-200 bg-white hover:bg-gray-100 text-black font-bold px-6"
                           >
                             CANCEL ORDER
                           </Button>
@@ -425,7 +425,7 @@ export default function MyStoreOrders() {
                       {shippingRates.map((rate) => (
                         <div
                           key={rate.rateId}
-                          className={`flex items-center space-x-3 border-2 rounded-xl p-4 cursor-pointer transition-all ${
+                          className={`flex items-center space-x-3 border rounded-xl p-4 cursor-pointer transition-all ${
                             selectedRate === rate.rateId
                               ? "border-black bg-gray-50"
                               : "border-gray-200 hover:border-gray-400"
@@ -475,7 +475,7 @@ export default function MyStoreOrders() {
                   <Button
                     variant="outline"
                     onClick={() => setShowLabelDialog(false)}
-                    className="border-2 border-gray-200 rounded-xl px-8"
+                    className="border border-gray-200 rounded-xl px-8"
                   >
                     Cancel
                   </Button>

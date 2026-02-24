@@ -111,7 +111,7 @@ export default function Admin() {
         <div className="container py-6">
           <div className="flex items-center gap-4">
             <Button 
-              className="rounded-full border-2 border-gray-200 bg-white hover:bg-gray-100 text-black" 
+              className="rounded-full border border-gray-200 bg-white hover:bg-gray-100 text-black" 
               variant="outline" 
               size="sm"
               onClick={() => setLocation("/dashboard")}
@@ -199,7 +199,7 @@ export default function Admin() {
               {quickActions.map((action) => (
                 <Button 
                   key={action.label}
-                  className="rounded-full w-full justify-start border-2 border-gray-200 bg-white hover:bg-gray-100 text-black font-medium" 
+                  className="rounded-full w-full justify-start border border-gray-200 bg-white hover:bg-gray-100 text-black font-medium" 
                   variant="outline"
                 >
                   <span className="mr-2 text-lg">{action.symbol}</span>

@@ -76,7 +76,7 @@ export default function Shop() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {/* All Products Card */}
             <div 
-              className={`border-2 p-10 cursor-pointer transition-colors rounded-xl ${
+              className={`border p-10 cursor-pointer transition-colors rounded-xl ${
                 selectedType === null 
                   ? 'border-black bg-black' 
                   : 'border-gray-200 bg-white hover:border-gray-400'
@@ -98,7 +98,7 @@ export default function Shop() {
               return (
                 <div 
                   key={type.value}
-                  className={`border-2 p-10 cursor-pointer transition-colors rounded-xl ${
+                  className={`border p-10 cursor-pointer transition-colors rounded-xl ${
                     isSelected 
                       ? 'border-black bg-black' 
                       : 'border-gray-200 bg-white hover:border-gray-400'
@@ -136,7 +136,7 @@ export default function Shop() {
                 <CardContent className="p-6">
                   {/* Product Image */}
                   {product.images && product.images.length > 0 ? (
-                    <div className="aspect-square bg-gray-50 rounded-none border-2 border-gray-200 mb-4 overflow-hidden">
+                    <div className="aspect-square bg-gray-50 rounded-none border border-gray-200 mb-4 overflow-hidden">
                       <img
                         src={product.images[0]}
                         alt={product.name}
@@ -144,14 +144,14 @@ export default function Shop() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-square bg-gray-100 rounded-none border-2 border-gray-200 mb-4 flex items-center justify-center">
+                    <div className="aspect-square bg-gray-100 rounded-none border border-gray-200 mb-4 flex items-center justify-center">
                       <span className="text-4xl font-bold text-gray-400">No Image</span>
                     </div>
                   )}
 
                   {/* Product Info */}
                   <div className="space-y-3">
-                    <Badge className="rounded-full border-2 border-gray-200 bg-white text-black font-bold text-xs px-3 py-1 uppercase">
+                    <Badge className="rounded-full border border-gray-200 bg-white text-black font-bold text-xs px-3 py-1 uppercase">
                       {product.type}
                     </Badge>
                     <h3 className="font-bold text-xl text-black line-clamp-2">
@@ -165,11 +165,11 @@ export default function Shop() {
                         ${product.price}
                       </span>
                       {product.status === "active" ? (
-                        <Badge className="rounded-full border-2 border-gray-200 bg-white text-black font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full border border-gray-200 bg-white text-black font-bold text-xs px-3 py-1">
                           In Stock
                         </Badge>
                       ) : (
-                        <Badge className="rounded-full border-2 border-gray-200 bg-black text-white font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full border border-gray-200 bg-black text-white font-bold text-xs px-3 py-1">
                           Sold Out
                         </Badge>
                       )}

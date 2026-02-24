@@ -57,12 +57,12 @@ export function AIRecommendations() {
   };
   
   return (
-    <div className="border-2 border-gray-200 bg-white p-12">
+    <div className="border border-gray-200 bg-white p-12">
       <h3 className="text-4xl font-bold mb-8">AI Recommendations</h3>
       
       <div className="space-y-4">
         {visibleRecommendations.map((rec, index) => (
-          <div key={index} className="p-6 border-2 border-gray-300 bg-white">
+          <div key={index} className="p-6 border border-gray-300 bg-white">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
                 <h4 className="text-xl font-bold mb-2">{rec.title}</h4>

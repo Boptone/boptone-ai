@@ -172,7 +172,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="rounded-full bg-cyan-500 text-white hover:bg-cyan-600 text-lg h-14 px-8 border-2 border-black transition-colors"
+                className="rounded-full bg-[#81e6ff] text-white hover:bg-[#60d5ed] text-lg h-14 px-8 border border-black transition-colors"
                 style={{
                   boxShadow: '4px 4px 0 0 black'
                 }}
@@ -215,7 +215,7 @@ export default function Home() {
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className="border-2 border-black rounded-lg p-8 bg-white hover:bg-gray-50 transition-colors"
+                className="border border-black rounded-lg p-8 bg-white hover:bg-gray-50 transition-colors"
                 style={{
                   boxShadow: '4px 4px 0 0 black'
                 }}
@@ -244,7 +244,7 @@ export default function Home() {
               </span>
               <button
                 onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
+                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#81e6ff] focus:ring-offset-2"
               >
                 <span
                   className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
@@ -254,7 +254,7 @@ export default function Home() {
               </button>
               <span className={`text-base font-medium ${isAnnual ? 'text-black' : 'text-gray-500'}`}>
                 Annual
-                <span className="ml-2 text-cyan-500 font-semibold">Save 20%</span>
+                <span className="ml-2 text-[#81e6ff] font-semibold">Save 20%</span>
               </span>
             </div>
           </div>
@@ -263,7 +263,7 @@ export default function Home() {
             {tiers.map((tier, index) => (
               <div 
                 key={index} 
-                className="relative border-2 border-black p-10 flex flex-col hover:bg-white transition-colors bg-white rounded-lg"
+                className="relative border border-black p-10 flex flex-col hover:bg-white transition-colors bg-white rounded-lg"
                 style={{
                   boxShadow: '4px 4px 0 0 black'
                 }}
@@ -285,7 +285,7 @@ export default function Home() {
                         <span className="text-2xl text-gray-600 font-normal">/mo</span>
                       </div>
                       {isAnnual && savings(tier) > 0 && (
-                        <div className="text-sm text-cyan-500 font-semibold mt-1">
+                        <div className="text-sm text-[#81e6ff] font-semibold mt-1">
                           Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
                         </div>
                       )}
@@ -300,7 +300,7 @@ export default function Home() {
                 <ul className="space-y-3 mb-8 flex-grow">
                   {tier.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start gap-3 text-base">
-                      <span className="text-cyan-500 font-bold mt-0.5">✓</span>
+                      <span className="text-[#81e6ff] font-bold mt-0.5">✓</span>
                       <span className="text-gray-700">{feature}</span>
                     </li>
                   ))}
@@ -309,7 +309,7 @@ export default function Home() {
                 {/* CTA Button */}
                 <Button
                   size="lg"
-                  className="w-full rounded-full bg-cyan-500 text-white hover:bg-cyan-600 border-2 border-black transition-colors"
+                  className="w-full rounded-full bg-[#81e6ff] text-white hover:bg-[#60d5ed] border border-black transition-colors"
                   style={{
                     boxShadow: '4px 4px 0 0 black'
                   }}
@@ -341,7 +341,7 @@ export default function Home() {
             </p>
             <Button
               size="lg"
-              className="rounded-full bg-cyan-500 text-white hover:bg-cyan-600 text-lg h-14 px-8 border-2 border-black transition-colors"
+              className="rounded-full bg-[#81e6ff] text-white hover:bg-[#60d5ed] text-lg h-14 px-8 border border-black transition-colors"
               style={{
                 boxShadow: '4px 4px 0 0 black'
               }}

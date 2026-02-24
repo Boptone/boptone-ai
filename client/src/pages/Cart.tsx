@@ -101,7 +101,7 @@ export default function Cart() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Continue Shopping
@@ -136,11 +136,11 @@ export default function Cart() {
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-gray-400 transition-colors"
+                  className="bg-white border border-gray-200 rounded-xl p-6 hover:border-gray-400 transition-colors"
                 >
                   <div className="flex gap-6">
                     {/* Product Image - BAP Protocol */}
-                    <div className="w-32 h-32 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden border-2 border-gray-200">
+                    <div className="w-32 h-32 bg-gray-100 rounded-xl flex-shrink-0 overflow-hidden border border-gray-200">
                       {item.product?.primaryImageUrl ? (
                         <img
                           src={item.product.primaryImageUrl}
@@ -176,7 +176,7 @@ export default function Cart() {
                               });
                             }
                           }}
-                          className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                          className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
@@ -192,7 +192,7 @@ export default function Cart() {
                               quantity: item.quantity + 1,
                             });
                           }}
-                          className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                          className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                         >
                           <Plus className="h-4 w-4" />
                         </Button>
@@ -208,7 +208,7 @@ export default function Cart() {
                         variant="outline"
                         size="sm"
                         onClick={() => removeFromCart.mutate({ id: item.id })}
-                        className="border-2 border-red-200 text-red-600 rounded-lg hover:border-red-400 transition-colors"
+                        className="border border-red-200 text-red-600 rounded-lg hover:border-red-400 transition-colors"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
                         Remove
@@ -222,7 +222,7 @@ export default function Cart() {
               <Button
                 variant="outline"
                 onClick={() => clearCart.mutate()}
-                className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
               >
                 Clear Cart
               </Button>
@@ -230,7 +230,7 @@ export default function Cart() {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-white border-2 border-gray-200 rounded-xl p-6 sticky top-4">
+              <div className="bg-white border border-gray-200 rounded-xl p-6 sticky top-4">
                 <h2 className="text-3xl font-bold mb-6">Order Summary</h2>
 
                 <div className="space-y-4 mb-6">

@@ -2194,4 +2194,25 @@
 - [x] Update mini-player to display album artwork (full player view)
 - [x] Test album artwork display in hero section (verified - cactus image displays perfectly)
 - [x] Test album artwork display in mini-player (verified - artwork ready for display when track plays)
+- [x] Save checkpoint (version 635a4461)
+
+
+## Global Design Changes - Brand Consistency
+
+### Border Boldness Reduction (50% less bold)
+- [x] Find all `border-2` classes across entire site (105 matches in 20 files)
+- [x] Replace `border-2` with `border` (2px → 1px) across all components and pages
+- [x] Test border changes on all cards and components (verified - borders are 50% thinner, more refined look)
+
+### Blue Color Update (#81e6ff - Boptone Brand Blue)
+- [x] Find all cyan-500 (#06b6d4) colors across entire site (12 matches in 4 files)
+- [x] Replace with #81e6ff (exact Boptone logo blue)
+- [x] Update: Pills/badges (cyan-500 → [#81e6ff])
+- [x] Update: Checkmarks (cyan-500 → [#81e6ff])
+- [x] Update: Buttons (cyan-500 → [#81e6ff], hover: cyan-600 → [#60d5ed])
+- [x] Update: Play buttons (all cyan colors replaced)
+- [x] Update: Links (border-cyan-500 → border-[#81e6ff])
+- [x] Update: Icons (text-cyan-500 → text-[#81e6ff])
+- [x] Update: Any other blue elements (cyan-50 → [#e0f9ff] for backgrounds)
+- [x] Test color consistency across entire site (verified - perfect brand consistency with logo)
 - [ ] Save checkpoint

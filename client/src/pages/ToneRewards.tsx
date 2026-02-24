@@ -107,7 +107,7 @@ export default function ToneRewards() {
         </div>
 
         {/* Current Membership Status */}
-        <Card className="rounded-xl border-2 border-primary/20">
+        <Card className="rounded-xl border border-primary/20">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -165,7 +165,7 @@ export default function ToneRewards() {
               
               return (
                 <Card key={key} 
-                  className={`rounded-xl relative ${isCurrent ? "border-2 border-primary" : ""}`}
+                  className={`rounded-xl relative ${isCurrent ? "border border-primary" : ""}`}
                 >
                   {isCurrent && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">

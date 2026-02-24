@@ -184,7 +184,7 @@ export default function Money() {
                     <span className="font-bold text-sm uppercase">{item.source}</span>
                     <span className="font-bold text-lg">${item.amount.toLocaleString()} ({item.percentage}%)</span>
                   </div>
-                  <div className="w-full h-8 bg-gray-200 border-2 border-gray-200">
+                  <div className="w-full h-8 bg-gray-200 border border-gray-200">
                     <div 
                       className={`h-full ${item.color} transition-all duration-500`}
                       style={{ width: `${item.percentage}%` }}
@@ -237,7 +237,7 @@ export default function Money() {
             </CardHeader>
             <CardContent className="p-6 space-y-4">
               {recommendations.map((rec, idx) => (
-                <div key={idx} className="flex items-start gap-4 p-4 border-2 border-gray-200 bg-gray-50">
+                <div key={idx} className="flex items-start gap-4 p-4 border border-gray-200 bg-gray-50">
                   <div className="w-8 h-8 bg-black flex items-center justify-center flex-shrink-0">
                     <span className="text-white font-bold">{idx + 1}</span>
                   </div>
@@ -268,7 +268,7 @@ export default function Money() {
               <CardContent className="space-y-4">
                 {revenueBySource && revenueBySource.length > 0 ? (
                   revenueBySource.map((source: any) => (
-                    <div key={source.source} className="flex items-center justify-between p-4 border-2 border-gray-200">
+                    <div key={source.source} className="flex items-center justify-between p-4 border border-gray-200">
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 bg-black flex items-center justify-center">
                           <span className="text-white text-xl">$</span>
@@ -287,7 +287,7 @@ export default function Money() {
                   ))
                 ) : (
                   <div className="text-center py-8 text-gray-600">
-                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                       <span className="text-gray-400 text-5xl">$</span>
                     </div>
                     <p className="font-medium">No earnings yet. Upload music to start earning!</p>
@@ -306,7 +306,7 @@ export default function Money() {
                     </CardDescription>
                   </div>
                   <a href="/payouts/history">
-                    <Button variant="outline" className="bg-white text-black hover:bg-gray-100 rounded-full border-2 border-white font-bold">
+                    <Button variant="outline" className="bg-white text-black hover:bg-gray-100 rounded-full border border-white font-bold">
                       View Full History
                     </Button>
                   </a>
@@ -314,7 +314,7 @@ export default function Money() {
               </CardHeader>
               <CardContent>
                 <div className="text-center py-8 text-gray-600">
-                  <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                  <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                     <span className="text-gray-400 text-2xl font-bold">DATE</span>
                   </div>
                   <p className="font-medium">No payout history yet</p>
@@ -337,7 +337,7 @@ export default function Money() {
               <CardContent className="space-y-4">
                 {eligibility?.eligible ? (
                   <>
-                    <div className="flex items-center gap-2 p-4 bg-gray-100 border-2 border-gray-200">
+                    <div className="flex items-center gap-2 p-4 bg-gray-100 border border-gray-200">
                       <span className="text-2xl">✓</span>
                       <span className="font-bold">You're eligible for a micro-loan!</span>
                     </div>
@@ -352,7 +352,7 @@ export default function Money() {
                           value={loanAmount}
                           onChange={(e) => setLoanAmount(e.target.value)}
                           placeholder="Enter amount"
-                          className="rounded-none border-2 border-gray-200"
+                          className="rounded-none border border-gray-200"
                         />
                         <Button 
                           className="rounded-full bg-black hover:bg-gray-800 font-bold uppercase" 
@@ -368,7 +368,7 @@ export default function Money() {
                     </div>
                   </>
                 ) : (
-                  <div className="flex items-center gap-2 p-4 bg-gray-100 border-2 border-gray-200">
+                  <div className="flex items-center gap-2 p-4 bg-gray-100 border border-gray-200">
                     <span className="text-2xl">⚠</span>
                     <span className="font-medium">
                       {eligibility?.reasons?.[0] || "You need at least $50 in earnings to qualify"}
@@ -386,7 +386,7 @@ export default function Money() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {activeLoans.map((loan) => (
-                    <div key={loan.id} className="flex items-center justify-between p-4 border-2 border-gray-200">
+                    <div key={loan.id} className="flex items-center justify-between p-4 border border-gray-200">
                       <div>
                         <p className="font-bold text-xl">{formatCurrency(parseInt(loan.approvedAmount || "0"))}</p>
                         <p className="text-sm text-gray-600 font-medium">
@@ -395,7 +395,7 @@ export default function Money() {
                       </div>
                       <Badge 
                         variant={loan.status === "active" ? "default" : "secondary"}
-                        className="rounded-none border-2 border-gray-200 bg-black text-white font-bold uppercase"
+                        className="rounded-none border border-gray-200 bg-black text-white font-bold uppercase"
                       >
                         {loan.status}
                       </Badge>
@@ -414,7 +414,7 @@ export default function Money() {
                 {loanHistory && loanHistory.length > 0 ? (
                   <div className="space-y-2">
                     {loanHistory.map((loan) => (
-                      <div key={loan.id} className="flex items-center justify-between p-3 border-2 border-gray-200">
+                      <div key={loan.id} className="flex items-center justify-between p-3 border border-gray-200">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-black flex items-center justify-center">
                             <span className="text-white text-sm font-bold">$</span>
@@ -428,7 +428,7 @@ export default function Money() {
                         </div>
                         <Badge 
                           variant={loan.status === "repaid" ? "default" : "secondary"}
-                          className="rounded-none border-2 border-gray-200 bg-black text-white font-bold uppercase"
+                          className="rounded-none border border-gray-200 bg-black text-white font-bold uppercase"
                         >
                           {loan.status}
                         </Badge>
@@ -437,7 +437,7 @@ export default function Money() {
                   </div>
                 ) : (
                   <div className="text-center py-8 text-gray-600">
-                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                       <span className="text-gray-400 text-2xl font-bold">LOANS</span>
                     </div>
                     <p className="font-medium">No loan history</p>
@@ -460,7 +460,7 @@ export default function Money() {
                 {tips && tips.length > 0 ? (
                   <div className="space-y-3">
                     {tips.map((tip: any) => (
-                      <div key={tip.id} className="flex items-center justify-between p-3 border-2 border-gray-200">
+                      <div key={tip.id} className="flex items-center justify-between p-3 border border-gray-200">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-black flex items-center justify-center">
                             <span className="text-white text-sm font-bold">TIP</span>
@@ -480,7 +480,7 @@ export default function Money() {
                   </div>
                 ) : (
                   <div className="text-center py-8 text-gray-600">
-                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                       <span className="text-gray-400 text-2xl font-bold">TIPS</span>
                     </div>
                     <p className="font-medium">No tips yet</p>

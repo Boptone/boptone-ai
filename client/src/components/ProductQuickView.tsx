@@ -161,7 +161,7 @@ export function ProductQuickView({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="max-w-6xl max-h-[90vh] overflow-y-auto border-2 border-gray-200 rounded-xl p-0"
+        className="max-w-6xl max-h-[90vh] overflow-y-auto border border-gray-200 rounded-xl p-0"
         aria-describedby="product-quick-view-description"
       >
         {/* SEO Metadata - Hidden but accessible */}
@@ -195,14 +195,14 @@ export function ProductQuickView({
                   <>
                     <button
                       onClick={prevImage}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full border-2 border-gray-200 transition-all"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full border border-gray-200 transition-all"
                       aria-label="Previous image"
                     >
                       <ChevronLeft className="h-6 w-6" />
                     </button>
                     <button
                       onClick={nextImage}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full border-2 border-gray-200 transition-all"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full border border-gray-200 transition-all"
                       aria-label="Next image"
                     >
                       <ChevronRight className="h-6 w-6" />
@@ -280,7 +280,7 @@ export function ProductQuickView({
                     variant="outline"
                     size="sm"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                   >
                     -
                   </Button>
@@ -289,7 +289,7 @@ export function ProductQuickView({
                     variant="outline"
                     size="sm"
                     onClick={() => setQuantity(quantity + 1)}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                   >
                     +
                   </Button>
@@ -312,7 +312,7 @@ export function ProductQuickView({
                 <Button
                   variant="outline"
                   onClick={handleShare}
-                  className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                  className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                 >
                   <Share2 className="mr-2 h-4 w-4" />
                   Share
@@ -321,7 +321,7 @@ export function ProductQuickView({
                   variant="outline"
                   onClick={handleSave}
                   disabled={addToWishlist.isPending || removeFromWishlist.isPending}
-                  className={`border-2 rounded-xl transition-colors ${
+                  className={`border rounded-xl transition-colors ${
                     isInWishlist 
                       ? "border-red-500 bg-red-50 hover:bg-red-100" 
                       : "border-gray-200 hover:border-gray-400"
@@ -342,7 +342,7 @@ export function ProductQuickView({
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-lg border-2 overflow-hidden transition-all ${
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg border overflow-hidden transition-all ${
                       index === currentImageIndex
                         ? "border-black"
                         : "border-gray-200 hover:border-gray-400"

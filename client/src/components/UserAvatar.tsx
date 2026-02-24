@@ -46,7 +46,7 @@ export function UserAvatar({ size = "md", showName = false, className = "" }: Us
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {/* Avatar Circle */}
-      <div className={`${sizeClasses[size]} rounded-full overflow-hidden border-2 border-gray-200 bg-gray-100 flex items-center justify-center flex-shrink-0`}>
+      <div className={`${sizeClasses[size]} rounded-full overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center flex-shrink-0`}>
         {avatarUrl ? (
           <img 
             src={avatarUrl} 

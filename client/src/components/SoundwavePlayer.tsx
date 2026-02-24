@@ -408,7 +408,7 @@ function KickInButton({ track }: { track: Track }) {
       <button 
         onClick={handleKickIn}
         disabled={createTipCheckout.isPending}
-        className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white font-bold rounded-full shadow-2xl border-2 border-green-400 hover:scale-110 transition-transform flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 text-white font-bold rounded-full shadow-2xl border border-green-400 hover:scale-110 transition-transform flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ backgroundColor: '#008000' }}
       >
         <Zap className="w-5 h-5" />

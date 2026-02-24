@@ -220,7 +220,7 @@ export default function Analytics() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {overviewStats.map((stat) => {
             return (
-              <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors" key={stat.title}>
+              <Card className="border border-gray-200 hover:border-gray-400 transition-colors" key={stat.title}>
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-sm font-medium text-gray-600">{stat.change}</span>
@@ -293,7 +293,7 @@ export default function Analytics() {
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <Card className="border border-gray-200 hover:border-gray-400 transition-colors">
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
                     <div>
@@ -310,7 +310,7 @@ export default function Analytics() {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <Card className="border border-gray-200 hover:border-gray-400 transition-colors">
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
                     <div>
@@ -343,7 +343,7 @@ export default function Analytics() {
                     {Object.entries(socialByPlatform)
                       .sort(([, a], [, b]) => b.followers - a.followers)
                       .map(([platform, data]) => (
-                        <div key={platform} className="border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-lg p-6">
+                        <div key={platform} className="border border-gray-200 hover:border-gray-400 transition-colors rounded-lg p-6">
                           <div className="flex items-center justify-between mb-4">
                             <span className="text-lg font-bold capitalize">{platformLabels[platform] || platform}</span>
                             <span className="text-sm text-gray-600">
@@ -418,7 +418,7 @@ export default function Analytics() {
                 <CardDescription>Personalized recommendations to grow your audience and revenue</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="p-4 bg-gray-100 border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-lg">
+                <div className="p-4 bg-gray-100 border border-gray-200 hover:border-gray-400 transition-colors rounded-lg">
                   <h3 className="font-bold text-lg mb-2">Growth Opportunity</h3>
                   <p className="text-gray-700">
                     Your engagement rate on Instagram is 2.3% above average. Consider posting more frequently to
@@ -426,7 +426,7 @@ export default function Analytics() {
                   </p>
                 </div>
 
-                <div className="p-4 bg-gray-100 border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-lg">
+                <div className="p-4 bg-gray-100 border border-gray-200 hover:border-gray-400 transition-colors rounded-lg">
                   <h3 className="font-bold text-lg mb-2">Revenue Optimization</h3>
                   <p className="text-gray-700">
                     Streaming revenue increased 15% this month. Focus on playlist placements and collaborations to
@@ -434,7 +434,7 @@ export default function Analytics() {
                   </p>
                 </div>
 
-                <div className="p-4 bg-gray-100 border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-lg">
+                <div className="p-4 bg-gray-100 border border-gray-200 hover:border-gray-400 transition-colors rounded-lg">
                   <h3 className="font-bold text-lg mb-2">Audience Insight</h3>
                   <p className="text-gray-700">
                     Your top listeners are in Los Angeles, New York, and London. Consider planning shows in these
@@ -445,7 +445,7 @@ export default function Analytics() {
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <Card className="border border-gray-200 hover:border-gray-400 transition-colors">
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
                     <div>
@@ -457,7 +457,7 @@ export default function Analytics() {
                 </CardContent>
               </Card>
 
-              <Card className="border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <Card className="border border-gray-200 hover:border-gray-400 transition-colors">
                 <CardContent className="p-8">
                   <div className="flex items-center justify-between">
                     <div>

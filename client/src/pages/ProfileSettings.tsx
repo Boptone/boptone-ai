@@ -171,14 +171,14 @@ export default function ProfileSettings() {
                       type="color"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-xl border-2 border-gray-200"
+                      className="w-24 h-16 cursor-pointer rounded-xl border border-gray-200"
                     />
                     <Input
                       type="text"
                       value={themeColor}
                       onChange={(e) => setThemeColor(e.target.value)}
                       placeholder="#0066ff"
-                      className="flex-1 rounded-xl border-2 border-gray-200 text-lg font-medium"
+                      className="flex-1 rounded-xl border border-gray-200 text-lg font-medium"
                     />
                   </div>
                   <p className="text-sm text-gray-600 font-medium">
@@ -196,14 +196,14 @@ export default function ProfileSettings() {
                       type="color"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
-                      className="w-24 h-16 cursor-pointer rounded-xl border-2 border-gray-200"
+                      className="w-24 h-16 cursor-pointer rounded-xl border border-gray-200"
                     />
                     <Input
                       type="text"
                       value={accentColor}
                       onChange={(e) => setAccentColor(e.target.value)}
                       placeholder="#00d4aa"
-                      className="flex-1 rounded-xl border-2 border-gray-200 text-lg font-medium"
+                      className="flex-1 rounded-xl border border-gray-200 text-lg font-medium"
                     />
                   </div>
                   <p className="text-sm text-gray-600 font-medium">
@@ -255,16 +255,16 @@ export default function ProfileSettings() {
                   Layout
                 </Label>
                 <Select value={layoutStyle} onValueChange={(value) => setLayoutStyle(value as "default" | "minimal" | "grid")}>
-                  <SelectTrigger id="layoutStyle" className="rounded-xl border-2 border-gray-200 text-lg font-medium h-14">
+                  <SelectTrigger id="layoutStyle" className="rounded-xl border border-gray-200 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2 border-gray-200">
+                  <SelectContent className="rounded-xl border border-gray-200">
                     <SelectItem value="default" className="text-lg font-medium">Default (Single Column)</SelectItem>
                     <SelectItem value="grid" className="text-lg font-medium">Grid Layout</SelectItem>
                     <SelectItem value="minimal" className="text-lg font-medium">Minimal</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-base text-gray-600 font-medium p-4 rounded-xl bg-gray-100 border-2 border-gray-200">
+                <p className="text-base text-gray-600 font-medium p-4 rounded-xl bg-gray-100 border border-gray-200">
                   {layoutStyle === "default" && "Clean single-column layout with all sections stacked"}
                   {layoutStyle === "grid" && "Modern grid layout with side-by-side content"}
                   {layoutStyle === "minimal" && "Minimalist design focusing on essential content"}
@@ -276,10 +276,10 @@ export default function ProfileSettings() {
                   Font Family
                 </Label>
                 <Select value={fontFamily} onValueChange={setFontFamily}>
-                  <SelectTrigger id="fontFamily" className="rounded-xl border-2 border-gray-200 text-lg font-medium h-14">
+                  <SelectTrigger id="fontFamily" className="rounded-xl border border-gray-200 text-lg font-medium h-14">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl border-2 border-gray-200">
+                  <SelectContent className="rounded-xl border border-gray-200">
                     <SelectItem value="Inter" className="text-lg font-medium">Inter (Modern Sans-Serif)</SelectItem>
                     <SelectItem value="Playfair Display" className="text-lg font-medium">Playfair Display (Elegant Serif)</SelectItem>
                     <SelectItem value="Roboto" className="text-lg font-medium">Roboto (Clean Sans-Serif)</SelectItem>
@@ -303,7 +303,7 @@ export default function ProfileSettings() {
             </CardHeader>
             <CardContent className="space-y-6 pt-8">
               {/* Download Data */}
-              <div className="p-6 rounded-xl border-2 border-gray-200 bg-gray-50">
+              <div className="p-6 rounded-xl border border-gray-200 bg-gray-50">
                 <div className="flex items-start gap-4">
                   <Download className="h-6 w-6 text-blue-600 mt-1" />
                   <div className="flex-1">
@@ -315,7 +315,7 @@ export default function ProfileSettings() {
                     </p>
                     <Button
                       variant="outline"
-                      className="rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-bold"
+                      className="rounded-xl border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold"
                       onClick={async () => {
                         try {
                           const result = await trpc.gdpr.exportUserData.mutate();
@@ -334,7 +334,7 @@ export default function ProfileSettings() {
               </div>
 
               {/* Delete Account */}
-              <div className="p-6 rounded-xl border-2 border-red-200 bg-red-50">
+              <div className="p-6 rounded-xl border border-red-200 bg-red-50">
                 <div className="flex items-start gap-4">
                   <AlertTriangle className="h-6 w-6 text-red-600 mt-1" />
                   <div className="flex-1">
@@ -398,7 +398,7 @@ export default function ProfileSettings() {
               </div>
 
               {/* Cookie Preferences */}
-              <div className="p-6 rounded-xl border-2 border-gray-200 bg-gray-50">
+              <div className="p-6 rounded-xl border border-gray-200 bg-gray-50">
                 <div className="flex items-start gap-4">
                   <span className="text-2xl mt-1">🍪</span>
                   <div className="flex-1">
@@ -410,7 +410,7 @@ export default function ProfileSettings() {
                     </p>
                     <Button
                       variant="outline"
-                      className="rounded-xl border-2 border-gray-300 font-bold"
+                      className="rounded-xl border border-gray-300 font-bold"
                       onClick={() => {
                         // Clear cookie consent to trigger banner again
                         localStorage.removeItem('cookie-consent');

@@ -36,7 +36,7 @@ export default function Login() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white rounded-3xl p-8 border-2 border-gray-200 mb-6">
+        <div className="bg-white rounded-3xl p-8 border border-gray-200 mb-6">
           {/* Remember Me Option */}
           <div className="mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-200">
             <div className="flex items-start space-x-4">

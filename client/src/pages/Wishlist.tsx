@@ -83,14 +83,14 @@ export default function Wishlist() {
         {/* Loading State */}
         {isLoading && (
           <div className="text-center py-12">
-            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-cyan-500 border-r-transparent"></div>
+            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#81e6ff] border-r-transparent"></div>
             <p className="mt-4 text-gray-600">Loading your wishlist...</p>
           </div>
         )}
 
         {/* Empty State */}
         {!isLoading && wishlist.length === 0 && (
-          <div className="text-center py-16 bg-white rounded-2xl border-2 border-gray-200">
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-200">
             <Heart className="h-24 w-24 mx-auto text-gray-300 mb-4" />
             <h2 className="text-2xl font-bold mb-2">Your wishlist is empty</h2>
             <p className="text-gray-600 mb-6">
@@ -119,7 +119,7 @@ export default function Wishlist() {
               return (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl border-2 border-gray-200 overflow-hidden hover:border-black transition-all group"
+                  className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-black transition-all group"
                 >
                   {/* Product Image */}
                   <Link href={`/bopshop/${product.slug}`}>
@@ -148,7 +148,7 @@ export default function Wishlist() {
                   {/* Product Info */}
                   <div className="p-4 space-y-3">
                     <Link href={`/bopshop/${product.slug}`}>
-                      <h3 className="font-bold text-lg hover:text-cyan-600 transition-colors line-clamp-2">
+                      <h3 className="font-bold text-lg hover:text-[#60d5ed] transition-colors line-clamp-2">
                         {product.name}
                       </h3>
                     </Link>
@@ -179,7 +179,7 @@ export default function Wishlist() {
                         <Link href={`/bopshop/${product.slug}`}>
                           <Button
                             variant="outline"
-                            className="w-full border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                            className="w-full border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
                           >
                             <ExternalLink className="mr-2 h-4 w-4" />
                             View
@@ -189,7 +189,7 @@ export default function Wishlist() {
                           variant="outline"
                           onClick={() => handleRemove(product.id)}
                           disabled={isRemoving}
-                          className="border-2 border-red-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition-colors"
+                          className="border border-red-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition-colors"
                         >
                           <Trash2 className="mr-2 h-4 w-4" />
                           Remove

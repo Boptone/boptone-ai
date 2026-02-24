@@ -78,7 +78,7 @@ export default function Fans() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-center py-8 text-gray-600">
-                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                       <span className="text-gray-400 text-5xl">📊</span>
                     </div>
                     <p className="font-medium">No streaming data yet</p>
@@ -96,7 +96,7 @@ export default function Fans() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-center py-8 text-gray-600">
-                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                    <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                       <span className="text-gray-400 text-5xl">FANS</span>
                     </div>
                     <p className="font-medium">No audience data yet</p>
@@ -115,7 +115,7 @@ export default function Fans() {
               </CardHeader>
               <CardContent>
                 <div className="text-center py-8 text-gray-600">
-                  <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border-2 border-gray-200">
+                  <div className="w-24 h-24 bg-gray-100 flex items-center justify-center mx-auto mb-4 border border-gray-200">
                     <span className="text-gray-400 text-5xl">↗</span>
                   </div>
                   <p className="font-medium">No engagement data yet</p>
@@ -135,7 +135,7 @@ export default function Fans() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-start gap-4 p-4 border-2 border-gray-200">
+                <div className="flex items-start gap-4 p-4 border border-gray-200">
                   <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
                     <span className="text-white text-xl">SHARE</span>
                   </div>
@@ -144,13 +144,13 @@ export default function Fans() {
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       Get your unique artist link to share on social media
                     </p>
-                    <Button className="rounded-none border-2 border-gray-200 font-bold" variant="outline" size="sm">
+                    <Button className="rounded-none border border-gray-200 font-bold" variant="outline" size="sm">
                       Copy Profile Link
                     </Button>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 border-2 border-gray-200">
+                <div className="flex items-start gap-4 p-4 border border-gray-200">
                   <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
                     <span className="text-white text-xl">TARGET</span>
                   </div>
@@ -159,11 +159,11 @@ export default function Fans() {
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       Run targeted campaigns to reach new listeners
                     </p>
-                    <Badge variant="secondary" className="rounded-none border-2 border-gray-200 bg-gray-100 font-bold uppercase">Coming Soon</Badge>
+                    <Badge variant="secondary" className="rounded-none border border-gray-200 bg-gray-100 font-bold uppercase">Coming Soon</Badge>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 border-2 border-gray-200">
+                <div className="flex items-start gap-4 p-4 border border-gray-200">
                   <div className="h-10 w-10 bg-black flex items-center justify-center shrink-0">
                     <span className="text-white text-xl">NEW</span>
                   </div>
@@ -172,7 +172,7 @@ export default function Fans() {
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       Find and connect with other artists for features
                     </p>
-                    <Badge variant="secondary" className="rounded-none border-2 border-gray-200 bg-gray-100 font-bold uppercase">Coming Soon</Badge>
+                    <Badge variant="secondary" className="rounded-none border border-gray-200 bg-gray-100 font-bold uppercase">Coming Soon</Badge>
                   </div>
                 </div>
               </CardContent>
@@ -186,19 +186,19 @@ export default function Fans() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-gray-100 border-2 border-gray-200">
+                <div className="flex items-center gap-3 p-3 bg-gray-100 border border-gray-200">
                   <div className="h-8 w-8 bg-black flex items-center justify-center shrink-0">
                     <span className="text-sm font-bold text-white">1</span>
                   </div>
                   <p className="text-sm font-medium">Upload consistently - artists who release monthly grow 3x faster</p>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-100 border-2 border-gray-200">
+                <div className="flex items-center gap-3 p-3 bg-gray-100 border border-gray-200">
                   <div className="h-8 w-8 bg-black flex items-center justify-center shrink-0">
                     <span className="text-sm font-bold text-white">2</span>
                   </div>
                   <p className="text-sm font-medium">Complete your profile - bios and photos get 50% more followers</p>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-100 border-2 border-gray-200">
+                <div className="flex items-center gap-3 p-3 bg-gray-100 border border-gray-200">
                   <div className="h-8 w-8 bg-black flex items-center justify-center shrink-0">
                     <span className="text-sm font-bold text-white">3</span>
                   </div>
@@ -219,10 +219,10 @@ export default function Fans() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="p-4 border-2 border-gray-200">
+                  <div className="p-4 border border-gray-200">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-bold">Bronze Tier</h3>
-                      <Badge variant="outline" className="rounded-none border-2 border-gray-200 font-bold">0 fans</Badge>
+                      <Badge variant="outline" className="rounded-none border border-gray-200 font-bold">0 fans</Badge>
                     </div>
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       Fans who stream 10+ songs
@@ -233,10 +233,10 @@ export default function Fans() {
                     </ul>
                   </div>
 
-                  <div className="p-4 border-2 border-gray-200">
+                  <div className="p-4 border border-gray-200">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-bold">Silver Tier</h3>
-                      <Badge variant="outline" className="rounded-none border-2 border-gray-200 font-bold">0 fans</Badge>
+                      <Badge variant="outline" className="rounded-none border border-gray-200 font-bold">0 fans</Badge>
                     </div>
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       Fans who stream 50+ songs
@@ -248,10 +248,10 @@ export default function Fans() {
                     </ul>
                   </div>
 
-                  <div className="p-4 border-2 border-gray-200">
+                  <div className="p-4 border border-gray-200">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-bold">Gold Tier</h3>
-                      <Badge variant="outline" className="rounded-none border-2 border-gray-200 font-bold">0 fans</Badge>
+                      <Badge variant="outline" className="rounded-none border border-gray-200 font-bold">0 fans</Badge>
                     </div>
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       Fans who stream 100+ songs
@@ -265,7 +265,7 @@ export default function Fans() {
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-gray-100 border-2 border-gray-200">
+                <div className="mt-6 p-4 bg-gray-100 border border-gray-200">
                   <p className="text-sm text-center font-medium">
                     <strong>Tip:</strong> Reward tiers are automatically assigned based on fan engagement. The more your fans listen, the more they unlock!
                   </p>

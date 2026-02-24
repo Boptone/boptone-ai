@@ -238,7 +238,7 @@ export function Navigation() {
                   <Button variant="ghost" className="text-sm font-medium hover:bg-gray-100">Dashboard</Button>
                 </Link>
                 <Link href="/profile-settings">
-                  <Button variant="outline" className="text-sm font-medium rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black flex items-center gap-2">
+                  <Button variant="outline" className="text-sm font-medium rounded-full border border-black bg-white hover:bg-gray-100 text-black flex items-center gap-2">
                     {artistProfile?.avatarUrl ? (
                       <img 
                         src={artistProfile.avatarUrl} 
@@ -257,7 +257,7 @@ export function Navigation() {
                 <Button variant="ghost" asChild className="text-sm font-medium hover:bg-gray-100">
                   <Link href="/login">Log In</Link>
                 </Button>
-                <Button variant="outline" asChild className="text-sm font-medium px-6 rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black">
+                <Button variant="outline" asChild className="text-sm font-medium px-6 rounded-full border border-black bg-white hover:bg-gray-100 text-black">
                   <Link href="/login">
                     Get Started
                   </Link>
@@ -268,7 +268,7 @@ export function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 border-2 border-black rounded-full bg-white hover:bg-gray-100 w-12 h-12 flex items-center justify-center"
+            className="lg:hidden p-2 border border-black rounded-full bg-white hover:bg-gray-100 w-12 h-12 flex items-center justify-center"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -365,7 +365,7 @@ export function Navigation() {
                   <Link href="/profile-settings">
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-base rounded-full border-2 border-black bg-white hover:bg-gray-100 text-black"
+                      className="w-full justify-start text-base rounded-full border border-black bg-white hover:bg-gray-100 text-black"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Profile

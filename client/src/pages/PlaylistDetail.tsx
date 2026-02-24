@@ -68,7 +68,7 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
     <div
       ref={setNodeRef}
       style={style}
-      className="group flex items-center gap-4 p-4 bg-white border-2 border-black rounded-lg hover:bg-gray-50 transition-colors"
+      className="group flex items-center gap-4 p-4 bg-white border border-black rounded-lg hover:bg-gray-50 transition-colors"
     >
       {/* Drag Handle */}
       <div
@@ -85,7 +85,7 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
       </div>
 
       {/* Cover Art */}
-      <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg border-2 border-black flex-shrink-0">
+      <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-[#60d5ed] rounded-lg border border-black flex-shrink-0">
         {track.coverArtUrl ? (
           <img
             src={track.coverArtUrl}
@@ -103,7 +103,7 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
 
       {/* Genre */}
       <div className="hidden md:block">
-        <span className="px-3 py-1 bg-gray-100 border-2 border-black rounded-full text-sm font-medium">
+        <span className="px-3 py-1 bg-gray-100 border border-black rounded-full text-sm font-medium">
           {track.genre}
         </span>
       </div>
@@ -119,7 +119,7 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
           onClick={() => onPlay(track.id)}
           variant="outline"
           size="sm"
-          className="border-2 border-black rounded-full hover:bg-cyan-500 hover:text-white transition-colors"
+          className="border border-black rounded-full hover:bg-[#81e6ff] hover:text-white transition-colors"
         >
           <Play className="w-4 h-4" />
         </Button>
@@ -129,12 +129,12 @@ function SortableTrackRow({ track, index, onRemove, onPlay }: {
             <Button
               variant="outline"
               size="sm"
-              className="border-2 border-black rounded-full"
+              className="border border-black rounded-full"
             >
               <MoreVertical className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="border-2 border-black">
+          <DropdownMenuContent align="end" className="border border-black">
             <DropdownMenuItem
               onClick={() => onRemove(track.id)}
               className="text-red-600 cursor-pointer"
@@ -243,7 +243,7 @@ export default function PlaylistDetail() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-cyan-500 border-r-transparent mb-4"></div>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#81e6ff] border-r-transparent mb-4"></div>
           <p className="text-gray-600 font-medium">Loading playlist...</p>
         </div>
       </div>
@@ -257,7 +257,7 @@ export default function PlaylistDetail() {
           <h2 className="text-3xl font-bold mb-4">Playlist not found</h2>
           <Button
             onClick={() => navigate("/playlists")}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full px-6"
+            className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-6"
           >
             Back to Playlists
           </Button>
@@ -269,11 +269,11 @@ export default function PlaylistDetail() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="border-b-4 border-black bg-gradient-to-br from-cyan-50 to-white">
+      <div className="border-b-4 border-black bg-gradient-to-br from-[#e0f9ff] to-white">
         <div className="container py-12">
           <div className="flex items-start gap-8">
             {/* Cover Image */}
-            <div className="w-64 h-64 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl border-4 border-black shadow-[8px_8px_0px_0px_black] flex-shrink-0">
+            <div className="w-64 h-64 bg-gradient-to-br from-cyan-400 to-[#60d5ed] rounded-xl border-4 border-black shadow-[8px_8px_0px_0px_black] flex-shrink-0">
               {playlistData.coverImageUrl ? (
                 <img
                   src={playlistData.coverImageUrl}
@@ -290,16 +290,16 @@ export default function PlaylistDetail() {
             {/* Info */}
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-4">
-                <span className="px-4 py-2 bg-white border-2 border-black rounded-full text-sm font-bold">
+                <span className="px-4 py-2 bg-white border border-black rounded-full text-sm font-bold">
                   PLAYLIST
                 </span>
                 {playlistData.isPublic ? (
-                  <div className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-black rounded-full text-sm font-bold">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black rounded-full text-sm font-bold">
                     <Globe className="w-4 h-4" />
                     Public
                   </div>
                 ) : (
-                  <div className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-black rounded-full text-sm font-bold">
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black rounded-full text-sm font-bold">
                     <Lock className="w-4 h-4" />
                     Private
                   </div>
@@ -320,7 +320,7 @@ export default function PlaylistDetail() {
                 <Button
                   onClick={() => handlePlayTrack(localTracks[0]?.id)}
                   disabled={localTracks.length === 0}
-                  className="bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+                  className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
                 >
                   <Play className="w-6 h-6 mr-2" />
                   Play All
@@ -330,12 +330,12 @@ export default function PlaylistDetail() {
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="outline"
-                      className="border-2 border-black rounded-full px-6 py-6"
+                      className="border border-black rounded-full px-6 py-6"
                     >
                       <MoreVertical className="w-6 h-6" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="border-2 border-black">
+                  <DropdownMenuContent align="end" className="border border-black">
                     <DropdownMenuItem className="cursor-pointer">
                       <Edit className="w-4 h-4 mr-2" />
                       Edit playlist
@@ -366,7 +366,7 @@ export default function PlaylistDetail() {
             </p>
             <Button
               onClick={() => navigate("/discover")}
-              className="bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               Browse Music
             </Button>

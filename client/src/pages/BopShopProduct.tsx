@@ -117,7 +117,7 @@ export default function BopShopProduct() {
           <Link href="/bopshop">
             <Button
               variant="outline"
-              className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+              className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Shop
@@ -131,7 +131,7 @@ export default function BopShopProduct() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Product Image */}
           <div className="space-y-4">
-            <div className="relative aspect-square bg-white border-2 border-gray-200 rounded-xl overflow-hidden">
+            <div className="relative aspect-square bg-white border border-gray-200 rounded-xl overflow-hidden">
               {product.primaryImageUrl ? (
                 <img
                   src={product.primaryImageUrl}
@@ -192,14 +192,14 @@ export default function BopShopProduct() {
 
             {/* Stock Status */}
             {isOutOfStock && (
-              <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4">
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4">
                 <p className="text-red-600 font-medium text-lg">
                   This item is currently out of stock
                 </p>
               </div>
             )}
             {isLowStock && (
-              <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-4">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
                 <p className="text-orange-600 font-medium text-lg">
                   Only {product.inventoryQuantity} left in stock!
                 </p>
@@ -224,7 +224,7 @@ export default function BopShopProduct() {
                     variant="outline"
                     size="lg"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors w-14 h-14"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors w-14 h-14"
                   >
                     <Minus className="h-5 w-5" />
                   </Button>
@@ -240,7 +240,7 @@ export default function BopShopProduct() {
                         : 99;
                       setQuantity(Math.min(maxQty, quantity + 1));
                     }}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors w-14 h-14"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors w-14 h-14"
                   >
                     <Plus className="h-5 w-5" />
                   </Button>
@@ -260,7 +260,7 @@ export default function BopShopProduct() {
             </Button>
 
             {/* Product Details */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6 space-y-4">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
               <h3 className="text-2xl font-bold mb-4">Product Details</h3>
               
               {product.sku && (

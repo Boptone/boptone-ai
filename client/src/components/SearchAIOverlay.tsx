@@ -111,7 +111,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                       toast.success("Chat cleared");
                     }
                   }}
-                  className="rounded-full px-4 py-2 border-2 border-gray-300 hover:border-black hover:bg-gray-100 text-sm font-medium"
+                  className="rounded-full px-4 py-2 border border-gray-300 hover:border-black hover:bg-gray-100 text-sm font-medium"
                 >
                   <RotateCcw className="w-4 h-4 mr-2" />
                   Clear Chat
@@ -123,7 +123,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="rounded-full w-12 h-12 border-2 border-black hover:bg-gray-100"
+                className="rounded-full w-12 h-12 border border-black hover:bg-gray-100"
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -145,7 +145,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   placeholder="Search for artists, tracks, features..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 h-14 text-lg border-2 border-black rounded-full"
+                  className="pl-12 h-14 text-lg border border-black rounded-full"
                   autoFocus
                 />
               </div>
@@ -186,7 +186,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                       className={`max-w-[80%] rounded-2xl px-6 py-4 ${
                         message.role === "user"
                           ? "bg-black text-white"
-                          : "bg-gray-100 text-black border-2 border-gray-200"
+                          : "bg-gray-100 text-black border border-gray-200"
                       }`}
                     >
                       <p className="text-sm leading-relaxed">{message.content}</p>
@@ -204,7 +204,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
                   disabled={isLoading}
-                  className="flex-1 min-h-[60px] max-h-[200px] border-2 border-black rounded-2xl resize-none"
+                  className="flex-1 min-h-[60px] max-h-[200px] border border-black rounded-2xl resize-none"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && !e.shiftKey) {
                       e.preventDefault();
@@ -239,7 +239,7 @@ export function SearchAIOverlay({ isOpen, onClose }: SearchAIOverlayProps) {
                         onClick={() => {
                           setAiInput(question);
                         }}
-                        className="px-4 py-2 text-sm bg-white border-2 border-gray-300 rounded-full hover:border-black hover:bg-gray-50 transition-all"
+                        className="px-4 py-2 text-sm bg-white border border-gray-300 rounded-full hover:border-black hover:bg-gray-50 transition-all"
                       >
                         {question}
                       </button>

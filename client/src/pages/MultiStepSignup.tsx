@@ -89,7 +89,7 @@ export default function MultiStepSignup() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white rounded-3xl p-8 border-2 border-gray-200 mb-6">
+        <div className="bg-white rounded-3xl p-8 border border-gray-200 mb-6">
           <form onSubmit={handleSignup} className="space-y-6">
             {/* Email */}
             <div className="space-y-2">
@@ -105,7 +105,7 @@ export default function MultiStepSignup() {
                   setEmail(e.target.value);
                   setEmailError("");
                 }}
-                className={`h-12 rounded-full border-2 ${
+                className={`h-12 rounded-full border ${
                   emailError ? "border-red-500" : "border-gray-300"
                 } focus:border-black`}
                 required
@@ -129,7 +129,7 @@ export default function MultiStepSignup() {
                   setStageName(e.target.value);
                   setStageNameError("");
                 }}
-                className={`h-12 rounded-full border-2 ${
+                className={`h-12 rounded-full border ${
                   stageNameError ? "border-red-500" : "border-gray-300"
                 } focus:border-black`}
                 required

@@ -349,7 +349,7 @@ export default function Upload() {
   if (!user && !DEV_MODE) {
     return (
       <DashboardLayout>
-        <Card className="border-2 border-gray-200">
+        <Card className="border border-gray-200">
           <CardHeader>
             <CardTitle>Sign In Required</CardTitle>
             <CardDescription>Please sign in to upload music to BAP</CardDescription>
@@ -373,7 +373,7 @@ export default function Upload() {
 
         {/* Compliance Score Banner */}
         {audioFile && (
-          <Alert className="border-2 border-gray-200 bg-white">
+          <Alert className="border border-gray-200 bg-white">
             <AlertDescription>
               <div className="flex items-center justify-between">
                 <div>
@@ -396,7 +396,7 @@ export default function Upload() {
         )}
 
         {/* Audio Upload */}
-        <Card className="border-2 border-gray-200">
+        <Card className="border border-gray-200">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">Audio File</CardTitle>
             <CardDescription>
@@ -409,7 +409,7 @@ export default function Upload() {
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
+                className={`border border-dashed rounded-lg p-12 text-center transition-colors ${
                   isDragging ? 'border-gray-900 bg-gray-50' : 'border-gray-300'
                 }`}
               >
@@ -428,7 +428,7 @@ export default function Upload() {
                   id="audio-upload"
                 />
                 <Label htmlFor="audio-upload">
-                  <Button variant="outline" asChild className="rounded-full border-2 border-gray-200 hover:border-gray-400">
+                  <Button variant="outline" asChild className="rounded-full border border-gray-200 hover:border-gray-400">
                     <span>Choose File</span>
                   </Button>
                 </Label>
@@ -491,7 +491,7 @@ export default function Upload() {
         {/* Metadata Form */}
         {audioFile && !extractingMetadata && (
           <>
-            <Card className="border-2 border-gray-200">
+            <Card className="border border-gray-200">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Track Information</CardTitle>
                 <CardDescription>
@@ -607,7 +607,7 @@ export default function Upload() {
             </Card>
 
             {/* Compliance & Metadata Section */}
-            <Card className="border-2 border-gray-200">
+            <Card className="border border-gray-200">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Compliance & Metadata</CardTitle>
                 <CardDescription>
@@ -769,7 +769,7 @@ export default function Upload() {
                 </div>
 
                 {/* AI Disclosure */}
-                <div className="space-y-3 p-4 bg-white border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-xl">
+                <div className="space-y-3 p-4 bg-white border border-gray-200 hover:border-gray-400 transition-colors rounded-xl">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="aiUsed"
@@ -812,7 +812,7 @@ export default function Upload() {
             </Card>
 
             {/* Artwork Upload */}
-            <Card className="border-2 border-gray-200">
+            <Card className="border border-gray-200">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Artwork</CardTitle>
                 <CardDescription>
@@ -822,7 +822,7 @@ export default function Upload() {
               <CardContent>
                 {!artworkFile ? (
                   <div className="flex items-center gap-4">
-                    <div className="w-32 h-32 bg-gray-100 border-2 border-gray-200 flex items-center justify-center">
+                    <div className="w-32 h-32 bg-gray-100 border border-gray-200 flex items-center justify-center">
                       <div className="text-4xl text-gray-300">🖼</div>
                     </div>
                     <div className="flex-1">
@@ -834,7 +834,7 @@ export default function Upload() {
                         id="artwork-upload"
                       />
                       <Label htmlFor="artwork-upload">
-                        <Button variant="outline" asChild className="rounded-full border-2 border-gray-200 hover:border-gray-400">
+                        <Button variant="outline" asChild className="rounded-full border border-gray-200 hover:border-gray-400">
                           <span>Upload Artwork</span>
                         </Button>
                       </Label>
@@ -848,7 +848,7 @@ export default function Upload() {
                     <img
                       src={URL.createObjectURL(artworkFile)}
                       alt="Artwork preview"
-                      className="w-32 h-32 object-cover border-2 border-gray-200"
+                      className="w-32 h-32 object-cover border border-gray-200"
                     />
                     <div className="flex-1">
                       <p className="font-medium">{artworkFile.name}</p>
@@ -869,7 +869,7 @@ export default function Upload() {
             </Card>
 
             {/* Publish Button */}
-            <Card className="border-2 border-gray-200">
+            <Card className="border border-gray-200">
               <CardContent className="pt-6">
                 {isUploading && (
                   <div className="mb-4">

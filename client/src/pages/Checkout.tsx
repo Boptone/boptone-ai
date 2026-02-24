@@ -227,7 +227,7 @@ export default function Checkout() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Back to Cart
@@ -243,7 +243,7 @@ export default function Checkout() {
           {/* Shipping Form */}
           <div className="lg:col-span-2 space-y-6">
             {/* Contact Information */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h2 className="text-3xl font-bold mb-6">Contact Information</h2>
               <div className="space-y-4">
                 <div>
@@ -253,7 +253,7 @@ export default function Checkout() {
                     type="email"
                     value={shippingForm.email}
                     onChange={(e) => setShippingForm({ ...shippingForm, email: e.target.value })}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                     required
                   />
                 </div>
@@ -264,14 +264,14 @@ export default function Checkout() {
                     type="tel"
                     value={shippingForm.phone}
                     onChange={(e) => setShippingForm({ ...shippingForm, phone: e.target.value })}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                   />
                 </div>
               </div>
             </div>
 
             {/* Shipping Address */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h2 className="text-3xl font-bold mb-6">Shipping Address</h2>
               <div className="space-y-4">
                 <div>
@@ -280,7 +280,7 @@ export default function Checkout() {
                     id="name"
                     value={shippingForm.name}
                     onChange={(e) => setShippingForm({ ...shippingForm, name: e.target.value })}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                     required
                   />
                 </div>
@@ -290,7 +290,7 @@ export default function Checkout() {
                     id="line1"
                     value={shippingForm.line1}
                     onChange={(e) => setShippingForm({ ...shippingForm, line1: e.target.value })}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                     required
                   />
                 </div>
@@ -300,7 +300,7 @@ export default function Checkout() {
                     id="line2"
                     value={shippingForm.line2}
                     onChange={(e) => setShippingForm({ ...shippingForm, line2: e.target.value })}
-                    className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                    className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -310,7 +310,7 @@ export default function Checkout() {
                       id="city"
                       value={shippingForm.city}
                       onChange={(e) => setShippingForm({ ...shippingForm, city: e.target.value })}
-                      className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                      className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                       required
                     />
                   </div>
@@ -320,7 +320,7 @@ export default function Checkout() {
                       id="state"
                       value={shippingForm.state}
                       onChange={(e) => setShippingForm({ ...shippingForm, state: e.target.value })}
-                      className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                      className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                       required
                     />
                   </div>
@@ -332,14 +332,14 @@ export default function Checkout() {
                       id="zip"
                       value={shippingForm.zip}
                       onChange={(e) => setShippingForm({ ...shippingForm, zip: e.target.value })}
-                      className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
+                      className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors text-lg"
                       required
                     />
                   </div>
                   <div>
                     <Label htmlFor="country" className="text-lg">Country *</Label>
                     <Select value={shippingForm.country} onValueChange={(value) => setShippingForm({ ...shippingForm, country: value })}>
-                      <SelectTrigger className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
+                      <SelectTrigger className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -359,7 +359,7 @@ export default function Checkout() {
 
             {/* Shipping Method */}
             {shippingRates.length > 0 && (
-              <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+              <div className="bg-white border border-gray-200 rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-6">
                   <Truck className="h-8 w-8" />
                   <h2 className="text-3xl font-bold">Shipping Method</h2>
@@ -370,7 +370,7 @@ export default function Checkout() {
                     {shippingRates.map((rate) => (
                       <div
                         key={rate.rateId}
-                        className={`flex items-center space-x-3 border-2 rounded-xl p-4 cursor-pointer transition-all ${
+                        className={`flex items-center space-x-3 border rounded-xl p-4 cursor-pointer transition-all ${
                           selectedShippingRate === rate.rateId
                             ? "border-black bg-gray-50"
                             : "border-gray-200 hover:border-gray-400"
@@ -405,7 +405,7 @@ export default function Checkout() {
 
             {/* Loading Rates */}
             {isCalculatingRates && (
-              <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+              <div className="bg-white border border-gray-200 rounded-xl p-6">
                 <div className="flex items-center gap-3">
                   <Package className="h-6 w-6 animate-pulse" />
                   <p className="text-lg text-gray-600">Calculating shipping rates...</p>
@@ -414,10 +414,10 @@ export default function Checkout() {
             )}
 
             {/* Currency Selection */}
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6">
+            <div className="bg-white border border-gray-200 rounded-xl p-6">
               <h2 className="text-3xl font-bold mb-6">Payment Currency</h2>
               <Select value={currency} onValueChange={setCurrency}>
-                <SelectTrigger className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
+                <SelectTrigger className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -433,7 +433,7 @@ export default function Checkout() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white border-2 border-gray-200 rounded-xl p-6 sticky top-4">
+            <div className="bg-white border border-gray-200 rounded-xl p-6 sticky top-4">
               <h2 className="text-3xl font-bold mb-6">Order Summary</h2>
 
               {/* Cart Items */}

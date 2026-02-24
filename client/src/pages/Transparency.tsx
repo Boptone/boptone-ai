@@ -256,7 +256,7 @@ export default function Transparency() {
                   <span className="font-bold text-lg">{item.category}</span>
                   <span className="text-2xl font-bold">{item.percentage}%</span>
                 </div>
-                <div className="w-full bg-gray-200 h-8 border-2 border-gray-200 rounded-none overflow-hidden">
+                <div className="w-full bg-gray-200 h-8 border border-gray-200 rounded-none overflow-hidden">
                   <div 
                     className="bg-black h-full flex items-center justify-end pr-4"
                     style={{ width: `${item.percentage}%` }}

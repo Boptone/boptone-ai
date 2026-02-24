@@ -133,7 +133,7 @@ export default function ArtistInsights() {
                   className={`rounded-full h-12 px-6 text-base font-bold transition-all ${
                     dateRange === range
                       ? "bg-black text-white hover:bg-gray-800"
-                      : "bg-white text-black border-2 border-gray-300 hover:border-black"
+                      : "bg-white text-black border border-gray-300 hover:border-black"
                   }`}
                   style={dateRange === range ? { boxShadow: "4px 4px 0px #81e6fe" } : {}}
                 >
@@ -165,7 +165,7 @@ export default function ArtistInsights() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Page Views */}
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <Eye className="w-8 h-8" />
                 <TrendingUp className="w-5 h-5 text-green-600" />
@@ -177,7 +177,7 @@ export default function ArtistInsights() {
             </div>
 
             {/* Unique Visitors */}
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <Eye className="w-8 h-8" />
                 <TrendingUp className="w-5 h-5 text-green-600" />
@@ -189,7 +189,7 @@ export default function ArtistInsights() {
             </div>
 
             {/* Conversions */}
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <ShoppingCart className="w-8 h-8" />
                 <div className="text-sm font-bold text-green-600">
@@ -203,7 +203,7 @@ export default function ArtistInsights() {
             </div>
 
             {/* Revenue */}
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <DollarSign className="w-8 h-8" />
                 <TrendingUp className="w-5 h-5 text-green-600" />
@@ -225,7 +225,7 @@ export default function ArtistInsights() {
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Traffic Sources */}
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white">
               <h3 className="text-2xl font-bold mb-6">Traffic Sources</h3>
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 Where your visitors come from
@@ -255,7 +255,7 @@ export default function ArtistInsights() {
             </div>
 
             {/* Revenue Attribution */}
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white">
               <h3 className="text-2xl font-bold mb-6">Revenue by Source</h3>
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 Which channels drive the most sales
@@ -306,7 +306,7 @@ export default function ArtistInsights() {
           <p className="text-xl text-gray-700 mb-12 leading-relaxed">
             Your top-selling products and conversion rates
           </p>
-          <div className="border-2 border-gray-200 rounded-xl overflow-hidden bg-white">
+          <div className="border border-gray-200 rounded-xl overflow-hidden bg-white">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-gray-50 border-b-2 border-gray-200">
@@ -352,7 +352,7 @@ export default function ArtistInsights() {
           <p className="text-xl text-gray-700 mb-12 leading-relaxed">
             Track visitor journey from view to purchase
           </p>
-          <div className="border-2 border-gray-200 rounded-xl p-8 bg-white">
+          <div className="border border-gray-200 rounded-xl p-8 bg-white">
             {conversionFunnel && conversionFunnel.stages.length > 0 ? (
               <div className="space-y-6">
                 {conversionFunnel.stages.map((stage, index) => (

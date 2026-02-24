@@ -113,7 +113,7 @@ export default function Discover() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
               {/* Left: MASSIVE Typography */}
               <div className="lg:col-span-3">
-                <div className="inline-block px-4 py-2 bg-cyan-500 text-white text-sm font-bold rounded-full mb-6">
+                <div className="inline-block px-4 py-2 bg-[#81e6ff] text-white text-sm font-bold rounded-full mb-6">
                   FEATURED ARTIST
                 </div>
                 
@@ -132,7 +132,7 @@ export default function Discover() {
 
               {/* Right: Album Artwork with Play Button Overlay */}
               <div className="lg:col-span-2">
-                <div className="relative aspect-square rounded-lg border-2 border-black overflow-hidden">
+                <div className="relative aspect-square rounded-lg border border-black overflow-hidden">
                   <img
                     src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png"
                     alt={featuredTrack.title}
@@ -142,7 +142,7 @@ export default function Discover() {
                   {/* Play Button Overlay - Bottom Right Corner */}
                   <button
                     onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
-                    className="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 bg-cyan-500 rounded-full flex items-center justify-center hover:bg-cyan-600 transition-colors"
+                    className="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 bg-[#81e6ff] rounded-full flex items-center justify-center hover:bg-[#60d5ed] transition-colors"
                   >
                     <Play className="w-8 h-8 md:w-10 md:h-10 text-black fill-black" />
                   </button>
@@ -164,11 +164,11 @@ export default function Discover() {
             {trendingTracks.slice(1, 9).map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
+                className="bg-white border border-black rounded-lg p-8   hover:border-[#81e6ff] transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
                     <svg
                       className="w-12 h-12 text-gray-400"
                       fill="none"
@@ -199,7 +199,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, trendingTracks)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -222,11 +222,11 @@ export default function Discover() {
             {newReleases.map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
+                className="bg-white border border-black rounded-lg p-8   hover:border-[#81e6ff] transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
                     <svg
                       className="w-12 h-12 text-gray-400"
                       fill="none"
@@ -257,7 +257,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, newReleases)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -280,11 +280,11 @@ export default function Discover() {
             {picksForYou.map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
+                className="bg-white border border-black rounded-lg p-8   hover:border-[#81e6ff] transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
                     <svg
                       className="w-12 h-12 text-gray-400"
                       fill="none"
@@ -315,7 +315,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, picksForYou)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -357,7 +357,7 @@ export default function Discover() {
                   onClick={() => setSelectedGenre(genre)}
                   className={`px-6 py-3 rounded-full text-lg font-bold border border-black transition-all whitespace-nowrap flex-shrink-0 scroll-snap-align-start ${
                     selectedGenre === genre
-                      ? "bg-cyan-500 text-white border-cyan-500"
+                      ? "bg-[#81e6ff] text-white border-[#81e6ff]"
                       : "bg-white text-black hover:bg-gray-100"
                   }`}
                   style={{ scrollSnapAlign: 'start' }}
@@ -373,11 +373,11 @@ export default function Discover() {
             {endlessScrollTracks.slice(0, displayLimit).map((track) => (
               <div
                 key={track.id}
-                className="bg-white border-2 border-black rounded-lg p-8   hover:border-cyan-500 transition-all"
+                className="bg-white border border-black rounded-lg p-8   hover:border-[#81e6ff] transition-all"
               >
                 <div className="flex gap-6">
                   {/* Album Artwork */}
-                  <div className="w-24 h-24 bg-gray-200 rounded-lg border-2 border-black flex-shrink-0 flex items-center justify-center">
+                  <div className="w-24 h-24 bg-gray-200 rounded-lg border border-black flex-shrink-0 flex items-center justify-center">
                     <svg
                       className="w-12 h-12 text-gray-400"
                       fill="none"
@@ -408,7 +408,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, endlessScrollTracks)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
+                      className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -422,9 +422,9 @@ export default function Discover() {
           {displayLimit < endlessScrollTracks.length && (
             <div ref={scrollObserverRef} className="flex justify-center mt-12">
               <div className="flex gap-2">
-                <div className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                <div className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                <div className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                <div className="w-3 h-3 bg-[#81e6ff] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                <div className="w-3 h-3 bg-[#81e6ff] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                <div className="w-3 h-3 bg-[#81e6ff] rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
               </div>
             </div>
           )}
@@ -442,7 +442,7 @@ export default function Discover() {
               <div className="flex items-center justify-between gap-4 py-4">
                 {/* Track Info */}
                 <div className="flex items-center gap-4 flex-1 min-w-0">
-                  <div className="w-16 h-16 rounded-lg border-2 border-black flex-shrink-0 overflow-hidden">
+                  <div className="w-16 h-16 rounded-lg border border-black flex-shrink-0 overflow-hidden">
                     <img
                       src="https://files.manuscdn.com/user_upload_by_module/session_file/98208888/lFyBmeOuCgCpujMK.png"
                       alt={currentTrack.title}
@@ -459,7 +459,7 @@ export default function Discover() {
                 <div className="flex items-center gap-4">
                   <Button
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
+                    className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-12 h-12 p-0"
                   >
                     {isPlaying ? <Pause className="w-5 h-5 text-black fill-black" /> : <Play className="w-5 h-5 text-black fill-black" />}
                   </Button>
@@ -467,7 +467,7 @@ export default function Discover() {
                   <Button
                     onClick={() => setIsPlayerMinimized(true)}
                     variant="outline"
-                    className="rounded-full w-10 h-10 p-0 border-2 border-black"
+                    className="rounded-full w-10 h-10 p-0 border border-black"
                   >
                     <ChevronDown className="w-5 h-5" />
                   </Button>
@@ -479,7 +479,7 @@ export default function Discover() {
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <Button
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-10 h-10 p-0 flex-shrink-0"
+                    className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white rounded-full w-10 h-10 p-0 flex-shrink-0"
                   >
                     {isPlaying ? <Pause className="w-4 h-4 text-black fill-black" /> : <Play className="w-4 h-4 text-black fill-black" />}
                   </Button>
@@ -490,7 +490,7 @@ export default function Discover() {
                 <Button
                   onClick={() => setIsPlayerMinimized(false)}
                   variant="outline"
-                  className="rounded-full w-8 h-8 p-0 border-2 border-black flex-shrink-0"
+                  className="rounded-full w-8 h-8 p-0 border border-black flex-shrink-0"
                 >
                   <ChevronUp className="w-4 h-4" />
                 </Button>

@@ -97,18 +97,18 @@ export function AddToPlaylistModal({
             <Button
               onClick={() => setShowCreateNew(true)}
               variant="outline"
-              className="w-full border-2 border-black rounded-lg p-6 hover:bg-cyan-50 transition-colors"
+              className="w-full border border-black rounded-lg p-6 hover:bg-[#e0f9ff] transition-colors"
             >
               <Plus className="w-5 h-5 mr-2" />
               <span className="font-bold">Create New Playlist</span>
             </Button>
           ) : (
-            <div className="space-y-3 p-4 bg-cyan-50 border-2 border-black rounded-lg">
+            <div className="space-y-3 p-4 bg-[#e0f9ff] border border-black rounded-lg">
               <Input
                 value={newPlaylistName}
                 onChange={(e) => setNewPlaylistName(e.target.value)}
                 placeholder="Playlist name"
-                className="border-2 border-black rounded-lg"
+                className="border border-black rounded-lg"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -120,7 +120,7 @@ export function AddToPlaylistModal({
                 <Button
                   onClick={handleCreateAndAdd}
                   disabled={createPlaylistMutation.isPending}
-                  className="flex-1 bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full shadow-[2px_2px_0px_0px_black]"
+                  className="flex-1 bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full shadow-[2px_2px_0px_0px_black]"
                 >
                   {createPlaylistMutation.isPending ? "Creating..." : "Create & Add"}
                 </Button>
@@ -130,7 +130,7 @@ export function AddToPlaylistModal({
                     setNewPlaylistName("");
                   }}
                   variant="outline"
-                  className="border-2 border-black rounded-full"
+                  className="border border-black rounded-full"
                 >
                   Cancel
                 </Button>
@@ -151,10 +151,10 @@ export function AddToPlaylistModal({
                     key={playlist.id}
                     onClick={() => handleAddToPlaylist(playlist.id)}
                     disabled={addTrackMutation.isPending}
-                    className="w-full flex items-center gap-4 p-4 bg-white border-2 border-black rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                    className="w-full flex items-center gap-4 p-4 bg-white border border-black rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
                   >
                     {/* Cover */}
-                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg border-2 border-black flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-[#60d5ed] rounded-lg border border-black flex-shrink-0">
                       {playlist.coverImageUrl ? (
                         <img
                           src={playlist.coverImageUrl}
@@ -178,7 +178,7 @@ export function AddToPlaylistModal({
 
                     {/* Check if track is already in playlist */}
                     {playlist.trackIds && (playlist.trackIds as number[]).includes(trackId) && (
-                      <Check className="w-5 h-5 text-cyan-500" />
+                      <Check className="w-5 h-5 text-[#81e6ff]" />
                     )}
                   </button>
                 ))}

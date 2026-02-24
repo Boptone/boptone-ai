@@ -204,7 +204,7 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
 
           {/* Upload Button */}
           {photos.length < 5 && (
-            <label className="flex items-center justify-center gap-2 border-2 border-dashed border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors">
+            <label className="flex items-center justify-center gap-2 border border-dashed border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors">
               <Upload className="w-5 h-5 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
                 Click to upload photos

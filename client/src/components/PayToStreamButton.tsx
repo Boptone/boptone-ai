@@ -98,14 +98,14 @@ export function PayToStreamButton({
         variant="default"
         size="sm"
         onClick={() => setIsOpen(true)}
-        className="rounded-xl border-2 border-gray-200 bg-white text-black hover:border-gray-400 hover:bg-white transition-all shadow-[4px_4px_0px_0px_rgba(0,255,255,0.3)]"
+        className="rounded-xl border border-gray-200 bg-white text-black hover:border-gray-400 hover:bg-white transition-all shadow-[4px_4px_0px_0px_rgba(0,255,255,0.3)]"
       >
         <DollarSign className="h-4 w-4 mr-1" />
         Pay to Stream
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md rounded-xl border-2 border-gray-200">
+        <DialogContent className="sm:max-w-md rounded-xl border border-gray-200">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">Pay to Stream</DialogTitle>
             <DialogDescription className="text-gray-600">
@@ -120,11 +120,11 @@ export function PayToStreamButton({
               <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
                 <SelectTrigger 
                   id="currency"
-                  className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                  className="rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
                 >
                   <SelectValue placeholder="Select currency" />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl border-2 border-gray-200">
+                <SelectContent className="rounded-xl border border-gray-200">
                   {currencies?.map((curr) => (
                     <SelectItem key={curr.code} value={curr.code}>
                       {curr.code} - {curr.name}
@@ -145,7 +145,7 @@ export function PayToStreamButton({
                 max="5.00"
                 value={customPrice}
                 onChange={(e) => setCustomPrice(e.target.value)}
-                className="rounded-xl border-2 border-gray-200 hover:border-gray-400 focus:border-gray-400 transition-colors"
+                className="rounded-xl border border-gray-200 hover:border-gray-400 focus:border-gray-400 transition-colors"
                 placeholder="0.03"
               />
               <p className="text-xs text-gray-500">
@@ -154,7 +154,7 @@ export function PayToStreamButton({
             </div>
 
             {/* Revenue Split Display */}
-            <div className="rounded-xl border-2 border-gray-200 bg-gray-50 p-4 space-y-2">
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Stream Price:</span>
                 <span className="font-semibold">{formatPrice(priceInCents, selectedCurrency)}</span>
@@ -174,7 +174,7 @@ export function PayToStreamButton({
               <Button
                 variant="outline"
                 onClick={() => setIsOpen(false)}
-                className="flex-1 rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                className="flex-1 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
                 disabled={isProcessing}
               >
                 Cancel
@@ -182,7 +182,7 @@ export function PayToStreamButton({
               <Button
                 onClick={handlePayToStream}
                 disabled={isProcessing || !customPrice || parseFloat(customPrice) <= 0}
-                className="flex-1 rounded-xl border-2 border-gray-200 bg-black text-white hover:bg-gray-900 transition-all shadow-[4px_4px_0px_0px_rgba(0,255,255,0.3)]"
+                className="flex-1 rounded-xl border border-gray-200 bg-black text-white hover:bg-gray-900 transition-all shadow-[4px_4px_0px_0px_rgba(0,255,255,0.3)]"
               >
                 {isProcessing ? (
                   <>

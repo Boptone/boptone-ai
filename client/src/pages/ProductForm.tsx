@@ -251,7 +251,7 @@ export default function ProductForm() {
           <Button
             variant="outline"
             onClick={() => setLocation("/products")}
-            className="mb-4 rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+            className="mb-4 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Products
@@ -276,7 +276,7 @@ export default function ProductForm() {
                   key={type}
                   type="button"
                   onClick={() => handleInputChange("type", type)}
-                  className={`p-4 rounded-xl border-2 transition-colors ${
+                  className={`p-4 rounded-xl border transition-colors ${
                     formData.type === type
                       ? "border-black bg-black text-white"
                       : "border-gray-200 hover:border-gray-400"
@@ -299,7 +299,7 @@ export default function ProductForm() {
                 value={formData.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
                 placeholder="e.g., Limited Edition Vinyl"
-                className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                className="rounded-xl border border-gray-200 focus:border-gray-400"
                 required
               />
             </div>
@@ -314,7 +314,7 @@ export default function ProductForm() {
                 onChange={(e) => handleInputChange("description", e.target.value)}
                 placeholder="Describe your product..."
                 rows={4}
-                className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                className="rounded-xl border border-gray-200 focus:border-gray-400"
               />
             </div>
 
@@ -327,7 +327,7 @@ export default function ProductForm() {
                 value={formData.slug}
                 onChange={(e) => handleInputChange("slug", e.target.value)}
                 placeholder="product-url-slug"
-                className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                className="rounded-xl border border-gray-200 focus:border-gray-400"
                 required
               />
               <p className="text-sm text-gray-600 mt-1">
@@ -352,7 +352,7 @@ export default function ProductForm() {
                   value={formData.price}
                   onChange={(e) => handleInputChange("price", e.target.value)}
                   placeholder="0.00"
-                  className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                  className="rounded-xl border border-gray-200 focus:border-gray-400"
                   required
                 />
               </div>
@@ -368,7 +368,7 @@ export default function ProductForm() {
                   value={formData.compareAtPrice}
                   onChange={(e) => handleInputChange("compareAtPrice", e.target.value)}
                   placeholder="0.00"
-                  className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                  className="rounded-xl border border-gray-200 focus:border-gray-400"
                 />
                 <p className="text-sm text-gray-600 mt-1">Original price (for showing discounts)</p>
               </div>
@@ -384,7 +384,7 @@ export default function ProductForm() {
                   <img
                     src={image.url}
                     alt={image.alt || "Product"}
-                    className="w-full h-32 object-contain rounded-xl border-2 border-gray-200"
+                    className="w-full h-32 object-contain rounded-xl border border-gray-200"
                   />
                   <button
                     type="button"
@@ -402,7 +402,7 @@ export default function ProductForm() {
               ))}
             </div>
             <label className="cursor-pointer">
-              <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
+              <div className="border border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
                 <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
                 <p className="text-gray-600">
                   {uploading ? "Uploading..." : "Click to upload images"}
@@ -433,7 +433,7 @@ export default function ProductForm() {
                     value={formData.sku}
                     onChange={(e) => handleInputChange("sku", e.target.value)}
                     placeholder="PROD-001"
-                    className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                    className="rounded-xl border border-gray-200 focus:border-gray-400"
                   />
                 </div>
                 <div>
@@ -446,7 +446,7 @@ export default function ProductForm() {
                     min="0"
                     value={formData.inventoryQuantity}
                     onChange={(e) => handleInputChange("inventoryQuantity", e.target.value)}
-                    className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                    className="rounded-xl border border-gray-200 focus:border-gray-400"
                   />
                 </div>
               </div>
@@ -456,7 +456,7 @@ export default function ProductForm() {
                   id="trackInventory"
                   checked={formData.trackInventory}
                   onChange={(e) => handleInputChange("trackInventory", e.target.checked)}
-                  className="w-5 h-5 rounded border-2 border-gray-200"
+                  className="w-5 h-5 rounded border border-gray-200"
                 />
                 <Label htmlFor="trackInventory" className="cursor-pointer">
                   Track inventory
@@ -468,7 +468,7 @@ export default function ProductForm() {
                   id="allowBackorder"
                   checked={formData.allowBackorder}
                   onChange={(e) => handleInputChange("allowBackorder", e.target.checked)}
-                  className="w-5 h-5 rounded border-2 border-gray-200"
+                  className="w-5 h-5 rounded border border-gray-200"
                 />
                 <Label htmlFor="allowBackorder" className="cursor-pointer">
                   Allow backorders
@@ -487,7 +487,7 @@ export default function ProductForm() {
                   id="requiresShipping"
                   checked={formData.requiresShipping}
                   onChange={(e) => handleInputChange("requiresShipping", e.target.checked)}
-                  className="w-5 h-5 rounded border-2 border-gray-200"
+                  className="w-5 h-5 rounded border border-gray-200"
                 />
                 <Label htmlFor="requiresShipping" className="cursor-pointer">
                   Requires shipping
@@ -503,7 +503,7 @@ export default function ProductForm() {
                     value={formData.weight}
                     onChange={(e) => handleInputChange("weight", e.target.value)}
                     placeholder="0.5"
-                    className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                    className="rounded-xl border border-gray-200 focus:border-gray-400"
                   />
                 </div>
               )}
@@ -522,7 +522,7 @@ export default function ProductForm() {
                 value={formData.category}
                 onChange={(e) => handleInputChange("category", e.target.value)}
                 placeholder="e.g., Vinyl, Merch, Digital"
-                className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                className="rounded-xl border border-gray-200 focus:border-gray-400"
               />
             </div>
             <div>
@@ -534,7 +534,7 @@ export default function ProductForm() {
                 value={formData.tags}
                 onChange={(e) => handleInputChange("tags", e.target.value)}
                 placeholder="limited edition, signed, exclusive"
-                className="rounded-xl border-2 border-gray-200 focus:border-gray-400"
+                className="rounded-xl border border-gray-200 focus:border-gray-400"
               />
             </div>
           </div>
@@ -548,7 +548,7 @@ export default function ProductForm() {
                   key={status}
                   type="button"
                   onClick={() => handleInputChange("status", status)}
-                  className={`p-4 rounded-xl border-2 transition-colors ${
+                  className={`p-4 rounded-xl border transition-colors ${
                     formData.status === status
                       ? "border-black bg-black text-white"
                       : "border-gray-200 hover:border-gray-400"
@@ -564,7 +564,7 @@ export default function ProductForm() {
                 id="featured"
                 checked={formData.featured}
                 onChange={(e) => handleInputChange("featured", e.target.checked)}
-                className="w-5 h-5 rounded border-2 border-gray-200"
+                className="w-5 h-5 rounded border border-gray-200"
               />
               <Label htmlFor="featured" className="cursor-pointer">
                 Feature this product
@@ -578,14 +578,14 @@ export default function ProductForm() {
               type="button"
               variant="outline"
               onClick={() => setLocation("/products")}
-              className="flex-1 rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+              className="flex-1 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={createMutation.isPending || updateMutation.isPending}
-              className="flex-1 bg-black text-white rounded-xl border-2 border-black hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(6,182,212,1)]"
+              className="flex-1 bg-black text-white rounded-xl border border-black hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(6,182,212,1)]"
             >
               {createMutation.isPending || updateMutation.isPending
                 ? "Saving..."

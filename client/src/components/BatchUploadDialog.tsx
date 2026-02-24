@@ -198,7 +198,7 @@ export default function BatchUploadDialog({
         <div className="flex items-center justify-between mb-6">
           {["select", "metadata", "distribution", "uploading"].map((step, index) => (
             <div key={step} className="flex items-center">
-              <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
+              <div className={`flex items-center justify-center w-8 h-8 rounded-full border ${
                 currentStep === step ? "border-primary bg-primary text-primary-foreground" :
                 ["select", "metadata", "distribution", "uploading"].indexOf(currentStep) > index ? "border-primary bg-primary text-primary-foreground" :
                 "border-muted-foreground text-muted-foreground"
@@ -226,7 +226,7 @@ export default function BatchUploadDialog({
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
+              className={`border border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors ${
                 isDragging
                   ? "border-primary bg-primary/5"
                   : "border-muted-foreground/25 hover:border-primary/50"
@@ -387,7 +387,7 @@ export default function BatchUploadDialog({
             </div>
 
             {/* BAP (Primary Platform) */}
-            <div className="border-2 border-primary rounded-lg p-4 bg-primary/5">
+            <div className="border border-primary rounded-lg p-4 bg-primary/5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-lg bg-primary flex items-center justify-center text-2xl">

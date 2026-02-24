@@ -348,7 +348,7 @@ export default function MyMusic() {
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
-                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                  className={`border border-dashed rounded-lg p-8 text-center transition-colors ${
                     isDragging 
                       ? 'border-primary bg-primary/5' 
                       : 'border-border hover:border-primary/50'
@@ -416,7 +416,7 @@ export default function MyMusic() {
                         </Button>
                       </div>
                     ) : (
-                      <div className="h-24 w-24 rounded-md border-2 border-dashed border-border flex items-center justify-center">
+                      <div className="h-24 w-24 rounded-md border border-dashed border-border flex items-center justify-center">
                         <ImageIcon className="h-8 w-8 text-muted-foreground" />
                       </div>
                     )}

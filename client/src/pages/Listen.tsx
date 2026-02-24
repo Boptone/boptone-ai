@@ -176,7 +176,7 @@ export default function Listen() {
   if (error || !track) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <Card className="p-8 text-center max-w-md border-2 border-gray-200">
+        <Card className="p-8 text-center max-w-md border border-gray-200">
           <h2 className="text-2xl font-bold mb-2">Track Not Found</h2>
           <p className="text-muted-foreground mb-6">
             This track doesn't exist or has been removed.
@@ -250,11 +250,11 @@ export default function Listen() {
                   </span>
                 )}
                 {track.mood && (
-                  <span className="px-4 py-2 border-2 border-gray-200 rounded-none text-sm font-bold uppercase">
+                  <span className="px-4 py-2 border border-gray-200 rounded-none text-sm font-bold uppercase">
                     {track.mood}
                   </span>
                 )}
-                <span className="px-4 py-2 border-2 border-gray-200 rounded-none text-sm font-medium">
+                <span className="px-4 py-2 border border-gray-200 rounded-none text-sm font-medium">
                   {formatTime(track.duration)}
                 </span>
               </div>
@@ -314,7 +314,7 @@ export default function Listen() {
                 variant="outline"
                 size="icon"
                 onClick={() => likeTrack.mutate({ trackId: parseInt(trackId || "0") })}
-                className="border-2 border-gray-200 rounded-none"
+                className="border border-gray-200 rounded-none"
               >
                 <span className="text-sm font-bold">LIKE</span>
               </Button>
@@ -322,7 +322,7 @@ export default function Listen() {
                 variant="outline" 
                 size="icon" 
                 onClick={handleShare}
-                className="border-2 border-gray-200 rounded-none"
+                className="border border-gray-200 rounded-none"
               >
                 <span className="text-sm font-bold">SHARE</span>
               </Button>
@@ -349,7 +349,7 @@ export default function Listen() {
             {track.songwriterSplits && track.songwriterSplits.length > 0 && (
               <div>
                 <h2 className="text-3xl font-bold mb-4">Songwriters</h2>
-                <div className="bg-gray-50 p-6 rounded-none border-2 border-gray-200">
+                <div className="bg-gray-50 p-6 rounded-none border border-gray-200">
                   <div className="space-y-2">
                     {track.songwriterSplits.map((writer: any, idx: number) => (
                       <div key={idx} className="flex justify-between items-center">
@@ -367,17 +367,17 @@ export default function Listen() {
           <div className="space-y-6">
             {/* Artist profile */}
             {artist && (
-              <Card className="p-6 border-2 border-gray-200 rounded-none">
+              <Card className="p-6 border border-gray-200 rounded-none">
                 <h3 className="text-xl font-bold mb-4">Artist</h3>
                 <div className="flex items-center gap-4 mb-4">
                   {artist.avatarUrl ? (
                     <img
                       src={artist.avatarUrl}
                       alt={artist.stageName}
-                      className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+                      className="w-24 h-24 rounded-full object-cover border border-gray-200"
                     />
                   ) : (
-                    <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center border-2 border-gray-200">
+                    <div className="w-24 h-24 rounded-full bg-gray-900 flex items-center justify-center border border-gray-200">
                       <span className="text-white text-3xl font-bold">
                         {artist.stageName.charAt(0)}
                       </span>
@@ -395,7 +395,7 @@ export default function Listen() {
                 )}
                 <Button
                   variant="outline"
-                  className="w-full border-2 border-gray-200 rounded-none font-bold"
+                  className="w-full border border-gray-200 rounded-none font-bold"
                   onClick={() => navigate(`/artist/${artist.id}`)}
                 >
                   View Profile
@@ -404,7 +404,7 @@ export default function Listen() {
             )}
             
             {/* Track stats */}
-            <Card className="p-6 border-2 border-gray-200 rounded-none">
+            <Card className="p-6 border border-gray-200 rounded-none">
               <h3 className="text-xl font-bold mb-4">Track Stats</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
@@ -425,11 +425,11 @@ export default function Listen() {
             </Card>
             
             {/* Share */}
-            <Card className="p-6 border-2 border-gray-200 rounded-none">
+            <Card className="p-6 border border-gray-200 rounded-none">
               <h3 className="text-xl font-bold mb-4">Share</h3>
               <Button
                 variant="outline"
-                className="w-full border-2 border-gray-200 rounded-none font-bold"
+                className="w-full border border-gray-200 rounded-none font-bold"
                 onClick={handleShare}
               >
                 Copy Link

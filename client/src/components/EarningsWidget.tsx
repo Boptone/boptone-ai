@@ -67,7 +67,7 @@ export function EarningsWidget() {
 
   if (isLoading) {
     return (
-      <div className="border-2 border-gray-200 bg-white p-12">
+      <div className="border border-gray-200 bg-white p-12">
         <h3 className="text-3xl font-bold mb-2">Earnings</h3>
         <p className="text-lg text-gray-600">Loading balance...</p>
       </div>
@@ -75,7 +75,7 @@ export function EarningsWidget() {
   }
 
   return (
-    <div className="border-2 border-gray-200 bg-white p-12">
+    <div className="border border-gray-200 bg-white p-12">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h3 className="text-4xl font-bold">Earnings</h3>
@@ -116,7 +116,7 @@ export function EarningsWidget() {
 
       {/* Payout Schedule Info */}
       {balance && (
-        <div className="mb-8 p-6 bg-white border-2 border-gray-300">
+        <div className="mb-8 p-6 bg-white border border-gray-300">
           <p className="text-sm text-gray-600 font-medium mb-1">Payout Schedule</p>
           <p className="text-lg font-semibold text-gray-900">
             {getScheduleLabel(balance.payoutSchedule)}

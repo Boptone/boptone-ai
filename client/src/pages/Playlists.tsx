@@ -65,7 +65,7 @@ export default function Playlists() {
             </div>
             <Button
               onClick={() => setCreateModalOpen(true)}
-              className="bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-6 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               <Plus className="w-6 h-6 mr-2" />
               Create Playlist
@@ -81,7 +81,7 @@ export default function Playlists() {
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
-                className="bg-gray-200 border-2 border-black rounded-xl h-64 animate-pulse shadow-[4px_4px_0px_0px_black]"
+                className="bg-gray-200 border border-black rounded-xl h-64 animate-pulse shadow-[4px_4px_0px_0px_black]"
               />
             ))}
           </div>
@@ -94,7 +94,7 @@ export default function Playlists() {
             </p>
             <Button
               onClick={() => setCreateModalOpen(true)}
-              className="bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               <Plus className="w-5 h-5 mr-2" />
               Create Playlist
@@ -104,9 +104,9 @@ export default function Playlists() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {playlists.map((playlist) => (
               <Link key={playlist.id} href={`/playlists/${playlist.id}`}>
-                <div className="group cursor-pointer bg-white border-2 border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
+                <div className="group cursor-pointer bg-white border border-black rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
                   {/* Cover Image */}
-                  <div className="aspect-square bg-gradient-to-br from-cyan-400 to-cyan-600 relative">
+                  <div className="aspect-square bg-gradient-to-br from-cyan-400 to-[#60d5ed] relative">
                     {playlist.coverImageUrl ? (
                       <img
                         src={playlist.coverImageUrl}
@@ -121,11 +121,11 @@ export default function Playlists() {
                     {/* Privacy Badge */}
                     <div className="absolute top-3 right-3">
                       {playlist.isPublic ? (
-                        <div className="bg-white border-2 border-black rounded-full p-2 shadow-[2px_2px_0px_0px_black]">
+                        <div className="bg-white border border-black rounded-full p-2 shadow-[2px_2px_0px_0px_black]">
                           <Globe className="w-4 h-4" />
                         </div>
                       ) : (
-                        <div className="bg-white border-2 border-black rounded-full p-2 shadow-[2px_2px_0px_0px_black]">
+                        <div className="bg-white border border-black rounded-full p-2 shadow-[2px_2px_0px_0px_black]">
                           <Lock className="w-4 h-4" />
                         </div>
                       )}
@@ -134,7 +134,7 @@ export default function Playlists() {
 
                   {/* Info */}
                   <div className="p-4">
-                    <h3 className="font-bold text-lg mb-1 truncate group-hover:text-cyan-500 transition-colors">
+                    <h3 className="font-bold text-lg mb-1 truncate group-hover:text-[#81e6ff] transition-colors">
                       {playlist.name}
                     </h3>
                     <p className="text-sm text-gray-600">
@@ -168,7 +168,7 @@ export default function Playlists() {
                 value={newPlaylistName}
                 onChange={(e) => setNewPlaylistName(e.target.value)}
                 placeholder="e.g., Workout Mix, Chill Vibes"
-                className="border-2 border-black rounded-lg text-base"
+                className="border border-black rounded-lg text-base"
                 maxLength={255}
               />
             </div>
@@ -182,11 +182,11 @@ export default function Playlists() {
                 value={newPlaylistDescription}
                 onChange={(e) => setNewPlaylistDescription(e.target.value)}
                 placeholder="What's this playlist about?"
-                className="border-2 border-black rounded-lg text-base min-h-[100px]"
+                className="border border-black rounded-lg text-base min-h-[100px]"
               />
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-gray-50 border-2 border-black rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-gray-50 border border-black rounded-lg">
               <div>
                 <Label htmlFor="public" className="text-base font-bold">
                   Public Playlist
@@ -207,14 +207,14 @@ export default function Playlists() {
             <Button
               variant="outline"
               onClick={() => setCreateModalOpen(false)}
-              className="border-2 border-black rounded-full px-6"
+              className="border border-black rounded-full px-6"
             >
               Cancel
             </Button>
             <Button
               onClick={handleCreatePlaylist}
               disabled={createPlaylistMutation.isPending}
-              className="bg-cyan-500 hover:bg-cyan-600 text-white border-2 border-black rounded-full px-6 shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              className="bg-[#81e6ff] hover:bg-[#60d5ed] text-white border border-black rounded-full px-6 shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               {createPlaylistMutation.isPending ? "Creating..." : "Create Playlist"}
             </Button>

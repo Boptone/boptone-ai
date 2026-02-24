@@ -36,10 +36,10 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
 
   if (isLoading) {
     return (
-      <Card className="rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_black]">
+      <Card className="rounded-xl border border-black shadow-[4px_4px_0px_0px_black]">
         <CardContent className="p-8">
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#81e6ff]" />
           </div>
         </CardContent>
       </Card>
@@ -48,7 +48,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
 
   if (!tracks || tracks.length === 0) {
     return (
-      <Card className="rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_black]">
+      <Card className="rounded-xl border border-black shadow-[4px_4px_0px_0px_black]">
         <CardContent className="p-8">
           <div className="text-center py-12">
             <Music className="h-12 w-12 mx-auto mb-4 text-gray-400" />
@@ -60,10 +60,10 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
   }
 
   return (
-    <Card className="rounded-xl border-2 border-black shadow-[4px_4px_0px_0px_black]">
+    <Card className="rounded-xl border border-black shadow-[4px_4px_0px_0px_black]">
       <CardContent className="p-8">
         <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-          <Music className="h-6 w-6 text-cyan-500" />
+          <Music className="h-6 w-6 text-[#81e6ff]" />
           Tracks on BopAudio
         </h2>
         
@@ -71,7 +71,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
           {tracks.map((track: any, index: number) => (
             <div
               key={track.id}
-              className="flex items-center gap-4 p-4 rounded-lg border-2 border-black bg-white hover:bg-gray-50 transition-all shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black]"
+              className="flex items-center gap-4 p-4 rounded-lg border border-black bg-white hover:bg-gray-50 transition-all shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black]"
             >
               {/* Track Number */}
               <div className="w-8 text-center">
@@ -79,7 +79,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
               </div>
 
               {/* Album Artwork */}
-              <div className="w-12 h-12 rounded-lg border-2 border-black shadow-[2px_2px_0px_0px_black] flex-shrink-0 overflow-hidden">
+              <div className="w-12 h-12 rounded-lg border border-black shadow-[2px_2px_0px_0px_black] flex-shrink-0 overflow-hidden">
                 {track.coverArtUrl ? (
                   <img
                     src={track.coverArtUrl}
@@ -98,7 +98,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
                 <h3 className="font-bold text-base truncate">{track.title}</h3>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   {track.genre && (
-                    <span className="px-2 py-0.5 rounded-full bg-cyan-500 text-black text-xs font-bold border border-black">
+                    <span className="px-2 py-0.5 rounded-full bg-[#81e6ff] text-black text-xs font-bold border border-black">
                       {track.genre.toUpperCase()}
                     </span>
                   )}
@@ -109,7 +109,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
               {/* Play Button */}
               <Button
                 size="icon"
-                className="rounded-full w-10 h-10 bg-cyan-500 hover:bg-cyan-600 border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all flex-shrink-0"
+                className="rounded-full w-10 h-10 bg-[#81e6ff] hover:bg-[#60d5ed] border border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all flex-shrink-0"
                 onClick={() => handlePlayTrack(track.id)}
               >
                 {currentTrackId === track.id && isPlaying ? (
@@ -127,7 +127,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
           <div className="mt-6 text-center">
             <Button
               variant="outline"
-              className="rounded-full border-2 border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all font-bold"
+              className="rounded-full border border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all font-bold"
               onClick={() => (window.location.href = "/discover")}
             >
               View All Tracks on BopAudio

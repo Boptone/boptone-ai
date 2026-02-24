@@ -91,7 +91,7 @@ export default function PricingDashboard() {
             
             {/* Metrics Grid */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
                   <span>FANS Estimated Streams</span>
                 </div>
@@ -100,7 +100,7 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
                   <span>$ You Earn (90%)</span>
                 </div>
@@ -109,7 +109,7 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-gray-100 rounded-none p-4 col-span-2 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 col-span-2 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-center gap-2 text-sm text-gray-700 mb-1 font-medium">
                   <span>↗ Total Revenue (Monthly)</span>
                 </div>
@@ -120,7 +120,7 @@ export default function PricingDashboard() {
             </div>
             
             {isOptimal && (
-              <div className="bg-gray-100 border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-none p-4 flex items-start gap-3">
+              <div className="bg-gray-100 border border-gray-200 hover:border-gray-400 transition-colors rounded-none p-4 flex items-start gap-3">
                 <span className="text-2xl">INSTANT</span>
                 <div>
                   <p className="font-bold text-black">Optimal Price Point!</p>
@@ -151,7 +151,7 @@ export default function PricingDashboard() {
                 return (
                   <div
                     key={price}
-                    className={`p-4 rounded-none border-2 transition-all cursor-pointer ${
+                    className={`p-4 rounded-none border transition-all cursor-pointer ${
                       isSelected
                         ? 'border-black bg-gray-100'
                         : 'border-gray-900 hover:bg-gray-50'
@@ -164,7 +164,7 @@ export default function PricingDashboard() {
                           ${data.price.toFixed(2)}
                         </div>
                         {isOpt && (
-                          <Badge className="rounded-none bg-black text-white border-2 border-gray-200 font-bold">
+                          <Badge className="rounded-none bg-black text-white border border-gray-200 font-bold">
                             INSTANT Optimal
                           </Badge>
                         )}
@@ -204,9 +204,9 @@ export default function PricingDashboard() {
           </CardHeader>
           <CardContent className="space-y-4 pt-6">
             <div className="space-y-3">
-              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-gray-200">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border border-gray-200">
                     1
                   </div>
                   <div>
@@ -219,9 +219,9 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-gray-200">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border border-gray-200">
                     2
                   </div>
                   <div>
@@ -234,9 +234,9 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-gray-200">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border border-gray-200">
                     3
                   </div>
                   <div>
@@ -249,9 +249,9 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-gray-100 rounded-none p-4 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-4 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border-2 border-gray-200">
+                  <div className="w-8 h-8 bg-black text-white rounded-none flex items-center justify-center flex-shrink-0 font-bold border border-gray-200">
                     4
                   </div>
                   <div>
@@ -277,7 +277,7 @@ export default function PricingDashboard() {
           </CardHeader>
           <CardContent className="pt-6">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-100 rounded-none p-6 border-2 border-gray-200 hover:border-gray-400 transition-colors">
+              <div className="bg-gray-100 rounded-none p-6 border border-gray-200 hover:border-gray-400 transition-colors">
                 <div className="text-center space-y-2">
                   <div className="text-sm font-bold text-gray-700">Spotify</div>
                   <div className="text-4xl font-bold text-gray-900">$0.003</div>
@@ -289,7 +289,7 @@ export default function PricingDashboard() {
                 </div>
               </div>
               
-              <div className="bg-black rounded-none p-6 border-2 border-gray-200">
+              <div className="bg-black rounded-none p-6 border border-gray-200">
                 <div className="text-center space-y-2">
                   <div className="text-sm font-bold text-white">Boptone (You)</div>
                   <div className="text-4xl font-bold text-white">
@@ -306,7 +306,7 @@ export default function PricingDashboard() {
               </div>
             </div>
             
-            <div className="mt-6 bg-gray-100 border-2 border-gray-200 hover:border-gray-400 transition-colors rounded-none p-4 text-center">
+            <div className="mt-6 bg-gray-100 border border-gray-200 hover:border-gray-400 transition-colors rounded-none p-4 text-center">
               <p className="text-lg font-bold text-black">
                 You earn <strong>{((selectedData.revenuePerStream / 0.003) * 100).toFixed(0)}%</strong> more per stream on Boptone!
               </p>

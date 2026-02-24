@@ -72,7 +72,7 @@ ${formData.message}
         <div className="container">
           <div className="grid md:grid-cols-2 gap-16 max-w-6xl">
             {/* Contact Form */}
-            <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-12 rounded-xl">
+            <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-12 rounded-xl">
               <h2 className="text-4xl font-bold mb-10">Send us a message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -136,7 +136,7 @@ ${formData.message}
 
             {/* Contact Info */}
             <div className="space-y-8">
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
                 <h3 className="text-2xl font-bold mb-4">Email Us</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed">
                   For general inquiries, partnerships, or support:
@@ -149,14 +149,14 @@ ${formData.message}
                 </a>
               </div>
 
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
                 <h3 className="text-2xl font-bold mb-4">HQ</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Los Angeles, CA USA
                 </p>
               </div>
 
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
                 <h3 className="text-xl font-bold mb-3">Looking for Support?</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   If you're an existing user and need technical support, please email us with "Support" in the subject line for priority handling.
@@ -181,25 +181,25 @@ ${formData.message}
           <div className="max-w-5xl mx-auto">
             <h2 className="text-5xl font-bold mb-16">Common Questions</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
                 <h3 className="text-xl font-bold mb-3">When does Boptone launch?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   We're targeting a 2026 launch. Sign up for early access to be notified when we go live.
                 </p>
               </div>
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
                 <h3 className="text-xl font-bold mb-3">How much does it cost?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   We offer a free tier for emerging artists and paid plans starting at $29/month. Check our pricing page for details.
                 </p>
               </div>
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
                 <h3 className="text-xl font-bold mb-3">Can I try before I buy?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Yes! We offer a 14-day free trial on our Pro tier with no credit card required.
                 </p>
               </div>
-              <div className="border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
                 <h3 className="text-xl font-bold mb-3">Do you take a percentage of my revenue?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   No. We charge a flat subscription fee. You keep 100% of your revenue.

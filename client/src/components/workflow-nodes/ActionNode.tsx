@@ -4,7 +4,7 @@ import { Play } from 'lucide-react';
 
 export default function ActionNode({ data }: NodeProps) {
   return (
-    <Card className="min-w-[200px] border-2 border-blue-500 bg-blue-50 dark:bg-blue-950">
+    <Card className="min-w-[200px] border border-blue-500 bg-blue-50 dark:bg-blue-950">
       <div className="p-3">
         <div className="flex items-center gap-2 mb-2">
           <Play className="h-4 w-4 text-blue-600" />

@@ -84,21 +84,21 @@ export default function DemoArtistProfile() {
               <div className="flex items-center justify-center md:justify-start gap-4 mt-4">
                 {artist.instagramUrl && (
                   <a href={artist.instagramUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="rounded-full border-2" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
+                    <Button className="rounded-full border" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
                       IG
                     </Button>
                   </a>
                 )}
                 {artist.twitterUrl && (
                   <a href={artist.twitterUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="rounded-full border-2" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
+                    <Button className="rounded-full border" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
                       X
                     </Button>
                   </a>
                 )}
                 {artist.youtubeUrl && (
                   <a href={artist.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                    <Button className="rounded-full border-2" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
+                    <Button className="rounded-full border" variant="outline" style={{ borderColor: artist.accentColor, color: artist.accentColor }}>
                       YT
                     </Button>
                   </a>
@@ -146,7 +146,7 @@ export default function DemoArtistProfile() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {products.map((product) => (
                     <div key={product.id} className="group cursor-pointer">
-                      <div className="aspect-square bg-gray-100 rounded-none overflow-hidden mb-2 border-2 border-gray-200">
+                      <div className="aspect-square bg-gray-100 rounded-none overflow-hidden mb-2 border border-gray-200">
                         <img
                           src={product.imageUrl}
                           alt={product.name}
@@ -175,7 +175,7 @@ export default function DemoArtistProfile() {
                 </h2>
                 <div className="space-y-4">
                   {tourDates.map((show, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 rounded-none hover:bg-gray-50 transition-colors border-2 border-gray-200">
+                    <div key={index} className="flex items-center justify-between p-3 rounded-none hover:bg-gray-50 transition-colors border border-gray-200">
                       <div>
                         <p className="font-medium">{show.venue}</p>
                         <p className="text-sm text-gray-600">{show.city}</p>
@@ -184,7 +184,7 @@ export default function DemoArtistProfile() {
                         <p className="text-sm font-medium" style={{ color: artist.accentColor }}>
                           {show.date}
                         </p>
-                        <Button size="sm" variant="outline" className="rounded-full mt-1 border-2 border-gray-200">
+                        <Button size="sm" variant="outline" className="rounded-full mt-1 border border-gray-200">
                           Tickets
                         </Button>
                       </div>
@@ -208,17 +208,17 @@ export default function DemoArtistProfile() {
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className="w-full px-4 py-2 rounded-none border-2 border-gray-200 bg-white"
+                    className="w-full px-4 py-2 rounded-none border border-gray-200 bg-white"
                   />
                   <input
                     type="email"
                     placeholder="Your Email"
-                    className="w-full px-4 py-2 rounded-none border-2 border-gray-200 bg-white"
+                    className="w-full px-4 py-2 rounded-none border border-gray-200 bg-white"
                   />
                   <textarea
                     placeholder="Your Message"
                     rows={4}
-                    className="w-full px-4 py-2 rounded-none border-2 border-gray-200 bg-white resize-none"
+                    className="w-full px-4 py-2 rounded-none border border-gray-200 bg-white resize-none"
                   />
                   <Button className="rounded-full w-full" style={{ backgroundColor: artist.themeColor, color: 'white' }}>
                     Send Message
@@ -247,7 +247,7 @@ export default function DemoArtistProfile() {
                   <p><strong>Layout:</strong> {artist.layoutStyle}</p>
                 </div>
               </div>
-              <Button className="rounded-full mt-4 border-2 border-gray-200" 
+              <Button className="rounded-full mt-4 border border-gray-200" 
                 variant="outline"
                 onClick={() => window.location.href = "/profile-settings"}
               >

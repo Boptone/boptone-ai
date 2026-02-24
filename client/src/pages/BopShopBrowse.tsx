@@ -171,7 +171,7 @@ export default function BopShopBrowse() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 Cart
@@ -188,7 +188,7 @@ export default function BopShopBrowse() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search products..."
-                className="pl-12 pr-12 h-14 text-lg border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                className="pl-12 pr-12 h-14 text-lg border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
               />
               {searchQuery && (
                 <button
@@ -206,13 +206,13 @@ export default function BopShopBrowse() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors px-8"
+                  className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors px-8"
                 >
                   <SlidersHorizontal className="mr-2 h-5 w-5" />
                   Filter
                 </Button>
               </DialogTrigger>
-              <DialogContent className="border-2 border-gray-200 rounded-xl">
+              <DialogContent className="border border-gray-200 rounded-xl">
                 <DialogHeader>
                   <DialogTitle className="text-3xl font-bold">
                     Filter Products
@@ -225,7 +225,7 @@ export default function BopShopBrowse() {
                       Category
                     </label>
                     <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                      <SelectTrigger className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
+                      <SelectTrigger className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -245,7 +245,7 @@ export default function BopShopBrowse() {
                       Sort By
                     </label>
                     <Select value={sortBy} onValueChange={setSortBy}>
-                      <SelectTrigger className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
+                      <SelectTrigger className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -270,7 +270,7 @@ export default function BopShopBrowse() {
             {/* Sort Dropdown (Desktop) */}
             <div className="hidden md:block">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[200px] h-14 border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
+                <SelectTrigger className="w-[200px] h-14 border border-gray-200 rounded-xl hover:border-gray-400 transition-colors">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -302,7 +302,7 @@ export default function BopShopBrowse() {
                 setCategoryFilter("all");
               }}
               variant="outline"
-              className="border-2 border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+              className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
             >
               Clear Filters
             </Button>
@@ -326,7 +326,7 @@ export default function BopShopBrowse() {
                 >
                   <div>
                     {/* Product Image Container */}
-                    <div className="relative overflow-hidden rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors bg-white">
+                    <div className="relative overflow-hidden rounded-xl border border-gray-200 hover:border-gray-400 transition-colors bg-white">
                       {/* Image */}
                       <div className="relative aspect-[3/4] bg-gray-100">
                         {product.primaryImageUrl ? (
@@ -342,7 +342,7 @@ export default function BopShopBrowse() {
                         )}
 
                         {/* Price Badge Overlay - BAP Protocol */}
-                        <div className="absolute top-3 right-3 bg-white px-4 py-2 rounded-xl border-2 border-gray-200 shadow-sm">
+                        <div className="absolute top-3 right-3 bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm">
                           <span className="text-lg font-bold">
                             ${(product.price / 100).toFixed(2)}
                           </span>

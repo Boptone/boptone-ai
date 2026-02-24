@@ -102,7 +102,7 @@ export default function BopShopLanding() {
                   placeholder="Search for artists, products, or categories..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-6 text-lg border-2 border-gray-200 rounded-xl focus:border-gray-400 focus:ring-0 hover:border-gray-400 transition-colors"
+                  className="pl-12 pr-4 py-6 text-lg border border-gray-200 rounded-xl focus:border-gray-400 focus:ring-0 hover:border-gray-400 transition-colors"
                 />
               </div>
             </form>
@@ -113,7 +113,7 @@ export default function BopShopLanding() {
                 <Link key={cat.name} href={cat.link}>
                   <Button
                     variant="outline"
-                    className="rounded-full border-2 border-gray-200 hover:border-gray-400 px-6 py-2 transition-colors"
+                    className="rounded-full border border-gray-200 hover:border-gray-400 px-6 py-2 transition-colors"
                   >
                     <cat.icon className="h-4 w-4 mr-2" />
                     {cat.name}
@@ -131,7 +131,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-cyan-500" />
+                <Sparkles className="h-7 w-7 text-[#81e6ff]" />
                 <h2 className="text-3xl md:text-4xl font-black">New This Week</h2>
               </div>
               <Link href="/bopshop/browse?sort=newest">
@@ -149,7 +149,7 @@ export default function BopShopLanding() {
                   className="group cursor-pointer w-full text-left"
                 >
                   <div>
-                    <div className="relative aspect-square bg-gray-100 rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
+                    <div className="relative aspect-square bg-gray-100 rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
                           src={product.images[0]}
@@ -165,7 +165,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-cyan-600 transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -182,7 +182,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <TrendingUp className="h-7 w-7 text-cyan-500" />
+                <TrendingUp className="h-7 w-7 text-[#81e6ff]" />
                 <h2 className="text-3xl md:text-4xl font-black">Trending Now</h2>
               </div>
               <Link href="/bopshop/browse?sort=popular">
@@ -200,7 +200,7 @@ export default function BopShopLanding() {
                   className="group cursor-pointer w-full text-left"
                 >
                   <div>
-                    <div className="relative aspect-square bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
+                    <div className="relative aspect-square bg-white rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
                           src={product.images[0]}
@@ -216,7 +216,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-cyan-600 transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -233,7 +233,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-cyan-500" />
+                <Sparkles className="h-7 w-7 text-[#81e6ff]" />
                 <h2 className="text-3xl md:text-4xl font-black">Limited Edition</h2>
               </div>
               <Link href="/bopshop/browse?stock=low">
@@ -251,7 +251,7 @@ export default function BopShopLanding() {
                   className="group cursor-pointer w-full text-left"
                 >
                   <div>
-                    <div className="relative aspect-square bg-gray-100 rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
+                    <div className="relative aspect-square bg-gray-100 rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
                           src={product.images[0]}
@@ -270,7 +270,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-cyan-600 transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -287,7 +287,7 @@ export default function BopShopLanding() {
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <DollarSign className="h-7 w-7 text-cyan-500" />
+                <DollarSign className="h-7 w-7 text-[#81e6ff]" />
                 <h2 className="text-3xl md:text-4xl font-black">Under $50</h2>
               </div>
               <Link href="/bopshop/browse?maxPrice=50">
@@ -305,7 +305,7 @@ export default function BopShopLanding() {
                   className="group cursor-pointer w-full text-left"
                 >
                   <div>
-                    <div className="relative aspect-square bg-white rounded-xl border-2 border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
+                    <div className="relative aspect-square bg-white rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
                       {product.images && product.images.length > 0 ? (
                         <img
                           src={product.images[0]}
@@ -321,7 +321,7 @@ export default function BopShopLanding() {
                         ${product.price}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-cyan-600 transition-colors">
+                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#60d5ed] transition-colors">
                       {product.name}
                     </h3>
                   </div>
@@ -341,7 +341,7 @@ export default function BopShopLanding() {
           <div className="max-w-3xl mx-auto space-y-4">
             {categories.map((cat) => (
               <Link key={cat.name} href={cat.link}>
-                <div className="group cursor-pointer border-2 border-gray-200 rounded-xl p-6 hover:border-black transition-all">
+                <div className="group cursor-pointer border border-gray-200 rounded-xl p-6 hover:border-black transition-all">
                   <div className="flex items-center justify-between">
                     <h3 className="text-3xl font-black group-hover:translate-x-2 transition-transform">
                       {cat.name}

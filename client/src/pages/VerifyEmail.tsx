@@ -123,7 +123,7 @@ export default function VerifyEmail() {
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12">
       <div className="w-full max-w-md">
         {/* Main Card */}
-        <div className="bg-white rounded-3xl p-8 border-2 border-gray-200">
+        <div className="bg-white rounded-3xl p-8 border border-gray-200">
           {/* Pending State (Auto-verifying) */}
           {step === "pending" && (
             <div className="text-center space-y-6">
@@ -175,7 +175,7 @@ export default function VerifyEmail() {
                       setVerificationCode(e.target.value.replace(/\D/g, ""));
                       setCodeError("");
                     }}
-                    className={`text-center text-2xl tracking-widest font-bold border-2 rounded-2xl ${
+                    className={`text-center text-2xl tracking-widest font-bold border rounded-2xl ${
                       codeError ? "border-red-500" : "border-gray-300"
                     }`}
                     maxLength={6}

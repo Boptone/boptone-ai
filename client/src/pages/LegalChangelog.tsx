@@ -191,7 +191,7 @@ export default function LegalChangelog() {
             ))}
 
             {/* Future Updates Notice */}
-            <section className="bg-[#81e6fe] bg-opacity-10 border-2 border-[#81e6fe] rounded-lg p-8 mt-12">
+            <section className="bg-[#81e6fe] bg-opacity-10 border border-[#81e6fe] rounded-lg p-8 mt-12">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
                 Stay Informed About Future Changes
               </h3>
@@ -213,28 +213,28 @@ export default function LegalChangelog() {
             <section className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
               <Link 
                 href="/legal"
-                className="bg-white border-2 border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
+                className="bg-white border border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
               >
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Legal Hub</h3>
                 <p className="text-gray-700 text-sm">View all legal documents and policies</p>
               </Link>
               <Link 
                 href="/privacy"
-                className="bg-white border-2 border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
+                className="bg-white border border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
               >
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Privacy Policy</h3>
                 <p className="text-gray-700 text-sm">Learn how we protect your data</p>
               </Link>
               <Link 
                 href="/terms"
-                className="bg-white border-2 border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
+                className="bg-white border border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
               >
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Terms of Service</h3>
                 <p className="text-gray-700 text-sm">Review our terms and Artist Bill of Rights</p>
               </Link>
               <Link 
                 href="/cookie-settings"
-                className="bg-white border-2 border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
+                className="bg-white border border-gray-200 hover:border-[#81e6fe] rounded-lg p-6 transition-colors"
               >
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Cookie Settings</h3>
                 <p className="text-gray-700 text-sm">Manage your cookie preferences</p>

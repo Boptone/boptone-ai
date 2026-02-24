@@ -158,7 +158,7 @@ export default function Signup() {
             {tiers.map((tier) => (
               <Card
                 key={tier.id}
-                className="relative border-2 border-gray-200 p-8 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
+                className="relative border border-gray-200 p-8 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
               >
                 {/* Tier Name */}
                 <div className="mb-4">
@@ -210,19 +210,19 @@ export default function Signup() {
               All plans include
             </h3>
             <div className="grid md:grid-cols-3 gap-6 text-left">
-              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-xl">
+              <div className="bg-gray-50 p-6 border border-gray-200 rounded-xl">
                 <h4 className="font-bold text-black mb-2">Data Ownership</h4>
                 <p className="text-sm text-gray-600">
                   You own your fan data, master recordings, and publishing rights. Export anytime.
                 </p>
               </div>
-              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-xl">
+              <div className="bg-gray-50 p-6 border border-gray-200 rounded-xl">
                 <h4 className="font-bold text-black mb-2">90% Revenue Share</h4>
                 <p className="text-sm text-gray-600">
                   Keep 90% of BopAudio streaming revenue before platform fees. No hidden costs.
                 </p>
               </div>
-              <div className="bg-gray-50 p-6 border-2 border-gray-200 rounded-xl">
+              <div className="bg-gray-50 p-6 border border-gray-200 rounded-xl">
                 <h4 className="font-bold text-black mb-2">No Contracts</h4>
                 <p className="text-sm text-gray-600">
                   Cancel anytime. No long-term commitments. Your music, your terms.
@@ -238,7 +238,7 @@ export default function Signup() {
   // Profile Creation Step
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl border-2 border-gray-200 rounded-xl bg-white">
+      <Card className="w-full max-w-2xl border border-gray-200 rounded-xl bg-white">
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-black">
             Create Your Artist Profile
@@ -261,7 +261,7 @@ export default function Signup() {
                 }
                 placeholder="Your artist name"
                 required
-                className="mt-2 border-2 border-gray-200 rounded-xl"
+                className="mt-2 border border-gray-200 rounded-xl"
               />
             </div>
 
@@ -275,7 +275,7 @@ export default function Signup() {
                   setProfileData({ ...profileData, genre: value })
                 }
               >
-                <SelectTrigger className="mt-2 border-2 border-gray-200 rounded-none">
+                <SelectTrigger className="mt-2 border border-gray-200 rounded-none">
                   <SelectValue placeholder="Select a genre" />
                 </SelectTrigger>
                 <SelectContent>
@@ -304,7 +304,7 @@ export default function Signup() {
                 }
                 placeholder="Tell fans about yourself..."
                 rows={4}
-                className="mt-2 w-full px-3 py-2 border-2 border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-black"
+                className="mt-2 w-full px-3 py-2 border border-gray-200 rounded-none focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
 
@@ -319,7 +319,7 @@ export default function Signup() {
                   setProfileData({ ...profileData, location: e.target.value })
                 }
                 placeholder="City, State/Country"
-                className="mt-2 border-2 border-gray-200 rounded-xl"
+                className="mt-2 border border-gray-200 rounded-xl"
               />
             </div>
 

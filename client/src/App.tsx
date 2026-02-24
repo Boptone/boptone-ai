@@ -93,7 +93,7 @@ function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center space-y-4">
-        <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-cyan-500 border-r-transparent"></div>
+        <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#81e6ff] border-r-transparent"></div>
         <p className="text-gray-600 font-medium">Loading...</p>
       </div>
     </div>

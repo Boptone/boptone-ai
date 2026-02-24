@@ -73,7 +73,7 @@ class ErrorBoundary extends Component<Props, State> {
                 onClick={() => window.location.href = "/"}
                 className={cn(
                   "flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg",
-                  "border-2 border-gray-200 bg-white",
+                  "border border-gray-200 bg-white",
                   "hover:border-gray-400 cursor-pointer"
                 )}
               >

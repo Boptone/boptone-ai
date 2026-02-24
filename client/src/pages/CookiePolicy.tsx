@@ -362,7 +362,7 @@ export default function CookiePolicy() {
           </section>
 
           {/* Call to Action */}
-          <div className="p-6 bg-[#81e6fe] bg-opacity-10 border-2 border-[#81e6fe] rounded-lg">
+          <div className="p-6 bg-[#81e6fe] bg-opacity-10 border border-[#81e6fe] rounded-lg">
             <h3 className="text-2xl font-bold text-gray-900 mb-3">Manage Your Cookie Preferences</h3>
             <p className="text-gray-700 leading-relaxed mb-4">
               You have full control over which cookies we use. Visit our Cookie Settings page to customize your preferences.

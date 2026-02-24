@@ -33,15 +33,15 @@ export default function BAP() {
 
           {/* Stats Grid */}
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
               <div className="text-5xl font-bold text-black mb-4">10-100x</div>
               <div className="text-lg text-gray-700">Higher Earnings</div>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
               <div className="text-5xl font-bold text-black mb-4">Instant</div>
               <div className="text-lg text-gray-700">Payment Transfer</div>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
               <div className="text-5xl font-bold text-black mb-4">100%</div>
               <div className="text-lg text-gray-700">Transparent System</div>
             </div>
@@ -63,7 +63,7 @@ export default function BAP() {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {/* Old Model */}
-            <div className="border-2 border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
               <h3 className="text-3xl font-bold text-black mb-8">Traditional Streaming</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -103,7 +103,7 @@ export default function BAP() {
             </div>
 
             {/* New Model - BAP */}
-            <div className="border-2 border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
               <h3 className="text-3xl font-bold text-black mb-8">BopAudio Streaming</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -158,22 +158,22 @@ export default function BAP() {
           </div>
 
           <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
               <div className="text-5xl font-bold text-gray-600 mb-4">$0.01</div>
               <div className="text-xl font-bold mb-3">Budget Listener</div>
               <div className="text-lg text-gray-600">1,000 streams = $10</div>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center hover:border-gray-400 transition-colors">
               <div className="text-5xl font-bold text-black mb-4">$0.05</div>
               <div className="text-xl font-bold mb-3">Average Fan</div>
               <div className="text-lg text-gray-700">1,000 streams = $50</div>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center bg-gray-50 hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center bg-gray-50 hover:border-gray-400 transition-colors">
               <div className="text-5xl font-bold text-black mb-4">$0.25</div>
               <div className="text-xl font-bold mb-3">Superfan</div>
               <div className="text-lg text-gray-700">1,000 streams = $250</div>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 text-center bg-black text-white hover:border-gray-800 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 text-center bg-black text-white hover:border-gray-800 transition-colors">
               <div className="text-5xl font-bold mb-4">$1.00+</div>
               <div className="text-xl font-bold mb-3">Patron</div>
               <div className="text-lg">100 streams = $100+</div>
@@ -181,7 +181,7 @@ export default function BAP() {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="border-2 border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
               <h3 className="text-3xl font-bold mb-6">Real Earnings Comparison</h3>
               <div className="space-y-4 text-xl">
                 <p className="font-medium">Traditional Streaming: 10,000 streams × $0.004 = <span className="text-black font-bold text-2xl">$40</span></p>
@@ -206,7 +206,7 @@ export default function BAP() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="border-2 border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
               <h3 className="text-3xl font-bold mb-4">Fan Wallet</h3>
               <p className="text-gray-700 mb-6 text-lg leading-relaxed">
                 Fans load their wallet once, stream unlimited music. Set your own stream value. Top up anytime.
@@ -218,7 +218,7 @@ export default function BAP() {
               </div>
             </div>
 
-            <div className="border-2 border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
               <h3 className="text-3xl font-bold mb-4">Instant Transfer</h3>
               <p className="text-gray-700 mb-6 text-lg leading-relaxed">
                 When a fan streams your song, payment transfers instantly from their wallet to yours. No delays.
@@ -230,7 +230,7 @@ export default function BAP() {
               </div>
             </div>
 
-            <div className="border-2 border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-10 bg-white hover:border-gray-400 transition-colors">
               <h3 className="text-3xl font-bold mb-4">Artist Wallet</h3>
               <p className="text-gray-700 mb-6 text-lg leading-relaxed">
                 Receive payments instantly. Withdraw anytime. See exactly which fans paid and how much.
@@ -258,27 +258,27 @@ export default function BAP() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <h3 className="font-bold text-2xl mb-4">10-100x Higher Earnings</h3>
               <p className="text-gray-700 text-lg leading-relaxed">Artists earn $50-250 per 1,000 streams instead of $3-5. Real money for real work.</p>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <h3 className="font-bold text-2xl mb-4">Direct Fan Relationships</h3>
               <p className="text-gray-700 text-lg leading-relaxed">Know exactly which fans support you most. Build real relationships, not anonymous streams.</p>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <h3 className="font-bold text-2xl mb-4">Instant Payments</h3>
               <p className="text-gray-700 text-lg leading-relaxed">Get paid the moment a fan streams your song. No waiting 90 days for quarterly payouts.</p>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <h3 className="font-bold text-2xl mb-4">Complete Transparency</h3>
               <p className="text-gray-700 text-lg leading-relaxed">See every transaction. Know every payment source. No black boxes, no hidden fees.</p>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <h3 className="font-bold text-2xl mb-4">Fan-Controlled Economics</h3>
               <p className="text-gray-700 text-lg leading-relaxed">Fans decide how much to pay. Budget listeners and superfans both supported. True market value.</p>
             </div>
-            <div className="border-2 border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
+            <div className="border border-gray-200 rounded-xl p-8 bg-white hover:border-gray-400 transition-colors">
               <h3 className="font-bold text-2xl mb-4">Artist Ownership</h3>
               <p className="text-gray-700 text-lg leading-relaxed">Boptone doesn't pay for streams—fans do. We just provide the infrastructure (10% platform fee).</p>
             </div>
@@ -296,7 +296,7 @@ export default function BAP() {
           </div>
           <div className="max-w-4xl mx-auto">
             <Accordion type="single" collapsible className="w-full space-y-4">
-              <AccordionItem value="item-1" className="border-2 border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
+              <AccordionItem value="item-1" className="border border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
                 <AccordionTrigger className="text-xl font-bold text-left">
                   How does the wallet system work?
                 </AccordionTrigger>
@@ -305,7 +305,7 @@ export default function BAP() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-2" className="border-2 border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
+              <AccordionItem value="item-2" className="border border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
                 <AccordionTrigger className="text-xl font-bold text-left">
                   What if a fan's wallet runs out?
                 </AccordionTrigger>
@@ -314,7 +314,7 @@ export default function BAP() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-3" className="border-2 border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
+              <AccordionItem value="item-3" className="border border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
                 <AccordionTrigger className="text-xl font-bold text-left">
                   How much does Boptone take?
                 </AccordionTrigger>
@@ -323,7 +323,7 @@ export default function BAP() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-4" className="border-2 border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
+              <AccordionItem value="item-4" className="border border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
                 <AccordionTrigger className="text-xl font-bold text-left">
                   Can I see who's streaming my music?
                 </AccordionTrigger>
@@ -332,7 +332,7 @@ export default function BAP() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-5" className="border-2 border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
+              <AccordionItem value="item-5" className="border border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
                 <AccordionTrigger className="text-xl font-bold text-left">
                   When do I get paid?
                 </AccordionTrigger>
@@ -341,7 +341,7 @@ export default function BAP() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-6" className="border-2 border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
+              <AccordionItem value="item-6" className="border border-gray-200 rounded-xl px-6 hover:border-gray-400 transition-colors">
                 <AccordionTrigger className="text-xl font-bold text-left">
                   What's the catch?
                 </AccordionTrigger>

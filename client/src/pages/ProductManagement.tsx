@@ -96,28 +96,28 @@ export default function ProductManagement() {
               <Button
                 variant={statusFilter === undefined ? "default" : "outline"}
                 onClick={() => setStatusFilter(undefined)}
-                className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                className="rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
               >
                 All
               </Button>
               <Button
                 variant={statusFilter === "active" ? "default" : "outline"}
                 onClick={() => setStatusFilter("active")}
-                className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                className="rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
               >
                 Active
               </Button>
               <Button
                 variant={statusFilter === "draft" ? "default" : "outline"}
                 onClick={() => setStatusFilter("draft")}
-                className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                className="rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
               >
                 Draft
               </Button>
               <Button
                 variant={statusFilter === "archived" ? "default" : "outline"}
                 onClick={() => setStatusFilter("archived")}
-                className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                className="rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
               >
                 Archived
               </Button>
@@ -125,7 +125,7 @@ export default function ProductManagement() {
 
             <Button
               onClick={() => setLocation("/products/new")}
-              className="bg-black text-white rounded-xl border-2 border-black hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(6,182,212,1)]"
+              className="bg-black text-white rounded-xl border border-black hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(6,182,212,1)]"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Product
@@ -135,7 +135,7 @@ export default function ProductManagement() {
 
         {/* Products Grid */}
         {!products || products.length === 0 ? (
-          <div className="text-center py-16 border-2 border-gray-200 rounded-xl">
+          <div className="text-center py-16 border border-gray-200 rounded-xl">
             <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
             <h3 className="text-2xl font-bold mb-2">No products yet</h3>
             <p className="text-gray-600 mb-6">
@@ -146,7 +146,7 @@ export default function ProductManagement() {
             {!statusFilter && (
               <Button
                 onClick={() => setLocation("/products/new")}
-                className="bg-black text-white rounded-xl border-2 border-black hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(6,182,212,1)]"
+                className="bg-black text-white rounded-xl border border-black hover:bg-white hover:text-black transition-all shadow-[4px_4px_0px_0px_rgba(6,182,212,1)]"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Your First Product
@@ -158,7 +158,7 @@ export default function ProductManagement() {
             {products.map((product: any) => (
               <div
                 key={product.id}
-                className="border-2 border-gray-200 rounded-xl p-6 hover:border-gray-400 transition-colors"
+                className="border border-gray-200 rounded-xl p-6 hover:border-gray-400 transition-colors"
               >
                 {/* Product Image */}
                 {product.primaryImageUrl ? (
@@ -208,7 +208,7 @@ export default function ProductManagement() {
                     variant="outline"
                     size="sm"
                     onClick={() => setLocation(`/products/edit/${product.id}`)}
-                    className="flex-1 rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                    className="flex-1 rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
                   >
                     <Edit className="w-4 h-4 mr-1" />
                     Edit
@@ -217,7 +217,7 @@ export default function ProductManagement() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleToggleStatus(product.id, product.status)}
-                    className="rounded-xl border-2 border-gray-200 hover:border-gray-400 transition-colors"
+                    className="rounded-xl border border-gray-200 hover:border-gray-400 transition-colors"
                   >
                     {product.status === "active" ? (
                       <EyeOff className="w-4 h-4" />
@@ -229,7 +229,7 @@ export default function ProductManagement() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDelete(product.id, product.name)}
-                    className="rounded-xl border-2 border-gray-200 hover:border-red-400 hover:text-red-600 transition-colors"
+                    className="rounded-xl border border-gray-200 hover:border-red-400 hover:text-red-600 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

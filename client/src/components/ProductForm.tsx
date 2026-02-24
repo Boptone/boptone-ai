@@ -147,7 +147,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <Card className="w-full max-w-3xl border-2 border-black my-8">
+      <Card className="w-full max-w-3xl border border-black my-8">
         <form onSubmit={handleSubmit} className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -159,7 +159,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
               variant="outline"
               size="sm"
               onClick={onClose}
-              className="border-2 border-black"
+              className="border border-black"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -178,7 +178,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                   className={`font-bold uppercase ${
                     type === t
                       ? "bg-black text-white"
-                      : "border-2 border-black"
+                      : "border border-black"
                   }`}
                 >
                   {t}
@@ -196,7 +196,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., Limited Edition Vinyl"
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
                 required
               />
             </div>
@@ -209,7 +209,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe your product..."
                 rows={4}
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
               />
             </div>
           </div>
@@ -219,21 +219,21 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
             <Label className="font-bold mb-2 block">PRODUCT IMAGES</Label>
             <div className="grid grid-cols-4 gap-3">
               {images.map((url, index) => (
-                <div key={index} className="relative aspect-square border-2 border-black">
+                <div key={index} className="relative aspect-square border border-black">
                   <img src={url} alt={`Product ${index + 1}`} className="w-full h-full object-cover" />
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => removeImage(index)}
-                    className="absolute top-1 right-1 h-6 w-6 p-0 bg-white border-2 border-black"
+                    className="absolute top-1 right-1 h-6 w-6 p-0 bg-white border border-black"
                   >
                     <X className="w-3 h-3" />
                   </Button>
                 </div>
               ))}
               {images.length < 4 && (
-                <label className="aspect-square border-2 border-dashed border-black flex items-center justify-center cursor-pointer hover:bg-gray-50">
+                <label className="aspect-square border border-dashed border-black flex items-center justify-center cursor-pointer hover:bg-gray-50">
                   <input
                     type="file"
                     accept="image/*"
@@ -266,7 +266,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="29.99"
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
                 required
               />
             </div>
@@ -280,7 +280,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 value={compareAtPrice}
                 onChange={(e) => setCompareAtPrice(e.target.value)}
                 placeholder="39.99"
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
               />
             </div>
           </div>
@@ -294,7 +294,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 value={sku}
                 onChange={(e) => setSku(e.target.value)}
                 placeholder="PROD-001"
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
               />
             </div>
             <div>
@@ -306,7 +306,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 value={inventory}
                 onChange={(e) => setInventory(e.target.value)}
                 placeholder="100"
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
               />
             </div>
           </div>
@@ -323,7 +323,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
                 placeholder="1.5"
-                className="border-2 border-black mt-1"
+                className="border border-black mt-1"
               />
             </div>
           )}
@@ -341,7 +341,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
                   className={`font-bold uppercase ${
                     status === s
                       ? "bg-black text-white"
-                      : "border-2 border-black"
+                      : "border border-black"
                   }`}
                 >
                   {s}
@@ -372,7 +372,7 @@ export function ProductForm({ onClose, onSuccess, productId }: ProductFormProps)
               type="button"
               variant="outline"
               onClick={onClose}
-              className="border-2 border-black font-bold"
+              className="border border-black font-bold"
             >
               CANCEL
             </Button>

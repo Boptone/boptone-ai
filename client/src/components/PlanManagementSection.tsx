@@ -92,7 +92,7 @@ export function PlanManagementSection() {
 
   if (isLoading) {
     return (
-      <div className="border-2 border-gray-200 bg-white p-12">
+      <div className="border border-gray-200 bg-white p-12">
         <div className="flex items-center justify-center py-12">
           <div className="text-xl font-medium text-gray-600">Loading...</div>
         </div>
@@ -105,7 +105,7 @@ export function PlanManagementSection() {
 
   return (
     <>
-      <div className="border-2 border-gray-200 bg-white p-12">
+      <div className="border border-gray-200 bg-white p-12">
         <h2 className="text-4xl font-bold mb-3">Your Plan</h2>
         <p className="text-lg text-gray-600 mb-10">
           Currently on {PLANS.find((p) => p.id === currentPlan)?.name} ({currentCycle})
@@ -118,7 +118,7 @@ export function PlanManagementSection() {
             return (
               <div
                 key={plan.id}
-                className={`border-2 ${isCurrent ? "border-black" : "border-gray-200"} bg-white p-8`}
+                className={`border ${isCurrent ? "border-black" : "border-gray-200"} bg-white p-8`}
               >
                 <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                 <p className="text-4xl font-bold text-gray-900 mb-6">
@@ -149,7 +149,7 @@ export function PlanManagementSection() {
                   <Button
                     onClick={() => handleUpgradeClick(plan.id)}
                     variant="outline"
-                    className="w-full rounded-full border-2 border-gray-900 hover:bg-gray-900 hover:text-white h-12"
+                    className="w-full rounded-full border border-gray-900 hover:bg-gray-900 hover:text-white h-12"
                   >
                     Downgrade
                   </Button>
@@ -173,13 +173,13 @@ export function PlanManagementSection() {
           {preview && selectedPlan && (
             <div className="space-y-6 py-4">
               <div className="grid grid-cols-2 gap-6">
-                <div className="p-6 border-2 border-gray-200 bg-white">
+                <div className="p-6 border border-gray-200 bg-white">
                   <p className="text-sm font-bold text-gray-500 mb-2">Current Plan</p>
                   <p className="text-2xl font-bold">{PLANS.find((p) => p.id === preview.currentPlan)?.name}</p>
                   <p className="text-lg font-semibold text-gray-600">{preview.currentBillingCycle}</p>
                 </div>
 
-                <div className="p-6 border-2 border-black bg-white">
+                <div className="p-6 border border-black bg-white">
                   <p className="text-sm font-bold text-gray-900 mb-2">New Plan</p>
                   <p className="text-2xl font-bold">{PLANS.find((p) => p.id === preview.newPlan)?.name}</p>
                   <p className="text-lg font-semibold text-gray-600">{preview.newBillingCycle}</p>
@@ -205,7 +205,7 @@ export function PlanManagementSection() {
               </div>
 
               {preview.proratedCredit > 0 && (
-                <div className="p-6 border-2 border-gray-200 bg-white">
+                <div className="p-6 border border-gray-200 bg-white">
                   <p className="text-sm font-bold text-gray-600 mb-1">Prorated Credit</p>
                   <p className="text-3xl font-bold text-gray-900">${preview.proratedCredit.toFixed(2)}</p>
                   <p className="text-sm text-gray-600 mt-2">
@@ -214,7 +214,7 @@ export function PlanManagementSection() {
                 </div>
               )}
 
-              <div className="p-6 border-2 border-gray-200 bg-white">
+              <div className="p-6 border border-gray-200 bg-white">
                 <p className="text-sm font-bold text-gray-900 mb-2">What happens next?</p>
                 <ul className="space-y-2 text-sm text-gray-700">
                   <li>• Your plan changes immediately</li>
