@@ -2054,3 +2054,57 @@
 - [x] Test genre carousel navigation (left/right arrows) - Visual structure confirmed
 - [x] Test mini-player minimize/expand functionality - SUCCESS (minimizes to h-16 compact bar)
 - [ ] Save checkpoint
+
+
+## BopAudio /discover UI Refinements (Round 2)
+
+### Hero Section Play Button
+- [x] Add inline play button next to song title (after "Saturday")
+- [x] Use cyan-500 background with black arrow icon
+- [x] Match reference screenshot styling (circular, 2px black border)
+
+### Play Button Arrow Colors
+- [x] Change all play button arrows from white to black (6 replacements)
+- [x] Update hero Play Now button arrow
+- [x] Update track card play button arrows (4 sections)
+- [x] Update mini-player play button arrow (full + minimized)
+
+### Artist Names Display
+- [x] Add artist names below track titles in Top Bops section
+- [x] Add artist names below track titles in Fresh Music section
+- [x] Add artist names below track titles in Picks For You section
+- [x] Ensure consistent typography (text-gray-600, smaller than track title)
+
+### Testing
+- [ ] Test inline play button in hero section
+- [ ] Verify all play arrows are black
+- [ ] Verify artist names display correctly on all cards
+- [ ] Save checkpoint
+
+
+## BopAudio /discover UI Refinement Round 2 ✅ COMPLETE
+
+### Hero Section Play Button
+- [x] Add inline play button next to song title (after "Saturday")
+- [x] Use cyan-500 background with black arrow icon
+- [x] Match reference screenshot styling (circular, 2px black border)
+
+### Play Button Arrow Colors
+- [x] Change all play button arrows from white to black (6 replacements)
+- [x] Update hero Play Now button arrow
+- [x] Update track card play button arrows (4 sections)
+- [x] Update mini-player play button arrow (full + minimized)
+
+### Artist Names Display
+- [x] Add artist names below track titles in Top Bops section
+- [x] Add artist names below track titles in Fresh Music section
+- [x] Add artist names below track titles in Picks For You section
+- [x] Ensure consistent typography (text-gray-600, smaller than track title)
+- [x] Fixed field name from track.artistName → track.artist (4 replacements)
+- [x] Verified artist names displaying correctly: Tyler West, Smooth Operator, The Blue Notes, Luna Waves
+
+### Testing
+- [x] Test inline play button in hero section
+- [x] Test black play arrows across all buttons
+- [x] Test artist names display in all sections
+- [x] Save checkpoint

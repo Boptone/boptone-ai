@@ -1,0 +1,290 @@
+{
+  "query": "SHOW COLUMNS FROM bap_tracks;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute SHOW COLUMNS FROM bap_tracks;",
+  "rows": [
+    {
+      "Field": "id",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "PRI",
+      "Default": "NULL",
+      "Extra": "auto_increment"
+    },
+    {
+      "Field": "artistId",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "title",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "artist",
+      "Type": "varchar(255)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "albumId",
+      "Type": "int(11)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "duration",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "bpm",
+      "Type": "int(11)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "musicalKey",
+      "Type": "varchar(10)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "genre",
+      "Type": "varchar(100)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "mood",
+      "Type": "varchar(100)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "audioUrl",
+      "Type": "text",
+      "Null": "NO",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "waveformUrl",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "artworkUrl",
+      "Type": "text",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "fileSize",
+      "Type": "int(11)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "audioFormat",
+      "Type": "varchar(20)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "mp3",
+      "Extra": ""
+    },
+    {
+      "Field": "did",
+      "Type": "varchar(255)",
+      "Null": "YES",
+      "Key": "UNI",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "contentHash",
+      "Type": "varchar(128)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "isrcCode",
+      "Type": "varchar(12)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "upcCode",
+      "Type": "varchar(12)",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "songwriterSplits",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "publishingData",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "aiDisclosure",
+      "Type": "json",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "playCount",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "likeCount",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "repostCount",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "pricePerStream",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "100",
+      "Extra": ""
+    },
+    {
+      "Field": "artistShare",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "90",
+      "Extra": ""
+    },
+    {
+      "Field": "platformFee",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "10",
+      "Extra": ""
+    },
+    {
+      "Field": "totalEarnings",
+      "Type": "int(11)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "status",
+      "Type": "enum('draft','processing','live','archived')",
+      "Null": "NO",
+      "Key": "",
+      "Default": "draft",
+      "Extra": ""
+    },
+    {
+      "Field": "isExplicit",
+      "Type": "tinyint(1)",
+      "Null": "NO",
+      "Key": "",
+      "Default": "0",
+      "Extra": ""
+    },
+    {
+      "Field": "releasedAt",
+      "Type": "timestamp",
+      "Null": "YES",
+      "Key": "",
+      "Default": "NULL",
+      "Extra": ""
+    },
+    {
+      "Field": "createdAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": ""
+    },
+    {
+      "Field": "updatedAt",
+      "Type": "timestamp",
+      "Null": "NO",
+      "Key": "",
+      "Default": "CURRENT_TIMESTAMP",
+      "Extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP"
+    },
+    {
+      "Field": "deletedAt",
+      "Type": "timestamp",
+      "Null": "YES",
+      "Key": "MUL",
+      "Default": "NULL",
+      "Extra": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "Field\tType\tNull\tKey\tDefault\tExtra\nid\tint(11)\tNO\tPRI\tNULL\tauto_increment\nartistId\tint(11)\tNO\t\tNULL\t\ntitle\tvarchar(255)\tNO\t\tNULL\t\nartist\tvarchar(255)\tNO\t\tNULL\t\nalbumId\tint(11)\tYES\t\tNULL\t\nduration\tint(11)\tNO\t\tNULL\t\nbpm\tint(11)\tYES\t\tNULL\t\nmusicalKey\tvarchar(10)\tYES\t\tNULL\t\ngenre\tvarchar(100)\tYES\t\tNULL\t\nmood\tvarchar(100)\tYES\t\tNULL\t\naudioUrl\ttext\tNO\t\tNULL\t\nwaveformUrl\ttext\tYES\t\tNULL\t\nartworkUrl\ttext\tYES\t\tNULL\t\nfileSize\tint(11)\tYES\t\tNULL\t\naudioFormat\tvarchar(20)\tYES\t\tmp3\t\ndid\tvarchar(255)\tYES\tUNI\tNULL\t\ncontentHash\tvarchar(128)\tYES\t\tNULL\t\nisrcCode\tvarchar(12)\tYES\t\tNULL\t\nupcCode\tvarchar(12)\tYES\t\tNULL\t\nsongwriterSplits\tjson\tYES\t\tNULL\t\npublishingData\tjson\tYES\t\tNULL\t\naiDisclosure\tjson\tYES\t\tNULL\t\nplayCount\tint(11)\tNO\t\t0\t\nlikeCount\tint(11)\tNO\t\t0\t\nrepostCount\tint(11)\tNO\t\t0\t\npricePerStream\tint(11)\tNO\t\t100\t\nartistShare\tint(11)\tNO\t\t90\t\nplatformFee\tint(11)\tNO\t\t10\t\ntotalEarnings\tint(11)\tNO\t\t0\t\nstatus\tenum('draft','processing','live','archived')\tNO\t\tdraft\t\nisExplicit\ttinyint(1)\tNO\t\t0\t\nreleasedAt\ttimestamp\tYES\t\tNULL\t\ncreatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\t\nupdatedAt\ttimestamp\tNO\t\tCURRENT_TIMESTAMP\tDEFAULT_GENERATED on update CURRENT_TIMESTAMP\ndeletedAt\ttimestamp\tYES\tMUL\tNULL\t\n",
+  "stderr": "",
+  "execution_time_ms": 130
+}

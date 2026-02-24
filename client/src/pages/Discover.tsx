@@ -136,9 +136,17 @@ export default function Discover() {
                   FEATURED ARTIST
                 </div>
                 
-                <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-none">
-                  {featuredTrack.title}
-                </h1>
+                <div className="flex items-center gap-6 mb-6">
+                  <h1 className="text-6xl md:text-8xl font-extrabold leading-none">
+                    {featuredTrack.title}
+                  </h1>
+                  <button
+                    onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
+                    className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 bg-cyan-500 rounded-full border-2 border-black flex items-center justify-center hover:bg-cyan-600 transition-colors"
+                  >
+                    <Play className="w-10 h-10 md:w-12 md:h-12 text-black fill-black" />
+                  </button>
+                </div>
                 
                 <p className="text-xl md:text-2xl text-gray-600 mb-8">
                   {featuredTrack.genre}
@@ -149,7 +157,7 @@ export default function Discover() {
                     onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
                     className="bg-cyan-500 hover:bg-cyan-600 text-white text-lg px-8 py-6 rounded-full  border-2 border-black"
                   >
-                    <Play className="w-6 h-6 mr-2" />
+                    <Play className="w-6 h-6 mr-2 text-black fill-black" />
                     Play Now
                   </Button>
                 </div>
@@ -214,7 +222,7 @@ export default function Discover() {
                     <h3 className="text-2xl font-bold mb-2 truncate">
                       {track.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{track.artistName}</p>
+                    <p className="text-gray-600 mb-4">{track.artist}</p>
                     <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
                       {track.genre}
                     </span>
@@ -226,7 +234,7 @@ export default function Discover() {
                       onClick={() => handlePlayTrack(track.id, trendingTracks)}
                       className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
-                      <Play className="w-5 h-5" />
+                      <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
                   </div>
                 </div>
@@ -272,7 +280,7 @@ export default function Discover() {
                     <h3 className="text-2xl font-bold mb-2 truncate">
                       {track.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{track.artistName}</p>
+                    <p className="text-gray-600 mb-4">{track.artist}</p>
                     <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
                       {track.genre}
                     </span>
@@ -284,7 +292,7 @@ export default function Discover() {
                       onClick={() => handlePlayTrack(track.id, newReleases)}
                       className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
-                      <Play className="w-5 h-5" />
+                      <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
                   </div>
                 </div>
@@ -330,7 +338,7 @@ export default function Discover() {
                     <h3 className="text-2xl font-bold mb-2 truncate">
                       {track.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{track.artistName}</p>
+                    <p className="text-gray-600 mb-4">{track.artist}</p>
                     <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
                       {track.genre}
                     </span>
@@ -342,7 +350,7 @@ export default function Discover() {
                       onClick={() => handlePlayTrack(track.id, picksForYou)}
                       className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
-                      <Play className="w-5 h-5" />
+                      <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
                   </div>
                 </div>
@@ -435,7 +443,7 @@ export default function Discover() {
                     <h3 className="text-2xl font-bold mb-2 truncate">
                       {track.title}
                     </h3>
-                    <p className="text-gray-600 mb-4">{track.artistName}</p>
+                    <p className="text-gray-600 mb-4">{track.artist}</p>
                     <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full border border-gray-300">
                       {track.genre}
                     </span>
@@ -447,7 +455,7 @@ export default function Discover() {
                       onClick={() => handlePlayTrack(track.id, endlessScrollTracks)}
                       className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
                     >
-                      <Play className="w-5 h-5" />
+                      <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
                   </div>
                 </div>
@@ -506,7 +514,7 @@ export default function Discover() {
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
                     className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 border-2 border-black"
                   >
-                    {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                    {isPlaying ? <Pause className="w-5 h-5 text-black fill-black" /> : <Play className="w-5 h-5 text-black fill-black" />}
                   </Button>
                   
                   <Button
@@ -526,7 +534,7 @@ export default function Discover() {
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
                     className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-10 h-10 p-0 border-2 border-black flex-shrink-0"
                   >
-                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                    {isPlaying ? <Pause className="w-4 h-4 text-black fill-black" /> : <Play className="w-4 h-4 text-black fill-black" />}
                   </Button>
                   <div className="flex-1 min-w-0">
                     <p className="font-bold text-sm truncate">{currentTrack.title}</p>
