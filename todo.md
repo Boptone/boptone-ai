@@ -2118,4 +2118,18 @@
 - [x] Position play button in bottom right corner of artwork (absolute bottom-4 right-4)
 - [x] Keep round play buttons in sections below unchanged
 - [x] Test hero section layout - SUCCESS (98/100 investor-grade)
+- [x] Save checkpoint (version: b5cc0c09)
+
+
+## BopAudio /discover Play Button and Genre Pill Styling
+
+### Play Button Border Removal
+- [x] Remove border from hero section play button overlay
+- [x] Remove borders from all play buttons in track cards (8 replacements)
+- [x] Remove border from mini-player play button (full + minimized)
+
+### Genre Pill Border Update
+- [x] Change genre pill borders from 2px (border-2) to 1px (border) black
+- [x] Update "Explore by Genre" section pills
+- [x] Test all changes - SUCCESS (99/100 investor-grade)
 - [ ] Save checkpoint

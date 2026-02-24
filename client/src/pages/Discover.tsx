@@ -165,7 +165,7 @@ export default function Discover() {
                   {/* Play Button Overlay - Bottom Right Corner */}
                   <button
                     onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
-                    className="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 bg-cyan-500 rounded-full border-2 border-black flex items-center justify-center hover:bg-cyan-600 transition-colors"
+                    className="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 bg-cyan-500 rounded-full flex items-center justify-center hover:bg-cyan-600 transition-colors"
                   >
                     <Play className="w-8 h-8 md:w-10 md:h-10 text-black fill-black" />
                   </button>
@@ -222,7 +222,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, trendingTracks)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -280,7 +280,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, newReleases)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -338,7 +338,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, picksForYou)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -380,7 +380,7 @@ export default function Discover() {
                 <button
                   key={genre}
                   onClick={() => setSelectedGenre(genre)}
-                  className={`px-6 py-3 rounded-full text-lg font-bold border-2 border-black transition-all whitespace-nowrap flex-shrink-0 ${
+                  className={`px-6 py-3 rounded-full text-lg font-bold border border-black transition-all whitespace-nowrap flex-shrink-0 ${
                     selectedGenre === genre
                       ? "bg-cyan-500 text-white"
                       : "bg-white text-black hover:bg-gray-100"
@@ -443,7 +443,7 @@ export default function Discover() {
                   <div className="flex items-center">
                     <Button
                       onClick={() => handlePlayTrack(track.id, endlessScrollTracks)}
-                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0  border-2 border-black"
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
                     >
                       <Play className="w-5 h-5 text-black fill-black" />
                     </Button>
@@ -502,7 +502,7 @@ export default function Discover() {
                 <div className="flex items-center gap-4">
                   <Button
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0 border-2 border-black"
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-12 h-12 p-0"
                   >
                     {isPlaying ? <Pause className="w-5 h-5 text-black fill-black" /> : <Play className="w-5 h-5 text-black fill-black" />}
                   </Button>
@@ -522,7 +522,7 @@ export default function Discover() {
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <Button
                     onClick={isPlaying ? handlePauseTrack : () => setIsPlaying(true)}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-10 h-10 p-0 border-2 border-black flex-shrink-0"
+                    className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full w-10 h-10 p-0 flex-shrink-0"
                   >
                     {isPlaying ? <Pause className="w-4 h-4 text-black fill-black" /> : <Play className="w-4 h-4 text-black fill-black" />}
                   </Button>
