@@ -2108,3 +2108,14 @@
 - [x] Test black play arrows across all buttons
 - [x] Test artist names display in all sections
 - [x] Save checkpoint
+
+
+## BopAudio /discover Hero Section Play Button Repositioning
+
+### Hero Section Layout Update
+- [x] Remove "Play Now" pill button completely
+- [x] Move round play button to overlay featured artist artwork
+- [x] Position play button in bottom right corner of artwork (absolute bottom-4 right-4)
+- [x] Keep round play buttons in sections below unchanged
+- [x] Test hero section layout - SUCCESS (98/100 investor-grade)
+- [ ] Save checkpoint

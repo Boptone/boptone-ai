@@ -136,36 +136,18 @@ export default function Discover() {
                   FEATURED ARTIST
                 </div>
                 
-                <div className="flex items-center gap-6 mb-6">
-                  <h1 className="text-6xl md:text-8xl font-extrabold leading-none">
-                    {featuredTrack.title}
-                  </h1>
-                  <button
-                    onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
-                    className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 bg-cyan-500 rounded-full border-2 border-black flex items-center justify-center hover:bg-cyan-600 transition-colors"
-                  >
-                    <Play className="w-10 h-10 md:w-12 md:h-12 text-black fill-black" />
-                  </button>
-                </div>
+                <h1 className="text-6xl md:text-8xl font-extrabold leading-none mb-6">
+                  {featuredTrack.title}
+                </h1>
                 
-                <p className="text-xl md:text-2xl text-gray-600 mb-8">
+                <p className="text-xl md:text-2xl text-gray-600">
                   {featuredTrack.genre}
                 </p>
-                
-                <div className="flex gap-4">
-                  <Button
-                    onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
-                    className="bg-cyan-500 hover:bg-cyan-600 text-white text-lg px-8 py-6 rounded-full  border-2 border-black"
-                  >
-                    <Play className="w-6 h-6 mr-2 text-black fill-black" />
-                    Play Now
-                  </Button>
-                </div>
               </div>
 
-              {/* Right: Album Artwork */}
+              {/* Right: Album Artwork with Play Button Overlay */}
               <div className="lg:col-span-2">
-                <div className="aspect-square bg-gray-200 rounded-lg border-2 border-black  flex items-center justify-center">
+                <div className="relative aspect-square bg-gray-200 rounded-lg border-2 border-black flex items-center justify-center">
                   <svg
                     className="w-32 h-32 text-gray-400"
                     fill="none"
@@ -179,6 +161,14 @@ export default function Discover() {
                       d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
                     />
                   </svg>
+                  
+                  {/* Play Button Overlay - Bottom Right Corner */}
+                  <button
+                    onClick={() => handlePlayTrack(featuredTrack.id, trendingTracks)}
+                    className="absolute bottom-4 right-4 w-16 h-16 md:w-20 md:h-20 bg-cyan-500 rounded-full border-2 border-black flex items-center justify-center hover:bg-cyan-600 transition-colors"
+                  >
+                    <Play className="w-8 h-8 md:w-10 md:h-10 text-black fill-black" />
+                  </button>
                 </div>
               </div>
             </div>
