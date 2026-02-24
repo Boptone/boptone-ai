@@ -202,24 +202,50 @@ export default function PublicLanding() {
       {/* Final CTA Section */}
       <section className="py-24 md:py-32 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-5xl md:text-7xl font-bold mb-8">
-              Ready to Find Your Tone?
+              Start Exploring.
             </h2>
             <p className="text-2xl text-gray-700 mb-12 leading-relaxed">
-              Join thousands of artists building their careers on Boptone.
+              Whether you're an artist building your career, a fan discovering new music, or shopping for authentic merch—Boptone is your platform.
             </p>
-            <Link href="/artists">
-              <Button 
-                size="lg"
-                className="rounded-full bg-[#008B8B] text-white hover:bg-[#006666] text-xl h-16 px-12 border border-black"
-                style={{
-                  boxShadow: '4px 4px 0 0 black'
-                }}
-              >
-                Get Started Free
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href="/artists">
+                <Button 
+                  size="lg"
+                  className="rounded-full bg-[#008B8B] text-white hover:bg-[#006666] text-xl h-16 px-10 border border-black"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }}
+                >
+                  For Artists
+                </Button>
+              </Link>
+              <Link href="/music">
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border border-black text-black hover:bg-gray-50 text-xl h-16 px-10"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }}
+                >
+                  Listen Now
+                </Button>
+              </Link>
+              <Link href="/shop">
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border border-black text-black hover:bg-gray-50 text-xl h-16 px-10"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }}
+                >
+                  Shop Merch
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
