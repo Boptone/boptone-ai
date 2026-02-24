@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 
-const rotatingPhrases = ["Automate Your Tone.", "Create Your Tone.", "Own Your Tone."];
+const rotatingPhrases = ["Find Your Tone.", "Create Your Tone.", "Automate Your Tone.", "Own Your Tone."];
 
 /**
  * Landing Page for Boptone Platform

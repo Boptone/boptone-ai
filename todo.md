@@ -2451,3 +2451,8 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Add pricing tiers (Free, Pro, Enterprise) for artists with 4px color-coded borders
 - [x] Keep revolutionary aesthetic (thick borders, gradients, hover effects)
 - [x] Test to ensure messaging is clear - VERIFIED artist-focused
+
+## Landing Page Hero Message Update
+- [x] Update rotating phrases to include "Find Your Tone"
+- [x] Test hero rotation animation - VERIFIED showing "Find Your Tone"
+- [ ] Save checkpoint
