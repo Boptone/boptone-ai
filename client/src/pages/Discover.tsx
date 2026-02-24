@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder } from "lucide-react";
+import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder, ShoppingBag, Shield, FileText, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { APP_LOGO } from "@/const";
@@ -114,20 +114,55 @@ export default function Discover() {
       <div className="flex-1 overflow-y-auto">
         {/* Hero Section */}
         <div className="bg-gradient-to-b from-gray-900 to-[#1a1a1a] p-12">
-          <h1 className="text-6xl font-black mb-6">
+          <h1 className="text-6xl font-black mb-8">
             Find Your Tone
           </h1>
           
-          {/* Search Bar */}
-          <div className="relative max-w-2xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          {/* Larger Search Bar */}
+          <div className="relative max-w-4xl mb-8">
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" />
             <Input
               type="text"
               placeholder="Search for artists, albums, or tracks..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 pr-4 py-6 text-lg bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 rounded-full focus:ring-2 focus:ring-cyan-500"
+              className="pl-16 pr-6 py-8 text-xl bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 rounded-full focus:ring-2 focus:ring-cyan-500 shadow-lg"
             />
+          </div>
+
+          {/* Action Buttons Row */}
+          <div className="flex gap-4 max-w-4xl">
+            <button
+              onClick={() => window.location.href = '/shop'}
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <ShoppingBag className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
+              <span className="font-semibold text-sm">BopShop</span>
+            </button>
+            
+            <button
+              onClick={() => window.location.href = '/privacy'}
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <Shield className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
+              <span className="font-semibold text-sm">Privacy</span>
+            </button>
+            
+            <button
+              onClick={() => window.location.href = '/terms'}
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <FileText className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
+              <span className="font-semibold text-sm">Terms</span>
+            </button>
+            
+            <button
+              onClick={() => window.location.href = '/newsletter'}
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+            >
+              <Mail className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
+              <span className="font-semibold text-sm">Newsletter</span>
+            </button>
           </div>
         </div>
 
