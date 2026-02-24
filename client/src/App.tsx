@@ -10,6 +10,7 @@ import { ToneyChatbot } from "./components/ToneyChatbot";
 import Footer from "./components/Footer";
 import { CookieConsentBanner } from "./components/CookieConsentBanner";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import MusicPlayer from "./components/MusicPlayer";
 
 // Eager load only Home page and Landing page for fast initial load
 import Home from "./pages/Home";
@@ -213,6 +214,7 @@ function App() {
             {!window.location.pathname.startsWith('/music') && <Footer />}
             <ToneyChatbot />
             <CookieConsentBanner />
+            <MusicPlayer />
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>

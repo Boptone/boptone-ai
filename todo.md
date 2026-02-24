@@ -2599,3 +2599,26 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Remove example prompt helper text below textarea
 - [x] Test updated interface - VERIFIED cleaner layout, focused placeholder, legal links in sidebar footer
 - [ ] Save checkpoint
+
+## Persistent Bottom Music Player - First Pass
+- [x] Create MusicPlayer component in client/src/components/
+- [x] Implement fixed bottom bar layout (stays visible on all pages)
+- [x] Add track info display (title, artist, album art thumbnail)
+- [x] Add core playback controls (play/pause, previous, next buttons)
+- [x] Add progress bar with current time / total duration display
+- [x] Add volume control slider
+- [x] Add minimize/expand toggle button
+- [x] Style with dark theme matching /music page aesthetic (gray-900 bg, cyan accents)
+- [x] Integrate MusicPlayer into App.tsx for global persistence
+- [x] Test player visibility and controls across different pages - VERIFIED persists on all pages
+- [x] Deliver first pass for user feedback - READY FOR REVIEW
+- [ ] Save checkpoint after user feedback
+
+## Music Player - Add Shuffle & Repeat Buttons
+- [x] Add shuffle button to playback controls (Shuffle icon from lucide-react)
+- [x] Add repeat button to playback controls (Repeat icon from lucide-react)
+- [x] Implement toggle state for shuffle (active = cyan color)
+- [x] Implement toggle state for repeat (active = cyan color)
+- [x] Position buttons alongside existing playback controls (shuffle left, repeat right)
+- [x] Test button interactions and visual feedback - VERIFIED buttons toggle cyan on click
+- [ ] Save checkpoint
