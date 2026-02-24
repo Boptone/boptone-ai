@@ -2263,4 +2263,20 @@
 - [x] Update: Play buttons (automatic via find/replace)
 - [x] Update: Any other pill elements (automatic via find/replace)
 - [x] Test new color scheme in browser (verified - #008B8B with white text looks perfect)
+- [x] Save checkpoint (version 9883d89f)
+
+
+## Fix Play Button Icons and Hero Artwork Shadow
+
+### User Request
+1. Change all play circle button icons from black to white for better contrast
+2. Remove shadow from hero artist artwork card (cactus image) - looks odd on left side
+
+### Tasks
+- [x] Find all play button icons with black color (found 7 instances)
+- [x] Change play button icons to white (text-white fill-white)
+- [x] Find hero artwork card shadow CSS (rounded-lg was causing shadow effect)
+- [x] Remove shadow from hero artwork card (removed rounded-lg class)
+- [x] Test play button icons across all sections (verified - all white icons display correctly)
+- [x] Test hero artwork card without shadow (verified - no shadow on left side)
 - [ ] Save checkpoint
