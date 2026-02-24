@@ -20,20 +20,14 @@ export default function Landing() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32">
         <div className="max-w-5xl mx-auto text-center">
-          {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <img src={APP_LOGO} alt="Boptone" className="h-16 md:h-24" />
-          </div>
-
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
-            The All-in-One Platform for Artists
+            Create Your Tone
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Upload your music. Reach millions of fans. Sell your merch. Keep 100% ownership.
-            Everything you need to build your empire, in one place.
+            Automate Your Tone. Own Your Tone.
           </p>
 
           {/* Primary CTAs */}

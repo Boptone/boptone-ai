@@ -2424,3 +2424,8 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Test mobile responsiveness across all experiences
 - [ ] Save checkpoint
 
+
+## Landing Page Hero Section Update
+- [x] Remove gear icon from hero section
+- [x] Restore "Create Your Tone / Automate Your Tone / Own Your Tone" messaging
+- [x] Test changes in browser
