@@ -1,29 +1,74 @@
 import { useState, useEffect, useRef } from "react";
-import { Music, Play, Pause, Heart, Share2, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
+import { Play, Pause, Heart, X } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Discover() {
   const [selectedGenre, setSelectedGenre] = useState<string>("ALL");
+  const [displayLimit, setDisplayLimit] = useState(12);
   const [currentTrack, setCurrentTrack] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [displayLimit, setDisplayLimit] = useState(12);
   const scrollObserverRef = useRef<HTMLDivElement>(null);
 
-  // Fetch tracks from BAP router
-  const { data: allTracks = [] } = trpc.bap.discover.trending.useQuery({
+  // tRPC queries
+  const { data: trendingTracks = [] } = trpc.bap.discover.trending.useQuery({
     limit: 100,
     genre: selectedGenre === "ALL" ? undefined : selectedGenre,
   });
 
-  // Get featured artist (first track)
-  const featuredArtist = allTracks[0];
+  const { data: newReleases = [] } = trpc.bap.discover.newReleases.useQuery({
+    limit: 100,
+    genre: selectedGenre === "ALL" ? undefined : selectedGenre,
+  });
 
-  // Get discovery tracks (skip first, show up to displayLimit)
-  const discoveryTracks = allTracks.slice(1, displayLimit + 1);
+  // Combine and deduplicate tracks
+  const allTracks = [
+    ...trendingTracks,
+    ...newReleases.filter(
+      (nr) => !trendingTracks.some((tt) => tt.id === nr.id)
+    ),
+  ];
 
-  // Genre list
+  // Reset display limit when genre changes
+  useEffect(() => {
+    setDisplayLimit(12);
+  }, [selectedGenre]);
+
+  // Endless scroll observer
+  useEffect(() => {
+    if (!scrollObserverRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && displayLimit < allTracks.length) {
+          setDisplayLimit((prev) => Math.min(prev + 12, 100));
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(scrollObserverRef.current);
+    return () => observer.disconnect();
+  }, [displayLimit, allTracks.length]);
+
+  const handlePlayTrack = (trackId: number) => {
+    const track = allTracks.find((t) => t.id === trackId);
+    if (track) {
+      setCurrentTrack(track);
+      setIsPlaying(true);
+      toast.success(`Now playing: ${track.title}`);
+    }
+  };
+
+  const handlePauseTrack = () => {
+    setIsPlaying(false);
+  };
+
+  const handleSupportArtist = (artistName: string) => {
+    toast.info(`Support feature coming soon for ${artistName}!`);
+  };
+
   const genres = [
     "ALL",
     "Hip-Hop",
@@ -38,116 +83,78 @@ export default function Discover() {
     "Alternative",
   ];
 
-  // Endless scroll observer
-  useEffect(() => {
-    if (selectedGenre !== "ALL") {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && displayLimit < 100) {
-            setDisplayLimit((prev) => Math.min(prev + 12, 100));
-          }
-        },
-        { threshold: 0.1 }
-      );
+  // Featured track (first trending track)
+  const featuredTrack = trendingTracks[0];
 
-      if (scrollObserverRef.current) {
-        observer.observe(scrollObserverRef.current);
-      }
-
-      return () => observer.disconnect();
-    }
-  }, [selectedGenre, displayLimit]);
-
-  // Reset display limit when genre changes
-  useEffect(() => {
-    setDisplayLimit(12);
-  }, [selectedGenre]);
-
-  const handlePlayTrack = (trackId: number) => {
-    const track = allTracks.find((t) => t.id === trackId);
-    console.log('[handlePlayTrack] trackId:', trackId, 'track:', track);
-    if (track) {
-      setCurrentTrack(track);
-      setIsPlaying(true);
-      console.log('[handlePlayTrack] currentTrack set to:', track);
-      toast.success(`Now playing: ${track.title}`);
-    } else {
-      console.error('[handlePlayTrack] Track not found for ID:', trackId);
-    }
-  };
-
-  const handleSupportArtist = (artistName: string) => {
-    toast.info(`Support feature coming soon for ${artistName}!`);
-  };
-
-  const handleShare = (trackTitle: string) => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success(`Link copied for "${trackTitle}"!`);
-  };
+  // Discovery tracks (remaining tracks, limited by displayLimit)
+  const discoveryTracks = allTracks.slice(1, displayLimit);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* HERO: Featured Artist Spotlight */}
-      {featuredArtist && (
-        <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-24">
-          <div className="container">
-            <div className="max-w-4xl mx-auto text-center space-y-8">
-              {/* Featured Badge */}
-              <div className="inline-block">
-                <span className="px-4 py-2 bg-cyan-500 text-black font-bold text-sm rounded-full border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                  FEATURED ARTIST
-                </span>
-              </div>
-
-              {/* Artist Name */}
-              <h1 className="text-6xl md:text-8xl font-extrabold leading-tight">
-                {featuredArtist.artist}
-              </h1>
-
-              {/* Genre Badge */}
-              <div className="inline-block">
-                <span className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-500 font-semibold text-sm rounded-full border border-cyan-500">
-                  {featuredArtist.genre}
-                </span>
-              </div>
-
-              {/* Featured Track */}
-              <div className="flex flex-col items-center gap-6 pt-8">
-                {/* Album Artwork */}
-                <div className="w-64 h-64 rounded-2xl border-2 border-white overflow-hidden shadow-[8px_8px_0px_0px_rgba(255,255,255,0.2)]">
-                  {featuredArtist.coverArtUrl ? (
-                    <img
-                      src={featuredArtist.coverArtUrl}
-                      alt={featuredArtist.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                      <Music className="w-24 h-24 text-white opacity-50" />
-                    </div>
-                  )}
+      {/* Hero Section - Featured Artist Spotlight */}
+      {featuredTrack && (
+        <section className="py-20 md:py-32 bg-white border-b border-gray-200">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+              {/* Left: MASSIVE Typography */}
+              <div className="lg:col-span-3">
+                <div className="inline-block px-4 py-2 bg-cyan-500 text-white text-sm font-semibold uppercase tracking-wide rounded-full mb-6">
+                  Featured Artist
                 </div>
-
-                {/* Track Title */}
-                <h2 className="text-3xl font-bold">{featuredArtist.title}</h2>
-
-                {/* CTAs */}
-                <div className="flex gap-4">
+                <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-none">
+                  {featuredTrack.artistName}
+                </h1>
+                <h2 className="text-3xl md:text-4xl font-semibold text-gray-700 mb-6">
+                  {featuredTrack.title}
+                </h2>
+                <p className="text-xl text-gray-600 mb-8 max-w-2xl leading-relaxed">
+                  {featuredTrack.genre} • {Math.floor(Math.random() * 10) + 1}K plays
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
                   <Button
-                    onClick={() => handlePlayTrack(featuredArtist.id)}
-                    className="px-8 py-6 bg-cyan-500 hover:bg-cyan-600 text-black font-bold text-lg rounded-full border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+                    size="lg"
+                    className="rounded-full bg-cyan-500 text-white hover:bg-cyan-600 text-lg h-14 px-8 border-2 border-black transition-colors"
+                    style={{ boxShadow: "4px 4px 0 0 black" }}
+                    onClick={() => handlePlayTrack(featuredTrack.id)}
                   >
                     <Play className="w-5 h-5 mr-2" />
                     Play Now
                   </Button>
                   <Button
-                    onClick={() => handleSupportArtist(featuredArtist.artist)}
+                    size="lg"
                     variant="outline"
-                    className="px-8 py-6 bg-transparent hover:bg-white hover:text-black text-white font-bold text-lg rounded-full border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:shadow-[6px_6px_0px_0px_rgba(255,255,255,0.5)] transition-all"
+                    className="rounded-full border-2 border-black text-lg h-14 px-8 hover:bg-gray-50 transition-colors"
+                    style={{ boxShadow: "4px 4px 0 0 black" }}
+                    onClick={() => handleSupportArtist(featuredTrack.artistName)}
                   >
-                    <DollarSign className="w-5 h-5 mr-2" />
+                    <Heart className="w-5 h-5 mr-2" />
                     Support Artist
                   </Button>
+                </div>
+              </div>
+
+              {/* Right: Large Album Artwork */}
+              <div className="lg:col-span-2">
+                <div
+                  className="w-full aspect-square max-w-md mx-auto rounded-lg border-2 border-black bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center"
+                  style={{ boxShadow: "8px 8px 0 0 black" }}
+                >
+                  <div className="text-white text-6xl">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-32 h-32"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -155,18 +162,18 @@ export default function Discover() {
         </section>
       )}
 
-      {/* GENRE NAVIGATION */}
-      <section className="bg-white border-b-2 border-black sticky top-0 z-40">
-        <div className="container py-6">
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide">
+      {/* Genre Navigation - Sticky */}
+      <div className="sticky top-0 z-40 bg-white border-b-2 border-black">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
             {genres.map((genre) => (
               <button
                 key={genre}
                 onClick={() => setSelectedGenre(genre)}
-                className={`px-6 py-3 font-bold text-sm rounded-full border-2 border-black whitespace-nowrap transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] ${
+                className={`flex-shrink-0 px-6 py-3 rounded-full border-2 border-black text-base font-semibold transition-all ${
                   selectedGenre === genre
-                    ? "bg-cyan-500 text-black"
-                    : "bg-white text-black hover:bg-gray-50"
+                    ? "bg-cyan-500 text-white shadow-[4px_4px_0px_0px_black]"
+                    : "bg-white text-black shadow-[2px_2px_0px_0px_black] hover:shadow-[4px_4px_0px_0px_black]"
                 }`}
               >
                 {genre}
@@ -174,152 +181,168 @@ export default function Discover() {
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* DISCOVERY ENGINE: Artists You Need to Hear */}
-      <section className="container py-16">
-        <div className="mb-12">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-4">
-            {selectedGenre === "ALL" ? "Discover Artists" : `${selectedGenre} Artists`}
+      {/* Discovery Grid - 2-Column Generous Spacing */}
+      <section className="py-20 md:py-32 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-5xl md:text-6xl font-bold mb-16">
+            {selectedGenre === "ALL" ? "Discover Music" : `${selectedGenre} Artists`}
           </h2>
-          <p className="text-xl text-gray-600">
-            Curated music from artists building sustainable careers
-          </p>
-        </div>
 
-        {/* Artist Cards Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {discoveryTracks.map((track) => (
-            <div
-              key={track.id}
-              className="group relative bg-white border-2 border-black rounded-2xl overflow-hidden hover:border-cyan-500 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(6,182,212,0.3)]"
-            >
-              {/* Album Artwork */}
-              <div className="aspect-square relative overflow-hidden">
-                {track.coverArtUrl ? (
-                  <img
-                    src={track.coverArtUrl}
-                    alt={track.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                    <Music className="w-16 h-16 text-white opacity-50" />
-                  </div>
-                )}
-
-                {/* Play Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <button
-                    onClick={() => handlePlayTrack(track.id)}
-                    className="w-16 h-16 rounded-full bg-cyan-500 border-2 border-black flex items-center justify-center hover:scale-110 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {discoveryTracks.map((track) => (
+              <div
+                key={track.id}
+                className="border-2 border-black rounded-lg p-8 bg-white hover:bg-gray-50 transition-colors"
+                style={{ boxShadow: "4px 4px 0 0 black" }}
+              >
+                <div className="flex gap-6">
+                  {/* Album Artwork */}
+                  <div
+                    className="w-48 h-48 flex-shrink-0 rounded-lg border-2 border-black bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center"
+                    style={{ boxShadow: "2px 2px 0 0 black" }}
                   >
-                    <Play className="w-7 h-7 text-black ml-1" />
-                  </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-16 h-16 text-white"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Track Info */}
+                  <div className="flex-1 flex flex-col justify-between min-w-0">
+                    <div>
+                      <h3 className="text-2xl font-bold mb-2 truncate">
+                        {track.artistName}
+                      </h3>
+                      <p className="text-xl text-gray-700 mb-3 truncate">
+                        {track.title}
+                      </p>
+                      <span className="inline-block px-3 py-1 bg-cyan-500 text-white text-sm font-semibold uppercase tracking-wide rounded-full">
+                        {track.genre}
+                      </span>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-3 mt-4">
+                      <button
+                        onClick={() => handlePlayTrack(track.id)}
+                        className="w-14 h-14 rounded-full bg-cyan-500 border-2 border-black flex items-center justify-center hover:bg-cyan-600 transition-colors"
+                        style={{ boxShadow: "2px 2px 0 0 black" }}
+                      >
+                        <Play className="w-6 h-6 text-white" />
+                      </button>
+                      <Button
+                        variant="outline"
+                        className="flex-1 rounded-full border-2 border-black hover:bg-gray-100 transition-colors"
+                        style={{ boxShadow: "2px 2px 0 0 black" }}
+                        onClick={() => handleSupportArtist(track.artistName)}
+                      >
+                        <Heart className="w-4 h-4 mr-2" />
+                        Support
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Share Button */}
-                <button
-                  onClick={() => handleShare(track.title)}
-                  className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white border-2 border-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
-                >
-                  <Share2 className="w-4 h-4 text-black" />
-                </button>
               </div>
-
-              {/* Track Info */}
-              <div className="p-5 space-y-3">
-                <div>
-                  <h3 className="font-bold text-lg line-clamp-1">{track.title}</h3>
-                  <p className="text-sm text-gray-600 line-clamp-1">{track.artist}</p>
-                </div>
-
-                {/* Genre Badge */}
-                <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full border border-gray-300">
-                  {track.genre}
-                </span>
-
-                {/* Support Button */}
-                <Button
-                  onClick={() => handleSupportArtist(track.artist)}
-                  variant="outline"
-                  className="w-full border-2 border-black rounded-full font-bold hover:bg-cyan-500 hover:text-black hover:border-cyan-500 transition-all shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                >
-                  <Heart className="w-4 h-4 mr-2" />
-                  Support
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Scroll Observer for Endless Loading */}
-        {selectedGenre !== "ALL" && displayLimit < 100 && (
-          <div ref={scrollObserverRef} className="flex justify-center py-12">
-            <div className="flex items-center gap-2 text-gray-500">
-              <div
-                className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce"
-                style={{ animationDelay: "0ms" }}
-              />
-              <div
-                className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce"
-                style={{ animationDelay: "150ms" }}
-              />
-              <div
-                className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce"
-                style={{ animationDelay: "300ms" }}
-              />
-            </div>
+            ))}
           </div>
-        )}
+
+          {/* Scroll Observer for Endless Loading */}
+          {selectedGenre !== "ALL" && displayLimit < allTracks.length && (
+            <div ref={scrollObserverRef} className="flex justify-center py-12">
+              <div className="flex items-center gap-2 text-gray-500">
+                <div
+                  className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <div
+                  className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <div
+                  className="w-3 h-3 bg-cyan-500 rounded-full animate-bounce"
+                  style={{ animationDelay: "300ms" }}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </section>
 
-      {/* MINI-PLAYER (Bottom Bar) */}
+      {/* Mini-Player (Fixed Bottom Bar) */}
       {currentTrack && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-black">
-          <div className="container py-4">
+          <div className="container mx-auto px-4 py-4">
             <div className="flex items-center gap-6">
               {/* Track Info */}
               <div className="flex items-center gap-4 flex-1 min-w-0">
-                <div className="w-14 h-14 rounded-lg border-2 border-black flex-shrink-0 overflow-hidden shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                  {currentTrack.coverArtUrl ? (
-                    <img
-                      src={currentTrack.coverArtUrl}
-                      alt={currentTrack.title}
-                      className="w-full h-full object-cover"
+                <div
+                  className="w-14 h-14 rounded-lg border-2 border-black flex-shrink-0 bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center"
+                  style={{ boxShadow: "2px 2px 0 0 black" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6 text-white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"
                     />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                      <Music className="w-6 h-6 text-white" />
-                    </div>
-                  )}
+                  </svg>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <h4 className="font-bold text-base truncate">{currentTrack.title}</h4>
-                  <p className="text-sm text-gray-600 truncate">{currentTrack.artist}</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-lg font-bold truncate">{currentTrack.title}</p>
+                  <p className="text-base text-gray-700 truncate">
+                    {currentTrack.artistName}
+                  </p>
                 </div>
               </div>
 
-              {/* Play/Pause Button */}
-              <Button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="w-12 h-12 rounded-full bg-cyan-500 hover:bg-cyan-600 border-2 border-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-              >
-                {isPlaying ? (
-                  <Pause className="w-5 h-5 text-black" />
-                ) : (
-                  <Play className="w-5 h-5 text-black ml-0.5" />
-                )}
-              </Button>
-
-              {/* Support Artist CTA */}
-              <Button
-                onClick={() => handleSupportArtist(currentTrack.artist)}
-                className="px-6 py-3 bg-black hover:bg-gray-800 text-white font-bold rounded-full border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
-              >
-                <DollarSign className="w-4 h-4 mr-2" />
-                Support Artist
-              </Button>
+              {/* Play Controls */}
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={isPlaying ? handlePauseTrack : () => handlePlayTrack(currentTrack.id)}
+                  className="w-12 h-12 rounded-full bg-cyan-500 border-2 border-black flex items-center justify-center hover:bg-cyan-600 transition-colors"
+                  style={{ boxShadow: "2px 2px 0 0 black" }}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-5 h-5 text-white" />
+                  ) : (
+                    <Play className="w-5 h-5 text-white" />
+                  )}
+                </button>
+                <Button
+                  variant="outline"
+                  className="rounded-full border-2 border-black px-6 hover:bg-gray-50 transition-colors"
+                  style={{ boxShadow: "2px 2px 0 0 black" }}
+                  onClick={() => handleSupportArtist(currentTrack.artistName)}
+                >
+                  <Heart className="w-4 h-4 mr-2" />
+                  Support Artist
+                </Button>
+                <button
+                  onClick={() => setCurrentTrack(null)}
+                  className="w-10 h-10 rounded-full border-2 border-black flex items-center justify-center hover:bg-gray-50 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
