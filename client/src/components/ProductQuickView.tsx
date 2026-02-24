@@ -97,7 +97,7 @@ export function ProductQuickView({
   };
 
   const handleShare = async () => {
-    const url = `${window.location.origin}/bopshop/${productSlug}`;
+    const url = `${window.location.origin}/shop/${productSlug}`;
     const title = product?.name || "Check out this product";
     const text = product?.description || "";
 

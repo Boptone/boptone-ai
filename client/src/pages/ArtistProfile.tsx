@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useRoute } from "wouter";
 import { SEOHead } from "@/components/SEOHead";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -33,6 +34,7 @@ import { useBOPixel } from "@/hooks/useBOPixel";
 import { ArtistMiniPlayer } from "@/components/ArtistMiniPlayer";
 
 export default function ArtistProfile() {
+  useRequireArtist(); // Enforce artist authentication
   const { trackArtistView } = useBOPixel();
   const [, params] = useRoute("/@:username");
   const username = params?.username;
@@ -142,7 +144,7 @@ export default function ArtistProfile() {
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Artists', href: '/discover' },
+    { label: 'Artists', href: '/music' },
     { label: profile.stageName }
   ];
 

@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { DEV_MODE } from "@/lib/devMode";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +11,7 @@ import { useState } from "react";
 import { ToneyChatbot } from "@/components/ToneyChatbot";
 
 export default function Earnings() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [isConnecting, setIsConnecting] = useState(false);
 

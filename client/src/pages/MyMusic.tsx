@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -68,6 +69,7 @@ import {
  */
 
 export default function MyMusic() {
+  useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
   
   // Upload state

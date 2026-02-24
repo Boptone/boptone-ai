@@ -88,7 +88,7 @@ export function Navigation() {
     },
     { 
       icon: Music, 
-      href: "/discover", 
+      href: "/music", 
       label: "Discover Music", 
       description: "Find new artists and tracks" 
     },

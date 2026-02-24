@@ -93,7 +93,7 @@ export function SearchBar() {
                   Products ({results.products.length})
                 </div>
                 {results.products.map((product) => (
-                  <Link key={product.id} href={`/bopshop/${product.slug}`}>
+                  <Link key={product.id} href={`/shop/${product.slug}`}>
                     <a
                       className="flex items-center gap-3 px-3 py-2 hover:bg-gray-100 rounded-md transition-colors"
                       onClick={() => setIsOpen(false)}

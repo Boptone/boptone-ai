@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,7 @@ import { Link } from "wouter";
  * Displays a table of past payouts with date, amount, and status
  */
 export default function PayoutHistory() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const { data: payouts, isLoading, error } = trpc.payouts.getHistory.useQuery(
     { limit: 100 },

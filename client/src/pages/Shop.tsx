@@ -188,7 +188,7 @@ export default function Shop() {
               Artists are preparing exclusive merchandise and digital content. Check back soon!
             </p>
             <Button
-              onClick={() => setLocation("/discover")}
+              onClick={() => setLocation("/music")}
               className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white shadow-[8px_8px_0px_0px_#81e6fe]"
               size="lg"
             >

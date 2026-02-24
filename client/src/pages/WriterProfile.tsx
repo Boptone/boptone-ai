@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +18,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
  */
 
 export default function WriterProfile() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [isCreatingProfile, setIsCreatingProfile] = useState(false);
   const [isAddingPayment, setIsAddingPayment] = useState(false);

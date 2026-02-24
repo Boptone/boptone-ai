@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/select";
 
 export default function ReviewAnalyticsDashboard() {
+  useRequireArtist(); // Enforce artist authentication
   const [location] = useLocation();
   const artistId = useMemo(() => {
     const params = new URLSearchParams(location.split('?')[1] || '');

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ import AIWorkflowAssistant from "@/components/AIWorkflowAssistant";
  * Browse templates, create custom workflows, view execution history.
  */
 export default function Workflows() {
+  useRequireArtist(); // Enforce artist authentication
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("templates");
 

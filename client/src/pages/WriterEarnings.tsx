@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -11,6 +12,7 @@ import DashboardLayout from "@/components/DashboardLayout";
  */
 
 export default function WriterEarnings() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [selectedPeriod, setSelectedPeriod] = useState<"7d" | "30d" | "90d" | "all">("30d");
   

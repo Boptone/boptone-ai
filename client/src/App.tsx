@@ -9,9 +9,11 @@ import { Navigation } from "./components/Navigation";
 import { ToneyChatbot } from "./components/ToneyChatbot";
 import Footer from "./components/Footer";
 import { CookieConsentBanner } from "./components/CookieConsentBanner";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
-// Eager load only Home page for fast initial load
+// Eager load only Home page and Landing page for fast initial load
 import Home from "./pages/Home";
+import Landing from "./pages/Landing";
 
 // Lazy load all other pages
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -105,7 +107,8 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        <Route path={"/"} component={Home} />
+        <Route path={"/"} component={Landing} />
+        <Route path={"/home"} component={Home} />
         <Route path={"/login"} component={Login} />
         <Route path={"/auth-signup"} component={MultiStepSignup} />
         <Route path={"/forgot-password"} component={ForgotPassword} />
@@ -116,9 +119,9 @@ function Router() {
         <Route path={"/writer-earnings"} component={WriterEarnings} />
         <Route path="/onboarding" component={Onboarding} />
         <Route path={"/@:username"} component={ArtistProfile} />
-        <Route path="/bopshop" component={BopShopLanding} />
-        <Route path="/bopshop/browse" component={BopShopBrowse} />
-        <Route path="/bopshop/:slug" component={BopShopProduct} />
+        <Route path="/shop" component={BopShopLanding} />
+        <Route path="/shop/browse" component={BopShopBrowse} />
+        <Route path="/shop/:slug" component={BopShopProduct} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/wishlist" component={Wishlist} />
@@ -128,7 +131,6 @@ function Router() {
         <Route path="/admin/revenue" component={AdminRevenue} />
         <Route path="/admin/reviews" component={ReviewModeration} />
         <Route path="/analytics/reviews" component={ReviewAnalyticsDashboard} />
-        <Route path="/shop" component={Shop} />
         <Route path="/product/:productId" component={ProductDetail} />
         <Route path="/store" component={MyStore} />
         <Route path="/store/orders" component={MyStoreOrders} />
@@ -162,7 +164,6 @@ function Router() {
         <Route path={"/protocol"} component={BAP} />
         <Route path={"/bap-protocol"} component={BAP} />
         <Route path={"/upload"} component={Upload} />
-        <Route path={"/discover"} component={Discover} />
         <Route path={"/music"} component={Discover} />
         <Route path={"/playlists"} component={Playlists} />
         <Route path={"/playlists/:id"} component={PlaylistDetail} />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ import { toast } from "sonner";
  * Artists configure automation rules: "When X happens → do Y"
  */
 export default function WorkflowSettings() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [selectedWorkflow, setSelectedWorkflow] = useState<number | null>(null);
   const [showCreateTrigger, setShowCreateTrigger] = useState(false);

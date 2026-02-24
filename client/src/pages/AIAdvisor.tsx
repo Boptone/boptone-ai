@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { DEV_MODE } from "@/lib/devMode";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ type Message = {
 };
 
 export default function AIAdvisor() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();

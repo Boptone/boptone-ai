@@ -22,7 +22,7 @@ export default function BopShopLanding() {
 
   // Handle URL-based product modal
   useEffect(() => {
-    const match = location.match(/^\/bopshop\/([^/]+)$/);
+    const match = location.match(/^\/shop\/([^/]+)$/);
     if (match && match[1] !== "browse") {
       const slug = match[1];
       // Find product by slug
@@ -37,13 +37,13 @@ export default function BopShopLanding() {
   const handleProductClick = (product: any) => {
     setSelectedProduct({ id: product.id, slug: product.slug });
     setModalOpen(true);
-    setLocation(`/bopshop/${product.slug}`);
+    setLocation(`/shop/${product.slug}`);
   };
 
   const handleModalClose = (open: boolean) => {
     setModalOpen(open);
     if (!open) {
-      setLocation("/bopshop");
+      setLocation("/shop");
       setSelectedProduct(null);
     }
   };
@@ -68,15 +68,15 @@ export default function BopShopLanding() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/bopshop/browse?search=${encodeURIComponent(searchQuery)}`;
+      window.location.href = `/shop/browse?search=${encodeURIComponent(searchQuery)}`;
     }
   };
 
   const categories = [
-    { name: "Apparel", icon: Shirt, link: "/bopshop/browse?category=apparel" },
-    { name: "Accessories", icon: ShoppingBag, link: "/bopshop/browse?category=accessories" },
-    { name: "Music", icon: Headphones, link: "/bopshop/browse?category=music" },
-    { name: "Art", icon: Palette, link: "/bopshop/browse?category=art" },
+    { name: "Apparel", icon: Shirt, link: "/shop/browse?category=apparel" },
+    { name: "Accessories", icon: ShoppingBag, link: "/shop/browse?category=accessories" },
+    { name: "Music", icon: Headphones, link: "/shop/browse?category=music" },
+    { name: "Art", icon: Palette, link: "/shop/browse?category=art" },
   ];
 
   return (
@@ -134,7 +134,7 @@ export default function BopShopLanding() {
                 <Sparkles className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">New This Week</h2>
               </div>
-              <Link href="/bopshop/browse?sort=newest">
+              <Link href="/shop/browse?sort=newest">
                 <Button variant="ghost" className="text-lg font-semibold">
                   View All →
                 </Button>
@@ -185,7 +185,7 @@ export default function BopShopLanding() {
                 <TrendingUp className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">Trending Now</h2>
               </div>
-              <Link href="/bopshop/browse?sort=popular">
+              <Link href="/shop/browse?sort=popular">
                 <Button variant="ghost" className="text-lg font-semibold">
                   View All →
                 </Button>
@@ -236,7 +236,7 @@ export default function BopShopLanding() {
                 <Sparkles className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">Limited Edition</h2>
               </div>
-              <Link href="/bopshop/browse?stock=low">
+              <Link href="/shop/browse?stock=low">
                 <Button variant="ghost" className="text-lg font-semibold">
                   View All →
                 </Button>
@@ -290,7 +290,7 @@ export default function BopShopLanding() {
                 <DollarSign className="h-7 w-7 text-[#008B8B]" />
                 <h2 className="text-3xl md:text-4xl font-black">Under $50</h2>
               </div>
-              <Link href="/bopshop/browse?maxPrice=50">
+              <Link href="/shop/browse?maxPrice=50">
                 <Button variant="ghost" className="text-lg font-semibold">
                   View All →
                 </Button>
@@ -357,7 +357,7 @@ export default function BopShopLanding() {
 
           {/* CTA to Full Catalog */}
           <div className="mt-16 text-center">
-            <Link href="/bopshop/browse">
+            <Link href="/shop/browse">
               <Button
                 size="lg"
                 className="rounded-full px-12 py-7 text-xl font-black shadow-[0_4px_0_0_rgb(6,182,212)] hover:shadow-[0_2px_0_0_rgb(6,182,212)] transition-all"

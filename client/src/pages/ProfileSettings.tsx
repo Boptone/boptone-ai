@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useDemo } from "@/contexts/DemoContext";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function ProfileSettings() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const { isDemoMode } = useDemo();
   const [, setLocation] = useLocation();

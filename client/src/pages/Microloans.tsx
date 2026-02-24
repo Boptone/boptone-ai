@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ const LOAN_PURPOSES = [
 ];
 
 export default function Microloans() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, isAuthenticated } = useAuth();
   const [amount, setAmount] = useState<number>(250);
   const [purpose, setPurpose] = useState<string>("");

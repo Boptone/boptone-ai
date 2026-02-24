@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +18,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
  */
 
 export default function WriterInvite() {
+  useRequireArtist(); // Enforce artist authentication
   const [, setLocation] = useLocation();
   const [token, setToken] = useState<string | null>(null);
   const [step, setStep] = useState<"loading" | "profile" | "payment" | "success">("loading");

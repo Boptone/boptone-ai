@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { DEV_MODE } from "@/lib/devMode";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -14,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
  * Allows creators to add/edit products, manage inventory, and fulfill orders
  */
 export default function MyStore() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showConnectPrintful, setShowConnectPrintful] = useState(false);

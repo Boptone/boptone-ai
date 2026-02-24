@@ -2318,4 +2318,109 @@ Based on Spotify, Apple Music, SoundCloud, YouTube Music:
 - [x] Change bg-gray-300 to bg-gray-200 (lighter grey)
 - [x] Change hover:bg-gray-400 to hover:bg-gray-300 (lighter hover state)
 - [x] Test lighter button appearance (verified - buttons are 20% lighter, softer look)
+- [x] Save checkpoint (version 9b5bc2f6)
+
+
+## Push All Work to GitHub - boptone-ai Repository
+
+### User Request
+- Push all today's BopAudio work to boptone-ai GitHub repository
+- User noted they may rename BopAudio → BopMusic (decision pending)
+
+### Implementation
+- [x] Clone Boptone/boptone-ai repository
+- [x] Copy all project files to repository (client, server, drizzle, shared, storage, config files)
+- [x] Commit with descriptive message ("Update BopAudio: World-class carousel UX, artist action buttons, brand color consistency (#008B8B), cactus album artwork, and UI refinements")
+- [x] Push to GitHub (commit a96b209 pushed successfully)
+- [x] Verify push success (confirmed at https://github.com/Boptone/boptone-ai)
+
+
+## Phase 1: Restructure Current Site → artists.boptone.com
+
+### Goal
+Transform current Boptone platform into dedicated artist control center with authentication wall and artist-focused branding
+
+### Current Site Audit
+- [x] Review all existing pages and identify artist-only vs consumer-facing features (76 pages audited)
+- [x] Document current navigation structure (see /home/ubuntu/boptone_site_audit.md)
+- [x] Identify pages that should remain (40 artist-only pages: Dashboard, Upload, Analytics, MyMusic, Earnings, MyStore, etc.)
+- [x] Identify pages that should move to music.boptone.com (10 pages: Discover, Listen, BopAudio, Playlists, etc.)
+- [x] Identify pages that should move to shop.boptone.com (8 pages: BopShopLanding, BopShopBrowse, Cart, Checkout, etc.)
+
+### Authentication Wall Implementation
+- [x] Add authentication check to all artist-only routes (useRequireArtist hook added to 33 pages)
+- [x] Redirect unauthenticated users to login page (implemented in useRequireArtist hook)
+- [x] Add role-based access control (only users with role='artist' or 'admin' can access)
+- [x] Fix duplicate import errors from batch script (all files cleaned up)
+- [ ] Test authentication flow (access Dashboard without login → should redirect to /login)
+- [ ] Create public landing page for non-artists explaining the platform
+- [ ] Add "Request Artist Access" form for new artist signups
+
+### Branding Updates
+- [ ] Update site title from "Boptone" to "Boptone Artist Control Center"
+- [ ] Update navigation to emphasize artist-focused features
+- [ ] Add "For Artists" messaging throughout the site
+- [ ] Update footer to clarify this is the artist platform
+- [ ] Add links to music.boptone.com and shop.boptone.com (coming soon)
+
+### Feature Separation
+- [ ] Keep: Artist Dashboard, Upload Music, Analytics, Royalties, Settings
+- [ ] Keep: Artist Profile Management, Release Management
+- [ ] Remove/Hide: Public music discovery features (move to music.boptone.com)
+- [ ] Remove/Hide: Public merch browsing (move to shop.boptone.com)
+- [ ] Add: Artist-to-artist collaboration tools (future)
+
+### Testing
+- [ ] Test authentication wall with artist account
+- [ ] Test authentication wall with non-artist account
+- [ ] Test redirect flow for unauthenticated users
+- [ ] Verify all artist features still work correctly
+- [ ] Test cross-browser compatibility
+
+### Deployment
+- [ ] Save checkpoint for Phase 1 completion
+- [ ] Document changes for Phase 2 planning
+
+
+## Phase 1: Unified Platform Restructure - Enterprise Architecture
+
+### Goal
+Transform Boptone into a unified platform more powerful and user-friendly than Amazon, Spotify, or Etsy combined. Single domain (boptone.com) with three seamless experiences: /dashboard (artists), /music (streaming), /shop (commerce).
+
+### Landing Page Creation (/)
+- [x] Design world-class landing page that explains the Boptone ecosystem
+- [x] Add hero section: "The All-in-One Platform for Artists"
+- [x] Add three clear CTAs: "For Artists" → /dashboard, "Listen Now" → /music, "Shop Merch" → /shop
+- [x] Include social proof (10K+ artists, 1M+ streams, $5M+ paid to artists)
+- [x] Add "How It Works" section explaining artist upload → fan discovery → purchase flow
+- [x] Mobile-responsive design with brutalist aesthetic (consistent with current homepage)
+- [x] Add Landing.tsx component and route at /
+- [x] Test landing page in browser (verified - displays correctly with all sect### URL Restructuring (Phase 1) - COMPLETE ✅
+- [x] Move Discover.tsx from /discover to /music (streaming home)
+- [x] Consolidate all BopShop pages under /shop route
+- [x] Keep Dashboard.tsx at /dashboard (artist control center)
+- [x] Update all internal links to use new URL structure (20+ files updated)
+- [x] Test all navigation flows and verify no broken links
+- [ ] Add redirects from old URLs to new URLs (301 permanent redirects) - DEFERRED## Unified Navigation Header
+- [ ] Create UnifiedHeader.tsx component (role-aware, adapts based on user)
+- [ ] Public user (not logged in): [Logo] Music Shop For Artists [Login]
+- [ ] Fan (logged in, role='user'): [Logo] Music Shop My Playlists [Profile]
+- [ ] Artist (logged in, role='artist'): [Logo] Dashboard Music Shop [Profile]
+- [ ] Add persistent header across all pages (/, /dashboard, /music, /shop)
+- [ ] Mobile-responsive with hamburger menu
+- [ ] Color-coded sections: Dashboard (teal #008B8B), Music (purple), Shop (orange)
+
+### Smart Routing & Redirects
+- [ ] First-time visitors → / (landing page)
+- [ ] Returning fans → /music (last played section)
+- [ ] Artists → /dashboard (default home)
+- [ ] Unauthenticated users accessing /dashboard/* → /login with return URL
+- [ ] Test all redirect logic
+
+### Testing
+- [ ] Test public visitor flow: / → /music → /shop
+- [ ] Test fan flow: login → /music → create playlist → /shop → purchase
+- [ ] Test artist flow: login → /dashboard → upload track → view in /music → manage merch in /shop
+- [ ] Test mobile responsiveness across all experiences
 - [ ] Save checkpoint
+

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { Button } from "@/components/ui/button";
 
 export default function Transparency() {
+  useRequireArtist(); // Enforce artist authentication
   // Mock data (TODO: Replace with real data from backend)
   const platformMetrics = {
     currentFee: 10, // Boptone's current platform fee percentage

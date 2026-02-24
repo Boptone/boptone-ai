@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { DEV_MODE } from "@/lib/devMode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ import { Package, Printer, Download, Truck } from "lucide-react";
  * Allows artists to view orders, update fulfillment status, and add tracking
  */
 export default function MyStoreOrders() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [selectedOrder, setSelectedOrder] = useState<number | null>(null);
   const [trackingNumber, setTrackingNumber] = useState("");

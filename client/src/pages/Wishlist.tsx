@@ -96,7 +96,7 @@ export default function Wishlist() {
             <p className="text-gray-600 mb-6">
               Start saving products you love to buy them later!
             </p>
-            <Link href="/bopshop/browse">
+            <Link href="/shop/browse">
               <Button className="bg-black text-white rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all">
                 Browse BopShop
               </Button>
@@ -122,7 +122,7 @@ export default function Wishlist() {
                   className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-black transition-all group"
                 >
                   {/* Product Image */}
-                  <Link href={`/bopshop/${product.slug}`}>
+                  <Link href={`/shop/${product.slug}`}>
                     <div className="relative aspect-square overflow-hidden bg-gray-100">
                       {primaryImage ? (
                         <img
@@ -147,7 +147,7 @@ export default function Wishlist() {
 
                   {/* Product Info */}
                   <div className="p-4 space-y-3">
-                    <Link href={`/bopshop/${product.slug}`}>
+                    <Link href={`/shop/${product.slug}`}>
                       <h3 className="font-bold text-lg hover:text-[#006666] transition-colors line-clamp-2">
                         {product.name}
                       </h3>
@@ -176,7 +176,7 @@ export default function Wishlist() {
                       </Button>
 
                       <div className="grid grid-cols-2 gap-2">
-                        <Link href={`/bopshop/${product.slug}`}>
+                        <Link href={`/shop/${product.slug}`}>
                           <Button
                             variant="outline"
                             className="w-full border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"

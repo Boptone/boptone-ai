@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +28,7 @@ ChartJS.register(
 type DateRange = "7d" | "30d" | "90d" | "all";
 
 export default function ArtistInsights() {
+  useRequireArtist(); // Enforce artist authentication
   const [dateRange, setDateRange] = useState<DateRange>("30d");
   const [realtimeCount, setRealtimeCount] = useState(0);
 

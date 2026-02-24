@@ -365,7 +365,7 @@ export default function PlaylistDetail() {
               Add tracks from the Discover page to start building your playlist
             </p>
             <Button
-              onClick={() => navigate("/discover")}
+              onClick={() => navigate("/music")}
               className="bg-[#008B8B] hover:bg-[#006666] text-white border border-black rounded-full px-8 py-4 text-lg font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
             >
               Browse Music

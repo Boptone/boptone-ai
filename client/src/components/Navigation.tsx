@@ -58,7 +58,7 @@ export function Navigation() {
       icon: ShoppingBag,
       title: "BopShop",
       description: "Sell merchandise and digital products directly to fans",
-      href: "/bopshop"
+      href: "/shop"
     },
     {
       icon: BarChart3,

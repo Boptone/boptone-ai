@@ -128,7 +128,7 @@ export function ArtistMiniPlayer({ artistId, themeColor = "#06b6d4" }: ArtistMin
             <Button
               variant="outline"
               className="rounded-full border border-black shadow-[2px_2px_0px_0px_black] hover:shadow-[1px_1px_0px_0px_black] transition-all font-bold"
-              onClick={() => (window.location.href = "/discover")}
+              onClick={() => (window.location.href = "/music")}
             >
               View All Tracks on BopAudio
             </Button>

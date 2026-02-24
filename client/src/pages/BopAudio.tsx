@@ -81,7 +81,7 @@ export default function BopAudio() {
               <Button 
                 className="rounded-full text-lg px-10 py-7 bg-[#008B8B] hover:bg-[#006666] text-white font-bold border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all" 
                 size="lg" 
-                onClick={() => setLocation("/discover")}
+                onClick={() => setLocation("/music")}
               >
                 Start Listening Now
               </Button>

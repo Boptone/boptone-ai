@@ -37,7 +37,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/discover" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/music" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Discover Music
                 </Link>
               </li>

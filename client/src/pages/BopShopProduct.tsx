@@ -96,7 +96,7 @@ export default function BopShopProduct() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
-            <Link href="/bopshop">
+            <Link href="/shop">
             <Button className="bg-black text-white rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all">
               Back to Shop
             </Button>
@@ -114,7 +114,7 @@ export default function BopShopProduct() {
       {/* Back Button */}
       <div className="bg-white border-b-2 border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <Link href="/bopshop">
+          <Link href="/shop">
             <Button
               variant="outline"
               className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"

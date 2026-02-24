@@ -1,4 +1,5 @@
 /**
+import { useRequireArtist } from "@/hooks/useRequireArtist";
  * TONE REWARDS - Fan Membership & Rewards Dashboard
  * The revolutionary system where fans become investors
  */
@@ -71,6 +72,7 @@ const MEMBERSHIP_TIERS = {
 };
 
 export default function ToneRewards() {
+  useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
   
   const { data: membership, isLoading: membershipLoading } = trpc.toneRewards.getMyMembership.useQuery();

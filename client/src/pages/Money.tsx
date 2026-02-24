@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
 export default function Money() {
+  useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
   const [loanAmount, setLoanAmount] = useState("");
   

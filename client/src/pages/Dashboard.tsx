@@ -12,8 +12,10 @@ import { PlanManagementSection } from "@/components/PlanManagementSection";
 import { EarningsWidget } from "@/components/EarningsWidget";
 import { AIRecommendations } from "@/components/AIRecommendations";
 import { UserAvatar } from "@/components/UserAvatar";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 
 export default function Dashboard() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, isAuthenticated, loading } = useAuth();
   const { isDemoMode, demoUser, demoProfile } = useDemo();
   const [, setLocation] = useLocation();
@@ -92,7 +94,7 @@ export default function Dashboard() {
   const quickActions = [
     { label: "Upload Music", href: "/upload" },
     { label: "View Analytics", href: "/analytics" },
-    { label: "Discover Music", href: "/discover" },
+    { label: "Discover Music", href: "/music" },
     { label: "Edit Profile", href: "/profile-settings" },
   ];
 
@@ -120,7 +122,7 @@ export default function Dashboard() {
       title: "Share your music",
       description: "Social sharing drives 40% of new listeners",
       action: "View Tracks",
-      href: "/discover",
+      href: "/music",
     },
   ];
 

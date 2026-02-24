@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -22,6 +23,7 @@ type FilterStatus = "all" | "pending" | "approved" | "rejected" | "flagged";
  * - View review photos and details
  */
 export default function ReviewModeration() {
+  useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
   const [filterStatus, setFilterStatus] = useState<FilterStatus>("pending");
 
@@ -128,7 +130,7 @@ export default function ReviewModeration() {
                   <div className="flex-1">
                     {/* Product Info */}
                     <div className="flex items-center gap-3 mb-3">
-                      <Link href={`/bopshop/${review.product?.slug}`}>
+                      <Link href={`/shop/${review.product?.slug}`}>
                         <Button variant="ghost" size="sm" className="gap-2">
                           <Eye className="w-4 h-4" />
                           {review.product?.name || `Product #${review.productId}`}

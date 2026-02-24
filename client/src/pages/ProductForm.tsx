@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { storagePut } from "@/lib/storage";
  * Artists can create or edit products with multi-currency pricing
  */
 export default function ProductForm() {
+  useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const params = useParams();

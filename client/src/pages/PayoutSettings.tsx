@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import { useLocation } from "wouter";
  * This is the ONLY compliant way to handle artist payouts at scale.
  */
 export default function PayoutSettings() {
+  useRequireArtist(); // Enforce artist authentication
   const [location, setLocation] = useLocation();
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);

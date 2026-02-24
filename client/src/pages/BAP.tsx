@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { Link } from "wouter";
 import {
   Accordion,
@@ -9,6 +10,7 @@ import {
 import Footer from "@/components/Footer";
 
 export default function BAP() {
+  useRequireArtist(); // Enforce artist authentication
   return (
     <div className="min-h-screen">
       

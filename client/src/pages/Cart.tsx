@@ -97,7 +97,7 @@ export default function Cart() {
                 {isEmpty ? "Your cart is empty" : `${cartItems.length} item${cartItems.length > 1 ? "s" : ""}`}
               </p>
             </div>
-            <Link href="/bopshop">
+            <Link href="/shop">
               <Button
                 variant="outline"
                 size="lg"
@@ -120,7 +120,7 @@ export default function Cart() {
             <p className="text-xl text-gray-600 mb-8">
               Start shopping to add items to your cart
             </p>
-            <Link href="/bopshop">
+            <Link href="/shop">
               <Button
                 size="lg"
                 className="bg-black text-white text-xl px-8 py-6 rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all"

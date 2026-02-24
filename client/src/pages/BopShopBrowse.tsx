@@ -83,13 +83,13 @@ export default function BopShopBrowse() {
   const handleProductClick = (product: any) => {
     setSelectedProduct({ id: product.id, slug: product.slug });
     setModalOpen(true);
-    setLocation(`/bopshop/browse/${product.slug}`);
+    setLocation(`/shop/browse/${product.slug}`);
   };
 
   const handleModalClose = (open: boolean) => {
     setModalOpen(open);
     if (!open) {
-      setLocation("/bopshop/browse");
+      setLocation("/shop/browse");
       setSelectedProduct(null);
     }
   };
@@ -132,14 +132,14 @@ export default function BopShopBrowse() {
   const seoData = useMemo(() => ({
     title: 'BopShop | Official Artist Merchandise',
     description: 'Shop official merchandise from independent artists. Vinyl, apparel, accessories, and more. Support artists directly.',
-    url: `${window.location.origin}/bopshop/browse`,
+    url: `${window.location.origin}/shop/browse`,
     type: 'website' as const,
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Store",
       name: "BopShop",
       description: "Official artist merchandise marketplace",
-      url: `${window.location.origin}/bopshop/browse`
+      url: `${window.location.origin}/shop/browse`
     }
   }), []);
 

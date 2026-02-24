@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { DEV_MODE } from "@/lib/devMode";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,7 @@ interface ValidationState {
 }
 
 export default function Upload() {
+  useRequireArtist(); // Enforce artist authentication
   const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
   const [audioFile, setAudioFile] = useState<File | null>(null);
@@ -94,7 +96,7 @@ export default function Upload() {
       toast.success("Track published to BAP!", {
         description: "Your music is now live and available to fans worldwide."
       });
-      setLocation("/discover");
+      setLocation("/music");
     },
     onError: (error: any) => {
       toast.error("Upload failed", {

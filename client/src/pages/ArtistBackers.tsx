@@ -1,4 +1,5 @@
 /**
+import { useRequireArtist } from "@/hooks/useRequireArtist";
  * ARTIST BACKERS - Dashboard for artists to see who supports them
  * Shows backers, patrons, investors and their contributions
  */
@@ -12,6 +13,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { trpc } from "@/lib/trpc";
 
 export default function ArtistBackers() {
+  useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
   
   const { data: profile } = trpc.artistProfile.getMyProfile.useQuery();
