@@ -2441,3 +2441,13 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Redesign "How It Works" section with color-coded cards
 - [x] Redesign "Three Experiences" section with color-coded borders
 - [x] Test in browser for visual impact - VERIFIED
+
+## Landing Page Correct Redesign (Fix Messaging)
+- [x] Study /home page to understand correct artist-focused messaging
+- [x] Remove confusing "How It Works" section that tells everyone they can upload music
+- [x] Keep hero with rotating phrases (Create/Automate/Own Your Tone) - this IS for artists
+- [x] Add stats section showing platform credibility ($2.5M+ paid, 50K+ tracks, etc.)
+- [x] Add features section highlighting artist tools (Career Advisor, Financial Management, etc.)
+- [x] Add pricing tiers (Free, Pro, Enterprise) for artists with 4px color-coded borders
+- [x] Keep revolutionary aesthetic (thick borders, gradients, hover effects)
+- [x] Test to ensure messaging is clear - VERIFIED artist-focused
