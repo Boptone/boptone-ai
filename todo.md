@@ -2522,4 +2522,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Add "Trending Tracks" section with list view
 - [x] Maintain BAP Protocol design (black borders, rounded-lg, 4px shadows)
 - [x] Test hybrid layout (LLM UX meets Spotify homepage) - VERIFIED working
+- [x] Save checkpoint
+
+## BopAudio Dark Theme Redesign (Fix Hallucination)
+- [x] Change background from WHITE to BLACK (#1a1a1a like DeepSeek)
+- [x] Remove "Boptone" text from sidebar header
+- [x] Update sidebar menu items to match TIDAL style (Music, Explore, Feed, Upload, Collection, Playlists)
+- [x] Change layout from vertical grid to horizontal scrolling carousels
+- [x] Add section headers with "View all" buttons (like "The Hits", "Popular albums")
+- [x] Use large square cards in horizontal rows
+- [x] Apply dark theme to all text (white/gray on black)
+- [x] Test dark theme layout - VERIFIED all requirements met
 - [ ] Save checkpoint
