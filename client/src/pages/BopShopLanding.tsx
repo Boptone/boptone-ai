@@ -1,383 +1,216 @@
-import { Search, TrendingUp, Sparkles, DollarSign, Shirt, Headphones, Palette, ShoppingBag } from "lucide-react";
-import { Link, useLocation } from "wouter";
-import { useState, useEffect } from "react";
-import { trpc } from "@/lib/trpc";
+import { useState } from "react";
+import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ProductQuickView } from "@/components/ProductQuickView";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { trpc } from "@/lib/trpc";
+import { useLocation } from "wouter";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart } from "lucide-react";
 
-/**
- * BopShop Landing Page
- * Discovery-driven marketplace inspired by Gem's UX patterns
- * Text-forward brutalist design with curated collections
- */
-export default function BopShopLanding() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [location, setLocation] = useLocation();
-  const [selectedProduct, setSelectedProduct] = useState<{ id: number; slug: string } | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  
-  // Fetch products for curated collections
-  const { data: allProducts = [] } = trpc.ecommerce.products.getAllActive.useQuery({ limit: 100 });
+export default function Shop() {
+  const { user } = useAuth();
+  const [, setLocation] = useLocation();
+  const [selectedType, setSelectedType] = useState<string | null>(null);
 
-  // Handle URL-based product modal
-  useEffect(() => {
-    const match = location.match(/^\/shop\/([^/]+)$/);
-    if (match && match[1] !== "browse") {
-      const slug = match[1];
-      // Find product by slug
-      const product = allProducts.find((p: any) => p.slug === slug);
-      if (product) {
-        setSelectedProduct({ id: product.id, slug: product.slug });
-        setModalOpen(true);
-      }
-    }
-  }, [location, allProducts]);
+  // Fetch all products
+  const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
+    limit: 100,
+  });
 
-  const handleProductClick = (product: any) => {
-    setSelectedProduct({ id: product.id, slug: product.slug });
-    setModalOpen(true);
-    setLocation(`/shop/${product.slug}`);
-  };
+  // Get cart count
+  const { data: cart } = trpc.ecommerce.cart.get.useQuery(undefined, {
+    enabled: !!user,
+  });
 
-  const handleModalClose = (open: boolean) => {
-    setModalOpen(open);
-    if (!open) {
-      setLocation("/shop");
-      setSelectedProduct(null);
-    }
-  };
-  
-  // Curated collections logic
-  const newThisWeek = allProducts
-    .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-    .slice(0, 8);
-  
-  const trendingNow = allProducts
-    .filter((p: any) => p.stock && p.stock > 0)
-    .slice(0, 8);
-  
-  const limitedEdition = allProducts
-    .filter((p: any) => p.stock && p.stock < 10)
-    .slice(0, 8);
-  
-  const underFifty = allProducts
-    .filter((p: any) => p.price < 50)
-    .slice(0, 8);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/shop/browse?search=${encodeURIComponent(searchQuery)}`;
-    }
-  };
+  const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
   const categories = [
-    { name: "Apparel", icon: Shirt, link: "/shop/browse?category=apparel" },
-    { name: "Accessories", icon: ShoppingBag, link: "/shop/browse?category=accessories" },
-    { name: "Music", icon: Headphones, link: "/shop/browse?category=music" },
-    { name: "Art", icon: Palette, link: "/shop/browse?category=art" },
+    { value: null, label: "All", icon: Package },
+    { value: "physical", label: "Apparel", icon: Shirt },
+    { value: "digital", label: "Music", icon: Disc },
+    { value: "experience", label: "Art", icon: Palette },
   ];
 
+  // Filter products
+  const filteredProducts = selectedType
+    ? products?.filter((p: any) => p.type === selectedType)
+    : products;
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section - Search First */}
-      <section className="bg-white border-b-2 border-gray-200">
-        <div className="container py-16 md:py-24">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight">
-              BopShop
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 font-medium">
-              Where artists sell direct. Where fans buy authentic.
-            </p>
+    <div className="min-h-screen bg-white pb-24">
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center max-w-5xl mx-auto">
+          <h1 className="text-8xl md:text-9xl font-bold mb-6 tracking-tight">
+            Shop Your Sound.
+          </h1>
+          <p className="text-2xl md:text-3xl text-gray-600 mb-4">
+            Where artists sell direct. Where fans buy authentic.
+          </p>
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-50 border-l-4 border-cyan-400 rounded-r-xl">
+            <Heart className="w-5 h-5 text-cyan-600" />
+            <span className="text-lg font-semibold text-gray-900">
+              90% goes directly to artists
+            </span>
+          </div>
+        </div>
 
-            {/* Search Bar - BAP Protocol */}
-            <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                <Input
-                  type="search"
-                  placeholder="Search for artists, products, or categories..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-6 text-lg border border-gray-200 rounded-xl focus:border-gray-400 focus:ring-0 hover:border-gray-400 transition-colors"
-                />
-              </div>
-            </form>
+        {/* Category Pills */}
+        <div className="flex flex-wrap justify-center gap-3 mt-12">
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            return (
+              <Button
+                key={cat.value || "all"}
+                onClick={() => setSelectedType(cat.value)}
+                variant={selectedType === cat.value ? "default" : "outline"}
+                className={`rounded-full px-8 py-6 text-lg font-semibold transition-all ${
+                  selectedType === cat.value
+                    ? "bg-cyan-500 text-white hover:bg-cyan-600 shadow-lg scale-105"
+                    : "bg-white text-gray-700 border-2 border-gray-200 hover:border-cyan-400 hover:text-cyan-600"
+                }`}
+              >
+                <Icon className="w-5 h-5 mr-2" />
+                {cat.label}
+              </Button>
+            );
+          })}
+        </div>
 
-            {/* Quick Category Pills */}
-            <div className="flex flex-wrap justify-center gap-3">
-              {categories.map((cat) => (
-                <Link key={cat.name} href={cat.link}>
-                  <Button
-                    variant="outline"
-                    className="rounded-full border border-gray-200 hover:border-gray-400 px-6 py-2 transition-colors"
-                  >
-                    <cat.icon className="h-4 w-4 mr-2" />
-                    {cat.name}
-                  </Button>
-                </Link>
-              ))}
+        {/* Cart Button */}
+        {user && cartItemCount > 0 && (
+          <div className="fixed top-24 right-8 z-50">
+            <Button
+              onClick={() => setLocation("/cart")}
+              className="rounded-full px-6 py-6 bg-black text-white hover:bg-gray-800 shadow-2xl"
+              size="lg"
+            >
+              <ShoppingCart className="w-5 h-5 mr-2" />
+              Cart ({cartItemCount})
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Featured Collection */}
+      <div className="container mx-auto px-4 mb-20">
+        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-cyan-400 shadow-2xl">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="w-48 h-48 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex-shrink-0"></div>
+            <div className="flex-1">
+              <Badge className="rounded-full bg-cyan-500 text-white px-4 py-1 text-sm font-bold mb-4">
+                FEATURED COLLECTION
+              </Badge>
+              <h2 className="text-7xl md:text-8xl font-bold text-white mb-4">
+                Luna Rivers
+              </h2>
+              <p className="text-xl text-gray-300 mb-6">
+                Exclusive merch drop from the artist behind "Midnight Dreams". Limited edition apparel, vinyl, and art prints.
+              </p>
+              <Button
+                onClick={() => setLocation("/artist/luna-rivers")}
+                className="rounded-full px-8 py-6 bg-cyan-500 text-white hover:bg-cyan-600 text-lg font-semibold shadow-lg"
+              >
+                Shop Collection →
+              </Button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* New This Week */}
-      {newThisWeek.length > 0 && (
-        <section className="py-16 bg-white border-b-2 border-gray-200">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-[#008B8B]" />
-                <h2 className="text-3xl md:text-4xl font-black">New This Week</h2>
-              </div>
-              <Link href="/shop/browse?sort=newest">
-                <Button variant="ghost" className="text-lg font-semibold">
-                  View All →
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {newThisWeek.map((product: any) => (
-                <button
-                  key={product.id}
-                  onClick={() => handleProductClick(product)}
-                  className="group cursor-pointer w-full text-left"
-                >
-                  <div>
-                    <div className="relative aspect-square bg-gray-100 rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
-                      {product.images && product.images.length > 0 ? (
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
-                          <ShoppingBag className="h-16 w-16" />
-                        </div>
-                      )}
-                      <div className="absolute top-3 right-3 bg-black text-white px-3 py-1 rounded-full text-sm font-bold">
-                        ${product.price}
-                      </div>
-                    </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
-                      {product.name}
-                    </h3>
-                  </div>
-                </button>
-              ))}
+      {/* Product Grid */}
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-5xl font-bold">
+            {selectedType ? categories.find(c => c.value === selectedType)?.label : "All Products"}
+          </h2>
+          <p className="text-xl text-gray-600">
+            {filteredProducts?.length || 0} items
+          </p>
+        </div>
+
+        {isLoading ? (
+          <div className="text-center py-24">
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gray-100 text-gray-900 text-2xl font-bold">
+              <div className="w-6 h-6 border-4 border-gray-900 border-t-transparent rounded-full animate-spin"></div>
+              Loading Products...
             </div>
           </div>
-        </section>
-      )}
-
-      {/* Trending Now */}
-      {trendingNow.length > 0 && (
-        <section className="py-16 bg-gray-50">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <TrendingUp className="h-7 w-7 text-[#008B8B]" />
-                <h2 className="text-3xl md:text-4xl font-black">Trending Now</h2>
-              </div>
-              <Link href="/shop/browse?sort=popular">
-                <Button variant="ghost" className="text-lg font-semibold">
-                  View All →
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {trendingNow.map((product: any) => (
-                <button
-                  key={product.id}
-                  onClick={() => handleProductClick(product)}
-                  className="group cursor-pointer w-full text-left"
-                >
-                  <div>
-                    <div className="relative aspect-square bg-white rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
-                      {product.images && product.images.length > 0 ? (
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
-                          <ShoppingBag className="h-16 w-16" />
-                        </div>
-                      )}
-                      <div className="absolute top-3 right-3 bg-black text-white px-3 py-1 rounded-full text-sm font-bold">
-                        ${product.price}
-                      </div>
+        ) : filteredProducts && filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filteredProducts.map((product: any) => (
+              <Card
+                key={product.id}
+                className="rounded-3xl border-l-4 border-cyan-400 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden"
+                onClick={() => setLocation(`/product/${product.id}`)}
+              >
+                <CardContent className="p-0">
+                  {/* Product Image */}
+                  {product.images && product.images.length > 0 ? (
+                    <div className="aspect-square bg-gray-50 overflow-hidden">
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                      />
                     </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
+                  ) : (
+                    <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                      <Package className="w-20 h-20 text-gray-400" />
+                    </div>
+                  )}
+
+                  {/* Product Info */}
+                  <div className="p-6 space-y-3">
+                    <Badge className="rounded-full border border-gray-200 bg-white text-gray-900 font-bold text-xs px-3 py-1 uppercase">
+                      {product.type}
+                    </Badge>
+                    <h3 className="font-bold text-2xl text-gray-900 line-clamp-2">
                       {product.name}
                     </h3>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Limited Edition */}
-      {limitedEdition.length > 0 && (
-        <section className="py-16 bg-white border-b-2 border-gray-200">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <Sparkles className="h-7 w-7 text-[#008B8B]" />
-                <h2 className="text-3xl md:text-4xl font-black">Limited Edition</h2>
-              </div>
-              <Link href="/shop/browse?stock=low">
-                <Button variant="ghost" className="text-lg font-semibold">
-                  View All →
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {limitedEdition.map((product: any) => (
-                <button
-                  key={product.id}
-                  onClick={() => handleProductClick(product)}
-                  className="group cursor-pointer w-full text-left"
-                >
-                  <div>
-                    <div className="relative aspect-square bg-gray-100 rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
-                      {product.images && product.images.length > 0 ? (
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="w-full h-full object-contain"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
-                          <ShoppingBag className="h-16 w-16" />
-                        </div>
-                      )}
-                      <div className="absolute top-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                        Only {product.stock} left
-                      </div>
-                      <div className="absolute top-3 right-3 bg-black text-white px-3 py-1 rounded-full text-sm font-bold">
+                    <p className="text-base text-gray-600 line-clamp-2">
+                      {product.description}
+                    </p>
+                    <div className="flex items-center justify-between pt-3">
+                      <span className="text-4xl font-bold text-gray-900">
                         ${product.price}
-                      </div>
-                    </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
-                      {product.name}
-                    </h3>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Under $50 */}
-      {underFifty.length > 0 && (
-        <section className="py-16 bg-gray-50">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <DollarSign className="h-7 w-7 text-[#008B8B]" />
-                <h2 className="text-3xl md:text-4xl font-black">Under $50</h2>
-              </div>
-              <Link href="/shop/browse?maxPrice=50">
-                <Button variant="ghost" className="text-lg font-semibold">
-                  View All →
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {underFifty.map((product: any) => (
-                <button
-                  key={product.id}
-                  onClick={() => handleProductClick(product)}
-                  className="group cursor-pointer w-full text-left"
-                >
-                  <div>
-                    <div className="relative aspect-square bg-white rounded-xl border border-gray-200 overflow-hidden mb-3 group-hover:border-gray-400 transition-colors">
-                      {product.images && product.images.length > 0 ? (
-                        <img
-                          src={product.images[0]}
-                          alt={product.name}
-                          className="w-full h-full object-contain"
-                        />
+                      </span>
+                      {product.status === "active" ? (
+                        <Badge className="rounded-full bg-cyan-500 text-white font-bold text-xs px-3 py-1">
+                          In Stock
+                        </Badge>
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">
-                          <ShoppingBag className="h-16 w-16" />
-                        </div>
+                        <Badge className="rounded-full bg-gray-900 text-white font-bold text-xs px-3 py-1">
+                          Sold Out
+                        </Badge>
                       )}
-                      <div className="absolute top-3 right-3 bg-black text-white px-3 py-1 rounded-full text-sm font-bold">
-                        ${product.price}
-                      </div>
-                    </div>
-                    <h3 className="font-bold text-lg line-clamp-2 group-hover:text-[#006666] transition-colors">
-                      {product.name}
-                    </h3>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Browse by Category */}
-      <section className="py-20 bg-white border-t-2 border-gray-200">
-        <div className="container">
-          <h2 className="text-4xl md:text-5xl font-black mb-12 text-center">Browse by Category</h2>
-          
-          {/* Text-forward category links */}
-          <div className="max-w-3xl mx-auto space-y-4">
-            {categories.map((cat) => (
-              <Link key={cat.name} href={cat.link}>
-                <div className="group cursor-pointer border border-gray-200 rounded-xl p-6 hover:border-black transition-all">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-3xl font-black group-hover:translate-x-2 transition-transform">
-                      {cat.name}
-                    </h3>
-                    <div className="text-4xl font-black text-gray-300 group-hover:text-black group-hover:translate-x-2 transition-all">
-                      →
-                    </div>
                     </div>
                   </div>
-                </Link>
+                </CardContent>
+              </Card>
             ))}
           </div>
-
-          {/* CTA to Full Catalog */}
-          <div className="mt-16 text-center">
-            <Link href="/shop/browse">
-              <Button
-                size="lg"
-                className="rounded-full px-12 py-7 text-xl font-black shadow-[0_4px_0_0_rgb(6,182,212)] hover:shadow-[0_2px_0_0_rgb(6,182,212)] transition-all"
-              >
-                Browse All Products
-              </Button>
-            </Link>
+        ) : (
+          <div className="max-w-3xl mx-auto text-center py-24">
+            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
+              <Package className="w-16 h-16 text-gray-400" />
+            </div>
+            <h2 className="text-6xl font-bold mb-6 text-gray-900">
+              Coming Soon
+            </h2>
+            <p className="text-2xl text-gray-600 leading-relaxed mb-12">
+              Artists are preparing exclusive merchandise and digital content. Check back soon!
+            </p>
+            <Button
+              onClick={() => setLocation("/music")}
+              className="rounded-full text-lg px-10 py-7 bg-gray-900 hover:bg-gray-800 text-white shadow-lg"
+              size="lg"
+            >
+              Discover Artists
+            </Button>
           </div>
-        </div>
-      </section>
-
-      {/* Product Quick View Modal */}
-      {selectedProduct && (
-        <ProductQuickView
-          productId={selectedProduct.id}
-          productSlug={selectedProduct.slug}
-          open={modalOpen}
-          onOpenChange={handleModalClose}
-        />
-      )}
+        )}
+      </div>
     </div>
   );
 }

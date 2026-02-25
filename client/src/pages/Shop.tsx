@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart } from "lucide-react";
 
 export default function Shop() {
   const { user } = useAuth();
@@ -23,10 +24,11 @@ export default function Shop() {
 
   const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
 
-  const productTypes = [
-    { value: "physical", label: "Physical Merch", description: "T-shirts, vinyl, posters" },
-    { value: "digital", label: "Digital Downloads", description: "Beats, samples, stems" },
-    { value: "experience", label: "Experiences", description: "Meet & greets, studio sessions" },
+  const categories = [
+    { value: null, label: "All", icon: Package },
+    { value: "physical", label: "Apparel", icon: Shirt },
+    { value: "digital", label: "Music", icon: Disc },
+    { value: "experience", label: "Art", icon: Palette },
   ];
 
   // Filter products
@@ -35,141 +37,150 @@ export default function Shop() {
     : products;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Full Width, Centered */}
+    <div className="min-h-screen bg-white pb-24">
+      {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
-        <div className="text-center max-w-5xl mx-auto mb-20">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-none mb-6">
-            BopShop.
+        <div className="text-center max-w-5xl mx-auto">
+          <h1 className="text-8xl md:text-9xl font-bold mb-6 tracking-tight">
+            Shop Your Sound.
           </h1>
-          <p className="text-2xl md:text-3xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Support artists directly. 90% of every purchase goes straight to creators—no middlemen, no hidden fees.
+          <p className="text-2xl md:text-3xl text-gray-600 mb-4">
+            Where artists sell direct. Where fans buy authentic.
           </p>
-          
-          {/* Value Props - Inline Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
-            <Badge className="rounded-full border-4 border-black bg-white text-black font-bold text-lg px-6 py-3">
-              90% to Artists
-            </Badge>
-            <Badge className="rounded-full border-4 border-black bg-white text-black font-bold text-lg px-6 py-3">
-              Exclusive Merch
-            </Badge>
-            <Badge className="rounded-full border-4 border-black bg-white text-black font-bold text-lg px-6 py-3">
-              Verified Creators
-            </Badge>
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-50 border-l-4 border-cyan-400 rounded-r-xl">
+            <Heart className="w-5 h-5 text-cyan-600" />
+            <span className="text-lg font-semibold text-gray-900">
+              90% goes directly to artists
+            </span>
           </div>
+        </div>
 
-          {user && cartItemCount > 0 && (
-            <Button 
+        {/* Category Pills */}
+        <div className="flex flex-wrap justify-center gap-3 mt-12">
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            return (
+              <Button
+                key={cat.value || "all"}
+                onClick={() => setSelectedType(cat.value)}
+                variant={selectedType === cat.value ? "default" : "outline"}
+                className={`rounded-full px-8 py-6 text-lg font-semibold transition-all ${
+                  selectedType === cat.value
+                    ? "bg-cyan-500 text-white hover:bg-cyan-600 shadow-lg scale-105"
+                    : "bg-white text-gray-700 border-2 border-gray-200 hover:border-cyan-400 hover:text-cyan-600"
+                }`}
+              >
+                <Icon className="w-5 h-5 mr-2" />
+                {cat.label}
+              </Button>
+            );
+          })}
+        </div>
+
+        {/* Cart Button */}
+        {user && cartItemCount > 0 && (
+          <div className="fixed top-24 right-8 z-50">
+            <Button
               onClick={() => setLocation("/cart")}
-              className="rounded-full text-xl px-12 py-7 bg-black text-white hover:bg-gray-800 border-4 border-black font-bold shadow-[8px_8px_0px_0px_rgba(129,230,254,1)] hover:shadow-[4px_4px_0px_0px_rgba(129,230,254,1)] transition-all"
+              className="rounded-full px-6 py-6 bg-black text-white hover:bg-gray-800 shadow-2xl"
               size="lg"
             >
-              View Cart ({cartItemCount})
+              <ShoppingCart className="w-5 h-5 mr-2" />
+              Cart ({cartItemCount})
             </Button>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
 
-        {/* Browse by Category */}
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-10 text-center">Browse by Category</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            {/* All Products Card */}
-            <div 
-              className={`border p-10 cursor-pointer transition-colors rounded-xl ${
-                selectedType === null 
-                  ? 'border-black bg-black' 
-                  : 'border-gray-200 bg-white hover:border-gray-400'
-              }`}
-              onClick={() => setSelectedType(null)}
-            >
-              <h3 className={`text-3xl font-bold mb-4 ${selectedType === null ? 'text-white' : 'text-black'}`}>
-                All Products
-              </h3>
-              <p className={`leading-relaxed text-lg ${selectedType === null ? 'text-gray-300' : 'text-gray-600'}`}>
-                Browse everything
+      {/* Featured Collection */}
+      <div className="container mx-auto px-4 mb-20">
+        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-cyan-400 shadow-2xl">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="w-48 h-48 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex-shrink-0"></div>
+            <div className="flex-1">
+              <Badge className="rounded-full bg-cyan-500 text-white px-4 py-1 text-sm font-bold mb-4">
+                FEATURED COLLECTION
+              </Badge>
+              <h2 className="text-7xl md:text-8xl font-bold text-white mb-4">
+                Luna Rivers
+              </h2>
+              <p className="text-xl text-gray-300 mb-6">
+                Exclusive merch drop from the artist behind "Midnight Dreams". Limited edition apparel, vinyl, and art prints.
               </p>
+              <Button
+                onClick={() => setLocation("/artist/luna-rivers")}
+                className="rounded-full px-8 py-6 bg-cyan-500 text-white hover:bg-cyan-600 text-lg font-semibold shadow-lg"
+              >
+                Shop Collection →
+              </Button>
             </div>
-
-            {/* Category Cards */}
-            {productTypes.map((type) => {
-              const isSelected = selectedType === type.value;
-
-              return (
-                <div 
-                  key={type.value}
-                  className={`border p-10 cursor-pointer transition-colors rounded-xl ${
-                    isSelected 
-                      ? 'border-black bg-black' 
-                      : 'border-gray-200 bg-white hover:border-gray-400'
-                  }`}
-                  onClick={() => setSelectedType(type.value)}
-                >
-                  <h3 className={`text-3xl font-bold mb-4 ${isSelected ? 'text-white' : 'text-black'}`}>
-                    {type.label}
-                  </h3>
-                  <p className={`leading-relaxed text-lg ${isSelected ? 'text-gray-300' : 'text-gray-600'}`}>
-                    {type.description}
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </div>
+      </div>
 
-        {/* Product Grid */}
+      {/* Product Grid */}
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-5xl font-bold">
+            {selectedType ? categories.find(c => c.value === selectedType)?.label : "All Products"}
+          </h2>
+          <p className="text-xl text-gray-600">
+            {filteredProducts?.length || 0} items
+          </p>
+        </div>
+
         {isLoading ? (
           <div className="text-center py-24">
-            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-black text-white text-2xl font-bold border-4 border-black">
-              <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gray-100 text-gray-900 text-2xl font-bold">
+              <div className="w-6 h-6 border-4 border-gray-900 border-t-transparent rounded-full animate-spin"></div>
               Loading Products...
             </div>
           </div>
         ) : filteredProducts && filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className="rounded-xl border-4 border-black cursor-pointer hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] transition-all bg-white"
+                className="rounded-3xl border-l-4 border-cyan-400 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden"
                 onClick={() => setLocation(`/product/${product.id}`)}
               >
-                <CardContent className="p-6">
+                <CardContent className="p-0">
                   {/* Product Image */}
                   {product.images && product.images.length > 0 ? (
-                    <div className="aspect-square bg-gray-50 rounded-none border border-gray-200 mb-4 overflow-hidden">
+                    <div className="aspect-square bg-gray-50 overflow-hidden">
                       <img
                         src={product.images[0]}
                         alt={product.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                       />
                     </div>
                   ) : (
-                    <div className="aspect-square bg-gray-100 rounded-none border border-gray-200 mb-4 flex items-center justify-center">
-                      <span className="text-4xl font-bold text-gray-400">No Image</span>
+                    <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                      <Package className="w-20 h-20 text-gray-400" />
                     </div>
                   )}
 
                   {/* Product Info */}
-                  <div className="space-y-3">
-                    <Badge className="rounded-full border border-gray-200 bg-white text-black font-bold text-xs px-3 py-1 uppercase">
+                  <div className="p-6 space-y-3">
+                    <Badge className="rounded-full border border-gray-200 bg-white text-gray-900 font-bold text-xs px-3 py-1 uppercase">
                       {product.type}
                     </Badge>
-                    <h3 className="font-bold text-xl text-black line-clamp-2">
+                    <h3 className="font-bold text-2xl text-gray-900 line-clamp-2">
                       {product.name}
                     </h3>
-                    <p className="text-sm text-gray-600 font-medium line-clamp-2">
+                    <p className="text-base text-gray-600 line-clamp-2">
                       {product.description}
                     </p>
                     <div className="flex items-center justify-between pt-3">
-                      <span className="text-3xl font-bold text-black">
+                      <span className="text-4xl font-bold text-gray-900">
                         ${product.price}
                       </span>
                       {product.status === "active" ? (
-                        <Badge className="rounded-full border border-gray-200 bg-white text-black font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full bg-cyan-500 text-white font-bold text-xs px-3 py-1">
                           In Stock
                         </Badge>
                       ) : (
-                        <Badge className="rounded-full border border-gray-200 bg-black text-white font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full bg-gray-900 text-white font-bold text-xs px-3 py-1">
                           Sold Out
                         </Badge>
                       )}
@@ -180,8 +191,11 @@ export default function Shop() {
             ))}
           </div>
         ) : (
-          <div className="max-w-3xl mx-auto text-center py-16">
-            <h2 className="text-6xl font-bold mb-8">
+          <div className="max-w-3xl mx-auto text-center py-24">
+            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
+              <Package className="w-16 h-16 text-gray-400" />
+            </div>
+            <h2 className="text-6xl font-bold mb-6 text-gray-900">
               Coming Soon
             </h2>
             <p className="text-2xl text-gray-600 leading-relaxed mb-12">
@@ -189,7 +203,7 @@ export default function Shop() {
             </p>
             <Button
               onClick={() => setLocation("/music")}
-              className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white shadow-[8px_8px_0px_0px_#81e6fe]"
+              className="rounded-full text-lg px-10 py-7 bg-gray-900 hover:bg-gray-800 text-white shadow-lg"
               size="lg"
             >
               Discover Artists
