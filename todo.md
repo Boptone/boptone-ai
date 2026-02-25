@@ -2675,3 +2675,13 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Preserve all cart/product functionality and tRPC integration - VERIFIED
 - [x] Test all e-commerce features - products load, filtering works, cart persists
 - [ ] Save checkpoint after user review
+
+
+## BopShop AI Chat & Logo Update
+- [x] Copy bopshop_main_logo_black.png to client/public directory
+- [x] Replace "Shop Your Sound." text hero with BopShop logo image
+- [x] Size logo to match Boptone footer logo dimensions (h-32 sm:h-40 md:h-48 lg:h-56)
+- [x] Add conversational AI chat textarea (same as /music page)
+- [x] Position chat box below logo and above category pills
+- [x] Test layout and functionality - VERIFIED logo and AI chat display correctly
+- [ ] Save checkpoint

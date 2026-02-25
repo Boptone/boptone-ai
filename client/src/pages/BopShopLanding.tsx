@@ -5,12 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { ShoppingCart, Shirt, Disc, Palette, Package, Heart } from "lucide-react";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Sparkles } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Shop() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch all products
   const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
@@ -41,17 +43,37 @@ export default function Shop() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center max-w-5xl mx-auto">
-          <h1 className="text-8xl md:text-9xl font-bold mb-6 tracking-tight">
-            Shop Your Sound.
-          </h1>
-          <p className="text-2xl md:text-3xl text-gray-600 mb-4">
+          {/* BopShop Logo */}
+          <img 
+            src="/bopshop_main_logo_black.png" 
+            alt="BopShop" 
+            className="h-32 sm:h-40 md:h-48 lg:h-56 mx-auto mb-8"
+          />
+          <p className="text-2xl md:text-3xl text-gray-600 mb-8">
             Where artists sell direct. Where fans buy authentic.
           </p>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-50 border-l-4 border-cyan-400 rounded-r-xl">
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-50 border-l-4 border-cyan-400 rounded-r-xl mb-12">
             <Heart className="w-5 h-5 text-cyan-600" />
             <span className="text-lg font-semibold text-gray-900">
               90% goes directly to artists
             </span>
+          </div>
+
+          {/* AI Chat Search */}
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              <Textarea
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for artists, products, or get recommendations..."
+                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200 resize-none shadow-lg"
+                rows={3}
+              />
+              <div className="absolute bottom-4 right-4 flex items-center gap-2 text-sm text-gray-500">
+                <Sparkles className="w-4 h-4 text-cyan-500" />
+                <span className="font-medium">Powered by Boptone AI</span>
+              </div>
+            </div>
           </div>
         </div>
 
