@@ -43,10 +43,10 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl p-0 overflow-hidden">
-        <div className="grid md:grid-cols-2 gap-0">
+      <DialogContent className="max-w-2xl max-h-[90vh] p-0 overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-0 max-h-[90vh] overflow-y-auto">
           {/* Left: Image Gallery */}
-          <div className="bg-gray-50 p-6">
+          <div className="bg-gray-50 p-4 md:p-6">
             <div className="relative aspect-square bg-white rounded-lg overflow-hidden mb-4">
               {images.length > 0 ? (
                 <img
@@ -86,14 +86,14 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
           </div>
 
           {/* Right: Product Details */}
-          <div className="p-6 flex flex-col">
+          <div className="p-4 md:p-6 flex flex-col">
             <div className="flex-1">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <Badge className="rounded-full border border-gray-200 bg-white text-gray-900 font-bold text-xs px-3 py-1 uppercase mb-3">
                     {product.type}
                   </Badge>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
                     {product.name}
                   </h2>
                   <p className="text-sm text-gray-500 mb-4">Artist Name</p>
@@ -107,13 +107,13 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
               </div>
 
               <div className="mb-6">
-                <span className="text-3xl font-bold text-gray-900">
+                <span className="text-2xl md:text-3xl font-bold text-gray-900">
                   ${product.price}
                 </span>
               </div>
 
               <div className="mb-6">
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   {product.description}
                 </p>
               </div>
