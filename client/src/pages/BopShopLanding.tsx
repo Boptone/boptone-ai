@@ -62,7 +62,7 @@ export default function Shop() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="What are you looking for? T-shirt, Vinyl, Hoodie, Hat..."
-                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-black focus:ring-2 focus:ring-gray-300 resize-none shadow-lg"
+                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-black focus:ring-2 focus:ring-gray-300 resize-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 rows={3}
               />
               <div className="absolute bottom-4 right-4 flex items-center gap-2 text-sm text-gray-500">
@@ -84,7 +84,7 @@ export default function Shop() {
                 variant={selectedType === cat.value ? "default" : "outline"}
                 className={`rounded-full px-8 py-6 text-lg font-semibold transition-all ${
                   selectedType === cat.value
-                    ? "bg-black text-white hover:bg-gray-800 shadow-lg scale-105"
+                    ? "bg-black text-white hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] scale-105"
                     : "bg-white text-gray-700 border-2 border-gray-200 hover:border-black hover:text-black"
                 }`}
               >
@@ -100,7 +100,7 @@ export default function Shop() {
           <div className="fixed top-24 right-8 z-50">
             <Button
               onClick={() => setLocation("/cart")}
-              className="rounded-full px-6 py-6 bg-black text-white hover:bg-gray-800 shadow-2xl"
+              className="rounded-full px-6 py-6 bg-black text-white hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               size="lg"
             >
               <ShoppingCart className="w-5 h-5 mr-2" />
@@ -112,7 +112,7 @@ export default function Shop() {
 
       {/* Featured Collection */}
       <div className="container mx-auto px-4 mb-20">
-        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-black shadow-2xl">
+        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-48 h-48 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex-shrink-0"></div>
             <div className="flex-1">
@@ -127,7 +127,7 @@ export default function Shop() {
               </p>
               <Button
                 onClick={() => setLocation("/artist/luna-rivers")}
-                className="rounded-full px-8 py-6 bg-black text-white hover:bg-gray-800 text-lg font-semibold shadow-lg"
+                className="rounded-full px-8 py-6 bg-black text-white hover:bg-gray-800 text-lg font-semibold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 Shop Collection →
               </Button>
@@ -179,7 +179,7 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className={`rounded-3xl border-l-4 border-black cursor-pointer hover:shadow-2xl transition-all duration-300 bg-white overflow-hidden ${
+                className={`rounded-3xl border-l-4 border-black cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 bg-white overflow-hidden ${
                   viewMode === 'grid' ? 'hover:scale-[1.02]' : 'flex flex-row'
                 }`}
                 onClick={() => setLocation(`/product/${product.id}`)}
@@ -243,7 +243,7 @@ export default function Shop() {
             </p>
             <Button
               onClick={() => setLocation("/music")}
-              className="rounded-full text-lg px-10 py-7 bg-gray-900 hover:bg-gray-800 text-white shadow-lg"
+              className="rounded-full text-lg px-10 py-7 bg-gray-900 hover:bg-gray-800 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               size="lg"
             >
               Discover Artists

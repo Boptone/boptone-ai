@@ -141,7 +141,7 @@ export default function Discover() {
                 placeholder="Search for artists, albums, tracks, or get recommendations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-16 pr-6 py-6 text-lg bg-gray-800 border-2 border-gray-700 text-white placeholder:text-gray-500 rounded-3xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-lg resize-none min-h-[120px] leading-relaxed"
+                className="pl-16 pr-6 py-6 text-lg bg-gray-800 border-2 border-gray-700 text-white placeholder:text-gray-500 rounded-3xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] resize-none min-h-[120px] leading-relaxed"
                 rows={3}
               />
               <div className="absolute bottom-4 right-4 flex items-center gap-2">
@@ -157,7 +157,7 @@ export default function Discover() {
           <div className="flex gap-4 max-w-4xl">
             <button
               onClick={() => window.location.href = '/shop'}
-              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
             >
               <ShoppingBag className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
               <span className="font-semibold text-sm">BopShop</span>
@@ -165,7 +165,7 @@ export default function Discover() {
             
             <button
               onClick={() => window.location.href = '/newsletter'}
-              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
             >
               <Mail className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
               <span className="font-semibold text-sm">Newsletter</span>
@@ -176,7 +176,7 @@ export default function Discover() {
         {/* Featured Artist Module */}
         <div className="px-8 py-6">
           <h2 className="text-5xl font-bold mb-6">Featured Artist</h2>
-          <div className="bg-gray-900 rounded-lg p-8 flex gap-8 items-center border-l-4 border-cyan-400 shadow-2xl">
+          <div className="bg-gray-900 rounded-lg p-8 flex gap-8 items-center border-l-4 border-cyan-400 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
             <img
               src={featuredArtist.image}
               alt={featuredArtist.name}
@@ -225,7 +225,7 @@ export default function Discover() {
                     alt={item.title}
                     className="w-full aspect-square object-cover rounded-lg"
                   />
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-lg">
+                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <Play className="w-5 h-5 text-white fill-white" />
                   </button>
                 </div>
@@ -254,7 +254,7 @@ export default function Discover() {
                     alt={album.title}
                     className="w-full aspect-square object-cover rounded-lg"
                   />
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-lg">
+                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <Play className="w-5 h-5 text-white fill-white" />
                   </button>
                 </div>
@@ -283,7 +283,7 @@ export default function Discover() {
                     alt={album.title}
                     className="w-full aspect-square object-cover rounded-lg"
                   />
-                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-lg">
+                  <button className="absolute bottom-2 right-2 w-12 h-12 bg-cyan-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <Play className="w-5 h-5 text-white fill-white" />
                   </button>
                 </div>
