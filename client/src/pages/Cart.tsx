@@ -4,7 +4,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Link } from "wouter";
 import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
+import { toastSuccess, toastError } from "@/lib/toast";
 
 /**
  * Shopping Cart Page
@@ -27,7 +27,7 @@ export default function Cart() {
       utils.cart.count.invalidate();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to update cart");
+      toastError(error.message || "Failed to update cart");
     },
   });
 
@@ -36,10 +36,10 @@ export default function Cart() {
     onSuccess: () => {
       utils.cart.list.invalidate();
       utils.cart.count.invalidate();
-      toast.success("Item removed from cart");
+      toastSuccess("Item removed from cart");
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to remove item");
+      toastError(error.message || "Failed to remove item");
     },
   });
 
@@ -48,10 +48,10 @@ export default function Cart() {
     onSuccess: () => {
       utils.cart.list.invalidate();
       utils.cart.count.invalidate();
-      toast.success("Cart cleared");
+      toastSuccess("Cart cleared");
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to clear cart");
+      toastError(error.message || "Failed to clear cart");
     },
   });
 
@@ -60,11 +60,11 @@ export default function Cart() {
     onSuccess: (data) => {
       if (data.url) {
         window.open(data.url, "_blank");
-        toast.success("Redirecting to checkout...");
+        toastSuccess("Redirecting to checkout...");
       }
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to create checkout session");
+      toastError(error.message || "Failed to create checkout session");
     },
   });
 
@@ -134,17 +134,25 @@ export default function Cart() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         {isEmpty ? (
           <div className="text-center py-16">
-            <ShoppingBag className="h-32 w-32 text-gray-300 mx-auto mb-6" />
-            <h2 className="text-4xl font-bold mb-4">Your cart is empty</h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Start shopping to add items to your cart
+            {/* Empty State Icon - BAP Protocol */}
+            <div className="inline-flex items-center justify-center w-40 h-40 bg-[#0a1628] border-2 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] mb-8">
+              <ShoppingBag className="h-20 w-20 text-[#0cc0df]" strokeWidth={2} />
+            </div>
+            
+            <h2 className="text-5xl font-bold mb-4">Your cart is empty</h2>
+            <p className="text-xl text-gray-600 mb-2">
+              Nothing here yet! Browse BopShop to find merch you love.
             </p>
+            <p className="text-lg text-gray-500 mb-8">
+              Support your favorite artists with official merchandise.
+            </p>
+            
             <Link href="/shop">
               <Button
                 size="lg"
-                className="bg-black text-white text-xl px-8 py-6 rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all"
+                className="bg-[#0cc0df] text-black text-xl px-8 py-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all font-bold"
               >
-                Browse Products
+                Browse BopShop
               </Button>
             </Link>
           </div>

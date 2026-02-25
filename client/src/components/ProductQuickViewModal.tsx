@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, Minus, Plus, ShoppingCart, Zap } from "lucide-react";
 import { trpc } from "@/lib/trpc";
-import { toast } from "sonner";
+import { toastSuccess, toastError, toastCartSuccess, toastWishlistSuccess } from "@/lib/toast";
 
 // Wishlist Button Component for Modal
 function WishlistButtonModal({ productId }: { productId: number }) {
@@ -19,7 +19,7 @@ function WishlistButtonModal({ productId }: { productId: number }) {
     onSuccess: () => {
       utils.wishlist.check.invalidate({ productId });
       utils.wishlist.count.invalidate();
-      toast.success("Added to wishlist!");
+      toastWishlistSuccess();
     },
   });
 
@@ -28,7 +28,7 @@ function WishlistButtonModal({ productId }: { productId: number }) {
     onSuccess: () => {
       utils.wishlist.check.invalidate({ productId });
       utils.wishlist.count.invalidate();
-      toast.success("Removed from wishlist");
+      toastSuccess("Removed from wishlist");
     },
   });
 
@@ -69,15 +69,16 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
   const [isAdding, setIsAdding] = useState(false);
 
   const utils = trpc.useUtils();
-  const addToCart = trpc.ecommerce.cart.add.useMutation({
+  const addToCart = trpc.cart.add.useMutation({
     onSuccess: () => {
-      utils.ecommerce.cart.get.invalidate();
-      toast.success("Added to cart!");
+      utils.cart.list.invalidate();
+      utils.cart.count.invalidate();
+      toastCartSuccess();
       setIsAdding(false);
       onClose();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to add to cart");
+      toastError(error.message || "Failed to add to cart");
       setIsAdding(false);
     },
   });
@@ -206,7 +207,7 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
               <Button
                 onClick={handleAddToCart}
                 disabled={isAdding || product.status !== "active"}
-                className="w-full bg-black text-white hover:bg-gray-800 rounded-lg py-6 text-base font-semibold"
+                className="w-full bg-[#0cc0df] text-black hover:bg-[#0bb0cf] rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all py-6 text-base font-bold"
                 size="lg"
               >
                 {isAdding ? (

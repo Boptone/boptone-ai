@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { Zap, ShoppingCart, Package, Trash2 } from "lucide-react";
-import { toast } from "sonner";
+import { toastSuccess, toastError } from "@/lib/toast";
 import { getLoginUrl } from "@/const";
 
 export default function Wishlist() {
@@ -24,7 +24,7 @@ export default function Wishlist() {
     onSuccess: () => {
       utils.wishlist.list.invalidate();
       utils.wishlist.count.invalidate();
-      toast.success("Removed from wishlist");
+      toastSuccess("Removed from wishlist");
     },
   });
 
@@ -32,10 +32,15 @@ export default function Wishlist() {
   const addToCart = trpc.ecommerce.cart.add.useMutation({
     onSuccess: () => {
       utils.ecommerce.cart.get.invalidate();
-      toast.success("Added to cart!");
+      toastSuccess("Added to cart!", {
+        action: {
+          label: "View Cart",
+          onClick: () => setLocation("/cart"),
+        },
+      });
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to add to cart");
+      toastError(error.message || "Failed to add to cart");
     },
   });
 
@@ -104,16 +109,24 @@ export default function Wishlist() {
             </div>
           ) : !wishlistItems || wishlistItems.length === 0 ? (
             <div className="text-center py-20">
-              <Zap className="w-20 h-20 mx-auto mb-6 text-gray-300" />
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {/* Empty State Icon - BAP Protocol */}
+              <div className="inline-flex items-center justify-center w-40 h-40 bg-[#0a1628] border-2 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] mb-8">
+                <Zap className="w-20 h-20 text-[#0cc0df] fill-[#0cc0df]" strokeWidth={2} />
+              </div>
+              
+              <h2 className="text-5xl font-bold text-gray-900 mb-4">
                 Your wishlist is empty
               </h2>
-              <p className="text-gray-600 mb-8">
-                Start adding products you love by clicking the lightning bolt icon
+              <p className="text-xl text-gray-600 mb-2">
+                Nothing here yet! Click the lightning bolt ⚡ to save products you love.
               </p>
+              <p className="text-lg text-gray-500 mb-8">
+                Build your collection and never lose track of merch you want.
+              </p>
+              
               <Button
                 onClick={() => setLocation("/shop")}
-                className="rounded-full px-8 py-6 text-lg font-semibold bg-cyan-500 text-black hover:bg-cyan-600"
+                className="bg-[#0cc0df] text-black text-xl px-8 py-6 rounded-lg border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all font-bold"
               >
                 Browse BopShop
               </Button>

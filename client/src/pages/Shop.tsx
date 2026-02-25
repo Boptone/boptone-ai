@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Zap, Plus } from "lucide-react";
-import { toast } from "sonner";
+import { toastCartSuccess, toastError } from "@/lib/toast";
 
 // Wishlist Button Component with Lightning Bolt
 function WishlistButton({ productId }: { productId: number }) {
@@ -75,10 +75,10 @@ export default function Shop() {
     onSuccess: () => {
       utils.cart.list.invalidate();
       utils.cart.count.invalidate();
-      toast.success("Added to cart!");
+      toastCartSuccess();
     },
     onError: () => {
-      toast.error("Failed to add to cart");
+      toastError("Failed to add to cart");
     },
   });
 
