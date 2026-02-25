@@ -4500,3 +4500,9 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Fix nested container issue causing chat bubble to be stuck in bottom corner
 - [x] Ensure proper fixed positioning relative to viewport
 - [x] Test chat bubble on all pages to ensure consistent positioning
+
+### Toney Chat Bubble Styling Update
+- [x] Update chat bubble color to Boptone brand blue (#0cc0df)
+- [x] Remove gray gradient ring around chat bubble
+- [x] Apply BAP protocol design to chat window (black borders, 4px shadows, rounded corners)
+- [x] Ensure chat window matches Boptone design consistency

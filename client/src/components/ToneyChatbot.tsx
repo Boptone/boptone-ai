@@ -121,38 +121,32 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-[99999] w-16 h-16">
-        {/* Outer ring - lighter blue */}
-        <div className="absolute inset-0 rounded-full" style={{ 
-          background: 'linear-gradient(135deg, #7AB8F5 0%, #9B87E8 100%)',
-          padding: '4px',
-          width: '64px',
-          height: '64px'
-        }}>
-          {/* Inner button - primary blue */}
-          <Button
-            data-toney-trigger
-            onClick={() => setIsOpen(true)}
-            className="h-14 w-14 rounded-full shadow-lg"
-            style={{ backgroundColor: '#81e6fe', color: 'white' }}
-            size="icon"
-          >
-            <MessageCircle className="h-6 w-6" />
-          </Button>
-        </div>
+      <div className="fixed bottom-6 right-6 z-[99999]">
+        <Button
+          data-toney-trigger
+          onClick={() => setIsOpen(true)}
+          className="h-16 w-16 rounded-full border-2 border-black"
+          style={{ 
+            backgroundColor: '#0cc0df',
+            boxShadow: '4px 4px 0px rgba(0,0,0,1)'
+          }}
+          size="icon"
+        >
+          <MessageCircle className="h-7 w-7 text-black" />
+        </Button>
       </div>
     );
   }
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] max-w-md">
-      <div className="rounded-lg shadow-2xl border flex flex-col" style={{ height: "600px", backgroundColor: "#f5f5f5" }}>
-        <div className="flex items-center justify-between p-4 border-b bg-primary text-primary-foreground rounded-t-lg">
+      <div className="rounded-lg border-4 border-black bg-white flex flex-col shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{ height: "600px" }}>
+        <div className="flex items-center justify-between p-4 border-b-4 border-black bg-[#0cc0df] rounded-t-lg">
           <div className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
+            <MessageCircle className="h-5 w-5 text-black" />
             <div>
-              <h3 className="font-semibold">Toney</h3>
-              <p className="text-xs opacity-90">Your AI Career Assistant</p>
+              <h3 className="font-semibold text-black">Toney</h3>
+              <p className="text-xs text-black">Your AI Career Assistant</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -170,7 +164,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
                   setHasAutoOpened(false);
                 }
               }}
-              className="text-xs text-primary-foreground hover:bg-primary-foreground/20"
+              className="text-xs text-black hover:bg-black/10"
             >
               Clear History
             </Button>
@@ -178,7 +172,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
+              className="h-8 w-8 text-black hover:bg-black/10"
             >
               <X className="h-4 w-4" />
             </Button>
