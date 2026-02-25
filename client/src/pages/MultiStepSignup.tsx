@@ -83,10 +83,7 @@ export default function MultiStepSignup() {
           <h1 className="text-5xl font-black text-black mb-4 leading-tight">
             Join Boptone
           </h1>
-          <p className="text-xl text-gray-600 mb-4">
-            Start your music career today
-          </p>
-          <p className="text-base text-gray-500">
+          <p className="text-xl text-gray-600">
             After signing up, you'll upload your first track, set up your profile, and start building your audience.
           </p>
         </div>

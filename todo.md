@@ -4488,3 +4488,10 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Save Manus checkpoint
 - [ ] Push to GitHub (boptone-ai)
 - [ ] Verify sync
+
+## UI/UX Improvements
+
+### Signup Page Copy Update
+- [x] Remove "Start your music career today" tagline (too cheesy)
+- [x] Move copy below that sentence up near "Join Boptone"
+- [x] Reorganize signup page content hierarchy
