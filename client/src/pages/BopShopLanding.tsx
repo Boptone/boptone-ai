@@ -7,6 +7,7 @@ import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Sparkles, ArrowUpDown, List, Grid3x3 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 
 export default function Shop() {
   const { user } = useAuth();
@@ -15,6 +16,7 @@ export default function Shop() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [quickViewProduct, setQuickViewProduct] = useState<any>(null);
 
   // Fetch all products
   const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
@@ -182,7 +184,7 @@ export default function Shop() {
                 className={`rounded-xl cursor-pointer hover:shadow-lg transition-all duration-300 bg-white overflow-hidden border border-gray-100 ${
                   viewMode === 'grid' ? 'hover:scale-[1.01]' : 'flex flex-row'
                 }`}
-                onClick={() => setLocation(`/product/${product.id}`)}
+                onClick={() => setQuickViewProduct(product)}
               >
                 <CardContent className={viewMode === 'grid' ? 'p-0' : 'p-0 flex flex-row w-full'}>
                   {/* Product Image */}
@@ -239,6 +241,15 @@ export default function Shop() {
           </div>
         )}
       </div>
+
+      {/* Quick View Modal */}
+      {quickViewProduct && (
+        <ProductQuickViewModal
+          product={quickViewProduct}
+          open={!!quickViewProduct}
+          onClose={() => setQuickViewProduct(null)}
+        />
+      )}
     </div>
   );
 }
