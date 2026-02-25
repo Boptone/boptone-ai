@@ -3030,3 +3030,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Music player now only appears on /music page (BopAudio music discovery). Hidden on all other pages including landing, shop, pricing, features, etc. for cleaner UX.
+
+
+---
+
+## 🎬 Hero Animation Update ✅ COMPLETE
+
+- [x] Update hero section to rotate only "Create", "Automate", "Own" (single words)
+- [x] Keep "Your Tone." static below rotating words
+- [x] Test animation smoothness and reduced jumpiness
+- [x] Save checkpoint
+
+**Result:** Hero now displays single rotating words ("Create", "Automate", "Own") above static "Your Tone." text. Significantly reduces jumpiness and creates stable visual anchor. Rotation every 3 seconds with smooth 500ms fade transition.

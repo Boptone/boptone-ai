@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 
-const rotatingPhrases = ["Create Your Tone.", "Automate Your Tone.", "Own Your Tone."];
+const rotatingWords = ["Create", "Automate", "Own"];
 
 /**
  * Landing Page for Boptone Platform
@@ -23,9 +23,9 @@ export default function Landing() {
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
-        setVerbIndex((prev) => (prev + 1) % rotatingPhrases.length);
+        setVerbIndex((prev) => (prev + 1) % rotatingWords.length);
         setIsAnimating(false);
-      }, 3000);
+      }, 500);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -162,9 +162,11 @@ export default function Landing() {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl">
             <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
-              <span className={`inline-block min-w-[280px] md:min-w-[650px] transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-                {rotatingPhrases[verbIndex]}
+              <span className={`inline-block transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+                {rotatingWords[verbIndex]}
               </span>
+              <br />
+              <span>Your Tone.</span>
             </h1>
             <p className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
               Boptone
