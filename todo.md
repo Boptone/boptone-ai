@@ -3806,3 +3806,251 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Save Manus checkpoint
 - [ ] Push to GitHub (boptone-ai)
 - [ ] Verify sync
+
+
+## BopShop Implementation (Phase 1: Printful + Printify + Shippo)
+
+### POD Provider Strategy
+- **Dual POD integration:** Offer both Printful (premium) and Printify (budget) as options
+- **Artist choice:** Let artists choose POD provider per product or account-wide
+- **Cost comparison:** Show side-by-side pricing (Printful $9.95 vs Printify $7.50 for t-shirts)
+- **Quality transparency:** Display provider info on product pages ("Fulfilled by Printful" badge)
+
+### Database Schema
+- [ ] Create `product_fulfillment_settings` table
+  - [ ] product_id, fulfillment_mode (printful/printify/diy)
+  - [ ] printful_product_id, printful_variant_id
+  - [ ] printify_blueprint_id, printify_print_provider_id, printify_variant_id
+  - [ ] diy_instructions, created_at, updated_at
+  - [ ] Foreign key to products table
+- [ ] Create `artist_shipping_settings` table
+  - [ ] artist_id, shipping_mode (shippo/diy), diy_shipping_type (flat_rate/free/calculated)
+  - [ ] diy_flat_rate, accepted_liability, accepted_liability_date
+  - [ ] Foreign key to artist_profiles table
+- [ ] Create `printful_orders` table
+  - [ ] order_id, printful_order_id, status (pending/processing/shipped/delivered/failed)
+  - [ ] tracking_number, tracking_url, estimated_delivery_date
+  - [ ] Foreign key to orders table
+- [ ] Create `printify_orders` table
+  - [ ] order_id, printify_order_id, print_provider_id, status (pending/processing/shipped/delivered/failed)
+  - [ ] tracking_number, tracking_url, estimated_delivery_date
+  - [ ] Foreign key to orders table
+- [ ] Create `shippo_shipments` table
+  - [ ] order_id, shippo_shipment_id, shippo_transaction_id
+  - [ ] carrier, service_level, tracking_number, tracking_url, label_url, cost
+  - [ ] Foreign key to orders table
+- [ ] Run `pnpm db:push` to apply schema changes
+
+### Printful API Integration (Weeks 1-3)
+- [ ] Set up Printful API credentials in environment variables
+  - [ ] `PRINTFUL_API_KEY` - Private API token
+  - [ ] `PRINTFUL_STORE_ID` - Store ID for order forwarding
+- [ ] Create `server/integrations/printful.ts` service
+  - [ ] `getPrintfulProducts()` - Fetch Printful product catalog
+  - [ ] `createPrintfulOrder(order)` - Forward order to Printful
+  - [ ] `getPrintfulOrderStatus(printfulOrderId)` - Get order status
+  - [ ] `getPrintfulShipment(printfulOrderId)` - Get tracking info
+  - [ ] `generatePrintfulMockup(productId, designUrl)` - Generate product mockups
+- [ ] Build product sync system
+  - [ ] Import Printful catalog to BopShop (479 products)
+  - [ ] Map Printful products to BopShop products
+  - [ ] Sync pricing (base cost + suggested retail)
+  - [ ] Tag products with "printful" provider
+- [ ] Build order forwarding system
+  - [ ] Listen for new BopShop orders with fulfillment_mode="printful"
+  - [ ] Format order for Printful API (recipient, items, files)
+  - [ ] Send order to Printful
+  - [ ] Store printful_order_id in printful_orders table
+- [ ] Build fulfillment tracking system
+  - [ ] Poll Printful API for order status updates (every 1 hour)
+  - [ ] Update order status in database (pending → processing → shipped → delivered)
+  - [ ] Send tracking email to customer when shipped
+
+### Printify API Integration (Weeks 1-3, parallel with Printful)
+- [ ] Set up Printify API credentials in environment variables
+  - [ ] `PRINTIFY_API_KEY` - Personal access token
+  - [ ] `PRINTIFY_SHOP_ID` - Shop ID for order forwarding
+- [ ] Create `server/integrations/printify.ts` service
+  - [ ] `getPrintifyProducts()` - Fetch Printify product catalog (blueprints)
+  - [ ] `getPrintifyPrintProviders()` - Fetch list of print providers (90+ providers)
+  - [ ] `createPrintifyOrder(order)` - Forward order to Printify
+  - [ ] `getPrintifyOrderStatus(printifyOrderId)` - Get order status
+  - [ ] `getPrintifyShipment(printifyOrderId)` - Get tracking info
+  - [ ] `generatePrintifyMockup(productId, designUrl)` - Generate product mockups
+- [ ] Build product sync system
+  - [ ] Import Printify catalog to BopShop (blueprints + variants)
+  - [ ] Map Printify products to BopShop products
+  - [ ] Sync pricing (base cost + suggested retail, varies by print provider)
+  - [ ] Tag products with "printify" provider
+  - [ ] Store print_provider_id for each product
+- [ ] Build order forwarding system
+  - [ ] Listen for new BopShop orders with fulfillment_mode="printify"
+  - [ ] Format order for Printify API (line_items, shipping_method, address_to)
+  - [ ] Send order to Printify
+  - [ ] Store printify_order_id in printify_orders table
+- [ ] Build fulfillment tracking system
+  - [ ] Poll Printify API for order status updates (every 1 hour)
+  - [ ] Update order status in database (pending → processing → shipped → delivered)
+  - [ ] Send tracking email to customer when shipped
+  - [ ] Send tracking number to customer via email
+- [ ] Add Printful cost calculator to product creation flow
+  - [ ] Show base cost, shipping estimate, suggested retail price
+  - [ ] Calculate artist profit margin
+- [ ] Test end-to-end order flow (order → Printful → ship → track)
+
+### Shippo API Integration (Weeks 3-4)
+- [ ] Set up Shippo API credentials in environment variables
+- [ ] Create `server/integrations/shippo.ts` service
+  - [ ] `getShippingRates(from, to, parcel)` - Get real-time shipping rates
+  - [ ] `purchaseShippingLabel(rateId)` - Purchase shipping label
+  - [ ] `getTrackingStatus(carrier, trackingNumber)` - Get tracking status
+- [ ] Build real-time shipping rate calculator
+  - [ ] Call Shippo API with customer address + product dimensions
+  - [ ] Return USPS, UPS, FedEx rates
+  - [ ] Cache rates for 1 hour per address/product combo
+- [ ] Add shipping options to checkout
+  - [ ] Display carrier options (USPS Priority, UPS Ground, FedEx Ground)
+  - [ ] Show estimated delivery date
+  - [ ] Add shipping cost to order total
+- [ ] Auto-generate shipping labels on order confirmation
+  - [ ] Purchase label via Shippo API
+  - [ ] Store label URL in database
+  - [ ] Forward label to Printful (if Printful order)
+- [ ] Add tracking number to customer emails
+  - [ ] Send order confirmation email with tracking link
+  - [ ] Send "Your order has shipped" email
+  - [ ] Send "Your order has been delivered" email
+- [ ] Build shipping label download for artists (if needed for DIY)
+
+### Testing & Launch (Weeks 5-6)
+- [ ] End-to-end testing (order → payment → Printful → ship → deliver)
+  - [ ] Test with real Printful order (use test mode)
+  - [ ] Test with real Shippo label (use test mode)
+  - [ ] Verify tracking updates work
+  - [ ] Verify customer emails sent correctly
+- [ ] Load testing (100 concurrent orders)
+  - [ ] Use k6 or Artillery to simulate traffic
+  - [ ] Verify no race conditions in order processing
+  - [ ] Verify Printful API rate limits not exceeded
+- [ ] Customer support training
+  - [ ] Document refund process
+  - [ ] Document return process
+  - [ ] Document quality issue escalation
+  - [ ] Train support team on Printful policies
+- [ ] Launch to beta artists (10-20 artists)
+  - [ ] Invite artists with existing merch sales
+  - [ ] Provide onboarding guide
+  - [ ] Collect feedback via surveys
+  - [ ] Monitor for bugs/issues
+- [ ] Iterate based on feedback
+  - [ ] Fix critical bugs
+  - [ ] Improve UX based on artist feedback
+  - [ ] Optimize pricing calculator
+
+## BopShop Implementation (Phase 2: DIY Options)
+
+### DIY Manufacturing (Post-MVP)
+- [ ] Add "Self-Fulfill Orders" toggle in artist settings
+  - [ ] Add toggle to artist dashboard
+  - [ ] Show warning about liability
+  - [ ] Require Terms of Service agreement
+- [ ] Build order notification system
+  - [ ] Send email when DIY order placed
+  - [ ] Send SMS when DIY order placed (optional)
+  - [ ] Include customer address, product details, shipping deadline
+- [ ] Build manual fulfillment workflow
+  - [ ] Add "Mark as Shipped" button in artist dashboard
+  - [ ] Add tracking number input (optional)
+  - [ ] Send "Your order has shipped" email to customer
+- [ ] Add shipping label upload
+  - [ ] Let artist upload their own label (if using own carrier)
+  - [ ] Store label URL in database
+- [ ] Add Terms of Service agreement
+  - [ ] Draft ToS for DIY fulfillment
+  - [ ] Add checkbox to artist settings
+  - [ ] Store acceptance date in database
+- [ ] Build customer support handoff
+  - [ ] DIY orders go to artist, not Boptone support
+  - [ ] Add "Contact Artist" button on order page
+  - [ ] Add "Fulfilled by Artist" badge on product page
+
+### DIY Shipping (Post-MVP)
+- [ ] Add "Manage My Own Shipping" toggle in artist settings
+  - [ ] Add toggle to artist dashboard
+  - [ ] Show warning about liability
+  - [ ] Require Terms of Service agreement
+- [ ] Let artist set flat-rate shipping or free shipping
+  - [ ] Add shipping rate input (e.g., $5 flat rate)
+  - [ ] Add "Free shipping" checkbox
+  - [ ] Add "Free shipping over $X" option
+- [ ] Disable Shippo for DIY shipping artists
+  - [ ] Check artist settings before calling Shippo API
+  - [ ] Use artist's flat rate instead
+- [ ] Add Terms of Service agreement
+  - [ ] Draft ToS for DIY shipping
+  - [ ] Add checkbox to artist settings
+  - [ ] Store acceptance date in database
+- [ ] Build shipping cost calculator for artists
+  - [ ] Estimate profitability with different shipping strategies
+  - [ ] Show "Customer pays" vs "Artist pays" comparison
+
+### Legal & Compliance
+- [ ] Draft Terms of Service for DIY fulfillment
+  - [ ] Artist assumes liability for product quality
+  - [ ] Artist assumes liability for shipping delays
+  - [ ] Artist assumes liability for lost/damaged packages
+  - [ ] Artist assumes liability for refunds/returns
+- [ ] Add liability waiver to artist settings
+  - [ ] Require checkbox agreement
+  - [ ] Store acceptance date in database
+  - [ ] Show waiver text in modal before enabling DIY
+- [ ] Add "Fulfilled by Artist" badge on DIY products
+  - [ ] Show badge on product page
+  - [ ] Show badge in cart
+  - [ ] Show badge in order confirmation
+- [ ] Add customer support handoff for DIY orders
+  - [ ] DIY orders show "Contact Artist" button
+  - [ ] Boptone support redirects DIY inquiries to artist
+
+### Customer Experience
+- [ ] Add estimated delivery date to checkout
+  - [ ] Calculate based on Printful production time + shipping time
+  - [ ] Show "Estimated delivery: March 5-10" in checkout
+- [ ] Add tracking number to order confirmation email
+  - [ ] Include tracking link
+  - [ ] Include carrier name (USPS, UPS, FedEx)
+- [ ] Add "Where's my order?" self-service page
+  - [ ] Let customer enter order number + email
+  - [ ] Show order status (pending, processing, shipped, delivered)
+  - [ ] Show tracking link
+- [ ] Add refund/return policy page
+  - [ ] Document Printful's return policy
+  - [ ] Document DIY artist return policy
+  - [ ] Add link to footer
+
+### Artist Dashboard
+- [ ] Add "Fulfillment Mode" toggle (Printful vs. DIY)
+  - [ ] Show toggle in artist settings
+  - [ ] Show warning about liability for DIY
+  - [ ] Require ToS agreement
+- [ ] Add "Shipping Mode" toggle (Shippo vs. DIY)
+  - [ ] Show toggle in artist settings
+  - [ ] Show warning about liability for DIY
+  - [ ] Require ToS agreement
+- [ ] Add Printful cost calculator
+  - [ ] Show base cost for each product
+  - [ ] Show shipping estimate
+  - [ ] Show suggested retail price
+  - [ ] Show profit margin
+- [ ] Add profit margin calculator
+  - [ ] Let artist enter retail price
+  - [ ] Show profit after Printful cost + processing fee
+  - [ ] Show profit margin percentage
+- [ ] Add order notification settings (email/SMS)
+  - [ ] Let artist choose notification method
+  - [ ] Let artist set notification frequency (instant, daily digest)
+
+### Checkpoint & Sync
+- [ ] Save Manus checkpoint
+- [ ] Push to GitHub (boptone-ai)
+- [ ] Verify sync

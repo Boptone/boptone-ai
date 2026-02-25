@@ -3861,3 +3861,179 @@ export const fanSubscriptions = mysqlTable("fan_subscriptions", {
 
 export type FanSubscription = typeof fanSubscriptions.$inferSelect;
 export type InsertFanSubscription = typeof fanSubscriptions.$inferInsert;
+
+
+/**
+ * BopShop POD Fulfillment Settings
+ * Tracks which POD provider (Printful/Printify/DIY) is used for each product
+ */
+export const productFulfillmentSettings = mysqlTable("product_fulfillment_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  productId: int("productId").notNull().references(() => products.id, { onDelete: "cascade" }),
+  
+  // Fulfillment mode
+  fulfillmentMode: mysqlEnum("fulfillmentMode", ["printful", "printify", "diy"]).notNull(),
+  
+  // Printful fields
+  printfulProductId: varchar("printfulProductId", { length: 255 }),
+  printfulVariantId: varchar("printfulVariantId", { length: 255 }),
+  
+  // Printify fields
+  printifyBlueprintId: varchar("printifyBlueprintId", { length: 255 }),
+  printifyPrintProviderId: varchar("printifyPrintProviderId", { length: 255 }),
+  printifyVariantId: varchar("printifyVariantId", { length: 255 }),
+  
+  // DIY fields
+  diyInstructions: text("diyInstructions"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  productIdIdx: index("product_id_idx").on(table.productId),
+  fulfillmentModeIdx: index("fulfillment_mode_idx").on(table.fulfillmentMode),
+}));
+
+export type ProductFulfillmentSetting = typeof productFulfillmentSettings.$inferSelect;
+export type InsertProductFulfillmentSetting = typeof productFulfillmentSettings.$inferInsert;
+
+/**
+ * Artist Shipping Settings
+ * Tracks whether artist uses Shippo or DIY shipping
+ */
+export const artistShippingSettings = mysqlTable("artist_shipping_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  artistId: int("artistId").notNull().unique().references(() => artistProfiles.id, { onDelete: "cascade" }),
+  
+  // Shipping mode
+  shippingMode: mysqlEnum("shippingMode", ["shippo", "diy"]).default("shippo").notNull(),
+  
+  // DIY shipping settings
+  diyShippingType: mysqlEnum("diyShippingType", ["flat_rate", "free", "calculated"]),
+  diyFlatRate: int("diyFlatRate"), // in cents
+  
+  // Liability acceptance
+  acceptedLiability: boolean("acceptedLiability").default(false).notNull(),
+  acceptedLiabilityDate: timestamp("acceptedLiabilityDate"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  shippingModeIdx: index("shipping_mode_idx").on(table.shippingMode),
+}));
+
+export type ArtistShippingSetting = typeof artistShippingSettings.$inferSelect;
+export type InsertArtistShippingSetting = typeof artistShippingSettings.$inferInsert;
+
+/**
+ * Printful Orders
+ * Tracks orders forwarded to Printful for fulfillment
+ */
+export const printfulOrders = mysqlTable("printful_orders", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  orderId: int("orderId").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  
+  // Printful order ID
+  printfulOrderId: varchar("printfulOrderId", { length: 255 }).notNull().unique(),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "processing", "shipped", "delivered", "failed"]).default("pending").notNull(),
+  
+  // Tracking
+  trackingNumber: varchar("trackingNumber", { length: 255 }),
+  trackingUrl: text("trackingUrl"),
+  estimatedDeliveryDate: date("estimatedDeliveryDate"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  printfulOrderIdIdx: index("printful_order_id_idx").on(table.printfulOrderId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type PrintfulOrder = typeof printfulOrders.$inferSelect;
+export type InsertPrintfulOrder = typeof printfulOrders.$inferInsert;
+
+/**
+ * Printify Orders
+ * Tracks orders forwarded to Printify for fulfillment
+ */
+export const printifyOrders = mysqlTable("printify_orders", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  orderId: int("orderId").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  
+  // Printify order ID
+  printifyOrderId: varchar("printifyOrderId", { length: 255 }).notNull().unique(),
+  printProviderId: varchar("printProviderId", { length: 255 }).notNull(),
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "processing", "shipped", "delivered", "failed"]).default("pending").notNull(),
+  
+  // Tracking
+  trackingNumber: varchar("trackingNumber", { length: 255 }),
+  trackingUrl: text("trackingUrl"),
+  estimatedDeliveryDate: date("estimatedDeliveryDate"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  printifyOrderIdIdx: index("printify_order_id_idx").on(table.printifyOrderId),
+  printProviderIdIdx: index("print_provider_id_idx").on(table.printProviderId),
+  statusIdx: index("status_idx").on(table.status),
+}));
+
+export type PrintifyOrder = typeof printifyOrders.$inferSelect;
+export type InsertPrintifyOrder = typeof printifyOrders.$inferInsert;
+
+/**
+ * Shippo Shipments
+ * Tracks shipping labels generated via Shippo
+ */
+export const shippoShipments = mysqlTable("shippo_shipments", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  orderId: int("orderId").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  
+  // Shippo IDs
+  shippoShipmentId: varchar("shippoShipmentId", { length: 255 }).notNull().unique(),
+  shippoTransactionId: varchar("shippoTransactionId", { length: 255 }).unique(),
+  
+  // Carrier info
+  carrier: varchar("carrier", { length: 100 }), // USPS, FedEx, UPS
+  serviceLevel: varchar("serviceLevel", { length: 100 }), // Priority, Ground, etc.
+  
+  // Tracking
+  trackingNumber: varchar("trackingNumber", { length: 255 }),
+  trackingUrl: text("trackingUrl"),
+  labelUrl: text("labelUrl"),
+  
+  // Cost
+  cost: int("cost"), // in cents
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  orderIdIdx: index("order_id_idx").on(table.orderId),
+  shippoShipmentIdIdx: index("shippo_shipment_id_idx").on(table.shippoShipmentId),
+  shippoTransactionIdIdx: index("shippo_transaction_id_idx").on(table.shippoTransactionId),
+  trackingNumberIdx: index("tracking_number_idx").on(table.trackingNumber),
+}));
+
+export type ShippoShipment = typeof shippoShipments.$inferSelect;
+export type InsertShippoShipment = typeof shippoShipments.$inferInsert;
