@@ -8,10 +8,10 @@ const rotatingPhrases = ["Create Your Tone.", "Automate Your Tone.", "Own Your T
  * Landing Page for Boptone Platform
  * 
  * Target Audience: ARTISTS (not fans/shoppers)
- * Purpose: Convert artists to sign up for Free/Pro/Enterprise plans
+ * Purpose: Position Boptone as the necessary alternative - the platform artists have been waiting for
  * 
- * Design: Revolutionary aesthetic with thick borders, gradients, hover effects
- * Messaging: Artist-focused value proposition (distribution, analytics, financial tools)
+ * Design: BAP Protocol (black borders, brutalist shadows, rounded-lg, cyan buttons)
+ * Messaging: Hard-hitting value proposition (ownership, transparency, consolidation)
  */
 export default function Landing() {
   const [verbIndex, setVerbIndex] = useState(0);
@@ -32,49 +32,40 @@ export default function Landing() {
 
   const features = [
     {
-      title: "Career Advisor",
-      description: "Get personalized guidance on releases, marketing, and growth strategies.",
-      color: "teal"
+      title: "One Login. Your Entire Business.",
+      description: "Distribution, analytics, commerce, payments, and fan management in a single platform."
     },
     {
-      title: "Financial Management",
-      description: "Track revenue across all sources and access royalty-backed micro-loans.",
-      color: "green"
+      title: "You Keep 90%. We Keep 10%.",
+      description: "No hidden fees. No surprise charges. Transparent revenue split on everything you earn."
     },
     {
-      title: "Direct-to-Fan Commerce",
-      description: "Sell merchandise, digital downloads, and experiences directly to fans.",
-      color: "orange"
-    },
-    {
-      title: "IP Protection",
-      description: "Intelligent copyright monitoring with instant DMCA takedowns.",
-      color: "purple"
-    },
-    {
-      title: "Healthcare & Wellness",
-      description: "Artist-focused health coverage including mental health and vocal care.",
-      color: "blue"
-    },
-    {
-      title: "Tour Management",
-      description: "Plan tours, track venues, manage budgets, and maximize live revenue.",
-      color: "indigo"
+      title: "Your Data. Your Fans. Your Revenue.",
+      description: "You own your audience data. Export it anytime. No platform lock-in."
     },
     {
       title: "Global Distribution",
-      description: "Distribute your music to all major streaming platforms in real-time.",
-      color: "teal"
+      description: "Deliver your music to every major streaming platform. Real-time tracking across all services."
     },
     {
-      title: "Analytics & Insights",
-      description: "Track performance across platforms with actionable insights.",
-      color: "purple"
+      title: "Direct-to-Fan Commerce",
+      description: "Sell merchandise, digital downloads, and experiences. Keep the majority of every sale."
     },
     {
-      title: "Marketing Tools",
-      description: "Launch campaigns, track engagement, and grow your audience.",
-      color: "orange"
+      title: "Financial Tools",
+      description: "Track revenue across all sources. Access royalty-backed micro-loans when you need capital."
+    },
+    {
+      title: "IP Protection",
+      description: "Automated copyright monitoring with instant takedown capabilities to protect your work."
+    },
+    {
+      title: "Healthcare Access",
+      description: "Artist-focused health coverage including mental health support and vocal care."
+    },
+    {
+      title: "Tour Management",
+      description: "Plan tours, track venues, manage budgets, and maximize revenue from live performances."
     }
   ];
 
@@ -101,8 +92,7 @@ export default function Landing() {
         "Early access to new features"
       ],
       cta: "Contact Sales",
-      borderColor: "border-purple-500",
-      bgGradient: "from-purple-50 to-pink-50"
+      highlight: false
     },
     {
       name: "Pro",
@@ -127,8 +117,7 @@ export default function Landing() {
         "Priority support (24-hour response)"
       ],
       cta: "Start Pro",
-      borderColor: "border-teal-500",
-      bgGradient: "from-teal-50 to-cyan-50"
+      highlight: true
     },
     {
       name: "Free",
@@ -149,16 +138,15 @@ export default function Landing() {
         "Community support"
       ],
       cta: "Get Started",
-      borderColor: "border-green-500",
-      bgGradient: "from-green-50 to-emerald-50"
+      highlight: false
     }
   ];
 
   const stats = [
-    { number: "$2.5M+", label: "Paid to Artists", color: "from-green-600 to-emerald-600" },
-    { number: "50K+", label: "Tracks Distributed", color: "from-blue-600 to-indigo-600" },
-    { number: "180+", label: "Countries Reached", color: "from-purple-600 to-pink-600" },
-    { number: "99.9%", label: "Uptime", color: "from-orange-600 to-red-600" }
+    { number: "$2.5M+", label: "Paid to Artists" },
+    { number: "50K+", label: "Tracks Distributed" },
+    { number: "180+", label: "Countries Reached" },
+    { number: "99.9%", label: "Uptime" }
   ];
 
   const currentPrice = (tier: typeof tiers[0]) => 
@@ -167,18 +155,9 @@ export default function Landing() {
   const savings = (tier: typeof tiers[0]) => 
     tier.monthlyPrice > 0 ? Math.round((tier.monthlyPrice * 12 - tier.annualPrice * 12) / (tier.monthlyPrice * 12) * 100) : 0;
 
-  const colorMap: Record<string, string> = {
-    teal: "border-teal-500 bg-gradient-to-br from-teal-50 to-cyan-50",
-    green: "border-green-500 bg-gradient-to-br from-green-50 to-emerald-50",
-    orange: "border-orange-500 bg-gradient-to-br from-orange-50 to-red-50",
-    purple: "border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50",
-    blue: "border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50",
-    indigo: "border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50"
-  };
-
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Rotating Phrases for Artists */}
+      {/* Hero Section */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
@@ -188,12 +167,12 @@ export default function Landing() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl leading-relaxed">
-              Upload your music. Sell your merch. Build your audience. Get paid. All in one place.
+              The platform that consolidates your entire music business. Distribution, commerce, analytics, payments, and fan management in one place. You own your data. You keep the majority of your revenue.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="rounded-full bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white text-lg h-14 px-8 border-4 border-teal-500 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                className="rounded-full bg-[#0cc0df] hover:bg-[#0aa0bf] text-black text-lg font-bold h-14 px-8 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                 onClick={() => window.location.href = getLoginUrl()}
               >
                 Get Started Free
@@ -203,13 +182,13 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Stats Section - Revolutionary Design */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Stats Section */}
+      <section className="py-20 md:py-32 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className={`text-4xl md:text-5xl font-black mb-2 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                <div className="text-4xl md:text-5xl font-black mb-2 text-black">
                   {stat.number}
                 </div>
                 <div className="text-sm md:text-base text-gray-600 uppercase tracking-wide font-bold">
@@ -221,18 +200,15 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Features Section - Color-Coded Cards */}
+      {/* Features Section */}
       <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mb-16">
             <h2 className="text-5xl md:text-6xl font-black mb-6">
-              Everything you need to build a{" "}
-              <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
-                sustainable music career
-              </span>
+              Everything you need. Nothing you don't.
             </h2>
             <p className="text-2xl text-gray-700 leading-relaxed">
-              From distribution to healthcare, Boptone handles the business so you can focus on creating.
+              Built for artists who want control over their business without juggling multiple platforms.
             </p>
           </div>
 
@@ -240,7 +216,7 @@ export default function Landing() {
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className={`border-4 rounded-3xl p-8 transition-all duration-300 hover:scale-105 hover:shadow-2xl ${colorMap[feature.color]}`}
+                className="bg-white border-2 border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
               >
                 <h4 className="text-xl font-bold mb-3">{feature.title}</h4>
                 <p className="text-lg text-gray-700 leading-relaxed">{feature.description}</p>
@@ -250,8 +226,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Pricing Section - Revolutionary Design */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Pricing Section */}
+      <section className="py-20 md:py-32 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-5xl md:text-6xl font-black mb-6">Choose Your Plan</h2>
@@ -266,7 +242,7 @@ export default function Landing() {
               </span>
               <button
                 onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#0cc0df] focus:ring-offset-2"
               >
                 <span
                   className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
@@ -276,129 +252,136 @@ export default function Landing() {
               </button>
               <span className={`text-base font-medium ${isAnnual ? 'text-black' : 'text-gray-500'}`}>
                 Annual
-                <span className="ml-2 text-teal-600 font-bold">Save 20%</span>
+                <span className="ml-2 text-[#0cc0df] font-bold">Save 20%</span>
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {tiers.map((tier, index) => (
               <div 
                 key={index} 
-                className={`relative border-4 ${tier.borderColor} rounded-3xl p-10 flex flex-col bg-gradient-to-br ${tier.bgGradient} transition-all duration-300 hover:scale-105 hover:shadow-2xl`}
+                className={`bg-white border-2 border-black rounded-lg p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
+                  tier.highlight ? 'ring-4 ring-[#0cc0df]' : ''
+                }`}
               >
-                {/* Tier Name */}
+                {tier.highlight && (
+                  <div className="bg-[#0cc0df] text-black text-sm font-bold px-4 py-1 rounded-full inline-block mb-4">
+                    MOST POPULAR
+                  </div>
+                )}
+                <h3 className="text-3xl font-black mb-2">{tier.name}</h3>
                 <div className="mb-4">
-                  <h3 className="text-3xl font-black">{tier.name}</h3>
-                  <p className="text-lg text-gray-600 mt-2">{tier.description}</p>
-                </div>
-
-                {/* Pricing */}
-                <div className="mb-6">
-                  {tier.monthlyPrice === 0 ? (
-                    <div className="text-5xl font-black">Free</div>
-                  ) : (
-                    <div>
-                      <div className="text-5xl font-black">
-                        ${currentPrice(tier)}
-                        <span className="text-2xl text-gray-600 font-normal">/mo</span>
-                      </div>
-                      {isAnnual && savings(tier) > 0 && (
-                        <div className="text-sm text-teal-600 font-bold mt-1">
-                          Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
-                        </div>
-                      )}
+                  <span className="text-5xl font-black">${currentPrice(tier)}</span>
+                  {tier.monthlyPrice > 0 && (
+                    <span className="text-gray-600 text-lg">/{isAnnual ? 'mo' : 'month'}</span>
+                  )}
+                  {isAnnual && savings(tier) > 0 && (
+                    <div className="text-sm text-[#0cc0df] font-bold mt-1">
+                      Save {savings(tier)}% annually
                     </div>
                   )}
-                  <div className="text-base text-gray-600 mt-2">
-                    {tier.platformFee} platform fee on sales
-                  </div>
                 </div>
-
-                {/* Features List */}
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {tier.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <span className="text-teal-600 font-bold text-lg">✓</span>
-                      <span className="text-base text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA Button */}
+                <p className="text-gray-700 mb-6">{tier.description}</p>
+                <div className="mb-6">
+                  <div className="text-sm text-gray-600 mb-1">Platform Fee</div>
+                  <div className="text-2xl font-bold">{tier.platformFee}</div>
+                </div>
                 <Button 
-                  className="w-full rounded-full h-14 text-lg bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white border-4 border-teal-500 transition-all duration-300 hover:scale-105 hover:shadow-xl font-black"
+                  className={`w-full rounded-full font-bold h-12 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${
+                    tier.highlight 
+                      ? 'bg-[#0cc0df] hover:bg-[#0aa0bf] text-black' 
+                      : 'bg-white hover:bg-gray-50 text-black'
+                  }`}
                   onClick={() => window.location.href = getLoginUrl()}
                 >
                   {tier.cta}
                 </Button>
+                <ul className="mt-8 space-y-3">
+                  {tier.features.map((feature, fIndex) => (
+                    <li key={fIndex} className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-[#0cc0df] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-gray-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA Section - Bold Gradient */}
-      <section className="bg-gradient-to-r from-teal-500 via-blue-500 to-indigo-600 text-white py-20 md:py-32">
+      {/* FAQ Section */}
+      <section className="py-20 md:py-32 bg-white">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="text-5xl md:text-6xl font-black mb-12 text-center">Common Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                question: "What makes Boptone different?",
+                answer: "Boptone consolidates your entire music business into one platform. Instead of managing separate accounts for distribution, commerce, analytics, and payments, you have one login. You own your data, you keep 90% of your revenue, and there are no hidden fees."
+              },
+              {
+                question: "Can I really keep 90% of my revenue?",
+                answer: "Yes. Boptone takes a flat 10% platform fee on all revenue you generate through the platform (streaming, sales, tips, merchandise). No surprise charges, no hidden fees. If you earn $1000, you keep $900."
+              },
+              {
+                question: "Do I own my fan data?",
+                answer: "Absolutely. You own your audience data and can export it anytime. No platform lock-in. Your fans are yours, not ours."
+              },
+              {
+                question: "How does distribution work?",
+                answer: "Upload your music once, and we deliver it to all major streaming platforms (Spotify, Apple Music, Amazon Music, Deezer, and more). Track performance across all services in real-time from your dashboard."
+              },
+              {
+                question: "What if I already use other platforms?",
+                answer: "You can migrate to Boptone at your own pace. Many artists start by using Boptone for commerce or analytics while keeping existing distribution, then consolidate everything once they're comfortable."
+              }
+            ].map((faq, index) => (
+              <div key={index} className="bg-white border-2 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <button
+                  onClick={() => setFaqOpen(faqOpen === index ? null : index)}
+                  className="w-full text-left p-6 flex justify-between items-center"
+                >
+                  <span className="text-xl font-bold">{faq.question}</span>
+                  <svg 
+                    className={`w-6 h-6 transform transition-transform ${faqOpen === index ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {faqOpen === index && (
+                  <div className="px-6 pb-6 text-gray-700 text-lg leading-relaxed">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 md:py-32 bg-black text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-            Ready to Build Your Career?
-          </h2>
-          <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto opacity-90">
-            Join thousands of artists building sustainable careers on Boptone. 
-            Start free, scale as you grow.
+          <h2 className="text-5xl md:text-6xl font-black mb-6">Ready to take control?</h2>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join thousands of artists building sustainable careers on their own terms.
           </p>
           <Button 
             size="lg" 
-            className="bg-white text-teal-600 hover:bg-gray-100 text-xl px-12 py-8 h-auto rounded-full transition-all duration-300 hover:scale-110 hover:shadow-2xl border-4 border-white font-black"
+            className="rounded-full bg-[#0cc0df] hover:bg-[#0aa0bf] text-black text-lg font-bold h-14 px-8 border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]"
             onClick={() => window.location.href = getLoginUrl()}
           >
             Get Started Free
           </Button>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="font-bold mb-4">Platform</h4>
-              <ul className="space-y-2">
-                <li><a href="/dashboard" className="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
-                <li><a href="/music" className="text-gray-400 hover:text-white transition-colors">Music</a></li>
-                <li><a href="/shop" className="text-gray-400 hover:text-white transition-colors">Shop</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Resources</h4>
-              <ul className="space-y-2">
-                <li><a href="/help" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="/api" className="text-gray-400 hover:text-white transition-colors">API Docs</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Company</h4>
-              <ul className="space-y-2">
-                <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About</a></li>
-                <li><a href="/careers" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-                <li><a href="/press" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Legal</h4>
-              <ul className="space-y-2">
-                <li><a href="/terms" className="text-gray-400 hover:text-white transition-colors">Terms</a></li>
-                <li><a href="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="/cookies" className="text-gray-400 hover:text-white transition-colors">Cookies</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            © 2026 Boptone. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
