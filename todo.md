@@ -2936,3 +2936,14 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Landing page now positions Boptone as the consolidation platform artists have been waiting for, not just another distribution service
+
+
+---
+
+## 🔧 Landing Page Copy Fix ✅ COMPLETE
+
+- [x] Replace "You keep the majority of your revenue" with "You keep 90% of your revenue" in hero section
+- [x] Test updated copy
+- [x] Save checkpoint
+
+**Result:** Direct-to-Fan Commerce section now says "Keep 90% of every sale" - specific and transparent instead of vague "majority"

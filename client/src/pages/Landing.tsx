@@ -49,7 +49,7 @@ export default function Landing() {
     },
     {
       title: "Direct-to-Fan Commerce",
-      description: "Sell merchandise, digital downloads, and experiences. Keep the majority of every sale."
+      description: "Sell merchandise, digital downloads, and experiences. Keep 90% of every sale."
     },
     {
       title: "Financial Tools",
