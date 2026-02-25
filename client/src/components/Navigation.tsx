@@ -43,6 +43,11 @@ export function Navigation() {
     enabled: isAuthenticated,
   });
 
+  // Fetch cart count for badge
+  const { data: cartCount = 0 } = trpc.cart.count.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
+
   // Close mobile menu when clicking a link
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -243,7 +248,7 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Desktop Right Side - AI Chat + Auth */}
+          {/* Desktop Right Side - AI Chat + Cart + Auth */}
           <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
             {/* AI Chat Icon */}
             <Button
@@ -255,6 +260,25 @@ export function Navigation() {
             >
               <MessageCircle className="w-5 h-5 text-gray-700" />
             </Button>
+
+            {/* Shopping Cart Icon with Badge */}
+            {isAuthenticated && (
+              <Link href="/cart">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full w-11 h-11 hover:bg-gray-100 transition-colors relative"
+                  aria-label="Shopping Cart"
+                >
+                  <ShoppingBag className="w-5 h-5 text-gray-700" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </span>
+                  )}
+                </Button>
+              </Link>
+            )}
 
             {isAuthenticated ? (
               <>
@@ -310,7 +334,7 @@ export function Navigation() {
             )}
           </div>
 
-          {/* Mobile Right Side - AI Chat + Hamburger */}
+          {/* Mobile Right Side - AI Chat + Cart + Hamburger */}
           <div className="lg:hidden flex items-center gap-3">
             {/* AI Chat Icon */}
             <Button
@@ -322,6 +346,25 @@ export function Navigation() {
             >
               <MessageCircle className="w-5 h-5 text-gray-700" />
             </Button>
+
+            {/* Shopping Cart Icon with Badge */}
+            {isAuthenticated && (
+              <Link href="/cart">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full w-11 h-11 hover:bg-gray-100 transition-colors relative"
+                  aria-label="Shopping Cart"
+                >
+                  <ShoppingBag className="w-5 h-5 text-gray-700" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </span>
+                  )}
+                </Button>
+              </Link>
+            )}
 
             {/* Hamburger Menu Button */}
             <Button

@@ -15,15 +15,16 @@ export default function Cart() {
   const utils = trpc.useUtils();
 
   // Fetch cart
-  const { data: cartItems, isLoading } = trpc.ecommerce.cart.get.useQuery(
+  const { data: cartItems, isLoading } = trpc.cart.list.useQuery(
     undefined,
     { enabled: isAuthenticated }
   );
 
   // Update cart item
-  const updateCart = trpc.ecommerce.cart.update.useMutation({
+  const updateCart = trpc.cart.updateQuantity.useMutation({
     onSuccess: () => {
-      utils.ecommerce.cart.get.invalidate();
+      utils.cart.list.invalidate();
+      utils.cart.count.invalidate();
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update cart");
@@ -31,9 +32,10 @@ export default function Cart() {
   });
 
   // Remove from cart
-  const removeFromCart = trpc.ecommerce.cart.remove.useMutation({
+  const removeFromCart = trpc.cart.remove.useMutation({
     onSuccess: () => {
-      utils.ecommerce.cart.get.invalidate();
+      utils.cart.list.invalidate();
+      utils.cart.count.invalidate();
       toast.success("Item removed from cart");
     },
     onError: (error) => {
@@ -42,13 +44,27 @@ export default function Cart() {
   });
 
   // Clear cart
-  const clearCart = trpc.ecommerce.cart.clear.useMutation({
+  const clearCart = trpc.cart.clear.useMutation({
     onSuccess: () => {
-      utils.ecommerce.cart.get.invalidate();
+      utils.cart.list.invalidate();
+      utils.cart.count.invalidate();
       toast.success("Cart cleared");
     },
     onError: (error) => {
       toast.error(error.message || "Failed to clear cart");
+    },
+  });
+
+  // Checkout
+  const checkout = trpc.checkout.createSession.useMutation({
+    onSuccess: (data) => {
+      if (data.url) {
+        window.open(data.url, "_blank");
+        toast.success("Redirecting to checkout...");
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to create checkout session");
     },
   });
 
@@ -82,7 +98,10 @@ export default function Cart() {
     );
   }
 
-  const subtotal = cartItems?.reduce((sum, item) => sum + item.priceAtAdd * item.quantity, 0) || 0;
+  const subtotal = cartItems?.reduce((sum, item) => {
+    const price = item.variant?.price || item.product?.price || "0";
+    return sum + parseFloat(price) * item.quantity;
+  }, 0) || 0;
   const isEmpty = !cartItems || cartItems.length === 0;
 
   return (
@@ -160,7 +179,7 @@ export default function Cart() {
                         {item.product?.name || "Product"}
                       </h3>
                       <p className="text-xl text-gray-600 mb-4">
-                        ${(item.priceAtAdd / 100).toFixed(2)} each
+                        ${parseFloat(item.variant?.price || item.product?.price || "0").toFixed(2)} each
                       </p>
 
                       {/* Quantity Controls */}
@@ -171,7 +190,7 @@ export default function Cart() {
                           onClick={() => {
                             if (item.quantity > 1) {
                               updateCart.mutate({
-                                id: item.id,
+                                cartItemId: item.id,
                                 quantity: item.quantity - 1,
                               });
                             }
@@ -188,7 +207,7 @@ export default function Cart() {
                           size="sm"
                           onClick={() => {
                             updateCart.mutate({
-                              id: item.id,
+                              cartItemId: item.id,
                               quantity: item.quantity + 1,
                             });
                           }}
@@ -202,12 +221,12 @@ export default function Cart() {
                     {/* Item Total & Remove */}
                     <div className="text-right">
                       <div className="text-2xl font-bold mb-4">
-                        ${((item.priceAtAdd * item.quantity) / 100).toFixed(2)}
+                        ${(parseFloat(item.variant?.price || item.product?.price || "0") * item.quantity).toFixed(2)}
                       </div>
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => removeFromCart.mutate({ id: item.id })}
+                        onClick={() => removeFromCart.mutate({ cartItemId: item.id })}
                         className="border border-red-200 text-red-600 rounded-lg hover:border-red-400 transition-colors"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
@@ -236,7 +255,7 @@ export default function Cart() {
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-xl">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="font-bold">${(subtotal / 100).toFixed(2)}</span>
+                    <span className="font-bold">${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-xl">
                     <span className="text-gray-600">Shipping</span>
@@ -245,19 +264,19 @@ export default function Cart() {
                   <div className="border-t-2 border-gray-200 pt-4">
                     <div className="flex justify-between text-2xl">
                       <span className="font-bold">Total</span>
-                      <span className="font-bold">${(subtotal / 100).toFixed(2)}</span>
+                      <span className="font-bold">${subtotal.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
 
-                <Link href="/checkout">
-                  <Button
-                    size="lg"
-                    className="w-full bg-black text-white text-xl py-6 rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all"
-                  >
-                    Proceed to Checkout
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  onClick={() => checkout.mutate()}
+                  disabled={checkout.isPending}
+                  className="w-full bg-black text-white text-xl py-6 rounded-xl shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all"
+                >
+                  {checkout.isPending ? "Processing..." : "Proceed to Checkout"}
+                </Button>
 
                 <p className="text-sm text-gray-500 text-center mt-4">
                   Secure checkout powered by Stripe

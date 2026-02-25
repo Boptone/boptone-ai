@@ -156,11 +156,15 @@
 ## 🛒 BopShop (E-Commerce)
 
 ### ✅ Core Features (COMPLETE)
-- [x] Database schema (products, productVariants, orders, orderItems, shippingLabels, trackingEvents)
+- [x] Database schema (products, productVariants, orders, orderItems, shippingLabels, trackingEvents, cartItems, wishlist)
 - [x] Product management (create, edit, delete)
 - [x] Variant support (size, color, etc.)
-- [x] Shopping cart functionality
-- [x] Checkout flow with Stripe integration
+- [x] Shopping cart functionality with cart/checkout routers
+- [x] Checkout flow with Stripe integration (opens in new tab)
+- [x] Order confirmation page (/checkout/success)
+- [x] Cart badge in navigation with item count
+- [x] "Add to Cart" buttons on Shop product cards
+- [x] Wishlist system with lightning bolt icons
 - [x] Order management dashboard
 - [x] Shipping label generation (Shippo integration)
 - [x] Tracking events
@@ -3042,3 +3046,51 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Hero now displays single rotating words ("Create", "Automate", "Own") above static "Your Tone." text. Significantly reduces jumpiness and creates stable visual anchor. Rotation every 3 seconds with smooth 500ms fade transition.
+
+
+---
+
+## 🛒 Shopping Cart & Stripe Checkout System
+
+### Database Schema
+- [x] Create cart table (userId, createdAt, updatedAt) - Already exists!
+- [x] Create cartItems table (cartId, productId, quantity, price, variant) - Already exists!
+- [x] Create orders table (userId, stripeSessionId, status, total, shippingAddress) - Already exists!
+- [x] Create orderItems table (orderId, productId, quantity, price, variant) - Already exists!
+- [x] Push database schema changes - Schema complete!
+
+### Backend API
+- [ ] Create cart router with CRUD operations (add, remove, update quantity, clear)
+- [ ] Create checkout router for Stripe session creation
+- [ ] Create webhook handler for Stripe payment events
+- [ ] Add order creation logic on successful payment
+- [ ] Test API endpoints
+
+### Cart Page
+- [ ] Create /cart page with product list
+- [ ] Add quantity controls (increase/decrease)
+- [ ] Add remove item functionality
+- [ ] Show cart totals (subtotal, shipping, total)
+- [ ] Add checkout button
+- [ ] Handle empty cart state
+
+### Stripe Integration
+- [ ] Configure Stripe checkout session with product line items
+- [ ] Add shipping address collection
+- [ ] Handle successful payment redirect
+- [ ] Create order confirmation page
+- [ ] Test payment flow with test card
+
+### Navigation & Shop Integration
+- [ ] Add cart badge to navigation showing item count
+- [ ] Add "Add to Cart" buttons to shop product cards
+- [ ] Add "Add to Cart" to product quick-view modal
+- [ ] Show success toast on add to cart
+- [ ] Update cart badge count on add/remove
+
+### Testing
+- [ ] Test add to cart from shop page
+- [ ] Test cart page CRUD operations
+- [ ] Test Stripe checkout flow
+- [ ] Test order creation and confirmation
+- [ ] Save checkpoint

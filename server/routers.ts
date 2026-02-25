@@ -31,6 +31,8 @@ import { reviewRouter } from "./routers/reviews";
 import { gdprRouter } from "./routers/gdpr";
 import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
 import { wishlistRouter } from "./routers/wishlist";
+import { cartRouter } from "./routers/cart";
+import { checkoutRouter } from "./routers/checkout";
 import { stripeConnectRouter } from "./routers/stripeConnect";
 import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { playlistRouter } from "./routers/playlist";
@@ -774,6 +776,10 @@ export const appRouter = router({
 
   // Wishlist System (BopShop)
   wishlist: wishlistRouter,
+
+  // Shopping Cart System (BopShop)
+  cart: cartRouter,
+  checkout: checkoutRouter,
 
   // Cookie Preferences Management
   cookiePreferences: router({

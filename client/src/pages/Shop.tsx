@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Zap } from "lucide-react";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Zap, Plus } from "lucide-react";
+import { toast } from "sonner";
 
 // Wishlist Button Component with Lightning Bolt
 function WishlistButton({ productId }: { productId: number }) {
@@ -67,12 +68,19 @@ export default function Shop() {
     limit: 100,
   });
 
-  // Get cart count
-  const { data: cart } = trpc.ecommerce.cart.get.useQuery(undefined, {
-    enabled: !!user,
-  });
+  const utils = trpc.useUtils();
 
-  const cartItemCount = cart?.reduce((sum: number, item: any) => sum + item.quantity, 0) || 0;
+  // Add to cart mutation
+  const addToCart = trpc.cart.add.useMutation({
+    onSuccess: () => {
+      utils.cart.list.invalidate();
+      utils.cart.count.invalidate();
+      toast.success("Added to cart!");
+    },
+    onError: () => {
+      toast.error("Failed to add to cart");
+    },
+  });
 
   const categories = [
     { value: null, label: "All", icon: Package },
@@ -241,6 +249,24 @@ export default function Shop() {
                         </Badge>
                       )}
                     </div>
+                    
+                    {/* Add to Cart Button */}
+                    {product.status === "active" && user && (
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addToCart.mutate({
+                            productId: product.id,
+                            quantity: 1,
+                          });
+                        }}
+                        disabled={addToCart.isPending}
+                        className="w-full mt-4 rounded-full bg-[#0cc0df] hover:bg-[#0aa0bf] text-black text-lg font-bold h-12 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                      >
+                        <ShoppingCart className="w-5 h-5 mr-2" />
+                        Add to Cart
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>
