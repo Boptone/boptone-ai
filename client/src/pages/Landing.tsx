@@ -161,17 +161,17 @@ export default function Landing() {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl">
-            <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-6 leading-[1.1] sm:leading-tight">
               <span className={`inline-block transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                 {rotatingWords[verbIndex]}
               </span>
               <br />
               <span>Your Tone.</span>
             </h1>
-            <p className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-gray-900">
               Boptone
             </p>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
               The Autonomous Operating System for Artists.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
