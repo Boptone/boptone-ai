@@ -56,7 +56,7 @@ export default function Dashboard() {
           <p className="text-lg text-gray-600 mb-8">
             Create your artist profile to take control of your career
           </p>
-          <Button onClick={() => setLocation("/onboarding")} className="w-full rounded-full h-14 text-lg bg-[#008B8B] hover:bg-[#006666] text-white border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
+                <Button onClick={() => setLocation("/onboarding")} className="w-full rounded-full h-14 text-lg bg-[#0cc0df] hover:bg-[#0aabca] text-black border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
             Get Started
           </Button>
         </div>
@@ -131,7 +131,7 @@ export default function Dashboard() {
       <DemoBanner />
       <div className="min-h-screen bg-white">
         {/* Header - Minimal with massive typography */}
-        <div className="border-b border-gray-200 bg-white">
+        <div className="border-b border-black bg-white">
           <div className="container py-20">
             <div className="flex items-start justify-between">
               {/* Left: Avatar + Massive Typography */}
@@ -156,7 +156,7 @@ export default function Dashboard() {
                     </span>
                   )}
                 </Button>
-                <Button onClick={() => setLocation("/ai-advisor")} size="lg" className="gap-2 bg-[#008B8B] hover:bg-[#006666] text-white rounded-full border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
+                <Button onClick={() => setLocation("/ai-advisor")} size="lg" className="gap-2 bg-[#0cc0df] hover:bg-[#0aabca] text-black rounded-full border border-black shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all">
                   AI Advisor
                 </Button>
               </div>
@@ -181,7 +181,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat) => {
               return (
-                <div key={stat.title} className="border border-black hover:border-black transition-colors bg-white p-8 rounded-3xl shadow-[4px_4px_0px_0px_black]">
+                <div key={stat.title} className="border border-black hover:border-black transition-colors bg-white p-8 rounded-lg shadow-[4px_4px_0px_0px_black]">
                   <p className="text-sm text-gray-500 font-medium uppercase tracking-wide mb-3">{stat.title}</p>
                   <p className="text-5xl font-bold text-gray-900 mb-2">{stat.value}</p>
                   <p className={`text-sm font-medium ${stat.trend === "up" ? "text-[#008B8B]" : stat.trend === "down" ? "text-gray-600" : "text-gray-500"}`}>
@@ -199,7 +199,7 @@ export default function Dashboard() {
           <AIRecommendations />
 
           {/* Quick Actions - BAP Protocol design */}
-          <div className="border border-black bg-white p-12 rounded-3xl shadow-[4px_4px_0px_0px_black]">
+          <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Quick Actions</h2>
             <p className="text-lg text-gray-600 mb-10">Common tasks to manage your career</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -207,7 +207,7 @@ export default function Dashboard() {
                 return (
                   <button
                     key={action.label}
-                    className="p-8 border border-black hover:bg-gray-50 transition-all text-center rounded-3xl shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black]"
+                    className="p-8 border border-black hover:bg-gray-50 transition-all text-center rounded-lg shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black]"
                     onClick={() => setLocation(action.href)}
                   >
                     <span className="text-lg font-semibold text-gray-900">{action.label}</span>
@@ -218,7 +218,7 @@ export default function Dashboard() {
           </div>
 
           {/* Compliance Score Widget - BAP Protocol design */}
-          <div className="border border-black hover:border-black transition-colors bg-white p-12 rounded-xl shadow-[4px_4px_0px_0px_black]">
+          <div className="border border-black hover:border-black transition-colors bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-3xl font-bold mb-6">Compliance Score</h2>
             <div className="flex items-center justify-between mb-8">
               <div>
@@ -255,7 +255,7 @@ export default function Dashboard() {
           </div>
 
           {/* Goals Progress - BAP Protocol design */}
-          <div className="border border-black bg-white p-12 rounded-3xl shadow-[4px_4px_0px_0px_black]">
+          <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Your Goals</h2>
             <p className="text-lg text-gray-600 mb-10">Track your progress toward key milestones</p>
             <div className="space-y-6">
@@ -275,12 +275,12 @@ export default function Dashboard() {
           </div>
 
           {/* Growth Tips - BAP Protocol design */}
-          <div className="border border-black bg-white p-12 rounded-3xl shadow-[4px_4px_0px_0px_black]">
+          <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Growth Tips</h2>
             <p className="text-lg text-gray-600 mb-10">Personalized recommendations to accelerate your career</p>
             <div className="grid md:grid-cols-3 gap-6">
               {tips.map((tip) => (
-                <div key={tip.title} className="border border-black p-8 rounded-xl shadow-[4px_4px_0px_0px_black]">
+                <div key={tip.title} className="border border-black p-8 rounded-lg shadow-[4px_4px_0px_0px_black]">
                   <h3 className="text-xl font-bold mb-3">{tip.title}</h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">{tip.description}</p>
                   <Button

@@ -2846,3 +2846,18 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Test all updated pages
 - [ ] Create final audit report
 - [ ] Save checkpoint
+
+---
+
+## 🎨 BAP Protocol Site-Wide Audit - Tier 2 (IN PROGRESS)
+
+### Tier 2: Core User Experience Pages
+- [ ] ~~Discover.tsx - Music discovery page (/music)~~ DEFERRED - Dark theme requires separate design review
+- [x] BopShopLanding.tsx - Shop landing page (/shop)
+- [x] Dashboard.tsx - Main artist dashboard
+- [x] Test all Tier 2 pages on desktop and mobile
+- [x] Save checkpoint
+
+### Future: Discover.tsx Dark Theme Review
+- [ ] Decide whether to keep dark theme or convert to light BAP Protocol
+- [ ] Update Discover.tsx with chosen design direction

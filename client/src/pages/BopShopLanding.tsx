@@ -64,7 +64,7 @@ export default function Shop() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="What are you looking for? T-shirt, Vinyl, Hoodie, Hat..."
-                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-black focus:ring-2 focus:ring-gray-300 resize-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-black focus:border-black focus:ring-2 focus:ring-black resize-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 rows={3}
               />
               <div className="absolute bottom-4 right-4 flex items-center gap-2 text-sm text-gray-500">
@@ -114,9 +114,9 @@ export default function Shop() {
 
       {/* Featured Collection */}
       <div className="container mx-auto px-4 mb-20">
-        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <div className="bg-white rounded-lg p-12 border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="w-48 h-48 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex-shrink-0"></div>
+            <div className="w-48 h-48 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex-shrink-0"></div>
             <div className="flex-1">
               <Badge className="rounded-full bg-black text-white px-4 py-1 text-sm font-bold mb-4">
                 FEATURED COLLECTION
@@ -129,7 +129,7 @@ export default function Shop() {
               </p>
               <Button
                 onClick={() => setLocation("/artist/luna-rivers")}
-                className="rounded-full px-8 py-6 bg-black text-white hover:bg-gray-800 text-lg font-semibold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                className="rounded-full px-8 py-6 bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black text-lg font-semibold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 Shop Collection →
               </Button>
@@ -152,7 +152,7 @@ export default function Shop() {
               {/* Sort By */}
               <button
                 onClick={() => setSortMenuOpen(!sortMenuOpen)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-gray-300 hover:border-black transition-colors"
+                className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-black hover:bg-gray-50 transition-colors"
               >
                 <ArrowUpDown className="w-5 h-5" />
                 <span className="font-medium">Sort By</span>
@@ -160,7 +160,7 @@ export default function Shop() {
               {/* View As List */}
               <button
                 onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-gray-300 hover:border-black transition-colors"
+                className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-black hover:bg-gray-50 transition-colors"
               >
                 {viewMode === 'grid' ? <List className="w-5 h-5" /> : <Grid3x3 className="w-5 h-5" />}
                 <span className="font-medium">{viewMode === 'grid' ? 'List View' : 'Grid View'}</span>
@@ -181,7 +181,7 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className={`rounded-xl cursor-pointer hover:shadow-lg transition-all duration-300 bg-white overflow-hidden border border-gray-100 ${
+                className={`rounded-lg cursor-pointer hover:shadow-lg transition-all duration-300 bg-white overflow-hidden border border-black ${
                   viewMode === 'grid' ? 'hover:scale-[1.01]' : 'flex flex-row'
                 }`}
                 onClick={() => setQuickViewProduct(product)}
@@ -222,7 +222,7 @@ export default function Shop() {
           </div>
         ) : (
           <div className="max-w-3xl mx-auto text-center py-24">
-            <div className="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
+            <div className="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-8">
               <Package className="w-16 h-16 text-gray-400" />
             </div>
             <h2 className="text-6xl font-bold mb-6 text-gray-900">
@@ -233,7 +233,7 @@ export default function Shop() {
             </p>
             <Button
               onClick={() => setLocation("/music")}
-              className="rounded-full text-lg px-10 py-7 bg-gray-900 hover:bg-gray-800 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className="rounded-full text-lg px-10 py-7 bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               size="lg"
             >
               Discover Artists
