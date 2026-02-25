@@ -1,4 +1,4 @@
-import { int, bigint, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, index } from "drizzle-orm/mysql-core";
+import { int, bigint, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, index, date } from "drizzle-orm/mysql-core";
 
 /**
  * BOPTONE DATABASE SCHEMA
@@ -816,44 +816,29 @@ export type InsertHealthcarePlan = typeof healthcarePlans.$inferInsert;
 // ============================================================================
 
 /**
- * AI Conversations - Unified table for both public AI chat and personal Toney
- * CRITICAL SECURITY: 
- * - Public AI chat: conversationType="public", userId can be null (anonymous)
- * - Personal Toney: conversationType="toney", userId MUST be set, ALWAYS filter by userId
- * - Each artist's Toney is completely isolated - zero cross-user data access
+ * AI Conversations - STUB matching existing database schema
+ * TODO: Migrate to new schema with conversationType field
+ * Current database schema: artistId (required), no userId, no conversationType
  */
 export const aiConversations = mysqlTable("ai_conversations", {
   id: int("id").autoincrement().primaryKey(),
-  
-  // User association - REQUIRED for Toney, optional for public chat
-  userId: int("userId").references(() => users.id),
-  artistId: int("artistId").references(() => artistProfiles.id),
-  
-  // Conversation type determines isolation rules
-  conversationType: mysqlEnum("conversationType", ["public", "toney"]).default("public").notNull(),
-  
-  // Conversation title (auto-generated from first message)
-  title: varchar("title", { length: 255 }),
-  
-  // Messages stored as JSON array
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
   messages: json("messages").$type<Array<{
     role: "user" | "assistant" | "system";
     content: string;
     timestamp: string;
   }>>(),
-  
-  // Context/topic for categorization
-  context: mysqlEnum("context", ["career_advice", "release_strategy", "content_ideas", "financial_planning", "tour_planning", "general", "search"]).notNull(),
-  
-  // Token usage tracking
+  context: mysqlEnum("context", ["career_advice", "release_strategy", "content_ideas", "financial_planning", "tour_planning", "general"]).notNull(),
   tokensUsed: int("tokensUsed").default(0).notNull(),
-  
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  // Added fields for compatibility with new code (will be null in existing rows)
+  userId: int("userId").references(() => users.id),
+  conversationType: mysqlEnum("conversationType", ["public", "toney"]).default("public"),
+  title: varchar("title", { length: 255 }),
 }, (table) => ({
-  userIdIdx: index("user_id_idx").on(table.userId),
   artistIdIdx: index("artist_id_idx").on(table.artistId),
-  conversationTypeIdx: index("conversation_type_idx").on(table.conversationType),
+  userIdIdx: index("user_id_idx").on(table.userId),
 }));
 
 export type AIConversation = typeof aiConversations.$inferSelect;
@@ -3621,3 +3606,169 @@ export const aiEvents = mysqlTable("ai_events", {
 
 export type AIEvent = typeof aiEvents.$inferSelect;
 export type InsertAIEvent = typeof aiEvents.$inferInsert;
+
+
+/**
+ * ========================================
+ * FAN STREAMING WALLET SYSTEM (Layer 1)
+ * ========================================
+ * Core monetization layer for Boptone's "Music Business 2.0" model.
+ * Fans preload $5-$20, streams debit at $0.01-$0.03 per play.
+ * Artists get paid instantly (95%), Boptone takes 5% protocol fee.
+ */
+
+/**
+ * Fan Wallets
+ * Preloaded balance system for streaming payments
+ */
+export const fanWallets = mysqlTable("fan_wallets", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // User reference (one wallet per user)
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }).unique(),
+  
+  // Balance tracking (all amounts in cents)
+  balance: int("balance").default(0).notNull(), // Current balance in cents
+  lifetimeSpent: int("lifetimeSpent").default(0).notNull(), // Total amount spent on streams
+  lifetimeTopups: int("lifetimeTopups").default(0).notNull(), // Total amount added to wallet
+  
+  // Auto-reload settings
+  autoReloadEnabled: boolean("autoReloadEnabled").default(false).notNull(),
+  autoReloadThreshold: int("autoReloadThreshold").default(500).notNull(), // Reload when balance < $5
+  autoReloadAmount: int("autoReloadAmount").default(2000).notNull(), // Reload $20
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  lastTopupAt: timestamp("lastTopupAt"),
+  lastDebitAt: timestamp("lastDebitAt"),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  balanceIdx: index("balance_idx").on(table.balance), // For low balance queries
+  autoReloadIdx: index("auto_reload_idx").on(table.autoReloadEnabled, table.balance), // For auto-reload triggers
+}));
+
+export type FanWallet = typeof fanWallets.$inferSelect;
+export type InsertFanWallet = typeof fanWallets.$inferInsert;
+
+/**
+ * Stream Debits
+ * Per-stream payment tracking with protocol fee split
+ */
+export const streamDebits = mysqlTable("stream_debits", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  fanWalletId: int("fanWalletId").notNull().references(() => fanWallets.id, { onDelete: "cascade" }),
+  streamId: int("streamId").notNull().references(() => bapStreams.id, { onDelete: "cascade" }),
+  trackId: int("trackId").notNull().references(() => bapTracks.id, { onDelete: "cascade" }),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id, { onDelete: "cascade" }),
+  
+  // Payment amounts (all in cents)
+  amount: int("amount").notNull(), // Total debit amount (1-3 cents per stream)
+  balanceBefore: int("balanceBefore").notNull(), // Fan balance before debit
+  balanceAfter: int("balanceAfter").notNull(), // Fan balance after debit
+  
+  // Fee split
+  protocolFee: int("protocolFee").notNull(), // 5% to Boptone
+  artistPayout: int("artistPayout").notNull(), // 95% to artist
+  
+  // Processing status
+  processed: boolean("processed").default(false).notNull(), // Batch processing flag
+  processedAt: timestamp("processedAt"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  fanWalletIdIdx: index("fan_wallet_id_idx").on(table.fanWalletId),
+  streamIdIdx: index("stream_id_idx").on(table.streamId),
+  trackIdIdx: index("track_id_idx").on(table.trackId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+  processedIdx: index("processed_idx").on(table.processed),
+  // Composite indexes for common queries
+  fanWalletCreatedIdx: index("fan_wallet_created_idx").on(table.fanWalletId, table.createdAt),
+  artistCreatedIdx: index("artist_created_idx").on(table.artistId, table.createdAt),
+  processedCreatedIdx: index("processed_created_idx").on(table.processed, table.createdAt), // For batch processing
+}));
+
+export type StreamDebit = typeof streamDebits.$inferSelect;
+export type InsertStreamDebit = typeof streamDebits.$inferInsert;
+
+/**
+ * Wallet Topups
+ * Fan wallet recharge transactions (Stripe, PayPal, crypto)
+ */
+export const walletTopups = mysqlTable("wallet_topups", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  fanWalletId: int("fanWalletId").notNull().references(() => fanWallets.id, { onDelete: "cascade" }),
+  
+  // Payment details
+  amount: int("amount").notNull(), // Amount in cents
+  paymentMethod: varchar("paymentMethod", { length: 50 }).notNull(), // "stripe", "paypal", "crypto"
+  
+  // Payment processor references
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }),
+  paypalTransactionId: varchar("paypalTransactionId", { length: 255 }),
+  cryptoTxHash: varchar("cryptoTxHash", { length: 255 }),
+  
+  // Status tracking
+  status: mysqlEnum("status", ["pending", "completed", "failed", "refunded"]).default("pending").notNull(),
+  failureReason: text("failureReason"),
+  
+  // Auto-reload flag
+  isAutoReload: boolean("isAutoReload").default(false).notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  completedAt: timestamp("completedAt"),
+  failedAt: timestamp("failedAt"),
+  refundedAt: timestamp("refundedAt"),
+}, (table) => ({
+  fanWalletIdIdx: index("fan_wallet_id_idx").on(table.fanWalletId),
+  statusIdx: index("status_idx").on(table.status),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+  stripePaymentIntentIdIdx: index("stripe_payment_intent_id_idx").on(table.stripePaymentIntentId),
+  // Composite for wallet transaction history
+  fanWalletStatusIdx: index("fan_wallet_status_idx").on(table.fanWalletId, table.status),
+  fanWalletCreatedIdx: index("fan_wallet_created_idx").on(table.fanWalletId, table.createdAt),
+}));
+
+export type WalletTopup = typeof walletTopups.$inferSelect;
+export type InsertWalletTopup = typeof walletTopups.$inferInsert;
+
+/**
+ * Protocol Revenue
+ * Boptone's 5% protocol fee tracking (for analytics and reporting)
+ */
+export const protocolRevenue = mysqlTable("protocol_revenue", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Revenue source
+  source: varchar("source", { length: 50 }).notNull(), // "streaming", "ecommerce", "tips"
+  sourceId: int("sourceId"), // Reference to streamDebit, order, etc.
+  
+  // Amount tracking (in cents)
+  amount: int("amount").notNull(), // Protocol fee collected
+  grossAmount: int("grossAmount").notNull(), // Total transaction amount
+  
+  // Artist reference (for reporting)
+  artistId: int("artistId").references(() => artistProfiles.id, { onDelete: "set null" }),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  recordedDate: date("recordedDate").notNull(), // For daily/monthly aggregation
+}, (table) => ({
+  sourceIdx: index("source_idx").on(table.source),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+  recordedDateIdx: index("recorded_date_idx").on(table.recordedDate),
+  // Composite for revenue reporting
+  sourceArtistIdx: index("source_artist_idx").on(table.source, table.artistId),
+  dateSourceIdx: index("date_source_idx").on(table.recordedDate, table.source),
+}));
+
+export type ProtocolRevenue = typeof protocolRevenue.$inferSelect;
+export type InsertProtocolRevenue = typeof protocolRevenue.$inferInsert;

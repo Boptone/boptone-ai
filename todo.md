@@ -3438,3 +3438,260 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Save Manus checkpoint
 - [ ] Push to GitHub (boptone-ai)
 - [ ] Verify sync
+
+
+## 🎯 Strategic Gap Analysis - Core Monetization Layer (Session 5)
+
+### 🔴 Priority 0 - Critical (Blocking "Music Business 2.0" Launch)
+
+#### Fan Streaming Wallet System (Layer 1)
+- [ ] Create `fanWallets` table (userId, balance, lifetimeSpent, autoReloadEnabled, autoReloadThreshold, autoReloadAmount)
+- [ ] Create `streamDebits` table (fanWalletId, streamId, trackId, artistId, amount, balanceBefore, balanceAfter)
+- [ ] Create `walletTopups` table (fanWalletId, amount, paymentMethod, stripePaymentIntentId, status)
+- [ ] Build fan wallet router (server/routers/fanWallet.ts)
+  - [ ] fanWallet.getBalance - Get current wallet balance
+  - [ ] fanWallet.topup - Add funds to wallet (Stripe integration)
+  - [ ] fanWallet.getHistory - Get transaction history
+  - [ ] fanWallet.enableAutoReload - Enable auto-reload when balance < threshold
+- [ ] Build wallet topup UI (client/src/pages/Wallet.tsx)
+  - [ ] Wallet balance display
+  - [ ] Topup form ($5, $10, $20, custom amount)
+  - [ ] Auto-reload settings
+  - [ ] Transaction history
+- [ ] Build per-stream debit logic
+  - [ ] Calculate per-stream cost ($0.01-$0.03 based on artist pricing)
+  - [ ] Debit fan wallet on stream play
+  - [ ] Credit artist wallet instantly
+  - [ ] Batch processing (aggregate micro-payments every 5 minutes)
+- [ ] Add protocol fee calculation (5% on direct streaming revenue)
+- [ ] Test with 10 beta artists
+
+#### Superfan Monetization Features
+- [ ] Create `superfanTiers` table (artistId, tierName, price, perks)
+- [ ] Create `exclusiveContent` table (artistId, contentType, contentUrl, tierRequired)
+- [ ] Create `fanBadges` table (userId, badgeType, earnedAt)
+- [ ] Build superfan router (server/routers/superfan.ts)
+  - [ ] superfan.getTiers - Get artist's superfan tiers
+  - [ ] superfan.subscribe - Subscribe to superfan tier
+  - [ ] superfan.getExclusiveContent - Get gated content
+  - [ ] superfan.getBadges - Get fan's earned badges
+- [ ] Build exclusive content UI
+  - [ ] Gated tracks (superfans only)
+  - [ ] Behind-the-scenes videos
+  - [ ] Early access to new releases
+- [ ] Build community features
+  - [ ] Artist-fan messaging
+  - [ ] Fan forums (per artist)
+  - [ ] Discord integration
+- [ ] Build identity signaling
+  - [ ] Superfan badges (Bronze, Silver, Gold)
+  - [ ] Profile icons (special avatars for top fans)
+  - [ ] Leaderboards (top fans by spend, engagement)
+
+### 🟡 Priority 1 - High (Launch Soon After Core)
+
+#### Distribution Bridge (Layer 2)
+- [ ] Build distribution router (server/routers/distribution.ts)
+  - [ ] distribution.selectPlatforms - Choose Direct + DSP, Direct Only, DSP Only
+  - [ ] distribution.submitTrack - Submit track to selected platforms
+  - [ ] distribution.checkStatus - Poll distribution status
+  - [ ] distribution.getRevenue - Fetch revenue from DSPs
+- [ ] Build distribution UI (client/src/pages/Distribution.tsx)
+  - [ ] Platform selection checkboxes (Spotify, Apple Music, Tidal, etc.)
+  - [ ] Distribution mode selector (Direct + DSP, Direct Only, DSP Only)
+  - [ ] Status dashboard (pending, live, failed)
+  - [ ] Revenue breakdown per platform
+- [ ] Integrate DistroKid API (or build custom distribution rail)
+- [ ] Integrate TuneCore API
+- [ ] Test with 100 beta artists
+
+#### Fan CRM & Email Marketing
+- [ ] Build fan CRM router (server/routers/fanCRM.ts)
+  - [ ] fanCRM.exportEmails - Export fan emails (CSV)
+  - [ ] fanCRM.segmentFans - Segment fans (superfans, casual listeners, one-time buyers)
+  - [ ] fanCRM.getFanLTV - Get fan lifetime value
+  - [ ] fanCRM.getFanEngagement - Get fan engagement score
+- [ ] Build email marketing router (server/routers/emailMarketing.ts)
+  - [ ] emailMarketing.createCampaign - Create email campaign
+  - [ ] emailMarketing.sendCampaign - Send email campaign
+  - [ ] emailMarketing.getCampaignAnalytics - Get open rates, click rates, conversions
+- [ ] Build fan analytics dashboard (client/src/pages/FanAnalytics.tsx)
+  - [ ] Top fans by spend
+  - [ ] Fan demographics (age, location, gender)
+  - [ ] Fan behavior (streams, purchases, tips)
+  - [ ] Fan retention (churn rate, lifetime value)
+
+#### Pricing Model & Billing
+- [ ] Define pricing tiers
+  - [ ] Free tier: Basic profile, streaming, e-commerce
+  - [ ] Pro tier ($9.99/month): Distribution, advanced analytics, email marketing
+- [ ] Build pricing router (server/routers/pricing.ts)
+  - [ ] pricing.subscribe - Subscribe to Pro tier
+  - [ ] pricing.cancel - Cancel subscription
+  - [ ] pricing.calculateProtocolFee - Calculate 5% fee on direct revenue
+- [ ] Build pricing page (client/src/pages/Pricing.tsx)
+  - [ ] Clear pricing tiers (Free vs Pro)
+  - [ ] Protocol fee explanation (transparent, artist-friendly)
+  - [ ] Distribution add-on pricing ($29.99/year)
+- [ ] Implement monthly subscription billing (Stripe)
+- [ ] Implement protocol fee calculation (5% of direct revenue)
+
+### 🟢 Priority 2 - Medium (Post-Launch Enhancements)
+
+#### Music Discovery Engine
+- [ ] Build discovery router (server/routers/discovery.ts)
+  - [ ] discovery.getPlaylists - Get algorithmic playlists
+  - [ ] discovery.search - Search artists, tracks, albums
+  - [ ] discovery.browse - Browse new releases, trending, top charts
+  - [ ] discovery.getGenres - Get genre/mood filters
+- [ ] Build discovery UI (client/src/pages/Discover.tsx)
+  - [ ] Algorithmic playlists (like Spotify's Discover Weekly)
+  - [ ] Genre/mood filters (Hip-Hop, R&B, Chill, Workout)
+  - [ ] Search (artists, tracks, albums)
+  - [ ] Browse (new releases, trending, top charts)
+
+#### Social Features
+- [ ] Build social router (server/routers/social.ts)
+  - [ ] social.followArtist - Follow artist
+  - [ ] social.getActivityFeed - Get activity feed
+  - [ ] social.getSocialGraph - Get social graph (see what friends are listening to)
+- [ ] Build social UI
+  - [ ] Follow artists
+  - [ ] Activity feed (new releases, merch drops, tour announcements)
+  - [ ] Social graph (see what friends are listening to)
+
+#### Playlist System
+- [ ] Build playlist router (server/routers/playlist.ts)
+  - [ ] playlist.create - Create user playlist
+  - [ ] playlist.addTrack - Add track to playlist
+  - [ ] playlist.removeTrack - Remove track from playlist
+  - [ ] playlist.getPlaylists - Get user's playlists
+- [ ] Build playlist UI (client/src/pages/Playlists.tsx)
+  - [ ] User-created playlists
+  - [ ] Artist-curated playlists
+  - [ ] Collaborative playlists (like Spotify)
+
+### Strategic Decision Point
+- [ ] Review gap analysis document (BOPTONE_STRATEGIC_GAP_ANALYSIS.md)
+- [ ] Decide: Path A (Fintech for Artists) vs Path B (Cultural Movement)
+- [ ] Recommendation: Choose Path A as primary, add Path B features later
+- [ ] Approve Phase 1 roadmap (fan wallet + per-stream debit)
+- [ ] Set beta launch date (target: 4 weeks from approval)
+
+### Documentation
+- [x] Create BOPTONE_STRATEGIC_GAP_ANALYSIS.md
+- [ ] Review gap analysis with team
+- [ ] Approve roadmap and timeline
+- [ ] Begin Phase 1 implementation
+
+
+## 🚀 Phase 1: Core Monetization Layer - IN PROGRESS (Session 6)
+
+### Database Schema Design
+- [x] Create `fanWallets` table (12 columns, 3 indexes)
+  - [x] userId (FK to users.id, unique)
+  - [x] balance (int, in cents, default 0)
+  - [x] lifetimeSpent (int, in cents, default 0)
+  - [x] autoReloadEnabled (boolean, default false)
+  - [x] autoReloadThreshold (int, in cents, default 500 = $5)
+  - [x] autoReloadAmount (int, in cents, default 2000 = $20)
+  - [x] createdAt, updatedAt timestamps
+  - [x] Indexes: userId, balance, autoReload
+
+- [x] Create `streamDebits` table (13 columns, 9 indexes)
+  - [x] fanWalletId (FK to fanWallets.id)
+  - [x] streamId (FK to bapStreams.id)
+  - [x] trackId (FK to bapTracks.id)
+  - [x] artistId (FK to artistProfiles.id)
+  - [x] amount (int, in cents, 1-3 cents per stream)
+  - [x] balanceBefore (int, in cents)
+  - [x] balanceAfter (int, in cents)
+  - [x] protocolFee (int, in cents, 5% of amount)
+  - [x] artistPayout (int, in cents, 95% of amount)
+  - [x] createdAt timestamp
+  - [x] Indexes: fanWalletId, streamId, trackId, artistId, createdAt, processed
+  - [x] Composite indexes: (fanWalletId, createdAt), (artistId, createdAt), (processed, createdAt)
+
+- [x] Create `walletTopups` table (14 columns, 6 indexes)
+  - [x] fanWalletId (FK to fanWallets.id)
+  - [x] amount (int, in cents)
+  - [x] paymentMethod (varchar, "stripe", "crypto", "paypal")
+  - [x] stripePaymentIntentId (varchar, nullable)
+  - [x] status (enum: "pending", "completed", "failed", "refunded")
+  - [x] failureReason (text, nullable)
+  - [x] isAutoReload flag
+  - [x] createdAt, completedAt timestamps
+  - [x] Indexes: fanWalletId, status, createdAt, stripePaymentIntentId
+
+- [x] Create `protocolRevenue` table (8 columns, 6 indexes) for Boptone's 5% fee tracking
+
+- [x] Run `pnpm db:push` to apply schema changes (tables already exist in database)
+
+### Backend Router Implementation
+- [x] Create `server/routers/fanWallet.ts`
+  - [x] fanWallet.getBalance - Get current wallet balance and lifetime spent
+  - [x] fanWallet.topup - Create Stripe payment intent for wallet topup
+  - [x] fanWallet.confirmTopup - Confirm topup after Stripe payment success
+  - [x] fanWallet.getHistory - Get paginated transaction history (debits + topups)
+  - [x] fanWallet.setAutoReload - Enable/disable auto-reload with threshold and amount
+  - [x] fanWallet.getAutoReloadSettings - Get current auto-reload settings
+
+- [x] Register fanWallet router in `server/routers.ts`
+
+### Per-Stream Debit System
+- [ ] Create `server/services/streamDebit.ts`
+  - [ ] calculateStreamCost(trackId, artistId) - Get per-stream cost based on artist pricing tier
+  - [ ] debitFanWallet(userId, streamId, trackId, artistId) - Debit fan wallet on stream play
+  - [ ] batchProcessDebits() - Aggregate micro-payments every 5 minutes
+  - [ ] checkFanBalance(userId) - Check if fan has sufficient balance to stream
+  - [ ] triggerAutoReload(userId) - Trigger auto-reload if balance < threshold
+
+- [ ] Integrate stream debit into BAP streaming logic
+  - [ ] Hook into existing `bapStreams` creation
+  - [ ] Check fan balance before allowing stream
+  - [ ] Debit fan wallet on successful stream
+  - [ ] Show "Insufficient balance" error if fan wallet empty
+
+### Protocol Fee & Artist Payout
+- [ ] Create `server/services/protocolFee.ts`
+  - [ ] calculateProtocolFee(amount) - Calculate 5% protocol fee
+  - [ ] calculateArtistPayout(amount) - Calculate 95% artist payout
+  - [ ] creditArtistWallet(artistId, amount) - Credit artist wallet instantly
+  - [ ] recordProtocolRevenue(amount) - Track Boptone's protocol revenue
+
+- [ ] Add protocol fee tracking table (optional)
+  - [ ] `protocolRevenue` table (date, amount, source)
+
+### Frontend UI Implementation
+- [ ] Create `client/src/pages/Wallet.tsx`
+  - [ ] Wallet balance display (current balance, lifetime spent)
+  - [ ] Topup form with preset amounts ($5, $10, $20, $50, custom)
+  - [ ] Stripe payment integration
+  - [ ] Auto-reload settings (enable/disable, threshold, amount)
+  - [ ] Transaction history table (paginated, sortable)
+  - [ ] Low balance warning banner
+
+- [ ] Add Wallet link to navigation
+  - [ ] Add to user dropdown menu
+  - [ ] Add to dashboard sidebar (if using DashboardLayout)
+
+- [ ] Add low balance notification
+  - [ ] Show toast when balance < $5
+  - [ ] Show banner on streaming pages
+  - [ ] Link to wallet topup page
+
+### Testing & Validation
+- [ ] Test wallet creation on user signup
+- [ ] Test topup flow (Stripe payment)
+- [ ] Test stream debit (balance deduction)
+- [ ] Test auto-reload (trigger when balance < threshold)
+- [ ] Test protocol fee calculation (5% to Boptone, 95% to artist)
+- [ ] Test artist instant payout (credit artist wallet immediately)
+- [ ] Test transaction history (debits + topups)
+- [ ] Test low balance handling (show error, prevent streaming)
+- [ ] Load test batch processing (1000 streams/minute)
+
+### Checkpoint & Sync
+- [ ] Save Manus checkpoint
+- [ ] Push to GitHub (boptone-ai)
+- [ ] Verify sync

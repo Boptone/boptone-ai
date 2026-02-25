@@ -40,6 +40,7 @@ import { stripeConnectRouter } from "./routers/stripeConnect";
 import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { playlistRouter } from "./routers/playlist";
 import { analyticsRouter } from "./routers/analytics";
+import { fanWalletRouter } from "./routers/fanWallet";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -637,6 +638,7 @@ export const appRouter = router({
   postPurchase: postPurchaseAutomationRouter,
   analytics: analyticsRouter,
   playlist: playlistRouter,
+  fanWallet: fanWalletRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
