@@ -60,7 +60,7 @@ export default function Shop() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="What are you looking for? T-shirt, Vinyl, Hoodie, Hat..."
-                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200 resize-none shadow-lg"
+                className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-black focus:ring-2 focus:ring-gray-300 resize-none shadow-lg"
                 rows={3}
               />
               <div className="absolute bottom-4 right-4 flex items-center gap-2 text-sm text-gray-500">
@@ -82,8 +82,8 @@ export default function Shop() {
                 variant={selectedType === cat.value ? "default" : "outline"}
                 className={`rounded-full px-8 py-6 text-lg font-semibold transition-all ${
                   selectedType === cat.value
-                    ? "bg-cyan-500 text-white hover:bg-cyan-600 shadow-lg scale-105"
-                    : "bg-white text-gray-700 border-2 border-gray-200 hover:border-cyan-400 hover:text-cyan-600"
+                    ? "bg-black text-white hover:bg-gray-800 shadow-lg scale-105"
+                    : "bg-white text-gray-700 border-2 border-gray-200 hover:border-black hover:text-black"
                 }`}
               >
                 <Icon className="w-5 h-5 mr-2" />
@@ -110,11 +110,11 @@ export default function Shop() {
 
       {/* Featured Collection */}
       <div className="container mx-auto px-4 mb-20">
-        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-cyan-400 shadow-2xl">
+        <div className="bg-gray-900 rounded-3xl p-12 border-l-[6px] border-black shadow-2xl">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-48 h-48 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex-shrink-0"></div>
             <div className="flex-1">
-              <Badge className="rounded-full bg-cyan-500 text-white px-4 py-1 text-sm font-bold mb-4">
+              <Badge className="rounded-full bg-black text-white px-4 py-1 text-sm font-bold mb-4">
                 FEATURED COLLECTION
               </Badge>
               <h2 className="text-7xl md:text-8xl font-bold text-white mb-4">
@@ -125,7 +125,7 @@ export default function Shop() {
               </p>
               <Button
                 onClick={() => setLocation("/artist/luna-rivers")}
-                className="rounded-full px-8 py-6 bg-cyan-500 text-white hover:bg-cyan-600 text-lg font-semibold shadow-lg"
+                className="rounded-full px-8 py-6 bg-black text-white hover:bg-gray-800 text-lg font-semibold shadow-lg"
               >
                 Shop Collection →
               </Button>
@@ -157,7 +157,7 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className="rounded-3xl border-l-4 border-cyan-400 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden"
+                className="rounded-3xl border-l-4 border-black cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden"
                 onClick={() => setLocation(`/product/${product.id}`)}
               >
                 <CardContent className="p-0">

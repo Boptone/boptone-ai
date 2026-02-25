@@ -2693,3 +2693,14 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Update placeholder text to "What are you looking for? T-shirt, Vinyl, Hoodie, Hat..."
 - [x] Test layout changes - VERIFIED new placeholder displays, box removed, chat moved up
 - [ ] Save checkpoint
+
+
+## BopShop Card Border Color Update
+- [x] Replace all blue/cyan card outline colors with black
+- [x] Update AI chat textarea border from cyan to black (focus:border-black)
+- [x] Update Featured Collection card border from cyan to black (border-l-[6px] border-black)
+- [x] Update product card borders from cyan to black (border-l-4 border-black)
+- [x] Update category pill active state from cyan to black (bg-black)
+- [x] Update Featured Collection badge and button from cyan to black
+- [x] Test all border changes - VERIFIED all borders now black, brutalist aesthetic achieved
+- [ ] Save checkpoint
