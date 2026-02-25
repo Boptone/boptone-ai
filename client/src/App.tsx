@@ -214,7 +214,8 @@ function App() {
             {!window.location.pathname.startsWith('/music') && <Footer />}
             <ToneyChatbot />
             <CookieConsentBanner />
-            <MusicPlayer />
+            {/* Hide MusicPlayer on /shop page - bad UX while shopping */}
+            {!window.location.pathname.startsWith('/shop') && <MusicPlayer />}
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>

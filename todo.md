@@ -2704,3 +2704,28 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Update Featured Collection badge and button from cyan to black
 - [x] Test all border changes - VERIFIED all borders now black, brutalist aesthetic achieved
 - [ ] Save checkpoint
+
+
+## BopShop UX Improvements
+- [ ] Change "In Stock" badge color from blue to #0cc0df (cyan)
+- [ ] Hide music player on /shop route (bad UX while shopping)
+- [ ] Add "Sort By" icon (up/down arrows) below "23 items"
+- [ ] Add "View As List" icon (list view) below "23 items"
+- [ ] Build compact list view layout for products
+- [ ] Implement view toggle between grid and list
+- [ ] Test all changes
+- [ ] Save checkpoint
+
+---
+
+## 🛍️ BopShop UX Improvements (February 24, 2026)
+
+### ✅ User Experience Enhancements (COMPLETE)
+- [x] Changed "In Stock" badge color to cyan (#0cc0df) for brand consistency
+- [x] Hid music player on /shop route for distraction-free shopping experience
+- [x] Added Sort By dropdown control with 4 options (Newest, Price Low-High, Price High-Low, Most Popular)
+- [x] Added View As List toggle control to switch between grid and compact list layouts
+- [x] Implemented list view layout with horizontal product rows
+- [x] Positioned controls below "23 Items" count for intuitive access
+- [x] Applied consistent black border styling to all controls
+- [x] Added hover effects and smooth transitions to controls

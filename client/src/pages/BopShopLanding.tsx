@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Sparkles } from "lucide-react";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Sparkles, ArrowUpDown, List, Grid3x3 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function Shop() {
@@ -13,6 +13,8 @@ export default function Shop() {
   const [, setLocation] = useLocation();
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   // Fetch all products
   const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
@@ -136,13 +138,33 @@ export default function Shop() {
 
       {/* Product Grid */}
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between mb-10">
-          <h2 className="text-5xl font-bold">
+        <div className="mb-12">
+          <h2 className="text-5xl font-bold mb-4 text-gray-900">
             {selectedType ? categories.find(c => c.value === selectedType)?.label : "All Products"}
           </h2>
-          <p className="text-xl text-gray-600">
-            {filteredProducts?.length || 0} items
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-xl text-gray-600">
+              {filteredProducts?.length || 0} items
+            </p>
+            <div className="flex items-center gap-4">
+              {/* Sort By */}
+              <button
+                onClick={() => setSortMenuOpen(!sortMenuOpen)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-gray-300 hover:border-black transition-colors"
+              >
+                <ArrowUpDown className="w-5 h-5" />
+                <span className="font-medium">Sort By</span>
+              </button>
+              {/* View As List */}
+              <button
+                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-gray-300 hover:border-black transition-colors"
+              >
+                {viewMode === 'grid' ? <List className="w-5 h-5" /> : <Grid3x3 className="w-5 h-5" />}
+                <span className="font-medium">{viewMode === 'grid' ? 'List View' : 'Grid View'}</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {isLoading ? (
@@ -153,17 +175,19 @@ export default function Shop() {
             </div>
           </div>
         ) : filteredProducts && filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className={viewMode === 'grid' ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" : "space-y-4"}>
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className="rounded-3xl border-l-4 border-black cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden"
+                className={`rounded-3xl border-l-4 border-black cursor-pointer hover:shadow-2xl transition-all duration-300 bg-white overflow-hidden ${
+                  viewMode === 'grid' ? 'hover:scale-[1.02]' : 'flex flex-row'
+                }`}
                 onClick={() => setLocation(`/product/${product.id}`)}
               >
-                <CardContent className="p-0">
+                <CardContent className={viewMode === 'grid' ? 'p-0' : 'p-0 flex flex-row w-full'}>
                   {/* Product Image */}
                   {product.images && product.images.length > 0 ? (
-                    <div className="aspect-square bg-gray-50 overflow-hidden">
+                    <div className={viewMode === 'grid' ? 'aspect-square bg-gray-50 overflow-hidden' : 'w-32 h-32 bg-gray-50 overflow-hidden flex-shrink-0'}>
                       <img
                         src={product.images[0]}
                         alt={product.name}
@@ -177,7 +201,7 @@ export default function Shop() {
                   )}
 
                   {/* Product Info */}
-                  <div className="p-6 space-y-3">
+                  <div className={viewMode === 'grid' ? 'p-6 space-y-3' : 'p-4 flex-1 flex items-center justify-between'}>
                     <Badge className="rounded-full border border-gray-200 bg-white text-gray-900 font-bold text-xs px-3 py-1 uppercase">
                       {product.type}
                     </Badge>
@@ -192,7 +216,7 @@ export default function Shop() {
                         ${product.price}
                       </span>
                       {product.status === "active" ? (
-                        <Badge className="rounded-full bg-cyan-500 text-white font-bold text-xs px-3 py-1">
+                        <Badge className="rounded-full font-bold text-xs px-3 py-1 text-white" style={{ backgroundColor: '#0cc0df' }}>
                           In Stock
                         </Badge>
                       ) : (
