@@ -9,7 +9,7 @@ export default function About() {
     <div className="min-h-screen bg-white">
       
       {/* Hero Section - Minimal with massive typography */}
-      <section className="border-b border-gray-200 bg-white">
+      <section className="border-b border-black bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h1 className="text-7xl lg:text-8xl font-bold mb-10 leading-none">
@@ -21,11 +21,24 @@ export default function About() {
               You own your music. You own your career. You own your future. No middlemen, no hidden fees, no compromises.
             </p>
             <div className="flex items-center gap-4">
-              <Button size="lg" className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white" onClick={() => setLocation("/signup")}>
+              <Button 
+                size="lg" 
+                className="rounded-full text-lg px-10 py-7 bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
+                onClick={() => setLocation("/signup")}
+              >
                 Get Started
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-full text-lg px-10 py-7 border border-gray-200 hover:border-gray-400" onClick={() => setLocation("/contact")}>
-                Contact Us
+              </Button>              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full text-lg px-10 py-7 border border-black hover:bg-gray-50"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
+                onClick={() => setLocation("/contact")}
+              >               Contact Us
               </Button>
             </div>
           </div>
@@ -33,7 +46,7 @@ export default function About() {
       </section>
 
       {/* Mission Section - Xerox gradient */}
-      <section className="bg-gray-50 border-b border-gray-200">
+      <section className="bg-gray-50 border-b border-black">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h2 className="text-5xl font-bold mb-8">Our Mission</h2>
@@ -57,7 +70,7 @@ export default function About() {
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl">
             {/* Artists First */}
-            <div className="border border-gray-200 bg-white p-10 rounded-xl">
+            <div className="border border-black bg-white p-10 rounded-lg">
               <h3 className="text-3xl font-bold mb-6">Artists First</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 Every decision we make starts with one question: Does this help artists? We build for you, not for anyone else.
@@ -65,16 +78,19 @@ export default function About() {
             </div>
 
             {/* Simple & Powerful */}
-            <div className="border border-gray-200 bg-white p-10 rounded-xl">
+            <div className="border border-black bg-white p-10 rounded-lg">
               <h3 className="text-3xl font-bold mb-6">Simple & Powerful</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 We use the latest technology to give you powerful tools that are easy to use. No technical knowledge required.
               </p>
             </div>
 
-            {/* 100% Transparent */}
-            <div className="border border-gray-200 bg-white p-10 rounded-xl">
-              <h3 className="text-3xl font-bold mb-6">100% Transparent</h3>
+            {/* 100% Transparent */}            <div 
+              className="border border-black bg-white p-10 rounded-lg"
+              style={{
+                boxShadow: '4px 4px 0 0 black'
+              }}
+            >             <h3 className="text-3xl font-bold mb-6">100% Transparent</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
                 No hidden fees, no confusing contracts. You own your music, your data, and your money—100%.
               </p>
@@ -84,7 +100,7 @@ export default function About() {
       </section>
 
       {/* Our Story - Minimal layout with xerox gradient */}
-      <section className="border-t border-gray-200 bg-gray-50 py-32">
+      <section className="border-t border-black bg-gray-50 py-32">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-20 items-start max-w-6xl">
             <div>
@@ -95,7 +111,7 @@ export default function About() {
                 We built Boptone because we were frustrated with how complicated and unfair the music industry is for independent artists.
               </p>
             </div>
-            <div className="border border-gray-200 bg-white p-12 rounded-xl">
+            <div className="border border-black bg-white p-12 rounded-lg">
               <p className="text-2xl text-gray-900 leading-relaxed font-bold mb-8">
                 We wanted to create a platform that's simple, fair, and puts artists in control.
               </p>
@@ -108,7 +124,7 @@ export default function About() {
       </section>
 
       {/* What We're Building - Minimal cards */}
-      <section className="border-t border-gray-200 bg-white py-32">
+      <section className="border-t border-black bg-white py-32">
         <div className="container">
           <div className="mb-20">
             <h2 className="text-6xl font-bold mb-8">
@@ -120,7 +136,7 @@ export default function About() {
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl">
             {/* New Artists */}
-            <div className="border border-gray-200 bg-white p-12 rounded-xl">
+            <div className="border border-black bg-white p-12 rounded-lg">
               <h3 className="text-4xl font-bold mb-6">For New Artists</h3>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Get help from our AI advisor, upload your music, and start earning money from day one.
@@ -128,7 +144,7 @@ export default function About() {
             </div>
 
             {/* Established Artists */}
-            <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-12 rounded-xl">
+            <div className="border border-black hover:border-gray-400 transition-colors bg-white p-12 rounded-lg">
               <h3 className="text-4xl font-bold mb-6">For Established Artists</h3>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Advanced tools to grow your career, protect your music, and keep more of what you earn.
@@ -139,7 +155,7 @@ export default function About() {
       </section>
 
       {/* CTA Section - Minimal with xerox gradient */}
-      <section className="border-t border-gray-200 bg-gray-50 py-32">
+      <section className="border-t border-black bg-gray-50 py-32">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-6xl font-bold mb-8">
@@ -152,7 +168,7 @@ export default function About() {
               <Button size="lg" className="rounded-full text-lg px-12 py-7 bg-black hover:bg-gray-800 text-white" onClick={() => setLocation("/signup")}>
                 Get Early Access
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full text-lg px-12 py-7 border border-gray-200 hover:border-gray-400" onClick={() => setLocation("/contact")}>
+              <Button size="lg" variant="outline" className="rounded-full text-lg px-12 py-7 border border-black hover:border-gray-400" onClick={() => setLocation("/contact")}>
                 Contact Us
               </Button>
             </div>

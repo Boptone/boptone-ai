@@ -10,12 +10,12 @@ import { toast } from "sonner";
 
 /**
  * Single-screen signup page with BAP Protocol aesthetic
- * Matches Login page design:
- * - Cyan (#81e6fe) shadow effects
- * - Pill-shaped buttons
+ * Design standards from /welcome page:
+ * - Black borders (border-black)
+ * - Brutalist shadows (4px 4px 0 0 black)
+ * - Pill-shaped buttons (rounded-full)
  * - Bold typography
- * - Viewport-constrained (no scrolling required)
- * - Rounded-3xl cards
+ * - Rounded-lg cards
  */
 export default function MultiStepSignup() {
   const { isAuthenticated, loading: authLoading } = useAuth();
@@ -89,7 +89,12 @@ export default function MultiStepSignup() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white rounded-3xl p-8 border border-gray-200 mb-6">
+        <div 
+          className="bg-white rounded-lg p-8 border border-black mb-6"
+          style={{
+            boxShadow: '4px 4px 0 0 black'
+          }}
+        >
           <form onSubmit={handleSignup} className="space-y-6">
             {/* Email */}
             <div className="space-y-2">
@@ -142,7 +147,10 @@ export default function MultiStepSignup() {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full h-14 text-lg font-bold bg-black text-white hover:bg-gray-900 rounded-full shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none"
+              className="w-full h-14 text-lg font-bold bg-[#0cc0df] text-black hover:bg-[#0aabca] rounded-full border border-black"
+              style={{
+                boxShadow: '4px 4px 0 0 black'
+              }}
               disabled={isLoading}
             >
               {isLoading ? "Creating Account..." : "Continue to Sign Up"}

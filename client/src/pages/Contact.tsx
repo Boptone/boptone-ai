@@ -54,7 +54,7 @@ ${formData.message}
     <div className="min-h-screen bg-white">
       
       {/* Hero - Minimal with massive typography */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-black bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h1 className="text-7xl md:text-8xl font-bold mb-10 leading-none">
@@ -72,7 +72,12 @@ ${formData.message}
         <div className="container">
           <div className="grid md:grid-cols-2 gap-16 max-w-6xl">
             {/* Contact Form */}
-            <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-12 rounded-xl">
+            <div 
+              className="border border-black hover:bg-gray-50 transition-colors bg-white p-12 rounded-lg"
+              style={{
+                boxShadow: '4px 4px 0 0 black'
+              }}
+            >
               <h2 className="text-4xl font-bold mb-10">Send us a message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -125,7 +130,10 @@ ${formData.message}
                 </div>
 
                 <Button 
-                  className="rounded-full w-full h-14 text-lg bg-black hover:bg-gray-800 text-white" 
+                  className="rounded-full w-full h-14 text-lg bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black"
+                  style={{
+                    boxShadow: '4px 4px 0 0 black'
+                  }} 
                   type="submit" 
                   disabled={sendMessage.isPending}
                 >
@@ -136,7 +144,7 @@ ${formData.message}
 
             {/* Contact Info */}
             <div className="space-y-8">
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-10 rounded-lg">
                 <h3 className="text-2xl font-bold mb-4">Email Us</h3>
                 <p className="text-gray-600 mb-4 leading-relaxed">
                   For general inquiries, partnerships, or support:
@@ -149,14 +157,14 @@ ${formData.message}
                 </a>
               </div>
 
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-10 rounded-lg">
                 <h3 className="text-2xl font-bold mb-4">HQ</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Los Angeles, CA USA
                 </p>
               </div>
 
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-10 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">Looking for Support?</h3>
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   If you're an existing user and need technical support, please email us with "Support" in the subject line for priority handling.
@@ -176,30 +184,30 @@ ${formData.message}
       </div>
 
       {/* FAQ Preview - Minimal cards */}
-      <div className="border-t border-gray-200 bg-white py-32">
+      <div className="border-t border-black bg-white py-32">
         <div className="container">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-5xl font-bold mb-16">Common Questions</h2>
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-8 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">When does Boptone launch?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   We're targeting a 2026 launch. Sign up for early access to be notified when we go live.
                 </p>
               </div>
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-8 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">How much does it cost?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   We offer a free tier for emerging artists and paid plans starting at $29/month. Check our pricing page for details.
                 </p>
               </div>
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-8 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">Can I try before I buy?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   Yes! We offer a 14-day free trial on our Pro tier with no credit card required.
                 </p>
               </div>
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-8 rounded-xl">
+              <div className="border border-black hover:bg-gray-50 transition-colors bg-white p-8 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">Do you take a percentage of my revenue?</h3>
                 <p className="text-gray-600 leading-relaxed">
                   No. We charge a flat subscription fee. You keep 100% of your revenue.

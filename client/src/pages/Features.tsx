@@ -72,7 +72,7 @@ export default function Features() {
     <div className="min-h-screen bg-white">
       
       {/* Hero Section - Minimal with massive typography */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-black bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
             <h1 className="text-7xl md:text-8xl font-bold leading-none mb-8">
@@ -85,15 +85,19 @@ export default function Features() {
             </p>
             <div className="flex gap-4">
               <Button 
-                className="rounded-full text-lg px-10 py-7 bg-black hover:bg-gray-800 text-white" 
+                className="rounded-full text-lg px-10 py-7 bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }} 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
                 Start Free
-              </Button>
-              <Button 
-                className="rounded-full text-lg px-10 py-7 border border-gray-200 hover:border-gray-400" 
-                size="lg" 
+              </Button>              <Button 
+                className="rounded-full text-lg px-10 py-7 border border-black hover:bg-gray-50"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}                size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/bap-protocol")}
               >
@@ -105,7 +109,7 @@ export default function Features() {
       </div>
 
       {/* Stats Bar - Xerox gradient background */}
-      <div className="bg-gray-50 border-b border-gray-200">
+      <div className="bg-gray-50 border-b border-black">
         <div className="container py-16">
           <div className="grid grid-cols-3 gap-12 max-w-4xl">
             <div className="text-center">
@@ -134,8 +138,10 @@ export default function Features() {
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="border border-gray-200 bg-white p-10 hover:border-gray-400 transition-colors rounded-xl"
-              >
+                className="border border-black bg-white p-10 hover:bg-gray-50 transition-colors rounded-lg"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}            >
                 <h3 className="text-3xl font-bold mb-4">{feature.title}</h3>
                 <p className="text-gray-600 mb-8 leading-relaxed text-lg">{feature.description}</p>
                 <div className="space-y-3">
@@ -153,7 +159,7 @@ export default function Features() {
       </div>
 
       {/* Comparison Section - Minimal with bold typography */}
-      <div className="border-t border-gray-200 bg-white py-32">
+      <div className="border-t border-black bg-white py-32">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-20 items-start max-w-6xl">
             {/* Left: Massive headline */}
@@ -171,8 +177,12 @@ export default function Features() {
             {/* Right: Comparison cards */}
             <div className="space-y-8">
               {/* Without Boptone */}
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-gray-50 p-10 rounded-xl">
-                <h3 className="text-2xl font-bold mb-6">Without Boptone</h3>
+              <div 
+                className="border border-black hover:bg-gray-100 transition-colors bg-gray-50 p-10 rounded-lg"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
+              >                <h3 className="text-2xl font-bold mb-6">Without Boptone</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-4">
                     <span className="font-mono text-xl">×</span>
@@ -194,8 +204,12 @@ export default function Features() {
               </div>
 
               {/* With Boptone */}
-              <div className="border border-gray-200 hover:border-gray-400 transition-colors bg-white p-10 rounded-xl">
-                <h3 className="text-2xl font-bold mb-6">With Boptone</h3>
+              <div 
+                className="border border-black hover:bg-gray-50 transition-colors bg-white p-10 rounded-lg"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
+              >                <h3 className="text-2xl font-bold mb-6">With Boptone</h3>
                 <ul className="space-y-4">
                   <li className="flex items-start gap-4">
                     <span className="font-mono text-xl">✓</span>
@@ -221,7 +235,7 @@ export default function Features() {
       </div>
 
       {/* CTA Section - Bold and centered with xerox gradient */}
-      <div className="border-t border-gray-200 bg-gray-50 py-32">
+      <div className="border-t border-black bg-gray-50 py-32">
         <div className="container">
           <div className="max-w-4xl mx-auto text-center space-y-10">
             <h2 className="text-7xl font-bold leading-tight">
@@ -234,14 +248,20 @@ export default function Features() {
             </p>
             <div className="flex gap-4 justify-center pt-6">
               <Button 
-                className="rounded-full text-lg px-12 py-7 bg-black hover:bg-gray-800 text-white" 
+                className="rounded-full text-lg px-12 py-7 bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }} 
                 size="lg" 
                 onClick={() => setLocation("/signup")}
               >
                 Start Free
               </Button>
               <Button 
-                className="rounded-full text-lg px-12 py-7 border border-gray-200 hover:border-gray-400" 
+                className="rounded-full text-lg px-12 py-7 border border-black hover:bg-gray-50"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
                 size="lg" 
                 variant="outline" 
                 onClick={() => setLocation("/demo")}

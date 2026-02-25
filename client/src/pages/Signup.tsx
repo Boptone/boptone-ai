@@ -156,9 +156,12 @@ export default function Signup() {
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {tiers.map((tier) => (
-              <Card
+               <Card
                 key={tier.id}
-                className="relative border border-gray-200 p-8 flex flex-col hover:border-gray-400 transition-colors bg-white rounded-xl"
+                className="relative border border-black p-8 flex flex-col hover:bg-gray-50 transition-colors bg-white rounded-lg"
+                style={{
+                  boxShadow: '4px 4px 0 0 black'
+                }}
               >
                 {/* Tier Name */}
                 <div className="mb-4">
@@ -185,7 +188,10 @@ export default function Signup() {
                 <div className="mb-6">
                   <Button
                     onClick={() => handleTierSelection(tier.id)}
-                    className="w-full rounded-full bg-black text-white hover:bg-gray-900 h-12 shadow-[4px_4px_0px_#81e6fe] hover:shadow-[2px_2px_0px_#81e6fe] transition-all border-none font-bold"
+                    className="w-full rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] h-12 border border-black font-bold"
+                    style={{
+                      boxShadow: '4px 4px 0 0 black'
+                    }}
                   >
                     {tier.id === "enterprise" ? "Contact Sales" : "Get Started"}
                   </Button>
@@ -238,7 +244,12 @@ export default function Signup() {
   // Profile Creation Step
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl border border-gray-200 rounded-xl bg-white">
+      <Card 
+        className="w-full max-w-2xl border border-black rounded-lg bg-white"
+        style={{
+          boxShadow: '4px 4px 0 0 black'
+        }}
+      >
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-black">
             Create Your Artist Profile
