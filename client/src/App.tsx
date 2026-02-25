@@ -86,6 +86,7 @@ const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const Legal = lazy(() => import("./pages/Legal"));
 const LegalChangelog = lazy(() => import("./pages/LegalChangelog"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
+const Orders = lazy(() => import("./pages/Orders"));
 const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
 const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
 const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
@@ -129,7 +130,8 @@ function Router() {
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/checkout/success" component={CheckoutSuccess} />
-        <Route path="/wishlist" component={Wishlist} />
+          <Route path="/wishlist" component={Wishlist} />
+          <Route path="/orders" component={Orders} />
         <Route path="/admin" component={AdminOverview} />
         <Route path="/admin/orders" component={AdminOrders} />
         <Route path="/admin/products" component={AdminProducts} />

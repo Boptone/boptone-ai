@@ -34,6 +34,8 @@ import { wishlistRouter } from "./routers/wishlist";
 import { cartRouter } from "./routers/cart";
 import { checkoutRouter } from "./routers/checkout";
 import { walletRouter } from "./routers/wallet";
+import { ordersRouter } from "./api/routers/orders";
+import { recommendationsRouter } from "./api/routers/recommendations";
 import { stripeConnectRouter } from "./routers/stripeConnect";
 import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { playlistRouter } from "./routers/playlist";
@@ -784,6 +786,12 @@ export const appRouter = router({
 
   // Wallet System (Stripe Link Integration)
   wallet: walletRouter,
+
+  // Order History System (BopShop)
+  orders: ordersRouter,
+
+  // AI-Powered Product Recommendations (BopShop)
+  recommendations: recommendationsRouter,
 
   // Cookie Preferences Management
   cookiePreferences: router({

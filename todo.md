@@ -3322,6 +3322,76 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Test all toast notifications across cart/wishlist flows
 
 ### Checkpoint & Sync
+- [x] Save Manus checkpoint (version 3b46f036)
+- [x] Push to GitHub (boptone-ai) - Already synced by webdev_save_checkpoint
+- [x] Verify sync
+
+
+## 📦 Order History System (February 25, 2026)
+
+### Database Schema
+- [x] Design orders table (orderId, userId, stripeSessionId, status, total, createdAt) - Already exists in schema
+- [x] Design orderItems table (orderItemId, orderId, productId, quantity, price, variantId) - Already exists in schema
+- [x] Add indexes for userId, stripeSessionId, createdAt for fast queries - Already exists in schema
+- [x] Run database migration (pnpm db:push) - Schema already migrated
+
+### Backend API
+- [x] Create orders router (server/api/routers/orders.ts)
+- [x] Implement orders.list procedure (paginated, sorted by date desc)
+- [x] Implement orders.getById procedure (with order items)
+- [x] Implement orders.getReceipt procedure (PDF generation or Stripe receipt URL)
+- [x] Implement orders.getStats procedure (total orders, total spent)
+- [ ] Add webhook handler to create order records on checkout.session.completed - Requires Stripe webhook setup
+- [x] Add order status tracking (pending, processing, shipped, delivered, cancelled) - Already in schema
+
+### Frontend UI
+- [x] Create /orders page (client/src/pages/Orders.tsx)
+- [x] Build order list with pagination (10 orders per page)
+- [x] Add order status badges (BAP Protocol styling)
+- [x] Add "View Details" modal for each order
+- [x] Add "Download Receipt" button (opens Stripe receipt or generated PDF)
+- [x] Add order tracking display (if shipping info available)
+- [x] Add empty state for users with no orders
+- [x] Add loading states and error handling
+- [x] Add route to Orders page in App.tsx
+
+### Testing
+- [ ] Test order creation via webhook
+- [ ] Test order list pagination
+- [ ] Test order details modal
+- [ ] Test receipt download
+- [ ] Test empty state
+- [ ] Test across desktop and mobile
+
+---
+
+## 🤖 AI-Powered Product Recommendations (February 25, 2026)
+
+### Backend AI Engine
+- [x] Create recommendations router (server/api/routers/recommendations.ts)
+- [x] Implement recommendations.getForUser procedure (uses LLM to analyze user behavior)
+- [x] Implement recommendations.getForEmptyCart procedure (trending/popular products)
+- [x] Implement recommendations.getForEmptyWishlist procedure (personalized suggestions)
+- [x] Add caching layer (cache recommendations for 1 hour per user)
+- [x] Add fallback to random popular products if AI fails
+
+### Frontend Integration
+- [x] Add "You might also like" section to Cart empty state
+- [x] Add "You might also like" section to Wishlist empty state
+- [x] Create RecommendationCard component (BAP Protocol styling)
+- [x] Add "Add to Cart" quick action on recommendation cards
+- [x] Add "Add to Wishlist" lightning bolt on recommendation cards
+- [x] Add error handling (hide section if recommendations fail)
+
+### Testing
+- [ ] Test AI recommendations with different user profiles
+- [ ] Test fallback to popular products
+- [ ] Test caching behavior
+- [ ] Test empty cart recommendations
+- [ ] Test empty wishlist recommendations
+- [ ] Test quick actions (add to cart, add to wishlist)
+
+### Checkpoint & Sync
 - [ ] Save Manus checkpoint
 - [ ] Push to GitHub (boptone-ai)
 - [ ] Verify sync
