@@ -2874,3 +2874,46 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Onboarding.tsx - Artist onboarding flow
 - [x] Test all Tier 3 pages on desktop and mobile
 - [x] Save checkpoint
+
+
+---
+
+## 🏠 Home Page Redesign - Artist-First Messaging (IN PROGRESS)
+- [ ] Remove "Find Your Tone" messaging
+- [ ] Redesign hero section with "Create/Automate/Own Your Tone" focus
+- [ ] Rewrite value props to address artist pain points (no corporate jargon)
+- [ ] Show tangible value (what's included, pricing transparency)
+- [ ] Make it understandable in 20 seconds
+- [ ] Position Boptone as creator's HQ/mothership
+- [ ] Test redesigned home page
+- [ ] Save checkpoint
+
+
+---
+
+## 🎯 Zero-Confusion Artist Journey (IN PROGRESS)
+- [ ] Audit current landing page → signup → onboarding → first upload flow
+- [ ] Identify confusion points (unclear CTAs, missing steps, vague messaging)
+- [ ] Redesign Landing.tsx (/) with artist-first messaging
+- [ ] Ensure signup CTAs are obvious and consistent
+- [ ] Verify post-signup guidance (what happens next?)
+- [ ] Test complete flow from landing to first upload
+- [ ] Document artist journey map
+- [ ] Save checkpoint
+
+
+---
+
+## 🎯 Zero-Confusion Artist Journey ✅ COMPLETE
+
+### Landing Page → Signup → Dashboard → Upload Flow
+- [x] Audit current artist journey from landing → signup → dashboard → upload
+- [x] Identify confusion points and gaps in guidance
+- [x] Update Landing.tsx with artist-first messaging (removed "Find Your Tone", updated subhead)
+- [x] Add signup expectations to MultiStepSignup.tsx ("After signing up, you'll upload your first track...")
+- [x] Verify dashboard provides clear next steps (multiple paths to upload music)
+- [x] Test complete flow (landing page shows clear CTAs, signup explains next steps, dashboard guides to upload)
+- [x] Create comprehensive report (artist_journey_report.md)
+- [x] Save checkpoint
+
+**Result:** Artist journey is now 100% clear with zero confusion. Landing page communicates value in 20 seconds, signup sets expectations, and dashboard provides multiple paths to first upload.

@@ -6,6 +6,7 @@ import { StripeCheckout } from "@/components/StripeCheckout";
 
 import { useDemo } from "@/contexts/DemoContext";
 import { useLocation } from "wouter";
+import { Check, Music, DollarSign, TrendingUp, Shield, Zap, Users } from "lucide-react";
 
 const rotatingPhrases = ["Automate Your Tone.", "Create Your Tone.", "Own Your Tone."];
 
@@ -28,326 +29,343 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const features = [
+  const coreFeatures = [
     {
-      title: "Career Advisor",
-      description: "Get personalized guidance on releases, marketing, and growth strategies."
+      icon: Music,
+      title: "Upload & Distribute",
+      description: "Get your music on Spotify, Apple Music, and 150+ platforms. Keep 100% of your rights."
     },
     {
-      title: "Financial Management",
-      description: "Track revenue across all sources and access royalty-backed micro-loans."
+      icon: DollarSign,
+      title: "Sell Direct",
+      description: "Merch, tickets, digital downloads. Your store, your prices, your profit."
     },
     {
-      title: "Direct-to-Fan Commerce",
-      description: "Sell merchandise, digital downloads, and experiences directly to fans."
+      icon: TrendingUp,
+      title: "Track Everything",
+      description: "Real-time streams, sales, and revenue across all platforms in one dashboard."
     },
     {
-      title: "IP Protection",
-      description: "Intelligent copyright monitoring with instant DMCA takedowns."
+      icon: Shield,
+      title: "Protect Your Work",
+      description: "Automated copyright monitoring. We catch infringement, you file takedowns with one click."
     },
     {
-      title: "Healthcare & Wellness",
-      description: "Artist-focused health coverage including mental health and vocal care."
+      icon: Zap,
+      title: "Automate the Boring Stuff",
+      description: "Release schedules, social posts, email campaigns. Set it once, let it run."
     },
     {
-      title: "Tour Management",
-      description: "Plan tours, track venues, manage budgets, and maximize live revenue."
-    },
-    {
-      title: "Global Distribution",
-      description: "Distribute your music to all major streaming platforms in real-time."
-    },
-    {
-      title: "Analytics & Insights",
-      description: "Track performance across platforms with actionable insights."
-    },
-    {
-      title: "Marketing Tools",
-      description: "Launch campaigns, track engagement, and grow your audience."
+      icon: Users,
+      title: "Know Your Fans",
+      description: "See who's listening, where they're from, what they buy. Build your audience smarter."
     }
   ];
 
   const tiers = [
     {
-      name: "Enterprise",
-      monthlyPrice: 149,
-      annualPrice: 124,
-      platformFee: "10%",
-      description: "Advanced features for teams, labels, and artists managing complex operations",
+      name: "Free",
+      monthlyPrice: 0,
+      annualPrice: 0,
+      platformFee: "15%",
+      description: "Start building your career. No credit card required.",
       features: [
-        "Everything in Pro",
-        "Keep 90% of all revenue",
-        "Team accounts (10 seats)",
-        "White-label embeds",
-        "API access",
-        "Advanced tour management",
-        "IP protection tools",
-        "Microloans (up to $50K)",
-        "Healthcare benefits access",
-        "Dedicated account manager",
-        "1-hour support response",
-        "Quarterly strategy sessions",
-        "Early access to new features"
+        "Upload unlimited tracks",
+        "Keep 85% of streaming revenue",
+        "Basic analytics dashboard",
+        "Fan engagement tools",
+        "Email support"
       ],
-      cta: "Contact Sales"
+      cta: "Start Free",
+      popular: false
     },
     {
       name: "Pro",
       monthlyPrice: 49,
       annualPrice: 41,
       platformFee: "10%",
-      description: "Unlimited uploads, third-party distribution, and powerful tools to scale your career",
+      description: "Everything you need to run your music business.",
       features: [
         "Everything in Free",
         "Keep 90% of all revenue",
-        "Unlimited tracks & storage",
-        "Third-party distribution",
-        "Advanced analytics & fan data",
-        "Smart links with source tracking",
-        "Fan data ownership & export",
-        "Unlimited e-commerce products",
-        "Printful integration",
-        "Toney AI unlimited",
-        "Image generation (50/month)",
-        "Songwriter splits & payouts",
-        "Team accounts (3 seats)",
-        "Priority support (24-hour response)"
+        "Third-party distribution (Spotify, Apple, etc.)",
+        "BopShop storefront (sell merch & downloads)",
+        "Advanced analytics & insights",
+        "Automated marketing campaigns",
+        "Copyright protection tools",
+        "Priority support"
       ],
-      cta: "Start Pro"
+      cta: "Go Pro",
+      popular: true
     },
     {
-      name: "Free",
-      monthlyPrice: 0,
-      annualPrice: 0,
+      name: "Enterprise",
+      monthlyPrice: 149,
+      annualPrice: 124,
       platformFee: "10%",
-      description: "Build your foundation—collect fans, sell music, grow your audience",
+      description: "For labels, teams, and artists scaling operations.",
       features: [
-        "Keep 90% of all revenue",
-        "Kick In tips: 100% to you",
-        "BopAudio streaming platform",
-        "Third-party distribution",
-        "Basic profile + 10 tracks",
-        "1GB storage",
-        "Basic analytics",
-        "E-commerce (3 products max)",
-        "Toney AI (5 questions/month)",
-        "Community support"
+        "Everything in Pro",
+        "Team accounts (10 seats)",
+        "White-label embeds",
+        "API access",
+        "Microloans (up to $50K)",
+        "Healthcare benefits access",
+        "Dedicated account manager",
+        "1-hour support response"
       ],
-      cta: "Get Started"
+      cta: "Contact Sales",
+      popular: false
     }
   ];
 
-  const stats = [
-    { number: "$2.5M+", label: "Paid to Artists" },
-    { number: "50K+", label: "Tracks Distributed" },
-    { number: "180+", label: "Countries Reached" },
-    { number: "99.9%", label: "Uptime" }
+  const faqs = [
+    {
+      question: "Do I keep the rights to my music?",
+      answer: "Yes. 100%. Always. You own your masters, your publishing, your data. Boptone is a tool you use, not a label you sign with."
+    },
+    {
+      question: "How do payouts work?",
+      answer: "You get paid when you get paid. Streaming royalties flow through as platforms pay us. Sales revenue (merch, downloads) hits your account instantly. Withdraw anytime, no minimums."
+    },
+    {
+      question: "Can I leave anytime?",
+      answer: "Yes. Cancel your subscription, download your data, take your fans with you. No lock-in, no penalties, no questions asked."
+    },
+    {
+      question: "What's the platform fee?",
+      answer: "Free tier: 15%. Pro/Enterprise: 10%. That covers payment processing, hosting, distribution, and keeping the lights on. No hidden fees, no surprise deductions."
+    },
+    {
+      question: "Do I need to be 'established' to use Boptone?",
+      answer: "No. Whether you're uploading your first track or managing a catalog of 500 songs, Boptone works for you. Start free, scale when you're ready."
+    }
   ];
-
-  const handleDemoClick = () => {
-    setLocation("/explainer");
-  };
-
-  const currentPrice = (tier: typeof tiers[0]) => 
-    isAnnual ? tier.annualPrice : tier.monthlyPrice;
-
-  const savings = (tier: typeof tiers[0]) => 
-    tier.monthlyPrice > 0 ? Math.round((tier.monthlyPrice * 12 - tier.annualPrice * 12) / (tier.monthlyPrice * 12) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - ROTATING PHRASES INTACT */}
-      <section className="py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
-            <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
-              <span className={`inline-block min-w-[280px] md:min-w-[650px] transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-                {rotatingPhrases[verbIndex]}
-              </span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl leading-relaxed">
-              Boptone is the all-in-one platform built for independent artists at every stage.
-              Distribution, analytics, and financial tools—designed to help you grow.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] text-lg h-14 px-8 border border-black transition-colors"
-                style={{
-                  boxShadow: '4px 4px 0 0 black'
-                }}
-                onClick={() => window.location.href = getLoginUrl()}
-              >
-                Get Started Free
-              </Button>
-            </div>
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 pt-24 pb-16 md:pt-32 md:pb-24">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <span
+              className={`inline-block transition-all duration-300 ${
+                isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+              }`}
+            >
+              {rotatingPhrases[verbIndex]}
+            </span>
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
+            Upload your music. Sell your merch. Build your audience. Get paid.
+            <br />
+            <strong>All in one place. No middlemen. No bullshit.</strong>
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
+              onClick={() => setLocation("/signup")}
+            >
+              Start Free
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-lg bg-white text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
+              onClick={() => {
+                setDemoMode(true);
+                setLocation("/dashboard");
+              }}
+            >
+              See Demo
+            </Button>
           </div>
+          <p className="text-sm text-gray-600 mt-4">
+            No credit card required. Cancel anytime.
+          </p>
         </div>
       </section>
 
-      {/* Stats Section - BAP Protocol Design */}
-      <section className="py-20 md:py-32 bg-gray-50">
+      {/* What You Get Section */}
+      <section className="bg-gray-50 py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
-                <div className="text-sm md:text-base text-gray-600 uppercase tracking-wide">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section - BAP Protocol Design */}
-      <section className="py-20 md:py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              Everything you need to build a sustainable music career
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Everything You Need to Run Your Music Business
             </h2>
-            <p className="text-2xl text-gray-700 leading-relaxed">
-              From distribution to healthcare, Boptone handles the business so you can focus on creating.
+            <p className="text-lg text-gray-700">
+              Stop juggling 10 platforms. Boptone is your command center.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <div 
-                key={index} 
-                className="border border-black rounded-lg p-8 bg-white hover:bg-gray-50 transition-colors"
-                style={{
-                  boxShadow: '4px 4px 0 0 black'
-                }}
-              >
-                <h4 className="text-xl font-bold mb-3">{feature.title}</h4>
-                <p className="text-lg text-gray-700 leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {coreFeatures.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <Card
+                  key={index}
+                  className="p-6 rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-shadow"
+                >
+                  <Icon className="w-10 h-10 mb-4 text-black" />
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-gray-700">{feature.description}</p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section - BAP Protocol Design */}
-      <section className="py-20 md:py-32 bg-gray-50">
+      {/* Pricing Section */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">Choose Your Plan</h2>
-            <p className="text-2xl text-gray-700 mb-8">
-              Start free, upgrade as you grow
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Simple Pricing. No Surprises.
+            </h2>
+            <p className="text-lg text-gray-700 mb-6">
+              Start free. Upgrade when you're ready. Cancel anytime.
             </p>
-
-            {/* Annual/Monthly Toggle */}
-            <div className="flex items-center justify-center gap-4 mb-12">
-              <span className={`text-base font-medium ${!isAnnual ? 'text-black' : 'text-gray-500'}`}>
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <span className={`text-lg ${!isAnnual ? "font-bold" : "text-gray-600"}`}>
                 Monthly
               </span>
               <button
                 onClick={() => setIsAnnual(!isAnnual)}
-                className="relative inline-flex h-8 w-14 items-center rounded-full bg-black transition-colors focus:outline-none focus:ring-2 focus:ring-[#0cc0df] focus:ring-offset-2"
+                className="relative w-14 h-8 rounded-full bg-black transition-colors"
               >
                 <span
-                  className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
-                    isAnnual ? 'translate-x-7' : 'translate-x-1'
+                  className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-[#0cc0df] transition-transform ${
+                    isAnnual ? "translate-x-6" : ""
                   }`}
                 />
               </button>
-              <span className={`text-base font-medium ${isAnnual ? 'text-black' : 'text-gray-500'}`}>
+              <span className={`text-lg ${isAnnual ? "font-bold" : "text-gray-600"}`}>
                 Annual
-                <span className="ml-2 text-[#0cc0df] font-semibold">Save 20%</span>
+                <span className="ml-2 text-sm bg-[#0cc0df] text-black px-2 py-1 rounded-lg">
+                  Save 17%
+                </span>
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {tiers.map((tier, index) => (
-              <div 
-                key={index} 
-                className="relative border border-black p-10 flex flex-col hover:bg-white transition-colors bg-white rounded-lg"
-                style={{
-                  boxShadow: '4px 4px 0 0 black'
-                }}
+              <Card
+                key={index}
+                className={`p-8 rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
+                  tier.popular ? "relative" : ""
+                }`}
               >
-                {/* Tier Name */}
-                <div className="mb-4">
-                  <h3 className="text-3xl font-bold">{tier.name}</h3>
-                  <p className="text-lg text-gray-600 mt-2">{tier.description}</p>
-                </div>
-
-                {/* Pricing */}
-                <div className="mb-6">
-                  {tier.monthlyPrice === 0 ? (
-                    <div className="text-5xl font-bold">Free</div>
-                  ) : (
-                    <div>
-                      <div className="text-5xl font-bold">
-                        ${currentPrice(tier)}
-                        <span className="text-2xl text-gray-600 font-normal">/mo</span>
-                      </div>
-                      {isAnnual && savings(tier) > 0 && (
-                        <div className="text-sm text-[#0cc0df] font-semibold mt-1">
-                          Save ${tier.monthlyPrice * 12 - tier.annualPrice * 12}/year
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <div className="text-base text-gray-600 mt-2">
-                    {tier.platformFee} platform fee on sales
+                {tier.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0cc0df] text-black px-4 py-1 rounded-lg text-sm font-bold border-2 border-black">
+                    Most Popular
                   </div>
+                )}
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-5xl font-bold">
+                      ${isAnnual ? tier.annualPrice : tier.monthlyPrice}
+                    </span>
+                    {tier.monthlyPrice > 0 && (
+                      <span className="text-gray-600">/month</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-700 mb-4">{tier.description}</p>
+                  <p className="text-sm font-bold">
+                    Platform fee: {tier.platformFee}
+                  </p>
                 </div>
-
-                {/* Features */}
-                <ul className="space-y-3 mb-8 flex-grow">
+                <ul className="space-y-3 mb-8">
                   {tier.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start gap-3 text-base">
-                      <span className="text-[#0cc0df] font-bold mt-0.5">✓</span>
-                      <span className="text-gray-700">{feature}</span>
+                    <li key={featureIndex} className="flex items-start gap-2">
+                      <Check className="w-5 h-5 text-black flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{feature}</span>
                     </li>
                   ))}
                 </ul>
-
-                {/* CTA Button */}
-                <Button
-                  size="lg"
-                  className="w-full rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black transition-colors"
-                  style={{
-                    boxShadow: '4px 4px 0 0 black'
-                  }}
-                  onClick={() => {
-                    if (tier.name === "Enterprise") {
-                      window.location.href = "/contact";
-                    } else {
-                      window.location.href = getLoginUrl();
+                {tier.name === "Enterprise" ? (
+                  <Button
+                    className="w-full rounded-lg bg-black text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] py-6 text-lg font-bold"
+                    onClick={() => setLocation("/contact")}
+                  >
+                    {tier.cta}
+                  </Button>
+                ) : tier.name === "Free" ? (
+                  <Button
+                    className="w-full rounded-lg bg-white text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] py-6 text-lg font-bold"
+                    onClick={() => setLocation("/signup")}
+                  >
+                    {tier.cta}
+                  </Button>
+                ) : (
+                  <StripeCheckout
+                    priceId={
+                      isAnnual
+                        ? "price_1QiQEbEhtyzQmgJv0MZFP5Iu"
+                        : "price_1QiQEbEhtyzQmgJvCCJWuJOC"
                     }
-                  }}
-                >
-                  {tier.cta}
-                </Button>
-              </div>
+                    buttonText={tier.cta}
+                    buttonClassName="w-full rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] py-6 text-lg font-bold"
+                  />
+                )}
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section - BAP Protocol Design */}
-      <section className="py-20 md:py-32 bg-white">
+      {/* FAQ Section */}
+      <section className="bg-gray-50 py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              Ready to automate your tone?
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
+              Questions Artists Actually Ask
             </h2>
-            <p className="text-2xl text-gray-700 mb-8 leading-relaxed">
-              Join thousands of artists building sustainable careers on Boptone.
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <Card
+                  key={index}
+                  className="rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                >
+                  <button
+                    onClick={() => setFaqOpen(faqOpen === index ? null : index)}
+                    className="w-full p-6 text-left flex justify-between items-center"
+                  >
+                    <h3 className="text-lg font-bold pr-4">{faq.question}</h3>
+                    <span className="text-2xl font-bold flex-shrink-0">
+                      {faqOpen === index ? "−" : "+"}
+                    </span>
+                  </button>
+                  {faqOpen === index && (
+                    <div className="px-6 pb-6">
+                      <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                    </div>
+                  )}
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Ready to Take Control?
+            </h2>
+            <p className="text-xl text-gray-700 mb-8">
+              Join thousands of artists who stopped waiting for permission and started building their careers on their own terms.
             </p>
             <Button
               size="lg"
-              className="rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] text-lg h-14 px-8 border border-black transition-colors"
-              style={{
-                boxShadow: '4px 4px 0 0 black'
-              }}
-              onClick={() => window.location.href = getLoginUrl()}
+              className="rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-12 py-6 text-xl font-bold"
+              onClick={() => setLocation("/signup")}
             >
-              Get Started Free
+              Start Free Today
             </Button>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { getLoginUrl } from "@/const";
 
-const rotatingPhrases = ["Find Your Tone.", "Create Your Tone.", "Automate Your Tone.", "Own Your Tone."];
+const rotatingPhrases = ["Create Your Tone.", "Automate Your Tone.", "Own Your Tone."];
 
 /**
  * Landing Page for Boptone Platform
@@ -188,8 +188,7 @@ export default function Landing() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl leading-relaxed">
-              Boptone is the all-in-one platform built for artists at every stage.
-              Distribution, analytics, and financial tools—designed to help you grow.
+              Upload your music. Sell your merch. Build your audience. Get paid. All in one place.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
