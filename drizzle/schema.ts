@@ -249,7 +249,10 @@ export const products = mysqlTable("products", {
   statusIdx: index("status_idx").on(table.status),
   typeIdx: index("type_idx").on(table.type),
   slugIdx: index("slug_idx").on(table.slug),
+  createdAtIdx: index("created_at_idx").on(table.createdAt), // Index for "new arrivals" sorting
+  featuredIdx: index("featured_idx").on(table.featured), // Index for featured products
   artistStatusIdx: index("artist_status_idx").on(table.artistId, table.status), // Composite index for artist product queries
+  statusCreatedAtIdx: index("status_created_at_idx").on(table.status, table.createdAt), // Composite for active products sorted by date
   deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
 }));
 
@@ -397,7 +400,9 @@ export const orders = mysqlTable("orders", {
   orderNumberIdx: index("order_number_idx").on(table.orderNumber),
   paymentStatusIdx: index("payment_status_idx").on(table.paymentStatus),
   fulfillmentStatusIdx: index("fulfillment_status_idx").on(table.fulfillmentStatus),
+  createdAtIdx: index("created_at_idx").on(table.createdAt), // Index for sorting by date
   artistPaymentStatusIdx: index("artist_payment_status_idx").on(table.artistId, table.paymentStatus), // Composite index for artist order queries
+  customerCreatedAtIdx: index("customer_created_at_idx").on(table.customerId, table.createdAt), // Composite for user order history
   deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
 }));
 
@@ -3558,3 +3563,61 @@ export const pixelConsent = mysqlTable("pixel_consent", {
 
 export type PixelConsent = typeof pixelConsent.$inferSelect;
 export type InsertPixelConsent = typeof pixelConsent.$inferInsert;
+
+// ============================================================================
+// AI ORCHESTRATOR TABLES
+// ============================================================================
+
+/**
+ * AI Context
+ * Stores unified artist context for AI features (Toney, Workflow Assistant, etc.)
+ */
+export const aiContext = mysqlTable("ai_context", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // User reference
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }).unique(),
+  
+  // Context data (JSON)
+  contextData: json("contextData").$type<Record<string, any>>().notNull(),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  lastEnriched: timestamp("lastEnriched").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  lastEnrichedIdx: index("last_enriched_idx").on(table.lastEnriched),
+}));
+
+export type AIContext = typeof aiContext.$inferSelect;
+export type InsertAIContext = typeof aiContext.$inferInsert;
+
+/**
+ * AI Events
+ * Event bus for AI system to track user actions and trigger workflows
+ */
+export const aiEvents = mysqlTable("ai_events", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // User reference
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  
+  // Event details
+  eventType: varchar("eventType", { length: 100 }).notNull(),
+  eventData: json("eventData").$type<Record<string, any>>().notNull(),
+  
+  // Processing status
+  processed: boolean("processed").default(false).notNull(),
+  processedAt: timestamp("processedAt"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  processedIdx: index("processed_idx").on(table.processed),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+  userProcessedIdx: index("user_processed_idx").on(table.userId, table.processed), // Composite for user event queries
+}));
+
+export type AIEvent = typeof aiEvents.$inferSelect;
+export type InsertAIEvent = typeof aiEvents.$inferInsert;
