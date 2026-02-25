@@ -49,15 +49,9 @@ export default function Shop() {
             alt="BopShop" 
             className="h-32 sm:h-40 md:h-48 lg:h-56 mx-auto mb-8"
           />
-          <p className="text-2xl md:text-3xl text-gray-600 mb-8">
+          <p className="text-2xl md:text-3xl text-gray-600 mb-12">
             Where artists sell direct. Where fans buy authentic.
           </p>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-cyan-50 border-l-4 border-cyan-400 rounded-r-xl mb-12">
-            <Heart className="w-5 h-5 text-cyan-600" />
-            <span className="text-lg font-semibold text-gray-900">
-              90% goes directly to artists
-            </span>
-          </div>
 
           {/* AI Chat Search */}
           <div className="max-w-4xl mx-auto">
@@ -65,7 +59,7 @@ export default function Shop() {
               <Textarea
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for artists, products, or get recommendations..."
+                placeholder="What are you looking for? T-shirt, Vinyl, Hoodie, Hat..."
                 className="min-h-[120px] text-xl px-6 py-6 rounded-3xl border-2 border-gray-200 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-200 resize-none shadow-lg"
                 rows={3}
               />

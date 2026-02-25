@@ -2685,3 +2685,11 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Position chat box below logo and above category pills
 - [x] Test layout and functionality - VERIFIED logo and AI chat display correctly
 - [ ] Save checkpoint
+
+
+## BopShop Layout Refinement
+- [x] Remove "90% goes directly to artists" box from hero section
+- [x] Move AI chat textarea up to position directly below tagline
+- [x] Update placeholder text to "What are you looking for? T-shirt, Vinyl, Hoodie, Hat..."
+- [x] Test layout changes - VERIFIED new placeholder displays, box removed, chat moved up
+- [ ] Save checkpoint
