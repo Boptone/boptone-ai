@@ -4495,3 +4495,8 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Remove "Start your music career today" tagline (too cheesy)
 - [x] Move copy below that sentence up near "Join Boptone"
 - [x] Reorganize signup page content hierarchy
+
+### Toney Chat Bubble Positioning Fix
+- [x] Fix nested container issue causing chat bubble to be stuck in bottom corner
+- [x] Ensure proper fixed positioning relative to viewport
+- [x] Test chat bubble on all pages to ensure consistent positioning

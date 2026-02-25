@@ -121,7 +121,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-8 right-8 z-[99999]">
+      <div className="fixed bottom-6 right-6 z-[99999] w-16 h-16">
         {/* Outer ring - lighter blue */}
         <div className="absolute inset-0 rounded-full" style={{ 
           background: 'linear-gradient(135deg, #7AB8F5 0%, #9B87E8 100%)',
@@ -145,7 +145,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
   }
 
   return (
-    <div className="fixed bottom-12 right-12 z-[9999] w-full max-w-md">
+    <div className="fixed bottom-6 right-6 z-[9999] max-w-md">
       <div className="rounded-lg shadow-2xl border flex flex-col" style={{ height: "600px", backgroundColor: "#f5f5f5" }}>
         <div className="flex items-center justify-between p-4 border-b bg-primary text-primary-foreground rounded-t-lg">
           <div className="flex items-center gap-2">

@@ -84,7 +84,7 @@ export default function MultiStepSignup() {
             Join Boptone
           </h1>
           <p className="text-xl text-gray-600">
-            After signing up, you'll upload your first track, set up your profile, and start building your audience.
+            After signing up, upload music, set up your profile, and start building your audience.
           </p>
         </div>
 
