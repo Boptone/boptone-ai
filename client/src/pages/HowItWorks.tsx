@@ -39,13 +39,13 @@ export default function HowItWorks() {
 
         {/* Screen 1: Fans Pay You Directly */}
         {currentStep === 1 && (
-          <div className="grid md:grid-cols-2 gap-12 items-center animate-in fade-in duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center animate-in fade-in duration-500">
             {/* Left: Content */}
             <div className="space-y-6">
               <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-lg text-sm font-bold uppercase tracking-wide border border-black">
                 Step 1 of 3
               </div>
-              <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-none tracking-tight">
                 Fans Pay
                 <br />
                 <span className="text-black">You Directly</span>
@@ -106,13 +106,13 @@ export default function HowItWorks() {
 
         {/* Screen 2: Get Paid Instantly */}
         {currentStep === 2 && (
-          <div className="grid md:grid-cols-2 gap-12 items-center animate-in fade-in duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center animate-in fade-in duration-500">
             {/* Left: Visual */}
             <div className="relative h-96 order-2 md:order-1">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white rounded-lg  p-12 border border-black">
                   <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-4xl md:text-5xl lg:text-6xl font-bold text-black">$47.50</span>
+                    <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black">$47.50</span>
                     <span className="text-2xl font-bold text-black">INSTANT</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-600">
@@ -131,7 +131,7 @@ export default function HowItWorks() {
               <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-lg text-sm font-bold uppercase tracking-wide border border-black">
                 Step 2 of 3
               </div>
-              <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-none tracking-tight">
                 Get Paid
                 <br />
                 <span className="text-black">Instantly</span>
@@ -164,13 +164,13 @@ export default function HowItWorks() {
 
         {/* Screen 3: You Control Your Earnings */}
         {currentStep === 3 && (
-          <div className="grid md:grid-cols-2 gap-12 items-center animate-in fade-in duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center animate-in fade-in duration-500">
             {/* Left: Content */}
             <div className="space-y-6">
               <div className="inline-block px-4 py-2 bg-gray-100 text-black rounded-lg text-sm font-bold uppercase tracking-wide border border-black">
                 Step 3 of 3
               </div>
-              <h1 className="text-6xl md:text-7xl font-bold leading-none tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-none tracking-tight">
                 You Control
                 <br />
                 <span className="text-black">Your Earnings</span>

@@ -75,12 +75,12 @@ export default function Features() {
       <div className="border-b border-black bg-white">
         <div className="container py-32">
           <div className="max-w-4xl">
-            <h1 className="text-7xl md:text-8xl font-bold leading-none mb-8">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-none mb-8">
               Everything
               <br />
               You Need.
             </h1>
-            <p className="text-2xl text-gray-600 leading-relaxed mb-12 max-w-2xl">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 leading-relaxed mb-12 max-w-2xl">
               Upload music, get paid, sell merch, and grow your career—all in one simple platform.
             </p>
             <div className="flex gap-4">
@@ -111,7 +111,7 @@ export default function Features() {
       {/* Stats Bar - Xerox gradient background */}
       <div className="bg-gray-50 border-b border-black">
         <div className="container py-16">
-          <div className="grid grid-cols-3 gap-12 max-w-4xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 max-w-4xl">
             <div className="text-center">
               <div className="text-5xl font-bold mb-2">6 Tools</div>
               <div className="text-lg text-gray-600">One Platform</div>
@@ -134,7 +134,7 @@ export default function Features() {
           <h2 className="text-6xl font-bold mb-20 max-w-3xl">
             Six Powerful Tools.
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {features.map((feature, index) => (
               <div 
                 key={index}

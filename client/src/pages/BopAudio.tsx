@@ -69,12 +69,12 @@ export default function BopAudio() {
             <div className="inline-block px-4 py-2 bg-[#008B8B] text-white font-bold text-sm rounded-full mb-8 border border-black shadow-[4px_4px_0px_0px_black]">
               BOPAUDIO STREAMING PLATFORM
             </div>
-            <h1 className="text-6xl md:text-8xl font-bold leading-none mb-8">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-none mb-8">
               Keep 90%.
               <br />
               <span className="text-[#008B8B]">Own Your Tone.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-12 max-w-3xl">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed mb-12 max-w-3xl">
               The streaming platform built for artists. Upload unlimited music, reach global audiences, and keep 90% of every dollar you earn. No middlemen, no hidden fees.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -101,7 +101,7 @@ export default function BopAudio() {
       {/* Stats Bar - BAP Protocol */}
       <div className="bg-gray-50 border-b-2 border-black">
         <div className="container py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
             <div className="text-center p-8 bg-white border border-black rounded-lg shadow-[4px_4px_0px_0px_black]">
               <div className="text-5xl md:text-6xl font-bold mb-2 text-[#008B8B]">90%</div>
               <div className="text-lg font-bold text-gray-700">Artist Revenue Share</div>

@@ -178,7 +178,7 @@ export default function Dashboard() {
 
         <div className="container py-20 space-y-20">
           {/* Stats Grid - BAP Protocol with black borders and brutalist shadows */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((stat) => {
               return (
                 <div key={stat.title} className="border border-black hover:border-black transition-colors bg-white p-8 rounded-lg shadow-[4px_4px_0px_0px_black]">
@@ -202,7 +202,7 @@ export default function Dashboard() {
           <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Quick Actions</h2>
             <p className="text-lg text-gray-600 mb-10">Common tasks to manage your career</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
               {quickActions.map((action) => {
                 return (
                   <button
@@ -278,7 +278,7 @@ export default function Dashboard() {
           <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Growth Tips</h2>
             <p className="text-lg text-gray-600 mb-10">Personalized recommendations to accelerate your career</p>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               {tips.map((tip) => (
                 <div key={tip.title} className="border border-black p-8 rounded-lg shadow-[4px_4px_0px_0px_black]">
                   <h3 className="text-xl font-bold mb-3">{tip.title}</h3>

@@ -162,7 +162,7 @@ export default function ProfileSettings() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8 pt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                 <div className="space-y-4">
                   <Label htmlFor="themeColor" className="text-lg font-bold text-gray-900">
                     Primary Color
@@ -428,7 +428,7 @@ export default function ProfileSettings() {
           </Card>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <Card 
               className="rounded-lg border-4 border-black bg-white cursor-pointer hover:bg-gray-50 transition-colors"
               onClick={handleSave}
