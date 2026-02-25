@@ -170,7 +170,7 @@ export default function Landing() {
               Boptone
             </p>
             <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
-              The Autonomous Operating System for the Modern Music Business.
+              The Autonomous Operating System for Artists.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
