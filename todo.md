@@ -3017,3 +3017,16 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Tagline now reads "The Autonomous Operating System for Artists." - more concise and direct, removing unnecessary "Modern Music Business" verbiage.
+
+
+---
+
+## 🎵 Music Player Visibility Update ✅ COMPLETE
+
+- [x] Locate music player component in codebase
+- [x] Update visibility logic to only show on /music page
+- [x] Test music player hidden on landing, shop, pricing, etc.
+- [x] Test music player visible on /music page
+- [x] Save checkpoint
+
+**Result:** Music player now only appears on /music page (BopAudio music discovery). Hidden on all other pages including landing, shop, pricing, features, etc. for cleaner UX.
