@@ -2787,3 +2787,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Test on desktop viewport
 - [x] Test on mobile viewport
 - [x] Save checkpoint
+
+---
+
+## 🛍️ Quick-View Modal Cleanup (February 24, 2026)
+
+### ✅ Remove Type Badge (COMPLETE)
+- [x] Remove product type badge ("PHYSICAL", "DIGITAL", etc.) from modal
+- [x] Test modal layout without badge
+- [x] Save checkpoint

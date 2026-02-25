@@ -90,9 +90,6 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
             <div className="flex-1">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <Badge className="rounded-full border border-gray-200 bg-white text-gray-900 font-bold text-xs px-3 py-1 uppercase mb-3">
-                    {product.type}
-                  </Badge>
                   <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
                     {product.name}
                   </h2>
