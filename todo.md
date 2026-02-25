@@ -3211,3 +3211,39 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 
 **Architecture Status:** World-class foundation, ready for production integration
 **Next Steps:** Complete Stripe Connect + error handling + testing for bulletproof system
+
+
+---
+
+## 🚀 Priority Next Steps (Deferred)
+
+### Complete Stripe Connect Integration
+- [ ] Replace stub payouts with real Stripe Connect API calls
+- [ ] Implement actual artist withdrawal functionality
+- [ ] Add bank account/debit card linking for artists
+- [ ] Test real payout flow with Stripe Connect test accounts
+
+### Build Wallet Management UI
+- [ ] Create fan wallet page for top-ups and balance viewing
+- [ ] Build artist earnings dashboard with revenue breakdown
+- [ ] Add payout request interface (instant vs standard)
+- [ ] Implement transaction history view with filters
+
+### Test Shopping Cart Flow
+- [ ] Verify complete purchase journey: BopShop → Cart → Stripe Checkout → Order Confirmation
+- [ ] Test cart quantity updates and item removal
+- [ ] Test Stripe checkout with test card (4242 4242 4242 4242)
+- [ ] Verify order confirmation page displays correct details
+- [ ] Test cart badge updates in navigation
+
+
+---
+
+## ⚡ Quick Wins - Low-Hanging Fruit
+
+### Navigation Badge Counters ✅ COMPLETE
+- [x] Add wishlist count badge (lightning bolt icon with number)
+- [x] Test wishlist badge updates in real-time
+- [x] Ensure badge styling matches cart badge
+
+**Result:** Lightning bolt wishlist icon now appears in navigation next to cart icon. Both show cyan badges with item counts (99+ max). Fully responsive on desktop and mobile.

@@ -48,6 +48,11 @@ export function Navigation() {
     enabled: isAuthenticated,
   });
 
+  // Fetch wishlist count for badge
+  const { data: wishlistCount = 0 } = trpc.wishlist.count.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
+
   // Close mobile menu when clicking a link
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -261,23 +266,43 @@ export function Navigation() {
               <MessageCircle className="w-5 h-5 text-gray-700" />
             </Button>
 
-            {/* Shopping Cart Icon with Badge */}
+            {/* Wishlist & Cart Icons with Badges */}
             {isAuthenticated && (
-              <Link href="/cart">
+              <>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-full w-11 h-11 hover:bg-gray-100 transition-colors relative"
+                  className="relative hover:bg-gray-100"
+                  asChild
+                  aria-label="Wishlist"
+                >
+                  <Link href="/wishlist">
+                    <Zap className="w-5 h-5 text-gray-700" />
+                    {wishlistCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                        {wishlistCount > 99 ? "99+" : wishlistCount}
+                      </span>
+                    )}
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative hover:bg-gray-100"
+                  asChild
                   aria-label="Shopping Cart"
                 >
-                  <ShoppingBag className="w-5 h-5 text-gray-700" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
-                      {cartCount > 99 ? "99+" : cartCount}
-                    </span>
-                  )}
+                  <Link href="/cart">
+                    <ShoppingBag className="w-5 h-5 text-gray-700" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                        {cartCount > 99 ? "99+" : cartCount}
+                      </span>
+                    )}
+                  </Link>
                 </Button>
-              </Link>
+              </>
             )}
 
             {isAuthenticated ? (
@@ -347,23 +372,43 @@ export function Navigation() {
               <MessageCircle className="w-5 h-5 text-gray-700" />
             </Button>
 
-            {/* Shopping Cart Icon with Badge */}
+            {/* Wishlist & Cart Icons with Badges */}
             {isAuthenticated && (
-              <Link href="/cart">
+              <>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="rounded-full w-11 h-11 hover:bg-gray-100 transition-colors relative"
+                  className="relative hover:bg-gray-100"
+                  asChild
+                  aria-label="Wishlist"
+                >
+                  <Link href="/wishlist">
+                    <Zap className="w-5 h-5 text-gray-700" />
+                    {wishlistCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                        {wishlistCount > 99 ? "99+" : wishlistCount}
+                      </span>
+                    )}
+                  </Link>
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative hover:bg-gray-100"
+                  asChild
                   aria-label="Shopping Cart"
                 >
-                  <ShoppingBag className="w-5 h-5 text-gray-700" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
-                      {cartCount > 99 ? "99+" : cartCount}
-                    </span>
-                  )}
+                  <Link href="/cart">
+                    <ShoppingBag className="w-5 h-5 text-gray-700" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-[#0cc0df] text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">
+                        {cartCount > 99 ? "99+" : cartCount}
+                      </span>
+                    )}
+                  </Link>
                 </Button>
-              </Link>
+              </>
             )}
 
             {/* Hamburger Menu Button */}
