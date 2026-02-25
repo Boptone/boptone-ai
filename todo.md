@@ -3839,6 +3839,16 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] order_id, shippo_shipment_id, shippo_transaction_id
   - [ ] carrier, service_level, tracking_number, tracking_url, label_url, cost
   - [ ] Foreign key to orders table
+- [ ] Add enterprise-grade database indexes (WEEK 1 CRITICAL):
+  - [ ] product_fulfillment_settings: (product_id, fulfillment_mode)
+  - [ ] printful_orders: (order_id, status), (printful_order_id)
+  - [ ] printify_orders: (order_id, status), (printify_order_id)
+  - [ ] shippo_shipments: (order_id), (shippo_transaction_id)
+  - [ ] orders: (status, created_at) for admin dashboard queries
+- [ ] Add audit trail columns to all POD tables (WEEK 2):
+  - [ ] created_at, updated_at, last_synced_at (for webhook tracking)
+  - [ ] error_count, last_error_message (for debugging)
+- [ ] Add idempotency_key column to printful_orders and printify_orders (WEEK 1 CRITICAL)
 - [ ] Run `pnpm db:push` to apply schema changes
 
 ### Printful API Integration (Weeks 1-3)
@@ -3851,6 +3861,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] `getPrintfulOrderStatus(printfulOrderId)` - Get order status
   - [ ] `getPrintfulShipment(printfulOrderId)` - Get tracking info
   - [ ] `generatePrintfulMockup(productId, designUrl)` - Generate product mockups
+- [ ] Add enterprise-grade API client features (WEEK 1 CRITICAL):
+  - [ ] Rate limiting (10 req/sec Printful limit, use sliding window)
+  - [ ] Exponential backoff retry logic (3 retries with 1s, 2s, 4s delays)
+  - [ ] Circuit breaker pattern (open after 5 failures, half-open after 60s)
+  - [ ] Request timeout (30s for product catalog, 10s for order status)
+  - [ ] Idempotency headers (X-Idempotency-Key) for order creation
+- [ ] Add comprehensive error handling (WEEK 1 CRITICAL):
+  - [ ] Map Printful error codes to user-friendly messages
+  - [ ] Log all API errors to database (api_error_logs table)
+  - [ ] Alert admin on repeated failures (>10 errors/hour)
+  - [ ] Fallback to cached product catalog if API unavailable
 - [ ] Build product sync system
   - [ ] Import Printful catalog to BopShop (479 products)
   - [ ] Map Printful products to BopShop products
@@ -3862,9 +3883,14 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] Send order to Printful
   - [ ] Store printful_order_id in printful_orders table
 - [ ] Build fulfillment tracking system
-  - [ ] Poll Printful API for order status updates (every 1 hour)
+  - [ ] Replace polling with webhooks (WEEK 1 CRITICAL):
+    - [ ] Register webhook endpoint /api/webhooks/printful
+    - [ ] Verify webhook signature (HMAC-SHA256)
+    - [ ] Handle events: order_created, order_updated, package_shipped, package_delivered
+    - [ ] Fallback polling (every 6 hours) for missed webhooks
   - [ ] Update order status in database (pending → processing → shipped → delivered)
   - [ ] Send tracking email to customer when shipped
+  - [ ] Add state machine validation (prevent invalid transitions)
 
 ### Printify API Integration (Weeks 1-3, parallel with Printful)
 - [ ] Set up Printify API credentials in environment variables
@@ -3877,6 +3903,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] `getPrintifyOrderStatus(printifyOrderId)` - Get order status
   - [ ] `getPrintifyShipment(printifyOrderId)` - Get tracking info
   - [ ] `generatePrintifyMockup(productId, designUrl)` - Generate product mockups
+- [ ] Add enterprise-grade API client features (WEEK 1 CRITICAL):
+  - [ ] Rate limiting (15 req/sec Printify limit, use sliding window)
+  - [ ] Exponential backoff retry logic (3 retries with 1s, 2s, 4s delays)
+  - [ ] Circuit breaker pattern (open after 5 failures, half-open after 60s)
+  - [ ] Request timeout (30s for product catalog, 10s for order status)
+  - [ ] Idempotency headers for order creation
+- [ ] Add comprehensive error handling (WEEK 1 CRITICAL):
+  - [ ] Map Printify error codes to user-friendly messages
+  - [ ] Log all API errors to database (api_error_logs table)
+  - [ ] Alert admin on repeated failures (>10 errors/hour)
+  - [ ] Fallback to cached product catalog if API unavailable
 - [ ] Build product sync system
   - [ ] Import Printify catalog to BopShop (blueprints + variants)
   - [ ] Map Printify products to BopShop products
@@ -3889,10 +3926,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] Send order to Printify
   - [ ] Store printify_order_id in printify_orders table
 - [ ] Build fulfillment tracking system
-  - [ ] Poll Printify API for order status updates (every 1 hour)
+  - [ ] Replace polling with webhooks (WEEK 1 CRITICAL):
+    - [ ] Register webhook endpoint /api/webhooks/printify
+    - [ ] Verify webhook signature (HMAC-SHA256)
+    - [ ] Handle events: order:created, order:sent-to-production, order:shipment:created, order:shipment:delivered
+    - [ ] Fallback polling (every 6 hours) for missed webhooks
   - [ ] Update order status in database (pending → processing → shipped → delivered)
   - [ ] Send tracking email to customer when shipped
   - [ ] Send tracking number to customer via email
+  - [ ] Add state machine validation (prevent invalid transitions)
 - [ ] Add Printful cost calculator to product creation flow
   - [ ] Show base cost, shipping estimate, suggested retail price
   - [ ] Calculate artist profit margin
@@ -3904,6 +3946,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] `getShippingRates(from, to, parcel)` - Get real-time shipping rates
   - [ ] `purchaseShippingLabel(rateId)` - Purchase shipping label
   - [ ] `getTrackingStatus(carrier, trackingNumber)` - Get tracking status
+- [ ] Add enterprise-grade API client features (WEEK 1 CRITICAL):
+  - [ ] Rate limiting (25 req/sec Shippo limit, use sliding window)
+  - [ ] Exponential backoff retry logic (3 retries with 1s, 2s, 4s delays)
+  - [ ] Circuit breaker pattern (open after 5 failures, half-open after 60s)
+  - [ ] Request timeout (10s for rate quotes, 15s for label purchase)
+  - [ ] Idempotency for label purchase (prevent duplicate charges)
+- [ ] Add comprehensive error handling (WEEK 1 CRITICAL):
+  - [ ] Map Shippo error codes to user-friendly messages
+  - [ ] Log all API errors to database (api_error_logs table)
+  - [ ] Alert admin on repeated failures (>10 errors/hour)
+  - [ ] Fallback to flat-rate shipping if API unavailable
 - [ ] Build real-time shipping rate calculator
   - [ ] Call Shippo API with customer address + product dimensions
   - [ ] Return USPS, UPS, FedEx rates
@@ -3922,16 +3975,44 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] Send "Your order has been delivered" email
 - [ ] Build shipping label download for artists (if needed for DIY)
 
+### Order Fulfillment Router (WEEK 1 CRITICAL)
+- [ ] Create centralized order processing service
+  - [ ] `server/services/orderFulfillment.ts` - Main orchestrator
+  - [ ] `processOrder(orderId)` - Route to correct POD provider
+  - [ ] `retryFailedOrder(orderId)` - Retry with exponential backoff
+  - [ ] `cancelOrder(orderId)` - Cancel across all providers
+- [ ] Add order state machine (WEEK 1 CRITICAL):
+  - [ ] States: pending → processing → shipped → delivered → failed
+  - [ ] Validate state transitions (prevent invalid jumps)
+  - [ ] Log all state changes to audit trail
+  - [ ] Add timeout handling (auto-cancel after 24 hours if stuck)
+- [ ] Add idempotency layer (WEEK 1 CRITICAL):
+  - [ ] Generate idempotency key per order (UUID)
+  - [ ] Store in database before API calls
+  - [ ] Check for duplicate orders (same customer + items + timestamp)
+  - [ ] Return existing order if duplicate detected
+- [ ] Add transaction rollback (WEEK 2):
+  - [ ] If Printful order fails, refund customer immediately
+  - [ ] If Shippo label fails, cancel POD order
+  - [ ] If payment fails, mark order as failed (no POD order)
+  - [ ] Log all rollback actions to audit trail
+
 ### Testing & Launch (Weeks 5-6)
 - [ ] End-to-end testing (order → payment → Printful → ship → deliver)
   - [ ] Test with real Printful order (use test mode)
   - [ ] Test with real Shippo label (use test mode)
   - [ ] Verify tracking updates work
   - [ ] Verify customer emails sent correctly
-- [ ] Load testing (100 concurrent orders)
+- [ ] Load testing (WEEK 1 CRITICAL - Scale to 10,000 orders):
+  - [ ] Test 100 concurrent orders (baseline)
+  - [ ] Test 1,000 concurrent orders (realistic peak)
+  - [ ] Test 10,000 concurrent orders (Shopify-level scale)
   - [ ] Use k6 or Artillery to simulate traffic
   - [ ] Verify no race conditions in order processing
-  - [ ] Verify Printful API rate limits not exceeded
+  - [ ] Verify Printful/Printify API rate limits not exceeded
+  - [ ] Verify database connection pool handles load
+  - [ ] Verify Redis rate limiter handles load
+  - [ ] Measure p95/p99 latency (target: <500ms for checkout)
 - [ ] Customer support training
   - [ ] Document refund process
   - [ ] Document return process
@@ -3946,6 +4027,260 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] Fix critical bugs
   - [ ] Improve UX based on artist feedback
   - [ ] Optimize pricing calculator
+
+### Enterprise Monitoring & Observability (WEEK 2 HIGH-PRIORITY)
+- [ ] Add Sentry error tracking integration
+  - [ ] Track API errors (Printful, Printify, Shippo)
+  - [ ] Track order processing failures
+  - [ ] Track payment failures
+  - [ ] Set up alerts for error spikes (>10 errors/min)
+- [ ] Add health check endpoints
+  - [ ] /api/health - Basic health check
+  - [ ] /api/health/deep - Database + Redis + API connectivity
+  - [ ] /api/health/integrations - Printful/Printify/Shippo status
+- [ ] Add metrics dashboard
+  - [ ] Order volume by hour/day/week
+  - [ ] Revenue by POD provider
+  - [ ] API error rates by provider
+  - [ ] Average order processing time
+  - [ ] Failed order rate (target: <0.1%)
+- [ ] Add alerting system
+  - [ ] Slack/email alerts for critical errors
+  - [ ] Alert on API downtime (>5 min)
+  - [ ] Alert on order processing delays (>1 hour)
+  - [ ] Alert on payment failures (>5% rate)
+
+### Fraud Detection & Prevention (WEEK 2 HIGH-PRIORITY)
+- [ ] Add order fraud detection
+  - [ ] Flag orders with mismatched billing/shipping countries
+  - [ ] Flag orders with high-risk email domains
+  - [ ] Flag orders with >$500 value (manual review)
+  - [ ] Flag artists with >10 chargebacks (suspend account)
+- [ ] Add DIY fulfillment abuse detection
+  - [ ] Flag artists who never ship orders (>5 unshipped after 7 days)
+  - [ ] Flag artists with high refund rates (>20%)
+  - [ ] Flag artists uploading copyrighted designs (AI detection)
+  - [ ] Auto-disable DIY mode after 3 strikes
+- [ ] Add rate limiting for order creation
+  - [ ] 10 orders/hour per customer (prevent bot attacks)
+  - [ ] 100 orders/hour per artist (prevent abuse)
+  - [ ] Block IP addresses with >50 failed payments
+
+### Performance Optimization (WEEK 3)
+- [ ] Add caching layer
+  - [ ] Cache Printful/Printify product catalogs (24 hour TTL)
+  - [ ] Cache shipping rates per address/product (1 hour TTL)
+  - [ ] Cache artist fulfillment settings (5 min TTL)
+  - [ ] Use Redis for distributed caching
+- [ ] Optimize database queries
+  - [ ] Add composite indexes for common queries
+  - [ ] Use connection pooling (min 10, max 50 connections)
+  - [ ] Add read replicas for order history queries
+- [ ] Add background job processing
+  - [ ] Move order fulfillment to background queue (BullMQ)
+  - [ ] Move webhook processing to background queue
+  - [ ] Move email sending to background queue
+  - [ ] Add retry logic with exponential backoff
+- [ ] Add CDN for static assets
+  - [ ] Serve product images from CDN
+  - [ ] Serve mockup images from CDN
+  - [ ] Add image optimization (WebP, lazy loading)
+
+## BopShop Expansion Strategy: Music Artists → All Creators
+
+### Phase 1: Music Artists Only (Q1 2026) ✅ IN PROGRESS
+**Goal:** Prove the model, build IP protection systems
+**Target:** 100+ artists, <1% DMCA rate, $50k+ monthly GMV
+
+- [x] Launch BopShop to music artists
+- [x] Dual POD provider integration (Printful + Printify)
+- [ ] Implement basic AI IP screening (logo detection)
+- [ ] Track DMCA takedown rate
+- [ ] Build artist success stories for marketing
+
+### Phase 2: Visual Artists & Designers (Q2 2026)
+**Goal:** Expand to adjacent creator category with moderate IP risk
+**Target:** 500+ creators, <0.5% DMCA rate, $250k+ monthly GMV
+
+- [ ] Open BopShop to visual artists (illustrators, photographers, digital artists)
+- [ ] Implement advanced AI screening (celebrity faces, perceptual hashing)
+- [ ] Hire IP compliance specialist (part-time)
+- [ ] Create educational resources (what's allowed/not allowed)
+- [ ] Marketing campaign: "Where Original Art Becomes Wearable"
+
+### Phase 3: All Creators (Q3-Q4 2026)
+**Goal:** Open floodgates to massive market
+**Target:** 5,000+ creators, <1% DMCA rate, $1M+ monthly GMV
+
+- [ ] Soft launch to all creators (invite-only, Q3)
+- [ ] Public launch to all creators (Q4)
+- [ ] Implement human review queue for all designs
+- [ ] Whitelist trusted creators (auto-approve after good track record)
+- [ ] Marketing campaign: "The Creator Economy's Merch Platform"
+
+### AI-Powered IP Protection System (Q1 2026 - CRITICAL)
+
+#### Database Schema
+- [ ] Create `ip_screening_results` table
+  - [ ] product_id, design_url, screening_status (pending/approved/rejected/flagged)
+  - [ ] ai_confidence_score, detected_logos, detected_celebrities, detected_text
+  - [ ] flagged_reason, reviewed_by, reviewed_at
+  - [ ] Foreign key to products table
+- [ ] Create `ip_strikes` table
+  - [ ] artist_id, strike_number (1/2/3), strike_reason, strike_date
+  - [ ] product_id, design_url, evidence_url
+  - [ ] resolved (boolean), resolved_by, resolved_at
+  - [ ] Foreign key to artist_profiles table
+- [ ] Create `dmca_notices` table
+  - [ ] notice_id, product_id, artist_id, complainant_name, complainant_email
+  - [ ] infringement_description, evidence_url, notice_date
+  - [ ] status (pending/takedown/counter_notice/resolved)
+  - [ ] action_taken, action_date, action_by
+- [ ] Run `pnpm db:push` to apply schema changes
+
+#### AI Integration (Google Vision API)
+- [ ] Set up Google Cloud account
+- [ ] Enable Vision API
+- [ ] Generate API key
+- [ ] Add GOOGLE_VISION_API_KEY to environment via webdev_request_secrets
+- [ ] Create `server/services/ipScreening.ts` service
+  - [ ] `screenDesign(imageUrl)` - Main orchestrator
+  - [ ] `detectLogos(imageUrl)` - Google Vision logo detection
+  - [ ] `detectText(imageUrl)` - Google Vision text extraction
+  - [ ] `detectSafeSearch(imageUrl)` - Google Vision safe search
+  - [ ] `calculateConfidenceScore()` - Aggregate AI results
+- [ ] Test with sample designs (Nike logo, Disney characters, band logos)
+
+#### AI Integration (AWS Rekognition)
+- [ ] Set up AWS account (if not already)
+- [ ] Enable Rekognition API
+- [ ] Generate IAM credentials
+- [ ] Add AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to environment
+- [ ] Extend `server/services/ipScreening.ts` service
+  - [ ] `detectCelebrities(imageUrl)` - AWS Rekognition celebrity detection
+  - [ ] `detectFaces(imageUrl)` - AWS Rekognition face detection
+
+#### Perceptual Hashing (Image Similarity)
+- [ ] Install perceptual hashing library (pHash or similar)
+- [ ] Build database of known copyrighted images
+  - [ ] Disney characters, Marvel/DC superheroes, sports team logos
+  - [ ] Band logos, album art (from music database)
+  - [ ] Celebrity headshots (from public databases)
+- [ ] Extend `server/services/ipScreening.ts` service
+  - [ ] `generatePerceptualHash(imageUrl)` - Generate pHash
+  - [ ] `compareToKnownImages(hash)` - Compare against database
+  - [ ] `calculateSimilarityScore()` - Hamming distance calculation
+
+#### Three-Strike Policy System
+- [ ] Create `server/services/strikeSystem.ts` service
+  - [ ] `issueStrike(artistId, productId, reason)` - Issue strike
+  - [ ] `getStrikeCount(artistId)` - Get current strike count
+  - [ ] `revokeStrike(strikeId, reason)` - Admin can revoke strikes
+  - [ ] `checkBopShopAccess(artistId)` - Check if artist can use BopShop
+- [ ] Build strike notification emails
+  - [ ] Strike 1: Warning email with educational resources
+  - [ ] Strike 2: Serious warning email with 7-day upload freeze
+  - [ ] Strike 3: Account suspension email with appeal process
+- [ ] Add strike appeal process
+  - [ ] Appeal form in artist dashboard
+  - [ ] Admin review queue for appeals
+  - [ ] Email notification on appeal decision
+
+#### DMCA Fast-Track Process
+- [ ] Create dmca@boptone.com email address
+- [ ] Build DMCA notice submission form
+  - [ ] Complainant information (name, email, company)
+  - [ ] Infringement description
+  - [ ] Evidence upload (screenshots, links)
+  - [ ] Digital signature
+- [ ] Create `server/routers/dmca.ts` router
+  - [ ] `submitNotice()` - Submit DMCA notice
+  - [ ] `getNoticeStatus(noticeId)` - Check notice status
+  - [ ] `submitCounterNotice()` - Artist can submit counter-notice
+- [ ] Build automated takedown system
+  - [ ] Auto-delist product within 24 hours of valid notice
+  - [ ] Send notification email to artist
+  - [ ] Issue strike to artist
+  - [ ] Log all actions to audit trail
+
+#### Admin Moderation Dashboard
+- [ ] Create `/admin/ip-moderation` page
+  - [ ] Review queue for flagged designs (AI confidence <80%)
+  - [ ] Approve/reject buttons with feedback form
+  - [ ] View AI detection results (logos, celebrities, text)
+  - [ ] View perceptual hash similarity scores
+  - [ ] Search by artist, product, date
+- [ ] Create `/admin/strikes` page
+  - [ ] View all strikes by artist
+  - [ ] Revoke strikes (with reason)
+  - [ ] View strike history and appeal status
+- [ ] Create `/admin/dmca` page
+  - [ ] View all DMCA notices
+  - [ ] Process takedowns
+  - [ ] Review counter-notices
+  - [ ] Track resolution status
+
+#### Legal & Compliance Updates
+- [ ] Update Terms of Service Section 9.11: BopShop IP Policy
+  - [ ] Add "Original work only" requirement
+  - [ ] Add three-strike policy details
+  - [ ] Add DMCA fast-track process
+  - [ ] Add indemnification clause for IP infringement
+- [ ] Create educational guide page `/bopshop/ip-guidelines`
+  - [ ] What's allowed (original art, licensed designs, public domain)
+  - [ ] What's not allowed (copyrighted images, trademarked logos, celebrity faces)
+  - [ ] Examples with visual references
+  - [ ] FAQ section
+- [ ] Add IP certification checkbox to product upload flow
+  - [ ] "I certify that this design is my original work or I have proper licenses"
+  - [ ] Link to IP guidelines
+  - [ ] Store certification timestamp in database
+
+#### Testing & Validation
+- [ ] Test AI screening with known copyrighted images
+  - [ ] Nike swoosh (should be rejected)
+  - [ ] Disney characters (should be rejected)
+  - [ ] Band logos (should be flagged for review)
+  - [ ] Celebrity faces (should be rejected)
+- [ ] Test AI screening with original art
+  - [ ] Abstract designs (should be approved)
+  - [ ] Original illustrations (should be approved)
+  - [ ] Photography (should be approved)
+- [ ] Test three-strike policy workflow
+  - [ ] Issue Strike 1, verify email sent
+  - [ ] Issue Strike 2, verify 7-day freeze
+  - [ ] Issue Strike 3, verify BopShop access revoked
+- [ ] Test DMCA fast-track process
+  - [ ] Submit test DMCA notice
+  - [ ] Verify 24-hour takedown
+  - [ ] Verify artist notification
+  - [ ] Test counter-notice workflow
+
+### Revenue Projections (All Creators)
+
+**Q1 2026 (Music Artists Only):**
+- 100 artists, 60% Free / 30% Pro / 10% Enterprise
+- $7k/month subscription revenue
+- $15k/month GMV → $435/month CC processing
+- **Total: $7.4k/month ($89k annual)**
+
+**Q2 2026 (+ Visual Artists):**
+- 500 creators, 60% Free / 30% Pro / 10% Enterprise
+- $35k/month subscription revenue
+- $100k/month GMV → $2.9k/month CC processing
+- **Total: $38k/month ($456k annual)**
+
+**Q4 2026 (All Creators):**
+- 5,000 creators, 60% Free / 30% Pro / 10% Enterprise
+- $350k/month subscription revenue
+- $1M/month GMV → $29k/month CC processing
+- **Total: $379k/month ($4.5M annual)**
+
+**Optimistic Q4 2026:**
+- 25,000 creators, 50% Free / 35% Pro / 15% Enterprise
+- $2M/month subscription revenue
+- $6M/month GMV → $174k/month CC processing
+- **Total: $2.2M/month ($26M annual)**
 
 ## BopShop Implementation (Phase 2: DIY Options)
 

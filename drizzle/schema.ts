@@ -4037,3 +4037,197 @@ export const shippoShipments = mysqlTable("shippo_shipments", {
 
 export type ShippoShipment = typeof shippoShipments.$inferSelect;
 export type InsertShippoShipment = typeof shippoShipments.$inferInsert;
+
+
+// ============================================================================
+// IP PROTECTION & CONTENT MODERATION (BopShop Expansion)
+// ============================================================================
+
+/**
+ * IP Screening Results
+ * Tracks AI-powered IP screening for product designs
+ */
+export const ipScreeningResults = mysqlTable("ip_screening_results", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  productId: int("productId").notNull().references(() => products.id, { onDelete: "cascade" }),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Design info
+  designUrl: varchar("designUrl", { length: 500 }).notNull(),
+  
+  // Screening status
+  screeningStatus: mysqlEnum("screeningStatus", ["pending", "approved", "rejected", "flagged"]).default("pending").notNull(),
+  
+  // AI detection results
+  aiConfidenceScore: decimal("aiConfidenceScore", { precision: 5, scale: 2 }), // 0.00 to 100.00
+  detectedLogos: json("detectedLogos").$type<Array<{name: string; confidence: number}>>(),
+  detectedCelebrities: json("detectedCelebrities").$type<Array<{name: string; confidence: number}>>(),
+  detectedText: json("detectedText").$type<string[]>(),
+  perceptualHashSimilarity: decimal("perceptualHashSimilarity", { precision: 5, scale: 2 }), // 0.00 to 100.00
+  matchedCopyrightedImages: json("matchedCopyrightedImages").$type<Array<{name: string; similarity: number}>>(),
+  
+  // Flagged reason
+  flaggedReason: text("flaggedReason"),
+  
+  // Human review
+  reviewedBy: int("reviewedBy").references(() => users.id),
+  reviewedAt: timestamp("reviewedAt"),
+  reviewNotes: text("reviewNotes"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  productIdIdx: index("product_id_idx").on(table.productId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  screeningStatusIdx: index("screening_status_idx").on(table.screeningStatus),
+  aiConfidenceScoreIdx: index("ai_confidence_score_idx").on(table.aiConfidenceScore),
+  reviewedByIdx: index("reviewed_by_idx").on(table.reviewedBy),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+}));
+
+export type IpScreeningResult = typeof ipScreeningResults.$inferSelect;
+export type InsertIpScreeningResult = typeof ipScreeningResults.$inferInsert;
+
+/**
+ * IP Strikes
+ * Tracks three-strike policy for IP infringement
+ */
+export const ipStrikes = mysqlTable("ip_strikes", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  productId: int("productId").references(() => products.id, { onDelete: "set null" }), // Product may be deleted
+  
+  // Strike info
+  strikeNumber: int("strikeNumber").notNull(), // 1, 2, or 3
+  strikeReason: text("strikeReason").notNull(),
+  strikeDate: timestamp("strikeDate").defaultNow().notNull(),
+  
+  // Evidence
+  designUrl: varchar("designUrl", { length: 500 }),
+  evidenceUrl: varchar("evidenceUrl", { length: 500 }),
+  
+  // Resolution
+  resolved: boolean("resolved").default(false).notNull(),
+  resolvedBy: int("resolvedBy").references(() => users.id),
+  resolvedAt: timestamp("resolvedAt"),
+  resolutionNotes: text("resolutionNotes"),
+  
+  // Appeal
+  appealSubmitted: boolean("appealSubmitted").default(false).notNull(),
+  appealReason: text("appealReason"),
+  appealDate: timestamp("appealDate"),
+  appealDecision: mysqlEnum("appealDecision", ["pending", "approved", "rejected"]),
+  appealDecisionDate: timestamp("appealDecisionDate"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  productIdIdx: index("product_id_idx").on(table.productId),
+  strikeNumberIdx: index("strike_number_idx").on(table.strikeNumber),
+  strikeDateIdx: index("strike_date_idx").on(table.strikeDate),
+  resolvedIdx: index("resolved_idx").on(table.resolved),
+  appealSubmittedIdx: index("appeal_submitted_idx").on(table.appealSubmitted),
+  artistStrikeNumberIdx: index("artist_strike_number_idx").on(table.artistId, table.strikeNumber), // Composite for counting strikes
+}));
+
+export type IpStrike = typeof ipStrikes.$inferSelect;
+export type InsertIpStrike = typeof ipStrikes.$inferInsert;
+
+/**
+ * DMCA Notices
+ * Tracks DMCA takedown notices and counter-notices
+ */
+export const dmcaNotices = mysqlTable("dmca_notices", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  productId: int("productId").references(() => products.id, { onDelete: "set null" }), // Product may be deleted
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  
+  // Complainant info
+  complainantName: varchar("complainantName", { length: 255 }).notNull(),
+  complainantEmail: varchar("complainantEmail", { length: 320 }).notNull(),
+  complainantCompany: varchar("complainantCompany", { length: 255 }),
+  complainantAddress: text("complainantAddress"),
+  
+  // Infringement details
+  infringementDescription: text("infringementDescription").notNull(),
+  copyrightedWorkDescription: text("copyrightedWorkDescription").notNull(),
+  evidenceUrl: varchar("evidenceUrl", { length: 500 }),
+  
+  // Notice details
+  noticeDate: timestamp("noticeDate").defaultNow().notNull(),
+  digitalSignature: text("digitalSignature"), // "I declare under penalty of perjury..."
+  
+  // Status
+  status: mysqlEnum("status", ["pending", "takedown", "counter_notice", "resolved", "rejected"]).default("pending").notNull(),
+  
+  // Action taken
+  actionTaken: text("actionTaken"),
+  actionDate: timestamp("actionDate"),
+  actionBy: int("actionBy").references(() => users.id),
+  
+  // Counter-notice (if artist disputes)
+  counterNoticeSubmitted: boolean("counterNoticeSubmitted").default(false).notNull(),
+  counterNoticeReason: text("counterNoticeReason"),
+  counterNoticeDate: timestamp("counterNoticeDate"),
+  counterNoticeSignature: text("counterNoticeSignature"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  productIdIdx: index("product_id_idx").on(table.productId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  noticeDateIdx: index("notice_date_idx").on(table.noticeDate),
+  counterNoticeSubmittedIdx: index("counter_notice_submitted_idx").on(table.counterNoticeSubmitted),
+  complainantEmailIdx: index("complainant_email_idx").on(table.complainantEmail),
+}));
+
+export type DmcaNotice = typeof dmcaNotices.$inferSelect;
+export type InsertDmcaNotice = typeof dmcaNotices.$inferInsert;
+
+/**
+ * Known Copyrighted Images
+ * Database of copyrighted images for perceptual hashing comparison
+ */
+export const knownCopyrightedImages = mysqlTable("known_copyrighted_images", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Image info
+  name: varchar("name", { length: 255 }).notNull(), // e.g., "Nike Swoosh", "Mickey Mouse"
+  category: varchar("category", { length: 100 }).notNull(), // e.g., "logo", "character", "celebrity"
+  rightsHolder: varchar("rightsHolder", { length: 255 }), // e.g., "Nike, Inc.", "Disney"
+  
+  // Image data
+  imageUrl: varchar("imageUrl", { length: 500 }).notNull(),
+  perceptualHash: varchar("perceptualHash", { length: 64 }).notNull(), // pHash string
+  
+  // Metadata
+  description: text("description"),
+  tags: json("tags").$type<string[]>(), // ["brand", "sports", "apparel"]
+  
+  // Source
+  sourceUrl: varchar("sourceUrl", { length: 500 }),
+  addedBy: int("addedBy").references(() => users.id),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  nameIdx: index("name_idx").on(table.name),
+  categoryIdx: index("category_idx").on(table.category),
+  rightsHolderIdx: index("rights_holder_idx").on(table.rightsHolder),
+  perceptualHashIdx: index("perceptual_hash_idx").on(table.perceptualHash),
+}));
+
+export type KnownCopyrightedImage = typeof knownCopyrightedImages.$inferSelect;
+export type InsertKnownCopyrightedImage = typeof knownCopyrightedImages.$inferInsert;
