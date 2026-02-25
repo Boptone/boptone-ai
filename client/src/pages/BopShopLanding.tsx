@@ -179,8 +179,8 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className={`rounded-3xl border-l-4 border-black cursor-pointer shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 bg-white overflow-hidden ${
-                  viewMode === 'grid' ? 'hover:scale-[1.02]' : 'flex flex-row'
+                className={`rounded-xl cursor-pointer hover:shadow-lg transition-all duration-300 bg-white overflow-hidden border border-gray-100 ${
+                  viewMode === 'grid' ? 'hover:scale-[1.01]' : 'flex flex-row'
                 }`}
                 onClick={() => setLocation(`/product/${product.id}`)}
               >
@@ -201,29 +201,17 @@ export default function Shop() {
                   )}
 
                   {/* Product Info */}
-                  <div className={viewMode === 'grid' ? 'p-6 space-y-3' : 'p-4 flex-1 flex items-center justify-between'}>
-                    <Badge className="rounded-full border border-gray-200 bg-white text-gray-900 font-bold text-xs px-3 py-1 uppercase">
-                      {product.type}
-                    </Badge>
-                    <h3 className="font-bold text-2xl text-gray-900 line-clamp-2">
+                  <div className={viewMode === 'grid' ? 'p-4 space-y-2' : 'p-4 flex-1 flex flex-col justify-center'}>
+                    <h3 className="font-semibold text-base text-gray-900 line-clamp-2">
                       {product.name}
                     </h3>
-                    <p className="text-base text-gray-600 line-clamp-2">
-                      {product.description}
+                    <p className="text-sm text-gray-500">
+                      Artist Name
                     </p>
-                    <div className="flex items-center justify-between pt-3">
-                      <span className="text-4xl font-bold text-gray-900">
-                        ${product.price}
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="text-lg font-bold text-gray-900">
+                        From ${product.price}
                       </span>
-                      {product.status === "active" ? (
-                        <Badge className="rounded-full font-bold text-xs px-3 py-1 text-white" style={{ backgroundColor: '#0cc0df' }}>
-                          In Stock
-                        </Badge>
-                      ) : (
-                        <Badge className="rounded-full bg-gray-900 text-white font-bold text-xs px-3 py-1">
-                          Sold Out
-                        </Badge>
-                      )}
                     </div>
                   </div>
                 </CardContent>
