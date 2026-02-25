@@ -104,7 +104,7 @@ export function ConnectPrintfulDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Connect Your Printful Account</DialogTitle>
           <DialogDescription>

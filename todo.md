@@ -2796,3 +2796,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Remove product type badge ("PHYSICAL", "DIGITAL", etc.) from modal
 - [x] Test modal layout without badge
 - [x] Save checkpoint
+
+---
+
+## 🎨 Site-Wide Modal Standardization (February 24, 2026)
+
+### ✅ Modal Audit & Standardization (COMPLETE)
+- [x] Identify all modal components across the site (11 modals found)
+- [x] List modals that need updating to match product modal design
+- [x] Update modal dimensions (max-w-2xl, max-h-90vh)
+- [x] Standardize modal padding (p-4 md:p-6 where needed)
+- [x] Ensure responsive typography across all modals
+- [x] Remove unnecessary badges/pills from modals
+- [x] Test all modals on desktop and mobile
+- [x] Save checkpoint

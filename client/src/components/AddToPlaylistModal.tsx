@@ -83,7 +83,7 @@ export function AddToPlaylistModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] border-4 border-black rounded-xl shadow-[8px_8px_0px_0px_black]">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-4 md:p-6">
         <DialogHeader>
           <DialogTitle className="text-3xl font-bold">Add to Playlist</DialogTitle>
           <DialogDescription className="text-base">

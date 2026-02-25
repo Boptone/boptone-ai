@@ -105,7 +105,7 @@ export function PayToStreamButton({
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md rounded-xl border border-gray-200">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">Pay to Stream</DialogTitle>
             <DialogDescription className="text-gray-600">

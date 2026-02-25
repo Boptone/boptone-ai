@@ -162,7 +162,7 @@ export function PlanManagementSection() {
 
       {/* Upgrade/Downgrade Confirmation Modal */}
       <Dialog open={showUpgradeModal} onOpenChange={setShowUpgradeModal}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-3xl font-bold">Confirm Plan Change</DialogTitle>
             <DialogDescription className="text-lg">
