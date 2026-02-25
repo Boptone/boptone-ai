@@ -16,25 +16,28 @@ import { useEffect } from "react";
  * ```
  */
 export function useRequireArtist() {
+  // DEVELOPMENT MODE: Auth checks disabled for unrestricted page viewing
+  // TODO: Re-enable auth guards before production deployment
+  
   const { user, loading, isAuthenticated } = useAuth();
-  const [, setLocation] = useLocation();
+  // const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    if (!loading) {
-      // Redirect to login if not authenticated
-      if (!isAuthenticated) {
-        const currentPath = window.location.pathname;
-        setLocation(`/login?redirect=${encodeURIComponent(currentPath)}`);
-        return;
-      }
+  // useEffect(() => {
+  //   if (!loading) {
+  //     // Redirect to login if not authenticated
+  //     if (!isAuthenticated) {
+  //       const currentPath = window.location.pathname;
+  //       setLocation(`/login?redirect=${encodeURIComponent(currentPath)}`);
+  //       return;
+  //     }
 
-      // Redirect non-artists to public music discovery page
-      if (user && user.role !== "artist" && user.role !== "admin") {
-        setLocation("/music");
-        return;
-      }
-    }
-  }, [loading, isAuthenticated, user, setLocation]);
+  //     // Redirect non-artists to public music discovery page
+  //     if (user && user.role !== "artist" && user.role !== "admin") {
+  //       setLocation("/music");
+  //       return;
+  //     }
+  //   }
+  // }, [loading, isAuthenticated, user, setLocation]);
 
   return { user, loading, isAuthenticated };
 }

@@ -129,8 +129,8 @@ export default function Discover() {
       <div className="flex-1 overflow-y-auto">
         {/* Hero Section */}
         <div className="bg-gradient-to-b from-gray-900 to-[#1a1a1a] p-12">
-          <h1 className="text-6xl font-black mb-8">
-            Find Your Tone
+          <h1 className="text-8xl md:text-9xl font-black mb-8">
+            Find Your Tone.
           </h1>
           
           {/* Conversational AI Interface */}
@@ -175,8 +175,8 @@ export default function Discover() {
 
         {/* Featured Artist Module */}
         <div className="px-8 py-6">
-          <h2 className="text-2xl font-bold mb-4">Featured Artist</h2>
-          <div className="bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg p-8 flex gap-8 items-center">
+          <h2 className="text-5xl font-bold mb-6">Featured Artist</h2>
+          <div className="bg-gray-900 rounded-lg p-8 flex gap-8 items-center border-l-4 border-cyan-400 shadow-2xl">
             <img
               src={featuredArtist.image}
               alt={featuredArtist.name}
@@ -184,7 +184,7 @@ export default function Discover() {
             />
             <div className="flex-1">
               <p className="text-sm font-semibold uppercase tracking-wider mb-2 opacity-90">{featuredArtist.genre}</p>
-              <h3 className="text-5xl font-black mb-4">{featuredArtist.name}</h3>
+              <h3 className="text-7xl md:text-8xl font-black mb-4">{featuredArtist.name}</h3>
               <p className="text-lg mb-4 opacity-90">{featuredArtist.bio}</p>
               <p className="text-sm mb-6">{featuredArtist.monthlyListeners} monthly listeners</p>
               <div className="flex gap-4">
@@ -210,7 +210,7 @@ export default function Discover() {
         {/* The Hits - Horizontal Carousel */}
         <div className="px-8 py-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">The Hits</h2>
+            <h2 className="text-4xl font-bold">The Hits</h2>
             <button className="text-sm text-gray-400 hover:text-white transition-colors">View all</button>
           </div>
           <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
@@ -239,7 +239,7 @@ export default function Discover() {
         {/* Popular Albums - Horizontal Carousel */}
         <div className="px-8 py-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">Popular albums</h2>
+            <h2 className="text-4xl font-bold">Popular albums</h2>
             <button className="text-sm text-gray-400 hover:text-white transition-colors">View all</button>
           </div>
           <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
