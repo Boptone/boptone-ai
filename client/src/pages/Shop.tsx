@@ -5,7 +5,57 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { ShoppingCart, Shirt, Disc, Palette, Package, Heart } from "lucide-react";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Zap } from "lucide-react";
+
+// Wishlist Button Component with Lightning Bolt
+function WishlistButton({ productId }: { productId: number }) {
+  const utils = trpc.useUtils();
+  
+  // Check if product is in wishlist
+  const { data: wishlistCheck } = trpc.wishlist.check.useQuery({ productId });
+  const inWishlist = wishlistCheck?.inWishlist || false;
+
+  // Add to wishlist mutation
+  const addToWishlist = trpc.wishlist.add.useMutation({
+    onSuccess: () => {
+      utils.wishlist.check.invalidate({ productId });
+      utils.wishlist.count.invalidate();
+    },
+  });
+
+  // Remove from wishlist mutation
+  const removeFromWishlist = trpc.wishlist.remove.useMutation({
+    onSuccess: () => {
+      utils.wishlist.check.invalidate({ productId });
+      utils.wishlist.count.invalidate();
+    },
+  });
+
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click
+    if (inWishlist) {
+      removeFromWishlist.mutate({ productId });
+    } else {
+      addToWishlist.mutate({ productId });
+    }
+  };
+
+  return (
+    <button
+      onClick={handleToggle}
+      className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/90 backdrop-blur-sm border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+      aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+    >
+      <Zap
+        className={`w-5 h-5 transition-all ${
+          inWishlist
+            ? "fill-cyan-500 text-cyan-500"
+            : "fill-none text-black"
+        }`}
+      />
+    </button>
+  );
+}
 
 export default function Shop() {
   const { user } = useAuth();
@@ -141,23 +191,29 @@ export default function Shop() {
             {filteredProducts.map((product: any) => (
               <Card
                 key={product.id}
-                className="rounded-3xl border-l-4 border-cyan-400 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden"
-                onClick={() => setLocation(`/product/${product.id}`)}
+                className="rounded-3xl border-l-4 border-cyan-400 cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] bg-white overflow-hidden relative"
               >
                 <CardContent className="p-0">
                   {/* Product Image */}
-                  {product.images && product.images.length > 0 ? (
-                    <div className="aspect-square bg-gray-50 overflow-hidden">
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                      <Package className="w-20 h-20 text-gray-400" />
-                    </div>
+                  <div className="relative" onClick={() => setLocation(`/product/${product.id}`)}>
+                    {product.images && product.images.length > 0 ? (
+                      <div className="aspect-square bg-gray-50 overflow-hidden">
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                    ) : (
+                      <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                        <Package className="w-20 h-20 text-gray-400" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Wishlist Lightning Bolt */}
+                  {user && (
+                    <WishlistButton productId={product.id} />
                   )}
 
                   {/* Product Info */}

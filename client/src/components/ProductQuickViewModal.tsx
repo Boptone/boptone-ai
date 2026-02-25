@@ -2,9 +2,60 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X, Minus, Plus, ShoppingCart } from "lucide-react";
+import { X, Minus, Plus, ShoppingCart, Zap } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+
+// Wishlist Button Component for Modal
+function WishlistButtonModal({ productId }: { productId: number }) {
+  const utils = trpc.useUtils();
+  
+  // Check if product is in wishlist
+  const { data: wishlistCheck } = trpc.wishlist.check.useQuery({ productId });
+  const inWishlist = wishlistCheck?.inWishlist || false;
+
+  // Add to wishlist mutation
+  const addToWishlist = trpc.wishlist.add.useMutation({
+    onSuccess: () => {
+      utils.wishlist.check.invalidate({ productId });
+      utils.wishlist.count.invalidate();
+      toast.success("Added to wishlist!");
+    },
+  });
+
+  // Remove from wishlist mutation
+  const removeFromWishlist = trpc.wishlist.remove.useMutation({
+    onSuccess: () => {
+      utils.wishlist.check.invalidate({ productId });
+      utils.wishlist.count.invalidate();
+      toast.success("Removed from wishlist");
+    },
+  });
+
+  const handleToggle = () => {
+    if (inWishlist) {
+      removeFromWishlist.mutate({ productId });
+    } else {
+      addToWishlist.mutate({ productId });
+    }
+  };
+
+  return (
+    <button
+      onClick={handleToggle}
+      className="p-2 rounded-full border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+      aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+    >
+      <Zap
+        className={`w-5 h-5 transition-all ${
+          inWishlist
+            ? "fill-cyan-500 text-cyan-500"
+            : "fill-none text-black"
+        }`}
+      />
+    </button>
+  );
+}
 
 interface ProductQuickViewModalProps {
   product: any;
@@ -95,12 +146,15 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
                   </h2>
                   <p className="text-sm text-gray-500 mb-4">Artist Name</p>
                 </div>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <X className="w-5 h-5 text-gray-500" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <WishlistButtonModal productId={product.id} />
+                  <button
+                    onClick={onClose}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-500" />
+                  </button>
+                </div>
               </div>
 
               <div className="mb-6">

@@ -30,6 +30,7 @@ import { aeoRouter } from "./routers/aeo";
 import { reviewRouter } from "./routers/reviews";
 import { gdprRouter } from "./routers/gdpr";
 import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
+import { wishlistRouter } from "./routers/wishlist";
 import { stripeConnectRouter } from "./routers/stripeConnect";
 import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { playlistRouter } from "./routers/playlist";
@@ -770,6 +771,9 @@ export const appRouter = router({
   // Product Review System (BopShop)
   reviews: reviewRouter,
   reviewAnalytics: reviewAnalyticsRouter,
+
+  // Wishlist System (BopShop)
+  wishlist: wishlistRouter,
 
   // Cookie Preferences Management
   cookiePreferences: router({

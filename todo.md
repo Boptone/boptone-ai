@@ -2947,3 +2947,34 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Direct-to-Fan Commerce section now says "Keep 90% of every sale" - specific and transparent instead of vague "majority"
+
+
+---
+
+## ⚡ BopShop Wishlist System
+
+### Database & Backend
+- [x] Create wishlist table in drizzle/schema.ts (userId, productId, addedAt) - Already exists!
+- [x] Add wishlist router in server/routers.ts (add, remove, list, check)
+- [x] Push database schema changes
+
+### Frontend Integration
+- [x] Add lightning bolt icon to product cards (Shop.tsx)
+- [x] Add lightning bolt icon to quick-view modal (ProductQuickViewModal.tsx)
+- [x] Implement toggle functionality (filled/unfilled lightning bolt)
+- [x] Add optimistic updates for instant feedback
+
+### Wishlist Page
+- [x] Create /wishlist page with product grid
+- [x] Add "Remove from Wishlist" functionality
+- [x] Add "Add to Cart" from wishlist
+- [x] Handle empty state ("Your wishlist is empty")
+
+### Testing
+- [x] Test add/remove from product cards
+- [x] Test add/remove from quick-view modal
+- [x] Test wishlist page display
+- [x] Test across desktop and mobile
+- [x] Save checkpoint
+
+**Result:** Complete wishlist system with lightning bolt icons (⚡) instead of hearts. Lightning bolts appear on product cards and quick-view modals when logged in. Filled cyan lightning bolt = in wishlist, unfilled black lightning bolt = not in wishlist. BAP Protocol design (black borders, brutalist shadows) applied throughout.
