@@ -84,6 +84,10 @@ export const artistProfiles = mysqlTable("artist_profiles", {
   layoutStyle: mysqlEnum("layoutStyle", ["default", "minimal", "grid"]).default("default"),
   fontFamily: varchar("fontFamily", { length: 100 }).default("Inter"),
   onboardingCompleted: boolean("onboardingCompleted").default(false).notNull(),
+  // BopShop Seller Type & Pricing
+  sellerType: mysqlEnum("sellerType", ["music_artist", "visual_artist", "general_creator"]).default("music_artist").notNull(),
+  platformFeePercentage: decimal("platformFeePercentage", { precision: 4, scale: 2 }).default("0.00"), // 0.00 to 99.99 (music artists = 0%, visual = 12%, general = 15%)
+  subscriptionTier: mysqlEnum("subscriptionTier", ["free", "pro", "premium"]).default("free").notNull(),
   metadata: json("metadata").$type<{
     stripeAccountId?: string;
     [key: string]: any;

@@ -176,6 +176,13 @@
       "when": 1772060794890,
       "tag": "0028_clear_baron_zemo",
       "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "5",
+      "when": 1772061868148,
+      "tag": "0029_parallel_wolf_cub",
+      "breakpoints": true
     }
   ]
 }

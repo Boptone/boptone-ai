@@ -4256,6 +4256,102 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
   - [ ] Verify artist notification
   - [ ] Test counter-notice workflow
 
+### BopShop Pricing Schema for Non-Music Sellers (WEEK 1 CRITICAL)
+
+#### Pricing Strategy (Competitive Analysis Complete)
+- [x] Research Etsy fees (22% total: 6.5% transaction + 3% processing + 12-15% ads)
+- [x] Research Redbubble fees (20-50%: 20% base + 50% excess markup penalty)
+- [x] Research Shopify fees ($29/mo + 2.9% + $0.30)
+- [x] Create BOPSHOP_PRICING_STRATEGY.md document
+
+**Recommended Pricing:**
+- Music Artists: 0% platform fee (core mission, Music Business 2.0)
+- Visual Artists: 12% platform fee (Phase 2, introductory rate)
+- General Creators: 15% platform fee (Phase 3, standard rate)
+- All Sellers: 2.9% + $0.30 credit card processing (passed through)
+
+**Tiered Discounts:**
+- Free Tier: $0/month + standard platform fee
+- Pro Tier: $29/month + (-3% discount)
+- Premium Tier: $79/month + (-5% discount)
+
+**Example: $50 sale (General Creator, Free Tier)**
+- Platform fee: $7.50 (15%)
+- CC processing: $1.75 (2.9% + $0.30)
+- Artist payout: $40.75 (81.5%)
+- **vs. Etsy (22%): BopShop saves $1.75 per sale**
+
+#### Database Schema Updates
+- [x] Add `sellerType` enum to artist_profiles (music_artist | visual_artist | general_creator)
+- [x] Add `platformFeePercentage` decimal to artist_profiles (0.00 to 99.99)
+- [x] Add `subscriptionTier` enum to artist_profiles (free | pro | premium)
+- [x] Run `pnpm db:push` to apply schema changes
+
+#### Pricing Calculator Service
+- [x] Create `server/services/pricingCalculator.ts`
+  - [x] `calculatePricing(orderTotal, sellerConfig)` - Main calculator
+  - [x] `getPlatformFeePercentage(sellerType, tier)` - Get fee percentage
+  - [x] `calculatePlatformFee(orderTotal, percentage)` - Calculate platform fee
+  - [x] `calculateCreditCardFee(orderTotal)` - Calculate CC fee
+  - [x] `calculateArtistPayout(orderTotal, fees)` - Calculate artist payout
+  - [x] `generatePricingExamples()` - Generate examples for all tiers
+
+#### Stripe Integration Updates
+- [ ] Update Stripe checkout session creation to include platform fee
+- [ ] Add `application_fee_amount` to checkout session (Stripe Connect)
+- [ ] Calculate platform fee based on seller type and tier
+- [ ] Pass credit card processing fee to seller (included in total)
+- [ ] Update order confirmation email with fee breakdown
+
+#### Payment Processing Flow
+- [ ] Create `server/services/paymentProcessor.ts`
+  - [ ] `createCheckoutSession(order, seller)` - Create Stripe session with fees
+  - [ ] `calculateOrderTotal(items, shipping)` - Calculate total
+  - [ ] `applyPlatformFee(total, seller)` - Apply platform fee
+  - [ ] `processPayment(session)` - Process payment and split fees
+  - [ ] `transferToArtist(amount, artistStripeId)` - Transfer payout
+
+#### Admin Dashboard Updates
+- [ ] Create `/admin/pricing` page
+  - [ ] View platform fee revenue by seller type
+  - [ ] View credit card processing revenue
+  - [ ] View artist payouts by tier
+  - [ ] Adjust platform fee percentages (admin only)
+- [ ] Add pricing breakdown to order details page
+  - [ ] Show platform fee, CC fee, artist payout
+  - [ ] Show seller type and tier
+
+#### Seller Dashboard Updates
+- [ ] Create `/dashboard/earnings` page
+  - [ ] Show total sales, platform fees, CC fees, net earnings
+  - [ ] Show fee breakdown per order
+  - [ ] Show tier upgrade savings calculator
+  - [ ] Show "Upgrade to Pro" CTA if on Free tier
+- [ ] Add pricing transparency to product upload flow
+  - [ ] Show estimated fees before publishing
+  - [ ] Show pricing comparison (BopShop vs. Etsy vs. Redbubble)
+
+#### Marketing & Messaging
+- [ ] Create `/bopshop/pricing` public page
+  - [ ] Pricing comparison table (BopShop vs. Etsy vs. Redbubble)
+  - [ ] Fee calculator tool (enter sale price, see breakdown)
+  - [ ] Tier comparison (Free vs. Pro vs. Premium)
+  - [ ] Testimonials from sellers
+- [ ] Update homepage with BopShop pricing CTA
+  - [ ] "Sell for 15% less than Etsy" headline
+  - [ ] "No listing fees, no punitive markup fees" subheadline
+- [ ] Create seller onboarding flow
+  - [ ] Select seller type (music artist, visual artist, general creator)
+  - [ ] Show pricing breakdown for their type
+  - [ ] Offer Pro tier trial (first month free)
+
+#### Testing & Validation
+- [ ] Test pricing calculator with all seller types and tiers
+- [ ] Test Stripe checkout with platform fee split
+- [ ] Test artist payout transfer to Stripe Connect account
+- [ ] Verify fee breakdown in order confirmation emails
+- [ ] Test tier upgrade flow (Free → Pro → Premium)
+
 ### Revenue Projections (All Creators)
 
 **Q1 2026 (Music Artists Only):**
@@ -4268,19 +4364,22 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - 500 creators, 60% Free / 30% Pro / 10% Enterprise
 - $35k/month subscription revenue
 - $100k/month GMV → $2.9k/month CC processing
-- **Total: $38k/month ($456k annual)**
+- Platform fees (12%): $12k/month
+- **Total: $50k/month ($600k annual)**
 
 **Q4 2026 (All Creators):**
 - 5,000 creators, 60% Free / 30% Pro / 10% Enterprise
 - $350k/month subscription revenue
 - $1M/month GMV → $29k/month CC processing
-- **Total: $379k/month ($4.5M annual)**
+- Platform fees (15% avg): $150k/month
+- **Total: $529k/month ($6.3M annual)**
 
 **Optimistic Q4 2026:**
 - 25,000 creators, 50% Free / 35% Pro / 15% Enterprise
 - $2M/month subscription revenue
 - $6M/month GMV → $174k/month CC processing
-- **Total: $2.2M/month ($26M annual)**
+- Platform fees (15% avg): $900k/month
+- **Total: $3.1M/month ($37M annual)**
 
 ## BopShop Implementation (Phase 2: DIY Options)
 
