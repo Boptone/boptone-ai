@@ -430,13 +430,43 @@ export async function recordStream(stream: InsertBapStream) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  // Calculate payment split (90/10)
-  const paymentAmount = stream.paymentAmount || 1; // Default $0.01 per stream
-  const artistShare = Math.floor(paymentAmount * 0.9); // 90%
-  const platformShare = paymentAmount - artistShare; // 10%
+  // Get track to determine pricing
+  const track = await getTrackById(stream.trackId);
+  if (!track) throw new Error("Track not found");
+  
+  // Use track's pricePerStream (default $0.02, range $0.01-$0.05)
+  const paymentAmount = track.pricePerStream;
+  
+  // If user is logged in, check balance and debit wallet
+  if (stream.userId) {
+    const { checkFanBalance, debitFanWallet } = await import("./services/streamDebit");
+    
+    // Check if fan can afford stream (or has subscription)
+    const balanceCheck = await checkFanBalance(stream.userId, stream.trackId);
+    
+    if (!balanceCheck.isSubscribed && !balanceCheck.hasBalance) {
+      throw new Error(
+        `Insufficient wallet balance. You need $${(balanceCheck.streamCost / 100).toFixed(2)} to stream this track. Current balance: $${(balanceCheck.currentBalance / 100).toFixed(2)}`
+      );
+    }
+    
+    // Debit wallet (unless subscribed)
+    if (!balanceCheck.isSubscribed) {
+      await debitFanWallet({
+        userId: stream.userId,
+        streamId: 0, // Will be updated after stream record is created
+        trackId: stream.trackId,
+      });
+    }
+  }
+  
+  // Calculate payment split (95/5 for streaming)
+  const artistShare = Math.floor(paymentAmount * 0.95); // 95%
+  const platformShare = paymentAmount - artistShare; // 5%
   
   const [newStream] = await db.insert(bapStreams).values({
     ...stream,
+    paymentAmount,
     artistShare,
     platformShare,
   });
@@ -444,8 +474,7 @@ export async function recordStream(stream: InsertBapStream) {
   // Increment track play count
   await incrementTrackPlay(stream.trackId);
   
-  // Update track total earnings
-  const track = await getTrackById(stream.trackId);
+  // Update track total earnings (track already fetched above)
   if (track) {
     await db
       .update(bapTracks)

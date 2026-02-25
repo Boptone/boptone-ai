@@ -1029,10 +1029,10 @@ export const bapTracks = mysqlTable("bap_tracks", {
   likeCount: int("likeCount").default(0).notNull(),
   repostCount: int("repostCount").default(0).notNull(),
   
-  // Revenue tracking
-  pricePerStream: int("pricePerStream").default(100).notNull(), // In cents (default $0.01)
-  artistShare: int("artistShare").default(90).notNull(), // Percentage (90% default)
-  platformFee: int("platformFee").default(10).notNull(), // Percentage (10% default)
+  // Revenue tracking (updated for Music Business 2.0 model)
+  pricePerStream: int("pricePerStream").default(200).notNull(), // In cents (default $0.02, range $0.01-$0.05)
+  artistShare: int("artistShare").default(95).notNull(), // Percentage (95% for streaming)
+  platformFee: int("platformFee").default(5).notNull(), // Percentage (5% for streaming, 10% for DSP)
   totalEarnings: int("totalEarnings").default(0).notNull(), // In cents
   
   // Status
@@ -3772,3 +3772,92 @@ export const protocolRevenue = mysqlTable("protocol_revenue", {
 
 export type ProtocolRevenue = typeof protocolRevenue.$inferSelect;
 export type InsertProtocolRevenue = typeof protocolRevenue.$inferInsert;
+
+
+/**
+ * ========================================
+ * ARTIST SUBSCRIPTION SYSTEM
+ * ========================================
+ * Opt-in monthly subscriptions where fans pay artists directly
+ * for unlimited streaming access to all their music.
+ * Example: "Subscribe to Artist A for $5/month, stream all their music unlimited"
+ */
+
+/**
+ * Artist Subscriptions
+ * Artists create subscription tiers for fans
+ */
+export const artistSubscriptions = mysqlTable("artist_subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Artist reference
+  artistId: int("artistId").notNull().references(() => artistProfiles.id, { onDelete: "cascade" }),
+  
+  // Subscription details
+  subscriptionName: varchar("subscriptionName", { length: 255 }).notNull(), // e.g., "All Access Pass", "VIP Fan Club"
+  description: text("description"), // What fans get
+  monthlyPrice: int("monthlyPrice").notNull(), // In cents (e.g., 500 = $5/month)
+  
+  // Status
+  isActive: boolean("isActive").default(true).notNull(),
+  
+  // Stats
+  subscriberCount: int("subscriberCount").default(0).notNull(),
+  totalRevenue: int("totalRevenue").default(0).notNull(), // Lifetime revenue in cents
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  isActiveIdx: index("is_active_idx").on(table.isActive),
+  artistActiveIdx: index("artist_active_idx").on(table.artistId, table.isActive),
+}));
+
+export type ArtistSubscription = typeof artistSubscriptions.$inferSelect;
+export type InsertArtistSubscription = typeof artistSubscriptions.$inferInsert;
+
+/**
+ * Fan Subscriptions
+ * Fans subscribe to artists for unlimited streaming
+ */
+export const fanSubscriptions = mysqlTable("fan_subscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // References
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  artistSubscriptionId: int("artistSubscriptionId").notNull().references(() => artistSubscriptions.id, { onDelete: "cascade" }),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id, { onDelete: "cascade" }), // Denormalized for fast queries
+  
+  // Stripe subscription
+  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }).notNull().unique(),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }).notNull(),
+  
+  // Status
+  status: mysqlEnum("status", ["active", "cancelled", "expired", "past_due"]).default("active").notNull(),
+  
+  // Billing period
+  currentPeriodStart: timestamp("currentPeriodStart").notNull(),
+  currentPeriodEnd: timestamp("currentPeriodEnd").notNull(),
+  
+  // Cancellation
+  cancelAtPeriodEnd: boolean("cancelAtPeriodEnd").default(false).notNull(),
+  cancelledAt: timestamp("cancelledAt"),
+  
+  // Timestamps
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("user_id_idx").on(table.userId),
+  artistSubscriptionIdIdx: index("artist_subscription_id_idx").on(table.artistSubscriptionId),
+  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  statusIdx: index("status_idx").on(table.status),
+  stripeSubscriptionIdIdx: index("stripe_subscription_id_idx").on(table.stripeSubscriptionId),
+  // Composite indexes for common queries
+  userStatusIdx: index("user_status_idx").on(table.userId, table.status),
+  artistStatusIdx: index("artist_status_idx").on(table.artistId, table.status),
+  userArtistIdx: index("user_artist_idx").on(table.userId, table.artistId), // Check if user subscribed to artist
+}));
+
+export type FanSubscription = typeof fanSubscriptions.$inferSelect;
+export type InsertFanSubscription = typeof fanSubscriptions.$inferInsert;

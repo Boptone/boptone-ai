@@ -3695,3 +3695,114 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Save Manus checkpoint
 - [ ] Push to GitHub (boptone-ai)
 - [ ] Verify sync
+
+
+## 💰 Updated Fan Wallet Economics Implementation (Session 7)
+
+### Finalized Business Model
+- **Per-stream pricing:** $0.01 - $0.05 (artist sets rate, no old/new distinction)
+- **Protocol fees:** 5% on Boptone streaming, 10% on DSP distribution
+- **Artist subscriptions:** Opt-in monthly subscriptions (e.g., "$5/month, stream all my music unlimited")
+- **$0 balance handling:** Block streaming, show topup modal with auto-reload option
+- **No album bundles:** Pure per-stream + subscription model
+
+### Phase 1: Update Pricing Model & Artist Subscription Schema
+- [x] Update per-stream pricing range from $0.01-$0.03 to $0.01-$0.05
+  - [x] Update schema defaults in `bapTracks` table (pricePerStream default $0.02, range $0.01-$0.05)
+  - [x] Update artistShare to 95% (was 90%)
+  - [x] Update platformFee to 5% for streaming (10% for DSP)
+  - [ ] Update validation in fan wallet router
+  - [ ] Update protocol fee calculation (5% streaming, 10% DSP)
+- [x] Create `artistSubscriptions` table (10 columns, 3 indexes)
+  - [ ] artistId (FK to artistProfiles.id)
+  - [ ] subscriptionName (varchar, e.g., "All Access Pass")
+  - [ ] monthlyPrice (int, in cents)
+  - [ ] isActive (boolean)
+  - [ ] createdAt, updatedAt timestamps
+  - [ ] Indexes: artistId, isActive
+- [ ] Create `fanSubscriptions` table
+  - [ ] userId (FK to users.id)
+  - [ ] artistSubscriptionId (FK to artistSubscriptions.id)
+  - [ ] status (enum: "active", "cancelled", "expired")
+  - [ ] stripeSubscriptionId (varchar)
+  - [ ] currentPeriodStart, currentPeriodEnd timestamps
+  - [ ] cancelledAt timestamp
+  - [ ] Indexes: userId, artistSubscriptionId, status
+- [ ] Run `pnpm db:push`
+
+### Phase 2: Per-Stream Debit System with $0 Balance Checks
+- [x] Create `server/services/streamDebit.ts`
+  - [x] `checkFanBalance(userId, trackId)` - Check if fan has sufficient balance or subscription
+  - [x] `debitFanWallet(userId, streamId, trackId)` - Debit wallet and credit artist with atomic updates
+  - [x] `batchProcessDebits()` - Aggregate micro-payments every 5 minutes (future optimization)
+  - [x] `triggerAutoReload(walletId, amount)` - Trigger auto-reload if balance < threshold
+- [x] Integrate into BAP streaming logic
+  - [x] Hook into `recordStream()` function in `server/bap.ts`
+  - [x] Check balance before allowing stream
+  - [x] Return error if balance insufficient
+  - [x] Debit wallet on successful stream
+  - [x] Update split from 90/10 to 95/5
+  - [x] Preserve Invisible Flywheel logic
+
+### Phase 3: Artist Subscription System
+- [ ] Create `server/routers/artistSubscription.ts`
+  - [ ] `artistSubscription.create` - Artist creates subscription tier
+  - [ ] `artistSubscription.update` - Artist updates pricing/status
+  - [ ] `artistSubscription.list` - Get artist's subscription tiers
+  - [ ] `artistSubscription.subscribe` - Fan subscribes to artist
+  - [ ] `artistSubscription.cancel` - Fan cancels subscription
+  - [ ] `artistSubscription.checkAccess` - Check if fan has active subscription to artist
+- [ ] Register router in `server/routers.ts`
+- [ ] Add Stripe subscription integration
+  - [ ] Create Stripe subscription on fan subscribe
+  - [ ] Handle webhook for subscription renewal
+  - [ ] Handle webhook for subscription cancellation
+
+### Phase 4: Fan Wallet UI
+- [ ] Create `/wallet` page (client/src/pages/Wallet.tsx)
+  - [ ] Wallet balance display (large, prominent)
+  - [ ] Lifetime stats (total spent, total topups)
+  - [ ] Quick topup buttons ($5, $10, $20, custom)
+  - [ ] Auto-reload settings toggle
+  - [ ] Transaction history (paginated)
+- [ ] Create topup modal component (client/src/components/WalletTopupModal.tsx)
+  - [ ] Stripe payment form
+  - [ ] Auto-reload toggle
+  - [ ] Success/error states
+- [ ] Create $0 balance warning modal
+  - [ ] Trigger when stream blocked due to insufficient balance
+  - [ ] Show "Your wallet is empty" message
+  - [ ] Quick topup buttons
+  - [ ] Auto-reload option
+- [ ] Add wallet balance to navbar
+  - [ ] Show current balance next to profile
+  - [ ] Click to open wallet page
+
+### Phase 5: Stripe Webhook Handler
+- [ ] Update `server/webhooks/stripe.ts`
+  - [ ] Handle `payment_intent.succeeded` for wallet topups
+  - [ ] Call `fanWallet.confirmTopup` to credit wallet
+  - [ ] Handle `customer.subscription.created` for artist subscriptions
+  - [ ] Handle `customer.subscription.deleted` for subscription cancellations
+  - [ ] Handle `invoice.payment_succeeded` for subscription renewals
+
+### Phase 6: Testing & Validation
+- [ ] Test per-stream debit flow
+  - [ ] Stream with sufficient balance
+  - [ ] Stream with insufficient balance (should block)
+  - [ ] Verify artist gets 95%, Boptone gets 5%
+- [ ] Test wallet topup flow
+  - [ ] Manual topup via Stripe
+  - [ ] Auto-reload trigger
+  - [ ] Webhook confirmation
+- [ ] Test artist subscription flow
+  - [ ] Artist creates subscription tier
+  - [ ] Fan subscribes
+  - [ ] Fan streams unlimited (no per-stream debit)
+  - [ ] Fan cancels subscription
+- [ ] Save checkpoint
+
+### Checkpoint & Sync
+- [ ] Save Manus checkpoint
+- [ ] Push to GitHub (boptone-ai)
+- [ ] Verify sync
