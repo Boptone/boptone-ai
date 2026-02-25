@@ -172,7 +172,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
-                className="rounded-full bg-[#0cc0df] text-white hover:bg-[#0aabca] text-lg h-14 px-8 border border-black transition-colors"
+                className="rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] text-lg h-14 px-8 border border-black transition-colors"
                 style={{
                   boxShadow: '4px 4px 0 0 black'
                 }}
@@ -309,7 +309,7 @@ export default function Home() {
                 {/* CTA Button */}
                 <Button
                   size="lg"
-                  className="w-full rounded-full bg-[#0cc0df] text-white hover:bg-[#0aabca] border border-black transition-colors"
+                  className="w-full rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] border border-black transition-colors"
                   style={{
                     boxShadow: '4px 4px 0 0 black'
                   }}
@@ -341,7 +341,7 @@ export default function Home() {
             </p>
             <Button
               size="lg"
-              className="rounded-full bg-[#0cc0df] text-white hover:bg-[#0aabca] text-lg h-14 px-8 border border-black transition-colors"
+              className="rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] text-lg h-14 px-8 border border-black transition-colors"
               style={{
                 boxShadow: '4px 4px 0 0 black'
               }}

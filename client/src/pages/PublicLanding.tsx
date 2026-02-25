@@ -75,7 +75,7 @@ export default function PublicLanding() {
               <Link href="/artists">
                 <Button 
                   size="lg" 
-                  className="rounded-full bg-[#008B8B] text-white hover:bg-[#006666] text-xl h-16 px-10 border border-black"
+                  className="rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] text-xl h-16 px-10 border border-black"
                   style={{
                     boxShadow: '4px 4px 0 0 black'
                   }}
@@ -213,7 +213,7 @@ export default function PublicLanding() {
               <Link href="/artists">
                 <Button 
                   size="lg"
-                  className="rounded-full bg-[#008B8B] text-white hover:bg-[#006666] text-xl h-16 px-10 border border-black"
+                  className="rounded-full bg-[#0cc0df] text-black hover:bg-[#0aabca] text-xl h-16 px-10 border border-black"
                   style={{
                     boxShadow: '4px 4px 0 0 black'
                   }}

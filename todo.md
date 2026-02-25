@@ -2820,3 +2820,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Update pill colors to cyan #0cc0df
 - [x] Test home page with new pill colors
 - [x] Save checkpoint
+
+---
+
+## 🎨 Pill Text Color Updates (February 25, 2026)
+
+### ✅ Update Pill Text Colors (COMPLETE)
+- [x] Change home page pill text from white to black
+- [x] Change welcome page green pills to blue (#0cc0df)
+- [x] Update welcome page pill text to black
+- [x] Keep black background pills unchanged
+- [x] Test both pages
+- [x] Save checkpoint
