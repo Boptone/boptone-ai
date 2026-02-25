@@ -351,7 +351,7 @@ export default function Upload() {
   if (!user && !DEV_MODE) {
     return (
       <DashboardLayout>
-        <Card className="border border-gray-200">
+        <Card className="border border-black">
           <CardHeader>
             <CardTitle>Sign In Required</CardTitle>
             <CardDescription>Please sign in to upload music to BAP</CardDescription>
@@ -375,7 +375,7 @@ export default function Upload() {
 
         {/* Compliance Score Banner */}
         {audioFile && (
-          <Alert className="border border-gray-200 bg-white">
+          <Alert className="border border-black bg-white">
             <AlertDescription>
               <div className="flex items-center justify-between">
                 <div>
@@ -398,7 +398,7 @@ export default function Upload() {
         )}
 
         {/* Audio Upload */}
-        <Card className="border border-gray-200">
+        <Card className="border border-black">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">Audio File</CardTitle>
             <CardDescription>
@@ -430,13 +430,13 @@ export default function Upload() {
                   id="audio-upload"
                 />
                 <Label htmlFor="audio-upload">
-                  <Button variant="outline" asChild className="rounded-full border border-gray-200 hover:border-gray-400">
+                  <Button variant="outline" asChild className="rounded-full border border-black hover:border-black">
                     <span>Choose File</span>
                   </Button>
                 </Label>
               </div>
             ) : (
-              <div className="flex items-center gap-4 p-6 bg-gray-50 border border-gray-200">
+              <div className="flex items-center gap-4 p-6 bg-gray-50 border border-black">
                 {extractingMetadata ? (
                   <div className="h-10 w-10 flex items-center justify-center flex-shrink-0">
                     <div className="text-2xl font-bold text-gray-400">...</div>
@@ -493,7 +493,7 @@ export default function Upload() {
         {/* Metadata Form */}
         {audioFile && !extractingMetadata && (
           <>
-            <Card className="border border-gray-200">
+            <Card className="border border-black">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Track Information</CardTitle>
                 <CardDescription>
@@ -609,7 +609,7 @@ export default function Upload() {
             </Card>
 
             {/* Compliance & Metadata Section */}
-            <Card className="border border-gray-200">
+            <Card className="border border-black">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Compliance & Metadata</CardTitle>
                 <CardDescription>
@@ -629,7 +629,7 @@ export default function Upload() {
                     onChange={(e) => handleISRCChange(e.target.value)}
                     placeholder="CC-XXX-YY-NNNNN (e.g., USRC11234567)"
                     maxLength={15}
-                    className={showValidation && validation.isrc === 'invalid' ? 'border-gray-400' : ''}
+                    className={showValidation && validation.isrc === 'invalid' ? 'border-black' : ''}
                   />
                   <p className="text-xs text-gray-600">
                     International Standard Recording Code - unique identifier for this recording
@@ -651,7 +651,7 @@ export default function Upload() {
                     onChange={(e) => handleUPCChange(e.target.value)}
                     placeholder="123456789012 (12 digits)"
                     maxLength={12}
-                    className={showValidation && validation.upc === 'invalid' ? 'border-gray-400' : ''}
+                    className={showValidation && validation.upc === 'invalid' ? 'border-black' : ''}
                   />
                   <p className="text-xs text-gray-600">
                     Universal Product Code - barcode identifier for commercial release
@@ -681,7 +681,7 @@ export default function Upload() {
                   </Label>
                   <div className="space-y-3">
                     {songwriterSplits.map((split, index) => (
-                      <div key={index} className="space-y-2 p-3 bg-gray-50 border border-gray-200">
+                      <div key={index} className="space-y-2 p-3 bg-gray-50 border border-black">
                         <div className="flex items-center gap-2">
                           <Input
                             value={split.fullName}
@@ -771,7 +771,7 @@ export default function Upload() {
                 </div>
 
                 {/* AI Disclosure */}
-                <div className="space-y-3 p-4 bg-white border border-gray-200 hover:border-gray-400 transition-colors rounded-xl">
+                <div className="space-y-3 p-4 bg-white border border-black hover:border-black transition-colors rounded-lg">
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="aiUsed"
@@ -814,7 +814,7 @@ export default function Upload() {
             </Card>
 
             {/* Artwork Upload */}
-            <Card className="border border-gray-200">
+            <Card className="border border-black">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">Artwork</CardTitle>
                 <CardDescription>
@@ -824,7 +824,7 @@ export default function Upload() {
               <CardContent>
                 {!artworkFile ? (
                   <div className="flex items-center gap-4">
-                    <div className="w-32 h-32 bg-gray-100 border border-gray-200 flex items-center justify-center">
+                    <div className="w-32 h-32 bg-gray-100 border border-black flex items-center justify-center">
                       <div className="text-4xl text-gray-300">🖼</div>
                     </div>
                     <div className="flex-1">
@@ -836,7 +836,7 @@ export default function Upload() {
                         id="artwork-upload"
                       />
                       <Label htmlFor="artwork-upload">
-                        <Button variant="outline" asChild className="rounded-full border border-gray-200 hover:border-gray-400">
+                        <Button variant="outline" asChild className="rounded-full border border-black hover:border-black">
                           <span>Upload Artwork</span>
                         </Button>
                       </Label>
@@ -850,7 +850,7 @@ export default function Upload() {
                     <img
                       src={URL.createObjectURL(artworkFile)}
                       alt="Artwork preview"
-                      className="w-32 h-32 object-cover border border-gray-200"
+                      className="w-32 h-32 object-cover border border-black"
                     />
                     <div className="flex-1">
                       <p className="font-medium">{artworkFile.name}</p>
@@ -871,7 +871,7 @@ export default function Upload() {
             </Card>
 
             {/* Publish Button */}
-            <Card className="border border-gray-200">
+            <Card className="border border-black">
               <CardContent className="pt-6">
                 {isUploading && (
                   <div className="mb-4">

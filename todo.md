@@ -2861,3 +2861,16 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ### Future: Discover.tsx Dark Theme Review
 - [ ] Decide whether to keep dark theme or convert to light BAP Protocol
 - [ ] Update Discover.tsx with chosen design direction
+
+---
+
+## 🎨 BAP Protocol Site-Wide Audit - Tier 3 (IN PROGRESS)
+
+### Tier 3: Artist Tool Pages
+- [x] Upload.tsx - Music/content upload page
+- [x] MyMusic.tsx - Artist music management (already compliant)
+- [x] MyStore.tsx - Artist store management
+- [x] ProfileSettings.tsx - Profile settings page
+- [x] Onboarding.tsx - Artist onboarding flow
+- [x] Test all Tier 3 pages on desktop and mobile
+- [x] Save checkpoint
