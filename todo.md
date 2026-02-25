@@ -2978,3 +2978,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Complete wishlist system with lightning bolt icons (⚡) instead of hearts. Lightning bolts appear on product cards and quick-view modals when logged in. Filled cyan lightning bolt = in wishlist, unfilled black lightning bolt = not in wishlist. BAP Protocol design (black borders, brutalist shadows) applied throughout.
+
+
+---
+
+## 📝 Landing Page Hero Copy Update ✅ COMPLETE
+
+- [x] Update hero section to exact three-line stacking:
+  - Line 1: "Boptone"
+  - Line 2: "The Autonomous Operating System for the Modern Music Business."
+  - Line 3: "Own your masters. Own your revenue. Own your future."
+- [x] Test updated copy
+- [x] Save checkpoint
+
+**Result:** Hero section now displays exact three-line stacking as requested. Removed rotating phrases animation and replaced with static, powerful messaging that positions Boptone as the autonomous operating system for modern music business.
