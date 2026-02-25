@@ -161,14 +161,16 @@ export default function Landing() {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl">
-            <h1 className="text-6xl md:text-8xl font-extrabold mb-4 leading-tight">
-              Boptone
+            <h1 className="text-6xl md:text-8xl font-extrabold mb-6 leading-tight">
+              <span className={`inline-block min-w-[280px] md:min-w-[650px] transition-opacity duration-300 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
+                {rotatingPhrases[verbIndex]}
+              </span>
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-900 font-semibold mb-6 leading-tight">
-              The Autonomous Operating System for the Modern Music Business.
+            <p className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Boptone
             </p>
             <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
-              Own your masters. Own your revenue. Own your future.
+              The Autonomous Operating System for the Modern Music Business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 

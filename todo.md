@@ -2992,3 +2992,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** Hero section now displays exact three-line stacking as requested. Removed rotating phrases animation and replaced with static, powerful messaging that positions Boptone as the autonomous operating system for modern music business.
+
+
+---
+
+## 🔄 Landing Page Hero Revision ✅ COMPLETE
+
+- [x] Restore rotating phrases as main headline ("Create Your Tone.", "Automate Your Tone.", "Own Your Tone.")
+- [x] Add "Boptone" smaller below rotating phrases
+- [x] Keep "The Autonomous Operating System for the Modern Music Business."
+- [x] Remove "Own your masters. Own your revenue. Own your future."
+- [x] Test updated hierarchy
+- [x] Save checkpoint
+
+**Result:** Hero section now shows rotating phrases as main headline (text-6xl/8xl), "Boptone" smaller below (text-3xl/4xl), followed by tagline. Removed ownership line as requested. Visual hierarchy: Rotating Phrases > Boptone > Tagline > CTA.
