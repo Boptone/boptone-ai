@@ -33,6 +33,7 @@ import { reviewAnalyticsRouter } from "./routers/reviewAnalytics";
 import { wishlistRouter } from "./routers/wishlist";
 import { cartRouter } from "./routers/cart";
 import { checkoutRouter } from "./routers/checkout";
+import { walletRouter } from "./routers/wallet";
 import { stripeConnectRouter } from "./routers/stripeConnect";
 import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { playlistRouter } from "./routers/playlist";
@@ -780,6 +781,9 @@ export const appRouter = router({
   // Shopping Cart System (BopShop)
   cart: cartRouter,
   checkout: checkoutRouter,
+
+  // Wallet System (Stripe Link Integration)
+  wallet: walletRouter,
 
   // Cookie Preferences Management
   cookiePreferences: router({

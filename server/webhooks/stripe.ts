@@ -113,6 +113,11 @@ async function handleCheckoutSessionCompleted(session: any) {
       await handleKickinPayment(session, db);
       break;
     
+    case 'wallet_topup':
+      const { handleWalletTopUp } = await import('../services/walletWebhook');
+      await handleWalletTopUp(session);
+      break;
+    
     default:
       // Handle subscription checkout
       if (session.mode === 'subscription' && session.subscription) {
