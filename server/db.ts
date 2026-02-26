@@ -997,9 +997,22 @@ export async function createToneyConversation(
   }
 
   try {
+    // Get artistId from userId
+    const artistProfile = await db
+      .select({ id: artistProfiles.id })
+      .from(artistProfiles)
+      .where(eq(artistProfiles.userId, userId))
+      .limit(1);
+    
+    if (!artistProfile || artistProfile.length === 0) {
+      console.warn("[Database] Cannot create Toney conversation: artist profile not found for userId", userId);
+      return null;
+    }
+
     const [conversation] = await db
       .insert(aiConversations)
       .values({
+        artistId: artistProfile[0].id,
         userId,
         conversationType: "toney",
         title: title || "New Conversation",
