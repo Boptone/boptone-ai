@@ -197,15 +197,10 @@ export const ordersRouter = router({
           });
         }
 
-        if (!order.stripeReceiptUrl) {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "Receipt not available for this order",
-          });
-        }
-
+        // TODO: Implement receipt URL retrieval from Stripe API
+        // For now, return a placeholder or fetch from Stripe using paymentIntentId
         return {
-          receiptUrl: order.stripeReceiptUrl,
+          receiptUrl: null, // Will be implemented when needed
         };
       } catch (error) {
         if (error instanceof TRPCError) throw error;

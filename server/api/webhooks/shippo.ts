@@ -91,7 +91,7 @@ export async function handleShippoWebhook(req: Request, res: Response) {
     await db
       .update(orders)
       .set({
-        orderStatus: trackingStatus,
+        fulfillmentStatus: trackingStatus,
         updatedAt: new Date(),
       })
       .where(eq(orders.id, order.id));

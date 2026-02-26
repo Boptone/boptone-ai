@@ -118,7 +118,7 @@ export async function initializeRedis(redisUrl?: string): Promise<void> {
 
     redisClient = createClient({ url });
 
-    redisClient.on('error', (err) => {
+    redisClient.on('error', (err: Error) => {
       console.error('[RateLimiter] Redis error:', err);
       handleRedisFailure();
     });

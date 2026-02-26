@@ -140,7 +140,8 @@ Respond with ONLY a JSON array of product IDs in order of relevance:
           });
 
           const content = response.choices[0]?.message?.content || "[]";
-          const recommendedIds = JSON.parse(content.trim());
+          const contentStr = typeof content === 'string' ? content : JSON.stringify(content);
+          const recommendedIds = JSON.parse(contentStr.trim());
 
           // Fetch recommended products
           const recommendations = availableProducts
