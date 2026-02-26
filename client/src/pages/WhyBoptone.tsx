@@ -77,7 +77,6 @@ export default function WhyBoptone() {
           </p>
           <Button
             size="lg"
-            className="rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
             onClick={() => setLocation("/signup")}
           >
             Start Free
@@ -102,7 +101,7 @@ export default function WhyBoptone() {
               return (
                 <Card
                   key={index}
-                  className="p-6 rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-shadow"
+                  className="p-6 rounded-2xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-shadow"
                 >
                   <Icon className="w-10 h-10 mb-4 text-black" />
                   <h3 className="text-xl font-bold mb-2">{value.title}</h3>
@@ -165,7 +164,7 @@ export default function WhyBoptone() {
             {testimonials.map((testimonial, index) => (
               <Card
                 key={index}
-                className="p-6 rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                className="p-6 rounded-2xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
                 <div className="border-t-2 border-gray-200 pt-4">
@@ -191,15 +190,13 @@ export default function WhyBoptone() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
                 onClick={() => setLocation("/signup")}
               >
                 Start Free
               </Button>
               <Button
                 size="lg"
-                variant="outline"
-                className="rounded-lg bg-white text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
+                variant="secondary"
                 onClick={() => setLocation("/pricing")}
               >
                 See Pricing

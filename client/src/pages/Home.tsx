@@ -167,15 +167,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
               onClick={() => setLocation("/signup")}
             >
               Start Free
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              className="rounded-lg bg-white text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-8 py-6 text-lg font-bold"
+              variant="secondary"
               onClick={() => {
                 setDemoMode(true);
                 setLocation("/dashboard");
@@ -207,7 +205,7 @@ export default function Home() {
               return (
                 <Card
                   key={index}
-                  className="p-6 rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-shadow"
+                  className="p-6 rounded-2xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-shadow"
                 >
                   <Icon className="w-10 h-10 mb-4 text-black" />
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
@@ -256,12 +254,12 @@ export default function Home() {
             {tiers.map((tier, index) => (
               <Card
                 key={index}
-                className={`p-8 rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
+                className={`p-8 rounded-2xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
                   tier.popular ? "relative" : ""
                 }`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0cc0df] text-black px-4 py-1 rounded-lg text-sm font-bold border-2 border-black">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#0cc0df] text-black px-4 py-1 rounded-2xl text-sm font-bold border-2 border-black">
                     Most Popular
                   </div>
                 )}
@@ -290,14 +288,17 @@ export default function Home() {
                 </ul>
                 {tier.name === "Enterprise" ? (
                   <Button
-                    className="w-full rounded-lg bg-black text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] py-6 text-lg font-bold"
+                    size="lg"
+                    className="w-full bg-black text-white"
                     onClick={() => setLocation("/contact")}
                   >
                     {tier.cta}
                   </Button>
                 ) : tier.name === "Free" ? (
                   <Button
-                    className="w-full rounded-lg bg-white text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] py-6 text-lg font-bold"
+                    size="lg"
+                    variant="secondary"
+                    className="w-full"
                     onClick={() => setLocation("/signup")}
                   >
                     {tier.cta}
@@ -310,7 +311,7 @@ export default function Home() {
                         : "price_1QiQEbEhtyzQmgJvCCJWuJOC"
                     }
                     buttonText={tier.cta}
-                    buttonClassName="w-full rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] py-6 text-lg font-bold"
+                    buttonClassName="w-full"
                   />
                 )}
               </Card>
@@ -330,7 +331,7 @@ export default function Home() {
               {faqs.map((faq, index) => (
                 <Card
                   key={index}
-                  className="rounded-lg border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                  className="rounded-2xl border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 >
                   <button
                     onClick={() => setFaqOpen(faqOpen === index ? null : index)}
@@ -365,7 +366,6 @@ export default function Home() {
             </p>
             <Button
               size="lg"
-              className="rounded-lg bg-[#0cc0df] text-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] px-12 py-6 text-xl font-bold"
               onClick={() => setLocation("/signup")}
             >
               Start Free Today

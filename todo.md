@@ -4677,3 +4677,236 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Add calculator: "How much would you earn on Boptone?" (input streams/sales, show payout)
 - [ ] NO competitor comparisons - focus on Boptone's value
 
+
+
+## BAP Protocol Pill Design Rollout (CRITICAL - SITE-WIDE)
+
+**Design Specification:**
+- Thick black border (4px)
+- 4px brutalist shadow (shadow-[4px_4px_0px_0px_rgba(0,0,0,1)])
+- Rounded corners (rounded-2xl)
+- Cyan background (#0cc0df) for primary buttons
+- White background for secondary buttons
+- Black text for all buttons
+
+### Global Component Updates
+- [ ] Update `client/src/components/ui/button.tsx` with BAP protocol pill styling
+- [ ] Update primary variant (cyan bg + black border + 4px shadow)
+- [ ] Update secondary variant (white bg + black border + 4px shadow)
+- [ ] Update outline variant (transparent bg + black border + 4px shadow)
+- [ ] Test all button variants
+
+### Public Pages (10 pages)
+- [ ] Home.tsx - Update all CTA buttons
+- [ ] WhyBoptone.tsx - Update all CTA buttons
+- [ ] Pricing.tsx - Update tier selection buttons
+- [ ] Features.tsx - Update feature CTA buttons
+- [ ] HowItWorks.tsx - Update step CTA buttons
+- [ ] Blog.tsx - Update navigation buttons
+- [ ] BlogPost.tsx - Update action buttons
+- [ ] Terms.tsx - Update any action buttons
+- [ ] Privacy.tsx - Update any action buttons
+- [ ] NotFound.tsx - Update "Go Home" button
+
+### Auth Pages (6 pages)
+- [ ] MultiStepSignup.tsx - Update all step buttons (Next, Back, Complete)
+- [ ] AuthSignup.tsx - Update signup/login buttons
+- [ ] Login.tsx - Update login button
+- [ ] ForgotPassword.tsx - Update reset button
+- [ ] ResetPassword.tsx - Update submit button
+- [ ] VerifyEmail.tsx - Update verification button
+
+### Dashboard Pages (15+ pages)
+- [ ] Dashboard.tsx - Update all action buttons
+- [ ] MyMusic.tsx - Update upload/edit/delete buttons
+- [ ] Upload.tsx - Update upload button
+- [ ] Analytics.tsx - Update filter/export buttons
+- [ ] Insights.tsx - Update action buttons
+- [ ] Workflows.tsx - Update create/edit buttons
+- [ ] WorkflowBuilder.tsx - Update save/test/deploy buttons
+- [ ] ArtistProfile.tsx - Update edit profile button
+- [ ] Fans.tsx - Update action buttons
+- [ ] Messages.tsx - Update send button
+- [ ] Notifications.tsx - Update action buttons
+- [ ] Calendar.tsx - Update event buttons
+- [ ] Tasks.tsx - Update task buttons
+- [ ] Goals.tsx - Update goal buttons
+- [ ] Collaborations.tsx - Update collaboration buttons
+
+### Settings Pages (10+ pages)
+- [ ] Settings.tsx - Update save buttons
+- [ ] Profile.tsx - Update save/cancel buttons
+- [ ] PayoutSettings.tsx - Update payout buttons
+- [ ] NotificationSettings.tsx - Update save button
+- [ ] PrivacySettings.tsx - Update save button
+- [ ] SecuritySettings.tsx - Update save button
+- [ ] BillingSettings.tsx - Update payment buttons
+- [ ] IntegrationSettings.tsx - Update connect buttons
+- [ ] TeamSettings.tsx - Update invite/remove buttons
+- [ ] APISettings.tsx - Update generate/revoke buttons
+
+### Admin Pages (8+ pages)
+- [ ] Admin.tsx - Update admin action buttons
+- [ ] ContentModeration.tsx - Update approve/reject buttons
+- [ ] UserManagement.tsx - Update user action buttons
+- [ ] AnalyticsAdmin.tsx - Update export buttons
+- [ ] SystemSettings.tsx - Update save buttons
+- [ ] AuditLogs.tsx - Update filter buttons
+- [ ] IPModeration.tsx - Update moderation buttons
+- [ ] DMCAManagement.tsx - Update action buttons
+
+### Shop Pages (10+ pages)
+- [ ] Shop.tsx - Update "Add to Cart" buttons
+- [ ] ProductDetail.tsx - Update "Add to Cart" / "Buy Now" buttons
+- [ ] Cart.tsx - Update "Checkout" button
+- [ ] Checkout.tsx - Update "Place Order" button
+- [ ] CheckoutSuccess.tsx - Update "Continue Shopping" button
+- [ ] Orders.tsx - Update order action buttons
+- [ ] OrderDetail.tsx - Update tracking buttons
+- [ ] Wishlist.tsx - Update wishlist buttons
+- [ ] ProductManagement.tsx - Update create/edit buttons
+- [ ] Reviews.tsx - Update review buttons
+
+### Component Updates (Shared Components)
+- [ ] Navigation.tsx - Update "Get Started" / "Log In" buttons
+- [ ] Footer.tsx - Update any CTA buttons
+- [ ] ToneyChatbot.tsx - Update chat button (already done ✅)
+- [ ] SearchAIOverlay.tsx - Update search buttons
+- [ ] Modal components - Update all modal action buttons
+- [ ] Card components - Update all card action buttons
+- [ ] Form components - Update all submit buttons
+
+### Testing & Validation
+- [ ] Test all public pages (logged out state)
+- [ ] Test all auth flows (signup, login, password reset)
+- [ ] Test all dashboard pages (logged in state)
+- [ ] Test all settings pages
+- [ ] Test all admin pages (admin role)
+- [ ] Test all shop pages (cart, checkout, orders)
+- [ ] Test mobile responsiveness (all button sizes)
+- [ ] Test hover states (all button variants)
+- [ ] Test disabled states (all button variants)
+- [ ] Save checkpoint
+
+**Estimated Time:** 4-6 hours (comprehensive site-wide update)
+**Priority:** HIGH (brand consistency across entire platform)
+
+
+## BAP Protocol Pill Design Rollout (CRITICAL - SITE-WIDE)
+
+**Design Specification:**
+- Thick black border (4px)
+- 4px brutalist shadow (shadow-[4px_4px_0px_0px_rgba(0,0,0,1)])
+- Rounded corners (rounded-2xl)
+- Cyan background (#0cc0df) for primary buttons
+- White background for secondary buttons
+- Black text for all buttons
+
+### Global Component Updates
+- [x] Update `client/src/components/ui/button.tsx` with BAP protocol pill styling
+- [x] Update primary variant (cyan bg + black border + 4px shadow)
+- [x] Update secondary variant (white bg + black border + 4px shadow)
+- [x] Update outline variant (transparent bg + black border + 4px shadow)
+- [x] Test all button variants
+
+### Public Pages (10 pages)
+- [x] **Home.tsx** - Hero CTA, feature CTAs, pricing CTAs
+- [x] **WhyBoptone.tsx** - Vision page CTAs
+- [ ] **Features.tsx** - Feature showcase CTAs
+- [ ] **HowItWorks.tsx** - Step-by-step CTAs
+- [ ] **About.tsx** - About page CTAs
+- [ ] **Contact.tsx** - Contact form submit button
+- [ ] **Explainer.tsx** - Explainer video CTAs
+- [ ] **Terms.tsx** - Legal page (likely no buttons)
+- [ ] **Privacy.tsx** - Privacy page (likely no buttons)
+- [ ] **NotFound.tsx** - "Go Home" button
+
+### Auth Pages (8 pages)
+- [ ] **AuthSignup.tsx** - Signup/login buttons
+- [ ] **MultiStepSignup.tsx** - Step navigation buttons (Next, Back, Complete)
+- [ ] **Signup.tsx** - Signup form submit
+- [ ] **Login.tsx** - Login form submit
+- [ ] **ForgotPassword.tsx** - Reset password button
+- [ ] **VerifyEmail.tsx** - Verification button
+- [ ] **Onboarding.tsx** - Onboarding flow buttons
+- [ ] **Demo.tsx** - Demo signup buttons
+
+### Dashboard Pages (20 pages)
+- [ ] **Dashboard.tsx** - Main dashboard action buttons
+- [ ] **MyMusic.tsx** - Upload, edit, delete buttons
+- [ ] **Upload.tsx** - Upload form submit button
+- [ ] **Analytics.tsx** - Filter, export buttons
+- [ ] **ArtistInsights.tsx** - Insights action buttons
+- [ ] **Fans.tsx** - Fan management buttons
+- [ ] **Earnings.tsx** - Earnings dashboard buttons
+- [ ] **Financials.tsx** - Financial reports buttons
+- [ ] **Money.tsx** - Money management buttons
+- [ ] **PayoutHistory.tsx** - Payout history buttons
+- [ ] **Workflows.tsx** - Workflow management buttons
+- [ ] **WorkflowSettings.tsx** - Workflow settings buttons
+- [ ] **AIAdvisor.tsx** - AI advisor action buttons
+- [ ] **ToneRewards.tsx** - Rewards program buttons
+- [ ] **ArtistBackers.tsx** - Backer management buttons
+- [ ] **WriterEarnings.tsx** - Writer earnings buttons
+- [ ] **WriterInvite.tsx** - Writer invite buttons
+- [ ] **WriterProfile.tsx** - Writer profile buttons
+- [ ] **Discover.tsx** - Discovery page buttons
+- [ ] **Listen.tsx** - Listening page buttons
+
+### Settings Pages (5 pages)
+- [ ] **ProfileSettings.tsx** - Save/cancel buttons
+- [ ] **PayoutSettings.tsx** - Payout configuration buttons
+- [ ] **WorkflowSettings.tsx** - Workflow configuration buttons
+- [ ] **CookieSettings.tsx** - Cookie preference buttons
+- [ ] **ArtistProfile.tsx** - Profile edit buttons
+
+### Admin Pages (7 pages)
+- [ ] **Admin.tsx** - Admin dashboard buttons
+- [ ] **admin/AdminOverview.tsx** - Admin overview buttons
+- [ ] **admin/AdminOrders.tsx** - Order management buttons
+- [ ] **admin/AdminProducts.tsx** - Product management buttons
+- [ ] **admin/AdminRevenue.tsx** - Revenue analytics buttons
+- [ ] **ReviewModeration.tsx** - Review moderation buttons
+- [ ] **ReviewAnalyticsDashboard.tsx** - Review analytics buttons
+
+### Shop Pages (15 pages)
+- [ ] **Shop.tsx** - Shop browse "Add to Cart" buttons
+- [ ] **BopShopLanding.tsx** - BopShop landing page CTAs
+- [ ] **BopShopBrowse.tsx** - Browse products "Add to Cart" buttons
+- [ ] **BopShopProduct.tsx** - Product detail "Add to Cart" / "Buy Now"
+- [ ] **ProductDetail.tsx** - Product detail page buttons
+- [ ] **Cart.tsx** - "Checkout" button, remove item buttons
+- [ ] **Checkout.tsx** - "Place Order" button
+- [ ] **CheckoutSuccess.tsx** - "Continue Shopping" button
+- [ ] **Orders.tsx** - Order history buttons
+- [ ] **Wishlist.tsx** - Wishlist action buttons
+- [ ] **MyStore.tsx** - Store management buttons
+- [ ] **MyStoreOrders.tsx** - Store order management buttons
+- [ ] **ProductManagement.tsx** - Product CRUD buttons
+- [ ] **ProductForm.tsx** - Product form submit button
+- [ ] **Store.tsx** - Store page buttons
+
+### Component Updates (Shared Components)
+- [ ] **Navigation.tsx** - Update "Get Started" / "Log In" buttons
+- [ ] **Footer.tsx** - Update any CTA buttons
+- [x] **ToneyChatbot.tsx** - Update chat button (already done ✅)
+- [ ] **SearchAIOverlay.tsx** - Update search buttons
+- [ ] **Modal components** - Update all modal action buttons
+- [ ] **Card components** - Update all card action buttons
+- [ ] **Form components** - Update all submit buttons
+
+### Testing & Validation
+- [ ] Test all public pages (logged out state)
+- [ ] Test all auth flows (signup, login, password reset)
+- [ ] Test all dashboard pages (logged in state)
+- [ ] Test all settings pages
+- [ ] Test all admin pages (admin role)
+- [ ] Test all shop pages (cart, checkout, orders)
+- [ ] Test mobile responsiveness (all button sizes)
+- [ ] Test hover states (all button variants)
+- [ ] Test disabled states (all button variants)
+- [ ] Save checkpoint
+
+**Estimated Time:** 4-6 hours (comprehensive site-wide update)
+**Priority:** HIGH (brand consistency across entire platform)
+**Status:** IN PROGRESS (2/85 pages complete)
