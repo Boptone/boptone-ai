@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 import { Link } from "wouter";
 import { Package, Receipt, Truck, ExternalLink, ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { toastError } from "@/lib/toast";
@@ -186,7 +187,7 @@ export default function Orders() {
                             })}
                           </p>
                           <p className="text-2xl font-bold text-gray-900">
-                            ${parseFloat(order.total).toFixed(2)}
+                            ${(order.total / 100).toFixed(2)}
                           </p>
                         </div>
 
@@ -200,9 +201,9 @@ export default function Orders() {
                             <Package className="w-4 h-4 mr-2" />
                             View Details
                           </Button>
-                          {order.stripeReceiptUrl && (
+                          {order.paymentIntentId && (
                             <Button
-                              onClick={() => window.open(order.stripeReceiptUrl!, "_blank")}
+                              onClick={() => toast.info("Receipt feature coming soon")}
                               variant="outline"
                               className="border-2 border-black rounded-lg hover:bg-gray-100 transition-colors"
                             >
@@ -331,13 +332,13 @@ export default function Orders() {
                       <div className="flex-1">
                         <h5 className="font-bold mb-1">{item.productName || "Product"}</h5>
                         <p className="text-sm text-gray-600">
-                          Quantity: {item.quantity} × ${parseFloat(item.price).toFixed(2)}
+                          Quantity: {item.quantity} × ${(item.pricePerUnit / 100).toFixed(2)}
                         </p>
                       </div>
 
                       {/* Item Total */}
                       <div className="text-right">
-                        <p className="font-bold">${parseFloat(item.subtotal).toFixed(2)}</p>
+                        <p className="font-bold">${(item.subtotal / 100).toFixed(2)}</p>
                       </div>
                     </div>
                   ))}

@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { FileText, Shield, Cookie, Settings } from "lucide-react";
+import { Link } from "wouter";
 
 /**
  * Legal Landing Page - Enterprise-grade legal document hub

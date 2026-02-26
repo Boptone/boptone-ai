@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRequireArtist } from "@/hooks/useRequireArtist";
 import { useRoute } from "wouter";
 import { SEOHead } from "@/components/SEOHead";
@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
-import { useEffect, useState } from "react";
 import {
   Music,
   MapPin,

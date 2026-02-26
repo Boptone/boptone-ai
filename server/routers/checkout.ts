@@ -8,7 +8,7 @@ import Stripe from "stripe";
 import { ENV } from "../_core/env";
 
 const stripe = new Stripe(ENV.stripeSecretKey, {
-  apiVersion: "2024-12-18.acacia",
+  apiVersion: "2025-09-30.clover",
 });
 
 export const checkoutRouter = router({
@@ -58,13 +58,13 @@ export const checkoutRouter = router({
           product_data: {
             name,
             description: item.product.description || undefined,
-            images: item.product.imageUrls ? [item.product.imageUrls[0]] : undefined,
+            images: item.product.images ? [item.product.images[0]] : undefined,
             metadata: {
               productId: item.product.id.toString(),
               variantId: item.variant?.id?.toString() || "",
             },
           },
-          unit_amount: Math.round(parseFloat(price) * 100), // Convert to cents
+          unit_amount: Math.round(price), // Already in cents
         },
         quantity: item.quantity,
       };

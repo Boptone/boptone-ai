@@ -44,14 +44,16 @@ export function Navigation() {
   });
 
   // Fetch cart count for badge
-  const { data: cartCount = 0 } = trpc.cart.count.useQuery(undefined, {
+  const { data: cartCountData = 0 } = trpc.cart.count.useQuery(undefined, {
     enabled: isAuthenticated,
   });
+  const cartCount = typeof cartCountData === 'number' ? cartCountData : 0;
 
   // Fetch wishlist count for badge
-  const { data: wishlistCount = 0 } = trpc.wishlist.count.useQuery(undefined, {
+  const { data: wishlistCountData = 0 } = trpc.wishlist.count.useQuery(undefined, {
     enabled: isAuthenticated,
   });
+  const wishlistCount = typeof wishlistCountData === 'number' ? wishlistCountData : 0;
 
   // Close mobile menu when clicking a link
   const closeMobileMenu = () => setMobileMenuOpen(false);

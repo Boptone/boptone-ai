@@ -162,6 +162,11 @@ export default function MyStoreOrders() {
       country: "US",
     };
 
+    if (!order.shippingAddress) {
+      toast.error("Shipping address is missing");
+      return;
+    }
+
     purchaseLabel.mutate({
       orderId: labelOrderId,
       rateId: selectedRate,
