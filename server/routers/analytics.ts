@@ -57,7 +57,7 @@ export const analyticsRouter = router({
         .where(
           and(
             eq(pixelSessions.artistId, artistId),
-            gte(pixelSessions.updatedAt, thirtyMinutesAgo)
+            gte(pixelSessions.startedAt, thirtyMinutesAgo)
           )
         );
 
@@ -466,7 +466,7 @@ export const analyticsRouter = router({
         .where(
           and(
             eq(pixelSessions.artistId, artistId),
-            gte(pixelSessions.updatedAt, fiveMinutesAgo)
+            gte(pixelSessions.startedAt, fiveMinutesAgo)
           )
         );
 

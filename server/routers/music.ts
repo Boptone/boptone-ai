@@ -695,7 +695,7 @@ export const musicRouter = router({
           artist: bapTracks.artist,
           genre: bapTracks.genre,
           duration: bapTracks.duration,
-          coverArt: bapTracks.coverArt,
+          artworkUrl: bapTracks.artworkUrl,
           audioUrl: bapTracks.audioUrl,
           createdAt: bapTracks.createdAt,
         })
