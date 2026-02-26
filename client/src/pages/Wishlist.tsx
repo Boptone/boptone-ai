@@ -279,7 +279,7 @@ function RecommendationCard({ product }: { product: any }) {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart.mutate({ productId: product.id, quantity: 1 });
+    addToCart.mutate({ productId: product.id, priceAtAdd: parseFloat(product.price), quantity: 1 });
   };
 
   const images = Array.isArray(product.images) ? product.images : [];

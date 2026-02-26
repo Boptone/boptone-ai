@@ -22,10 +22,7 @@ export function initSentry() {
     // Performance monitoring
     integrations: [
       Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration({
-        // Capture 100% of sessions with errors
-        errorSampleRate: 1.0,
-      }),
+      Sentry.replayIntegration(),
     ],
     
     // Performance traces sample rate (10% of transactions)

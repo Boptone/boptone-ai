@@ -262,6 +262,7 @@ export default function Shop() {
                           e.stopPropagation();
                           addToCart.mutate({
                             productId: product.id,
+                            priceAtAdd: parseFloat(product.price),
                             quantity: 1,
                           });
                         }}

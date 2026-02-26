@@ -87,6 +87,7 @@ export function ProductQuickViewModal({ product, open, onClose }: ProductQuickVi
     setIsAdding(true);
     addToCart.mutate({
       productId: product.id,
+      priceAtAdd: parseFloat(product.price),
       quantity,
     });
   };

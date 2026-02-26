@@ -53,6 +53,7 @@ async function trackEvent(params: {
   const sessionId = getSessionId();
   
   try {
+    // @ts-ignore - tRPC client type issue in non-React context
     await trpc.postPurchase.trackCartEvent.mutate({
       sessionId,
       eventType: params.eventType,
