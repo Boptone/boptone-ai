@@ -64,7 +64,9 @@ export function ToneyChatbot() {
     const isKeyPage = location === '/' || location === '/features';
     
     // Only show proactive greeting if user has no chat history (first visit)
-    const hasHistory = messages.length > 1       (messages.length === 1 && messages[0].content !== "Hey! I'm Toney, your AI agent. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?");   if (isKeyPage && !hasAutoOpened && !isOpen && !hasHistory) {
+    const hasHistory = messages.length > 1 || (messages.length === 1 && messages[0].content !== "Hey! I'm Toney, your AI agent. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?");
+    
+    if (isKeyPage && !hasAutoOpened && !isOpen && !hasHistory) {
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasAutoOpened(true);
