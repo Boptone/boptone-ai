@@ -4506,3 +4506,11 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Remove gray gradient ring around chat bubble
 - [x] Apply BAP protocol design to chat window (black borders, 4px shadows, rounded corners)
 - [x] Ensure chat window matches Boptone design consistency
+
+### Toney Chat Window BAP Protocol Fixes
+- [x] Remove rounded corners from chat window (should be sharp corners per BAP protocol)
+- [x] Remove rounded corners from header (rounded-t-lg causing visible lines)
+- [x] Change "Your AI Career Assistant" to "Your AI Agent"
+- [x] Update initial welcome message to reflect Agent role
+- [x] Reduce chat window height for more compact design (600px → 480px)
+- [x] Add Privacy | Terms links footer to bottom of chat window

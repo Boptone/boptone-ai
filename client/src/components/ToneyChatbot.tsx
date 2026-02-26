@@ -38,7 +38,7 @@ export function ToneyChatbot() {
     // Default welcome message if no history
     return [{
       role: "assistant",
-      content: "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
+      content: "Hey! I'm Toney, your AI agent. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
     }];
   });
 
@@ -64,10 +64,7 @@ export function ToneyChatbot() {
     const isKeyPage = location === '/' || location === '/features';
     
     // Only show proactive greeting if user has no chat history (first visit)
-    const hasHistory = messages.length > 1 || 
-      (messages.length === 1 && messages[0].content !== "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?");
-    
-    if (isKeyPage && !hasAutoOpened && !isOpen && !hasHistory) {
+    const hasHistory = messages.length > 1       (messages.length === 1 && messages[0].content !== "Hey! I'm Toney, your AI agent. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?");   if (isKeyPage && !hasAutoOpened && !isOpen && !hasHistory) {
       const timer = setTimeout(() => {
         setIsOpen(true);
         setHasAutoOpened(true);
@@ -140,13 +137,13 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] max-w-md">
-      <div className="rounded-lg border-4 border-black bg-white flex flex-col shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{ height: "600px" }}>
-        <div className="flex items-center justify-between p-4 border-b-4 border-black bg-[#0cc0df] rounded-t-lg">
+      <div className="border-4 border-black bg-white flex flex-col shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{ height: "480px" }}>
+        <div className="flex items-center justify-between p-4 border-b-4 border-black bg-[#0cc0df]">
           <div className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5 text-black" />
             <div>
               <h3 className="font-semibold text-black">Toney</h3>
-              <p className="text-xs text-black">Your AI Career Assistant</p>
+              <p className="text-xs text-black">Your AI Agent</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -159,7 +156,7 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
                   localStorage.removeItem(AUTO_OPENED_KEY);
                   setMessages([{
                     role: "assistant",
-                    content: "Hey! I'm Toney, your AI career assistant. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
+         content: "Hey! I'm Toney, your AI agent. I'm here to help you navigate Boptone and grow your music career. What can I help you with today?"
                   }]);
                   setHasAutoOpened(false);
                 }
@@ -244,6 +241,17 @@ Be encouraging, knowledgeable, and help artists "Own Their Tone." Keep responses
             placeholder="Ask Toney anything about your music career..."
             height="100%"
           />
+        </div>
+        <div className="border-t-4 border-black bg-white p-2 text-center">
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-600">
+            <a href="/legal/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-black hover:underline">
+              Privacy
+            </a>
+            <span>|</span>
+            <a href="/legal/terms" target="_blank" rel="noopener noreferrer" className="hover:text-black hover:underline">
+              Terms
+            </a>
+          </div>
         </div>
       </div>
     </div>
