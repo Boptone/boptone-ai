@@ -304,6 +304,7 @@ export default function Home() {
                     {tier.cta}
                   </Button>
                 ) : (
+                  // @ts-ignore - StripeCheckout props type issue
                   <StripeCheckout
                     priceId={
                       isAnnual

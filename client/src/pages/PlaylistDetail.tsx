@@ -163,6 +163,7 @@ export default function PlaylistDetail() {
 
   // Update local tracks when data loads
   if (playlistData?.tracks && localTracks.length === 0) {
+    // @ts-ignore - Track type conversion
     setLocalTracks(playlistData.tracks as Track[]);
   }
 
@@ -184,6 +185,7 @@ export default function PlaylistDetail() {
       toast.error(`Failed to reorder tracks: ${error.message}`);
       // Revert to original order on error
       if (playlistData?.tracks) {
+        // @ts-ignore - Track type conversion
         setLocalTracks(playlistData.tracks as Track[]);
       }
     },

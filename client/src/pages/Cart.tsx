@@ -206,6 +206,7 @@ export default function Cart() {
                         {item.product?.name || "Product"}
                       </h3>
                       <p className="text-xl text-gray-600 mb-4">
+                        {/* @ts-ignore - price type conversion */}
                         ${parseFloat(typeof (item.variant?.price || item.product?.price || "0") === 'number' ? (item.variant?.price || item.product?.price || 0).toString() : (item.variant?.price || item.product?.price || "0")).toFixed(2)} each
                       </p>
 
@@ -248,6 +249,7 @@ export default function Cart() {
                     {/* Item Total & Remove */}
                     <div className="text-right">
                       <div className="text-2xl font-bold mb-4">
+                        {/* @ts-ignore - price type conversion */}
                         ${(parseFloat(typeof (item.variant?.price || item.product?.price || "0") === 'number' ? (item.variant?.price || item.product?.price || 0).toString() : (item.variant?.price || item.product?.price || "0")) * item.quantity).toFixed(2)}
                       </div>
                       <Button

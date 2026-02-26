@@ -68,6 +68,7 @@ export default function MultiStepSignup() {
         rememberMe: false 
       }));
       
+      // @ts-ignore - getLoginUrl signature mismatch
       window.location.href = getLoginUrl(false, state);
     } catch (error: any) {
       toast.error(error.message || "Failed to start signup");

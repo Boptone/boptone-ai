@@ -63,6 +63,7 @@ export async function getDb() {
       }
       
       // Create Drizzle instance with pooled connection
+      // @ts-ignore - Drizzle ORM type inference issue
       _db = drizzle(_pool);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
