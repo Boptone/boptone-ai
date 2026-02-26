@@ -23,8 +23,6 @@ export function initSentry() {
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration({
-        // Capture 10% of sessions for replay
-        sessionSampleRate: 0.1,
         // Capture 100% of sessions with errors
         errorSampleRate: 1.0,
       }),
@@ -32,9 +30,6 @@ export function initSentry() {
     
     // Performance traces sample rate (10% of transactions)
     tracesSampleRate: 0.1,
-    
-    // Capture unhandled promise rejections
-    autoSessionTracking: true,
     
     // Add user context automatically
     beforeSend(event, hint) {

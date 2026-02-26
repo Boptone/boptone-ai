@@ -247,11 +247,11 @@ export function ReviewForm({ productId, onSuccess }: ReviewFormProps) {
         {/* Submit Button */}
         <Button
           type="submit"
-          disabled={submitReview.isLoading || rating === 0 || content.trim().length < 10}
+          disabled={submitReview.isPending || rating === 0 || content.trim().length < 10}
           className="w-full"
           size="lg"
         >
-          {submitReview.isLoading ? "Submitting..." : "Submit Review"}
+          {submitReview.isPending ? "Submitting..." : "Submit Review"}
         </Button>
       </form>
     </Card>

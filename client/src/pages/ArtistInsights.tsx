@@ -243,7 +243,7 @@ export default function ArtistInsights() {
                         legend: {
                           position: "bottom",
                           labels: {
-                            font: { size: 14, weight: "600" },
+                            font: { size: 14, weight: 600 },
                             padding: 16
                           }
                         }
@@ -277,12 +277,12 @@ export default function ArtistInsights() {
                           beginAtZero: true,
                           ticks: {
                             callback: (value) => `$${value}`,
-                            font: { size: 12, weight: "600" }
+                            font: { size: 12, weight: 600 }
                           }
                         },
                         x: {
                           ticks: {
-                            font: { size: 12, weight: "600" }
+                            font: { size: 12, weight: 600 }
                           }
                         }
                       }

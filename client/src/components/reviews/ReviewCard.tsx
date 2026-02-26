@@ -149,7 +149,7 @@ export function ReviewCard({ review, onVoteSuccess }: ReviewCardProps) {
               variant="outline"
               size="sm"
               onClick={() => handleVote("helpful")}
-              disabled={voteHelpful.isLoading}
+              disabled={voteHelpful.isPending}
               className="gap-1"
             >
               <ThumbsUp className="w-4 h-4" />
@@ -159,7 +159,7 @@ export function ReviewCard({ review, onVoteSuccess }: ReviewCardProps) {
               variant="outline"
               size="sm"
               onClick={() => handleVote("unhelpful")}
-              disabled={voteHelpful.isLoading}
+              disabled={voteHelpful.isPending}
               className="gap-1"
             >
               <ThumbsDown className="w-4 h-4" />
