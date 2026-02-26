@@ -145,9 +145,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-24 pb-16 md:pt-32 md:pb-24">
+      <section className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight">
             <span
               className={`inline-block transition-all duration-300 ${
                 isAnimating ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
@@ -156,7 +156,7 @@ export default function Home() {
               {rotatingPhrases[verbIndex]}
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
             Upload your music. Sell your merch. Build your audience. Get paid.
             <br />
             <strong>All in one place. No middlemen. No bullshit.</strong>

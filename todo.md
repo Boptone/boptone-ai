@@ -4514,3 +4514,8 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Update initial welcome message to reflect Agent role
 - [x] Reduce chat window height for more compact design (600px → 480px)
 - [x] Add Privacy | Terms links footer to bottom of chat window
+
+### Homepage Viewport Fix
+- [x] Adjust hero section spacing to ensure "Get Started Free" CTA is fully visible on first load
+- [x] Optimize vertical spacing to fit hero content within viewport height
+- [x] Test on standard desktop resolutions (1920x1080, 1440x900, 1366x768)
