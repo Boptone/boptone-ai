@@ -100,6 +100,7 @@ export const cartRouter = router({
           productId: input.productId,
           variantId: input.variantId || null,
           quantity: input.quantity,
+          priceAtAdd: input.priceAtAdd,
         });
         
         return { success: true, action: "added" };

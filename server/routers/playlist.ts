@@ -47,7 +47,7 @@ export const playlistRouter = router({
       }
 
       // Fetch tracks if trackIds exist
-      let tracks = [];
+      let tracks: typeof bapTracks.$inferSelect[] = [];
       if (playlistData.trackIds && Array.isArray(playlistData.trackIds) && playlistData.trackIds.length > 0) {
         const trackRecords = await db
           .select()
@@ -71,7 +71,7 @@ export const playlistRouter = router({
         // Sort tracks according to trackIds order
         tracks = playlistData.trackIds
           .map(id => allTracks.find(t => t.id === id))
-          .filter(Boolean);
+          .filter((t): t is typeof bapTracks.$inferSelect => t !== undefined);
       }
 
       return {

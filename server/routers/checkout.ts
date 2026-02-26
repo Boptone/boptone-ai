@@ -58,7 +58,9 @@ export const checkoutRouter = router({
           product_data: {
             name,
             description: item.product.description || undefined,
-            images: item.product.images ? [item.product.images[0]] : undefined,
+            images: item.product.images && item.product.images.length > 0
+              ? [item.product.images[0].url] 
+              : undefined,
             metadata: {
               productId: item.product.id.toString(),
               variantId: item.variant?.id?.toString() || "",
