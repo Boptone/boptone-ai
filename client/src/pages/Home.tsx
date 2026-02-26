@@ -8,7 +8,7 @@ import { useDemo } from "@/contexts/DemoContext";
 import { useLocation } from "wouter";
 import { Check, Music, DollarSign, TrendingUp, Shield, Zap, Users } from "lucide-react";
 
-const rotatingPhrases = ["Automate Your Tone.", "Create Your Tone.", "Own Your Tone."];
+const rotatingPhrases = ["Own Your Data.", "Own Your Career.", "Own Your Future."];
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -156,10 +156,13 @@ export default function Home() {
               {rotatingPhrases[verbIndex]}
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-6 leading-relaxed">
-            Upload your music. Sell your merch. Build your audience. Get paid.
+          <p className="text-xl md:text-2xl text-gray-700 mb-4 leading-relaxed">
+            <strong>The Autonomous Operating System for Artists.</strong>
+          </p>
+          <p className="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed">
+            Every email, phone number, and fan insight belongs to you.
             <br />
-            <strong>All in one place. No middlemen. No bullshit.</strong>
+            Upload music. Sell merch. Build your audience. Keep 85-95% of revenue.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
