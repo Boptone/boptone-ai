@@ -210,9 +210,9 @@ export const aeoRouter = router({
           `Stream on BopAudio where artists earn 90% revenue`
         ],
         relatedLinks: [
-          { text: `More from ${mockTrack.artist.name}`, url: `${baseUrl}/artist/${mockTrack.artist.username}` },
-          { text: `${mockTrack.genre || 'Music'}`, url: `${baseUrl}/genres/${(mockTrack.genre || 'music').toLowerCase().replace(/\s+/g, "-")}` },
-          { text: "BopAudio Platform", url: `${baseUrl}/bopaudio` }
+          { title: `More from ${mockTrack.artist.name}`, url: `${baseUrl}/artist/${mockTrack.artist.username}` },
+          { title: `${mockTrack.genre || 'Music'}`, url: `${baseUrl}/genres/${(mockTrack.genre || 'music').toLowerCase().replace(/\s+/g, "-")}` },
+          { title: "BopAudio Platform", url: `${baseUrl}/bopaudio` }
         ]
       };
       
@@ -270,9 +270,9 @@ export const aeoRouter = router({
           `Available on BopAudio with 90% artist revenue share`
         ],
         relatedLinks: [
-          { text: `${mockAlbum.artist.name} Profile`, url: `${baseUrl}/artist/${mockAlbum.artist.username}` },
-          { text: `${mockAlbum.genres?.[0]} Albums`, url: `${baseUrl}/genres/${mockAlbum.genres?.[0].toLowerCase().replace(/\s+/g, "-")}` },
-          { text: "BopAudio Platform", url: `${baseUrl}/bopaudio` }
+          { title: `${mockAlbum.artist.name} Profile`, url: `${baseUrl}/artist/${mockAlbum.artist.username}` },
+          { title: `${mockAlbum.genres?.[0]} Albums`, url: `${baseUrl}/genres/${mockAlbum.genres?.[0].toLowerCase().replace(/\s+/g, "-")}` },
+          { title: "BopAudio Platform", url: `${baseUrl}/bopaudio` }
         ]
       };
       
@@ -331,9 +331,9 @@ export const aeoRouter = router({
           `Updated regularly with new independent releases`
         ],
         relatedLinks: [
-          { text: `${mockPlaylist.genres?.[0]} Playlists`, url: `${baseUrl}/genres/${mockPlaylist.genres?.[0].toLowerCase().replace(/\s+/g, "-")}/playlists` },
-          { text: "All Playlists", url: `${baseUrl}/playlists` },
-          { text: "BopAudio Platform", url: `${baseUrl}/bopaudio` }
+          { title: `${mockPlaylist.genres?.[0]} Playlists`, url: `${baseUrl}/genres/${mockPlaylist.genres?.[0].toLowerCase().replace(/\s+/g, "-")}/playlists` },
+          { title: "All Playlists", url: `${baseUrl}/playlists` },
+          { title: "BopAudio Platform", url: `${baseUrl}/bopaudio` }
         ]
       };
       
@@ -385,9 +385,9 @@ export const aeoRouter = router({
           `Discover new ${mockGenre.name} music on BopAudio`
         ],
         relatedLinks: [
-          { text: `Top ${mockGenre.name} Artists`, url: `${pageUrl}/artists` },
-          { text: `${mockGenre.name} Playlists`, url: `${pageUrl}/playlists` },
-          { text: "All Genres", url: `${baseUrl}/genres` }
+          { title: `Top ${mockGenre.name} Artists`, url: `${pageUrl}/artists` },
+          { title: `${mockGenre.name} Playlists`, url: `${pageUrl}/playlists` },
+          { title: "All Genres", url: `${baseUrl}/genres` }
         ]
       };
       
@@ -440,9 +440,9 @@ export const aeoRouter = router({
           `Notable artists include ${mockLocation.topArtists[0].name}`
         ],
         relatedLinks: [
-          { text: `${mockLocation.city} Artists`, url: `${pageUrl}/artists` },
-          { text: `${mockLocation.state} Music Scene`, url: `${baseUrl}/locations/${mockLocation.state.toLowerCase()}` },
-          { text: "All Locations", url: `${baseUrl}/locations` }
+          { title: `${mockLocation.city} Artists`, url: `${pageUrl}/artists` },
+          { title: `${mockLocation.state} Music Scene`, url: `${baseUrl}/locations/${mockLocation.state.toLowerCase()}` },
+          { title: "All Locations", url: `${baseUrl}/locations` }
         ]
       };
       
@@ -534,9 +534,9 @@ export const aeoRouter = router({
         oneSentenceSummary: `${platform.name} ${platform.description}.`,
         keyTakeaways: platform.keyFeatures.slice(0, 3),
         relatedLinks: [
-          { text: "How It Works", url: `${baseUrl}/how-it-works` },
-          { text: "Pricing", url: `${baseUrl}/pricing` },
-          { text: "Artist Success Stories", url: `${baseUrl}/success-stories` }
+          { title: "How It Works", url: `${baseUrl}/how-it-works` },
+          { title: "Pricing", url: `${baseUrl}/pricing` },
+          { title: "Artist Success Stories", url: `${baseUrl}/success-stories` }
         ]
       };
       

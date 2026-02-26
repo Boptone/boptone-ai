@@ -20,7 +20,7 @@ import Stripe from "stripe";
 import { ENV } from "../_core/env";
 
 const stripe = new Stripe(ENV.stripeSecretKey, {
-  apiVersion: "2024-11-20.acacia",
+  apiVersion: "2025-09-30.clover",
 });
 
 export const fanWalletRouter = router({
