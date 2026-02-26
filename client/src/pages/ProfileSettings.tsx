@@ -320,7 +320,7 @@ export default function ProfileSettings() {
                       className="rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold"
                       onClick={async () => {
                         try {
-                          const result = await trpc.gdpr.exportUserData.mutate();
+                          const result = await trpc.gdpr.exportUserData.mutate(undefined);
                           window.open(result.downloadUrl, '_blank');
                           toast.success('Your data export is ready! Download will start shortly.');
                         } catch (error: any) {
@@ -379,7 +379,11 @@ export default function ProfileSettings() {
                             className="rounded-lg bg-red-600 hover:bg-red-700 font-bold"
                             onClick={async () => {
                               try {
-                                await trpc.gdpr.deleteAccount.mutate();
+                                // TODO: Add password and confirmation text inputs in the dialog
+                                await trpc.gdpr.deleteAccount.mutate({
+                                  password: '', // Should be collected from user input
+                                  confirmText: 'DELETE MY ACCOUNT'
+                                });
                                 toast.success('Account deleted successfully');
                                 // Redirect to home after short delay
                                 setTimeout(() => {

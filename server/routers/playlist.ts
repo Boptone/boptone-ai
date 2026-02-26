@@ -55,7 +55,7 @@ export const playlistRouter = router({
           .where(eq(bapTracks.id, playlistData.trackIds[0])); // Start with first track
 
         // Fetch all tracks (this is a workaround for Drizzle's IN clause limitation)
-        const allTracks = [];
+        const allTracks: typeof bapTracks.$inferSelect[] = [];
         for (const trackId of playlistData.trackIds) {
           const trackResult = await db
             .select()
@@ -104,7 +104,7 @@ export const playlistRouter = router({
 
       return {
         success: true,
-        playlistId: Number(result.insertId),
+        playlistId: Number((result as any).insertId),
       };
     }),
 

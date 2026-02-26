@@ -310,6 +310,7 @@ export const ecommerceRouter = router({
         const order = await ecommerceDb.createOrder({
           orderNumber,
           customerId: ctx.user.id,
+          customerName: ctx.user.name || 'Unknown',
           ...input,
         });
         

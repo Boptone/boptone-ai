@@ -311,7 +311,7 @@ export const analyticsRouter = router({
       purchases.forEach((p) => {
         const referrer = sessionReferrerMap.get(p.sessionId) || "Direct";
         const current = revenueByReferrer.get(referrer) || 0;
-        revenueByReferrer.set(referrer, current + (p.revenue || 0));
+        revenueByReferrer.set(referrer, current + (parseFloat(String(p.revenue || 0))));
       });
 
       // Convert to array and categorize

@@ -106,10 +106,8 @@ async function seed() {
       });
 
       // Create artist profile
-      const username = artist.name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
       const [profile] = await db.insert(artistProfiles).values({
         userId: user.insertId,
-        username,
         stageName: artist.name,
         bio: artist.bio,
         genres: [artist.genre],
