@@ -145,7 +145,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
+      <section className="container mx-auto px-4 pt-8 pb-8 md:pt-12 md:pb-12">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 leading-tight">
             <span
