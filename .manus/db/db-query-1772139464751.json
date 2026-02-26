@@ -1,0 +1,9 @@
+{
+  "query": "\nCREATE INDEX is_read_idx ON notifications(isRead);\nCREATE INDEX created_at_idx ON notifications(createdAt);\nCREATE INDEX user_read_idx ON notifications(userId, isRead);\n",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute \nCREATE INDEX is_read_idx ON notifications(isRead);\nCREATE INDEX created_at_idx ON notifications(createdAt);\nCREATE INDEX user_read_idx ON notifications(userId, isRead);\n",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1459
+}

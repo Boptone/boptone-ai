@@ -4679,7 +4679,10 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 
 
 
-## BAP Protocol Pill Design Rollout (CRITICAL - SITE-WIDE)
+## BAP Protocol Pill Design Rollout (PAUSED - RESUME LATER)
+
+**⏸️ STATUS: PAUSED - User requested to return to this later**
+**CHECKPOINT: 9f149621 (Phase 1 Complete: 2/85 pages)**
 
 **Design Specification:**
 - Thick black border (4px)
@@ -4689,12 +4692,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - White background for secondary buttons
 - Black text for all buttons
 
-### Global Component Updates
-- [ ] Update `client/src/components/ui/button.tsx` with BAP protocol pill styling
-- [ ] Update primary variant (cyan bg + black border + 4px shadow)
-- [ ] Update secondary variant (white bg + black border + 4px shadow)
-- [ ] Update outline variant (transparent bg + black border + 4px shadow)
-- [ ] Test all button variants
+### Global Component Updates ✅ COMPLETE
+- [x] Update `client/src/components/ui/button.tsx` with BAP protocol pill styling
+- [x] Update primary variant (cyan bg + black border + 4px shadow)
+- [x] Update secondary variant (white bg + black border + 4px shadow)
+- [x] Update outline variant (transparent bg + black border + 4px shadow)
+- [x] Test all button variants
 
 ### Public Pages (10 pages)
 - [ ] Home.tsx - Update all CTA buttons
@@ -4792,121 +4795,61 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 **Priority:** HIGH (brand consistency across entire platform)
 
 
-## BAP Protocol Pill Design Rollout (CRITICAL - SITE-WIDE)
 
-**Design Specification:**
-- Thick black border (4px)
-- 4px brutalist shadow (shadow-[4px_4px_0px_0px_rgba(0,0,0,1)])
-- Rounded corners (rounded-2xl)
-- Cyan background (#0cc0df) for primary buttons
-- White background for secondary buttons
-- Black text for all buttons
 
-### Global Component Updates
-- [x] Update `client/src/components/ui/button.tsx` with BAP protocol pill styling
-- [x] Update primary variant (cyan bg + black border + 4px shadow)
-- [x] Update secondary variant (white bg + black border + 4px shadow)
-- [x] Update outline variant (transparent bg + black border + 4px shadow)
-- [x] Test all button variants
 
-### Public Pages (10 pages)
-- [x] **Home.tsx** - Hero CTA, feature CTAs, pricing CTAs
-- [x] **WhyBoptone.tsx** - Vision page CTAs
-- [ ] **Features.tsx** - Feature showcase CTAs
-- [ ] **HowItWorks.tsx** - Step-by-step CTAs
-- [ ] **About.tsx** - About page CTAs
-- [ ] **Contact.tsx** - Contact form submit button
-- [ ] **Explainer.tsx** - Explainer video CTAs
-- [ ] **Terms.tsx** - Legal page (likely no buttons)
-- [ ] **Privacy.tsx** - Privacy page (likely no buttons)
-- [ ] **NotFound.tsx** - "Go Home" button
+## Enterprise-Grade Scale & Performance Infrastructure (IN PROGRESS)
 
-### Auth Pages (8 pages)
-- [ ] **AuthSignup.tsx** - Signup/login buttons
-- [ ] **MultiStepSignup.tsx** - Step navigation buttons (Next, Back, Complete)
-- [ ] **Signup.tsx** - Signup form submit
-- [ ] **Login.tsx** - Login form submit
-- [ ] **ForgotPassword.tsx** - Reset password button
-- [ ] **VerifyEmail.tsx** - Verification button
-- [ ] **Onboarding.tsx** - Onboarding flow buttons
-- [ ] **Demo.tsx** - Demo signup buttons
+**Strategic Goal:** Build bulletproof infrastructure to support global scale and enterprise reliability
 
-### Dashboard Pages (20 pages)
-- [ ] **Dashboard.tsx** - Main dashboard action buttons
-- [ ] **MyMusic.tsx** - Upload, edit, delete buttons
-- [ ] **Upload.tsx** - Upload form submit button
-- [ ] **Analytics.tsx** - Filter, export buttons
-- [ ] **ArtistInsights.tsx** - Insights action buttons
-- [ ] **Fans.tsx** - Fan management buttons
-- [ ] **Earnings.tsx** - Earnings dashboard buttons
-- [ ] **Financials.tsx** - Financial reports buttons
-- [ ] **Money.tsx** - Money management buttons
-- [ ] **PayoutHistory.tsx** - Payout history buttons
-- [ ] **Workflows.tsx** - Workflow management buttons
-- [ ] **WorkflowSettings.tsx** - Workflow settings buttons
-- [ ] **AIAdvisor.tsx** - AI advisor action buttons
-- [ ] **ToneRewards.tsx** - Rewards program buttons
-- [ ] **ArtistBackers.tsx** - Backer management buttons
-- [ ] **WriterEarnings.tsx** - Writer earnings buttons
-- [ ] **WriterInvite.tsx** - Writer invite buttons
-- [ ] **WriterProfile.tsx** - Writer profile buttons
-- [ ] **Discover.tsx** - Discovery page buttons
-- [ ] **Listen.tsx** - Listening page buttons
+### 1. Database Indexing & Query Optimization
+- [x] Audit all database tables for missing indexes
+- [ ] Analyze slow query logs and identify bottlenecks
+- [ ] Add composite indexes for frequently joined tables
+- [x] Add indexes on foreign keys (userId, trackId, orderId, etc.)
+- [x] Add indexes on timestamp fields used for sorting/filtering
+- [x] Add indexes on status/enum fields used in WHERE clauses
+- [ ] Test query performance before/after indexing
+- [x] Document indexing strategy in `/docs/database-indexing-audit.md`
 
-### Settings Pages (5 pages)
-- [ ] **ProfileSettings.tsx** - Save/cancel buttons
-- [ ] **PayoutSettings.tsx** - Payout configuration buttons
-- [ ] **WorkflowSettings.tsx** - Workflow configuration buttons
-- [ ] **CookieSettings.tsx** - Cookie preference buttons
-- [ ] **ArtistProfile.tsx** - Profile edit buttons
+### 2. API Versioning System
+- [x] Design API versioning strategy (URL-based: `/api/v1/`, `/api/v2/`)
+- [ ] Create version middleware to route requests to correct handlers
+- [ ] Implement backward compatibility layer for v1 endpoints
+- [ ] Add deprecation warnings in API responses (headers)
+- [ ] Create API changelog documentation
+- [ ] Add version negotiation for breaking changes
+- [ ] Test version routing with multiple client versions
+- [x] Document API versioning in `/docs/api-versioning-strategy.md`
 
-### Admin Pages (7 pages)
-- [ ] **Admin.tsx** - Admin dashboard buttons
-- [ ] **admin/AdminOverview.tsx** - Admin overview buttons
-- [ ] **admin/AdminOrders.tsx** - Order management buttons
-- [ ] **admin/AdminProducts.tsx** - Product management buttons
-- [ ] **admin/AdminRevenue.tsx** - Revenue analytics buttons
-- [ ] **ReviewModeration.tsx** - Review moderation buttons
-- [ ] **ReviewAnalyticsDashboard.tsx** - Review analytics buttons
+### 3. Webhook Delivery System with Guarantees
+- [x] Design webhook delivery architecture (queue + retry logic)
+- [ ] Create `webhook_deliveries` table (id, url, payload, status, attempts, nextRetryAt)
+- [ ] Implement exponential backoff retry strategy (1min, 5min, 15min, 1hr, 6hr)
+- [ ] Add webhook signature verification (HMAC-SHA256)
+- [ ] Create webhook delivery worker (background job)
+- [ ] Add webhook delivery status tracking UI
+- [ ] Implement dead letter queue for failed deliveries (max 5 attempts)
+- [ ] Add webhook testing endpoint for developers
+- [x] Document webhook system in `/docs/webhook-delivery-guarantees.md`
 
-### Shop Pages (15 pages)
-- [ ] **Shop.tsx** - Shop browse "Add to Cart" buttons
-- [ ] **BopShopLanding.tsx** - BopShop landing page CTAs
-- [ ] **BopShopBrowse.tsx** - Browse products "Add to Cart" buttons
-- [ ] **BopShopProduct.tsx** - Product detail "Add to Cart" / "Buy Now"
-- [ ] **ProductDetail.tsx** - Product detail page buttons
-- [ ] **Cart.tsx** - "Checkout" button, remove item buttons
-- [ ] **Checkout.tsx** - "Place Order" button
-- [ ] **CheckoutSuccess.tsx** - "Continue Shopping" button
-- [ ] **Orders.tsx** - Order history buttons
-- [ ] **Wishlist.tsx** - Wishlist action buttons
-- [ ] **MyStore.tsx** - Store management buttons
-- [ ] **MyStoreOrders.tsx** - Store order management buttons
-- [ ] **ProductManagement.tsx** - Product CRUD buttons
-- [ ] **ProductForm.tsx** - Product form submit button
-- [ ] **Store.tsx** - Store page buttons
-
-### Component Updates (Shared Components)
-- [ ] **Navigation.tsx** - Update "Get Started" / "Log In" buttons
-- [ ] **Footer.tsx** - Update any CTA buttons
-- [x] **ToneyChatbot.tsx** - Update chat button (already done ✅)
-- [ ] **SearchAIOverlay.tsx** - Update search buttons
-- [ ] **Modal components** - Update all modal action buttons
-- [ ] **Card components** - Update all card action buttons
-- [ ] **Form components** - Update all submit buttons
+### 4. CDN Strategy & S3 Optimization
+- [x] Document current S3 usage patterns (audio files, images, documents)
+- [ ] Research CloudFront integration options (Manus platform limitations)
+- [ ] Add Cache-Control headers to S3 uploads (max-age, immutable)
+- [ ] Implement content-hash filenames for cache busting
+- [ ] Add image optimization pipeline (resize, compress, WebP conversion)
+- [x] Document CDN strategy in `/docs/cdn-optimization-strategy.md`
+- [ ] Add recommendations for future CloudFront integration
+- [ ] Calculate cost savings from CDN implementation
 
 ### Testing & Validation
-- [ ] Test all public pages (logged out state)
-- [ ] Test all auth flows (signup, login, password reset)
-- [ ] Test all dashboard pages (logged in state)
-- [ ] Test all settings pages
-- [ ] Test all admin pages (admin role)
-- [ ] Test all shop pages (cart, checkout, orders)
-- [ ] Test mobile responsiveness (all button sizes)
-- [ ] Test hover states (all button variants)
-- [ ] Test disabled states (all button variants)
-- [ ] Save checkpoint
+- [ ] Load test database queries with indexes (before/after comparison)
+- [ ] Test API versioning with multiple client versions
+- [ ] Test webhook delivery with simulated failures
+- [ ] Verify S3 cache headers are working correctly
+- [ ] Save checkpoint with all Scale & Performance improvements
 
-**Estimated Time:** 4-6 hours (comprehensive site-wide update)
-**Priority:** HIGH (brand consistency across entire platform)
-**Status:** IN PROGRESS (2/85 pages complete)
+**Estimated Time:** 6-8 hours
+**Priority:** MEDIUM (Scale & Performance foundation)
+**Status:** NOT STARTED

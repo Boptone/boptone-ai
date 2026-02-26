@@ -538,6 +538,9 @@ export const orderItems = mysqlTable("order_items", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
   orderIdIdx: index("order_id_idx").on(table.orderId),
+  productIdIdx: index("product_id_idx").on(table.productId),
+  variantIdIdx: index("variant_id_idx").on(table.variantId),
+  fulfillmentStatusIdx: index("fulfillment_status_idx").on(table.fulfillmentStatus),
 }));
 
 export type OrderItem = typeof orderItems.$inferSelect;
@@ -892,6 +895,9 @@ export const notifications = mysqlTable("notifications", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 }, (table) => ({
   userIdIdx: index("user_id_idx").on(table.userId),
+  isReadIdx: index("is_read_idx").on(table.isRead),
+  createdAtIdx: index("created_at_idx").on(table.createdAt),
+  userReadIdx: index("user_read_idx").on(table.userId, table.isRead), // Composite for unread notifications
 }));
 
 export type Notification = typeof notifications.$inferSelect;
