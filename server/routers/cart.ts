@@ -59,6 +59,7 @@ export const cartRouter = router({
       productId: z.number(),
       variantId: z.number().optional(),
       quantity: z.number().min(1).default(1),
+      priceAtAdd: z.number(),
     }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();

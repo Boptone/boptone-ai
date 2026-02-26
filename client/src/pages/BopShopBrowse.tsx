@@ -144,8 +144,8 @@ export default function BopShopBrowse() {
   }), []);
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'BopShop' }
+    { title: 'Home', href: '/' },
+    { title: 'BopShop' }
   ];
 
   return (

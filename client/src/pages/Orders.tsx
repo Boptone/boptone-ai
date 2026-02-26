@@ -317,7 +317,7 @@ export default function Orders() {
                       <div className="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
                         {item.productImages && Array.isArray(item.productImages) && item.productImages[0] ? (
                           <img
-                            src={item.productImages[0]}
+                            src={typeof item.productImages[0] === 'string' ? item.productImages[0] : item.productImages[0].url}
                             alt={item.productName || "Product"}
                             className="w-full h-full object-cover"
                           />
@@ -350,7 +350,7 @@ export default function Orders() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-gray-600">
                     <span>Subtotal</span>
-                    <span>${parseFloat(orderDetails.order.subtotal).toFixed(2)}</span>
+                    <span>${parseFloat(typeof orderDetails.order.subtotal === 'number' ? orderDetails.order.subtotal.toString() : orderDetails.order.subtotal).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Shipping</span>

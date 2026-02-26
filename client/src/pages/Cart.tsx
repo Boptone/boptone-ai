@@ -106,7 +106,8 @@ export default function Cart() {
 
   const subtotal = cartItems?.reduce((sum, item) => {
     const price = item.variant?.price || item.product?.price || "0";
-    return sum + parseFloat(price) * item.quantity;
+    const priceStr = typeof price === 'number' ? price.toString() : price;
+    return sum + parseFloat(priceStr) * item.quantity;
   }, 0) || 0;
   const isEmpty = !cartItems || cartItems.length === 0;
 
@@ -205,7 +206,7 @@ export default function Cart() {
                         {item.product?.name || "Product"}
                       </h3>
                       <p className="text-xl text-gray-600 mb-4">
-                        ${parseFloat(item.variant?.price || item.product?.price || "0").toFixed(2)} each
+                        ${parseFloat(typeof (item.variant?.price || item.product?.price || "0") === 'number' ? (item.variant?.price || item.product?.price || 0).toString() : (item.variant?.price || item.product?.price || "0")).toFixed(2)} each
                       </p>
 
                       {/* Quantity Controls */}
@@ -247,7 +248,7 @@ export default function Cart() {
                     {/* Item Total & Remove */}
                     <div className="text-right">
                       <div className="text-2xl font-bold mb-4">
-                        ${(parseFloat(item.variant?.price || item.product?.price || "0") * item.quantity).toFixed(2)}
+                        ${(parseFloat(typeof (item.variant?.price || item.product?.price || "0") === 'number' ? (item.variant?.price || item.product?.price || 0).toString() : (item.variant?.price || item.product?.price || "0")) * item.quantity).toFixed(2)}
                       </div>
                       <Button
                         variant="outline"

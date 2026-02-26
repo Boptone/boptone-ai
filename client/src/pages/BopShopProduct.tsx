@@ -21,7 +21,11 @@ export default function BopShopProduct() {
   const { slug } = useParams();
   const [, setLocation] = useLocation();
   const { user, isAuthenticated } = useAuth();
-  const { currency, formatPrice } = useCurrency();
+  const { currency } = useCurrency();
+  const formatPrice = (price: number | string) => {
+    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(numPrice);
+  };
   const [quantity, setQuantity] = useState(1);
 
   // Fetch product by slug

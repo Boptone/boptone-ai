@@ -121,10 +121,10 @@ export default function ProductDetail() {
   }), [product, productId, reviews, averageRating]);
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'BopShop', href: '/shop' },
-    { label: product.type, href: `/shop?type=${product.type}` },
-    { label: product.name }
+    { title: 'Home', href: '/' },
+    { title: 'BopShop', href: '/shop' },
+    { title: product.type, href: `/shop?type=${product.type}` },
+    { title: product.name }
   ];
 
   return (
