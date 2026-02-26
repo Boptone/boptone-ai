@@ -78,6 +78,7 @@ const PayoutSettings = lazy(() => import("./pages/PayoutSettings"));
 const PayoutHistory = lazy(() => import("./pages/PayoutHistory"));
 const Workflows = lazy(() => import("./pages/Workflows"));
 const WorkflowSettings = lazy(() => import("./pages/WorkflowSettings"));
+const WhyBoptone = lazy(() => import("./pages/WhyBoptone"));
 const Listen = lazy(() => import("./pages/Listen"));
 const PricingDashboard = lazy(() => import("./pages/PricingDashboard"));
 const Transparency = lazy(() => import("./pages/Transparency"));
@@ -119,6 +120,7 @@ function Router() {
         <Route path={"/forgot-password"} component={ForgotPassword} />
         <Route path={"/verify-email"} component={VerifyEmail} />
         <Route path={"/how-it-works"} component={HowItWorks} />
+        <Route path={"/why-boptone"} component={WhyBoptone} />
         <Route path={"/writer-invite"} component={WriterInvite} />
         <Route path={"/writer-profile"} component={WriterProfile} />
         <Route path={"/writer-earnings"} component={WriterEarnings} />

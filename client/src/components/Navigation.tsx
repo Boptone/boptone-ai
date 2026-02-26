@@ -86,6 +86,12 @@ export function Navigation() {
 
   const resourcesItems = [
     {
+      icon: Zap,
+      title: "Why Boptone",
+      description: "The Autonomous Operating System for Artists",
+      href: "/why-boptone"
+    },
+    {
       icon: BookOpen,
       title: "How It Works",
       description: "Learn how Boptone helps you grow your music career",
