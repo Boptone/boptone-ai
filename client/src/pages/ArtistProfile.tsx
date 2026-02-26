@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
+import { useEffect, useState } from "react";
 import {
   Music,
   MapPin,
@@ -74,7 +75,7 @@ export default function ArtistProfile() {
   // Track artist profile view (invisible to artist)
   useEffect(() => {
     if (profile) {
-      trackArtistView(profile.id, profile.stageName || profile.username);
+      trackArtistView(profile.id, profile.stageName);
     }
   }, [profile, trackArtistView]);
 
@@ -121,7 +122,7 @@ export default function ArtistProfile() {
   // Generate SEO metadata
   const seoData = useMemo(() => ({
     title: `${profile.stageName} | Boptone`,
-    description: profile.bio || `Listen to ${profile.stageName} on Boptone. ${profile.genre ? `${profile.genre} artist` : 'Independent artist'} ${profile.location ? `from ${profile.location}` : ''}.`,
+    description: profile.bio || `Listen to ${profile.stageName} on Boptone. ${profile.genres?.[0] ? `${profile.genres[0]} artist` : 'Independent artist'} ${profile.location ? `from ${profile.location}` : ''}.`,
     image: profile.avatarUrl || undefined,
     url: `${window.location.origin}/@${username}`,
     type: 'profile' as const,
@@ -131,21 +132,18 @@ export default function ArtistProfile() {
       name: profile.stageName,
       description: profile.bio || undefined,
       image: profile.avatarUrl || undefined,
-      genre: profile.genre || undefined,
+      genre: profile.genres?.[0] || undefined,
       url: `${window.location.origin}/@${username}`,
       sameAs: [
-        profile.instagramUrl,
-        profile.twitterUrl,
-        profile.youtubeUrl,
-        profile.websiteUrl
+        // Social URLs will be added when schema is updated
       ].filter(Boolean)
     }
   }), [profile, username]);
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Artists', href: '/music' },
-    { label: profile.stageName }
+    { name: 'Home', url: '/' },
+    { name: 'Artists', url: '/music' },
+    { name: profile.stageName, url: '' }
   ];
 
   return (

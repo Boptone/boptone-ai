@@ -9,6 +9,7 @@
  */
 
 import { drizzle } from "drizzle-orm/mysql2";
+import { eq } from "drizzle-orm";
 import { artistProfiles, pixelEvents, pixelSessions, pixelUsers } from "../../drizzle/schema";
 import { randomUUID } from "crypto";
 
@@ -58,7 +59,7 @@ async function main() {
   const existingProfile = await db
     .select()
     .from(artistProfiles)
-    .where((table) => table.id === ARTIST_ID)
+    .where(eq(artistProfiles.id, ARTIST_ID))
     .limit(1);
 
   if (existingProfile.length === 0) {
@@ -86,9 +87,9 @@ async function main() {
       lastSeen: new Date(
         now.getTime() - Math.random() * 7 * 24 * 60 * 60 * 1000
       ),
-      totalPageViews: Math.floor(Math.random() * 20) + 1,
-      totalPurchases: Math.random() > 0.7 ? 1 : 0,
-      totalRevenue: Math.random() > 0.7 ? Math.random() * 100 : 0,
+      totalEvents: Math.floor(Math.random() * 20) + 1,
+      totalSessions: Math.floor(Math.random() * 5) + 1,
+      totalRevenue: (Math.random() > 0.7 ? Math.random() * 100 : 0).toFixed(2),
     });
   }
 
@@ -120,7 +121,6 @@ async function main() {
         artistId: ARTIST_ID,
         referrer,
         startedAt: timestamp,
-        lastActivityAt: timestamp,
         pageViews: 1,
       });
     }
@@ -157,9 +157,8 @@ async function main() {
         pageUrl: `https://boptone.com/product/${product.id}`,
         pageTitle: product.name,
         referrer,
-        productId: product.id.toString(),
-        productName: product.name,
-        customData: JSON.stringify({ productName: product.name }),
+        productId: product.id,
+        customData: { productName: product.name },
         deviceType: Math.random() > 0.5 ? "mobile" : "desktop",
         createdAt: new Date(timestamp.getTime() + 60000), // 1 minute later
       });
@@ -197,14 +196,13 @@ async function main() {
         pageUrl: "https://boptone.com/checkout/success",
         pageTitle: "Order Confirmation",
         referrer: getRandomReferrer(),
-        productId: item.id.toString(),
-        productName: item.name,
-        revenue: item.price,
+        productId: item.id,
+        revenue: item.price.toFixed(2),
         currency: "USD",
-        customData: JSON.stringify({
+        customData: {
           productName: item.name,
           price: item.price,
-        }),
+        },
         deviceType: Math.random() > 0.5 ? "mobile" : "desktop",
         createdAt: timestamp,
       });

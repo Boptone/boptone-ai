@@ -44,12 +44,11 @@ export const ordersRouter = router({
             orderNumber: orders.orderNumber,
             total: orders.total,
             subtotal: orders.subtotal,
-            tax: orders.tax,
-            shippingCost: orders.shippingCost,
+            taxAmount: orders.taxAmount,
+            shippingAmount: orders.shippingAmount,
             paymentStatus: orders.paymentStatus,
             fulfillmentStatus: orders.fulfillmentStatus,
-            stripeSessionId: orders.stripeSessionId,
-            stripeReceiptUrl: orders.stripeReceiptUrl,
+            paymentIntentId: orders.paymentIntentId,
             createdAt: orders.createdAt,
             updatedAt: orders.updatedAt,
           })
@@ -121,7 +120,7 @@ export const ordersRouter = router({
           .select({
             id: orderItems.id,
             quantity: orderItems.quantity,
-            price: orderItems.price,
+            pricePerUnit: orderItems.pricePerUnit,
             subtotal: orderItems.subtotal,
             productId: orderItems.productId,
             variantId: orderItems.variantId,
@@ -140,7 +139,6 @@ export const ordersRouter = router({
             carrier: shippingLabels.carrier,
             trackingUrl: shippingLabels.trackingUrl,
             status: shippingLabels.status,
-            estimatedDeliveryDate: shippingLabels.estimatedDeliveryDate,
           })
           .from(shippingLabels)
           .where(eq(shippingLabels.orderId, input.orderId))
@@ -181,8 +179,7 @@ export const ordersRouter = router({
         // Fetch order (with user isolation check)
         const [order] = await db
           .select({
-            stripeReceiptUrl: orders.stripeReceiptUrl,
-            stripeSessionId: orders.stripeSessionId,
+            paymentIntentId: orders.paymentIntentId,
           })
           .from(orders)
           .where(
