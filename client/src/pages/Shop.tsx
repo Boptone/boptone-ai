@@ -61,6 +61,11 @@ function WishlistButton({ productId }: { productId: number }) {
 export default function Shop() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
+  
+  // Get cart item count
+  const { data: cartItemCount = 0 } = trpc.cart.count.useQuery(undefined, {
+    enabled: !!user,
+  });
   const [selectedType, setSelectedType] = useState<string | null>(null);
 
   // Fetch all products

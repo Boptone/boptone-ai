@@ -1,10 +1,10 @@
 /**
-import { useRequireArtist } from "@/hooks/useRequireArtist";
  * TONE REWARDS - Fan Membership & Rewards Dashboard
  * The revolutionary system where fans become investors
  */
 
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

@@ -1,10 +1,10 @@
 /**
-import { useRequireArtist } from "@/hooks/useRequireArtist";
  * ARTIST BACKERS - Dashboard for artists to see who supports them
  * Shows backers, patrons, investors and their contributions
  */
 
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequireArtist } from "@/hooks/useRequireArtist";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
