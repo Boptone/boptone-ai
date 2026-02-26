@@ -354,15 +354,15 @@ export default function Orders() {
                   </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Shipping</span>
-                    <span>${parseFloat(orderDetails.order.shippingCost || "0").toFixed(2)}</span>
+                    <span>${((orderDetails.order.shippingAmount || 0) / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-gray-600">
                     <span>Tax</span>
-                    <span>${parseFloat(orderDetails.order.tax || "0").toFixed(2)}</span>
+                    <span>${((orderDetails.order.taxAmount || 0) / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-xl font-bold pt-2 border-t-2 border-gray-200">
                     <span>Total</span>
-                    <span>${parseFloat(orderDetails.order.total).toFixed(2)}</span>
+                    <span>${((orderDetails.order.total) / 100).toFixed(2)}</span>
                   </div>
                 </div>
               </div>

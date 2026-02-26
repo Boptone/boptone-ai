@@ -55,7 +55,9 @@ export default function Wishlist() {
   };
 
   const handleAddToCart = (productId: number) => {
-    addToCart.mutate({ productId, quantity: 1 });
+    const product = wishlistItems?.find((item: any) => item.product.id === productId)?.product;
+    if (!product) return;
+    addToCart.mutate({ productId, priceAtAdd: product.price, quantity: 1 });
   };
 
   // Require authentication
@@ -199,7 +201,7 @@ export default function Wishlist() {
                         <div className="flex gap-2 pt-2">
                           <Button
                             onClick={() => handleAddToCart(product.id)}
-                            disabled={addToCart.isLoading}
+                            disabled={addToCart.isPending}
                             className="flex-1 rounded-full bg-cyan-500 text-black hover:bg-cyan-600 font-semibold"
                           >
                             <ShoppingCart className="w-4 h-4 mr-2" />
@@ -207,7 +209,7 @@ export default function Wishlist() {
                           </Button>
                           <Button
                             onClick={() => handleRemove(product.id)}
-                            disabled={removeFromWishlist.isLoading}
+                            disabled={removeFromWishlist.isPending}
                             variant="outline"
                             className="rounded-full border-2 border-black hover:bg-gray-100"
                           >
