@@ -6,6 +6,7 @@
  * - 4-column responsive video grid (4 col desktop → 3 col tablet → 2 col mobile)
  * - Each card: 9:16 aspect ratio, video preview on hover, stats overlay
  * - Infinite scroll pagination
+ * - Respects system dark/light mode via prefers-color-scheme
  */
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useLocation } from "wouter";
@@ -246,7 +247,6 @@ export default function ArtistBopsProfile() {
   // Derived stats
   const totalLikes = sumField(allBops, "likeCount");
   const totalViews = sumField(allBops, "viewCount");
-  const totalTips = sumField(allBops, "tipCount");
 
   // Loading
   if (profileLoading) {
@@ -273,10 +273,10 @@ export default function ArtistBopsProfile() {
   const isOwner = user && (artist as any).userId === (user as any).id;
 
   return (
-    <div className="min-h-screen bg-black text-white" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <div className="min-h-screen text-white" style={{ fontFamily: "'Inter', sans-serif", background: "var(--bops-bg, #000)", colorScheme: "dark light" }}>
 
       {/* ── Sticky top bar ── */}
-      <div className="sticky top-0 z-40 bg-black/80 backdrop-blur-md border-b border-white/5">
+      <div className="sticky top-0 z-40 backdrop-blur-md border-b border-white/5" style={{ background: "var(--bops-nav-bg, rgba(0,0,0,0.8))" }}>
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-3">
           <button
             onClick={() => navigate("/bops")}
@@ -404,11 +404,6 @@ export default function ArtistBopsProfile() {
                   <span className="text-xl font-black tabular-nums">{formatCount(totalLikes)}</span>
                   <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Likes</span>
                 </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div className="flex flex-col items-center md:items-start">
-                  <span className="text-xl font-black tabular-nums">{formatCount(totalTips)}</span>
-                  <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Tips</span>
-                </div>
               </div>
 
               {/* Action buttons */}
@@ -476,7 +471,7 @@ export default function ArtistBopsProfile() {
       <div className="max-w-6xl mx-auto px-4 pt-6 pb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Video className="w-4 h-4 text-[#5DCCCC]" />
-          <span className="text-sm font-semibold text-white/70 uppercase tracking-widest">Bops</span>
+          <span className="text-sm font-semibold text-white/70 uppercase tracking-widest">Latest Bops</span>
         </div>
         <span className="text-xs text-white/30 tabular-nums">{formatCount(allBops.length)} videos</span>
       </div>

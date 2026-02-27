@@ -178,6 +178,26 @@ html {
   --sidebar-ring: 180 65% 55%;
 }
 
+/* ── Bops page: system dark/light mode tokens ── */
+/* Default: dark (Bops is always dark-first) */
+:root {
+  --bops-bg: #000000;
+  --bops-nav-bg: rgba(0, 0, 0, 0.8);
+  --bops-card-bg: #111111;
+  --bops-text: #ffffff;
+  --bops-text-muted: rgba(255,255,255,0.5);
+}
+/* Light mode override — respects viewer's system preference */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bops-bg: #f0f0f0;
+    --bops-nav-bg: rgba(240, 240, 240, 0.85);
+    --bops-card-bg: #e0e0e0;
+    --bops-text: #111111;
+    --bops-text-muted: rgba(0,0,0,0.5);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
