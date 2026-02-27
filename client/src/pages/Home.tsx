@@ -304,15 +304,10 @@ export default function Home() {
                     {tier.cta}
                   </Button>
                 ) : (
-                  // @ts-ignore - StripeCheckout props type issue
                   <StripeCheckout
-                    priceId={
-                      isAnnual
-                        ? "price_1QiQEbEhtyzQmgJv0MZFP5Iu"
-                        : "price_1QiQEbEhtyzQmgJvCCJWuJOC"
-                    }
+                    tier={tier.name === "Pro" ? "pro" : "enterprise"}
                     buttonText={tier.cta}
-                    buttonClassName="w-full"
+                    className="w-full"
                   />
                 )}
               </Card>

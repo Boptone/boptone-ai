@@ -120,12 +120,11 @@ export default function ProductDetail() {
     }
   }), [product, productId, reviews, averageRating]);
 
-  // @ts-ignore - BreadcrumbItem type inference issue
   const breadcrumbItems = [
-    { title: 'Home', href: '/' },
-    { title: 'BopShop', href: '/shop' },
-    { title: product.type, href: `/shop?type=${product.type}` },
-    { title: product.name, href: undefined }
+    { name: 'Home', url: '/' },
+    { name: 'BopShop', url: '/shop/browse' },
+    { name: product.type, url: `/shop/browse?type=${product.type}` },
+    { name: product.name, url: `/shop/${product.slug}` }
   ];
 
   return (

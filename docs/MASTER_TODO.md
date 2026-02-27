@@ -319,9 +319,10 @@ These are the highest-priority items to tackle in the next 1-2 sessions.
 
 ### Fix Existing Bugs (Today)
 
-- [ ] Fix TypeScript error: `priceId` does not exist on `StripeCheckoutProps` in ProductDetail.tsx
-- [ ] Fix TypeScript error: `BreadcrumbItem` type mismatch in ProductDetail.tsx
-- [ ] Fix storage.ts: `await` used outside async function (line 160)
+- [x] Fix TypeScript error: `priceId` does not exist on `StripeCheckoutProps` in Home.tsx
+- [x] Fix TypeScript error: `BreadcrumbItem` type mismatch in ProductDetail.tsx and BopShopBrowse.tsx
+- [x] Fix Checkout.tsx: `variantId` null vs undefined type mismatch
+- [x] TypeScript: 0 errors (clean build confirmed)
 - [ ] Run E2E tests with seeded product data to confirm BopShop checkout works
 
 ### Start Bops Build (Tomorrow — Week 1)

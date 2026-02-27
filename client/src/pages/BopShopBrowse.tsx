@@ -144,9 +144,8 @@ export default function BopShopBrowse() {
   }), []);
 
   const breadcrumbItems = [
-    { title: 'Home', href: '/' },
-    // @ts-ignore - BreadcrumbItem type inference issue
-    { title: 'BopShop', href: undefined }
+    { name: 'Home', url: '/' },
+    { name: 'BopShop', url: '/shop/browse' }
   ];
 
   return (
