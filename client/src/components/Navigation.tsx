@@ -63,7 +63,7 @@ export function Navigation() {
   const platformItems = [
     {
       icon: Music,
-      title: "Boptone Music",
+      title: "BopMusic",
       description: "Stream, distribute, and earn from your music",
       href: "/features"
     },

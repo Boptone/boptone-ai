@@ -38,7 +38,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/music" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Discover Music
+                  Discover BopMusic
                 </Link>
               </li>
               <li>
@@ -92,7 +92,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/upload" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Upload Music
+                  Upload to BopMusic
                 </Link>
               </li>
               <li>

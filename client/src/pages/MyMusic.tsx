@@ -322,7 +322,7 @@ export default function MyMusic() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-black tracking-tight">Music</h1>
+            <h1 className="text-4xl font-black tracking-tight">BopMusic</h1>
             <p className="text-muted-foreground mt-1">
               Upload and manage your tracks
             </p>

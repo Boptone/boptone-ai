@@ -92,11 +92,11 @@ export default function Dashboard() {
   ];
 
   const quickActions = [
-    { label: "Upload Music", href: "/upload" },
+    { label: "Upload to BopMusic", href: "/upload" },
     { label: "Post a Bop", href: "/bops/upload" },
     { label: "View Bops Feed", href: "/bops" },
     { label: "View Analytics", href: "/analytics" },
-    { label: "Discover Music", href: "/music" },
+    { label: "Discover BopMusic", href: "/music" },
     { label: "Edit Profile", href: "/profile-settings" },
   ];
 
