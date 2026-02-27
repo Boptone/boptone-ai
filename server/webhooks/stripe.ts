@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { stripe } from "../stripe";
 import { getDb } from "../db";
-import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bapStreamPayments, products } from "../../drizzle/schema";
+import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bapStreamPayments, products, users } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { calculateFees } from "../stripe";
 
@@ -455,13 +455,33 @@ async function handleTransferFailed(transfer: any) {
 
 /**
  * Handle Stripe Connect account updates
+ * Syncs onboarding status back to the database so the UI reflects real-time state
  */
 async function handleAccountUpdated(account: any) {
   console.log('[Stripe Webhook] Account updated:', account.id);
+  const db = await getDb();
+  if (!db) {
+    console.warn('[Stripe Webhook] Database unavailable, skipping account update sync');
+    return;
+  }
+  try {
+    // Sync the latest Stripe Connect status to the users table
+    await db
+      .update(users)
+      .set({
+        stripeConnectOnboardingComplete: account.details_submitted ? 1 : 0,
+        stripeConnectChargesEnabled: account.charges_enabled ? 1 : 0,
+        stripeConnectPayoutsEnabled: account.payouts_enabled ? 1 : 0,
+      })
+      .where(eq(users.stripeConnectAccountId, account.id));
 
-  // Check if account is now fully onboarded
-  if (account.charges_enabled && account.payouts_enabled) {
-    console.log(`[Stripe Webhook] Account ${account.id} is now fully enabled for payouts`);
+    if (account.charges_enabled && account.payouts_enabled) {
+      console.log(`[Stripe Webhook] Account ${account.id} fully enabled — charges and payouts active`);
+    } else {
+      console.log(`[Stripe Webhook] Account ${account.id} updated — charges_enabled: ${account.charges_enabled}, payouts_enabled: ${account.payouts_enabled}, details_submitted: ${account.details_submitted}`);
+    }
+  } catch (error) {
+    console.error('[Stripe Webhook] Failed to sync account status to database:', error);
   }
 }
 

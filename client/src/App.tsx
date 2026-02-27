@@ -97,6 +97,7 @@ const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
 const BopsUpload = lazy(() => import("./pages/BopsUpload"));
 const Bops = lazy(() => import("./pages/Bops"));
 const ArtistBopsProfile = lazy(() => import("./pages/ArtistBopsProfile"));
+const ArtistPayout = lazy(() => import("./pages/ArtistPayout"));
 
 // Loading fallback component
 function PageLoader() {
@@ -179,6 +180,7 @@ function Router() {
         <Route path={"/bops"} component={Bops} />
         <Route path={"/bops/upload"} component={BopsUpload} />
         <Route path={"/bops/artist/:artistId"} component={ArtistBopsProfile} />
+        <Route path={"/artist/payout"} component={ArtistPayout} />
         <Route path={"/music"} component={Discover} />
         <Route path={"/playlists"} component={Playlists} />
         <Route path={"/playlists/:id"} component={PlaylistDetail} />
