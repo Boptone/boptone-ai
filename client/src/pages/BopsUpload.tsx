@@ -11,10 +11,15 @@ import BopsVideoUpload from "@/components/BopsVideoUpload";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { useEffect } from "react";
+import { trpc } from "@/lib/trpc";
 
 export default function BopsUpload() {
   const [, navigate] = useLocation();
   const { isAuthenticated, loading } = useAuth();
+  const { data: artistProfile, isLoading: profileLoading } = trpc.artistProfile.getMyProfile.useQuery(
+    undefined,
+    { enabled: isAuthenticated }
+  );
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -23,7 +28,17 @@ export default function BopsUpload() {
     }
   }, [loading, isAuthenticated]);
 
-  if (loading) {
+  // Redirect to onboarding wizard if profile not complete
+  useEffect(() => {
+    if (!loading && !profileLoading && isAuthenticated) {
+      const profile = artistProfile as { onboardingCompleted?: boolean } | null | undefined;
+      if (!profile || !profile.onboardingCompleted) {
+        navigate("/artist/setup");
+      }
+    }
+  }, [loading, profileLoading, isAuthenticated, artistProfile, navigate]);
+
+  if (loading || profileLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin" />

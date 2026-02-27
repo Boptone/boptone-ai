@@ -58,7 +58,31 @@ export async function handleBopsUpload(req: Request, res: Response): Promise<voi
     return;
   }
 
-  // 2. Parse multipart form
+  // 2. Check artist profile onboarding is complete
+  try {
+    const { getDb } = await import("../db");
+    const { artistProfiles } = await import("../../drizzle/schema");
+    const { eq } = await import("drizzle-orm");
+    const db = await getDb();
+    if (db) {
+      const profile = await db
+        .select({ id: artistProfiles.id, onboardingCompleted: artistProfiles.onboardingCompleted })
+        .from(artistProfiles)
+        .where(eq(artistProfiles.userId, user.id))
+        .limit(1);
+      if (!profile.length || !profile[0].onboardingCompleted) {
+        res.status(403).json({
+          error: "Complete your artist profile before posting Bops.",
+          redirect: "/artist/setup",
+        });
+        return;
+      }
+    }
+  } catch {
+    // Non-fatal: allow upload if DB check fails to avoid blocking artists
+  }
+
+  // 3. Parse multipart form
   await new Promise<void>((resolve, reject) => {
     upload.single("video")(req, res, (err) => {
       if (err) reject(err);

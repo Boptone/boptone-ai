@@ -359,11 +359,12 @@ These are the highest-priority items to tackle in the next 1-2 sessions.
 
 This is the most important sequence on the platform. Every dollar Boptone earns begins here.
 
-- [ ] Artist subscription flow: `/artist/signup` — tier selection (Starter/Pro/Label), Stripe subscription creation
-- [ ] Artist profile setup wizard: `/artist/setup` — stage name, bio, photo, genres, social links
-- [ ] Stripe Connect payout onboarding: `/artist/payout` — bank account for tips and BopShop revenue
+- [x] Artist subscription flow: `/artist/signup` — tier selection (Starter/Pro/Label), Stripe subscription creation
+- [x] Artist profile setup wizard: `/artist/setup` — 4-step wizard (stage name/bio, photo, genres/location, social links)
+- [x] Stripe Connect payout onboarding: `/artist/payout` — bank account for tips and BopShop revenue
+- [x] Gate Bops posting behind completed artist profile (server + client redirect to /artist/setup)
+- [x] Stripe Connect webhook: account.updated now syncs onboarding status to DB
 - [ ] Artist dashboard: `/dashboard` — completion checklist, QR code, quick-start CTAs
-- [ ] Gate Bops posting behind completed artist profile + Stripe Connect
 - [ ] Gate BopShop behind completed artist profile + Stripe Connect
 - [ ] Gate music distribution behind completed artist profile + subscription
 - [ ] App-to-web bridge: In-app "Post a Bop" button shows QR code to boptone.com/artist/signup
