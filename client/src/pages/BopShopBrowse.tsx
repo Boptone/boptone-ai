@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link, useLocation } from "wouter";
-import { Search, SlidersHorizontal, ShoppingCart, X } from "lucide-react";
+import { Search, SlidersHorizontal, ShoppingCart, X, Video } from "lucide-react";
 import "./BopShopBrowse.css";
 import { ProductQuickView } from "@/components/ProductQuickView";
 
@@ -149,7 +149,7 @@ export default function BopShopBrowse() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ background: "#f8f8f6" }}>
       <SEOHead {...seoData} />
       
       {/* Breadcrumb Navigation */}
@@ -157,7 +157,7 @@ export default function BopShopBrowse() {
         <Breadcrumb items={breadcrumbItems} />
       </div>
       {/* Sticky Header */}
-      <div className="sticky top-0 z-40 bg-white border-b-2 border-gray-200">
+      <div className="sticky top-0 z-40 border-b border-gray-200" style={{ background: "#f8f8f6" }}>
         <div className="max-w-[1600px] mx-auto px-4 py-6">
           {/* Title Row */}
           <div className="flex items-center justify-between mb-6">
@@ -167,16 +167,28 @@ export default function BopShopBrowse() {
                 Official artist merchandise
               </p>
             </div>
-            <Link href="/cart">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
-              >
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Cart
-              </Button>
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link href="/bops">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                >
+                  <Video className="mr-2 h-5 w-5" />
+                  Bops
+                </Button>
+              </Link>
+              <Link href="/cart">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border border-gray-200 rounded-xl hover:border-gray-400 transition-colors"
+                >
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Cart
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Search & Filter Row */}

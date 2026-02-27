@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder, ShoppingBag, Shield, FileText, Mail, Sparkles } from "lucide-react";
+import { Search, Plus, ChevronLeft, ChevronRight, Play, Music2, Globe, Bell, Upload, Folder, ShoppingBag, Shield, FileText, Mail, Sparkles, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -73,7 +73,15 @@ export default function Discover() {
         <nav className="flex-1 px-2 space-y-1">
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-800 text-white hover:bg-gray-700 transition-colors">
             <Music2 className="w-5 h-5" />
-            {!sidebarCollapsed && <span className="font-medium">Music</span>}
+            {!sidebarCollapsed && <span className="font-medium">BopMusic</span>}
+          </button>
+
+          <button
+            onClick={() => window.location.href = '/bops'}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+          >
+            <Video className="w-5 h-5" />
+            {!sidebarCollapsed && <span className="font-medium">Bops</span>}
           </button>
           
           <button 
@@ -81,7 +89,7 @@ export default function Discover() {
             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
           >
             <ShoppingBag className="w-5 h-5" />
-            {!sidebarCollapsed && <span className="font-medium">Shop</span>}
+            {!sidebarCollapsed && <span className="font-medium">BopShop</span>}
           </button>
           
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-colors">
@@ -155,6 +163,14 @@ export default function Discover() {
 
           {/* Action Buttons Row */}
           <div className="flex gap-4 max-w-4xl">
+            <button
+              onClick={() => window.location.href = '/bops'}
+              className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <Video className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
+              <span className="font-semibold text-sm">Bops</span>
+            </button>
+
             <button
               onClick={() => window.location.href = '/shop'}
               className="group flex items-center gap-3 px-6 py-4 bg-gray-800 hover:bg-cyan-600 rounded-full transition-all duration-300 hover:scale-105 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"

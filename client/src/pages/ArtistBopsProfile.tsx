@@ -273,22 +273,22 @@ export default function ArtistBopsProfile() {
   const isOwner = user && (artist as any).userId === (user as any).id;
 
   return (
-    <div className="min-h-screen text-white" style={{ fontFamily: "'Inter', sans-serif", background: "var(--bops-bg, #000)", colorScheme: "dark light" }}>
+    <div className="min-h-screen text-white" style={{ fontFamily: "'Inter', sans-serif", background: "#0d1117", colorScheme: "dark" }}>
 
-      {/* ── Sticky top bar ── */}
-      <div className="sticky top-0 z-40 backdrop-blur-md border-b border-white/5" style={{ background: "var(--bops-nav-bg, rgba(0,0,0,0.8))" }}>
-        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-3">
+      {/* ── Breadcrumb bar (below global nav) ── */}
+      <div className="border-b border-white/5" style={{ background: "rgba(13,17,23,0.95)" }}>
+        <div className="max-w-6xl mx-auto px-4 h-11 flex items-center gap-3">
           <button
             onClick={() => navigate("/bops")}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
             aria-label="Back to Bops"
           >
-            <ArrowLeft className="w-4 h-4 text-white" />
+            <ArrowLeft className="w-3.5 h-3.5 text-white" />
           </button>
           <div className="flex items-center gap-2">
-            <span className="font-black text-sm tracking-widest uppercase text-white">BOPTONE</span>
-            <span className="text-white/30 text-sm">/</span>
-            <span className="text-white/60 text-sm font-medium">{artist.stageName}</span>
+            <span className="text-white/40 text-xs font-medium">Bops</span>
+            <span className="text-white/20 text-xs">/</span>
+            <span className="text-white/70 text-xs font-semibold">{artist.stageName}</span>
           </div>
         </div>
       </div>
@@ -297,7 +297,7 @@ export default function ArtistBopsProfile() {
       <div
         className="relative"
         style={{
-          background: "linear-gradient(180deg, #0d1a1a 0%, #000 100%)",
+          background: "#0d1117",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >

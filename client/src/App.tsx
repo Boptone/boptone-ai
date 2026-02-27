@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Route, Switch } from "wouter";
-import { lazy, Suspense } from "react";
+import { Route, Switch, useLocation } from "wouter";
+import { lazy, Suspense, useMemo } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { DemoProvider } from "./contexts/DemoContext";
@@ -215,6 +215,37 @@ function Router() {
 //   to keep consistent foreground/background color across components
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
+/**
+ * AppShell — reactive nav/footer visibility based on current route.
+ * Must be rendered inside the Router context so useLocation works.
+ */
+function AppShell() {
+  const [location] = useLocation();
+
+  // Immersive full-screen pages: hide global nav + footer
+  const isBopsFeedOnly = location === '/bops';
+  const isMusicPage = location.startsWith('/music');
+
+  // Bops sub-pages (/bops/artist/:id, /bops/upload) DO get the global nav
+  // but still hide the footer to keep the Bops world feel
+  const isBopsSubPage = location.startsWith('/bops/') && !isBopsFeedOnly;
+
+  const showNav = !isBopsFeedOnly && !isMusicPage;
+  const showFooter = !isBopsFeedOnly && !isMusicPage && !isBopsSubPage;
+  const showMusicPlayer = isMusicPage;
+
+  return (
+    <>
+      {showNav && <Navigation />}
+      <Router />
+      {showFooter && <Footer />}
+      <ToneyChatbot />
+      <CookieConsentBanner />
+      {showMusicPlayer && <MusicPlayer />}
+    </>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
@@ -225,15 +256,7 @@ function App() {
         >
           <TooltipProvider>
             <Toaster />
-            {/* Hide Navigation on /music and /bops pages for immersive full-screen experience */}
-            {!window.location.pathname.startsWith('/music') && !window.location.pathname.startsWith('/bops') && <Navigation />}
-            <Router />
-            {/* Hide Footer on /music and /bops pages for immersive full-screen experience */}
-            {!window.location.pathname.startsWith('/music') && !window.location.pathname.startsWith('/bops') && <Footer />}
-            <ToneyChatbot />
-            <CookieConsentBanner />
-            {/* Only show MusicPlayer on /music page (BopAudio music discovery) */}
-            {window.location.pathname.startsWith('/music') && !window.location.pathname.startsWith('/bops') && <MusicPlayer />}
+            <AppShell />
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>
