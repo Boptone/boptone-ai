@@ -187,12 +187,18 @@ Artists post 15-30 second vertical videos called "Bops." Fans watch, like, comme
 - [x] Video upload: BopsVideoUpload component (drop zone, preview, validation indicators)
 - [x] Video upload: BopsUpload page at /bops/upload with auth guard
 - [x] Video upload: Route registered in App.tsx
-- [ ] Video player: Mobile-only vertical player with swipe-up navigation
-- [ ] Tap to pause/play
-- [ ] Like button: Animated heart, optimistic UI, counter
-- [ ] Comment button: Slide-up modal, real-time updates
-- [ ] Share button: Native share sheet, link preview
-- [ ] Lightning tip button: $1/$5/$10 presets, one-tap Stripe payment
+- [x] Video player: Mobile-only vertical player with swipe-up navigation (CSS scroll-snap)
+- [x] Tap to pause/play (IntersectionObserver auto-play, tap-to-pause)
+- [x] Like button: Animated heart, optimistic UI, counter
+- [x] Comment button: Slide-up drawer, real-time updates
+- [x] Share button: Native Web Share API + clipboard fallback
+- [x] Lightning tip button: $1/$5/$10 presets (Stripe Connect wiring in next sprint)
+- [x] Mobile-only gate: Desktop users see mobile-only page with link
+- [x] Boptone wordmark + Post button overlaid at top of feed
+- [x] Muted by default (browser autoplay policy), unmute toggle
+- [x] Infinite scroll: cursor-based pagination, loads more at 2 cards from end
+- [x] Empty state: CTA to post first Bop
+- [x] Navigation/Footer hidden on /bops for full-screen immersive experience
 - [ ] Stripe Connect: Artist onboarding, instant payouts
 - [ ] Tip fee breakdown: Stripe fee + 5% platform = 86% to artist
 - [ ] Artist push notification on tip received

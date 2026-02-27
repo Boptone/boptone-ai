@@ -95,6 +95,7 @@ const AdminRevenue = lazy(() => import("./pages/admin/AdminRevenue"));
 const Playlists = lazy(() => import("./pages/Playlists"));
 const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
 const BopsUpload = lazy(() => import("./pages/BopsUpload"));
+const Bops = lazy(() => import("./pages/Bops"));
 
 // Loading fallback component
 function PageLoader() {
@@ -174,6 +175,7 @@ function Router() {
         <Route path={"/protocol"} component={BAP} />
         <Route path={"/bap-protocol"} component={BAP} />
         <Route path={"/upload"} component={Upload} />
+        <Route path={"/bops"} component={Bops} />
         <Route path={"/bops/upload"} component={BopsUpload} />
         <Route path={"/music"} component={Discover} />
         <Route path={"/playlists"} component={Playlists} />
@@ -215,15 +217,15 @@ function App() {
         >
           <TooltipProvider>
             <Toaster />
-            {/* Hide Navigation on /music page for immersive dark experience */}
-            {!window.location.pathname.startsWith('/music') && <Navigation />}
+            {/* Hide Navigation on /music and /bops pages for immersive full-screen experience */}
+            {!window.location.pathname.startsWith('/music') && !window.location.pathname.startsWith('/bops') && <Navigation />}
             <Router />
-            {/* Hide Footer on /music page for immersive dark experience */}
-            {!window.location.pathname.startsWith('/music') && <Footer />}
+            {/* Hide Footer on /music and /bops pages for immersive full-screen experience */}
+            {!window.location.pathname.startsWith('/music') && !window.location.pathname.startsWith('/bops') && <Footer />}
             <ToneyChatbot />
             <CookieConsentBanner />
             {/* Only show MusicPlayer on /music page (BopAudio music discovery) */}
-            {window.location.pathname.startsWith('/music') && <MusicPlayer />}
+            {window.location.pathname.startsWith('/music') && !window.location.pathname.startsWith('/bops') && <MusicPlayer />}
           </TooltipProvider>
         </ThemeProvider>
       </DemoProvider>
