@@ -418,7 +418,7 @@ export default function ArtistBopsProfile() {
                   Tip Artist
                 </button>
 
-                {/* Music */}
+                {/* BopMusic */}
                 <button
                   onClick={() => navigate("/music")}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-all"
@@ -429,7 +429,7 @@ export default function ArtistBopsProfile() {
                   }}
                 >
                   <Music className="w-4 h-4" />
-                  Music
+                  BopMusic
                 </button>
 
                 {/* BopShop */}
