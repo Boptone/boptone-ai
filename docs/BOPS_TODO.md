@@ -1,6 +1,8 @@
-# Bops: Enterprise-Grade Implementation Roadmap
+# Boptone: Vertical Video Feature (Bops) - Enterprise Implementation Roadmap
 
-**Vision:** Build a global-scale vertical video platform that attracts artists worldwide with radical simplicity and authentic connection.
+**Vision:** Build Boptone's vertical video feature (where videos are called "Bops") at global scale to attract artists worldwide with radical simplicity and authentic connection.
+
+**Branding:** Platform = Boptone, Videos = Bops (like Twitter → Tweets). Users "Post a Bop on Boptone."
 
 **Mindset:** META, Amazon, ByteDance enterprise-level infrastructure from day 1.
 
@@ -18,7 +20,7 @@
   - [ ] Set up origin failover for high availability
   - [ ] Configure cache behaviors for video content
   - [ ] Set up SSL certificates (ACM)
-  - [ ] Configure custom domain (bops.boptone.com)
+  - [ ] Configure custom domain (boptone.com/bops)
 
 - [ ] Configure multi-region S3 buckets
   - [ ] Primary: us-east-1 (North America)
