@@ -128,6 +128,13 @@ const artistProfileRouter = router({
       return await db.getAllArtistProfiles(input.limit, input.offset);
     }),
 
+  // Get artist profile by ID (public)
+  getById: publicProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ input }) => {
+      return await db.getArtistProfileById(input.id);
+    }),
+
   // Get artist profile by username (public)
   getByUsername: publicProcedure
     .input(z.object({
