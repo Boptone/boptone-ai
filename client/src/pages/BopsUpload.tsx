@@ -28,15 +28,15 @@ export default function BopsUpload() {
     }
   }, [loading, isAuthenticated]);
 
-  // Redirect to onboarding wizard if profile not complete
-  useEffect(() => {
-    if (!loading && !profileLoading && isAuthenticated) {
-      const profile = artistProfile as { onboardingCompleted?: boolean } | null | undefined;
-      if (!profile || !profile.onboardingCompleted) {
-        navigate("/artist/setup");
-      }
-    }
-  }, [loading, profileLoading, isAuthenticated, artistProfile, navigate]);
+  // DEV MODE: Onboarding gate disabled for testing — re-enable before launch
+  // useEffect(() => {
+  //   if (!loading && !profileLoading && isAuthenticated) {
+  //     const profile = artistProfile as { onboardingCompleted?: boolean } | null | undefined;
+  //     if (!profile || !profile.onboardingCompleted) {
+  //       navigate("/artist/setup");
+  //     }
+  //   }
+  // }, [loading, profileLoading, isAuthenticated, artistProfile, navigate]);
 
   if (loading || profileLoading) {
     return (
