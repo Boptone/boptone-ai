@@ -1,7 +1,7 @@
-# Bops: Mobile-Only Vertical Video Platform
+# Boptone: Vertical Video Feature (Bops)
 
 **Platform:** Boptone - Autonomous Creator OS  
-**Feature:** Bops (Mobile-Only Vertical Video)  
+**Feature:** Vertical Video (Videos called "Bops")  
 **Timeline:** 2 Weeks MVP  
 **Author:** Manus AI  
 **Date:** February 26, 2026
@@ -10,7 +10,7 @@
 
 ## Vision
 
-**Bops is the most authentic, stripped-down vertical video platform for music artists.** No algorithms, no clutter, no bullshit. Just artists sharing raw 15-30 second moments with fans who can instantly tip them with a lightning bolt. Mobile-only because that's where the magic happens.
+**Boptone's vertical video feature is the most authentic, stripped-down way for music artists to share moments.** No algorithms, no clutter, no bullshit. Just artists posting raw 15-30 second Bops with fans who can instantly tip them with a lightning bolt. Mobile-only because that's where the magic happens.
 
 **Core Philosophy:**
 - **Radical simplicity** - 4 buttons max (like, tip, share, comment)
@@ -19,28 +19,34 @@
 - **Mobile-first** - Built for the device in your pocket, not your desktop
 - **1080p quality** - Artists deserve to look good
 
+**Branding:**
+- **Platform:** Boptone (unified brand)
+- **Videos:** Bops (like Twitter → Tweets)
+- **Action:** "Post a Bop" (upload a video)
+- **Slang:** "That's a Bop" (great video, great song)
+
 ---
 
-## The Bops Experience
+## The Boptone Experience
 
 ### For Artists (Upload Flow)
 
-1. **Open Bops** on mobile → Tap "+" button
+1. **Open Boptone** on mobile → Tap "+" button
 2. **Record or upload** 15-30 second video (1080p)
 3. **Add caption** (optional, 150 characters max)
-4. **Post** → Video goes live instantly
+4. **Post Bop** → Video goes live instantly
 
 **That's it.** No tags, no categories, no settings. Just post.
 
 ### For Fans (Viewing Flow)
 
-1. **Open Bops** → Vertical feed starts playing
-2. **Swipe up** → Next video (smooth, instant)
+1. **Open Boptone** → Vertical feed of Bops starts playing
+2. **Swipe up** → Next Bop (smooth, instant)
 3. **Tap screen** → Pause/play
 4. **Tap ❤️** → Like (animated heart)
 5. **Tap ⚡** → Send $1, $5, or $10 tip (one tap, no friction)
 6. **Tap 💬** → Comment (slide-up modal)
-7. **Tap ↗️** → Share link
+7. **Tap ↗️** → Share Bop link
 
 **That's it.** No profiles to navigate, no menus, no distractions. Just content.
 
@@ -48,7 +54,7 @@
 
 ## Feature Specifications
 
-### Video Constraints
+### Video Constraints (Bops)
 
 | Constraint | Value | Rationale |
 |------------|-------|-----------|
@@ -60,10 +66,10 @@
 | **Frame Rate** | 30fps minimum | Smooth playback |
 
 **Validation Rules:**
-- Duration <15s → "Video too short (min 15 seconds)"
+- Duration <15s → "Bop too short (min 15 seconds)"
 - Duration >30s → Auto-trim to 30 seconds with warning
 - Non-vertical → "Please record in vertical mode"
-- File size >50MB → "Video too large, please compress"
+- File size >50MB → "Bop too large, please compress"
 
 ### The 4 Interactions
 
@@ -95,7 +101,7 @@
 - Stripe Payment Intents API
 - Saved payment methods (Stripe Customer)
 - Instant confirmation (no page reload)
-- Artist gets push notification: "🎉 @username tipped you $5!"
+- Artist gets push notification: "🎉 @username tipped you $5 on your Bop!"
 
 **Why this is genius:**
 - **Instant gratification** - Fan sees immediate impact
@@ -108,7 +114,7 @@
 **Behavior:**
 - Tap → Native share sheet (iOS/Android)
 - Share options: Copy link, SMS, WhatsApp, Instagram, Twitter
-- Link format: `boptone.com/bops/{videoId}`
+- Link format: `boptone.com/bops/{videoId}` or `boptone.com/@artist/bops/{id}`
 - Link preview: Video thumbnail, artist name, caption
 
 **Technical:**
@@ -141,7 +147,7 @@
 - Mobile users watch 2x more videos per session
 - Vertical video completion rate is 90% vs 60% for horizontal
 
-**Bops Decision:**
+**Boptone Decision:**
 - **No desktop version** - Redirect to "Download our app" page
 - **No responsive design** - Build for 375px-428px width only
 - **No tablet optimization** - iPhone/Android phones only
@@ -171,7 +177,7 @@
 
 ### Database Schema
 
-**Videos Table**
+**Videos Table (bopsVideos)**
 ```sql
 CREATE TABLE bopsVideos (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -193,7 +199,7 @@ CREATE TABLE bopsVideos (
 );
 ```
 
-**Likes Table**
+**Likes Table (bopsLikes)**
 ```sql
 CREATE TABLE bopsLikes (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -207,7 +213,7 @@ CREATE TABLE bopsLikes (
 );
 ```
 
-**Tips Table**
+**Tips Table (bopsTips)**
 ```sql
 CREATE TABLE bopsTips (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -229,7 +235,7 @@ CREATE TABLE bopsTips (
 );
 ```
 
-**Comments Table**
+**Comments Table (bopsComments)**
 ```sql
 CREATE TABLE bopsComments (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -252,7 +258,7 @@ bops: router({
   // Feed
   getFeed: publicProcedure
     .input(z.object({ cursor: z.number().optional(), limit: z.number().default(20) }))
-    .query(/* Paginated video feed */),
+    .query(/* Paginated Bop feed */),
   
   // Upload
   upload: protectedProcedure
@@ -261,7 +267,7 @@ bops: router({
       caption: z.string().max(150).optional(),
       duration: z.number().min(15).max(30),
     }))
-    .mutation(/* Create video record */),
+    .mutation(/* Create Bop record */),
   
   // Interactions
   like: protectedProcedure
@@ -314,7 +320,8 @@ const paymentIntent = await stripe.paymentIntents.create({
   metadata: {
     videoId: '123',
     artistId: '456',
-    platform: 'bops',
+    platform: 'boptone',
+    feature: 'bops',
   },
 });
 
@@ -336,7 +343,8 @@ await db.insert(bopsTips).values({
 });
 
 // 6. Update video tip counter
-await db.update(bopsVideos)
+await db
+  .update(bopsVideos)
   .set({ 
     tipCount: sql`tipCount + 1`,
     tipAmount: sql`tipAmount + ${artistPayout}`,
@@ -347,7 +355,7 @@ await db.update(bopsVideos)
 await notifyArtist({
   artistId: artist.id,
   title: '⚡ New Tip!',
-  body: `@${user.username} tipped you $${amount}!`,
+  body: `@${user.username} tipped you $${amount} on your Bop!`,
   data: { videoId, tipAmount: amount },
 });
 
@@ -374,7 +382,7 @@ return { success: true, artistPayout };
 
 ```
 ┌─────────────────────────────┐
-│                             │ ← Video fills entire screen
+│                             │ ← Bop fills entire screen
 │                             │
 │         [VIDEO]             │
 │                             │
@@ -387,21 +395,21 @@ return { success: true, artistPayout };
 │                          💬 │ ← Comment button
 │                          ↗️ │ ← Share button
 └─────────────────────────────┘
-   ↑ Swipe up for next video
+   ↑ Swipe up for next Bop
 ```
 
 **Interaction Zones:**
 - **Left 60%** - Tap to pause/play
 - **Right 40%** - Action buttons (like, tip, comment, share)
 - **Bottom 20%** - Artist info and caption
-- **Swipe up** - Next video
-- **Swipe down** - Previous video
+- **Swipe up** - Next Bop
+- **Swipe down** - Previous Bop
 
 ### Upload Screen
 
 ```
 ┌─────────────────────────────┐
-│          Upload Bop         │ ← Title
+│          Post a Bop         │ ← Title
 ├─────────────────────────────┤
 │                             │
 │    [Video Preview]          │ ← Full-screen preview
@@ -454,7 +462,7 @@ return { success: true, artistPayout };
 ├─────────────────────────────┤
 │                             │
 │  @user1  2m ago             │
-│  This is fire! 🔥           │
+│  This Bop is fire! 🔥       │
 │                             │
 │  @artistname  1m ago  ⭐    │ ← Artist badge
 │  Thanks fam! 🙏             │
@@ -524,8 +532,8 @@ return { success: true, artistPayout };
 ### Week 1 Goals (Beta Launch)
 
 **Adoption:**
-- 10 beta artists upload at least 1 Bop each
-- 50+ total Bops uploaded
+- 10 beta artists post at least 1 Bop each
+- 50+ total Bops posted
 - 100+ registered users
 
 **Engagement:**
@@ -542,12 +550,12 @@ return { success: true, artistPayout };
 ### Month 1 Goals (Public Launch)
 
 **Adoption:**
-- 100 artists actively posting
-- 1,000+ Bops uploaded
+- 100 artists actively posting Bops
+- 1,000+ Bops posted
 - 5,000+ registered users
 
 **Engagement:**
-- 10,000+ daily video views
+- 10,000+ daily Bop views
 - $500+ in artist tips
 - 20% of users return daily
 
@@ -557,7 +565,7 @@ return { success: true, artistPayout };
 
 ---
 
-## Why Bops Will Win
+## Why Boptone Will Win
 
 ### Competitive Advantages
 
@@ -565,37 +573,75 @@ return { success: true, artistPayout };
 - **TikTok:** No direct tipping, creator fund pays pennies
 - **YouTube Shorts:** Super Chat requires 1000 subscribers
 - **Instagram Reels:** No monetization for small creators
-- **Bops:** One-tap tips from day 1, 86% goes to artist
+- **Boptone:** One-tap tips from day 1, 86% goes to artist
 
 **2. Music-First Platform**
 - **TikTok:** Viral dances, not artist discovery
 - **YouTube Shorts:** Everything competes (gaming, vlogs, music)
 - **Instagram Reels:** Fashion and lifestyle dominate
-- **Bops:** 100% music artists, 100% music fans
+- **Boptone:** 100% music artists, 100% music fans
 
 **3. Radical Simplicity**
 - **TikTok:** Overwhelming features, algorithm mystery
 - **YouTube Shorts:** Buried in YouTube app, confusing UI
 - **Instagram Reels:** Cluttered with ads and suggested posts
-- **Bops:** 4 buttons, zero clutter, pure content
+- **Boptone:** 4 buttons, zero clutter, pure content
 
 **4. Authentic Connection**
 - **TikTok:** Parasocial relationships, no real connection
 - **YouTube Shorts:** Comments get lost in noise
 - **Instagram Reels:** DMs are overwhelming for artists
-- **Bops:** Lightning tips = instant gratitude, real support
+- **Boptone:** Lightning tips = instant gratitude, real support
 
 ### Artist Value Proposition
 
-**"Post a 30-second Bop, get tipped by fans, keep 86%."**
+**"Post a Bop on Boptone, get tipped by fans, keep 86%."**
 
 That's the entire pitch. No complicated monetization requirements, no waiting for algorithm approval, no minimum follower counts. Just post and get paid.
 
 ### Fan Value Proposition
 
-**"Discover new artists, support them instantly."**
+**"Discover new artists on Boptone, support them instantly."**
 
 Fans want to support artists they love, but Patreon feels like a commitment, merch is expensive, and streaming pays nothing. A $1 tip on a Bop they loved? That's easy.
+
+---
+
+## Branding & Terminology
+
+### Unified Boptone Brand
+
+**Platform:** Boptone  
+**Videos:** Bops (like Twitter → Tweets)  
+**Action:** "Post a Bop" (upload a video)
+
+### User Language
+
+**Artists:**
+- "I just posted a Bop"
+- "Check out my new Bop on Boptone"
+- "Drop a Bop" (call to action)
+
+**Fans:**
+- "That Bop was fire 🔥"
+- "I tipped that Bop"
+- "Share this Bop"
+
+### URLs
+
+- `boptone.com/bops` - Feed of all Bops
+- `boptone.com/@artist/bops` - Artist's Bops
+- `boptone.com/bops/abc123` - Single Bop
+
+### Navigation
+
+```
+Boptone App
+├── Home (feed of Bops)
+├── Music (distribution)
+├── Shop (merch)
+└── Profile
+```
 
 ---
 
@@ -610,7 +656,7 @@ Fans want to support artists they love, but Patreon feels like a commitment, mer
 
 ### After Launch
 
-1. **Monitor usage** - Daily active users, videos uploaded, tips sent
+1. **Monitor usage** - Daily active users, Bops posted, tips sent
 2. **Gather feedback** - Weekly artist interviews, user surveys
 3. **Iterate quickly** - Ship improvements every week
 4. **Plan Phase 2** - Video transcoding, push notifications, artist analytics
@@ -619,11 +665,16 @@ Fans want to support artists they love, but Patreon feels like a commitment, mer
 
 ## Conclusion
 
-**Bops is the simplest, most authentic way for music artists to share moments and get paid.** No algorithms deciding who gets seen, no complicated monetization schemes, no desktop distractions. Just vertical video, real fans, and instant tips.
+**Boptone's vertical video feature is the simplest, most authentic way for music artists to share moments and get paid.** No algorithms deciding who gets seen, no complicated monetization schemes, no desktop distractions. Just vertical video, real fans, and instant tips.
 
 **This is what Boptone needs** - a feature that's so simple, so mobile-native, and so artist-friendly that it becomes the default way musicians share their work. YouTube Shorts is cluttered. TikTok is overwhelming. Instagram Reels is an afterthought.
 
-**Bops is purpose-built for music artists.** And with the lightning tip button, it's the only platform where fans can instantly support the artists they discover.
+**Boptone is purpose-built for music artists.** And with the lightning tip button, it's the only platform where fans can instantly support the artists they discover.
+
+**The terminology is perfect:**
+- "Post a Bop on Boptone"
+- "That's a Bop" (great video + great song)
+- "Drop a Bop" (call to action)
 
 **Let's build it in 2 weeks and change how music gets shared.**
 
