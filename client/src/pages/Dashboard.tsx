@@ -93,6 +93,8 @@ export default function Dashboard() {
 
   const quickActions = [
     { label: "Upload Music", href: "/upload" },
+    { label: "Post a Bop", href: "/bops/upload" },
+    { label: "View Bops Feed", href: "/bops" },
     { label: "View Analytics", href: "/analytics" },
     { label: "Discover Music", href: "/music" },
     { label: "Edit Profile", href: "/profile-settings" },
@@ -198,11 +200,42 @@ export default function Dashboard() {
           {/* AI Recommendations */}
           <AIRecommendations />
 
+          {/* Bops Feature Card */}
+          <div className="border-2 border-black bg-black text-white p-12 rounded-lg shadow-[4px_4px_0px_0px_rgba(12,192,223,1)]">
+            <div className="flex items-start justify-between flex-wrap gap-6">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">🎬</span>
+                  <h2 className="text-4xl font-bold text-white">Bops</h2>
+                  <span className="bg-[#0cc0df] text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Live</span>
+                </div>
+                <p className="text-lg text-gray-300 max-w-xl">
+                  Post 15–30 second vertical videos. Fans watch, like, and tip you directly — you keep 86% of every tip.
+                </p>
+              </div>
+              <div className="flex gap-3 flex-wrap">
+                <Button
+                  onClick={() => setLocation("/bops")}
+                  variant="outline"
+                  className="rounded-full border-2 border-white text-white bg-transparent hover:bg-white hover:text-black transition-all font-semibold px-6"
+                >
+                  Watch Bops
+                </Button>
+                <Button
+                  onClick={() => setLocation("/bops/upload")}
+                  className="rounded-full bg-[#0cc0df] hover:bg-[#0aabca] text-black border-2 border-[#0cc0df] font-bold px-6 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,0.3)] transition-all"
+                >
+                  Post a Bop
+                </Button>
+              </div>
+            </div>
+          </div>
+
           {/* Quick Actions - BAP Protocol design */}
           <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Quick Actions</h2>
             <p className="text-lg text-gray-600 mb-10">Common tasks to manage your career</p>
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 sm:gap-4">
               {quickActions.map((action) => {
                 return (
                   <button

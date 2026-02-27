@@ -17,7 +17,8 @@ import {
   HelpCircle,
   FileText,
   DollarSign,
-  Zap
+  Zap,
+  Video
 } from "lucide-react";
 import { SearchAIOverlay } from "@/components/SearchAIOverlay";
 
@@ -62,9 +63,15 @@ export function Navigation() {
   const platformItems = [
     {
       icon: Music,
-      title: "BopAudio",
-      description: "Your own streaming platform with 90/10 revenue split",
+      title: "Boptone Music",
+      description: "Stream, distribute, and earn from your music",
       href: "/features"
+    },
+    {
+      icon: Video,
+      title: "Bops",
+      description: "Post 15-30 second videos and get tipped instantly",
+      href: "/bops"
     },
     {
       icon: ShoppingBag,
@@ -75,14 +82,8 @@ export function Navigation() {
     {
       icon: BarChart3,
       title: "Analytics",
-      description: "Track performance across all platforms in real-time",
+      description: "Track performance across all your content in real-time",
       href: "/insights"
-    },
-    {
-      icon: TrendingUp,
-      title: "Distribution",
-      description: "Distribute music to all major streaming platforms",
-      href: "/features"
     }
   ];
 
@@ -261,7 +262,7 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Desktop Right Side - AI Chat + Cart + Auth */}
+          {/* Desktop Right Side - AI Chat + Bops + Cart + Auth */}
           <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
             {/* AI Chat Icon */}
             <Button
@@ -272,6 +273,19 @@ export function Navigation() {
               aria-label="AI Chat"
             >
               <MessageCircle className="w-5 h-5 text-gray-700" />
+            </Button>
+
+            {/* Bops Quick Access Icon */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full w-11 h-11 hover:bg-gray-100 transition-colors"
+              asChild
+              aria-label="Bops"
+            >
+              <Link href="/bops">
+                <Video className="w-5 h-5 text-gray-700" />
+              </Link>
             </Button>
 
             {/* Wishlist & Cart Icons with Badges */}
@@ -454,6 +468,16 @@ export function Navigation() {
                 onClick={closeMobileMenu}
               >
                 Platform
+              </a>
+            </Link>
+
+            <Link href="/bops">
+              <a
+                className="flex items-center gap-3 py-3 px-4 text-base font-bold text-black bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors border border-gray-200"
+                onClick={closeMobileMenu}
+              >
+                <Video className="w-5 h-5 text-black" />
+                Bops — Short Videos
               </a>
             </Link>
 
