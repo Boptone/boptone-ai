@@ -326,31 +326,57 @@ These items apply across all pillars and must be maintained as the platform scal
 
 ---
 
+## Platform Architecture Reference
+
+See `docs/PLATFORM_ARCHITECTURE.md` for the complete interconnected system design.
+Every feature below must be built in the sequence defined there. The Artist Onboarding Flow
+is Phase 1 and gates all revenue-generating features on the platform.
+
+**North Star Metric:** Does this make it easier for an artist to earn money from their art?
+
+---
+
 ## Current Sprint: Immediate Next Steps
 
 These are the highest-priority items to tackle in the next 1-2 sessions.
 
-### Fix Existing Bugs (Today)
+### Completed This Session
 
 - [x] Fix TypeScript error: `priceId` does not exist on `StripeCheckoutProps` in Home.tsx
 - [x] Fix TypeScript error: `BreadcrumbItem` type mismatch in ProductDetail.tsx and BopShopBrowse.tsx
 - [x] Fix Checkout.tsx: `variantId` null vs undefined type mismatch
 - [x] TypeScript: 0 errors (clean build confirmed)
+- [x] Bops database schema: 6 tables, 30 indexes, live in production DB
+- [x] Bops tRPC router: 17 procedures (feed, upload, like, comment, tip, view)
+- [x] Bops video upload: REST endpoint, client validation, XHR progress, S3
+- [x] Bops vertical video player: scroll-snap feed, auto-play, tap-to-pause
+- [x] Bops action buttons: like, tip ($1/$5/$10), share, comment drawer
+- [x] Artist Bops profile: circle header, stats, Music/BopShop quick-links, grid
+- [x] Platform architecture document: PLATFORM_ARCHITECTURE.md
+- [x] Unified MASTER_TODO: Single source of truth for all 5 pillars
+
+### Phase 1 — Revenue Gate (Build Next, In This Order)
+
+This is the most important sequence on the platform. Every dollar Boptone earns begins here.
+
+- [ ] Artist subscription flow: `/artist/signup` — tier selection (Starter/Pro/Label), Stripe subscription creation
+- [ ] Artist profile setup wizard: `/artist/setup` — stage name, bio, photo, genres, social links
+- [ ] Stripe Connect payout onboarding: `/artist/payout` — bank account for tips and BopShop revenue
+- [ ] Artist dashboard: `/dashboard` — completion checklist, QR code, quick-start CTAs
+- [ ] Gate Bops posting behind completed artist profile + Stripe Connect
+- [ ] Gate BopShop behind completed artist profile + Stripe Connect
+- [ ] Gate music distribution behind completed artist profile + subscription
+- [ ] App-to-web bridge: In-app "Post a Bop" button shows QR code to boptone.com/artist/signup
+
+### Phase 2 — Content Pillars (After Revenue Gate)
+
+- [ ] Wire Lightning Tip button to Stripe Connect (86% to artist after Stripe fees)
+- [ ] Artist push notification on tip received
+- [ ] Unified earnings dashboard: tips + music royalties + BopShop revenue in one view
+- [ ] Platform events table: async event bus for cross-pillar communication
 - [ ] Run E2E tests with seeded product data to confirm BopShop checkout works
-
-### Start Bops Build (Tomorrow — Week 1)
-
-- [ ] Day 1-2: Create database schema (bopsVideos, bopsLikes, bopsTips, bopsComments)
-- [ ] Day 1-2: Implement tRPC API (getFeed, upload, like, comment, tip)
-- [ ] Day 3-4: Build mobile-only video player with swipe navigation
-- [ ] Day 5-7: Build video upload flow with validation
-
-### Week 2: Interactions and Monetization
-
-- [ ] Day 8-9: Like button with animation and optimistic UI
-- [ ] Day 8-9: Comment modal with real-time updates
-- [ ] Day 10-12: Lightning tip button with Stripe Connect
-- [ ] Day 13-14: Beta launch with 10 artists
+- [ ] Stripe webhook: Handle payment_intent.succeeded, charge.refunded
+- [ ] Order confirmation email (Resend integration)
 
 ---
 
