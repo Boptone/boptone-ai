@@ -717,4 +717,64 @@ export const bopsRouter = router({
 
       return { items, nextCursor, hasNextPage };
     }),
+
+  // -------------------------------------------------------------------------
+  // CREATE TIP CHECKOUT — Public (fans don't need to be logged in to tip)
+  // Creates a Stripe Checkout session for tipping an artist via the profile page
+  // Kick In policy: Stripe fees only, Boptone takes ZERO cut
+  // Presets: $1, $5, $10, $20, $50
+  // -------------------------------------------------------------------------
+  createTipCheckout: publicProcedure
+    .input(z.object({
+      artistId: z.number().int().positive(),
+      artistName: z.string().max(100),
+      amountCents: z.union([
+        z.literal(100),
+        z.literal(500),
+        z.literal(1000),
+        z.literal(2000),
+        z.literal(5000),
+      ]),
+      message: z.string().max(150).optional(),
+      videoId: z.number().int().positive().optional(),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const Stripe = (await import("stripe")).default;
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2024-06-20" as any });
+      const origin = (ctx.req.headers.origin as string) || "https://boptoneos-ntbkjjza.manus.space";
+      const amountDollars = (input.amountCents / 100).toFixed(2);
+
+      const session = await stripe.checkout.sessions.create({
+        mode: "payment",
+        payment_method_types: ["card"],
+        allow_promotion_codes: false,
+        line_items: [{
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: `Tip for ${input.artistName}`,
+              description: input.message
+                ? `"${input.message}"`
+                : `Support ${input.artistName} on Boptone`,
+            },
+            unit_amount: input.amountCents,
+          },
+          quantity: 1,
+        }],
+        metadata: {
+          type: "bops_tip",
+          artist_id: input.artistId.toString(),
+          artist_name: input.artistName,
+          amount_cents: input.amountCents.toString(),
+          video_id: input.videoId?.toString() ?? "",
+          fan_user_id: ctx.user?.id?.toString() ?? "",
+          message: input.message ?? "",
+        },
+        client_reference_id: `tip_artist_${input.artistId}`,
+        success_url: `${origin}/bops/artist/${input.artistId}?tip=success&amount=${amountDollars}`,
+        cancel_url: `${origin}/bops/artist/${input.artistId}?tip=cancelled`,
+      });
+
+      return { checkoutUrl: session.url, sessionId: session.id };
+    }),
 });

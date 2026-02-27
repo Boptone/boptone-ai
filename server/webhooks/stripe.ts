@@ -112,6 +112,10 @@ async function handleCheckoutSessionCompleted(session: any) {
     case 'kickin':
       await handleKickinPayment(session, db);
       break;
+
+    case 'bops_tip':
+      await handleBopsTipPayment(session, db);
+      break;
     
     case 'wallet_topup':
       const { handleWalletTopUp } = await import('../services/walletWebhook');
@@ -375,6 +379,49 @@ async function handleKickinPayment(session: any, db: any) {
     });
 
   console.log(`[Stripe Webhook] Kick-in tip of $${(totalAmount / 100).toFixed(2)} from user ${userId} to artist ${artistId}`);
+}
+
+/**
+ * Handle Bops Tip payment (0% platform fee — Kick In policy)
+ * Triggered by createTipCheckout mutation on the artist profile page
+ */
+async function handleBopsTipPayment(session: any, db: any) {
+  const artistId = parseInt(session.metadata?.artist_id || '0');
+  const fanUserId = parseInt(session.metadata?.fan_user_id || '0');
+  const videoId = session.metadata?.video_id ? parseInt(session.metadata.video_id) : null;
+  const message = session.metadata?.message || '';
+  const amountCents = parseInt(session.metadata?.amount_cents || '0');
+
+  if (!artistId || !amountCents) {
+    console.error('[Stripe Webhook] Missing required metadata for Bops tip payment');
+    return;
+  }
+
+  const { calculateFees } = await import('../stripe');
+  const fees = calculateFees({ amount: amountCents, paymentType: 'kickin' });
+
+  // Insert into bops_tips table
+  try {
+    const { bopsTips } = await import('../../drizzle/schema');
+    await db.insert(bopsTips).values({
+      artistId,
+      userId: fanUserId || null,
+      videoId: videoId || null,
+      amount: amountCents,
+      currency: session.currency?.toUpperCase() || 'USD',
+      message: message || null,
+      status: 'completed',
+      stripeSessionId: session.id,
+      stripePaymentIntentId: session.payment_intent || null,
+      platformFee: 0,
+      processingFee: fees.stripeFee,
+      netAmount: fees.artistReceives,
+    });
+    console.log(`[Stripe Webhook] Bops tip of $${(amountCents / 100).toFixed(2)} recorded for artist ${artistId}`);
+  } catch (err: any) {
+    // Graceful fallback — log but don't fail the webhook
+    console.error('[Stripe Webhook] Failed to insert bops tip:', err.message);
+  }
 }
 
 /**

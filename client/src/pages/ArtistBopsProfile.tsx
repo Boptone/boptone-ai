@@ -6,12 +6,14 @@
  * - 4-column responsive video grid (4 col desktop → 3 col tablet → 2 col mobile)
  * - Each card: 9:16 aspect ratio, video preview on hover, stats overlay
  * - Infinite scroll pagination
+ * - Tip Artist modal → Stripe Checkout (Kick In: card fees only, Boptone takes 0%)
  * - Respects system dark/light mode via prefers-color-scheme
  */
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { toast } from "sonner";
 import {
   ArrowLeft,
   Music,
@@ -23,6 +25,8 @@ import {
   Eye,
   Plus,
   Video,
+  X,
+  MessageSquare,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -57,9 +61,182 @@ function sumField(items: BopVideo[], field: keyof BopVideo): number {
   return items.reduce((acc, item) => acc + (Number(item[field]) || 0), 0);
 }
 
+// ─── Tip presets ─────────────────────────────────────────────────────────────
+
+const TIP_PRESETS = [
+  { label: "$1", cents: 100 },
+  { label: "$5", cents: 500 },
+  { label: "$10", cents: 1000 },
+  { label: "$20", cents: 2000 },
+  { label: "$50", cents: 5000 },
+] as const;
+
+type TipCents = typeof TIP_PRESETS[number]["cents"];
+
+// ─── Tip Artist Modal ─────────────────────────────────────────────────────────
+
+interface TipModalProps {
+  artistId: number;
+  artistName: string;
+  onClose: () => void;
+}
+
+function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
+  const [selectedCents, setSelectedCents] = useState<TipCents>(500);
+  const [message, setMessage] = useState("");
+
+  const createCheckout = trpc.bops.createTipCheckout.useMutation({
+    onSuccess: (data) => {
+      if (data.checkoutUrl) {
+        toast.info("Redirecting to secure checkout…");
+        window.open(data.checkoutUrl, "_blank");
+        onClose();
+      }
+    },
+    onError: (err) => {
+      toast.error(err.message || "Failed to start checkout. Please try again.");
+    },
+  });
+
+  const handleTip = () => {
+    createCheckout.mutate({
+      artistId,
+      artistName,
+      amountCents: selectedCents,
+      message: message.trim() || undefined,
+    });
+  };
+
+  // Close on backdrop click
+  const handleBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
+      onClick={handleBackdrop}
+    >
+      <div
+        className="w-full max-w-sm rounded-2xl overflow-hidden"
+        style={{
+          background: "#111827",
+          border: "1px solid rgba(93,204,204,0.2)",
+          boxShadow: "0 0 60px rgba(93,204,204,0.12)",
+        }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 pt-6 pb-4">
+          <div>
+            <h2 className="text-white font-black text-xl tracking-tight">Tip Artist</h2>
+            <p className="text-white/50 text-sm mt-0.5">
+              100% goes to <span className="text-[#5DCCCC] font-semibold">{artistName}</span>
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+          >
+            <X className="w-4 h-4 text-white/60" />
+          </button>
+        </div>
+
+        {/* Divider */}
+        <div className="h-px mx-6" style={{ background: "rgba(255,255,255,0.06)" }} />
+
+        {/* Amount presets */}
+        <div className="px-6 pt-5 pb-4">
+          <p className="text-white/40 text-xs uppercase tracking-widest font-semibold mb-3">Choose amount</p>
+          <div className="grid grid-cols-5 gap-2">
+            {TIP_PRESETS.map(({ label, cents }) => (
+              <button
+                key={cents}
+                onClick={() => setSelectedCents(cents)}
+                className="py-2.5 rounded-xl text-sm font-bold transition-all"
+                style={
+                  selectedCents === cents
+                    ? { background: "#5DCCCC", color: "#000", boxShadow: "0 0 16px rgba(93,204,204,0.4)" }
+                    : { background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.1)" }
+                }
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Message field */}
+        <div className="px-6 pb-5">
+          <div className="flex items-center gap-2 mb-2">
+            <MessageSquare className="w-3.5 h-3.5 text-white/30" />
+            <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">
+              Message <span className="normal-case text-white/25">(optional)</span>
+            </p>
+          </div>
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value.slice(0, 150))}
+            placeholder={`Say something to ${artistName}…`}
+            rows={2}
+            className="w-full rounded-xl px-4 py-3 text-sm resize-none outline-none transition-colors"
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "rgba(255,255,255,0.8)",
+              fontFamily: "inherit",
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = "rgba(93,204,204,0.4)";
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+            }}
+          />
+          <p className="text-right text-[10px] text-white/20 mt-1">{message.length}/150</p>
+        </div>
+
+        {/* Fee note */}
+        <div className="mx-6 mb-4 px-3 py-2 rounded-lg" style={{ background: "rgba(93,204,204,0.06)", border: "1px solid rgba(93,204,204,0.12)" }}>
+          <p className="text-[11px] text-[#5DCCCC]/70 text-center">
+            ⚡ Only card processing fees apply — Boptone takes <strong className="text-[#5DCCCC]">0%</strong>
+          </p>
+        </div>
+
+        {/* CTA */}
+        <div className="px-6 pb-6">
+          <button
+            onClick={handleTip}
+            disabled={createCheckout.isPending}
+            className="w-full py-3.5 rounded-full font-black text-base transition-all disabled:opacity-60"
+            style={{
+              background: createCheckout.isPending ? "rgba(93,204,204,0.5)" : "#5DCCCC",
+              color: "#000",
+              boxShadow: createCheckout.isPending ? "none" : "0 4px 24px rgba(93,204,204,0.3)",
+            }}
+          >
+            {createCheckout.isPending
+              ? "Opening checkout…"
+              : `Send ${TIP_PRESETS.find((p) => p.cents === selectedCents)?.label ?? ""} Tip ⚡`}
+          </button>
+          <p className="text-center text-white/25 text-[11px] mt-2.5">
+            Powered by Stripe · Secure payment
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Video Grid Card ──────────────────────────────────────────────────────────
 
-function BopGridCard({ bop, onClick }: { bop: BopVideo; onClick: () => void }) {
+interface BopGridCardProps {
+  bop: BopVideo;
+  onClick: () => void;
+}
+
+function BopGridCard({ bop, onClick }: BopGridCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -81,52 +258,37 @@ function BopGridCard({ bop, onClick }: { bop: BopVideo; onClick: () => void }) {
 
   return (
     <button
-      onClick={onClick}
+      className="relative overflow-hidden rounded-sm cursor-pointer group"
+      style={{ aspectRatio: "9/16", background: "#111" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full overflow-hidden bg-[#111] group cursor-pointer"
-      style={{ aspectRatio: "9/16" }}
+      onClick={onClick}
       aria-label={bop.caption ?? "Watch Bop"}
     >
-      {/* Video preview (plays on hover, muted) */}
-      <video
-        ref={videoRef}
-        src={bop.videoUrl}
-        muted
-        playsInline
-        loop
-        preload="none"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          transition: "opacity 0.2s ease",
-        }}
-      />
-
-      {/* Thumbnail / static fallback */}
+      {/* Thumbnail or video */}
       {bop.thumbnailUrl ? (
         <img
           src={bop.thumbnailUrl}
           alt={bop.caption ?? "Bop"}
           className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
-          style={{
-            opacity: isHovered ? 0 : 1,
-            transition: "opacity 0.2s ease",
-          }}
         />
       ) : (
-        <div
-          className="absolute inset-0 w-full h-full flex items-center justify-center"
-          style={{
-            background: "linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%)",
-            opacity: isHovered ? 0 : 1,
-            transition: "opacity 0.2s ease",
-          }}
-        >
-          <Video className="w-8 h-8 text-white/20" />
+        <div className="absolute inset-0 flex items-center justify-center" style={{ background: "#1a1a1a" }}>
+          <Video className="w-8 h-8 text-white/15" />
         </div>
       )}
+
+      {/* Hover video preview */}
+      <video
+        ref={videoRef}
+        src={bop.videoUrl}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: isHovered ? 1 : 0, transition: "opacity 0.2s ease" }}
+        muted
+        playsInline
+        loop
+        preload="none"
+      />
 
       {/* Dark gradient overlay — always present */}
       <div
@@ -191,15 +353,32 @@ function BopGridCard({ bop, onClick }: { bop: BopVideo; onClick: () => void }) {
 
 export default function ArtistBopsProfile() {
   const { artistId } = useParams<{ artistId: string }>();
-  const [, navigate] = useLocation();
+  const [location, navigate] = useLocation();
   const { user } = useAuth();
   const [allBops, setAllBops] = useState<BopVideo[]>([]);
   const [cursor, setCursor] = useState<number | undefined>(undefined);
   const [hasMore, setHasMore] = useState(true);
+  const [showTipModal, setShowTipModal] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const seenCursors = useRef<Set<string>>(new Set());
 
   const parsedArtistId = parseInt(artistId ?? "0", 10);
+
+  // Handle tip success/cancel from Stripe redirect URL params
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tipStatus = params.get("tip");
+    const amount = params.get("amount");
+    if (tipStatus === "success" && amount) {
+      toast.success(`⚡ $${amount} tip sent! The artist will receive it shortly.`, { duration: 6000 });
+      // Clean URL
+      window.history.replaceState({}, "", window.location.pathname);
+    } else if (tipStatus === "cancelled") {
+      toast.info("Tip cancelled — no charge was made.");
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Fetch artist profile
   const { data: artistProfile, isLoading: profileLoading } = trpc.artistProfile.getById.useQuery(
@@ -216,7 +395,7 @@ export default function ArtistBopsProfile() {
   // Accumulate pages — use a stable cursor key to avoid double-appending
   useEffect(() => {
     if (!bopsData) return;
-    const key = String(cursor ?? 'init');
+    const key = String(cursor ?? "init");
     if (seenCursors.current.has(key)) return;
     seenCursors.current.add(key);
     const existingIds = new Set(allBops.map((b) => b.id));
@@ -274,6 +453,15 @@ export default function ArtistBopsProfile() {
 
   return (
     <div className="min-h-screen text-white" style={{ fontFamily: "'Inter', sans-serif", background: "#0d1117", colorScheme: "dark" }}>
+
+      {/* ── Tip Artist Modal ── */}
+      {showTipModal && (
+        <TipArtistModal
+          artistId={parsedArtistId}
+          artistName={artist.stageName}
+          onClose={() => setShowTipModal(false)}
+        />
+      )}
 
       {/* ── Breadcrumb bar (below global nav) ── */}
       <div className="border-b border-white/5" style={{ background: "rgba(13,17,23,0.95)" }}>
@@ -408,11 +596,11 @@ export default function ArtistBopsProfile() {
 
               {/* Action buttons */}
               <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
-                {/* Tip button — primary CTA */}
+                {/* Tip button — primary CTA — opens modal */}
                 <button
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all"
-                  style={{ background: "#5DCCCC", color: "#000" }}
-                  onClick={() => navigate("/bops")}
+                  style={{ background: "#5DCCCC", color: "#000", boxShadow: "0 4px 20px rgba(93,204,204,0.25)" }}
+                  onClick={() => setShowTipModal(true)}
                 >
                   <Zap className="w-4 h-4" />
                   Tip Artist
