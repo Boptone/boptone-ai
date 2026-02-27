@@ -10,30 +10,15 @@
  */
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { Plus, Smartphone } from "lucide-react";
+import { Plus } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import BopsVideoPlayer, { type BopItem } from "@/components/BopsVideoPlayer";
 
-// ── Mobile detection ──────────────────────────────────────────────────────
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-  });
-  useEffect(() => {
-    const handler = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
-  }, []);
-  return isMobile;
-}
-
 export default function Bops() {
   const [, navigate] = useLocation();
   const { isAuthenticated } = useAuth();
-  const isMobile = useIsMobile();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -114,39 +99,7 @@ export default function Bops() {
     return () => window.removeEventListener("keydown", handler);
   }, [allBops.length]);
 
-  // ── Desktop gate ───────────────────────────────────────────────────────
-  if (!isMobile) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-6">
-        <div className="text-center max-w-sm">
-          <div
-            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: "#5DCCCC" }}
-          >
-            <Smartphone className="w-8 h-8 text-black" />
-          </div>
-          <h1 className="text-white text-2xl font-bold mb-3">
-            Bops is mobile-only
-          </h1>
-          <p className="text-white/50 text-sm leading-relaxed mb-6">
-            Open Boptone on your phone to watch and post Bops. The full experience is built for mobile.
-          </p>
-          <div className="bg-white/10 rounded-xl p-4 mb-6">
-            <p className="text-white/40 text-xs mb-2">Open on your phone</p>
-            <p className="text-white font-mono text-sm">boptone.com/bops</p>
-          </div>
-          <button
-            onClick={() => navigate("/")}
-            className="text-[#5DCCCC] text-sm underline underline-offset-4"
-          >
-            Back to Boptone
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Loading state ──────────────────────────────────────────────────────
+  // ── Loading statee ──────────────────────────────────────────────────────
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
