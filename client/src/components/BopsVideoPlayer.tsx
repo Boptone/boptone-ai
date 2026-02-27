@@ -11,6 +11,7 @@
  */
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
@@ -183,38 +184,22 @@ export default function BopsVideoPlayer({
       />
 
       {/* ── Artist info + caption — bottom left ──────────────────────────── */}
-      <div className="absolute bottom-6 left-4 right-20 z-30 pointer-events-none">
-        {/* Artist identity */}
-        <div className="flex items-center gap-2 mb-2">
-          {bop.artistAvatarUrl ? (
-            <img
-              src={bop.artistAvatarUrl}
-              alt={bop.artistName ?? "Artist"}
-              className="w-9 h-9 rounded-full object-cover border-2 border-white/80"
-            />
-          ) : (
-            <div className="w-9 h-9 rounded-full bg-[#5DCCCC] flex items-center justify-center border-2 border-white/80">
-              <span className="text-black font-bold text-sm">
-                {(bop.artistName ?? "A").charAt(0).toUpperCase()}
-              </span>
-            </div>
+      <div className="absolute bottom-6 left-4 right-20 z-30">
+        {/* Artist identity — clickable, navigates to artist profile */}
+        <ArtistIdentity bop={bop} />
+        <div className="pointer-events-none">
+          {/* Caption */}
+          {bop.caption && (
+            <p className="text-white text-sm leading-snug line-clamp-3 drop-shadow-md">
+              {bop.caption}
+            </p>
           )}
-          <span className="text-white font-semibold text-sm drop-shadow-md">
-            {bop.artistUsername ? `@${bop.artistUsername}` : bop.artistName ?? "Artist"}
-          </span>
-        </div>
 
-        {/* Caption */}
-        {bop.caption && (
-          <p className="text-white text-sm leading-snug line-clamp-3 drop-shadow-md">
-            {bop.caption}
+          {/* View count */}
+          <p className="text-white/60 text-xs mt-1 drop-shadow-md">
+            {formatCount(bop.viewCount)} views
           </p>
-        )}
-
-        {/* View count */}
-        <p className="text-white/60 text-xs mt-1 drop-shadow-md">
-          {formatCount(bop.viewCount)} views
-        </p>
+        </div>
       </div>
 
       {/* ── Action buttons — right rail ───────────────────────────────────── */}
@@ -226,5 +211,46 @@ export default function BopsVideoPlayer({
         />
       </div>
     </div>
+  );
+}
+
+/**
+ * ArtistIdentity — clickable avatar + username that navigates to /bops/artist/:artistId
+ * Rendered inside the video overlay; stops tap propagation so it doesn't toggle play/pause.
+ */
+function ArtistIdentity({ bop }: { bop: BopItem }) {
+  const [, navigate] = useLocation();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (bop.artistId) {
+      navigate(`/bops/artist/${bop.artistId}`);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="flex items-center gap-2 mb-2 group cursor-pointer"
+      style={{ background: "none", border: "none", padding: 0 }}
+      aria-label={`View ${bop.artistName ?? "artist"}'s profile`}
+    >
+      {bop.artistAvatarUrl ? (
+        <img
+          src={bop.artistAvatarUrl}
+          alt={bop.artistName ?? "Artist"}
+          className="w-9 h-9 rounded-full object-cover border-2 border-white/80 group-hover:border-[#5DCCCC] transition-colors"
+        />
+      ) : (
+        <div className="w-9 h-9 rounded-full bg-[#5DCCCC] flex items-center justify-center border-2 border-white/80 group-hover:border-white transition-colors">
+          <span className="text-black font-bold text-sm">
+            {(bop.artistName ?? "A").charAt(0).toUpperCase()}
+          </span>
+        </div>
+      )}
+      <span className="text-white font-semibold text-sm drop-shadow-md group-hover:text-[#5DCCCC] transition-colors">
+        {bop.artistUsername ? `@${bop.artistUsername}` : bop.artistName ?? "Artist"}
+      </span>
+    </button>
   );
 }
