@@ -89,7 +89,7 @@ export default function BopShopProduct() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-2xl text-gray-600">Loading...</div>
       </div>
     );
@@ -97,7 +97,7 @@ export default function BopShopProduct() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Product Not Found</h1>
             <Link href="/shop">
@@ -114,7 +114,7 @@ export default function BopShopProduct() {
   const isLowStock = product.trackInventory && product.inventoryQuantity > 0 && product.inventoryQuantity <= 5;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Back Button */}
       <div className="bg-white border-b-2 border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">

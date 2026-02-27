@@ -131,7 +131,7 @@ export default function Dashboard() {
   return (
     <>
       <DemoBanner />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#f8f8f6]">
         {/* Header - Minimal with massive typography */}
         <div className="border-b border-black bg-white">
           <div className="container py-20">

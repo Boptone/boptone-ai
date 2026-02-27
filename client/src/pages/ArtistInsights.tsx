@@ -106,14 +106,14 @@ export default function ArtistInsights() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-2xl font-bold">Loading insights...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Hero Section - BAP Protocol */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">

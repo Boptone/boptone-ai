@@ -127,7 +127,7 @@ export default function LegalChangelog() {
       </div>
 
       {/* Main Content */}
-      <div className="bg-white">
+      <div className="bg-[#f8f8f6]">
         <div className="container mx-auto px-6 py-12">
           <div className="max-w-4xl mx-auto">
             {/* Change History Timeline */}

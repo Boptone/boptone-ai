@@ -67,7 +67,7 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-2xl font-bold">LOADING...</div>
       </div>
     );
@@ -75,7 +75,7 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-semibold mb-4">PRODUCT NOT FOUND</h1>
           <Button onClick={() => setLocation("/shop")} className="rounded-full border border-gray-200 font-bold">
@@ -128,7 +128,7 @@ export default function ProductDetail() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       <SEOHead {...seoData} />
       
       {/* Breadcrumb Navigation */}

@@ -97,7 +97,7 @@ export default function MyStoreOrders() {
 
   if (authLoading || isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="flex items-center justify-center min-h-screen bg-[#f8f8f6]">
         <div className="text-2xl font-bold">Loading...</div>
       </div>
     );
@@ -231,7 +231,7 @@ export default function MyStoreOrders() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       <div className="container py-12">
         {/* Header */}
         <div className="mb-12">

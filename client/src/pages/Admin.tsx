@@ -105,7 +105,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Header */}
       <div className="border-b-4 border-black bg-white sticky top-0 z-10">
         <div className="container py-6">

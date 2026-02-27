@@ -109,7 +109,7 @@ export default function Workflows() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-[#f8f8f6] p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* AI Workflow Assistant - Prominent placement */}
         <AIWorkflowAssistant

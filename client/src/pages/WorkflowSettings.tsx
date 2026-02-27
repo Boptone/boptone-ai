@@ -144,7 +144,7 @@ export default function WorkflowSettings() {
 
   if (authLoading || workflowsLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex items-center justify-center min-h-screen bg-[#f8f8f6]">
         <div className="text-2xl font-bold text-gray-900">Loading...</div>
       </div>
     );

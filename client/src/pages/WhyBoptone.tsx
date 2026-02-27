@@ -58,7 +58,7 @@ export default function WhyBoptone() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-16 pb-12 md:pt-24 md:pb-16">
         <div className="max-w-4xl mx-auto text-center">

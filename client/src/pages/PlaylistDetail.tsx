@@ -243,7 +243,7 @@ export default function PlaylistDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-[#008B8B] border-r-transparent mb-4"></div>
           <p className="text-gray-600 font-medium">Loading playlist...</p>
@@ -254,7 +254,7 @@ export default function PlaylistDetail() {
 
   if (!playlistData) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4">Playlist not found</h2>
           <Button
@@ -269,7 +269,7 @@ export default function PlaylistDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Header */}
       <div className="border-b-4 border-black bg-gradient-to-br from-[#e0f2f2] to-white">
         <div className="container py-12">

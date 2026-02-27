@@ -111,7 +111,7 @@ export default function CookieSettings() {
   return (
     <>
     {/* Light gray background with smooth scroll - matches TOS/Privacy pages */}
-    <div className="min-h-screen bg-gray-50 scroll-smooth">
+    <div className="min-h-screen bg-[#f8f8f6] scroll-smooth">
       {/* White content container with max-width and padding - matches TOS/Privacy pages */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">

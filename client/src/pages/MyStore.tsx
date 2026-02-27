@@ -42,7 +42,7 @@ export default function MyStore() {
 
   if (authLoading || productsLoading || ordersLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="flex items-center justify-center min-h-screen bg-[#f8f8f6]">
         <div className="text-xl font-medium text-gray-600">Loading...</div>
       </div>
     );

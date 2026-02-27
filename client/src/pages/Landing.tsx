@@ -156,7 +156,7 @@ export default function Landing() {
     tier.monthlyPrice > 0 ? Math.round((tier.monthlyPrice * 12 - tier.annualPrice * 12) / (tier.monthlyPrice * 12) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Hero Section */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">

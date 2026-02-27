@@ -165,7 +165,7 @@ export default function Listen() {
   
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white py-12">
+      <div className="min-h-screen bg-[#f8f8f6] py-12">
         <div className="container max-w-4xl">
           <Skeleton className="h-96 w-full rounded-xl" />
         </div>
@@ -175,7 +175,7 @@ export default function Listen() {
   
   if (error || !track) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <Card className="p-8 text-center max-w-md border border-gray-200">
           <h2 className="text-2xl font-bold mb-2">Track Not Found</h2>
           <p className="text-muted-foreground mb-6">
@@ -191,7 +191,7 @@ export default function Listen() {
   const artistShareAmount = ((track.pricePerStream * track.artistShare) / 10000).toFixed(2);
   
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Audio element */}
       <audio
         ref={audioRef}

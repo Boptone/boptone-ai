@@ -178,7 +178,7 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center p-4">
       <Card className="rounded-lg border border-black w-full max-w-2xl bg-white shadow-sm hover:border-black transition-colors">
         <CardHeader className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">

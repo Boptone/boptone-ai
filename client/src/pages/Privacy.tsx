@@ -8,7 +8,7 @@ export default function Privacy() {
   return (
     <>
     {/* Light gray background with smooth scroll */}
-    <div className="min-h-screen bg-gray-50 scroll-smooth">
+    <div className="min-h-screen bg-[#f8f8f6] scroll-smooth">
 
       {/* White content container with max-width and padding */}
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">

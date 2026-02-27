@@ -52,7 +52,7 @@ export default function Playlists() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Header */}
       <div className="border-b-4 border-black bg-white">
         <div className="container py-12">

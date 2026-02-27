@@ -19,7 +19,7 @@ export default function HowItWorks() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4 overflow-hidden relative">
+    <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center p-4 overflow-hidden relative">
       <div className="w-full max-w-6xl relative z-10">
         {/* Progress dots */}
         <div className="flex justify-center gap-2 mb-12">

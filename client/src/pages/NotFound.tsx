@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
  */
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#f8f8f6] flex flex-col">
       {/* Main Content - Centered */}
       <div className="flex-1 flex items-center justify-center px-6">
         <div className="max-w-2xl w-full text-center">

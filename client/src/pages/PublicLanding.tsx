@@ -63,7 +63,7 @@ export default function PublicLanding() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Hero Section */}
       <section className="py-24 md:py-40">
         <div className="container mx-auto px-4">

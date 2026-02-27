@@ -29,7 +29,7 @@ export default function CheckoutSuccess() {
   
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-16 h-16 animate-spin text-[#0cc0df] mx-auto mb-4" />
           <p className="text-xl text-gray-600">Confirming your order...</p>
@@ -40,7 +40,7 @@ export default function CheckoutSuccess() {
   
   if (!session || session.status !== "paid") {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <p className="text-xl text-gray-600 mb-8">Unable to confirm your order</p>
           <Link href="/cart">
@@ -57,7 +57,7 @@ export default function CheckoutSuccess() {
   }
   
   return (
-    <div className="min-h-screen bg-white py-20">
+    <div className="min-h-screen bg-[#f8f8f6] py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
           {/* Success Icon */}

@@ -56,7 +56,7 @@ export default function AdminDashboard({ children }: AdminDashboardProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full w-64 bg-white border-r border-gray-200 flex flex-col">
         {/* Logo */}

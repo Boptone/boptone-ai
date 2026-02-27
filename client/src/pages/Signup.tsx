@@ -141,7 +141,7 @@ export default function Signup() {
 
   if (step === "tier") {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-[#f8f8f6]">
         {/* Header */}
         <div className="container mx-auto px-4 py-12">
           <div className="text-center mb-16">
@@ -243,7 +243,7 @@ export default function Signup() {
 
   // Profile Creation Step
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center p-4">
       <Card 
         className="w-full max-w-2xl border border-black rounded-lg bg-white"
         style={{

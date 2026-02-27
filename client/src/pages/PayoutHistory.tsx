@@ -95,7 +95,7 @@ export default function PayoutHistory() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       <div className="container py-8">
         {/* Header */}
         <div className="mb-8">

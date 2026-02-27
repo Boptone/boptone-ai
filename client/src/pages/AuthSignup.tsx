@@ -165,7 +165,7 @@ export default function AuthSignup() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center p-4 relative">
       {/* Top-right Sign In link */}
       <div className="absolute top-8 right-8 flex items-center gap-4">
         <span className="text-sm text-gray-600">Have an account?</span>

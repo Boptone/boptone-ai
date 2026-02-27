@@ -76,7 +76,7 @@ export default function Cart() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <ShoppingBag className="h-24 w-24 text-gray-400 mx-auto mb-6" />
           <h1 className="text-4xl font-bold mb-4">Sign in to view your cart</h1>
@@ -98,7 +98,7 @@ export default function Cart() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-2xl text-gray-600">Loading cart...</div>
       </div>
     );
@@ -112,7 +112,7 @@ export default function Cart() {
   const isEmpty = !cartItems || cartItems.length === 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f8f8f6]">
       {/* Header */}
       <div className="bg-white border-b-2 border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-8">

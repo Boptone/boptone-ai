@@ -69,7 +69,7 @@ export default function Features() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       
       {/* Hero Section - Minimal with massive typography */}
       <div className="border-b border-black bg-white">

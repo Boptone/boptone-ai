@@ -60,7 +60,7 @@ export default function BopAudio() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#f8f8f6]">
       
       {/* Hero Section - BAP Protocol with massive typography */}
       <div className="border-b-2 border-black bg-white">

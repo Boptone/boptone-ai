@@ -120,7 +120,7 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-[#f8f8f6] py-12">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
         <div className="mb-12 flex items-start gap-8">

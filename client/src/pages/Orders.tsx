@@ -61,7 +61,7 @@ export default function Orders() {
   // Auth check
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
@@ -72,7 +72,7 @@ export default function Orders() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
           <h1 className="text-4xl font-bold mb-4">Sign in to view your orders</h1>
@@ -95,7 +95,7 @@ export default function Orders() {
   // Loading state
   if (ordersLoading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
           <p className="text-gray-600">Loading orders...</p>
@@ -110,7 +110,7 @@ export default function Orders() {
   const isEmpty = orders.length === 0 && page === 0;
 
   return (
-    <div className="min-h-screen bg-white pb-24">
+    <div className="min-h-screen bg-[#f8f8f6] pb-24">
       {/* Header */}
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
