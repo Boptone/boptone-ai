@@ -190,6 +190,13 @@
       "when": 1772139417753,
       "tag": "0030_ambiguous_runaways",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "5",
+      "when": 1772211158345,
+      "tag": "0031_shocking_mandroid",
+      "breakpoints": true
     }
   ]
 }

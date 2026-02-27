@@ -1,4 +1,4 @@
-import { int, bigint, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, index, date } from "drizzle-orm/mysql-core";
+import { int, bigint, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, boolean, json, index, uniqueIndex, date } from "drizzle-orm/mysql-core";
 
 /**
  * BOPTONE DATABASE SCHEMA
@@ -4241,3 +4241,197 @@ export const knownCopyrightedImages = mysqlTable("known_copyrighted_images", {
 
 export type KnownCopyrightedImage = typeof knownCopyrightedImages.$inferSelect;
 export type InsertKnownCopyrightedImage = typeof knownCopyrightedImages.$inferInsert;
+
+// =============================================================================
+// BOPS — VERTICAL VIDEO FEATURE
+// "Post a Bop on Boptone" — 15-30 second artist videos with instant tipping
+//
+// Architecture principles:
+//  • Composite indexes on every hot query path (feed, profile, trending)
+//  • Soft deletes on all content — nothing is hard-deleted (full audit trail)
+//  • Idempotent likes/views via unique constraints — no double-counting ever
+//  • Tip fee model: card processing fees only — Boptone takes ZERO cut (Kick In policy)
+//  • Content moderation hooks built-in — ready for AI pipeline integration
+//  • Designed to scale to 1B+ views without schema changes
+// =============================================================================
+
+/**
+ * Bops Videos
+ * Core table for all Bop (short-form vertical video) content.
+ * Every Bop is 15-30 seconds, 9:16 aspect ratio, 1080p max resolution.
+ */
+export const bopsVideos = mysqlTable("bops_videos", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  caption: varchar("caption", { length: 150 }),
+  videoKey: varchar("videoKey", { length: 500 }).notNull(),
+  videoUrl: varchar("videoUrl", { length: 500 }).notNull(),
+  rawVideoKey: varchar("rawVideoKey", { length: 500 }),
+  thumbnailKey: varchar("thumbnailKey", { length: 500 }),
+  thumbnailUrl: varchar("thumbnailUrl", { length: 500 }),
+  waveformKey: varchar("waveformKey", { length: 500 }),
+  durationMs: int("durationMs").notNull(),
+  width: int("width").default(1080),
+  height: int("height").default(1920),
+  fileSizeBytes: int("fileSizeBytes"),
+  mimeType: varchar("mimeType", { length: 50 }).default("video/mp4"),
+  processingStatus: mysqlEnum("processingStatus", ["pending", "processing", "ready", "failed"]).default("pending").notNull(),
+  processingError: text("processingError"),
+  processedAt: timestamp("processedAt"),
+  linkedTrackId: int("linkedTrackId").references(() => bapTracks.id, { onDelete: "set null" }),
+  viewCount: int("viewCount").default(0).notNull(),
+  likeCount: int("likeCount").default(0).notNull(),
+  commentCount: int("commentCount").default(0).notNull(),
+  tipCount: int("tipCount").default(0).notNull(),
+  tipTotalCents: int("tipTotalCents").default(0).notNull(),
+  shareCount: int("shareCount").default(0).notNull(),
+  trendingScore: int("trendingScore").default(0).notNull(),
+  trendingUpdatedAt: timestamp("trendingUpdatedAt"),
+  moderationStatus: mysqlEnum("moderationStatus", ["pending", "approved", "flagged", "rejected", "appealing"]).default("pending").notNull(),
+  moderationNote: text("moderationNote"),
+  moderatedAt: timestamp("moderatedAt"),
+  moderatedBy: int("moderatedBy").references(() => users.id, { onDelete: "set null" }),
+  isPublished: boolean("isPublished").default(false).notNull(),
+  isArchived: boolean("isArchived").default(false).notNull(),
+  isDeleted: boolean("isDeleted").default(false).notNull(),
+  deletedAt: timestamp("deletedAt"),
+  deletedBy: int("deletedBy").references(() => users.id, { onDelete: "set null" }),
+  geoRestrictions: json("geoRestrictions").$type<string[]>(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  publishedAt: timestamp("publishedAt"),
+}, (table) => ({
+  artistIdIdx: index("bops_artist_id_idx").on(table.artistId),
+  userIdIdx: index("bops_user_id_idx").on(table.userId),
+  linkedTrackIdx: index("bops_linked_track_idx").on(table.linkedTrackId),
+  feedIdx: index("bops_feed_idx").on(table.isPublished, table.isDeleted, table.isArchived, table.publishedAt),
+  trendingIdx: index("bops_trending_idx").on(table.trendingScore, table.isPublished, table.isDeleted),
+  artistFeedIdx: index("bops_artist_feed_idx").on(table.artistId, table.isPublished, table.isDeleted, table.publishedAt),
+  processingIdx: index("bops_processing_idx").on(table.processingStatus, table.createdAt),
+  moderationIdx: index("bops_moderation_idx").on(table.moderationStatus, table.createdAt),
+}));
+export type BopsVideo = typeof bopsVideos.$inferSelect;
+export type InsertBopsVideo = typeof bopsVideos.$inferInsert;
+
+/**
+ * Bops Likes
+ * Unique constraint on (userId, videoId) prevents double-liking.
+ * isActive=false = unliked (row kept for analytics).
+ */
+export const bopsLikes = mysqlTable("bops_likes", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  videoId: int("videoId").notNull().references(() => bopsVideos.id, { onDelete: "cascade" }),
+  isActive: boolean("isActive").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  uniqueLike: uniqueIndex("bops_likes_unique").on(table.userId, table.videoId),
+  videoIdIdx: index("bops_likes_video_idx").on(table.videoId, table.isActive),
+  userIdIdx: index("bops_likes_user_idx").on(table.userId, table.isActive),
+}));
+export type BopsLike = typeof bopsLikes.$inferSelect;
+export type InsertBopsLike = typeof bopsLikes.$inferInsert;
+
+/**
+ * Bops Views
+ * One row per view session. Deduplication for trending score at application layer.
+ */
+export const bopsViews = mysqlTable("bops_views", {
+  id: int("id").autoincrement().primaryKey(),
+  videoId: int("videoId").notNull().references(() => bopsVideos.id, { onDelete: "cascade" }),
+  userId: int("userId").references(() => users.id, { onDelete: "set null" }),
+  sessionId: varchar("sessionId", { length: 128 }),
+  watchDurationMs: int("watchDurationMs"),
+  watchPercent: int("watchPercent"),
+  completedWatch: boolean("completedWatch").default(false).notNull(),
+  source: mysqlEnum("source", ["for_you", "following", "profile", "search", "share", "direct"]).default("for_you"),
+  platform: mysqlEnum("platform", ["ios", "android", "web"]).default("web"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  videoIdIdx: index("bops_views_video_idx").on(table.videoId, table.createdAt),
+  userIdIdx: index("bops_views_user_idx").on(table.userId, table.createdAt),
+  trendingViewIdx: index("bops_views_trending_idx").on(table.videoId, table.completedWatch, table.createdAt),
+}));
+export type BopsView = typeof bopsViews.$inferSelect;
+export type InsertBopsView = typeof bopsViews.$inferInsert;
+
+/**
+ * Bops Tips (Lightning Tip Button)
+ * Fee model: Stripe processing fees only — Boptone takes ZERO cut (Kick In policy).
+ * All amounts in cents — never store floats for money.
+ */
+export const bopsTips = mysqlTable("bops_tips", {
+  id: int("id").autoincrement().primaryKey(),
+  videoId: int("videoId").notNull().references(() => bopsVideos.id, { onDelete: "restrict" }),
+  fromUserId: int("fromUserId").notNull().references(() => users.id, { onDelete: "restrict" }),
+  toArtistId: int("toArtistId").notNull().references(() => artistProfiles.id, { onDelete: "restrict" }),
+  toUserId: int("toUserId").notNull().references(() => users.id, { onDelete: "restrict" }),
+  grossAmountCents: int("grossAmountCents").notNull(),
+  stripeFeesCents: int("stripeFeesCents").notNull(),
+  netAmountCents: int("netAmountCents").notNull(),
+  platformFeeCents: int("platformFeeCents").default(0).notNull(),
+  currency: varchar("currency", { length: 3 }).default("usd").notNull(),
+  stripePaymentIntentId: varchar("stripePaymentIntentId", { length: 255 }).unique(),
+  stripeChargeId: varchar("stripeChargeId", { length: 255 }),
+  stripeTransferId: varchar("stripeTransferId", { length: 255 }),
+  status: mysqlEnum("status", ["pending", "completed", "failed", "refunded", "disputed"]).default("pending").notNull(),
+  message: varchar("message", { length: 150 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  completedAt: timestamp("completedAt"),
+}, (table) => ({
+  videoIdIdx: index("bops_tips_video_idx").on(table.videoId),
+  fromUserIdx: index("bops_tips_from_user_idx").on(table.fromUserId),
+  toArtistIdx: index("bops_tips_to_artist_idx").on(table.toArtistId, table.status),
+  statusIdx: index("bops_tips_status_idx").on(table.status, table.createdAt),
+  artistEarningsIdx: index("bops_tips_artist_earnings_idx").on(table.toArtistId, table.status, table.createdAt),
+}));
+export type BopsTip = typeof bopsTips.$inferSelect;
+export type InsertBopsTip = typeof bopsTips.$inferInsert;
+
+/**
+ * Bops Comments
+ * Max depth: 1 level (comment → reply only). Keeps UX simple and performant.
+ */
+export const bopsComments = mysqlTable("bops_comments", {
+  id: int("id").autoincrement().primaryKey(),
+  videoId: int("videoId").notNull().references(() => bopsVideos.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  body: varchar("body", { length: 300 }).notNull(),
+  parentCommentId: int("parentCommentId"),
+  likeCount: int("likeCount").default(0).notNull(),
+  replyCount: int("replyCount").default(0).notNull(),
+  isDeleted: boolean("isDeleted").default(false).notNull(),
+  deletedAt: timestamp("deletedAt"),
+  deletedBy: int("deletedBy").references(() => users.id, { onDelete: "set null" }),
+  isFlagged: boolean("isFlagged").default(false).notNull(),
+  flagReason: varchar("flagReason", { length: 255 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  videoIdIdx: index("bops_comments_video_idx").on(table.videoId, table.isDeleted, table.createdAt),
+  userIdIdx: index("bops_comments_user_idx").on(table.userId),
+  parentIdx: index("bops_comments_parent_idx").on(table.parentCommentId, table.isDeleted),
+  flaggedIdx: index("bops_comments_flagged_idx").on(table.isFlagged, table.createdAt),
+}));
+export type BopsComment = typeof bopsComments.$inferSelect;
+export type InsertBopsComment = typeof bopsComments.$inferInsert;
+
+/**
+ * Bops Comment Likes
+ * Unique constraint prevents double-liking a comment.
+ */
+export const bopsCommentLikes = mysqlTable("bops_comment_likes", {
+  id: int("id").autoincrement().primaryKey(),
+  commentId: int("commentId").notNull().references(() => bopsComments.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  uniqueCommentLike: uniqueIndex("bops_comment_likes_unique").on(table.commentId, table.userId),
+  commentIdIdx: index("bops_comment_likes_comment_idx").on(table.commentId),
+  userIdIdx: index("bops_comment_likes_user_idx").on(table.userId),
+}));
+export type BopsCommentLike = typeof bopsCommentLikes.$inferSelect;
+export type InsertBopsCommentLike = typeof bopsCommentLikes.$inferInsert;

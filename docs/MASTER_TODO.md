@@ -44,8 +44,8 @@ The foundation that powers every other pillar. Identity, authentication, profile
 - [x] CloudFront CDN setup documented
 - [x] Top navigation: BOPTONE wordmark, all caps, top left
 - [x] Copyright year current across all pages and legal docs
-- [ ] Fix 4 remaining TypeScript errors (ProductDetail.tsx, StripeCheckoutProps)
-- [ ] Fix storage.ts async/await error (line 160)
+- [x] Fix 4 remaining TypeScript errors (ProductDetail.tsx, StripeCheckoutProps, Checkout.tsx, BopShopBrowse.tsx)
+- [x] Fix storage.ts async/await error (stale log confirmed non-issue — 0 TS errors)
 - [ ] Mobile: Remove push notifications section from mobile view
 - [ ] Footer: Verify copyright year is current (2026)
 
@@ -177,8 +177,8 @@ Artists post 15-30 second vertical videos called "Bops." Fans watch, like, comme
 
 ### P0 — Launch Blocking (Week 1-2 Sprint)
 
-- [ ] Database schema: bopsVideos, bopsLikes, bopsTips, bopsComments, bopsViews tables
-- [ ] tRPC API: getFeed, upload, like, comment, tip, getComments, trackView
+- [x] Database schema: bopsVideos, bopsLikes, bopsTips, bopsComments, bopsViews, bopsCommentLikes tables (6 tables, 30 indexes, live in DB)
+- [x] tRPC API: getFeed, getByArtist, getById, create, publish, delete, toggleLike, getLikeStatus, recordView, sendTip, confirmTip, getMyTipEarnings, getComments, postComment, deleteComment, toggleCommentLike, getMyBops (17 procedures)
 - [ ] Video upload: S3 upload with validation (15-30s, 9:16, 50MB max, 1080p)
 - [ ] Video player: Mobile-only vertical player with swipe-up navigation
 - [ ] Tap to pause/play

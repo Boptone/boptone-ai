@@ -13,6 +13,7 @@ import { microloansRouter } from "./routers/microloans";
 import { ecommerceRouter } from "./ecommerceRouter";
 import { podRouter } from "./routers/pod";
 import { writerPaymentsRouter } from "./routers/writerPayments";
+import { bopsRouter } from "./routers/bops";
 import { subscriptionsRouter } from "./routers/subscriptions";
 import { musicRouter } from "./routers/music";
 import { payoutsRouter } from "./routers/payouts";
@@ -639,6 +640,7 @@ export const appRouter = router({
   analytics: analyticsRouter,
   playlist: playlistRouter,
   fanWallet: fanWalletRouter,
+  bops: bopsRouter,
   
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
