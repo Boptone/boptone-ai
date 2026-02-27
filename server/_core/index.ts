@@ -153,6 +153,16 @@ async function startServer() {
     }
   );
   
+  // Bops video upload endpoint — must be registered BEFORE body parsers
+  // Uses multer for multipart/form-data, handles up to 200MB video files
+  app.post(
+    "/api/bops/upload",
+    async (req, res) => {
+      const { handleBopsUpload } = await import("../api/bops-upload");
+      return handleBopsUpload(req, res);
+    }
+  );
+
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));

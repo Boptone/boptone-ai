@@ -179,7 +179,14 @@ Artists post 15-30 second vertical videos called "Bops." Fans watch, like, comme
 
 - [x] Database schema: bopsVideos, bopsLikes, bopsTips, bopsComments, bopsViews, bopsCommentLikes tables (6 tables, 30 indexes, live in DB)
 - [x] tRPC API: getFeed, getByArtist, getById, create, publish, delete, toggleLike, getLikeStatus, recordView, sendTip, confirmTip, getMyTipEarnings, getComments, postComment, deleteComment, toggleCommentLike, getMyBops (17 procedures)
-- [ ] Video upload: S3 upload with validation (15-30s, 9:16, 50MB max, 1080p)
+- [x] Video upload: REST endpoint /api/bops/upload (multer + S3, 200MB max)
+- [x] Video upload: Client-side validation (15-30s duration, 9:16 aspect ratio, 200MB, MP4/MOV/WebM)
+- [x] Video upload: XHR progress tracking with real-time percentage bar
+- [x] Video upload: Thumbnail preview extracted from video frame
+- [x] Video upload: Caption input (150 char limit)
+- [x] Video upload: BopsVideoUpload component (drop zone, preview, validation indicators)
+- [x] Video upload: BopsUpload page at /bops/upload with auth guard
+- [x] Video upload: Route registered in App.tsx
 - [ ] Video player: Mobile-only vertical player with swipe-up navigation
 - [ ] Tap to pause/play
 - [ ] Like button: Animated heart, optimistic UI, counter

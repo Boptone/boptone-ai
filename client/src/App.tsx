@@ -94,6 +94,7 @@ const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 const AdminRevenue = lazy(() => import("./pages/admin/AdminRevenue"));
 const Playlists = lazy(() => import("./pages/Playlists"));
 const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
+const BopsUpload = lazy(() => import("./pages/BopsUpload"));
 
 // Loading fallback component
 function PageLoader() {
@@ -173,6 +174,7 @@ function Router() {
         <Route path={"/protocol"} component={BAP} />
         <Route path={"/bap-protocol"} component={BAP} />
         <Route path={"/upload"} component={Upload} />
+        <Route path={"/bops/upload"} component={BopsUpload} />
         <Route path={"/music"} component={Discover} />
         <Route path={"/playlists"} component={Playlists} />
         <Route path={"/playlists/:id"} component={PlaylistDetail} />
