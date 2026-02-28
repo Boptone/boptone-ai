@@ -14,6 +14,7 @@ import { serveStatic, setupVite } from "./vite";
 import { startJobScheduler } from "../services/jobScheduler";
 import { startVideoProcessorWorker } from "../workers/videoProcessor";
 import { startAutoPayoutScheduler } from "../workers/autoPayoutScheduler";
+import { startAccountDeletionWorker } from "../workers/accountDeletionWorker";
 import { ENV } from "./env";
 import { COOKIE_NAME } from "@shared/const";
 
@@ -387,6 +388,12 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
       startAutoPayoutScheduler();
     } catch (err) {
       console.warn("[AutoPayout] Scheduler failed to start (Redis may not be available):", err instanceof Error ? err.message : err);
+    }
+    // Start the GDPR account deletion worker (processes 30-day delayed deletion jobs)
+    try {
+      startAccountDeletionWorker();
+    } catch (err) {
+      console.warn("[AccountDeletion] Worker failed to start (Redis may not be available):", err instanceof Error ? err.message : err);
     }
   });
 }

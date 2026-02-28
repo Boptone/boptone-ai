@@ -131,6 +131,51 @@ export async function storagePut(
   return { key, url };
 }
 
+/**
+ * Delete a single S3 object by key.
+ * Silently succeeds if the object does not exist (404).
+ */
+export async function storageDelete(relKey: string): Promise<void> {
+  const { baseUrl, apiKey } = getStorageConfig();
+  const key = normalizeKey(relKey);
+  const deleteUrl = new URL("v1/storage/delete", ensureTrailingSlash(baseUrl));
+  deleteUrl.searchParams.set("path", key);
+  const response = await fetch(deleteUrl, {
+    method: "DELETE",
+    headers: buildAuthHeaders(apiKey),
+  });
+  // 404 is acceptable — object may have already been deleted
+  if (!response.ok && response.status !== 404) {
+    const message = await response.text().catch(() => response.statusText);
+    throw new Error(
+      `Storage delete failed (${response.status} ${response.statusText}): ${message}`
+    );
+  }
+}
+
+/**
+ * Delete multiple S3 objects by key list.
+ * Silently skips keys that no longer exist.
+ * Returns counts of deleted and failed keys.
+ */
+export async function storageDeleteMany(
+  keys: string[]
+): Promise<{ deleted: number; failed: number }> {
+  let deleted = 0;
+  let failed = 0;
+  await Promise.allSettled(
+    keys.map(async (key) => {
+      try {
+        await storageDelete(key);
+        deleted++;
+      } catch {
+        failed++;
+      }
+    })
+  );
+  return { deleted, failed };
+}
+
 export async function storageGet(relKey: string): Promise<{ key: string; url: string; }> {
   const { baseUrl, apiKey } = getStorageConfig();
   const key = normalizeKey(relKey);

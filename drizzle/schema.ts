@@ -4456,3 +4456,48 @@ export const bopsArtistFollows = mysqlTable("bops_artist_follows", {
 }));
 export type BopsArtistFollow = typeof bopsArtistFollows.$inferSelect;
 export type InsertBopsArtistFollow = typeof bopsArtistFollows.$inferInsert;
+
+/**
+ * User Deletion Requests (GDPR Article 17 — Right to Erasure)
+ *
+ * Tracks account deletion requests with a 30-day grace period.
+ * During the grace period the user can cancel the request.
+ * After scheduledAt the BullMQ deletion worker fires and:
+ *   1. Anonymizes the users row (name, email, openId)
+ *   2. Deletes all S3 objects owned by the user
+ *   3. Deletes the Stripe customer and Connect account
+ *   4. Hard-deletes non-financial DB rows (bops, tracks, profile, etc.)
+ *   5. Marks this row status = 'completed'
+ *
+ * Financial records (orders, payouts, transactions) are retained for 7 years
+ * per tax/accounting obligations and anonymized instead of deleted.
+ */
+export const userDeletionRequests = mysqlTable("user_deletion_requests", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  /** ISO reason code: user_request | legal_order | admin_action */
+  reason: varchar("reason", { length: 64 }).notNull().default("user_request"),
+  /** Optional free-text reason provided by the user */
+  reasonDetail: varchar("reasonDetail", { length: 500 }),
+  /** When the actual deletion will execute (requestedAt + 30 days) */
+  scheduledAt: timestamp("scheduledAt").notNull(),
+  /** pending → processing → completed | cancelled | failed */
+  status: mysqlEnum("status", ["pending", "processing", "completed", "cancelled", "failed"])
+    .notNull()
+    .default("pending"),
+  /** BullMQ job ID for cancellation */
+  jobId: varchar("jobId", { length: 128 }),
+  /** JSON summary of what was deleted (for audit log) */
+  deletionSummary: text("deletionSummary"),
+  /** Error message if status = failed */
+  errorMessage: text("errorMessage"),
+  cancelledAt: timestamp("cancelledAt"),
+  completedAt: timestamp("completedAt"),
+  requestedAt: timestamp("requestedAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("udr_user_idx").on(table.userId, table.status),
+  scheduledIdx: index("udr_scheduled_idx").on(table.scheduledAt, table.status),
+}));
+export type UserDeletionRequest = typeof userDeletionRequests.$inferSelect;
+export type InsertUserDeletionRequest = typeof userDeletionRequests.$inferInsert;

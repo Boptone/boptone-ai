@@ -85,7 +85,7 @@ export default function Money() {
 
   const availableUSD = balance ? (balance.availableBalance / 100).toFixed(2) : "0.00";
   const pendingUSD = balance ? (balance.pendingBalance / 100).toFixed(2) : "0.00";
-  const totalEarnedUSD = balance ? (balance.totalEarned / 100).toFixed(2) : "0.00";
+  const totalEarnedUSD = balance ? (balance.totalEarnings / 100).toFixed(2) : "0.00";
 
   const getStatusBadge = (status: string) => {
     const map: Record<string, { label: string; className: string }> = {

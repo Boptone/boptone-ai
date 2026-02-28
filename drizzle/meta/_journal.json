@@ -218,6 +218,13 @@
       "when": 1772308138488,
       "tag": "0034_glorious_quentin_quire",
       "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "5",
+      "when": 1772309729299,
+      "tag": "0035_left_power_man",
+      "breakpoints": true
     }
   ]
 }

@@ -16,9 +16,10 @@ import {
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
-import { Download, Trash2, AlertTriangle } from "lucide-react";
+import { Download, Trash2, AlertTriangle, Clock, ShieldCheck, X } from "lucide-react";
 import { AvatarUpload } from "@/components/AvatarUpload";
 import { UserAvatar } from "@/components/UserAvatar";
+import { Badge } from "@/components/ui/badge";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,6 +31,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function ProfileSettings() {
   useRequireArtist(); // Enforce artist authentication
@@ -46,6 +56,37 @@ export default function ProfileSettings() {
   const [accentColor, setAccentColor] = useState(profile?.accentColor || "#00d4aa");
   const [layoutStyle, setLayoutStyle] = useState(profile?.layoutStyle || "default");
   const [fontFamily, setFontFamily] = useState(profile?.fontFamily || "Inter");
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+
+  // GDPR: Deletion status
+  const { data: deletionStatus, refetch: refetchDeletionStatus } = trpc.gdpr.getDeletionStatus.useQuery(
+    undefined,
+    { enabled: !!user && !isDemoMode }
+  );
+
+  const requestDeletion = trpc.gdpr.requestDeletion.useMutation({
+    onSuccess: (data) => {
+      toast.success(`Account scheduled for deletion on ${new Date(data.scheduledAt).toLocaleDateString()}. You have 30 days to cancel.`);
+      setDeleteDialogOpen(false);
+      setDeleteConfirmText("");
+      refetchDeletionStatus();
+    },
+    onError: (error) => {
+      toast.error(`Deletion request failed: ${error.message}`);
+    },
+  });
+
+  const cancelDeletion = trpc.gdpr.cancelDeletion.useMutation({
+    onSuccess: () => {
+      toast.success("Account deletion cancelled. Your account is safe.");
+      refetchDeletionStatus();
+    },
+    onError: (error) => {
+      toast.error(`Failed to cancel: ${error.message}`);
+    },
+  });
 
   const updateProfile = trpc.artistProfile.update.useMutation({
     onSuccess: () => {
@@ -77,6 +118,24 @@ export default function ProfileSettings() {
       layoutStyle: layoutStyle as "default" | "minimal" | "grid",
       fontFamily,
     });
+  };
+
+  const exportDataMutation = trpc.gdpr.exportUserData.useMutation({
+    onSuccess: (result) => {
+      window.open(result.downloadUrl, "_blank");
+      toast.success(`Data export ready — ${(result.fileSizeBytes / 1024).toFixed(1)} KB. Download started.`);
+      setIsExporting(false);
+    },
+    onError: (error) => {
+      toast.error(`Export failed: ${error.message}`);
+      setIsExporting(false);
+    },
+  });
+
+  const handleExportData = async () => {
+    if (isDemoMode) { toast.info("Data export is not available in demo mode."); return; }
+    setIsExporting(true);
+    exportDataMutation.mutate(undefined);
   };
 
   const handlePreview = () => {
@@ -304,33 +363,55 @@ export default function ProfileSettings() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 pt-8">
+              {/* Deletion Status Banner — shown only when a deletion is pending */}
+              {deletionStatus?.status === "pending" && (
+                <div className="p-5 rounded-lg border-2 border-orange-400 bg-orange-50 flex items-start gap-4">
+                  <Clock className="h-6 w-6 text-orange-600 mt-0.5 shrink-0" />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="text-lg font-bold text-orange-900">Account Deletion Scheduled</h4>
+                      <Badge className="bg-orange-200 text-orange-800 font-bold text-xs">PENDING</Badge>
+                    </div>
+                    <p className="text-sm text-orange-800 font-medium mb-3">
+                      Your account is scheduled for permanent deletion on{" "}
+                      <strong>
+                        {deletionStatus.scheduledAt
+                          ? new Date(deletionStatus.scheduledAt).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
+                          : "—"}
+                      </strong>.
+                      All your data, Bops, and artist profile will be permanently erased. You have until that date to cancel.
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="rounded-lg border-2 border-orange-600 text-orange-700 hover:bg-orange-100 font-bold"
+                      onClick={() => cancelDeletion.mutate(undefined)}
+                      disabled={cancelDeletion.isPending}
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      {cancelDeletion.isPending ? "Cancelling..." : "Cancel Account Deletion"}
+                    </Button>
+                  </div>
+                </div>
+              )}
+
               {/* Download Data */}
               <div className="p-6 rounded-lg border border-black bg-gray-50">
                 <div className="flex items-start gap-4">
                   <Download className="h-6 w-6 text-blue-600 mt-1" />
                   <div className="flex-1">
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      Download Your Data
-                    </h4>
+                    <h4 className="text-xl font-bold text-gray-900 mb-1">Download Your Data</h4>
+                    <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-3">GDPR Article 20 — Right to Data Portability</p>
                     <p className="text-base text-gray-600 font-medium mb-4">
-                      Export all your personal data in JSON format. This includes your profile, products, orders, and reviews.
+                      Export all your personal data as a JSON file. Includes your profile, Bops, BAP tracks, orders, tips, reviews, wallet history, and more.
                     </p>
                     <Button
                       variant="outline"
                       className="rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold"
-                      onClick={async () => {
-                        try {
-                          // @ts-ignore - tRPC mutate type issue
-                          const result = await trpc.gdpr.exportUserData.mutate(undefined);
-                          window.open(result.downloadUrl, '_blank');
-                          toast.success('Your data export is ready! Download will start shortly.');
-                        } catch (error: any) {
-                          toast.error(`Export failed: ${error.message}`);
-                        }
-                      }}
+                      onClick={handleExportData}
+                      disabled={isExporting}
                     >
                       <Download className="h-4 w-4 mr-2" />
-                      Download My Data
+                      {isExporting ? "Preparing Export..." : "Download My Data"}
                     </Button>
                   </div>
                 </div>
@@ -341,66 +422,75 @@ export default function ProfileSettings() {
                 <div className="flex items-start gap-4">
                   <AlertTriangle className="h-6 w-6 text-red-600 mt-1" />
                   <div className="flex-1">
-                    <h4 className="text-xl font-bold text-gray-900 mb-2">
-                      Delete Account
-                    </h4>
+                    <h4 className="text-xl font-bold text-gray-900 mb-1">Delete Account</h4>
+                    <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-3">GDPR Article 17 — Right to Erasure</p>
                     <p className="text-base text-gray-600 font-medium mb-4">
-                      Permanently delete your account and anonymize your personal data. This action cannot be undone.
+                      Request permanent deletion of your account and all associated data. A 30-day grace period applies — you can cancel anytime before the deadline.
                     </p>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant="destructive"
-                          className="rounded-lg bg-red-600 hover:bg-red-700 font-bold"
-                        >
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Delete My Account
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className="rounded-lg border-4 border-black">
-                        <AlertDialogHeader>
-                          <AlertDialogTitle className="text-2xl font-bold">
-                            Are you absolutely sure?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription className="text-base font-medium">
-                            This action cannot be undone. This will:
-                            <ul className="list-disc list-inside mt-2 space-y-1">
-                              <li>Permanently delete your account</li>
-                              <li>Anonymize your personal information</li>
-                              <li>Remove your artist profile</li>
-                              <li>Preserve order/review history (required by law)</li>
-                            </ul>
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel className="rounded-lg font-bold">
-                            Cancel
-                          </AlertDialogCancel>
-                          <AlertDialogAction
-                            className="rounded-lg bg-red-600 hover:bg-red-700 font-bold"
-                            onClick={async () => {
-                              try {
-                                // TODO: Add password and confirmation text inputs in the dialog
-                                // @ts-ignore - tRPC mutate type issue
-                                await trpc.gdpr.deleteAccount.mutate({
-                                  password: '', // Should be collected from user input
-                                  confirmText: 'DELETE MY ACCOUNT'
-                                });
-                                toast.success('Account deleted successfully');
-                                // Redirect to home after short delay
-                                setTimeout(() => {
-                                  window.location.href = '/';
-                                }, 2000);
-                              } catch (error: any) {
-                                toast.error(`Deletion failed: ${error.message}`);
-                              }
-                            }}
-                          >
-                            Delete Account
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                    {deletionStatus?.status === "pending" ? (
+                      <Button variant="outline" disabled className="rounded-lg font-bold opacity-60">
+                        <Clock className="h-4 w-4 mr-2" />
+                        Deletion Already Scheduled
+                      </Button>
+                    ) : (
+                      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                        <DialogTrigger asChild>
+                          <Button variant="destructive" className="rounded-lg bg-red-600 hover:bg-red-700 font-bold">
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            Request Account Deletion
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="rounded-lg border-4 border-black sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+                              <AlertTriangle className="h-6 w-6 text-red-600" />
+                              Delete Your Account
+                            </DialogTitle>
+                            <DialogDescription className="text-base font-medium pt-2">
+                              This will schedule permanent deletion of:
+                              <ul className="list-disc list-inside mt-2 space-y-1 text-sm">
+                                <li>Your profile, Bops, and BAP tracks</li>
+                                <li>Your artist storefront and products</li>
+                                <li>Your wallet balance and tip history</li>
+                                <li>Your Stripe Connect account</li>
+                                <li>All S3 media files (videos, audio, images)</li>
+                              </ul>
+                              <p className="mt-3 text-sm font-semibold text-orange-700">
+                                You have 30 days to cancel. Order history is retained as required by law.
+                              </p>
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="py-2">
+                            <Label className="text-sm font-bold text-gray-700 mb-2 block">
+                              Type <span className="font-mono bg-gray-100 px-1 rounded">DELETE MY ACCOUNT</span> to confirm
+                            </Label>
+                            <Input
+                              value={deleteConfirmText}
+                              onChange={(e) => setDeleteConfirmText(e.target.value)}
+                              placeholder="DELETE MY ACCOUNT"
+                              className="rounded-lg border-2 border-gray-300 font-mono"
+                            />
+                          </div>
+                          <DialogFooter className="gap-2">
+                            <Button
+                              variant="outline"
+                              className="rounded-lg font-bold"
+                              onClick={() => { setDeleteDialogOpen(false); setDeleteConfirmText(""); }}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              className="rounded-lg bg-red-600 hover:bg-red-700 font-bold"
+                              disabled={deleteConfirmText !== "DELETE MY ACCOUNT" || requestDeletion.isPending}
+                              onClick={() => requestDeletion.mutate({ confirmText: "DELETE MY ACCOUNT", reason: "User requested via settings" })}
+                            >
+                              {requestDeletion.isPending ? "Scheduling..." : "Schedule Deletion"}
+                            </Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    )}
                   </div>
                 </div>
               </div>

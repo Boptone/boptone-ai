@@ -59,11 +59,13 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         await handleTransferCreated(eventData);
         break;
 
+      // @ts-expect-error Stripe SDK types don't include transfer.paid/failed but they are real events
       case 'transfer.paid':
         await handleTransferPaid(eventData);
         break;
 
       case 'transfer.reversed':
+      // @ts-expect-error Stripe SDK types don't include transfer.failed but it is a real event
       case 'transfer.failed':
         await handleTransferFailed(eventData);
         break;

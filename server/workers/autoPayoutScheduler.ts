@@ -17,7 +17,6 @@
  */
 
 import { Queue, Worker, Job } from "bullmq";
-import IORedis from "ioredis";
 import { getDb } from "../db";
 import { earningsBalance as earningsBalances, payoutAccounts, artistProfiles, users, payouts } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";
@@ -36,12 +35,7 @@ let autoPayoutWorker: Worker | null = null;
  */
 export async function startAutoPayoutScheduler() {
   try {
-    const connection = new IORedis(REDIS_URL, {
-      maxRetriesPerRequest: null,
-      enableReadyCheck: false,
-    });
-
-    autoPayoutQueue = new Queue("auto-payouts", { connection });
+    autoPayoutQueue = new Queue("auto-payouts", { connection: { url: REDIS_URL } });
 
     // Schedule a repeatable job that runs every hour
     // The worker itself decides which artists to pay based on their schedule
@@ -64,10 +58,7 @@ export async function startAutoPayoutScheduler() {
         await processAutoPayouts();
       },
       {
-        connection: new IORedis(REDIS_URL, {
-          maxRetriesPerRequest: null,
-          enableReadyCheck: false,
-        }),
+        connection: { url: REDIS_URL },
         concurrency: 1, // Process one batch at a time
       }
     );

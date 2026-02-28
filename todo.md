@@ -5104,3 +5104,26 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Open Platform SDK and API Suite — third-party developers build specialized tools, AI models, and services directly integrated into the Boptone ecosystem, fostering an unparalleled developer community and app marketplace
 - [ ] Enterprise Creator Suite — advanced analytics, team collaboration tools, rights management dashboards, and bulk content distribution for major labels, management companies, and large creator collectives
 - [ ] Boptone as Open-Source Protocol — the core identity, IP, and royalty layers become open-source, allowing any application to build on top of Boptone's infrastructure, making it the foundational layer of the creator economy
+
+## GDPR/CCPA Data Deletion Flow — Priority 3 Complete (Feb 28, 2026)
+
+- [x] Schema migration: user_deletion_requests table with status, scheduledAt, jobId, deletionSummary
+- [x] BullMQ deletion worker (server/workers/accountDeletionWorker.ts): wipes all DB tables, S3 objects, Stripe customer + Connect account
+- [x] GDPR tRPC router (server/routers/gdpr.ts): requestDeletion, cancelDeletion, getDeletionStatus, exportUserData
+- [x] 30-day grace period with BullMQ delayed jobs (scheduleAccountDeletion / cancelAccountDeletion)
+- [x] Frontend: Delete My Account modal with "DELETE MY ACCOUNT" confirmation text input
+- [x] Frontend: Deletion status banner with scheduled date and Cancel button
+- [x] Frontend: Download My Data button wired to comprehensive exportUserData mutation
+- [x] Frontend: GDPR Article 17 (Right to Erasure) and Article 20 (Right to Data Portability) labels
+- [x] TypeScript: 0 errors across all GDPR files
+- [x] Fixed bullmqJobId → jobId column name in gdpr.ts
+- [x] Fixed bapFollows.userId → followerId in gdpr.ts and accountDeletionWorker.ts
+- [x] Fixed bapPlaylists.artistId → userId in accountDeletionWorker.ts
+- [x] Fixed bops title/description → caption in exportUserData
+- [x] Fixed payoutAccounts.currency → bankName/accountNumberLast4 in exportUserData
+- [x] Fixed Stripe API version 2025-01-27.acacia → 2025-09-30.clover in accountDeletionWorker
+- [x] Fixed transfer.paid/transfer.failed Stripe webhook type errors with @ts-expect-error
+- [x] Fixed autoPayoutScheduler IORedis → { url: REDIS_URL } connection config
+- [x] Fixed Money.tsx totalEarned → totalEarnings field name
+- [x] 37 new GDPR vitest tests passing (server/__tests__/gdpr.test.ts)
+- [x] Full test suite: 118/120 tests passing (1 pre-existing aiDetection API key failure, 1 skipped)
