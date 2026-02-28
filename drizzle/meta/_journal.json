@@ -204,6 +204,13 @@
       "when": 1772236929127,
       "tag": "0032_sturdy_prodigy",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "5",
+      "when": 1772305711787,
+      "tag": "0033_ancient_christian_walker",
+      "breakpoints": true
     }
   ]
 }

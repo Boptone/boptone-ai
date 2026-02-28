@@ -4270,6 +4270,9 @@ export const bopsVideos = mysqlTable("bops_videos", {
   rawVideoKey: varchar("rawVideoKey", { length: 500 }),
   thumbnailKey: varchar("thumbnailKey", { length: 500 }),
   thumbnailUrl: varchar("thumbnailUrl", { length: 500 }),
+  // HLS transcoded output (set by video processor worker after FFmpeg completes)
+  hlsKey: varchar("hlsKey", { length: 500 }),     // S3 key for the .m3u8 master playlist
+  hlsUrl: varchar("hlsUrl", { length: 500 }),     // Public URL for the .m3u8 master playlist
   waveformKey: varchar("waveformKey", { length: 500 }),
   durationMs: int("durationMs").notNull(),
   width: int("width").default(1080),

@@ -27,6 +27,7 @@ import {
   notifications,
 } from "../../drizzle/schema";
 import { storagePut } from "../storage";
+import { enqueueVideoProcessing } from "../workers/videoProcessor";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -94,6 +95,7 @@ export const bopsRouter = router({
           id: bopsVideos.id,
           caption: bopsVideos.caption,
           videoUrl: bopsVideos.videoUrl,
+          hlsUrl: bopsVideos.hlsUrl,
           thumbnailUrl: bopsVideos.thumbnailUrl,
           durationMs: bopsVideos.durationMs,
           viewCount: bopsVideos.viewCount,
@@ -250,6 +252,14 @@ export const bopsRouter = router({
       } catch (notifErr) {
         // Notification failure must never block the Bop creation
         console.warn("[Bops] Failed to send follower notifications:", notifErr);
+      }
+
+      // Enqueue video transcoding job (non-blocking — failure must not block Bop creation)
+      try {
+        await enqueueVideoProcessing(newBopId, input.videoKey, artistRows[0].id);
+      } catch (queueErr) {
+        console.warn(`[Bops] Failed to enqueue video processing for Bop ${newBopId}:`, queueErr);
+        // Bop is still created; processing will be retried manually or via admin
       }
 
       return { id: newBopId, status: "pending" };

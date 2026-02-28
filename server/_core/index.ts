@@ -4,12 +4,17 @@ import { createServer } from "http";
 import net from "net";
 import cookieParser from "cookie-parser";
 import { rateLimit } from "express-rate-limit";
+import helmet from "helmet";
+import { doubleCsrf } from "csrf-csrf";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startJobScheduler } from "../services/jobScheduler";
+import { startVideoProcessorWorker } from "../workers/videoProcessor";
+import { ENV } from "./env";
+import { COOKIE_NAME } from "@shared/const";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -36,82 +41,211 @@ async function startServer() {
   
   // Trust proxy for accurate IP detection behind load balancers
   app.set('trust proxy', 1);
-  
-  // Cookie parser for session management
+
+  // ─── HELMET: Security Headers ────────────────────────────────────────────────
+  // Sets CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+  // Permissions-Policy, and more. Must be first middleware.
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: [
+            "'self'",
+            "'unsafe-inline'", // Required for Vite HMR in dev
+            "https://js.stripe.com",
+            "https://cdn.jsdelivr.net",
+          ],
+          styleSrc: [
+            "'self'",
+            "'unsafe-inline'", // Required for Tailwind/shadcn
+            "https://fonts.googleapis.com",
+          ],
+          fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+          imgSrc: ["'self'", "data:", "blob:", "https:", "http:"],
+          mediaSrc: ["'self'", "blob:", "https:"],
+          connectSrc: [
+            "'self'",
+            "https://api.stripe.com",
+            "https://*.manus.space",
+            "wss:", // WebSocket for Vite HMR
+            "ws:",
+          ],
+          frameSrc: ["https://js.stripe.com", "https://hooks.stripe.com"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: process.env.NODE_ENV === "production" ? [] : null,
+        },
+      },
+      // HSTS: enforce HTTPS for 1 year in production
+      strictTransportSecurity:
+        process.env.NODE_ENV === "production"
+          ? { maxAge: 31536000, includeSubDomains: true, preload: true }
+          : false,
+      // Prevent clickjacking
+      frameguard: { action: "deny" },
+      // Prevent MIME sniffing
+      noSniff: true,
+      // Disable X-Powered-By
+      hidePoweredBy: true,
+      // Referrer policy
+      referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+      // Permissions policy — disable sensitive browser APIs
+      permittedCrossDomainPolicies: false,
+    })
+  );
+
+  // ─── COOKIE PARSER ───────────────────────────────────────────────────────────
   app.use(cookieParser());
-  
-  // Modern CSRF Protection Middleware (Origin + Referer validation)
-  // This replaces deprecated token-based CSRF protection
-  app.use((req, res, next) => {
-    // Skip CSRF check for GET, HEAD, OPTIONS (safe methods)
-    if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
-      return next();
-    }
-    
-    // Skip CSRF check for webhooks (verified by signature) and BOPixel (CORS-enabled)
-    if (req.path === '/api/webhooks/stripe' || req.path === '/api/webhooks/shippo' || req.path === '/api/pixel/track') {
-      return next();
-    }
-    
-    const origin = req.get('origin');
-    const referer = req.get('referer');
-    const host = req.get('host');
-    
-    // In production, validate origin/referer matches our domain
-    if (process.env.NODE_ENV === 'production') {
+
+  // ─── RATE LIMITING ───────────────────────────────────────────────────────────
+  // Global API limiter: 200 req / 15 min per IP (generous for normal use)
+  const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 200,
+    standardHeaders: "draft-7", // RateLimit-* headers (RFC draft)
+    legacyHeaders: false,
+    message: { error: "Too many requests. Please try again later.", retryAfter: "15 minutes" },
+    handler: (req, res, _next, options) => {
+      res.setHeader("Retry-After", Math.ceil(options.windowMs / 1000));
+      res.status(429).json(options.message);
+    },
+  });
+
+  // Auth limiter: 10 req / 15 min per IP (brute-force protection)
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    message: { error: "Too many authentication attempts. Please try again in 15 minutes.", retryAfter: "15 minutes" },
+    handler: (req, res, _next, options) => {
+      res.setHeader("Retry-After", Math.ceil(options.windowMs / 1000));
+      res.status(429).json(options.message);
+    },
+  });
+
+  // Checkout/payment limiter: 10 req / 1 min per IP
+  const checkoutLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 10,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    message: { error: "Too many payment requests. Please slow down.", retryAfter: "1 minute" },
+    handler: (req, res, _next, options) => {
+      res.setHeader("Retry-After", Math.ceil(options.windowMs / 1000));
+      res.status(429).json(options.message);
+    },
+  });
+
+  // Upload limiter: 5 uploads / 10 min per IP
+  const uploadLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 5,
+    standardHeaders: "draft-7",
+    legacyHeaders: false,
+    message: { error: "Upload limit reached. Please wait before uploading again.", retryAfter: "10 minutes" },
+    handler: (req, res, _next, options) => {
+      res.setHeader("Retry-After", Math.ceil(options.windowMs / 1000));
+      res.status(429).json(options.message);
+    },
+  });
+
+  // Apply rate limiters
+  app.use("/api/trpc", apiLimiter);
+  app.use("/api/oauth", authLimiter);
+  app.use("/api/trpc/ecommerce.cart", checkoutLimiter);
+  app.use("/api/trpc/ecommerce.orders", checkoutLimiter);
+  app.use("/api/trpc/ecommerce.createCheckoutSession", checkoutLimiter);
+  app.use("/api/bops/upload", uploadLimiter);
+
+  // ─── CSRF PROTECTION (Double-Submit Cookie Pattern via csrf-csrf) ────────────
+  // Uses HMAC-signed tokens. GET /api/csrf-token issues a token + cookie.
+  // All non-safe mutations must send the token in the x-csrf-token header.
+  // Webhooks and pixel use their own signature-based verification — excluded.
+  const isProduction = process.env.NODE_ENV === "production";
+  const { generateCsrfToken, doubleCsrfProtection } = doubleCsrf({
+    getSecret: () => ENV.cookieSecret || "boptone-csrf-secret-fallback",
+    getSessionIdentifier: (req) => {
+      // Use the session cookie value as the unique identifier, or IP as fallback
+      const sessionCookie = req.cookies?.[COOKIE_NAME];
+      return sessionCookie || req.ip || "anonymous";
+    },
+    // Use __Host- prefix in production (requires HTTPS + no Domain attribute + Path=/)
+    // In dev, use a plain name since we're on HTTP
+    cookieName: isProduction ? "__Host-boptone.csrf" : "boptone.csrf",
+    cookieOptions: {
+      sameSite: "strict",
+      path: "/",
+      secure: isProduction,
+      httpOnly: true,
+    },
+    // Skip CSRF for webhooks and pixel (they use signature-based auth)
+    skipCsrfProtection: (req) => {
+      const excluded = [
+        "/api/webhooks/stripe",
+        "/api/webhooks/shippo",
+        "/api/pixel/track",
+        "/api/oauth/callback",
+      ];
+      return excluded.some(path => req.path.startsWith(path));
+    },
+  });
+
+  // CSRF token endpoint — client fetches this on app init to get a token
+  app.get("/api/csrf-token", (req, res) => {
+    const token = generateCsrfToken(req, res);
+    res.json({ csrfToken: token });
+  });
+
+  // Apply CSRF protection to all non-safe methods
+  // In development, we skip enforcement to avoid breaking local dev with curl/tools
+  // but the token flow is still active so it can be tested
+  if (isProduction) {
+    app.use(doubleCsrfProtection);
+  } else {
+    // In dev: run the middleware but don't block on failure — just warn
+    app.use((req, res, next) => {
+      if (["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+        return next();
+      }
+      const excluded = [
+        "/api/webhooks/stripe",
+        "/api/webhooks/shippo",
+        "/api/pixel/track",
+        "/api/oauth/callback",
+      ];
+      if (excluded.some(path => req.path.startsWith(path))) {
+        return next();
+      }
+      // Also keep the origin/referer check as a secondary layer in dev
+      const origin = req.get("origin");
+      const referer = req.get("referer");
+      const host = req.get("host");
       const allowedOrigins = [
         `https://${host}`,
+        `http://${host}`,
         process.env.FRONTEND_URL,
-      ].filter(Boolean);
-      
-      const isValidOrigin = origin && allowedOrigins.some(allowed => allowed && origin.startsWith(allowed));
-      const isValidReferer = referer && allowedOrigins.some(allowed => allowed && referer.startsWith(allowed));
-      
+      ].filter(Boolean) as string[];
+      const isValidOrigin = origin && allowedOrigins.some(allowed => origin.startsWith(allowed));
+      const isValidReferer = referer && allowedOrigins.some(allowed => referer.startsWith(allowed));
       if (!isValidOrigin && !isValidReferer) {
-        console.warn('[CSRF] Blocked request with invalid origin/referer:', { origin, referer, host });
-        return res.status(403).json({ error: 'Invalid request origin' });
+        console.warn("[CSRF] Dev warning — no valid origin/referer:", { origin, referer, host, path: req.path });
       }
-    }
-    
-    next();
+      next();
+    });
+  }
+
+  // ─── HEALTH CHECK ────────────────────────────────────────────────────────────
+  app.get("/api/health", (_req, res) => {
+    res.json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      env: process.env.NODE_ENV,
+    });
   });
-  
-  // Rate limiting for API endpoints
-  const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
-    message: 'Too many requests from this IP, please try again later.',
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-  
-  // Stricter rate limiting for authentication endpoints
-  const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Only 5 auth requests per 15 minutes (prevents brute force)
-    message: 'Too many authentication attempts, please try again later.',
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-  
-  // Rate limiting for cart and checkout operations
-  const checkoutLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 10, // 10 requests per minute
-    message: 'Too many checkout attempts, please slow down.',
-    standardHeaders: true,
-    legacyHeaders: false,
-  });
-  
-  // Apply rate limiting
-  app.use('/api/trpc', apiLimiter);
-  app.use('/api/oauth', authLimiter);
-  
-  // Apply stricter limits to sensitive ecommerce endpoints
-  app.use('/api/trpc/ecommerce.cart', checkoutLimiter);
-  app.use('/api/trpc/ecommerce.orders', checkoutLimiter);
-  
-  // Stripe webhook needs raw body for signature verification
+
+  // ─── STRIPE WEBHOOK (raw body required for signature verification) ───────────
   app.post(
     "/api/webhooks/stripe",
     express.raw({ type: "application/json" }),
@@ -120,8 +254,8 @@ async function startServer() {
       return handleStripeWebhook(req, res);
     }
   );
-  
-  // Shippo webhook for tracking updates
+
+  // ─── SHIPPO WEBHOOK ──────────────────────────────────────────────────────────
   app.post(
     "/api/webhooks/shippo",
     express.json(),
@@ -130,20 +264,15 @@ async function startServer() {
       return handleShippoWebhook(req, res);
     }
   );
-  
-  // BOPixel tracking endpoint (with CORS for external domains)
+
+  // ─── BOPIXEL TRACKING (CORS-open for external artist sites) ─────────────────
   app.post(
     "/api/pixel/track",
     (req, res, next) => {
-      // Allow tracking from any domain (artists' external websites)
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-      
-      if (req.method === 'OPTIONS') {
-        return res.sendStatus(204);
-      }
-      
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+      if (req.method === "OPTIONS") return res.sendStatus(204);
       next();
     },
     express.json(),
@@ -152,9 +281,8 @@ async function startServer() {
       return trackEvent(req, res);
     }
   );
-  
-  // Bops video upload endpoint — must be registered BEFORE body parsers
-  // Uses multer for multipart/form-data, handles up to 200MB video files
+
+  // ─── BOPS VIDEO UPLOAD (registered before body parsers) ─────────────────────
   app.post(
     "/api/bops/upload",
     async (req, res) => {
@@ -163,42 +291,39 @@ async function startServer() {
     }
   );
 
-  // Configure body parser with larger size limit for file uploads
+  // ─── BODY PARSERS ────────────────────────────────────────────────────────────
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
-  
-  // CORS configuration for production
-  if (process.env.NODE_ENV === 'production') {
+
+  // ─── CORS (production only — Vite handles dev CORS) ─────────────────────────
+  if (process.env.NODE_ENV === "production") {
     app.use((req, res, next) => {
       const allowedOrigins = [
         process.env.FRONTEND_URL,
-        `https://${req.get('host')}`,
-      ].filter(Boolean);
-      
-      const origin = req.get('origin');
-      if (origin && allowedOrigins.some(allowed => allowed && origin.startsWith(allowed))) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-        res.setHeader('Access-Control-Allow-Credentials', 'true');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        `https://${req.get("host")}`,
+      ].filter(Boolean) as string[];
+
+      const origin = req.get("origin");
+      if (origin && allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-csrf-token");
       }
-      
-      if (req.method === 'OPTIONS') {
-        return res.sendStatus(204);
-      }
-      
+
+      if (req.method === "OPTIONS") return res.sendStatus(204);
       next();
     });
   }
-  // OAuth callback under /api/oauth/callback
+
+  // ─── OAUTH ROUTES ────────────────────────────────────────────────────────────
   registerOAuthRoutes(app);
 
-  // Sitemap and robots.txt routes
+  // ─── SITEMAP & ROBOTS ────────────────────────────────────────────────────────
   app.get("/sitemap.xml", async (req, res) => {
     try {
       const caller = appRouter.createCaller({ req, res, user: null });
       const { urls } = await caller.sitemap.generateSitemap();
-      
       res.setHeader("Content-Type", "application/xml");
       res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -216,7 +341,6 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
     try {
       const caller = appRouter.createCaller({ req, res, user: null });
       const { content } = await caller.sitemap.generateRobotsTxt();
-      
       res.setHeader("Content-Type", "text/plain");
       res.send(content);
     } catch (error) {
@@ -224,7 +348,8 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
       res.status(500).send("Error generating robots.txt");
     }
   });
-  // tRPC API
+
+  // ─── tRPC API ────────────────────────────────────────────────────────────────
   app.use(
     "/api/trpc",
     createExpressMiddleware({
@@ -232,7 +357,8 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
       createContext,
     })
   );
-  // development mode uses Vite, production mode uses static files
+
+  // ─── STATIC / VITE ───────────────────────────────────────────────────────────
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
@@ -248,9 +374,13 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
-    
-    // Start background job scheduler for post-purchase automation
     startJobScheduler();
+    // Start the BullMQ video transcoding worker (requires Redis)
+    try {
+      startVideoProcessorWorker();
+    } catch (err) {
+      console.warn("[VideoProcessor] Worker failed to start (Redis may not be available):", err instanceof Error ? err.message : err);
+    }
   });
 }
 

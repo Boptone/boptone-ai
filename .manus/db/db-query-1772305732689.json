@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE bops_videos ADD COLUMN hlsKey varchar(500) NULL AFTER thumbnailUrl; ALTER TABLE bops_videos ADD COLUMN hlsUrl varchar(500) NULL AFTER hlsKey;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE bops_videos ADD COLUMN hlsKey varchar(500) NULL AFTER thumbnailUrl; ALTER TABLE bops_videos ADD COLUMN hlsUrl varchar(500) NULL AFTER hlsKey;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1221
+}

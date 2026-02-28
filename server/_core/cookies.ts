@@ -42,9 +42,11 @@ export function getSessionCookieOptions(
   return {
     httpOnly: true,
     path: "/",
-    // SameSite 'lax' provides CSRF protection while allowing navigation from external sites
-    // This is the modern standard for session cookies (used by Google, GitHub, Stripe)
-    sameSite: "lax",
+    // SameSite 'strict' prevents the session cookie from being sent on any cross-site
+    // request, including top-level navigations. This is the strongest CSRF protection.
+    // Note: users will be logged out when arriving from external links (e.g. email),
+    // but this is the correct trade-off for a creator OS with sensitive data.
+    sameSite: "strict",
     secure: isSecureRequest(req),
   };
 }

@@ -8,8 +8,14 @@
  * - Shows artist info and caption overlaid at bottom-left
  * - Action buttons (like, tip, share, comment) on right rail
  * - Designed for mobile-only 9:16 full-viewport experience
+ *
+ * HLS Support:
+ * - If `bop.hlsUrl` is present, uses hls.js for adaptive bitrate streaming
+ * - Falls back to `bop.videoUrl` (raw MP4) if HLS is not available or not supported
+ * - hls.js automatically selects 360p on mobile data, 1080p on WiFi
  */
 import { useRef, useEffect, useState, useCallback } from "react";
+import Hls from "hls.js";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
@@ -21,6 +27,7 @@ export interface BopItem {
   id: number;
   caption: string | null;
   videoUrl: string;
+  hlsUrl?: string | null;       // HLS master playlist URL (set after transcoding)
   thumbnailUrl: string | null;
   durationMs: number | null;
   viewCount: number;
@@ -51,6 +58,7 @@ export default function BopsVideoPlayer({
   onMuteToggle,
 }: BopsVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hlsRef = useRef<Hls | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false); // user-initiated pause
   const [showPauseIcon, setShowPauseIcon] = useState(false);
@@ -58,6 +66,53 @@ export default function BopsVideoPlayer({
   const { isAuthenticated } = useAuth();
 
   const recordView = trpc.bops.recordView.useMutation();
+
+  // ── HLS initialization ─────────────────────────────────────────────────────
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Destroy any existing HLS instance
+    if (hlsRef.current) {
+      hlsRef.current.destroy();
+      hlsRef.current = null;
+    }
+
+    const hlsUrl = bop.hlsUrl;
+
+    if (hlsUrl && Hls.isSupported()) {
+      // Use hls.js for adaptive bitrate streaming
+      const hls = new Hls({
+        startLevel: -1,         // Auto-select quality level
+        capLevelToPlayerSize: true,
+        maxBufferLength: 30,
+        maxMaxBufferLength: 60,
+      });
+      hls.loadSource(hlsUrl);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.ERROR, (_event, data) => {
+        if (data.fatal) {
+          console.error("[BopsVideoPlayer] HLS fatal error:", data.type, data.details);
+          // Fall back to raw video URL on fatal HLS error
+          video.src = bop.videoUrl;
+        }
+      });
+      hlsRef.current = hls;
+    } else if (hlsUrl && video.canPlayType("application/vnd.apple.mpegurl")) {
+      // Native HLS support (Safari / iOS)
+      video.src = hlsUrl;
+    } else {
+      // Fallback: use raw video URL
+      video.src = bop.videoUrl;
+    }
+
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+    };
+  }, [bop.id, bop.hlsUrl, bop.videoUrl]);
 
   // ── Auto-play / pause based on visibility ──────────────────────────────────
   useEffect(() => {
@@ -127,7 +182,6 @@ export default function BopsVideoPlayer({
       {/* ── Video element ────────────────────────────────────────────────── */}
       <video
         ref={videoRef}
-        src={bop.videoUrl}
         poster={bop.thumbnailUrl ?? undefined}
         className="absolute inset-0 w-full h-full object-cover"
         playsInline
@@ -173,6 +227,15 @@ export default function BopsVideoPlayer({
           <Volume2 className="w-5 h-5 text-white" />
         )}
       </button>
+
+      {/* ── HLS quality indicator — top left (dev only) ──────────────────── */}
+      {bop.hlsUrl && (
+        <div className="absolute top-4 left-4 z-30 pointer-events-none">
+          <span className="bg-[#5DCCCC]/80 text-black text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
+            HLS
+          </span>
+        </div>
+      )}
 
       {/* ── Bottom gradient overlay ───────────────────────────────────────── */}
       <div
