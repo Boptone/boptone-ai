@@ -4853,3 +4853,161 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 **Estimated Time:** 6-8 hours
 **Priority:** MEDIUM (Scale & Performance foundation)
 **Status:** NOT STARTED
+
+
+---
+
+## ENGINEERING ACTION PLAN — 100-Engineer Audit (Feb 28, 2026)
+> Source: Global stress-test by 100 world-class enterprise engineers
+> Three highest-priority actions required before any public launch
+
+---
+
+### PRIORITY 1 — Rate Limiting, CSRF, and Security Hardening
+> Target: Week 1 | Estimated: 2.5 days | Gate: securityheaders.com A rating
+
+#### 1A — Rate Limiting
+- [ ] Install `express-rate-limit`, `rate-limit-redis`, and `ioredis`
+- [ ] Create `server/middleware/rateLimiter.ts` with three tiers:
+  - [ ] Global tier: 300 requests / 15 min per IP on all `/api/trpc/*`
+  - [ ] Authenticated tier: 60 requests / 15 min per user ID on all mutations
+  - [ ] Sensitive tier: 10 requests / 15 min per IP on tip checkout, upload, and auth
+- [ ] Apply rate limiter middleware in `server/_core/index.ts` before the tRPC handler
+- [ ] Return `429 Too Many Requests` with `Retry-After` header on breach
+- [ ] Surface 429 as a toast on the frontend: "Too many requests — please wait a moment"
+- [ ] Connect Redis (or TiDB fallback) to persist rate limit counters across restarts
+- [ ] Test: confirm 429 responses fire above threshold on the tip checkout endpoint
+
+#### 1B — CSRF Protection
+- [ ] Install `csrf-csrf`
+- [ ] Initialize `doubleCsrf` in `server/_core/index.ts` using JWT secret as signing key
+- [ ] Expose `GET /api/csrf-token` endpoint returning the CSRF token in a response header
+- [ ] Update `client/src/lib/trpc.ts` with a custom fetch wrapper injecting `x-csrf-token` on every POST
+- [ ] Validate CSRF token on all `protectedProcedure` mutations in the tRPC middleware chain
+- [ ] Exempt public read queries from CSRF validation
+- [ ] Set CSRF cookie with `SameSite=Strict; Secure; HttpOnly`
+- [ ] Test: confirm 403 Forbidden when POST sent from different origin without token
+
+#### 1C — Cookie and Header Hardening
+- [ ] Install `helmet`
+- [ ] Apply `helmet` in `server/_core/index.ts` with:
+  - [ ] `Content-Security-Policy` — allowlist Boptone domains, Stripe, and S3 CDN only
+  - [ ] `X-Frame-Options: DENY`
+  - [ ] `X-Content-Type-Options: nosniff`
+  - [ ] `Strict-Transport-Security: max-age=31536000; includeSubDomains`
+  - [ ] `Referrer-Policy: strict-origin-when-cross-origin`
+- [ ] Set `SameSite=Strict` and `Secure` on session cookie in `server/_core/cookies.ts`
+- [ ] Add brute-force protection on OAuth callback: max 10 attempts / hour per IP
+- [ ] Run securityheaders.com scan — must return A rating before Priority 1 is closed
+
+---
+
+### PRIORITY 2 — Video Transcoding Pipeline (HLS + Thumbnails)
+> Target: Weeks 2–3 | Estimated: 4 days | Gate: upload-to-playback under 60s, thumbnails in grid
+
+#### 2A — Architecture and Dependencies
+- [ ] Confirm FFmpeg is available in the server environment (install if not)
+- [ ] Install `bullmq`, `ioredis`, `hls.js`, and `fluent-ffmpeg`
+- [ ] Document chosen architecture: FFmpeg worker via BullMQ (migrate to AWS MediaConvert later)
+
+#### 2B — Job Queue and Worker
+- [ ] Add `processingStatus` enum to `bops` table in `drizzle/schema.ts`: `pending | processing | ready | error`
+- [ ] Add `hlsUrl` and `thumbnailUrl` fields to `bops` table
+- [ ] Run `pnpm db:push` to apply schema migration
+- [ ] Create `server/workers/videoProcessor.ts` — BullMQ worker that:
+  - [ ] Receives job: `{ bopId, s3RawKey, artistId }`
+  - [ ] Downloads raw video from S3 to temp directory
+  - [ ] Runs FFmpeg: produces HLS at 360p, 720p, 1080p with `.m3u8` playlist and `.ts` segments
+  - [ ] Runs FFmpeg: extracts thumbnail JPEG at the 3-second mark
+  - [ ] Uploads HLS output to S3 under `bops/{bopId}/hls/`
+  - [ ] Uploads thumbnail to S3 under `bops/{bopId}/thumb.jpg`
+  - [ ] Updates `bops` record: sets `hlsUrl`, `thumbnailUrl`, `processingStatus = 'ready'`
+  - [ ] Cleans up temp directory after upload
+  - [ ] On error: sets `processingStatus = 'error'` and logs failure
+- [ ] Create `server/workers/index.ts` to start the worker alongside the main server
+
+#### 2C — Upload Flow Integration
+- [ ] Update Bops upload tRPC procedure: set `processingStatus = 'processing'` on new Bop creation
+- [ ] Enqueue `process-video` BullMQ job immediately after raw video stored to S3
+- [ ] Do not mark Bop as publicly visible until `processingStatus = 'ready'`
+- [ ] Add "Processing..." badge to Bop grid cards where `processingStatus !== 'ready'`
+- [ ] Add polling or WebSocket update so badge clears automatically when processing completes
+
+#### 2D — HLS Playback in Video Player
+- [ ] Update `BopsVideoPlayer.tsx` to detect `hlsUrl` on the Bop record
+- [ ] If `hlsUrl` present: use `hls.js` to load the adaptive HLS stream
+- [ ] If `hlsUrl` absent: fall back to raw `videoUrl`
+- [ ] Confirm `hls.js` selects 360p on mobile data and 1080p on WiFi automatically
+- [ ] Test HLS playback on Chrome, Safari, and Firefox
+
+#### 2E — Thumbnail Display
+- [ ] Update `ArtistBopsProfile.tsx` grid cards to use `thumbnailUrl` from DB when available
+- [ ] Update Bops feed grid cards to use `thumbnailUrl` when available
+- [ ] Keep vivid gradient placeholder as fallback while `processingStatus === 'processing'`
+- [ ] Confirm thumbnails appear within 60 seconds of upload on a test video
+
+---
+
+### PRIORITY 3 — GDPR, CCPA, and PIPL Data Deletion Flow
+> Target: Weeks 3–4 | Estimated: 3 days | Gate: end-to-end deletion test confirms zero personal data remains
+
+#### 3A — Personal Data Mapping
+- [ ] Audit and document every table and field containing personal data (users, artist_profiles, bops, follows, tips, orders, sessions, S3)
+- [ ] Confirm with legal: tip/order records — anonymize or delete for financial audit compliance
+
+#### 3B — Data Deletion Endpoint and Background Job
+- [ ] Add `deletionRequestedAt` and `deletedAt` timestamp fields to `users` table
+- [ ] Run `pnpm db:push` to apply schema migration
+- [ ] Create `trpc.account.requestDeletion` protected mutation:
+  - [ ] Sets `deletionRequestedAt = now()` on the user record
+  - [ ] Enqueues BullMQ deletion job with 30-day delay
+  - [ ] Sends confirmation email with scheduled deletion date
+- [ ] Create `server/workers/accountDeletion.ts` — BullMQ worker that:
+  - [ ] Deletes all `bops` records and removes S3 objects (video, thumbnail, HLS)
+  - [ ] Deletes all `artist_profiles` records and removes avatar S3 objects
+  - [ ] Deletes all `bops_artist_follows` rows where `fanUserId = userId`
+  - [ ] Deletes or anonymizes tip and order records per legal guidance
+  - [ ] Calls `stripe.customers.del(stripeCustomerId)` to remove Stripe customer
+  - [ ] Anonymizes `users` row: `name = 'Deleted User'`, `email = null`, `openId = 'deleted_{id}'`, `deletedAt = now()`
+  - [ ] Does NOT hard-delete the `users` row (preserves referential integrity)
+- [ ] Create `GET /api/account/my-data` endpoint returning JSON export of all personal data for authenticated user
+- [ ] Test: trigger deletion, confirm email sent, confirm job queued, manually run job and confirm all personal data zeroed
+
+#### 3C — Privacy UI in Profile Settings
+- [ ] Add "Delete My Account" button to Profile Settings page (`/settings`)
+- [ ] Require user to type "DELETE" in confirmation input before mutation fires
+- [ ] Show warning: "This is permanent. All your content, followers, and data will be deleted within 30 days."
+- [ ] Add "Download My Data" button that calls the data export endpoint and downloads a JSON file
+- [ ] Show success toast after deletion request: "Deletion request received. Your account will be deleted by [date]."
+
+#### 3D — Privacy Policy and Cookie Consent
+- [ ] Update Privacy Policy to explicitly state GDPR compliance (EU users)
+- [ ] Update Privacy Policy to explicitly state CCPA compliance (California users)
+- [ ] Update Privacy Policy to explicitly state PIPL compliance (Chinese users)
+- [ ] State that data deletion requests are honored within 30 days
+- [ ] Add `privacy@boptone.com` as the data request contact email
+- [ ] Add cookie consent banner for EU users (Accept All / Necessary Only, no pre-ticked optional cookies)
+- [ ] Add consent checkbox at signup: "I consent to my data being processed on servers located outside of China"
+
+#### 3E — Data Residency Roadmap
+- [ ] Document roadmap item: China-region deployment (Alibaba Cloud or Tencent Cloud) when Chinese MAU exceeds 10,000
+- [ ] Add this as a tracked milestone in the platform roadmap doc
+
+---
+
+### DELIVERY GATES
+
+| Priority | Gate |
+|---|---|
+| 1 — Security Hardening | securityheaders.com A rating; 429 on rate limit breach; 403 on CSRF violation |
+| 2 — Video Pipeline | Upload-to-playback under 60s; HLS plays at correct quality tier; thumbnails in grid |
+| 3 — Data Deletion | Zero personal data in DB and S3 after worker runs; confirmation email delivered; data export downloads |
+
+### SEQUENCING
+
+| Week | Tasks |
+|---|---|
+| Week 1 | Priority 1A + 1B + 1C (full security hardening) |
+| Week 2 | Priority 2A + 2B + 2C (FFmpeg worker + upload flow) |
+| Week 3 | Priority 2D + 2E + 3A + 3B (HLS player + thumbnails + deletion endpoint) |
+| Week 4 | Priority 3C + 3D + 3E (privacy UI + policy + cookie consent) |
