@@ -5158,3 +5158,19 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Full test suite: 161/163 passing
 - [x] Production: 401 returned for any unsigned/tampered request
 - [x] Development: graceful bypass with console warning when secret not set
+
+## Song Splits & Writer Payout UI (Priority 1)
+- [x] Audit existing writerProfiles, writerEarnings, writerInvitations schema
+- [x] Audit revenueSplitEngine and writerPayments router
+- [x] Add splits.getForMyTracks procedure to writerPayments router
+- [x] Add splits.update mutation to writerPayments router (100% validation)
+- [x] Fix getTracksByArtist import path (server/bap.ts not server/db.ts)
+- [x] Extend bap.ts upload schema to include role and ipiNumber per split
+- [x] Fix primary artist writerEarnings linkage on track upload
+- [x] Upgrade Upload.tsx songwriter splits UI: role selector, IPI field, live % bar
+- [x] Fix handleSongwriterSplitsChange type to include role and ipiNumber
+- [x] Build SplitsDashboard page (/splits) with per-track split breakdown
+- [x] Add Splits nav item to DashboardLayout sidebar
+- [x] Register /splits route in App.tsx
+- [x] 31 new song splits vitest tests passing
+- [x] TypeScript: 0 errors

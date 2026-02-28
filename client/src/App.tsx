@@ -74,6 +74,7 @@ const HowItWorks = lazy(() => import("./pages/HowItWorks"));
 const WriterInvite = lazy(() => import("./pages/WriterInvite"));
 const WriterProfile = lazy(() => import("./pages/WriterProfile"));
 const WriterEarnings = lazy(() => import("./pages/WriterEarnings"));
+const SplitsDashboard = lazy(() => import("./pages/SplitsDashboard"));
 const PayoutSettings = lazy(() => import("./pages/PayoutSettings"));
 const PayoutHistory = lazy(() => import("./pages/PayoutHistory"));
 const Workflows = lazy(() => import("./pages/Workflows"));
@@ -131,6 +132,7 @@ function Router() {
         <Route path={"/writer-invite"} component={WriterInvite} />
         <Route path={"/writer-profile"} component={WriterProfile} />
         <Route path={"/writer-earnings"} component={WriterEarnings} />
+        <Route path={"/splits"} component={SplitsDashboard} />
         <Route path="/onboarding" component={Onboarding} />
         <Route path={"/@:username"} component={ArtistProfile} />
         <Route path="/shop" component={BopShopLanding} />

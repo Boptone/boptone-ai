@@ -76,8 +76,8 @@ export default function Upload() {
     pricePerStream: 1, // Default $0.01 (in cents)
   });
 
-  const [songwriterSplits, setSongwriterSplits] = useState<Array<{email: string; fullName: string; percentage: number}>>([
-    { email: user?.email || "", fullName: user?.name || "", percentage: 100 }
+  const [songwriterSplits, setSongwriterSplits] = useState<Array<{email: string; fullName: string; percentage: number; role: "songwriter" | "producer" | "mixer" | "mastering" | "other"; ipiNumber: string}>>([
+    { email: user?.email || "", fullName: user?.name || "", percentage: 100, role: "songwriter", ipiNumber: "" }
   ]);
 
   // Validation state
@@ -125,7 +125,7 @@ export default function Upload() {
     }
   };
 
-  const handleSongwriterSplitsChange = (newSplits: Array<{email: string; fullName: string; percentage: number}>) => {
+  const handleSongwriterSplitsChange = (newSplits: Array<{email: string; fullName: string; percentage: number; role: "songwriter" | "producer" | "mixer" | "mastering" | "other"; ipiNumber: string}>) => {
     setSongwriterSplits(newSplits);
     if (newSplits.length === 0) {
       setValidation(prev => ({ ...prev, songwriterSplits: 'empty' }));
@@ -146,7 +146,7 @@ export default function Upload() {
   };
 
   const addSongwriter = () => {
-    const newSplits = [...songwriterSplits, { email: "", fullName: "", percentage: 0 }];
+    const newSplits = [...songwriterSplits, { email: "", fullName: "", percentage: 0, role: "songwriter" as const, ipiNumber: "" }];
     handleSongwriterSplitsChange(newSplits);
   };
 
@@ -155,7 +155,7 @@ export default function Upload() {
     handleSongwriterSplitsChange(newSplits);
   };
 
-  const updateSongwriter = (index: number, field: 'email' | 'fullName' | 'percentage', value: string | number) => {
+  const updateSongwriter = (index: number, field: 'email' | 'fullName' | 'percentage' | 'role' | 'ipiNumber', value: string | number) => {
     const newSplits = [...songwriterSplits];
     newSplits[index] = { ...newSplits[index], [field]: value };
     handleSongwriterSplitsChange(newSplits);
@@ -673,68 +673,142 @@ export default function Upload() {
                   />
                 </div>
 
-                {/* Songwriter Splits */}
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    Songwriter Splits
-                    {showValidation && <ValidationIcon status={validation.songwriterSplits} />}
-                  </Label>
+                {/* Songwriter Splits — Music Business 2.0 */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Label className="flex items-center gap-2 text-base font-bold">
+                      Song Splits
+                      {showValidation && <ValidationIcon status={validation.songwriterSplits} />}
+                    </Label>
+                    <span className="text-xs text-gray-500">Who gets paid when this track earns</span>
+                  </div>
+
+                  {/* Visual percentage bar */}
+                  {(() => {
+                    const total = songwriterSplits.reduce((sum, s) => sum + s.percentage, 0);
+                    const remaining = 100 - total;
+                    const isOver = total > 100;
+                    const isExact = Math.abs(total - 100) < 0.01;
+                    return (
+                      <div className="space-y-1">
+                        <div className="flex h-3 rounded-full overflow-hidden bg-gray-100 border border-gray-200">
+                          {songwriterSplits.map((s, i) => {
+                            const colors = ['bg-gray-900', 'bg-gray-600', 'bg-gray-400', 'bg-gray-300', 'bg-gray-200'];
+                            return s.percentage > 0 ? (
+                              <div
+                                key={i}
+                                className={`${colors[i % colors.length]} transition-all duration-300`}
+                                style={{ width: `${Math.min(s.percentage, 100)}%` }}
+                                title={`${s.fullName || 'Writer ' + (i + 1)}: ${s.percentage}%`}
+                              />
+                            ) : null;
+                          })}
+                        </div>
+                        <div className="flex justify-between text-xs">
+                          <span className={isOver ? 'text-red-600 font-semibold' : isExact ? 'text-green-700 font-semibold' : 'text-gray-600'}>
+                            {total.toFixed(1)}% assigned{isExact ? ' ✓' : ''}
+                          </span>
+                          {!isExact && !isOver && (
+                            <span className="text-gray-400">{remaining.toFixed(1)}% remaining</span>
+                          )}
+                          {isOver && (
+                            <span className="text-red-600 font-semibold">Over by {(total - 100).toFixed(1)}%</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+
                   <div className="space-y-3">
                     {songwriterSplits.map((split, index) => (
-                      <div key={index} className="space-y-2 p-3 bg-gray-50 border border-black">
+                      <div key={index} className="p-4 bg-gray-50 border border-black space-y-3">
                         <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-gray-900 flex-shrink-0" />
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                            {index === 0 ? 'Primary Artist' : `Co-Writer ${index}`}
+                          </span>
+                          {songwriterSplits.length > 1 && index > 0 && (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeSongwriter(index)}
+                              className="ml-auto text-gray-400 hover:text-red-600 h-6 px-2"
+                            >
+                              Remove
+                            </Button>
+                          )}
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
                           <Input
                             value={split.fullName}
                             onChange={(e) => updateSongwriter(index, 'fullName', e.target.value)}
-                            placeholder="Full name"
-                            className="flex-1"
+                            placeholder="Full legal name"
                           />
+                          <div className="flex items-center gap-1">
+                            <Input
+                              type="number"
+                              min={0}
+                              max={100}
+                              step={0.1}
+                              value={split.percentage}
+                              onChange={(e) => updateSongwriter(index, 'percentage', parseFloat(e.target.value) || 0)}
+                              placeholder="%"
+                              className="w-20"
+                            />
+                            <span className="text-sm text-gray-500 flex-shrink-0">%</span>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Select
+                            value={split.role}
+                            onValueChange={(v) => updateSongwriter(index, 'role', v)}
+                          >
+                            <SelectTrigger className="border-black">
+                              <SelectValue placeholder="Role" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="songwriter">Songwriter</SelectItem>
+                              <SelectItem value="producer">Producer</SelectItem>
+                              <SelectItem value="mixer">Mixer</SelectItem>
+                              <SelectItem value="mastering">Mastering Engineer</SelectItem>
+                              <SelectItem value="other">Other</SelectItem>
+                            </SelectContent>
+                          </Select>
                           <Input
-                            type="number"
-                            value={split.percentage}
-                            onChange={(e) => updateSongwriter(index, 'percentage', parseFloat(e.target.value) || 0)}
-                            placeholder="%"
-                            className="w-24"
+                            value={split.ipiNumber}
+                            onChange={(e) => updateSongwriter(index, 'ipiNumber', e.target.value)}
+                            placeholder="IPI number (optional)"
                           />
-                          {songwriterSplits.length > 1 && (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => removeSongwriter(index)}
-                              className="flex-shrink-0"
-                            >
-                              ×
-                            </Button>
-                          )}
                         </div>
                         <Input
                           type="email"
                           value={split.email}
                           onChange={(e) => updateSongwriter(index, 'email', e.target.value)}
-                          placeholder="Email address (for payment invitations)"
+                          placeholder={index === 0 ? 'Your email (for payout notifications)' : 'Email — we\'ll send a payout invitation'}
                           className="w-full"
                         />
                         {index > 0 && (
-                          <p className="text-xs text-gray-600">
-                            We'll send an invitation to set up payment details
+                          <p className="text-xs text-gray-500 bg-white border border-gray-200 px-3 py-2 rounded">
+                            💌 We'll email this co-writer a secure link to register their payment details. They keep 100% of their split.
                           </p>
                         )}
                       </div>
                     ))}
                   </div>
+
                   <Button
+                    type="button"
                     variant="outline"
                     size="sm"
                     onClick={addSongwriter}
-                    className="w-full"
+                    className="w-full border-black hover:bg-gray-50"
                   >
-                    + Add Songwriter
+                    + Add Co-Writer or Collaborator
                   </Button>
-                  <p className="text-xs text-gray-600">
-                    Total: {songwriterSplits.reduce((sum, s) => sum + s.percentage, 0).toFixed(2)}% (must equal 100%)
-                  </p>
+
                   {showValidation && validation.songwriterSplits === 'invalid' && (
-                    <p className="text-xs text-gray-600">Songwriter splits must add up to 100%</p>
+                    <p className="text-xs text-red-600 font-medium">Splits must add up to exactly 100%</p>
                   )}
                 </div>
 

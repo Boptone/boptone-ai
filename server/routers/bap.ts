@@ -64,6 +64,8 @@ export const bapRouter = router({
           email: z.string(),
           fullName: z.string(),
           percentage: z.number(),
+          role: z.enum(["songwriter", "producer", "mixer", "mastering", "other"]).default("songwriter"),
+          ipiNumber: z.string().optional(),
         })).optional(),
         publishingData: z.object({
           publisher: z.string().optional(),
@@ -143,7 +145,8 @@ export const bapRouter = router({
           songwriterSplits: input.songwriterSplits ? input.songwriterSplits.map(s => ({
             name: s.fullName,
             percentage: s.percentage,
-            ipi: undefined,
+            role: s.role,
+            ipi: s.ipiNumber,
           })) : undefined,
           publishingData: input.publishingData,
           aiDisclosure: input.aiDisclosure,
@@ -155,6 +158,39 @@ export const bapRouter = router({
           releasedAt: new Date(),
         });
         
+        // Create writerEarnings record for the primary artist (index 0) immediately
+        if (input.songwriterSplits && input.songwriterSplits.length > 0) {
+          try {
+            const { getWriterProfileByUserId, createWriterProfile, createWriterEarning } = await import("../writerPayments");
+            let primaryWriterProfile = await getWriterProfileByUserId(ctx.user.id);
+            if (!primaryWriterProfile) {
+              const primaryWriter = input.songwriterSplits[0];
+              const newProfile = await createWriterProfile({
+                userId: ctx.user.id,
+                fullName: primaryWriter.fullName || profile.stageName,
+                email: primaryWriter.email || ctx.user.email || "",
+                status: "active",
+                verifiedAt: new Date(),
+              });
+              const { getWriterProfileById } = await import("../writerPayments");
+              primaryWriterProfile = await getWriterProfileById(newProfile.insertId as number);
+            }
+            if (primaryWriterProfile) {
+              const primarySplit = input.songwriterSplits[0];
+              await createWriterEarning({
+                writerProfileId: primaryWriterProfile.id,
+                trackId: track.insertId as number,
+                splitPercentage: primarySplit.percentage.toString(),
+                totalEarned: 0,
+                pendingPayout: 0,
+                totalPaidOut: 0,
+              });
+            }
+          } catch (err) {
+            console.error("[BAP] Failed to create primary writer earnings record:", err);
+          }
+        }
+
         // Send writer invitations for co-writers (skip first writer - that's the uploader)
         if (input.songwriterSplits && input.songwriterSplits.length > 1) {
           const { createWriterInvitation } = await import("../writerPayments");

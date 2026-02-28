@@ -386,6 +386,110 @@ export const writerPaymentsRouter = router({
   }),
   
   // ============================================================================
+  // SPLITS SUMMARY (for BAP dashboard)
+  // ============================================================================
+
+  splits: router({
+    /**
+     * Get all tracks owned by the current artist with their split breakdowns,
+     * invitation statuses, and per-writer earnings.
+     */
+    getForMyTracks: protectedProcedure.query(async ({ ctx }) => {
+      const { getArtistProfileByUserId } = await import("../db");
+      const { getTracksByArtist } = await import("../bap");
+      const profile = await getArtistProfileByUserId(ctx.user.id);
+      if (!profile) return [];
+
+      const tracks = await getTracksByArtist(profile.id);
+      if (!tracks.length) return [];
+
+      const db = await (await import("../db")).getDb();
+      if (!db) return [];
+
+      const { writerInvitations: invTable, writerEarnings: earnTable, writerProfiles: profTable } = await import("../../drizzle/schema");
+      const { inArray, eq } = await import("drizzle-orm");
+
+      const trackIds = tracks.map((t: any) => t.id);
+
+      const [invitations, earnings] = await Promise.all([
+        db.select().from(invTable).where(inArray(invTable.trackId, trackIds)),
+        db.select({
+          id: earnTable.id,
+          trackId: earnTable.trackId,
+          writerProfileId: earnTable.writerProfileId,
+          splitPercentage: earnTable.splitPercentage,
+          totalEarned: earnTable.totalEarned,
+          pendingPayout: earnTable.pendingPayout,
+          totalPaidOut: earnTable.totalPaidOut,
+          writerName: profTable.fullName,
+          writerEmail: profTable.email,
+        })
+          .from(earnTable)
+          .leftJoin(profTable, eq(earnTable.writerProfileId, profTable.id))
+          .where(inArray(earnTable.trackId, trackIds)),
+      ]);
+
+      return tracks.map((track: any) => ({
+        trackId: track.id,
+        title: track.title,
+        artist: track.artist,
+        artworkUrl: track.artworkUrl,
+        status: track.status,
+        songwriterSplits: (track.songwriterSplits as any[]) || [],
+        invitations: invitations.filter((inv: any) => inv.trackId === track.id),
+        earnings: earnings.filter((e: any) => e.trackId === track.id),
+      }));
+    }),
+
+    /**
+     * Update songwriter splits for a track (artist only)
+     */
+    update: protectedProcedure
+      .input(z.object({
+        trackId: z.number(),
+        splits: z.array(z.object({
+          fullName: z.string(),
+          email: z.string().email(),
+          percentage: z.number().min(0).max(100),
+          role: z.enum(["songwriter", "producer", "mixer", "mastering", "other"]).default("songwriter"),
+          ipiNumber: z.string().optional(),
+        })),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const total = input.splits.reduce((s, w) => s + w.percentage, 0);
+        if (Math.abs(total - 100) > 0.01) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Splits must add up to 100%" });
+        }
+
+        const { getArtistProfileByUserId } = await import("../db");
+        const artistProfile = await getArtistProfileByUserId(ctx.user.id);
+        if (!artistProfile) throw new TRPCError({ code: "UNAUTHORIZED", message: "Artist profile required" });
+
+        const db = await (await import("../db")).getDb();
+        if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+
+        const { bapTracks } = await import("../../drizzle/schema");
+        const { eq } = await import("drizzle-orm");
+
+        const [track] = await db.select().from(bapTracks).where(eq(bapTracks.id, input.trackId)).limit(1);
+        if (!track || track.artistId !== artistProfile.id) {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Track not found or access denied" });
+        }
+
+        await db.update(bapTracks).set({
+          songwriterSplits: input.splits.map(s => ({
+            name: s.fullName,
+            percentage: s.percentage,
+            role: s.role,
+            ipi: s.ipiNumber,
+          })),
+        }).where(eq(bapTracks.id, input.trackId));
+
+        return { success: true };
+      }),
+  }),
+
+  // ============================================================================
   // EARNINGS
   // ============================================================================
   
