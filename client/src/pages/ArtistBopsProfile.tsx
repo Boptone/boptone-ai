@@ -1,16 +1,20 @@
 /**
  * Artist Bops Profile — /bops/artist/:artistId
  *
- * Desktop-first layout inspired by TikTok/Instagram Reels profile pages:
- * - Full-width artist header with cover gradient, avatar, stats, and action buttons
- * - 4-column responsive video grid (4 col desktop → 3 col tablet → 2 col mobile)
- * - Each card: 9:16 aspect ratio, video preview on hover, stats overlay
- * - Infinite scroll pagination
- * - Tip Artist modal → Stripe Checkout (Kick In: card fees only, Boptone takes 0%)
- * - Respects system dark/light mode via prefers-color-scheme
+ * Fully immersive dark page — no global nav.
+ * Renders its own minimal Bops header (wordmark + back + bell).
+ *
+ * Layout:
+ * - Sticky minimal Bops header
+ * - Full-width cover banner with artist accent gradient
+ * - Avatar (large, overlapping banner), name, verified badge, genres, bio
+ * - Dominant stats row (Bops / Views / Likes / Followers)
+ * - Action pill row (Follow, Tip Artist, BopMusic, BopShop, Post a Bop)
+ * - 4-column responsive video grid with vivid gradient placeholders
+ * - Infinite scroll
  */
 import { useState, useRef, useCallback, useEffect } from "react";
-import { useParams, useLocation } from "wouter";
+import { useParams, useLocation, Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { toast } from "sonner";
@@ -29,6 +33,7 @@ import {
   MessageSquare,
   UserPlus,
   UserCheck,
+  Bell,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -61,6 +66,10 @@ function formatDuration(ms: number): string {
 
 function sumField(items: BopVideo[], field: keyof BopVideo): number {
   return items.reduce((acc, item) => acc + (Number(item[field]) || 0), 0);
+}
+
+function artistAccent(themeColor?: string | null): string {
+  return themeColor || "#5DCCCC";
 }
 
 // ─── Tip presets ─────────────────────────────────────────────────────────────
@@ -109,7 +118,6 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
     });
   };
 
-  // Close on backdrop click
   const handleBackdrop = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
   };
@@ -117,7 +125,7 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
+      style={{ background: "rgba(0,0,0,0.80)", backdropFilter: "blur(8px)" }}
       onClick={handleBackdrop}
     >
       <div
@@ -128,7 +136,6 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
           boxShadow: "0 0 60px rgba(93,204,204,0.12)",
         }}
       >
-        {/* Header */}
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
           <div>
             <h2 className="text-white font-black text-xl tracking-tight">Tip Artist</h2>
@@ -138,17 +145,13 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+            className="w-8 h-8 rounded-full flex items-center justify-center"
             style={{ background: "rgba(255,255,255,0.08)" }}
           >
             <X className="w-4 h-4 text-white/60" />
           </button>
         </div>
-
-        {/* Divider */}
         <div className="h-px mx-6" style={{ background: "rgba(255,255,255,0.06)" }} />
-
-        {/* Amount presets */}
         <div className="px-6 pt-5 pb-4">
           <p className="text-white/40 text-xs uppercase tracking-widest font-semibold mb-3">Choose amount</p>
           <div className="grid grid-cols-5 gap-2">
@@ -168,8 +171,6 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
             ))}
           </div>
         </div>
-
-        {/* Message field */}
         <div className="px-6 pb-5">
           <div className="flex items-center gap-2 mb-2">
             <MessageSquare className="w-3.5 h-3.5 text-white/30" />
@@ -182,31 +183,23 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
             onChange={(e) => setMessage(e.target.value.slice(0, 150))}
             placeholder={`Say something to ${artistName}…`}
             rows={2}
-            className="w-full rounded-xl px-4 py-3 text-sm resize-none outline-none transition-colors"
+            className="w-full rounded-xl px-4 py-3 text-sm resize-none outline-none"
             style={{
               background: "rgba(255,255,255,0.05)",
               border: "1px solid rgba(255,255,255,0.1)",
               color: "rgba(255,255,255,0.8)",
               fontFamily: "inherit",
             }}
-            onFocus={(e) => {
-              e.currentTarget.style.borderColor = "rgba(93,204,204,0.4)";
-            }}
-            onBlur={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-            }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(93,204,204,0.4)"; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
           />
           <p className="text-right text-[10px] text-white/20 mt-1">{message.length}/150</p>
         </div>
-
-        {/* Fee note */}
         <div className="mx-6 mb-4 px-3 py-2 rounded-lg" style={{ background: "rgba(93,204,204,0.06)", border: "1px solid rgba(93,204,204,0.12)" }}>
           <p className="text-[11px] text-[#5DCCCC]/70 text-center">
             ⚡ Only card processing fees apply — Boptone takes <strong className="text-[#5DCCCC]">0%</strong>
           </p>
         </div>
-
-        {/* CTA */}
         <div className="px-6 pb-6">
           <button
             onClick={handleTip}
@@ -235,10 +228,11 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
 
 interface BopGridCardProps {
   bop: BopVideo;
+  accentColor: string;
   onClick: () => void;
 }
 
-function BopGridCard({ bop, onClick }: BopGridCardProps) {
+function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -258,16 +252,21 @@ function BopGridCard({ bop, onClick }: BopGridCardProps) {
     }
   };
 
+  // Vivid unique gradient per bop
+  const hue = (bop.id * 47) % 360;
+  const hue2 = (bop.id * 83 + 120) % 360;
+  const placeholderGradient = `linear-gradient(160deg, hsl(${hue},55%,18%) 0%, ${accentColor}30 35%, hsl(${hue2},45%,10%) 100%)`;
+
   return (
     <button
-      className="relative overflow-hidden rounded-sm cursor-pointer group"
-      style={{ aspectRatio: "9/16", background: "#111" }}
+      className="relative overflow-hidden cursor-pointer group"
+      style={{ aspectRatio: "9/16", background: "#0d1117", borderRadius: "4px" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       aria-label={bop.caption ?? "Watch Bop"}
     >
-      {/* Thumbnail or video */}
+      {/* Thumbnail or vivid gradient placeholder */}
       {bop.thumbnailUrl ? (
         <img
           src={bop.thumbnailUrl}
@@ -275,8 +274,15 @@ function BopGridCard({ bop, onClick }: BopGridCardProps) {
           className="absolute inset-0 w-full h-full object-cover"
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center" style={{ background: "#1a1a1a" }}>
-          <Video className="w-8 h-8 text-white/15" />
+        <div className="absolute inset-0" style={{ background: placeholderGradient }}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className="w-10 h-10 rounded-full flex items-center justify-center"
+              style={{ background: `${accentColor}18`, border: `1px solid ${accentColor}30` }}
+            >
+              <Play className="w-5 h-5 fill-current" style={{ color: `${accentColor}80` }} />
+            </div>
+          </div>
         </div>
       )}
 
@@ -292,59 +298,52 @@ function BopGridCard({ bop, onClick }: BopGridCardProps) {
         preload="none"
       />
 
-      {/* Dark gradient overlay — always present */}
+      {/* Persistent bottom gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 50%)",
-        }}
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%)" }}
       />
 
-      {/* Hover: play icon center */}
+      {/* Hover: centered play ring */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          transition: "opacity 0.15s ease",
-        }}
+        style={{ opacity: isHovered ? 1 : 0, transition: "opacity 0.15s ease" }}
       >
-        <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
-          <Play className="w-6 h-6 text-white fill-white ml-0.5" />
+        <div
+          className="w-12 h-12 rounded-full flex items-center justify-center"
+          style={{
+            background: "rgba(0,0,0,0.55)",
+            backdropFilter: "blur(4px)",
+            border: `1.5px solid ${accentColor}60`,
+          }}
+        >
+          <Play className="w-5 h-5 text-white fill-white ml-0.5" />
         </div>
       </div>
 
-      {/* Bottom stats bar */}
+      {/* Bottom: caption + stats */}
       <div className="absolute bottom-0 left-0 right-0 px-2.5 pb-2.5 flex items-end justify-between gap-2">
-        {/* Caption */}
         {bop.caption && (
           <p className="text-white text-[11px] leading-tight line-clamp-2 flex-1 text-left drop-shadow-md">
             {bop.caption}
           </p>
         )}
-
-        {/* Stats */}
-        <div className="flex flex-col items-end gap-1 shrink-0">
+        <div className="flex flex-col items-end gap-0.5 shrink-0">
           <div className="flex items-center gap-1">
-            <Eye className="w-3 h-3 text-white/70" />
-            <span className="text-white/80 text-[10px] font-semibold tabular-nums">
-              {formatCount(bop.viewCount)}
-            </span>
+            <Eye className="w-3 h-3 text-white/60" />
+            <span className="text-white/80 text-[10px] font-semibold tabular-nums">{formatCount(bop.viewCount)}</span>
           </div>
           <div className="flex items-center gap-1">
             <Heart className="w-3 h-3 text-white fill-white" />
-            <span className="text-white text-[10px] font-semibold tabular-nums">
-              {formatCount(bop.likeCount)}
-            </span>
+            <span className="text-white text-[10px] font-semibold tabular-nums">{formatCount(bop.likeCount)}</span>
           </div>
         </div>
       </div>
 
-      {/* Duration badge — top right */}
+      {/* Duration badge */}
       {bop.durationMs > 0 && (
         <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm rounded px-1.5 py-0.5">
-          <span className="text-white text-[10px] font-mono tabular-nums">
-            {formatDuration(bop.durationMs)}
-          </span>
+          <span className="text-white text-[10px] font-mono tabular-nums">{formatDuration(bop.durationMs)}</span>
         </div>
       )}
     </button>
@@ -355,7 +354,7 @@ function BopGridCard({ bop, onClick }: BopGridCardProps) {
 
 export default function ArtistBopsProfile() {
   const { artistId } = useParams<{ artistId: string }>();
-  const [location, navigate] = useLocation();
+  const [, navigate] = useLocation();
   const { user } = useAuth();
   const [allBops, setAllBops] = useState<BopVideo[]>([]);
   const [cursor, setCursor] = useState<number | undefined>(undefined);
@@ -366,7 +365,7 @@ export default function ArtistBopsProfile() {
 
   const parsedArtistId = parseInt(artistId ?? "0", 10);
 
-  // Follow state
+  // ── Follow state ──────────────────────────────────────────────────────────
   const utils = trpc.useUtils();
   const { data: followData } = trpc.bops.isFollowingArtist.useQuery(
     { artistId: parsedArtistId },
@@ -377,18 +376,28 @@ export default function ArtistBopsProfile() {
     { enabled: parsedArtistId > 0 }
   );
   const [optimisticFollowing, setOptimisticFollowing] = useState<boolean | null>(null);
-  const isFollowing = optimisticFollowing !== null ? optimisticFollowing : (followData?.isFollowing ?? false);
-  const followerCount = (followerData?.count ?? 0) + (optimisticFollowing === true && !followData?.isFollowing ? 1 : optimisticFollowing === false && followData?.isFollowing ? -1 : 0);
+  const isFollowing =
+    optimisticFollowing !== null ? optimisticFollowing : (followData?.isFollowing ?? false);
+  const followerCount =
+    (followerData?.count ?? 0) +
+    (optimisticFollowing === true && !followData?.isFollowing ? 1 : 0) +
+    (optimisticFollowing === false && followData?.isFollowing ? -1 : 0);
 
   const followMutation = trpc.bops.followArtist.useMutation({
     onMutate: () => setOptimisticFollowing(true),
     onError: () => { setOptimisticFollowing(null); toast.error("Could not follow artist"); },
-    onSuccess: () => utils.bops.isFollowingArtist.invalidate({ artistId: parsedArtistId }),
+    onSuccess: () => {
+      utils.bops.isFollowingArtist.invalidate({ artistId: parsedArtistId });
+      utils.bops.getFollowerCount.invalidate({ artistId: parsedArtistId });
+    },
   });
   const unfollowMutation = trpc.bops.unfollowArtist.useMutation({
     onMutate: () => setOptimisticFollowing(false),
     onError: () => { setOptimisticFollowing(null); toast.error("Could not unfollow artist"); },
-    onSuccess: () => utils.bops.isFollowingArtist.invalidate({ artistId: parsedArtistId }),
+    onSuccess: () => {
+      utils.bops.isFollowingArtist.invalidate({ artistId: parsedArtistId });
+      utils.bops.getFollowerCount.invalidate({ artistId: parsedArtistId });
+    },
   });
 
   function handleFollowToggle() {
@@ -400,15 +409,15 @@ export default function ArtistBopsProfile() {
       toast.success(`Following ${artistProfile?.stageName ?? "artist"}!`);
     }
   }
+  // ─────────────────────────────────────────────────────────────────────────
 
-  // Handle tip success/cancel from Stripe redirect URL params
+  // Handle tip success/cancel from Stripe redirect
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tipStatus = params.get("tip");
     const amount = params.get("amount");
     if (tipStatus === "success" && amount) {
       toast.success(`⚡ $${amount} tip sent! The artist will receive it shortly.`, { duration: 6000 });
-      // Clean URL
       window.history.replaceState({}, "", window.location.pathname);
     } else if (tipStatus === "cancelled") {
       toast.info("Tip cancelled — no charge was made.");
@@ -417,19 +426,16 @@ export default function ArtistBopsProfile() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Fetch artist profile
   const { data: artistProfile, isLoading: profileLoading } = trpc.artistProfile.getById.useQuery(
     { id: parsedArtistId },
     { enabled: parsedArtistId > 0 }
   );
 
-  // Fetch Bops for this artist
   const { data: bopsData, isLoading: bopsLoading, isFetching } = trpc.bops.getByArtist.useQuery(
     { artistId: parsedArtistId, limit: 24, cursor },
     { enabled: parsedArtistId > 0 }
   );
 
-  // Accumulate pages — use a stable cursor key to avoid double-appending
   useEffect(() => {
     if (!bopsData) return;
     const key = String(cursor ?? "init");
@@ -442,7 +448,6 @@ export default function ArtistBopsProfile() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bopsData]);
 
-  // Infinite scroll sentinel
   const sentinelRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (observerRef.current) observerRef.current.disconnect();
@@ -460,23 +465,21 @@ export default function ArtistBopsProfile() {
     [hasMore, isFetching, allBops]
   );
 
-  // Derived stats
   const totalLikes = sumField(allBops, "likeCount");
   const totalViews = sumField(allBops, "viewCount");
 
-  // Loading
+  // ── Loading ───────────────────────────────────────────────────────────────
   if (profileLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#0d1117" }}>
         <div className="w-10 h-10 border-2 border-[#5DCCCC] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
-  // Not found
   if (!artistProfile && !profileLoading) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4 text-white">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-white" style={{ background: "#0d1117" }}>
         <p className="text-lg font-semibold">Artist not found</p>
         <button onClick={() => navigate("/bops")} className="text-[#5DCCCC] underline text-sm">
           Back to Bops
@@ -487,11 +490,14 @@ export default function ArtistBopsProfile() {
 
   const artist = artistProfile!;
   const isOwner = user && (artist as any).userId === (user as any).id;
+  const accent = artistAccent(artist.themeColor);
 
   return (
-    <div className="min-h-screen text-white" style={{ fontFamily: "'Inter', sans-serif", background: "#0d1117", colorScheme: "dark" }}>
-
-      {/* ── Tip Artist Modal ── */}
+    <div
+      className="min-h-screen text-white"
+      style={{ fontFamily: "'Inter', sans-serif", background: "#0d1117", colorScheme: "dark" }}
+    >
+      {/* ── Tip Modal ── */}
       {showTipModal && (
         <TipArtistModal
           artistId={parsedArtistId}
@@ -500,257 +506,274 @@ export default function ArtistBopsProfile() {
         />
       )}
 
-      {/* ── Breadcrumb bar (below global nav) ── */}
-      <div className="border-b border-white/5" style={{ background: "rgba(13,17,23,0.95)" }}>
-        <div className="max-w-6xl mx-auto px-4 h-11 flex items-center gap-3">
-          <button
-            onClick={() => navigate("/bops")}
-            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-            aria-label="Back to Bops"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 text-white" />
-          </button>
-          <div className="flex items-center gap-2">
-            <span className="text-white/40 text-xs font-medium">Bops</span>
-            <span className="text-white/20 text-xs">/</span>
-            <span className="text-white/70 text-xs font-semibold">{artist.stageName}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Hero header ── */}
-      <div
-        className="relative"
+      {/* ══════════════════════════════════════════════════════════════════════
+          MINIMAL BOPS HEADER — replaces the global marketing nav
+      ══════════════════════════════════════════════════════════════════════ */}
+      <header
+        className="sticky top-0 z-40 flex items-center justify-between px-4 h-14"
         style={{
-          background: "#0d1117",
+          background: "rgba(13,17,23,0.92)",
+          backdropFilter: "blur(12px)",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        {/* Subtle cyan glow behind avatar */}
+        {/* Back arrow */}
+        <button
+          onClick={() => navigate("/bops")}
+          className="w-9 h-9 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(255,255,255,0.07)" }}
+          aria-label="Back to Bops"
+        >
+          <ArrowLeft className="w-4 h-4 text-white" />
+        </button>
+
+        {/* Boptone wordmark */}
+        <Link href="/">
+          <span className="font-black text-lg tracking-tight select-none cursor-pointer" style={{ letterSpacing: "-0.02em" }}>
+            <span className="text-white">Bop</span>
+            <span style={{ color: accent }}>tone</span>
+          </span>
+        </Link>
+
+        {/* Notifications bell */}
+        <button
+          onClick={() => navigate("/bops/notifications")}
+          className="w-9 h-9 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(255,255,255,0.07)" }}
+          aria-label="Bops notifications"
+        >
+          <Bell className="w-4 h-4 text-white/70" />
+        </button>
+      </header>
+
+      {/* ══════════════════════════════════════════════════════════════════════
+          COVER BANNER
+      ══════════════════════════════════════════════════════════════════════ */}
+      <div
+        className="relative w-full"
+        style={{
+          height: "180px",
+          background: `linear-gradient(135deg, ${accent}40 0%, ${accent}18 40%, #0d1117 100%)`,
+        }}
+      >
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(93,204,204,0.12) 0%, transparent 70%)",
-          }}
+          className="absolute bottom-0 left-0 right-0 h-16"
+          style={{ background: "linear-gradient(to bottom, transparent, #0d1117)" }}
         />
+      </div>
 
-        <div className="max-w-6xl mx-auto px-6 py-10 relative">
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+      {/* ══════════════════════════════════════════════════════════════════════
+          ARTIST HEADER — overlaps the cover banner
+      ══════════════════════════════════════════════════════════════════════ */}
+      <div className="max-w-5xl mx-auto px-5 -mt-16 relative z-10">
+        <div className="flex flex-col md:flex-row items-center md:items-end gap-5 md:gap-7">
 
-            {/* Avatar */}
-            <div className="relative shrink-0">
-              <div
-                className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden"
-                style={{
-                  border: artist.verifiedStatus ? "3px solid #5DCCCC" : "3px solid rgba(255,255,255,0.15)",
-                  boxShadow: artist.verifiedStatus
-                    ? "0 0 24px rgba(93,204,204,0.35)"
-                    : "0 0 0 transparent",
-                }}
-              >
-                {artist.avatarUrl ? (
-                  <img
-                    src={artist.avatarUrl}
-                    alt={artist.stageName}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
-                    <span className="text-4xl font-black text-white/30">
-                      {artist.stageName.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
-                )}
-              </div>
-              {artist.verifiedStatus && (
-                <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-black rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-6 h-6 text-[#5DCCCC] fill-[#5DCCCC]" />
-                </div>
-              )}
-            </div>
-
-            {/* Info block */}
-            <div className="flex-1 flex flex-col items-center md:items-start gap-4">
-
-              {/* Name + verified */}
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl md:text-3xl font-black tracking-tight">{artist.stageName}</h1>
-                {artist.verifiedStatus && (
-                  <span
-                    className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
-                    style={{ background: "rgba(93,204,204,0.15)", color: "#5DCCCC", border: "1px solid rgba(93,204,204,0.3)" }}
-                  >
-                    Verified
+          {/* Avatar */}
+          <div className="relative shrink-0">
+            <div
+              className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden"
+              style={{
+                border: `3px solid ${accent}`,
+                boxShadow: `0 0 0 4px #0d1117, 0 0 32px ${accent}50`,
+              }}
+            >
+              {artist.avatarUrl ? (
+                <img src={artist.avatarUrl} alt={artist.stageName} className="w-full h-full object-cover" />
+              ) : (
+                <div
+                  className="w-full h-full flex items-center justify-center"
+                  style={{ background: `${accent}18` }}
+                >
+                  <span className="text-5xl font-black" style={{ color: `${accent}80` }}>
+                    {artist.stageName.charAt(0).toUpperCase()}
                   </span>
-                )}
-              </div>
-
-              {/* Location + genres */}
-              <div className="flex flex-wrap items-center gap-2 justify-center md:justify-start">
-                {artist.location && (
-                  <span className="text-white/50 text-sm">{artist.location}</span>
-                )}
-                {artist.genres && artist.genres.length > 0 && (
-                  <>
-                    {artist.location && <span className="text-white/20">·</span>}
-                    {artist.genres.slice(0, 3).map((genre) => (
-                      <span
-                        key={genre}
-                        className="text-xs px-2.5 py-0.5 rounded-full font-medium"
-                        style={{ background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}
-                      >
-                        {genre}
-                      </span>
-                    ))}
-                  </>
-                )}
-              </div>
-
-              {/* Bio */}
-              {artist.bio && (
-                <p className="text-white/60 text-sm leading-relaxed max-w-md text-center md:text-left">
-                  {artist.bio}
-                </p>
+                </div>
               )}
-
-              {/* Stats row */}
-              <div className="flex items-center gap-6 md:gap-8">
-                <div className="flex flex-col items-center md:items-start">
-                  <span className="text-xl font-black tabular-nums">{formatCount(allBops.length)}</span>
-                  <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Bops</span>
-                </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div className="flex flex-col items-center md:items-start">
-                  <span className="text-xl font-black tabular-nums">{formatCount(totalViews)}</span>
-                  <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Views</span>
-                </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div className="flex flex-col items-center md:items-start">
-                  <span className="text-xl font-black tabular-nums">{formatCount(totalLikes)}</span>
-                  <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Likes</span>
-                </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div className="flex flex-col items-center md:items-start">
-                  <span className="text-xl font-black tabular-nums">{formatCount(followerCount)}</span>
-                  <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Followers</span>
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
-                {/* Follow button — shown to non-owners */}
-                {!isOwner && (
-                  <button
-                    onClick={handleFollowToggle}
-                    disabled={followMutation.isPending || unfollowMutation.isPending}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all disabled:opacity-60"
-                    style={isFollowing ? {
-                      background: "rgba(93,204,204,0.12)",
-                      color: "#5DCCCC",
-                      border: "1px solid rgba(93,204,204,0.35)",
-                    } : {
-                      background: "#5DCCCC",
-                      color: "#000",
-                      boxShadow: "0 4px 20px rgba(93,204,204,0.25)",
-                    }}
-                  >
-                    {isFollowing ? (
-                      <><UserCheck className="w-4 h-4" /> Following</>
-                    ) : (
-                      <><UserPlus className="w-4 h-4" /> Follow</>
-                    )}
-                  </button>
-                )}
-
-                {/* Tip button — primary CTA — opens modal */}
-                <button
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all"
-                  style={{ background: isOwner ? "#5DCCCC" : "rgba(255,255,255,0.1)", color: isOwner ? "#000" : "rgba(255,255,255,0.85)", boxShadow: isOwner ? "0 4px 20px rgba(93,204,204,0.25)" : "none", border: isOwner ? "none" : "1px solid rgba(255,255,255,0.15)" }}
-                  onClick={() => setShowTipModal(true)}
-                >
-                  <Zap className="w-4 h-4" />
-                  Tip Artist
-                </button>
-
-                {/* BopMusic */}
-                <button
-                  onClick={() => navigate("/music")}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-all"
-                  style={{
-                    background: "rgba(255,255,255,0.08)",
-                    color: "rgba(255,255,255,0.8)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                  }}
-                >
-                  <Music className="w-4 h-4" />
-                  BopMusic
-                </button>
-
-                {/* BopShop */}
-                <button
-                  onClick={() => navigate("/shop")}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-all"
-                  style={{
-                    background: "rgba(255,255,255,0.08)",
-                    color: "rgba(255,255,255,0.8)",
-                    border: "1px solid rgba(255,255,255,0.12)",
-                  }}
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  BopShop
-                </button>
-
-                {/* Owner: Post a Bop */}
-                {isOwner && (
-                  <button
-                    onClick={() => navigate("/bops/upload")}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-all"
-                    style={{
-                      background: "rgba(93,204,204,0.1)",
-                      color: "#5DCCCC",
-                      border: "1px solid rgba(93,204,204,0.3)",
-                    }}
-                  >
-                    <Plus className="w-4 h-4" />
-                    Post a Bop
-                  </button>
-                )}
-              </div>
             </div>
+            {artist.verifiedStatus && (
+              <div
+                className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center"
+                style={{ background: "#0d1117" }}
+              >
+                <CheckCircle className="w-6 h-6" style={{ color: accent }} />
+              </div>
+            )}
+          </div>
+
+          {/* Name + meta */}
+          <div className="flex-1 flex flex-col items-center md:items-start gap-2 pb-1">
+            <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-start">
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-none">{artist.stageName}</h1>
+              {artist.verifiedStatus && (
+                <span
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                  style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}35` }}
+                >
+                  Verified
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 justify-center md:justify-start">
+              {artist.location && <span className="text-white/45 text-sm">{artist.location}</span>}
+              {artist.genres && artist.genres.length > 0 && (
+                <>
+                  {artist.location && <span className="text-white/20">·</span>}
+                  {artist.genres.slice(0, 3).map((genre) => (
+                    <span
+                      key={genre}
+                      className="text-xs px-2.5 py-0.5 rounded-full font-semibold"
+                      style={{ background: `${accent}14`, color: `${accent}CC`, border: `1px solid ${accent}25` }}
+                    >
+                      {genre}
+                    </span>
+                  ))}
+                </>
+              )}
+            </div>
+
+            {artist.bio && (
+              <p className="text-white/55 text-sm leading-relaxed max-w-md text-center md:text-left">
+                {artist.bio}
+              </p>
+            )}
           </div>
         </div>
-      </div>
 
-      {/* ── Grid section header ── */}
-      <div className="max-w-6xl mx-auto px-4 pt-6 pb-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Video className="w-4 h-4 text-[#5DCCCC]" />
-          <span className="text-sm font-semibold text-white/70 uppercase tracking-widest">Latest Bops</span>
+        {/* Stats row */}
+        <div
+          className="mt-6 flex items-center rounded-2xl overflow-hidden"
+          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+        >
+          {[
+            { value: formatCount(allBops.length), label: "Bops" },
+            { value: formatCount(totalViews), label: "Views" },
+            { value: formatCount(totalLikes), label: "Likes" },
+            { value: formatCount(followerCount), label: "Followers" },
+          ].map((stat, i, arr) => (
+            <div
+              key={stat.label}
+              className="flex-1 flex flex-col items-center py-4 gap-0.5"
+              style={{ borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }}
+            >
+              <span
+                className="text-2xl md:text-3xl font-black tabular-nums leading-none"
+                style={{ color: stat.label === "Followers" ? accent : "white" }}
+              >
+                {stat.value}
+              </span>
+              <span className="text-[11px] text-white/35 uppercase tracking-widest font-semibold">
+                {stat.label}
+              </span>
+            </div>
+          ))}
         </div>
-        <span className="text-xs text-white/30 tabular-nums">{formatCount(allBops.length)} videos</span>
+
+        {/* Action pills */}
+        <div className="mt-4 flex items-center gap-2.5 flex-wrap justify-center md:justify-start pb-6">
+          {/* Follow — hidden for owner */}
+          {!isOwner && (
+            <button
+              onClick={handleFollowToggle}
+              disabled={followMutation.isPending || unfollowMutation.isPending}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all disabled:opacity-60"
+              style={
+                isFollowing
+                  ? { background: `${accent}14`, color: accent, border: `1px solid ${accent}35` }
+                  : { background: accent, color: "#000", boxShadow: `0 4px 20px ${accent}40` }
+              }
+            >
+              {isFollowing ? <><UserCheck className="w-4 h-4" /> Following</> : <><UserPlus className="w-4 h-4" /> Follow</>}
+            </button>
+          )}
+
+          {/* Tip Artist */}
+          <button
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all"
+            style={
+              isOwner
+                ? { background: accent, color: "#000", boxShadow: `0 4px 20px ${accent}40` }
+                : { background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.14)" }
+            }
+            onClick={() => setShowTipModal(true)}
+          >
+            <Zap className="w-4 h-4" />
+            Tip Artist
+          </button>
+
+          {/* BopMusic */}
+          <button
+            onClick={() => navigate("/music")}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
+            style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.11)" }}
+          >
+            <Music className="w-4 h-4" />
+            BopMusic
+          </button>
+
+          {/* BopShop */}
+          <button
+            onClick={() => navigate("/shop")}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
+            style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.11)" }}
+          >
+            <ShoppingBag className="w-4 h-4" />
+            BopShop
+          </button>
+
+          {/* Owner: Post a Bop */}
+          {isOwner && (
+            <button
+              onClick={() => navigate("/bops/upload")}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
+              style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}30` }}
+            >
+              <Plus className="w-4 h-4" />
+              Post a Bop
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* ── Video grid ── */}
-      <div className="max-w-6xl mx-auto px-4 pb-16">
+      {/* ══════════════════════════════════════════════════════════════════════
+          GRID SECTION HEADER
+      ══════════════════════════════════════════════════════════════════════ */}
+      <div
+        className="max-w-5xl mx-auto px-5 pt-2 pb-3 flex items-center justify-between"
+        style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+      >
+        <div className="flex items-center gap-2">
+          <Video className="w-4 h-4" style={{ color: accent }} />
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)" }}>
+            Latest Bops
+          </span>
+        </div>
+        <span className="text-xs tabular-nums" style={{ color: "rgba(255,255,255,0.25)" }}>
+          {formatCount(allBops.length)} videos
+        </span>
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════════════
+          VIDEO GRID
+      ══════════════════════════════════════════════════════════════════════ */}
+      <div className="max-w-5xl mx-auto px-5 pb-20">
         {bopsLoading && allBops.length === 0 ? (
-          /* Skeleton */
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
             {Array.from({ length: 12 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-[#111] animate-pulse rounded-sm"
-                style={{ aspectRatio: "9/16" }}
+                className="animate-pulse rounded"
+                style={{ aspectRatio: "9/16", background: `${accent}08` }}
               />
             ))}
           </div>
         ) : allBops.length === 0 ? (
-          /* Empty state */
           <div className="flex flex-col items-center justify-center py-32 gap-5 text-center">
             <div
               className="w-20 h-20 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(93,204,204,0.08)", border: "1px solid rgba(93,204,204,0.15)" }}
+              style={{ background: `${accent}10`, border: `1px solid ${accent}20` }}
             >
-              <Video className="w-9 h-9 text-[#5DCCCC]/40" />
+              <Video className="w-9 h-9" style={{ color: `${accent}50` }} />
             </div>
             <div>
               <p className="text-white/50 text-base font-semibold mb-1">
@@ -764,7 +787,7 @@ export default function ArtistBopsProfile() {
               <button
                 onClick={() => navigate("/bops/upload")}
                 className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm"
-                style={{ background: "#5DCCCC", color: "#000" }}
+                style={{ background: accent, color: "#000" }}
               >
                 <Plus className="w-4 h-4" />
                 Post a Bop
@@ -773,35 +796,33 @@ export default function ArtistBopsProfile() {
           </div>
         ) : (
           <>
-            {/* 4-column grid on desktop, 3 on tablet, 2 on mobile */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
               {allBops.map((bop) => (
                 <BopGridCard
                   key={bop.id}
                   bop={bop}
+                  accentColor={accent}
                   onClick={() => navigate(`/bops?start=${bop.id}`)}
                 />
               ))}
             </div>
 
-            {/* Infinite scroll sentinel */}
             {hasMore && (
-              <div
-                ref={sentinelRef}
-                className="col-span-full h-16 flex items-center justify-center mt-4"
-              >
+              <div ref={sentinelRef} className="h-16 flex items-center justify-center mt-4">
                 {isFetching && (
-                  <div className="w-6 h-6 border-2 border-[#5DCCCC] border-t-transparent rounded-full animate-spin" />
+                  <div
+                    className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
+                    style={{ borderColor: `${accent} transparent transparent transparent` }}
+                  />
                 )}
               </div>
             )}
 
-            {/* End of feed */}
             {!hasMore && allBops.length > 0 && (
               <div className="flex items-center justify-center py-8 gap-3">
-                <div className="h-px flex-1 bg-white/5" />
-                <span className="text-white/25 text-xs uppercase tracking-widest font-medium">All Bops loaded</span>
-                <div className="h-px flex-1 bg-white/5" />
+                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
+                <span className="text-white/20 text-xs uppercase tracking-widest font-medium">All Bops loaded</span>
+                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
               </div>
             )}
           </>

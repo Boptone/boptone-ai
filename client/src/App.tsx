@@ -228,12 +228,12 @@ function AppShell() {
   const isBopsFeedOnly = location === '/bops';
   const isMusicPage = location.startsWith('/music');
 
-  // Bops sub-pages (/bops/artist/:id, /bops/upload) DO get the global nav
-  // but still hide the footer to keep the Bops world feel
+  // All Bops pages are fully immersive — they render their own minimal dark header.
   const isBopsSubPage = location.startsWith('/bops/') && !isBopsFeedOnly;
+  const isAnyBopsPage = isBopsFeedOnly || isBopsSubPage;
 
-  const showNav = !isBopsFeedOnly && !isMusicPage;
-  const showFooter = !isBopsFeedOnly && !isMusicPage && !isBopsSubPage;
+  const showNav = !isAnyBopsPage && !isMusicPage;
+  const showFooter = !isAnyBopsPage && !isMusicPage;
   const showMusicPlayer = isMusicPage;
 
   return (
