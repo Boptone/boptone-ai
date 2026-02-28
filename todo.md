@@ -5203,3 +5203,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] fileToBase64 helper, per-track error handling, shared artwork across all tracks
 - [x] TypeScript: 0 errors
 - [x] 32 new tests passing (192 total)
+
+## BopShop E-Commerce Foundation
+- [x] Audit existing BopShop schema, Stripe integration, and existing shop files
+- [x] Verify ecommerceRouter, checkoutRouter, cartRouter are all wired correctly
+- [x] Confirm BopShopLanding, BopShopBrowse, BopShopProduct, Cart, CheckoutSuccess pages exist
+- [x] Confirm MyStore, MyStoreOrders, ProductManagement, ProductForm pages exist
+- [x] Verify Stripe checkout session with 3% Boptone platform fee is implemented
+- [x] Verify Stripe webhook checkout.session.completed creates orders correctly
+- [x] Live browser test: storefront loads 23 products, cart works, Add Product form works
+- [x] Write 48 vitest tests: fee structure, product validation, cart ops, order status, inventory, Stripe metadata, slug generation
+- [x] TypeScript: 0 errors
+- [x] 272 tests passing (only pre-existing aiDetection live API test fails)

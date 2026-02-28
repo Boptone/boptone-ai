@@ -198,7 +198,7 @@ describe("Writer Invitation Email — writerInvitationEmail", () => {
       expect(mockCreateInvitation).toHaveBeenCalledOnce();
     });
 
-    it("does not throw when email service is unavailable", () => {
+    it("does not throw when email service is unavailable", async () => {
       const safeEmailSend = async (fn: () => Promise<void>) => {
         try {
           await fn();
