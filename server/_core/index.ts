@@ -13,6 +13,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import { startJobScheduler } from "../services/jobScheduler";
 import { startVideoProcessorWorker } from "../workers/videoProcessor";
+import { startAutoPayoutScheduler } from "../workers/autoPayoutScheduler";
 import { ENV } from "./env";
 import { COOKIE_NAME } from "@shared/const";
 
@@ -380,6 +381,12 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
       startVideoProcessorWorker();
     } catch (err) {
       console.warn("[VideoProcessor] Worker failed to start (Redis may not be available):", err instanceof Error ? err.message : err);
+    }
+    // Start the auto-payout scheduler (runs every hour, processes daily/weekly/monthly payouts)
+    try {
+      startAutoPayoutScheduler();
+    } catch (err) {
+      console.warn("[AutoPayout] Scheduler failed to start (Redis may not be available):", err instanceof Error ? err.message : err);
     }
   });
 }

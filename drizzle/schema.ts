@@ -2585,7 +2585,7 @@ export type InsertPayoutAccount = typeof payoutAccounts.$inferInsert;
 export const payouts = mysqlTable("payouts", {
   id: int("id").autoincrement().primaryKey(),
   artistId: int("artistId").notNull().references(() => artistProfiles.id),
-  payoutAccountId: int("payoutAccountId").notNull().references(() => payoutAccounts.id),
+  payoutAccountId: int("payoutAccountId").references(() => payoutAccounts.id), // Nullable for Stripe Connect users (bank managed in Stripe)
   
   // Payout details
   amount: int("amount").notNull(), // In cents

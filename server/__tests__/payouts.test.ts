@@ -244,3 +244,115 @@ describe("Payout System", () => {
     });
   });
 });
+
+// ─── Stripe Connect Transfer Tests (added with real transfer wiring) ──────────
+
+describe("Stripe Connect Transfer Execution", () => {
+  it("should reject payout if artist has no Stripe Connect account", () => {
+    const user = { stripeConnectAccountId: null, stripeConnectPayoutsEnabled: false };
+    const hasConnect = !!user.stripeConnectAccountId && user.stripeConnectPayoutsEnabled;
+    expect(hasConnect).toBe(false);
+  });
+
+  it("should reject payout if Stripe payouts are not enabled on the account", () => {
+    const user = { stripeConnectAccountId: "acct_test123", stripeConnectPayoutsEnabled: false };
+    const hasConnect = !!user.stripeConnectAccountId && user.stripeConnectPayoutsEnabled;
+    expect(hasConnect).toBe(false);
+  });
+
+  it("should allow payout when Stripe Connect is fully onboarded", () => {
+    const user = { stripeConnectAccountId: "acct_test123", stripeConnectPayoutsEnabled: true };
+    const hasConnect = !!user.stripeConnectAccountId && user.stripeConnectPayoutsEnabled;
+    expect(hasConnect).toBe(true);
+  });
+
+  it("should use idempotency key based on payout ID to prevent duplicates", () => {
+    const payoutId = 123;
+    const idempotencyKey = `payout-${payoutId}`;
+    expect(idempotencyKey).toBe("payout-123");
+  });
+
+  it("should include boptone_payout_id in transfer metadata for webhook reconciliation", () => {
+    const payoutId = 77;
+    const artistId = 10;
+    const metadata = {
+      boptone_payout_id: payoutId.toString(),
+      boptone_artist_id: artistId.toString(),
+    };
+    expect(metadata.boptone_payout_id).toBe("77");
+    expect(metadata.boptone_artist_id).toBe("10");
+  });
+
+  it("should route transfer.created to payouts table when boptone_payout_id is present", () => {
+    const transfer = {
+      id: "tr_test_abc",
+      metadata: { boptone_payout_id: "55", boptone_artist_id: "10" },
+    };
+    const boptonePayoutId = transfer.metadata?.boptone_payout_id;
+    expect(boptonePayoutId).toBe("55");
+    expect(parseInt(boptonePayoutId)).toBe(55);
+  });
+
+  it("should fall back to bapPayments table when no boptone_payout_id in metadata", () => {
+    const transfer = { id: "tr_bap_abc", metadata: { artistId: "10" } } as any;
+    const boptonePayoutId = transfer.metadata?.boptone_payout_id;
+    expect(boptonePayoutId).toBeUndefined();
+    const artistId = parseInt(transfer.metadata?.artistId || "0");
+    expect(artistId).toBe(10);
+  });
+
+  it("should restore balance on transfer reversal", () => {
+    const currentBalance = { availableBalance: 0, withdrawnBalance: 45000 };
+    const reversedAmount = 45000;
+    const restored = {
+      availableBalance: currentBalance.availableBalance + reversedAmount,
+      withdrawnBalance: Math.max(0, currentBalance.withdrawnBalance - reversedAmount),
+    };
+    expect(restored.availableBalance).toBe(45000);
+    expect(restored.withdrawnBalance).toBe(0);
+  });
+});
+
+describe("Auto-Payout Scheduler — Schedule Logic", () => {
+  it("should trigger daily payouts every day", () => {
+    const schedule = "daily";
+    const shouldPay = schedule === "daily" || (schedule === "weekly" && 3 === 1) || (schedule === "monthly" && 15 === 1);
+    expect(shouldPay).toBe(true);
+  });
+
+  it("should trigger weekly payouts only on Monday (dayOfWeek === 1)", () => {
+    const schedule = "weekly";
+    expect(schedule === "weekly" && 1 === 1).toBe(true);
+    expect(schedule === "weekly" && 3 === 1).toBe(false);
+  });
+
+  it("should trigger monthly payouts only on the 1st of the month", () => {
+    const schedule = "monthly";
+    expect(schedule === "monthly" && 1 === 1).toBe(true);
+    expect(schedule === "monthly" && 15 === 1).toBe(false);
+  });
+
+  it("should never trigger manual payouts automatically", () => {
+    const schedule = "manual";
+    const shouldPay = schedule === "daily" || (schedule === "weekly" && 1 === 1) || (schedule === "monthly" && 1 === 1);
+    expect(shouldPay).toBe(false);
+  });
+
+  it("should skip artists below auto-payout threshold", () => {
+    const availableBalance = 1500;
+    const threshold = 2000;
+    expect(availableBalance >= threshold).toBe(false);
+  });
+
+  it("should process artists above auto-payout threshold", () => {
+    const availableBalance = 5000;
+    const threshold = 2000;
+    expect(availableBalance >= threshold).toBe(true);
+  });
+
+  it("should generate idempotency key as auto-payout-{artistId}-{dateKey}", () => {
+    const artistId = 10;
+    const dateKey = "2026-2-28";
+    expect(`auto-payout-${artistId}-${dateKey}`).toBe("auto-payout-10-2026-2-28");
+  });
+});

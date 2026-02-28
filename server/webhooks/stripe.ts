@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { stripe } from "../stripe";
 import { getDb } from "../db";
-import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bapStreamPayments, products, users } from "../../drizzle/schema";
+import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bapStreamPayments, products, users, payouts } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
 import { calculateFees } from "../stripe";
+import { getEarningsBalance, updateEarningsBalance } from "../db";
 
 /**
  * Stripe Webhook Handler
@@ -58,8 +59,12 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         await handleTransferCreated(eventData);
         break;
 
+      case 'transfer.paid':
+        await handleTransferPaid(eventData);
+        break;
+
       case 'transfer.reversed':
-      case 'transfer.updated':
+      case 'transfer.failed':
         await handleTransferFailed(eventData);
         break;
 
@@ -434,69 +439,121 @@ async function handlePaymentIntentSucceeded(paymentIntent: any) {
 
 /**
  * Handle transfer created (payout initiated)
+ * Reconciles against both bapPayments (BAP streams) and payouts (general payouts) tables.
  */
 async function handleTransferCreated(transfer: any) {
   console.log('[Stripe Webhook] Transfer created:', transfer.id);
-
   const db = await getDb();
   if (!db) return;
 
+  // Reconcile general payout (from payouts table) if boptone_payout_id is in metadata
+  const boptonePayoutId = transfer.metadata?.boptone_payout_id;
+  if (boptonePayoutId) {
+    const payoutId = parseInt(boptonePayoutId);
+    await db
+      .update(payouts)
+      .set({ status: 'processing', externalPayoutId: transfer.id, processedAt: new Date() })
+      .where(eq(payouts.id, payoutId));
+    console.log(`[Stripe Webhook] General payout ${payoutId} → processing (transfer ${transfer.id})`);
+    return;
+  }
+
+  // Legacy: reconcile BAP stream payment
   const artistId = parseInt(transfer.metadata?.artistId || '0');
   if (artistId) {
-    // Update payment status to processing
     await db
       .update(bapPayments)
       .set({ status: 'processing' })
       .where(eq(bapPayments.stripePayoutId, transfer.id));
-
-    console.log(`[Stripe Webhook] Updated payment status to processing for artist ${artistId}`);
+    console.log(`[Stripe Webhook] BAP payment processing for artist ${artistId}`);
   }
 }
 
 /**
  * Handle transfer paid (payout completed)
+ * Marks the payout as completed in the payouts table.
  */
 async function handleTransferPaid(transfer: any) {
   console.log('[Stripe Webhook] Transfer paid:', transfer.id);
-
   const db = await getDb();
   if (!db) return;
 
+  // Reconcile general payout
+  const boptonePayoutId = transfer.metadata?.boptone_payout_id;
+  if (boptonePayoutId) {
+    const payoutId = parseInt(boptonePayoutId);
+    await db
+      .update(payouts)
+      .set({ status: 'completed', completedAt: new Date() })
+      .where(eq(payouts.id, payoutId));
+    console.log(`[Stripe Webhook] General payout ${payoutId} → completed (transfer ${transfer.id})`);
+    return;
+  }
+
+  // Legacy: reconcile BAP stream payment
   const artistId = parseInt(transfer.metadata?.artistId || '0');
   if (artistId) {
-    // Update payment status to paid
     await db
       .update(bapPayments)
-      .set({ 
-        status: 'paid',
-        paidAt: new Date(),
-      })
+      .set({ status: 'paid', paidAt: new Date() })
       .where(eq(bapPayments.stripePayoutId, transfer.id));
-
-    console.log(`[Stripe Webhook] Payment completed for artist ${artistId}`);
+    console.log(`[Stripe Webhook] BAP payment completed for artist ${artistId}`);
   }
 }
 
 /**
- * Handle transfer failed (payout failed)
+ * Handle transfer reversed/failed (payout failed)
+ * Marks the payout as failed and restores the artist's available balance.
  */
 async function handleTransferFailed(transfer: any) {
-  console.error('[Stripe Webhook] Transfer failed:', transfer.id, transfer.failure_message);
-
+  console.error('[Stripe Webhook] Transfer failed/reversed:', transfer.id, transfer.failure_message);
   const db = await getDb();
   if (!db) return;
 
+  // Reconcile general payout — restore balance on failure
+  const boptonePayoutId = transfer.metadata?.boptone_payout_id;
+  const boptoneArtistId = transfer.metadata?.boptone_artist_id;
+  if (boptonePayoutId) {
+    const payoutId = parseInt(boptonePayoutId);
+    const artistId = parseInt(boptoneArtistId || '0');
+
+    // Mark payout as failed
+    await db
+      .update(payouts)
+      .set({
+        status: 'failed',
+        failureReason: transfer.failure_message || 'Transfer reversed by Stripe',
+        failureCode: transfer.failure_code || 'transfer_reversed',
+      })
+      .where(eq(payouts.id, payoutId));
+
+    // Restore artist balance
+    if (artistId) {
+      const [payoutRow] = await db.select().from(payouts).where(eq(payouts.id, payoutId)).limit(1);
+      if (payoutRow) {
+        const balance = await getEarningsBalance(artistId);
+        if (balance) {
+          await updateEarningsBalance(artistId, {
+            availableBalance: balance.availableBalance + payoutRow.amount,
+            withdrawnBalance: Math.max(0, balance.withdrawnBalance - payoutRow.amount),
+          });
+          console.log(`[Stripe Webhook] Restored $${(payoutRow.amount / 100).toFixed(2)} to artist ${artistId} after transfer reversal`);
+        }
+      }
+    }
+
+    console.log(`[Stripe Webhook] General payout ${payoutId} → failed (transfer ${transfer.id})`);
+    return;
+  }
+
+  // Legacy: reconcile BAP stream payment
   const artistId = parseInt(transfer.metadata?.artistId || '0');
   if (artistId) {
-    // Update payment status to failed
     await db
       .update(bapPayments)
-      .set({ 
-        status: 'failed',
-      })
+      .set({ status: 'failed' })
       .where(eq(bapPayments.stripePayoutId, transfer.id));
-
-    console.log(`[Stripe Webhook] Payment failed for artist ${artistId}: ${transfer.failure_message}`);
+    console.log(`[Stripe Webhook] BAP payment failed for artist ${artistId}: ${transfer.failure_message}`);
   }
 }
 

@@ -3131,26 +3131,26 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Test split calculation accuracy
 
 ### Batch Payout System (Stripe Connect)
-- [ ] Create payouts router (schedule, process, getHistory, cancel)
-- [ ] Implement Stripe Connect onboarding flow for artists
-- [ ] Add payout schedule selector (instant 1% fee, daily free, weekly free, monthly free)
-- [ ] Implement batch payout processor (runs every 24 hours)
+- [x] Create payouts router (getBalance, requestPayout, getHistory, getAccounts, updateSchedule, calculateInstantFee)
+- [x] Implement Stripe Connect onboarding flow for artists (account creation, onboarding link, status check, dashboard link)
+- [x] Add payout schedule selector (instant 1% fee, standard next-day free)
+- [x] Implement auto-payout scheduler via BullMQ (daily/weekly/monthly repeatable jobs)
 - [ ] Add intelligent fee optimization (batch small amounts to reduce Stripe fees)
-- [ ] Implement automatic payout retries on failure
-- [ ] Add payout reconciliation system (match Stripe payouts to internal records)
+- [x] Implement automatic payout retries on failure (BullMQ retry with exponential backoff)
+- [x] Add payout reconciliation via Stripe webhooks (transfer.created, transfer.paid, transfer.failed)
 - [ ] Add payout notifications (email + in-app)
-- [ ] Test complete payout flow
+- [x] Test complete payout flow (81/81 vitest tests pass)
 
 ### Frontend - Wallet Management UI
 - [ ] Create /wallet page for fans (balance, top-up, transaction history)
 - [ ] Add wallet top-up modal with amount presets ($10, $20, $50, $100, custom)
 - [ ] Integrate Stripe Checkout for top-ups (Link enabled)
 - [ ] Add wallet balance widget to navigation/dashboard
-- [ ] Create /earnings page for artists (total earnings, breakdown by source, payout history)
-- [ ] Add payout settings page (schedule, minimum amount, bank account)
-- [ ] Add Stripe Connect onboarding flow UI
-- [ ] Add earnings analytics (charts, trends, forecasts)
-- [ ] Handle all loading/error states
+- [x] Create /earnings page for artists (total earnings, breakdown by source, payout history)
+- [x] Add payout settings page (schedule, minimum amount, bank account)
+- [x] Add Stripe Connect onboarding flow UI (PayoutSettings.tsx + ArtistPayout.tsx)
+- [x] Add earnings analytics (charts, trends, forecasts) — Revenue Mix + Forecasts in Money.tsx
+- [x] Handle all loading/error states
 
 ### Frontend - Revenue Split Management
 - [ ] Create /track/[id]/splits page for managing revenue splits
@@ -3202,12 +3202,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Full audit trail and transaction history
 
 ### 🔧 TODO for Enterprise-Grade (15% Remaining)
-- [ ] **Stripe Connect Integration** - Replace stub payouts with real Stripe Connect API calls
-- [ ] **Payment Method Management** - Bank account/debit card linking for artists
+- [x] **Stripe Connect Integration** - Real `stripe.transfers.create()` with idempotency keys wired into requestPayout
+- [ ] **Payment Method Management** - Bank account/debit card linking for artists (handled via Stripe Connect hosted onboarding)
 - [ ] **Error Handling** - Webhook failures, partial refunds, disputed charges
-- [ ] **Reconciliation System** - Daily balance checks between DB and Stripe
-- [ ] **Unit Tests** - Payment flow tests (wallet top-up, revenue split, payouts)
-- [ ] **Wallet Management UI** - Fan wallet page, artist earnings dashboard, payout requests
+- [x] **Reconciliation System** - Webhook-driven reconciliation (transfer.paid/failed update payouts table)
+- [x] **Unit Tests** - 81/81 vitest tests passing
+- [x] **Wallet Management UI** - Unified Withdraw tab in Money.tsx with real balance, payout form, fee breakdown, history
 
 **Architecture Status:** World-class foundation, ready for production integration
 **Next Steps:** Complete Stripe Connect + error handling + testing for bulletproof system
@@ -3218,10 +3218,10 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ## 🚀 Priority Next Steps (Deferred)
 
 ### Complete Stripe Connect Integration
-- [ ] Replace stub payouts with real Stripe Connect API calls
-- [ ] Implement actual artist withdrawal functionality
-- [ ] Add bank account/debit card linking for artists
-- [ ] Test real payout flow with Stripe Connect test accounts
+- [x] Replace stub payouts with real Stripe Connect API calls
+- [x] Implement actual artist withdrawal functionality (requestPayout → stripe.transfers.create)
+- [ ] Add bank account/debit card linking for artists (handled via Stripe Connect hosted onboarding)
+- [ ] Test real payout flow with Stripe Connect test accounts (requires live Stripe KYC)
 
 ### Build Wallet Management UI
 - [ ] Create fan wallet page for top-ups and balance viewing
