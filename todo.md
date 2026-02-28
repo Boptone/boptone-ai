@@ -5127,3 +5127,34 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Fixed Money.tsx totalEarned → totalEarnings field name
 - [x] 37 new GDPR vitest tests passing (server/__tests__/gdpr.test.ts)
 - [x] Full test suite: 118/120 tests passing (1 pre-existing aiDetection API key failure, 1 skipped)
+
+## Shippo Webhook Signature Verification — Complete (Feb 28, 2026)
+
+- [x] Created server/webhooks/shippoVerify.ts with dual-method verification:
+  - Method A (active): self-generated token via ?token= query parameter (timing-safe comparison)
+  - Method B (enterprise): HMAC-SHA256 header (t=timestamp,v1=hex_digest) with 5-min replay guard
+- [x] Updated server/_core/index.ts: Shippo route now uses express.raw() + shippoSignatureMiddleware before handler
+- [x] Added SHIPPO_WEBHOOK_SECRET to server/_core/env.ts
+- [x] Stored SHIPPO_WEBHOOK_SECRET in environment secrets (64-char hex, 32 bytes entropy)
+- [x] Registered webhook in Shippo dashboard with ?token= URL parameter
+- [x] 43 new vitest tests passing (server/__tests__/shippoVerify.test.ts)
+- [x] TypeScript: 0 errors
+- [x] Full test suite: 161/163 passing (1 pre-existing aiDetection API key failure, 1 skipped)
+- [x] Production behavior: 401 returned for any unsigned/tampered request
+- [x] Development behavior: graceful bypass with console warning when secret not set
+
+
+## Shippo Webhook Signature Verification - Complete (Feb 28, 2026)
+
+- [x] Created server/webhooks/shippoVerify.ts with dual-method verification
+- [x] Method A (active): self-generated token via ?token= query parameter (timing-safe)
+- [x] Method B (enterprise): HMAC-SHA256 header with 5-min replay guard
+- [x] Updated server/_core/index.ts: express.raw() + shippoSignatureMiddleware before handler
+- [x] Added SHIPPO_WEBHOOK_SECRET to server/_core/env.ts
+- [x] Stored SHIPPO_WEBHOOK_SECRET in environment (64-char hex, 32 bytes entropy)
+- [x] Registered webhook in Shippo dashboard with ?token= URL parameter
+- [x] 43 new vitest tests passing (server/__tests__/shippoVerify.test.ts)
+- [x] TypeScript: 0 errors
+- [x] Full test suite: 161/163 passing
+- [x] Production: 401 returned for any unsigned/tampered request
+- [x] Development: graceful bypass with console warning when secret not set

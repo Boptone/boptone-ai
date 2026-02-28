@@ -10,6 +10,7 @@ export const ENV = {
   stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? "",
   stripePublishableKey: process.env.VITE_STRIPE_PUBLISHABLE_KEY ?? "",
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? "",
+  shippoWebhookSecret: process.env.SHIPPO_WEBHOOK_SECRET ?? "",
   // Development mode bypasses authentication for seamless site navigation
   devMode: process.env.DEV_MODE === "true" || process.env.NODE_ENV === "development",
 };

@@ -257,10 +257,14 @@ async function startServer() {
     }
   );
 
-  // ─── SHIPPO WEBHOOK ──────────────────────────────────────────────────────────
+  // ─── SHIPPO WEBHOOK (raw body required for HMAC signature verification) ────────
   app.post(
     "/api/webhooks/shippo",
-    express.json(),
+    express.raw({ type: "*/*" }), // Must come before signature middleware
+    async (req, res, next) => {
+      const { shippoSignatureMiddleware } = await import("../webhooks/shippoVerify");
+      return shippoSignatureMiddleware(req, res, next);
+    },
     async (req, res) => {
       const { handleShippoWebhook } = await import("../api/webhooks/shippo");
       return handleShippoWebhook(req, res);
