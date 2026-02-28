@@ -197,6 +197,13 @@
       "when": 1772211158345,
       "tag": "0031_shocking_mandroid",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "5",
+      "when": 1772236929127,
+      "tag": "0032_sturdy_prodigy",
+      "breakpoints": true
     }
   ]
 }

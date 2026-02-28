@@ -4435,3 +4435,21 @@ export const bopsCommentLikes = mysqlTable("bops_comment_likes", {
 }));
 export type BopsCommentLike = typeof bopsCommentLikes.$inferSelect;
 export type InsertBopsCommentLike = typeof bopsCommentLikes.$inferInsert;
+
+/**
+ * Bops Artist Follows
+ * Fans follow artists to receive notifications when new Bops are posted.
+ * Unique constraint prevents duplicate follows.
+ */
+export const bopsArtistFollows = mysqlTable("bops_artist_follows", {
+  id: int("id").autoincrement().primaryKey(),
+  followerId: int("followerId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id, { onDelete: "cascade" }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  uniqueFollow: uniqueIndex("bops_artist_follows_unique").on(table.followerId, table.artistId),
+  followerIdx: index("bops_artist_follows_follower_idx").on(table.followerId),
+  artistIdx: index("bops_artist_follows_artist_idx").on(table.artistId),
+}));
+export type BopsArtistFollow = typeof bopsArtistFollows.$inferSelect;
+export type InsertBopsArtistFollow = typeof bopsArtistFollows.$inferInsert;

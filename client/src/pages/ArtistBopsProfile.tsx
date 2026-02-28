@@ -27,6 +27,8 @@ import {
   Video,
   X,
   MessageSquare,
+  UserPlus,
+  UserCheck,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -364,6 +366,41 @@ export default function ArtistBopsProfile() {
 
   const parsedArtistId = parseInt(artistId ?? "0", 10);
 
+  // Follow state
+  const utils = trpc.useUtils();
+  const { data: followData } = trpc.bops.isFollowingArtist.useQuery(
+    { artistId: parsedArtistId },
+    { enabled: parsedArtistId > 0 }
+  );
+  const { data: followerData } = trpc.bops.getFollowerCount.useQuery(
+    { artistId: parsedArtistId },
+    { enabled: parsedArtistId > 0 }
+  );
+  const [optimisticFollowing, setOptimisticFollowing] = useState<boolean | null>(null);
+  const isFollowing = optimisticFollowing !== null ? optimisticFollowing : (followData?.isFollowing ?? false);
+  const followerCount = (followerData?.count ?? 0) + (optimisticFollowing === true && !followData?.isFollowing ? 1 : optimisticFollowing === false && followData?.isFollowing ? -1 : 0);
+
+  const followMutation = trpc.bops.followArtist.useMutation({
+    onMutate: () => setOptimisticFollowing(true),
+    onError: () => { setOptimisticFollowing(null); toast.error("Could not follow artist"); },
+    onSuccess: () => utils.bops.isFollowingArtist.invalidate({ artistId: parsedArtistId }),
+  });
+  const unfollowMutation = trpc.bops.unfollowArtist.useMutation({
+    onMutate: () => setOptimisticFollowing(false),
+    onError: () => { setOptimisticFollowing(null); toast.error("Could not unfollow artist"); },
+    onSuccess: () => utils.bops.isFollowingArtist.invalidate({ artistId: parsedArtistId }),
+  });
+
+  function handleFollowToggle() {
+    if (!user) { toast.info("Sign in to follow artists"); return; }
+    if (isFollowing) {
+      unfollowMutation.mutate({ artistId: parsedArtistId });
+    } else {
+      followMutation.mutate({ artistId: parsedArtistId });
+      toast.success(`Following ${artistProfile?.stageName ?? "artist"}!`);
+    }
+  }
+
   // Handle tip success/cancel from Stripe redirect URL params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -592,14 +629,43 @@ export default function ArtistBopsProfile() {
                   <span className="text-xl font-black tabular-nums">{formatCount(totalLikes)}</span>
                   <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Likes</span>
                 </div>
+                <div className="w-px h-8 bg-white/10" />
+                <div className="flex flex-col items-center md:items-start">
+                  <span className="text-xl font-black tabular-nums">{formatCount(followerCount)}</span>
+                  <span className="text-[11px] text-white/40 uppercase tracking-wider font-medium">Followers</span>
+                </div>
               </div>
 
               {/* Action buttons */}
               <div className="flex items-center gap-3 flex-wrap justify-center md:justify-start">
+                {/* Follow button — shown to non-owners */}
+                {!isOwner && (
+                  <button
+                    onClick={handleFollowToggle}
+                    disabled={followMutation.isPending || unfollowMutation.isPending}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all disabled:opacity-60"
+                    style={isFollowing ? {
+                      background: "rgba(93,204,204,0.12)",
+                      color: "#5DCCCC",
+                      border: "1px solid rgba(93,204,204,0.35)",
+                    } : {
+                      background: "#5DCCCC",
+                      color: "#000",
+                      boxShadow: "0 4px 20px rgba(93,204,204,0.25)",
+                    }}
+                  >
+                    {isFollowing ? (
+                      <><UserCheck className="w-4 h-4" /> Following</>
+                    ) : (
+                      <><UserPlus className="w-4 h-4" /> Follow</>
+                    )}
+                  </button>
+                )}
+
                 {/* Tip button — primary CTA — opens modal */}
                 <button
                   className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all"
-                  style={{ background: "#5DCCCC", color: "#000", boxShadow: "0 4px 20px rgba(93,204,204,0.25)" }}
+                  style={{ background: isOwner ? "#5DCCCC" : "rgba(255,255,255,0.1)", color: isOwner ? "#000" : "rgba(255,255,255,0.85)", boxShadow: isOwner ? "0 4px 20px rgba(93,204,204,0.25)" : "none", border: isOwner ? "none" : "1px solid rgba(255,255,255,0.15)" }}
                   onClick={() => setShowTipModal(true)}
                 >
                   <Zap className="w-4 h-4" />

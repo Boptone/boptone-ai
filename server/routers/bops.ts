@@ -21,8 +21,10 @@ import {
   bopsTips,
   bopsComments,
   bopsCommentLikes,
+  bopsArtistFollows,
   artistProfiles,
   users,
+  notifications,
 } from "../../drizzle/schema";
 import { storagePut } from "../storage";
 
@@ -223,7 +225,34 @@ export const bopsRouter = router({
         isPublished: false,
       });
 
-      return { id: (result as any).insertId, status: "pending" };
+      const newBopId = (result as any).insertId;
+
+      // Notify all followers of this artist (non-blocking)
+      try {
+        const followers = await db
+          .select({ followerId: bopsArtistFollows.followerId })
+          .from(bopsArtistFollows)
+          .where(eq(bopsArtistFollows.artistId, artistRows[0].id));
+
+        if (followers.length > 0) {
+          const artistName = ctx.user.name ?? "An artist you follow";
+          const caption = input.caption ? `"${input.caption.slice(0, 60)}${input.caption.length > 60 ? "…" : ""}"` : "a new Bop";
+          await db.insert(notifications).values(
+            followers.map((f) => ({
+              userId: f.followerId,
+              title: `${artistName} posted a new Bop`,
+              message: `${artistName} just posted ${caption}. Watch it now.`,
+              type: "milestone" as const,
+              actionUrl: `/bops/artist/${artistRows[0].id}`,
+            }))
+          );
+        }
+      } catch (notifErr) {
+        // Notification failure must never block the Bop creation
+        console.warn("[Bops] Failed to send follower notifications:", notifErr);
+      }
+
+      return { id: newBopId, status: "pending" };
     }),
 
   // -------------------------------------------------------------------------
@@ -776,5 +805,69 @@ export const bopsRouter = router({
       });
 
       return { checkoutUrl: session.url, sessionId: session.id };
+    }),
+
+  // -------------------------------------------------------------------------
+  // FOLLOW / UNFOLLOW ARTIST
+  // -------------------------------------------------------------------------
+  followArtist: protectedProcedure
+    .input(z.object({ artistId: z.number().int().positive() }))
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      try {
+        await db.insert(bopsArtistFollows).values({
+          followerId: ctx.user.id,
+          artistId: input.artistId,
+        });
+      } catch (err: any) {
+        if (!err?.message?.includes("Duplicate entry")) throw err;
+      }
+      return { success: true };
+    }),
+
+  unfollowArtist: protectedProcedure
+    .input(z.object({ artistId: z.number().int().positive() }))
+    .mutation(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DB unavailable" });
+      await db.delete(bopsArtistFollows).where(
+        and(
+          eq(bopsArtistFollows.followerId, ctx.user.id),
+          eq(bopsArtistFollows.artistId, input.artistId)
+        )
+      );
+      return { success: true };
+    }),
+
+  isFollowingArtist: publicProcedure
+    .input(z.object({ artistId: z.number().int().positive() }))
+    .query(async ({ ctx, input }) => {
+      if (!ctx.user) return { isFollowing: false };
+      const db = await getDb();
+      if (!db) return { isFollowing: false };
+      const rows = await db
+        .select({ id: bopsArtistFollows.id })
+        .from(bopsArtistFollows)
+        .where(
+          and(
+            eq(bopsArtistFollows.followerId, ctx.user.id),
+            eq(bopsArtistFollows.artistId, input.artistId)
+          )
+        )
+        .limit(1);
+      return { isFollowing: rows.length > 0 };
+    }),
+
+  getFollowerCount: publicProcedure
+    .input(z.object({ artistId: z.number().int().positive() }))
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) return { count: 0 };
+      const rows = await db
+        .select({ count: sql<number>`COUNT(*)` })
+        .from(bopsArtistFollows)
+        .where(eq(bopsArtistFollows.artistId, input.artistId));
+      return { count: Number(rows[0]?.count ?? 0) };
     }),
 });

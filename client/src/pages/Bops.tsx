@@ -10,7 +10,7 @@
  */
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useLocation } from "wouter";
-import { Plus } from "lucide-react";
+import { Plus, Bell } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
@@ -164,6 +164,17 @@ export default function Bops() {
           BOPTONE
         </span>
       </div>
+
+      {/* Notifications bell — top right */}
+      {isAuthenticated && (
+        <button
+          onClick={() => navigate("/bops/notifications")}
+          className="absolute top-4 right-4 z-40 bg-black/40 backdrop-blur-sm rounded-full w-9 h-9 flex items-center justify-center"
+          aria-label="Bops Notifications"
+        >
+          <Bell className="w-4 h-4 text-white" />
+        </button>
+      )}
 
       {/* Scroll container — CSS scroll-snap */}
       <div

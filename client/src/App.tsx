@@ -97,6 +97,7 @@ const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
 const BopsUpload = lazy(() => import("./pages/BopsUpload"));
 const Bops = lazy(() => import("./pages/Bops"));
 const ArtistBopsProfile = lazy(() => import("./pages/ArtistBopsProfile"));
+const BopsNotifications = lazy(() => import("./pages/BopsNotifications"));
 const ArtistPayout = lazy(() => import("./pages/ArtistPayout"));
 const ArtistSetup = lazy(() => import("./pages/ArtistSetup"));
 const ArtistSignup = lazy(() => import("./pages/ArtistSignup"));
@@ -181,6 +182,7 @@ function Router() {
         <Route path={"/upload"} component={Upload} />
         <Route path={"/bops"} component={Bops} />
         <Route path={"/bops/upload"} component={BopsUpload} />
+        <Route path={"/bops/notifications"} component={BopsNotifications} />
         <Route path={"/bops/artist/:artistId"} component={ArtistBopsProfile} />
         <Route path={"/artist/payout"} component={ArtistPayout} />
         <Route path={"/artist/setup"} component={ArtistSetup} />
