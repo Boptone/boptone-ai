@@ -1,12 +1,13 @@
 import { useState, useMemo, useEffect } from "react";
 import { useRequireArtist } from "@/hooks/useRequireArtist";
-import { useRoute } from "wouter";
+import { useRoute, Link } from "wouter";
 import { SEOHead } from "@/components/SEOHead";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
 import {
   Music,
   MapPin,
@@ -21,6 +22,10 @@ import {
   Share2,
   Copy,
   Check,
+  UserPlus,
+  UserCheck,
+  Users,
+  Video,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -33,8 +38,15 @@ import { ToneyChatbot } from "@/components/ToneyChatbot";
 import { useBOPixel } from "@/hooks/useBOPixel";
 import { ArtistMiniPlayer } from "@/components/ArtistMiniPlayer";
 
+function formatCount(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toString();
+}
+
 export default function ArtistProfile() {
   useRequireArtist(); // Enforce artist authentication
+  const { user } = useAuth();
   const { trackArtistView } = useBOPixel();
   const [, params] = useRoute("/@:username");
   const username = params?.username;
@@ -77,6 +89,69 @@ export default function ArtistProfile() {
       trackArtistView(profile.id, profile.stageName);
     }
   }, [profile, trackArtistView]);
+
+  // ── Unified fan-graph follow state ──────────────────────────────────────────
+  const artistId = profile?.id ?? 0;
+  const utils = trpc.useUtils();
+
+  const { data: followData } = trpc.bops.isFollowingArtist.useQuery(
+    { artistId },
+    { enabled: artistId > 0 }
+  );
+  const { data: followerData } = trpc.bops.getFollowerCount.useQuery(
+    { artistId },
+    { enabled: artistId > 0 }
+  );
+
+  const [optimisticFollowing, setOptimisticFollowing] = useState<boolean | null>(null);
+  const isFollowing =
+    optimisticFollowing !== null
+      ? optimisticFollowing
+      : (followData?.isFollowing ?? false);
+  const followerCount =
+    (followerData?.count ?? 0) +
+    (optimisticFollowing === true && !followData?.isFollowing ? 1 : 0) +
+    (optimisticFollowing === false && followData?.isFollowing ? -1 : 0);
+
+  const followMutation = trpc.bops.followArtist.useMutation({
+    onMutate: () => setOptimisticFollowing(true),
+    onError: () => {
+      setOptimisticFollowing(null);
+      toast.error("Could not follow artist");
+    },
+    onSuccess: () => {
+      utils.bops.isFollowingArtist.invalidate({ artistId });
+      utils.bops.getFollowerCount.invalidate({ artistId });
+    },
+  });
+  const unfollowMutation = trpc.bops.unfollowArtist.useMutation({
+    onMutate: () => setOptimisticFollowing(false),
+    onError: () => {
+      setOptimisticFollowing(null);
+      toast.error("Could not unfollow artist");
+    },
+    onSuccess: () => {
+      utils.bops.isFollowingArtist.invalidate({ artistId });
+      utils.bops.getFollowerCount.invalidate({ artistId });
+    },
+  });
+
+  function handleFollowToggle() {
+    if (!user) {
+      toast.info("Sign in to follow artists");
+      return;
+    }
+    if (isFollowing) {
+      unfollowMutation.mutate({ artistId });
+    } else {
+      followMutation.mutate({ artistId });
+      toast.success(`Following ${profile?.stageName ?? "artist"}!`);
+    }
+  }
+
+  // Is the viewer the owner of this profile?
+  const isOwner = !!user && !!profile && user.id === (profile as any).userId;
+  // ────────────────────────────────────────────────────────────────────────────
 
   // Products and tours will be added in future iterations
   const products: any[] = [];
@@ -133,9 +208,7 @@ export default function ArtistProfile() {
       image: profile.avatarUrl || undefined,
       genre: profile.genres?.[0] || undefined,
       url: `${window.location.origin}/@${username}`,
-      sameAs: [
-        // Social URLs will be added when schema is updated
-      ].filter(Boolean)
+      sameAs: [].filter(Boolean)
     }
   }), [profile, username]);
 
@@ -156,6 +229,7 @@ export default function ArtistProfile() {
       <div className="container mx-auto px-4 pt-4">
         <Breadcrumb items={breadcrumbItems} />
       </div>
+
       {/* Hero Section */}
       <div
         className="relative h-64 md:h-80"
@@ -193,14 +267,54 @@ export default function ArtistProfile() {
 
                 {/* Profile Info */}
                 <div className="flex-1">
-                  <h1 className="text-4xl font-bold mb-2">{profile.stageName}</h1>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {profile.genres?.map((genre: string) => (
-                      <Badge key={genre} variant="secondary">
-                        {genre}
-                      </Badge>
-                    ))}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+                    <div>
+                      <h1 className="text-4xl font-bold mb-2">{profile.stageName}</h1>
+                      <div className="flex flex-wrap gap-2">
+                        {profile.genres?.map((genre: string) => (
+                          <Badge key={genre} variant="secondary">
+                            {genre}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* ── Unified Fan-Graph: Followers + Follow button ── */}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      {/* Follower count pill */}
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted text-sm font-medium">
+                        <Users className="h-4 w-4 text-muted-foreground" />
+                        <span className="font-semibold">{formatCount(followerCount)}</span>
+                        <span className="text-muted-foreground">
+                          {followerCount === 1 ? "Follower" : "Followers"}
+                        </span>
+                      </div>
+
+                      {/* Follow / Following toggle — hidden for the profile owner */}
+                      {!isOwner && (
+                        <Button
+                          size="sm"
+                          className="rounded-full gap-1.5 font-semibold"
+                          variant={isFollowing ? "outline" : "default"}
+                          style={
+                            isFollowing
+                              ? { borderColor: accentColor, color: accentColor }
+                              : { backgroundColor: accentColor, color: "#0d1117" }
+                          }
+                          onClick={handleFollowToggle}
+                          disabled={followMutation.isPending || unfollowMutation.isPending}
+                        >
+                          {isFollowing ? (
+                            <><UserCheck className="h-4 w-4" /> Following</>
+                          ) : (
+                            <><UserPlus className="h-4 w-4" /> Follow</>
+                          )}
+                        </Button>
+                      )}
+                    </div>
+                    {/* ─────────────────────────────────────────────── */}
                   </div>
+
                   {profile.location && (
                     <div className="flex items-center gap-2 text-muted-foreground mb-4">
                       <MapPin className="h-4 w-4" />
@@ -211,7 +325,7 @@ export default function ArtistProfile() {
                     <p className="text-muted-foreground mb-6">{profile.bio}</p>
                   )}
 
-                  {/* Social Links */}
+                  {/* Social Links + cross-pillar Bops link */}
                   <div className="flex flex-wrap gap-3">
                     {profile.socialLinks?.instagram && (
                       <Button className="rounded-full" variant="outline"
@@ -261,6 +375,19 @@ export default function ArtistProfile() {
                         Website
                       </Button>
                     )}
+
+                    {/* Cross-pillar Bops link */}
+                    <Link href={`/bops/artist/${profile.id}`}>
+                      <Button
+                        className="rounded-full gap-1.5 font-semibold"
+                        size="sm"
+                        style={{ backgroundColor: "#0d1117", color: "#00d4aa", border: "1px solid #00d4aa22" }}
+                      >
+                        <Video className="h-4 w-4" />
+                        Bops
+                      </Button>
+                    </Link>
+
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button className="rounded-full" variant="outline" size="sm">
