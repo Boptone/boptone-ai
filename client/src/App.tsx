@@ -104,6 +104,7 @@ const BopsNotifications = lazy(() => import("./pages/BopsNotifications"));
 const ArtistPayout = lazy(() => import("./pages/ArtistPayout"));
 const ArtistSetup = lazy(() => import("./pages/ArtistSetup"));
 const ArtistSignup = lazy(() => import("./pages/ArtistSignup"));
+const BatchUpload = lazy(() => import("./pages/BatchUpload"));
 
 // Loading fallback component
 function PageLoader() {
@@ -201,6 +202,7 @@ function Router() {
         <Route path="/revenue" component={Money} />
         <Route path="/audience" component={Fans} />
         <Route path="/releases" component={MyMusic} />
+        <Route path="/batch-upload" component={BatchUpload} />
         <Route path="/settings/payouts" component={PayoutSettings} />
         <Route path="/payouts/history" component={PayoutHistory} />
         <Route path="/workflows" component={Workflows} />

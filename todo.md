@@ -5220,3 +5220,23 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 
 - [x] Toney v1.0 system prompt approved and implemented (personality, three registers, geo-locale injection, human frequency guardrails)
 - [ ] Toney v2.0 — enterprise operational infrastructure layer: capabilities manifest, refusal/escalation tree, memory architecture spec, 50+ country locale taxonomy, evaluation framework (red-teaming, quality scoring, A/B protocols)
+
+## Batch Upload for Artists
+
+- [x] BatchUploadDialog already fully built (560 lines, drag-drop, per-track progress, real tRPC calls)
+- [x] Build dedicated BatchUpload page wrapping BatchUploadDialog
+- [x] Register /batch-upload route in App.tsx
+- [x] Add Batch Upload to sidebar nav in DashboardLayout
+
+## Toney v1.1 — Deep Artist Personalization
+
+- [x] Add artistToneyProfiles table to drizzle/schema.ts (6 data categories: identity, financial, goals, communication, sensitivities, conversation summary)
+- [x] Add toneyConversationTurns table for rolling history compression
+- [x] Apply schema via direct SQL migration (drizzle-kit blocked by existing tables)
+- [x] Write db_toney.ts helpers: getToneyProfileByUserId, upsertToneyProfile, buildKnowThisArtistBlock, saveToneyConversationTurn
+- [x] Wire getToneyProfileByUserId + buildKnowThisArtistBlock into toney.ts chat mutation
+- [x] Inject "Know This Artist" block into system prompt (locale + know-this-artist + current context)
+- [x] Persist conversation turns after each exchange in toney.ts
+- [x] Write 20 vitest tests for buildKnowThisArtistBlock (all passing)
+- [ ] Update toney-ai-spec skill with v1.1 implementation status
+- [ ] Build artist profile onboarding UI (let artists fill in goals, genre, preferences)

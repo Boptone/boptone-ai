@@ -30,6 +30,7 @@ import { Button } from "./ui/button";
 const menuItems = [
   { label: "Home", path: "/dashboard" },
   { label: "Releases", path: "/releases" },
+  { label: "Batch Upload", path: "/batch-upload" },
   { label: "Splits", path: "/splits" },
   { label: "Store", path: "/store" },
   { label: "Revenue", path: "/revenue" },

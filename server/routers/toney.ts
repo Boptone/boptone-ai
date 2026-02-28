@@ -4,6 +4,7 @@ import { invokeLLM, Message } from "../_core/llm";
 import { aiOrchestrator } from "../aiOrchestrator";
 import { buildLocaleContext } from "../toneyLocale";
 import { detectCountryFromRequest } from "../services/privacyCompliance";
+import { getToneyProfileByUserId, buildKnowThisArtistBlock, saveToneyConversationTurn } from "../db_toney";
 
 /**
  * Toney Chatbot Router
@@ -139,6 +140,10 @@ export const toneyRouter = router({
       const acceptLanguage = ctx.req.headers['accept-language'] as string | undefined;
       const localeContext = buildLocaleContext(countryCode, acceptLanguage);
 
+      // Build Toney v1.1 "Know This Artist" block (gracefully empty if no profile yet)
+      const toneyProfile = await getToneyProfileByUserId(userId);
+      const knowThisArtistBlock = buildKnowThisArtistBlock(toneyProfile);
+
       // Build artist context block
       const contextPrompt = artistContext ? `
 CURRENT ARTIST CONTEXT:
@@ -152,9 +157,9 @@ CURRENT ARTIST CONTEXT:
 Use this context to provide personalized responses.
 ` : '';
       
-      // Build conversation history — locale context + artist context appended to system prompt
+      // Build conversation history — locale + know-this-artist + current context appended to system prompt
       const messages: Message[] = [
-        { role: "system", content: TONEY_SYSTEM_PROMPT + localeContext + contextPrompt },
+        { role: "system", content: TONEY_SYSTEM_PROMPT + localeContext + knowThisArtistBlock + contextPrompt },
       ];
       
       // Add conversation history
@@ -198,6 +203,22 @@ Use this context to provide personalized responses.
         });
       }
       
+      // Persist conversation turns for Toney v1.1 rolling history compression
+      if (toneyProfile) {
+        await saveToneyConversationTurn({
+          userId,
+          artistProfileId: toneyProfile.artistProfileId,
+          role: "user",
+          content: input.message,
+        });
+        await saveToneyConversationTurn({
+          userId,
+          artistProfileId: toneyProfile.artistProfileId,
+          role: "assistant",
+          content: assistantText,
+        });
+      }
+
       // Publish event
       await aiOrchestrator.publishEvent({
         type: "toney_conversation",

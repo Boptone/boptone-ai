@@ -4501,3 +4501,55 @@ export const userDeletionRequests = mysqlTable("user_deletion_requests", {
 }));
 export type UserDeletionRequest = typeof userDeletionRequests.$inferSelect;
 export type InsertUserDeletionRequest = typeof userDeletionRequests.$inferInsert;
+
+// ─── Toney v1.1 — Persistent Artist Profiles ─────────────────────────────────
+
+/**
+ * Persistent per-artist profile maintained by Toney.
+ * Six categories from the v1.1 Deep Artist Personalization Addendum.
+ */
+export const artistToneyProfiles = mysqlTable("artist_toney_profiles", {
+  id: int("id").autoincrement().primaryKey(),
+  artistProfileId: int("artist_profile_id").notNull().unique(),
+  userId: int("user_id").notNull(),
+  careerStage: mysqlEnum("career_stage", ["emerging", "developing", "established", "legacy"]).default("emerging"),
+  primaryGenre: varchar("primary_genre", { length: 100 }),
+  subGenre: varchar("sub_genre", { length: 100 }),
+  teamStructure: mysqlEnum("team_structure", ["solo", "managed", "label_affiliated", "collective"]).default("solo"),
+  geographicBase: varchar("geographic_base", { length: 100 }),
+  releaseHistorySummary: text("release_history_summary"),
+  financialPatternsSummary: text("financial_patterns_summary"),
+  primaryIncomeSource: varchar("primary_income_source", { length: 100 }),
+  seasonalPatterns: text("seasonal_patterns"),
+  activeGoals: text("active_goals"),
+  implicitPriorities: text("implicit_priorities"),
+  prefersBriefResponses: boolean("prefers_brief_responses").default(false),
+  prefersDataHeavy: boolean("prefers_data_heavy").default(false),
+  communicationNotes: text("communication_notes"),
+  sensitivities: text("sensitivities"),
+  protectedTopics: text("protected_topics"),
+  conversationSummary: text("conversation_summary"),
+  summaryUpdatedAt: timestamp("summary_updated_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ArtistToneyProfile = typeof artistToneyProfiles.$inferSelect;
+export type InsertArtistToneyProfile = typeof artistToneyProfiles.$inferInsert;
+
+/**
+ * Individual conversation turns stored for rolling summary compression.
+ */
+export const toneyConversationTurns = mysqlTable("toney_conversation_turns", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("user_id").notNull(),
+  artistProfileId: int("artist_profile_id").notNull(),
+  role: mysqlEnum("role", ["user", "assistant"]).notNull(),
+  content: text("content").notNull(),
+  register: varchar("register", { length: 50 }),
+  topics: text("topics"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export type ToneyConversationTurn = typeof toneyConversationTurns.$inferSelect;
+export type InsertToneyConversationTurn = typeof toneyConversationTurns.$inferInsert;

@@ -225,6 +225,13 @@
       "when": 1772309729299,
       "tag": "0035_left_power_man",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "5",
+      "when": 1772322667905,
+      "tag": "0036_puzzling_darkhawk",
+      "breakpoints": true
     }
   ]
 }
