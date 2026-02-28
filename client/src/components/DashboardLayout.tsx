@@ -36,6 +36,9 @@ const menuItems = [
   { label: "Audience", path: "/audience" },
   { label: "Settings", path: "/profile-settings" },
 ];
+const adminMenuItems = [
+  { label: "Content Moderation", path: "/admin/content-moderation" },
+];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";
 const DEFAULT_WIDTH = 280;
@@ -225,6 +228,21 @@ function DashboardLayoutContent({
                       onClick={() => setLocation(item.path)}
                       tooltip={item.label}
                       className={`h-10 transition-all font-normal`}
+                    >
+                      <span>{item.label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+              {user?.role === "admin" && adminMenuItems.map(item => {
+                const isActive = location === item.path;
+                return (
+                  <SidebarMenuItem key={item.path}>
+                    <SidebarMenuButton
+                      isActive={isActive}
+                      onClick={() => setLocation(item.path)}
+                      tooltip={item.label}
+                      className={`h-10 transition-all font-normal text-orange-700`}
                     >
                       <span>{item.label}</span>
                     </SidebarMenuButton>

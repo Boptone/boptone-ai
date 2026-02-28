@@ -5174,3 +5174,32 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Register /splits route in App.tsx
 - [x] 31 new song splits vitest tests passing
 - [x] TypeScript: 0 errors
+
+## Admin Content Moderation Dashboard
+- [ ] Build moderation tRPC router (getQueue, approve, remove, issueStrike, getStrikeHistory)
+- [ ] Build /admin/content-moderation page with flagged queue, approve/reject/strike actions
+- [ ] Build strike history view per artist
+- [ ] Register route and add admin nav item
+- [ ] Guard route with admin role check
+
+## Email Delivery for Writer Invitations
+- [ ] Add sendWriterInvitationEmail function to emailService.ts
+- [ ] Wire email send into writerPayments invitations.invite procedure
+- [ ] Add resend invitation mutation
+
+## Batch Upload for Artists
+- [ ] Build BatchUpload page with multi-file drop zone
+- [ ] Per-track progress queue with status (queued/uploading/done/error)
+- [ ] Register /batch-upload route in App.tsx
+- [ ] Add Batch Upload nav item to DashboardLayout
+
+## Three-Feature Sprint (Feb 28, 2026)
+- [x] Admin Content Moderation Dashboard — /admin/content-moderation with flagged queue, approve/reject/strike, appeal flow
+- [x] Admin-only sidebar nav item (hidden from regular users)
+- [x] moderationRouter registered in appRouter
+- [x] Writer invitation email delivery — sendWriterInvitationEmail in writerInvitationEmail.ts
+- [x] writerPayments.ts TODO email replaced with real sendWriterInvitationEmail call (non-fatal)
+- [x] Batch upload real tRPC calls — replaced simulation in BatchUploadDialog.tsx
+- [x] fileToBase64 helper, per-track error handling, shared artwork across all tracks
+- [x] TypeScript: 0 errors
+- [x] 32 new tests passing (192 total)

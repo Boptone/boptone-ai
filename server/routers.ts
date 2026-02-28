@@ -13,6 +13,7 @@ import { microloansRouter } from "./routers/microloans";
 import { ecommerceRouter } from "./ecommerceRouter";
 import { podRouter } from "./routers/pod";
 import { writerPaymentsRouter } from "./routers/writerPayments";
+import { moderationRouter } from "./routers/moderation";
 import { bopsRouter } from "./routers/bops";
 import { subscriptionsRouter } from "./routers/subscriptions";
 import { musicRouter } from "./routers/music";
@@ -762,6 +763,7 @@ export const appRouter = router({
   
   // Writer Payment System (Songwriter Splits)
   writerPayments: writerPaymentsRouter,
+  moderation: moderationRouter,
 
   // Subscription Management (Upgrade/Downgrade)
   subscriptions: subscriptionsRouter,

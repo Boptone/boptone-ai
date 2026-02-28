@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -65,6 +66,7 @@ export default function BatchUploadDialog({
   onOpenChange,
   onUploadComplete,
 }: BatchUploadDialogProps) {
+  const uploadTrack = trpc.bap.tracks.upload.useMutation();
   const [uploadQueue, setUploadQueue] = useState<UploadQueueItem[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [currentStep, setCurrentStep] = useState<"select" | "metadata" | "distribution" | "uploading">("select");
@@ -144,31 +146,70 @@ export default function BatchUploadDialog({
     );
   };
 
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve((reader.result as string).split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
   const startUpload = async () => {
     setCurrentStep("uploading");
-    
-    // Simulate upload process (replace with actual upload logic)
-    for (const item of uploadQueue) {
-      setUploadQueue(prev => prev.map(i =>
-        i.id === item.id ? { ...i, status: "uploading" } : i
-      ));
+    let successCount = 0;
 
-      // Simulate progress
-      for (let progress = 0; progress <= 100; progress += 10) {
-        await new Promise(resolve => setTimeout(resolve, 200));
-        setUploadQueue(prev => prev.map(i =>
-          i.id === item.id ? { ...i, progress } : i
-        ));
+    // Convert bulk artwork to base64 once (shared across all tracks)
+    let artworkBase64: string | undefined;
+    if (bulkArtwork) {
+      try {
+        artworkBase64 = await fileToBase64(bulkArtwork);
+      } catch {
+        console.warn('[BatchUpload] Failed to read artwork file');
       }
-
-      setUploadQueue(prev => prev.map(i =>
-        i.id === item.id ? { ...i, status: "complete", progress: 100 } : i
-      ));
     }
 
-    toast.success(`Successfully uploaded ${uploadQueue.length} track${uploadQueue.length > 1 ? 's' : ''}!`);
-    onUploadComplete();
-    handleClose();
+    for (const item of uploadQueue) {
+      setUploadQueue(prev => prev.map(i =>
+        i.id === item.id ? { ...i, status: "uploading", progress: 10 } : i
+      ));
+
+      try {
+        // Convert audio file to base64
+        const audioBase64 = await fileToBase64(item.file);
+
+        setUploadQueue(prev => prev.map(i =>
+          i.id === item.id ? { ...i, progress: 40 } : i
+        ));
+
+        // Call the real tRPC upload procedure
+        await uploadTrack.mutateAsync({
+          title: item.title || item.file.name.replace(/\.[^/.]+$/, ''),
+          artist: item.artist || bulkArtist || undefined,
+          genre: bulkGenre || undefined,
+          audioFile: audioBase64,
+          artworkFile: artworkBase64,
+          isExplicit: false,
+          pricePerStream: 1,
+        });
+
+        setUploadQueue(prev => prev.map(i =>
+          i.id === item.id ? { ...i, status: "complete", progress: 100 } : i
+        ));
+        successCount++;
+      } catch (err: any) {
+        const message = err?.message || 'Upload failed';
+        setUploadQueue(prev => prev.map(i =>
+          i.id === item.id ? { ...i, status: "error", error: message, progress: 0 } : i
+        ));
+        toast.error(`Failed to upload "${item.title}": ${message}`);
+      }
+    }
+
+    if (successCount > 0) {
+      toast.success(`Successfully uploaded ${successCount} track${successCount > 1 ? 's' : ''}!`);
+      onUploadComplete();
+      if (successCount === uploadQueue.length) handleClose();
+    }
   };
 
   const handleClose = () => {

@@ -75,6 +75,7 @@ const WriterInvite = lazy(() => import("./pages/WriterInvite"));
 const WriterProfile = lazy(() => import("./pages/WriterProfile"));
 const WriterEarnings = lazy(() => import("./pages/WriterEarnings"));
 const SplitsDashboard = lazy(() => import("./pages/SplitsDashboard"));
+const AdminModeration = lazy(() => import("./pages/AdminModeration"));
 const PayoutSettings = lazy(() => import("./pages/PayoutSettings"));
 const PayoutHistory = lazy(() => import("./pages/PayoutHistory"));
 const Workflows = lazy(() => import("./pages/Workflows"));
@@ -148,6 +149,7 @@ function Router() {
         <Route path="/admin/products" component={AdminProducts} />
         <Route path="/admin/revenue" component={AdminRevenue} />
         <Route path="/admin/reviews" component={ReviewModeration} />
+        <Route path="/admin/content-moderation" component={AdminModeration} />
         <Route path="/analytics/reviews" component={ReviewAnalyticsDashboard} />
         <Route path="/product/:productId" component={ProductDetail} />
         <Route path="/store" component={MyStore} />

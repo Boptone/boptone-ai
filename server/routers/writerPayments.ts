@@ -270,9 +270,26 @@ export const writerPaymentsRouter = router({
           status: "pending",
         });
         
-        // TODO: Send email with invitation link
-        // Email should contain: boptone.com/writer-invite?token={inviteToken}
-        
+        // Send invitation email to the co-writer (non-fatal — invitation persists even if email fails)
+        try {
+          const { sendWriterInvitationEmail } = await import('../services/writerInvitationEmail');
+          const { getTrackById } = await import('../bap');
+          const track = await getTrackById(input.trackId);
+          const baseUrl = (ctx.req.headers.origin as string) || 'https://boptone.com';
+          await sendWriterInvitationEmail({
+            recipientEmail: input.email,
+            recipientName: input.fullName,
+            invitingArtistName: artistProfile.stageName || ctx.user.name || 'An artist',
+            trackTitle: track?.title || 'Untitled Track',
+            splitPercentage: input.splitPercentage,
+            role: (input as any).role || 'Songwriter',
+            inviteToken,
+            baseUrl,
+          });
+        } catch (emailErr) {
+          console.error('[writerPayments] Failed to send invitation email:', emailErr);
+        }
+
         return {
           success: true,
           invitationId: invitation.insertId,
