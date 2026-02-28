@@ -135,9 +135,9 @@
 - [x] Example prompts for inspiration
 
 ### 🔧 Integration (IN PROGRESS)
-- [ ] Add Pro/Enterprise tier restrictions
-- [ ] Display upgrade prompts for Free tier users
-- [ ] Test tier-based access control
+- [x] Add Pro/Enterprise tier restrictions
+- [x] Display upgrade prompts for Free tier users
+- [x] Test tier-based access control
 - [x] Add AI assistant to /workflows/builder page
 - [x] Test complete flow (input → generate → preview → save → execute)
 - [ ] Add analytics tracking (AI usage, success rate)

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../_core/trpc";
+import { requireProTier, hasProAccess } from "../tierGuard";
 import {
   createWorkflow,
   getWorkflowsByArtist,
@@ -49,9 +50,16 @@ export const workflowsRouter = router({
   // AI WORKFLOW GENERATION
   // ============================================================================
 
+  // Returns whether the current user has PRO/Enterprise access (used by frontend)
+  tierStatus: protectedProcedure.query(async ({ ctx }) => {
+    const isPro = await hasProAccess(ctx.user.id, ctx.user.role);
+    return { isPro, tier: isPro ? "pro" : "free" };
+  }),
+
   generateFromText: protectedProcedure
     .input(z.object({ description: z.string().min(10).max(500), workflowId: z.number().optional() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const workflow = await generateWorkflowFromText(input.description);
       return workflow;
     }),
@@ -63,7 +71,8 @@ export const workflowsRouter = router({
         refinementRequest: z.string().min(5).max(200),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const refined = await refineWorkflow(
         input.currentWorkflow,
         input.refinementRequest
@@ -88,6 +97,7 @@ export const workflowsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const workflow = await createWorkflow({
         artistId: ctx.user.id,
         name: input.name,
@@ -133,6 +143,7 @@ export const workflowsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const workflowId = await createWorkflow({
         artistId: ctx.user.id,
         name: input.name,
@@ -181,7 +192,8 @@ export const workflowsRouter = router({
         triggerData: z.record(z.string(), z.any()).optional(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const workflow = await getWorkflowById(input.workflowId);
       if (!workflow) {
         throw new Error("Workflow not found");
@@ -257,6 +269,7 @@ export const workflowsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const workflowId = await createWorkflowFromTemplate(
         input.templateId,
         ctx.user.id,
@@ -285,7 +298,8 @@ export const workflowsRouter = router({
         }),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
+      await requireProTier(ctx.user.id, ctx.user.role);
       const triggerId = await createWorkflowTrigger({
         workflowId: input.workflowId,
         type: input.type,

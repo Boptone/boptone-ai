@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import AIWorkflowAssistant from "@/components/AIWorkflowAssistant";
+import WorkflowUpgradeGate from "@/components/WorkflowUpgradeGate";
 
 /**
  * Workflows Management Page
@@ -32,6 +33,9 @@ export default function Workflows() {
   useRequireArtist(); // Enforce artist authentication
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("templates");
+
+  // Tier check — determines whether to show the upgrade gate
+  const { data: tierData, isLoading: tierLoading } = trpc.workflows.tierStatus.useQuery();
 
   // Fetch data
   const { data: workflows, isLoading: workflowsLoading } = trpc.workflows.list.useQuery();
@@ -107,6 +111,20 @@ export default function Workflows() {
         return "⚙️";
     }
   };
+
+  // Show loading skeleton while tier is resolving
+  if (tierLoading) {
+    return (
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+      </div>
+    );
+  }
+
+  // Free-tier users see the upgrade gate instead of the builder
+  if (!tierData?.isPro) {
+    return <WorkflowUpgradeGate />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f8f6] p-8">

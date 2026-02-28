@@ -80,6 +80,7 @@ const PayoutSettings = lazy(() => import("./pages/PayoutSettings"));
 const PayoutHistory = lazy(() => import("./pages/PayoutHistory"));
 const Workflows = lazy(() => import("./pages/Workflows"));
 const WorkflowSettings = lazy(() => import("./pages/WorkflowSettings"));
+const WorkflowBuilderPage = lazy(() => import("./pages/WorkflowBuilderPage"));
 const WhyBoptone = lazy(() => import("./pages/WhyBoptone"));
 const Listen = lazy(() => import("./pages/Listen"));
 const PricingDashboard = lazy(() => import("./pages/PricingDashboard"));
@@ -203,6 +204,7 @@ function Router() {
         <Route path="/settings/payouts" component={PayoutSettings} />
         <Route path="/payouts/history" component={PayoutHistory} />
         <Route path="/workflows" component={Workflows} />
+        <Route path="/workflows/builder" component={WorkflowBuilderPage} />
         <Route path="/workflows/settings" component={WorkflowSettings} />
         <Route path="/listen/:trackId" component={Listen} />
         <Route path="/pricing-dashboard" component={PricingDashboard} />
