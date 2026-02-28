@@ -30,6 +30,13 @@ import {
 const BOPS_LOGO_URL =
   "https://d2xsxph8kpxj0f.cloudfront.net/98208888/nTbKjjzazhRpeJn9kKuXdQ/bops_main_logo_black_f87d2efe.png";
 
+// Boptone brand cyan — single source of truth for all accent usage on this page
+const BOPTONE_CYAN = "#5DCCCC";
+// Tip pill: trustworthy green
+const TIP_GREEN = "#2D9E5F";
+const TIP_GREEN_LIGHT = "#E8F7EF";
+const TIP_YELLOW_BOLT = "#FFD600";
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 interface BopVideo {
@@ -63,7 +70,7 @@ function sumField(items: BopVideo[], field: keyof BopVideo): number {
 }
 
 function artistAccent(themeColor?: string | null): string {
-  return themeColor || "#00AACC";
+  return themeColor || BOPTONE_CYAN;
 }
 
 // ─── Tip presets ─────────────────────────────────────────────────────────────
@@ -260,7 +267,7 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
             <div
               className="w-10 h-10 rounded-full flex items-center justify-center bg-white/60"
             >
-              <Play className="w-5 h-5 fill-current" style={{ color: accentColor }} />
+              <Play className="w-5 h-5 fill-current" style={{ color: BOPTONE_CYAN }} />
             </div>
           </div>
         </div>
@@ -292,7 +299,7 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
         <div
           className="w-12 h-12 rounded-full flex items-center justify-center bg-white/80 backdrop-blur-sm"
         >
-          <Play className="w-5 h-5 fill-current ml-0.5" style={{ color: accentColor }} />
+          <Play className="w-5 h-5 fill-current ml-0.5" style={{ color: BOPTONE_CYAN }} />
         </div>
       </div>
 
@@ -446,7 +453,7 @@ export default function ArtistBopsProfile() {
   if (profileLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-10 h-10 border-2 border-[#00AACC] border-t-transparent rounded-full animate-spin" />
+        <div className="w-10 h-10 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: `${BOPTONE_CYAN} transparent transparent transparent` }} />
       </div>
     );
   }
@@ -455,7 +462,7 @@ export default function ArtistBopsProfile() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-white">
         <p className="text-lg font-semibold text-gray-800">Artist not found</p>
-        <button onClick={() => navigate("/bops")} className="text-[#00AACC] underline text-sm">
+        <button onClick={() => navigate("/bops")} className="underline text-sm" style={{ color: BOPTONE_CYAN }}>
           Back to Bops
         </button>
       </div>
@@ -464,7 +471,9 @@ export default function ArtistBopsProfile() {
 
   const artist = artistProfile!;
   const isOwner = user && (artist as any).userId === (user as any).id;
-  const accent = artistAccent(artist.themeColor);
+  // Always use Boptone cyan for all UI chrome; artist themeColor only used for avatar ring
+  const accent = BOPTONE_CYAN;
+  const avatarAccent = artistAccent(artist.themeColor);
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -516,26 +525,13 @@ export default function ArtistBopsProfile() {
         </button>
       </header>
 
-      {/* ══════════════════════════════════════════════════════════════════════
-          COVER BANNER — light accent tint on white
-      ══════════════════════════════════════════════════════════════════════ */}
-      <div
-        className="relative w-full"
-        style={{
-          height: "160px",
-          background: `linear-gradient(135deg, ${accent}22 0%, ${accent}0a 60%, #f9fafb 100%)`,
-        }}
-      >
-        <div
-          className="absolute bottom-0 left-0 right-0 h-12"
-          style={{ background: "linear-gradient(to bottom, transparent, white)" }}
-        />
-      </div>
+      {/* No cover banner — clean white from header straight into profile */}
+      <div className="h-8" />
 
       {/* ══════════════════════════════════════════════════════════════════════
           ARTIST HEADER
       ══════════════════════════════════════════════════════════════════════ */}
-      <div className="max-w-5xl mx-auto px-5 -mt-14 relative z-10">
+      <div className="max-w-5xl mx-auto px-5 relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-end gap-5 md:gap-7">
 
           {/* Avatar */}
@@ -543,7 +539,7 @@ export default function ArtistBopsProfile() {
             <div
               className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden bg-gray-100"
               style={{
-                border: `3px solid ${accent}`,
+                border: `3px solid ${avatarAccent}`,
                 boxShadow: `0 0 0 4px white, 0 4px 24px rgba(0,0,0,0.10)`,
               }}
             >
@@ -552,9 +548,9 @@ export default function ArtistBopsProfile() {
               ) : (
                 <div
                   className="w-full h-full flex items-center justify-center"
-                  style={{ background: `${accent}18` }}
-                >
-                  <span className="text-5xl font-black" style={{ color: accent }}>
+              style={{ background: `${avatarAccent}18` }}
+            >
+              <span className="text-5xl font-black" style={{ color: avatarAccent }}>
                     {artist.stageName.charAt(0).toUpperCase()}
                   </span>
                 </div>
@@ -562,7 +558,7 @@ export default function ArtistBopsProfile() {
             </div>
             {artist.verifiedStatus && (
               <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center bg-white">
-                <CheckCircle className="w-6 h-6" style={{ color: accent }} />
+                <CheckCircle className="w-6 h-6" style={{ color: avatarAccent }} />
               </div>
             )}
           </div>
@@ -574,7 +570,7 @@ export default function ArtistBopsProfile() {
               {artist.verifiedStatus && (
                 <span
                   className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
-                  style={{ background: `${accent}14`, color: accent, border: `1px solid ${accent}35` }}
+                  style={{ background: `${BOPTONE_CYAN}14`, color: BOPTONE_CYAN, border: `1px solid ${BOPTONE_CYAN}40` }}
                 >
                   Verified
                 </span>
@@ -590,7 +586,7 @@ export default function ArtistBopsProfile() {
                     <span
                       key={genre}
                       className="text-xs px-2.5 py-0.5 rounded-full font-semibold"
-                      style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}25` }}
+                      style={{ background: `${BOPTONE_CYAN}12`, color: BOPTONE_CYAN, border: `1px solid ${BOPTONE_CYAN}30` }}
                     >
                       {genre}
                     </span>
@@ -625,7 +621,7 @@ export default function ArtistBopsProfile() {
             >
               <span
                 className="text-2xl md:text-3xl font-black tabular-nums leading-none"
-                style={{ color: stat.label === "Followers" ? accent : "#111827" }}
+                style={{ color: stat.label === "Followers" ? BOPTONE_CYAN : "#111827" }}
               >
                 {stat.value}
               </span>
@@ -646,32 +642,29 @@ export default function ArtistBopsProfile() {
               className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all disabled:opacity-60"
               style={
                 isFollowing
-                  ? { background: `${accent}14`, color: accent, border: `1px solid ${accent}35` }
-                  : { background: accent, color: "#fff", boxShadow: `0 4px 16px ${accent}40` }
+                  ? { background: `${BOPTONE_CYAN}18`, color: BOPTONE_CYAN, border: `1px solid ${BOPTONE_CYAN}50` }
+                  : { background: BOPTONE_CYAN, color: "#000", boxShadow: `0 4px 16px ${BOPTONE_CYAN}40` }
               }
             >
               {isFollowing ? <><UserCheck className="w-4 h-4" /> Following</> : <><UserPlus className="w-4 h-4" /> Follow</>}
             </button>
           )}
 
-          {/* Tip Artist */}
+          {/* Tip Artist — trustworthy green, black text, yellow bolt */}
           <button
             className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all"
-            style={
-              isOwner
-                ? { background: accent, color: "#fff", boxShadow: `0 4px 16px ${accent}40` }
-                : { background: "#f3f4f6", color: "#374151", border: "1px solid #e5e7eb" }
-            }
+            style={{ background: TIP_GREEN, color: "#000", boxShadow: "0 4px 16px rgba(45,158,95,0.28)" }}
             onClick={() => setShowTipModal(true)}
           >
-            <Zap className="w-4 h-4" />
+            <Zap className="w-4 h-4" style={{ color: TIP_YELLOW_BOLT, fill: TIP_YELLOW_BOLT }} />
             Tip Artist
           </button>
 
           {/* BopMusic */}
           <button
             onClick={() => navigate("/music")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-colors"
+            style={{ background: `${BOPTONE_CYAN}14`, color: BOPTONE_CYAN, border: `1px solid ${BOPTONE_CYAN}40` }}
           >
             <Music className="w-4 h-4" />
             BopMusic
@@ -680,7 +673,8 @@ export default function ArtistBopsProfile() {
           {/* BopShop */}
           <button
             onClick={() => navigate("/shop")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm transition-colors"
+            style={{ background: `${BOPTONE_CYAN}14`, color: BOPTONE_CYAN, border: `1px solid ${BOPTONE_CYAN}40` }}
           >
             <ShoppingBag className="w-4 h-4" />
             BopShop
@@ -691,7 +685,7 @@ export default function ArtistBopsProfile() {
             <button
               onClick={() => navigate("/bops/upload")}
               className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
-              style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}30` }}
+              style={{ background: BOPTONE_CYAN, color: "#000", border: `1px solid ${BOPTONE_CYAN}` }}
             >
               <Plus className="w-4 h-4" />
               Post a Bop
@@ -708,7 +702,7 @@ export default function ArtistBopsProfile() {
         style={{ borderTop: "1px solid #f0f0f0" }}
       >
         <div className="flex items-center gap-2">
-          <Video className="w-4 h-4" style={{ color: accent }} />
+          <Video className="w-4 h-4" style={{ color: BOPTONE_CYAN }} />
           <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
             Latest Bops
           </span>
@@ -736,9 +730,9 @@ export default function ArtistBopsProfile() {
           <div className="flex flex-col items-center justify-center py-32 gap-5 text-center">
             <div
               className="w-20 h-20 rounded-full flex items-center justify-center"
-              style={{ background: `${accent}10`, border: `1px solid ${accent}20` }}
+              style={{ background: `${BOPTONE_CYAN}10`, border: `1px solid ${BOPTONE_CYAN}20` }}
             >
-              <Video className="w-9 h-9" style={{ color: `${accent}60` }} />
+              <Video className="w-9 h-9" style={{ color: `${BOPTONE_CYAN}80` }} />
             </div>
             <div>
               <p className="text-gray-600 text-base font-semibold mb-1">
@@ -751,8 +745,8 @@ export default function ArtistBopsProfile() {
             {isOwner && (
               <button
                 onClick={() => navigate("/bops/upload")}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-white"
-                style={{ background: accent }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm"
+                style={{ background: BOPTONE_CYAN, color: "#000" }}
               >
                 <Plus className="w-4 h-4" />
                 Post a Bop
@@ -777,7 +771,7 @@ export default function ArtistBopsProfile() {
                 {isFetching && (
                   <div
                     className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin"
-                    style={{ borderColor: `${accent} transparent transparent transparent` }}
+                    style={{ borderColor: `${BOPTONE_CYAN} transparent transparent transparent` }}
                   />
                 )}
               </div>
