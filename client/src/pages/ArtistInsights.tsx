@@ -32,41 +32,39 @@ export default function ArtistInsights() {
   const [dateRange, setDateRange] = useState<DateRange>("30d");
   const [realtimeCount, setRealtimeCount] = useState(0);
 
-  // Fetch analytics data (using demo artist Luna Waves ID: 180001)
-  const { data: overview, isLoading: overviewLoading, error: overviewError } = trpc.analytics.getOverview.useQuery({
-    dateRange,
-    artistId: 180001
-  });
+  // Fetch the logged-in user's artist profile to get their real artistId
+  const { data: myProfile, isLoading: profileLoading } = trpc.artistProfile.getMyProfile.useQuery();
+  const artistId = myProfile?.id ?? 180001; // Fall back to demo artist if no profile yet
 
-  useEffect(() => {
-    console.log('[ArtistInsights] Overview data:', overview);
-    console.log('[ArtistInsights] Overview loading:', overviewLoading);
-    console.log('[ArtistInsights] Overview error:', overviewError);
-  }, [overview, overviewLoading, overviewError]);
+  const { data: overview, isLoading: overviewLoading } = trpc.analytics.getOverview.useQuery(
+    { dateRange, artistId },
+    { enabled: !!artistId }
+  );
 
-  const { data: trafficSources, isLoading: trafficLoading } = trpc.analytics.getTrafficSources.useQuery({
-    dateRange,
-    artistId: 180001
-  });
+  const { data: trafficSources, isLoading: trafficLoading } = trpc.analytics.getTrafficSources.useQuery(
+    { dateRange, artistId },
+    { enabled: !!artistId }
+  );
 
-  const { data: productPerformance, isLoading: productsLoading } = trpc.analytics.getProductPerformance.useQuery({
-    dateRange,
-    artistId: 180001
-  });
+  const { data: productPerformance, isLoading: productsLoading } = trpc.analytics.getProductPerformance.useQuery(
+    { dateRange, artistId },
+    { enabled: !!artistId }
+  );
 
-  const { data: revenueAttribution, isLoading: revenueLoading } = trpc.analytics.getRevenueAttribution.useQuery({
-    dateRange,
-    artistId: 180001
-  });
+  const { data: revenueAttribution, isLoading: revenueLoading } = trpc.analytics.getRevenueAttribution.useQuery(
+    { dateRange, artistId },
+    { enabled: !!artistId }
+  );
 
-  const { data: conversionFunnel, isLoading: funnelLoading } = trpc.analytics.getConversionFunnel.useQuery({
-    dateRange,
-    artistId: 180001
-  });
+  const { data: conversionFunnel, isLoading: funnelLoading } = trpc.analytics.getConversionFunnel.useQuery(
+    { dateRange, artistId },
+    { enabled: !!artistId }
+  );
 
-  const { data: realtimeVisitors } = trpc.analytics.getRealtimeVisitors.useQuery({
-    artistId: 180001
-  });
+  const { data: realtimeVisitors } = trpc.analytics.getRealtimeVisitors.useQuery(
+    { artistId },
+    { enabled: !!artistId }
+  );
 
   // Update realtime counter
   useEffect(() => {
@@ -102,12 +100,27 @@ export default function ArtistInsights() {
     }]
   };
 
-  const isLoading = overviewLoading || trafficLoading || productsLoading || revenueLoading || funnelLoading;
+  const isLoading = profileLoading || overviewLoading || trafficLoading || productsLoading || revenueLoading || funnelLoading;
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
-        <div className="text-2xl font-bold">Loading insights...</div>
+        <div className="text-center">
+          <div className="text-2xl font-bold mb-2">Loading insights...</div>
+          <div className="text-gray-500">Fetching your analytics data</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!myProfile) {
+    return (
+      <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <h2 className="text-3xl font-extrabold mb-4">No Artist Profile Found</h2>
+          <p className="text-gray-600 mb-6">You need an artist profile to view insights. Set one up in your profile settings.</p>
+          <a href="/profile-settings" className="inline-block bg-black text-white font-bold px-8 py-3 rounded-full hover:bg-gray-800 transition-colors">Set Up Artist Profile</a>
+        </div>
       </div>
     );
   }

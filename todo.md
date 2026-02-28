@@ -891,15 +891,15 @@
 ## 🐛 Fix Insights Page Loading Issue (IN PROGRESS)
 
 ### Root Cause
-- [ ] Insights page stuck on "Loading insights..." because no artist ID is passed to analytics queries
-- [ ] Need to detect which artist's data to show (logged-in user's artist profile)
+- [x] Insights page stuck on "Loading insights..." because no artist ID is passed to analytics queries — FIXED: now fetches artistProfile.getMyProfile and uses real id
+- [x] Need to detect which artist's data to show (logged-in user's artist profile)
 
 ### Fix Implementation
-- [ ] Add tRPC procedure to get artist profile for logged-in user
-- [ ] Update ArtistInsights.tsx to fetch user's artist profile first
-- [ ] Pass artist ID to all analytics queries
-- [ ] Show "Create Artist Profile" message if user has no artist profile
-- [ ] Test with dummy artist data (Luna Waves, ID: 180001)
+- [x] Add tRPC procedure to get artist profile for logged-in user
+- [x] Update ArtistInsights.tsx to fetch user's artist profile first
+- [x] Pass artist ID to all analytics queries
+- [x] Show "Create Artist Profile" message if user has no artist profile
+- [x] Test with dummy artist data (Luna Waves, ID: 180001) — fallback preserved
 - [ ] Save checkpoint
 
 ## Authentication & Session Management
@@ -5176,15 +5176,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] TypeScript: 0 errors
 
 ## Admin Content Moderation Dashboard
-- [ ] Build moderation tRPC router (getQueue, approve, remove, issueStrike, getStrikeHistory)
-- [ ] Build /admin/content-moderation page with flagged queue, approve/reject/strike actions
-- [ ] Build strike history view per artist
-- [ ] Register route and add admin nav item
-- [ ] Guard route with admin role check
+- [x] Build moderation tRPC router (getQueue, approve, remove, issueStrike, getStrikeHistory)
+- [x] Build /admin/content-moderation page with flagged queue, approve/reject/strike actions
+- [x] Build strike history view per artist
+- [x] Register route and add admin nav item
+- [x] Guard route with admin role check
 
 ## Email Delivery for Writer Invitations
-- [ ] Add sendWriterInvitationEmail function to emailService.ts
-- [ ] Wire email send into writerPayments invitations.invite procedure
+- [x] Add sendWriterInvitationEmail function to emailService.ts
+- [x] Wire email send into writerPayments invitations.invite procedure
 - [ ] Add resend invitation mutation
 
 ## Batch Upload for Artists
