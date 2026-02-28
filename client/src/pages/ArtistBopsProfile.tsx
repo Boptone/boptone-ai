@@ -1,17 +1,8 @@
 /**
  * Artist Bops Profile — /bops/artist/:artistId
  *
- * Fully immersive dark page — no global nav.
- * Renders its own minimal Bops header (wordmark + back + bell).
- *
- * Layout:
- * - Sticky minimal Bops header
- * - Full-width cover banner with artist accent gradient
- * - Avatar (large, overlapping banner), name, verified badge, genres, bio
- * - Dominant stats row (Bops / Views / Likes / Followers)
- * - Action pill row (Follow, Tip Artist, BopMusic, BopShop, Post a Bop)
- * - 4-column responsive video grid with vivid gradient placeholders
- * - Infinite scroll
+ * White/light background, own Bops header with the big logo.
+ * No global marketing nav.
  */
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useParams, useLocation, Link } from "wouter";
@@ -35,6 +26,9 @@ import {
   UserCheck,
   Bell,
 } from "lucide-react";
+
+const BOPS_LOGO_URL =
+  "https://d2xsxph8kpxj0f.cloudfront.net/98208888/nTbKjjzazhRpeJn9kKuXdQ/bops_main_logo_black_f87d2efe.png";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -69,7 +63,7 @@ function sumField(items: BopVideo[], field: keyof BopVideo): number {
 }
 
 function artistAccent(themeColor?: string | null): string {
-  return themeColor || "#5DCCCC";
+  return themeColor || "#00AACC";
 }
 
 // ─── Tip presets ─────────────────────────────────────────────────────────────
@@ -125,35 +119,30 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.80)", backdropFilter: "blur(8px)" }}
+      style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)" }}
       onClick={handleBackdrop}
     >
       <div
-        className="w-full max-w-sm rounded-2xl overflow-hidden"
-        style={{
-          background: "#111827",
-          border: "1px solid rgba(93,204,204,0.2)",
-          boxShadow: "0 0 60px rgba(93,204,204,0.12)",
-        }}
+        className="w-full max-w-sm rounded-2xl overflow-hidden bg-white"
+        style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.18)" }}
       >
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
           <div>
-            <h2 className="text-white font-black text-xl tracking-tight">Tip Artist</h2>
-            <p className="text-white/50 text-sm mt-0.5">
-              100% goes to <span className="text-[#5DCCCC] font-semibold">{artistName}</span>
+            <h2 className="text-gray-900 font-black text-xl tracking-tight">Tip Artist</h2>
+            <p className="text-gray-400 text-sm mt-0.5">
+              100% goes to <span className="font-semibold" style={{ color: "#00AACC" }}>{artistName}</span>
             </p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(255,255,255,0.08)" }}
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
           >
-            <X className="w-4 h-4 text-white/60" />
+            <X className="w-4 h-4 text-gray-500" />
           </button>
         </div>
-        <div className="h-px mx-6" style={{ background: "rgba(255,255,255,0.06)" }} />
+        <div className="h-px mx-6 bg-gray-100" />
         <div className="px-6 pt-5 pb-4">
-          <p className="text-white/40 text-xs uppercase tracking-widest font-semibold mb-3">Choose amount</p>
+          <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold mb-3">Choose amount</p>
           <div className="grid grid-cols-5 gap-2">
             {TIP_PRESETS.map(({ label, cents }) => (
               <button
@@ -162,8 +151,8 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
                 className="py-2.5 rounded-xl text-sm font-bold transition-all"
                 style={
                   selectedCents === cents
-                    ? { background: "#5DCCCC", color: "#000", boxShadow: "0 0 16px rgba(93,204,204,0.4)" }
-                    : { background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.1)" }
+                    ? { background: "#00AACC", color: "#fff", boxShadow: "0 4px 16px rgba(0,170,204,0.35)" }
+                    : { background: "#f3f4f6", color: "#374151" }
                 }
               >
                 {label}
@@ -173,9 +162,9 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
         </div>
         <div className="px-6 pb-5">
           <div className="flex items-center gap-2 mb-2">
-            <MessageSquare className="w-3.5 h-3.5 text-white/30" />
-            <p className="text-white/40 text-xs uppercase tracking-widest font-semibold">
-              Message <span className="normal-case text-white/25">(optional)</span>
+            <MessageSquare className="w-3.5 h-3.5 text-gray-300" />
+            <p className="text-gray-400 text-xs uppercase tracking-widest font-semibold">
+              Message <span className="normal-case text-gray-300">(optional)</span>
             </p>
           </div>
           <textarea
@@ -183,39 +172,31 @@ function TipArtistModal({ artistId, artistName, onClose }: TipModalProps) {
             onChange={(e) => setMessage(e.target.value.slice(0, 150))}
             placeholder={`Say something to ${artistName}…`}
             rows={2}
-            className="w-full rounded-xl px-4 py-3 text-sm resize-none outline-none"
-            style={{
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              color: "rgba(255,255,255,0.8)",
-              fontFamily: "inherit",
-            }}
-            onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(93,204,204,0.4)"; }}
-            onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; }}
+            className="w-full rounded-xl px-4 py-3 text-sm resize-none outline-none border border-gray-200 focus:border-[#00AACC] text-gray-700 placeholder-gray-300 transition-colors"
+            style={{ fontFamily: "inherit" }}
           />
-          <p className="text-right text-[10px] text-white/20 mt-1">{message.length}/150</p>
+          <p className="text-right text-[10px] text-gray-300 mt-1">{message.length}/150</p>
         </div>
-        <div className="mx-6 mb-4 px-3 py-2 rounded-lg" style={{ background: "rgba(93,204,204,0.06)", border: "1px solid rgba(93,204,204,0.12)" }}>
-          <p className="text-[11px] text-[#5DCCCC]/70 text-center">
-            ⚡ Only card processing fees apply — Boptone takes <strong className="text-[#5DCCCC]">0%</strong>
+        <div className="mx-6 mb-4 px-3 py-2 rounded-lg bg-cyan-50 border border-cyan-100">
+          <p className="text-[11px] text-cyan-600 text-center">
+            ⚡ Only card processing fees apply — Boptone takes <strong>0%</strong>
           </p>
         </div>
         <div className="px-6 pb-6">
           <button
             onClick={handleTip}
             disabled={createCheckout.isPending}
-            className="w-full py-3.5 rounded-full font-black text-base transition-all disabled:opacity-60"
+            className="w-full py-3.5 rounded-full font-black text-base transition-all disabled:opacity-60 text-white"
             style={{
-              background: createCheckout.isPending ? "rgba(93,204,204,0.5)" : "#5DCCCC",
-              color: "#000",
-              boxShadow: createCheckout.isPending ? "none" : "0 4px 24px rgba(93,204,204,0.3)",
+              background: createCheckout.isPending ? "#7dd3e8" : "#00AACC",
+              boxShadow: createCheckout.isPending ? "none" : "0 4px 20px rgba(0,170,204,0.3)",
             }}
           >
             {createCheckout.isPending
               ? "Opening checkout…"
               : `Send ${TIP_PRESETS.find((p) => p.cents === selectedCents)?.label ?? ""} Tip ⚡`}
           </button>
-          <p className="text-center text-white/25 text-[11px] mt-2.5">
+          <p className="text-center text-gray-300 text-[11px] mt-2.5">
             Powered by Stripe · Secure payment
           </p>
         </div>
@@ -255,12 +236,12 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
   // Vivid unique gradient per bop
   const hue = (bop.id * 47) % 360;
   const hue2 = (bop.id * 83 + 120) % 360;
-  const placeholderGradient = `linear-gradient(160deg, hsl(${hue},55%,18%) 0%, ${accentColor}30 35%, hsl(${hue2},45%,10%) 100%)`;
+  const placeholderGradient = `linear-gradient(160deg, hsl(${hue},55%,85%) 0%, hsl(${hue2},45%,92%) 100%)`;
 
   return (
     <button
       className="relative overflow-hidden cursor-pointer group"
-      style={{ aspectRatio: "9/16", background: "#0d1117", borderRadius: "4px" }}
+      style={{ aspectRatio: "9/16", background: "#f3f4f6", borderRadius: "8px" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
@@ -277,10 +258,9 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
         <div className="absolute inset-0" style={{ background: placeholderGradient }}>
           <div className="absolute inset-0 flex items-center justify-center">
             <div
-              className="w-10 h-10 rounded-full flex items-center justify-center"
-              style={{ background: `${accentColor}18`, border: `1px solid ${accentColor}30` }}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-white/60"
             >
-              <Play className="w-5 h-5 fill-current" style={{ color: `${accentColor}80` }} />
+              <Play className="w-5 h-5 fill-current" style={{ color: accentColor }} />
             </div>
           </div>
         </div>
@@ -301,7 +281,7 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
       {/* Persistent bottom gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%)" }}
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 55%)" }}
       />
 
       {/* Hover: centered play ring */}
@@ -310,14 +290,9 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
         style={{ opacity: isHovered ? 1 : 0, transition: "opacity 0.15s ease" }}
       >
         <div
-          className="w-12 h-12 rounded-full flex items-center justify-center"
-          style={{
-            background: "rgba(0,0,0,0.55)",
-            backdropFilter: "blur(4px)",
-            border: `1.5px solid ${accentColor}60`,
-          }}
+          className="w-12 h-12 rounded-full flex items-center justify-center bg-white/80 backdrop-blur-sm"
         >
-          <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+          <Play className="w-5 h-5 fill-current ml-0.5" style={{ color: accentColor }} />
         </div>
       </div>
 
@@ -330,8 +305,8 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
         )}
         <div className="flex flex-col items-end gap-0.5 shrink-0">
           <div className="flex items-center gap-1">
-            <Eye className="w-3 h-3 text-white/60" />
-            <span className="text-white/80 text-[10px] font-semibold tabular-nums">{formatCount(bop.viewCount)}</span>
+            <Eye className="w-3 h-3 text-white/70" />
+            <span className="text-white/90 text-[10px] font-semibold tabular-nums">{formatCount(bop.viewCount)}</span>
           </div>
           <div className="flex items-center gap-1">
             <Heart className="w-3 h-3 text-white fill-white" />
@@ -342,7 +317,7 @@ function BopGridCard({ bop, accentColor, onClick }: BopGridCardProps) {
 
       {/* Duration badge */}
       {bop.durationMs > 0 && (
-        <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm rounded px-1.5 py-0.5">
+        <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm rounded px-1.5 py-0.5">
           <span className="text-white text-[10px] font-mono tabular-nums">{formatDuration(bop.durationMs)}</span>
         </div>
       )}
@@ -411,7 +386,6 @@ export default function ArtistBopsProfile() {
   }
   // ─────────────────────────────────────────────────────────────────────────
 
-  // Handle tip success/cancel from Stripe redirect
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const tipStatus = params.get("tip");
@@ -471,17 +445,17 @@ export default function ArtistBopsProfile() {
   // ── Loading ───────────────────────────────────────────────────────────────
   if (profileLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#0d1117" }}>
-        <div className="w-10 h-10 border-2 border-[#5DCCCC] border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="w-10 h-10 border-2 border-[#00AACC] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!artistProfile && !profileLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-white" style={{ background: "#0d1117" }}>
-        <p className="text-lg font-semibold">Artist not found</p>
-        <button onClick={() => navigate("/bops")} className="text-[#5DCCCC] underline text-sm">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-white">
+        <p className="text-lg font-semibold text-gray-800">Artist not found</p>
+        <button onClick={() => navigate("/bops")} className="text-[#00AACC] underline text-sm">
           Back to Bops
         </button>
       </div>
@@ -493,10 +467,7 @@ export default function ArtistBopsProfile() {
   const accent = artistAccent(artist.themeColor);
 
   return (
-    <div
-      className="min-h-screen text-white"
-      style={{ fontFamily: "'Inter', sans-serif", background: "#0d1117", colorScheme: "dark" }}
-    >
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* ── Tip Modal ── */}
       {showTipModal && (
         <TipArtistModal
@@ -507,74 +478,73 @@ export default function ArtistBopsProfile() {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════
-          MINIMAL BOPS HEADER — replaces the global marketing nav
+          BOPS HEADER — big logo on white, back arrow, bell
       ══════════════════════════════════════════════════════════════════════ */}
       <header
-        className="sticky top-0 z-40 flex items-center justify-between px-4 h-14"
+        className="sticky top-0 z-40 bg-white flex items-center justify-between px-4"
         style={{
-          background: "rgba(13,17,23,0.92)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          height: "72px",
+          borderBottom: "1px solid #f0f0f0",
         }}
       >
         {/* Back arrow */}
         <button
           onClick={() => navigate("/bops")}
-          className="w-9 h-9 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(255,255,255,0.07)" }}
+          className="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
           aria-label="Back to Bops"
         >
-          <ArrowLeft className="w-4 h-4 text-white" />
+          <ArrowLeft className="w-4 h-4 text-gray-700" />
         </button>
 
-        {/* Boptone wordmark */}
-        <Link href="/">
-          <span className="font-black text-lg tracking-tight select-none cursor-pointer" style={{ letterSpacing: "-0.02em" }}>
-            <span className="text-white">Bop</span>
-            <span style={{ color: accent }}>tone</span>
-          </span>
+        {/* Big Bops logo — centered */}
+        <Link href="/bops">
+          <img
+            src={BOPS_LOGO_URL}
+            alt="Bops"
+            className="cursor-pointer"
+            style={{ height: "44px", width: "auto", objectFit: "contain" }}
+          />
         </Link>
 
         {/* Notifications bell */}
         <button
           onClick={() => navigate("/bops/notifications")}
-          className="w-9 h-9 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(255,255,255,0.07)" }}
+          className="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors"
           aria-label="Bops notifications"
         >
-          <Bell className="w-4 h-4 text-white/70" />
+          <Bell className="w-4 h-4 text-gray-700" />
         </button>
       </header>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          COVER BANNER
+          COVER BANNER — light accent tint on white
       ══════════════════════════════════════════════════════════════════════ */}
       <div
         className="relative w-full"
         style={{
-          height: "180px",
-          background: `linear-gradient(135deg, ${accent}40 0%, ${accent}18 40%, #0d1117 100%)`,
+          height: "160px",
+          background: `linear-gradient(135deg, ${accent}22 0%, ${accent}0a 60%, #f9fafb 100%)`,
         }}
       >
         <div
-          className="absolute bottom-0 left-0 right-0 h-16"
-          style={{ background: "linear-gradient(to bottom, transparent, #0d1117)" }}
+          className="absolute bottom-0 left-0 right-0 h-12"
+          style={{ background: "linear-gradient(to bottom, transparent, white)" }}
         />
       </div>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          ARTIST HEADER — overlaps the cover banner
+          ARTIST HEADER
       ══════════════════════════════════════════════════════════════════════ */}
-      <div className="max-w-5xl mx-auto px-5 -mt-16 relative z-10">
+      <div className="max-w-5xl mx-auto px-5 -mt-14 relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-end gap-5 md:gap-7">
 
           {/* Avatar */}
           <div className="relative shrink-0">
             <div
-              className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden"
+              className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden bg-gray-100"
               style={{
                 border: `3px solid ${accent}`,
-                boxShadow: `0 0 0 4px #0d1117, 0 0 32px ${accent}50`,
+                boxShadow: `0 0 0 4px white, 0 4px 24px rgba(0,0,0,0.10)`,
               }}
             >
               {artist.avatarUrl ? (
@@ -584,17 +554,14 @@ export default function ArtistBopsProfile() {
                   className="w-full h-full flex items-center justify-center"
                   style={{ background: `${accent}18` }}
                 >
-                  <span className="text-5xl font-black" style={{ color: `${accent}80` }}>
+                  <span className="text-5xl font-black" style={{ color: accent }}>
                     {artist.stageName.charAt(0).toUpperCase()}
                   </span>
                 </div>
               )}
             </div>
             {artist.verifiedStatus && (
-              <div
-                className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center"
-                style={{ background: "#0d1117" }}
-              >
+              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center bg-white">
                 <CheckCircle className="w-6 h-6" style={{ color: accent }} />
               </div>
             )}
@@ -603,11 +570,11 @@ export default function ArtistBopsProfile() {
           {/* Name + meta */}
           <div className="flex-1 flex flex-col items-center md:items-start gap-2 pb-1">
             <div className="flex items-center gap-2.5 flex-wrap justify-center md:justify-start">
-              <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-none">{artist.stageName}</h1>
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-none text-gray-900">{artist.stageName}</h1>
               {artist.verifiedStatus && (
                 <span
                   className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
-                  style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}35` }}
+                  style={{ background: `${accent}14`, color: accent, border: `1px solid ${accent}35` }}
                 >
                   Verified
                 </span>
@@ -615,15 +582,15 @@ export default function ArtistBopsProfile() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2 justify-center md:justify-start">
-              {artist.location && <span className="text-white/45 text-sm">{artist.location}</span>}
+              {artist.location && <span className="text-gray-400 text-sm">{artist.location}</span>}
               {artist.genres && artist.genres.length > 0 && (
                 <>
-                  {artist.location && <span className="text-white/20">·</span>}
+                  {artist.location && <span className="text-gray-200">·</span>}
                   {artist.genres.slice(0, 3).map((genre) => (
                     <span
                       key={genre}
                       className="text-xs px-2.5 py-0.5 rounded-full font-semibold"
-                      style={{ background: `${accent}14`, color: `${accent}CC`, border: `1px solid ${accent}25` }}
+                      style={{ background: `${accent}12`, color: accent, border: `1px solid ${accent}25` }}
                     >
                       {genre}
                     </span>
@@ -633,7 +600,7 @@ export default function ArtistBopsProfile() {
             </div>
 
             {artist.bio && (
-              <p className="text-white/55 text-sm leading-relaxed max-w-md text-center md:text-left">
+              <p className="text-gray-500 text-sm leading-relaxed max-w-md text-center md:text-left">
                 {artist.bio}
               </p>
             )}
@@ -643,7 +610,7 @@ export default function ArtistBopsProfile() {
         {/* Stats row */}
         <div
           className="mt-6 flex items-center rounded-2xl overflow-hidden"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}
+          style={{ background: "#f9fafb", border: "1px solid #e5e7eb" }}
         >
           {[
             { value: formatCount(allBops.length), label: "Bops" },
@@ -654,15 +621,15 @@ export default function ArtistBopsProfile() {
             <div
               key={stat.label}
               className="flex-1 flex flex-col items-center py-4 gap-0.5"
-              style={{ borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }}
+              style={{ borderRight: i < arr.length - 1 ? "1px solid #e5e7eb" : "none" }}
             >
               <span
                 className="text-2xl md:text-3xl font-black tabular-nums leading-none"
-                style={{ color: stat.label === "Followers" ? accent : "white" }}
+                style={{ color: stat.label === "Followers" ? accent : "#111827" }}
               >
                 {stat.value}
               </span>
-              <span className="text-[11px] text-white/35 uppercase tracking-widest font-semibold">
+              <span className="text-[11px] text-gray-400 uppercase tracking-widest font-semibold">
                 {stat.label}
               </span>
             </div>
@@ -680,7 +647,7 @@ export default function ArtistBopsProfile() {
               style={
                 isFollowing
                   ? { background: `${accent}14`, color: accent, border: `1px solid ${accent}35` }
-                  : { background: accent, color: "#000", boxShadow: `0 4px 20px ${accent}40` }
+                  : { background: accent, color: "#fff", boxShadow: `0 4px 16px ${accent}40` }
               }
             >
               {isFollowing ? <><UserCheck className="w-4 h-4" /> Following</> : <><UserPlus className="w-4 h-4" /> Follow</>}
@@ -692,8 +659,8 @@ export default function ArtistBopsProfile() {
             className="flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all"
             style={
               isOwner
-                ? { background: accent, color: "#000", boxShadow: `0 4px 20px ${accent}40` }
-                : { background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.14)" }
+                ? { background: accent, color: "#fff", boxShadow: `0 4px 16px ${accent}40` }
+                : { background: "#f3f4f6", color: "#374151", border: "1px solid #e5e7eb" }
             }
             onClick={() => setShowTipModal(true)}
           >
@@ -704,8 +671,7 @@ export default function ArtistBopsProfile() {
           {/* BopMusic */}
           <button
             onClick={() => navigate("/music")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
-            style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.11)" }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
           >
             <Music className="w-4 h-4" />
             BopMusic
@@ -714,8 +680,7 @@ export default function ArtistBopsProfile() {
           {/* BopShop */}
           <button
             onClick={() => navigate("/shop")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm"
-            style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.11)" }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
           >
             <ShoppingBag className="w-4 h-4" />
             BopShop
@@ -740,15 +705,15 @@ export default function ArtistBopsProfile() {
       ══════════════════════════════════════════════════════════════════════ */}
       <div
         className="max-w-5xl mx-auto px-5 pt-2 pb-3 flex items-center justify-between"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+        style={{ borderTop: "1px solid #f0f0f0" }}
       >
         <div className="flex items-center gap-2">
           <Video className="w-4 h-4" style={{ color: accent }} />
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.5)" }}>
+          <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
             Latest Bops
           </span>
         </div>
-        <span className="text-xs tabular-nums" style={{ color: "rgba(255,255,255,0.25)" }}>
+        <span className="text-xs tabular-nums text-gray-300">
           {formatCount(allBops.length)} videos
         </span>
       </div>
@@ -758,12 +723,12 @@ export default function ArtistBopsProfile() {
       ══════════════════════════════════════════════════════════════════════ */}
       <div className="max-w-5xl mx-auto px-5 pb-20">
         {bopsLoading && allBops.length === 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             {Array.from({ length: 12 }).map((_, i) => (
               <div
                 key={i}
-                className="animate-pulse rounded"
-                style={{ aspectRatio: "9/16", background: `${accent}08` }}
+                className="animate-pulse rounded-lg bg-gray-100"
+                style={{ aspectRatio: "9/16" }}
               />
             ))}
           </div>
@@ -773,21 +738,21 @@ export default function ArtistBopsProfile() {
               className="w-20 h-20 rounded-full flex items-center justify-center"
               style={{ background: `${accent}10`, border: `1px solid ${accent}20` }}
             >
-              <Video className="w-9 h-9" style={{ color: `${accent}50` }} />
+              <Video className="w-9 h-9" style={{ color: `${accent}60` }} />
             </div>
             <div>
-              <p className="text-white/50 text-base font-semibold mb-1">
+              <p className="text-gray-600 text-base font-semibold mb-1">
                 {isOwner ? "You haven't posted any Bops yet." : "No Bops posted yet."}
               </p>
-              <p className="text-white/30 text-sm">
+              <p className="text-gray-400 text-sm">
                 {isOwner ? "Share your first video with the world." : "Check back soon."}
               </p>
             </div>
             {isOwner && (
               <button
                 onClick={() => navigate("/bops/upload")}
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm"
-                style={{ background: accent, color: "#000" }}
+                className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-white"
+                style={{ background: accent }}
               >
                 <Plus className="w-4 h-4" />
                 Post a Bop
@@ -796,7 +761,7 @@ export default function ArtistBopsProfile() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
               {allBops.map((bop) => (
                 <BopGridCard
                   key={bop.id}
@@ -820,9 +785,9 @@ export default function ArtistBopsProfile() {
 
             {!hasMore && allBops.length > 0 && (
               <div className="flex items-center justify-center py-8 gap-3">
-                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
-                <span className="text-white/20 text-xs uppercase tracking-widest font-medium">All Bops loaded</span>
-                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
+                <div className="h-px flex-1 bg-gray-100" />
+                <span className="text-gray-300 text-xs uppercase tracking-widest font-medium">All Bops loaded</span>
+                <div className="h-px flex-1 bg-gray-100" />
               </div>
             )}
           </>
