@@ -5215,3 +5215,8 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Write 48 vitest tests: fee structure, product validation, cart ops, order status, inventory, Stripe metadata, slug generation
 - [x] TypeScript: 0 errors
 - [x] 272 tests passing (only pre-existing aiDetection live API test fails)
+
+## Toney AI Agent
+
+- [x] Toney v1.0 system prompt approved and implemented (personality, three registers, geo-locale injection, human frequency guardrails)
+- [ ] Toney v2.0 — enterprise operational infrastructure layer: capabilities manifest, refusal/escalation tree, memory architecture spec, 50+ country locale taxonomy, evaluation framework (red-teaming, quality scoring, A/B protocols)
