@@ -50,7 +50,7 @@ export const workflowsRouter = router({
   // ============================================================================
 
   generateFromText: protectedProcedure
-    .input(z.object({ description: z.string().min(10).max(500) }))
+    .input(z.object({ description: z.string().min(10).max(500), workflowId: z.number().optional() }))
     .mutation(async ({ input }) => {
       const workflow = await generateWorkflowFromText(input.description);
       return workflow;

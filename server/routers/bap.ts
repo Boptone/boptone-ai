@@ -34,6 +34,7 @@ import {
   searchTracks,
 } from "../bap";
 import { storagePut } from "../storage";
+import { fireWorkflowEvent } from "../workflowEngine";
 
 /**
  * Boptone Audio Protocol (BAP) Router
@@ -479,6 +480,11 @@ export const bapRouter = router({
         }
         
         await followUser(ctx.user.id, input.userId);
+        // Fire workflow event for new_follower triggers (non-blocking)
+        fireWorkflowEvent("new_follower", input.userId, {
+          followerId: ctx.user.id,
+          followerName: ctx.user.name ?? "A fan",
+        }).catch((err) => console.error("[Workflow] new_follower event error:", err));
         return { success: true };
       }),
     

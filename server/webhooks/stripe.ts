@@ -5,6 +5,7 @@ import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bap
 import { eq } from "drizzle-orm";
 import { calculateFees } from "../stripe";
 import { getEarningsBalance, updateEarningsBalance } from "../db";
+import { fireWorkflowEvent } from "../workflowEngine";
 
 /**
  * Stripe Webhook Handler
@@ -276,6 +277,15 @@ async function handleBopShopPayment(session: any, db: any) {
     console.error('[BOPixel] Failed to track purchase:', error);
   }
   
+  // Fire workflow event for bopshop_sale triggers (non-blocking)
+  fireWorkflowEvent("bopshop_sale", artistId, {
+    orderId: order.id,
+    orderNumber,
+    productId,
+    productName: product.name,
+    amount: totalAmount,
+    buyerId: userId,
+  }).catch((err) => console.error("[Workflow] bopshop_sale event error:", err));
   console.log(`[Stripe Webhook] BopShop order ${orderNumber} created for user ${userId}`);
 }
 

@@ -138,8 +138,8 @@
 - [ ] Add Pro/Enterprise tier restrictions
 - [ ] Display upgrade prompts for Free tier users
 - [ ] Test tier-based access control
-- [ ] Add AI assistant to /workflows/builder page
-- [ ] Test complete flow (input → generate → preview → save → execute)
+- [x] Add AI assistant to /workflows/builder page
+- [x] Test complete flow (input → generate → preview → save → execute)
 - [ ] Add analytics tracking (AI usage, success rate)
 - [ ] Save checkpoint
 
@@ -147,7 +147,7 @@
 - [ ] Custom code nodes (JavaScript/Python execution)
 - [ ] Third-party integrations (Zapier, n8n compatibility)
 - [ ] Workflow marketplace (share/sell templates)
-- [ ] Natural language workflow refinement ("Make it send email instead")
+- [x] Natural language workflow refinement ("Make it send email instead")
 - [ ] Predictive analytics (forecast streams, sales)
 - [ ] Smart fan segmentation
 
