@@ -5266,3 +5266,13 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Add Billing link to mobile menu authenticated section
 - [x] Add Billing link to Dashboard quick actions
 - [x] Add Billing link to ProfileSettings page as a settings nav item
+
+## Artist Onboarding Flow (Toney v1.1)
+- [ ] Rewrite Onboarding.tsx as a 4-step wizard collecting all Toney v1.1 fields
+- [ ] Step 1: Identity (stage name, career stage, primary genre, sub-genre, location/city, team structure)
+- [ ] Step 2: Goals & Priorities (active goals free-text, primary income source)
+- [ ] Step 3: Communication Style (brief vs detailed preference, data-heavy vs plain language)
+- [ ] Step 4: Welcome + Toney intro (save profile, mark onboardingCompleted=true, redirect to dashboard)
+- [ ] Wire first-login redirect: check onboardingCompleted in App.tsx or a useRequireOnboarding hook
+- [ ] Add a "complete your setup" banner on Dashboard for artists who skipped onboarding
+- [ ] Write vitest tests for the onboarding procedures

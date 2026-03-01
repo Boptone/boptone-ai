@@ -140,11 +140,14 @@ function DashboardLayoutContent({
 
   useEffect(() => {
     if (onboardingStatus && !onboardingStatus.completed) {
-      // Small delay so the dashboard loads first, then the modal appears
-      const timer = setTimeout(() => setShowOnboarding(true), 1200);
-      return () => clearTimeout(timer);
+      // Redirect to the full-page onboarding wizard.
+      // Guard against redirect loops when already on /onboarding.
+      if (!location.startsWith("/onboarding")) {
+        const timer = setTimeout(() => setLocation("/onboarding"), 800);
+        return () => clearTimeout(timer);
+      }
     }
-  }, [onboardingStatus]);
+  }, [onboardingStatus, location, setLocation]);
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [isResizing, setIsResizing] = useState(false);

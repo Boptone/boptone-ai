@@ -31,6 +31,11 @@ export default function Dashboard() {
   const { data: opportunities } = trpc.opportunities.getAll.useQuery({ status: "new" }, {
     enabled: !isDemoMode && !DEV_MODE
   });
+  const { data: onboardingStatus } = trpc.toney.getOnboardingStatus.useQuery(undefined, {
+    enabled: !isDemoMode && !DEV_MODE && !!isAuthenticated,
+    staleTime: Infinity,
+  });
+  const toneySetupIncomplete = !isDemoMode && !DEV_MODE && onboardingStatus != null && !onboardingStatus.completed;
 
   useEffect(() => {
     if (!loading && !isAuthenticated && !isDemoMode && !DEV_MODE) {
@@ -232,6 +237,22 @@ export default function Dashboard() {
             </div>
           </div>
 
+          {/* Toney setup banner — shown when onboarding is incomplete */}
+          {toneySetupIncomplete && (
+            <div className="border-2 border-[#0cc0df] bg-[#0cc0df]/5 rounded-lg p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-[4px_4px_0px_0px_#0cc0df]">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#0cc0df] mb-2">Action required</p>
+                <h3 className="text-2xl font-bold mb-2">Activate Toney — your AI advisor</h3>
+                <p className="text-base text-gray-600">Complete a 2-minute setup so Toney knows your career stage, goals, and how you like to work.</p>
+              </div>
+              <Button
+                onClick={() => setLocation("/onboarding")}
+                className="shrink-0 rounded-full bg-[#0cc0df] hover:bg-[#0aabca] text-black border-2 border-black font-bold px-8 h-12 shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              >
+                Complete Setup →
+              </Button>
+            </div>
+          )}
           {/* Quick Actions - BAP Protocol design */}
           <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Quick Actions</h2>

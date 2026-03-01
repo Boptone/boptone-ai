@@ -1,440 +1,508 @@
-import { useState, useRef } from "react";
-import BoptoneExplainer from "@/components/BoptoneExplainer";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useAuth } from "@/_core/hooks/useAuth";
+
+// ─── Constants ───────────────────────────────────────────────────────────────
 
 const GENRES = [
-  "Hip-Hop", "Pop", "Rock", "Electronic", "R&B", "Jazz",
-  "Country", "Latin", "Indie", "Alternative", "Soul", "Reggae"
+  "Hip-Hop", "R&B / Soul", "Pop", "Rock", "Electronic / Dance",
+  "Jazz", "Country", "Latin", "Reggae / Dancehall", "Afrobeats",
+  "Indie / Alternative", "Classical", "Gospel / Worship", "Folk / Americana",
+  "Metal", "Punk", "Blues", "Funk", "World", "Experimental",
 ];
+
+const CAREER_STAGES = [
+  { value: "emerging", label: "Emerging", desc: "Building the foundation — first releases, first fans" },
+  { value: "developing", label: "Developing", desc: "Growing steadily — consistent releases, real traction" },
+  { value: "established", label: "Established", desc: "Known in the scene — solid fanbase, regular income" },
+  { value: "legacy", label: "Legacy", desc: "Proven track record — catalog, brand, long-term career" },
+] as const;
+
+const TEAM_STRUCTURES = [
+  { value: "solo", label: "Solo", desc: "I handle everything myself" },
+  { value: "managed", label: "Managed", desc: "I have a manager or team" },
+  { value: "label_affiliated", label: "Label", desc: "I work with a label" },
+  { value: "collective", label: "Collective", desc: "I'm part of a group or collective" },
+] as const;
+
+const INCOME_SOURCES = [
+  "Streaming", "Live performances", "Merchandise", "Sync licensing",
+  "Fan tips / crowdfunding", "Teaching / coaching", "Session work", "Brand deals",
+];
+
+const TOTAL_STEPS = 4;
+
+// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function Onboarding() {
   const [, setLocation] = useLocation();
-  const [showExplainer, setShowExplainer] = useState(true);
+  const { user } = useAuth();
   const [step, setStep] = useState(1);
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  
-  const [formData, setFormData] = useState({
-    displayName: "",
-    bio: "",
-    genres: [] as string[],
-    instagram: "",
-    twitter: "",
-    youtube: "",
-  });
 
-  const updateProfile = trpc.artistProfile.update.useMutation({
-    onSuccess: () => {
-      toast.success("Profile created successfully!");
-      if (step === 3) {
-        setLocation("/dashboard");
-      }
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to create profile");
-    },
-  });
+  // Step 1 — Identity
+  const [stageName, setStageName] = useState("");
+  const [careerStage, setCareerStage] = useState<"emerging" | "developing" | "established" | "legacy">("emerging");
+  const [primaryGenre, setPrimaryGenre] = useState("");
+  const [subGenre, setSubGenre] = useState("");
+  const [geographicBase, setGeographicBase] = useState("");
+  const [teamStructure, setTeamStructure] = useState<"solo" | "managed" | "label_affiliated" | "collective">("solo");
 
-  const uploadPhoto = trpc.artistProfile.uploadPhoto.useMutation();
+  // Step 2 — Goals & Priorities
+  const [activeGoals, setActiveGoals] = useState("");
+  const [primaryIncomeSource, setPrimaryIncomeSource] = useState("");
 
-  const totalSteps = 3;
-  const progress = (step / totalSteps) * 100;
+  // Step 3 — Communication Style
+  const [prefersBriefResponses, setPrefersBriefResponses] = useState(false);
+  const [prefersDataHeavy, setPrefersDataHeavy] = useState(false);
 
-  // Handle explainer completion
-  const handleExplainerComplete = () => {
-    setShowExplainer(false);
-  };
+  // Mutations
+  const createProfile = trpc.artistProfile.create.useMutation();
+  const updateProfile = trpc.artistProfile.update.useMutation();
+  const saveOnboarding = trpc.toney.saveOnboardingProfile.useMutation();
+  const { data: existingProfile } = trpc.artistProfile.getMyProfile.useQuery();
 
-  const handleExplainerSkip = () => {
-    setShowExplainer(false);
-  };
+  const progress = Math.round((step / TOTAL_STEPS) * 100);
 
-  // Show explainer first
-  if (showExplainer) {
-    return (
-      <BoptoneExplainer
-        mode="private"
-        onComplete={handleExplainerComplete}
-        onSkip={handleExplainerSkip}
-      />
-    );
-  }
+  // ─── Navigation ────────────────────────────────────────────────────────────
 
-  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("Photo must be smaller than 5MB");
-        return;
-      }
-      if (!file.type.startsWith("image/")) {
-        toast.error("Please select an image file");
-        return;
-      }
-      
-      setPhotoFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePhoto(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemovePhoto = () => {
-    setProfilePhoto(null);
-    setPhotoFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  const handleNext = async () => {
-    if (step === 1 && !formData.displayName) {
-      toast.error("Please enter your artist name");
+  const handleNext = () => {
+    if (step === 1 && !stageName.trim()) {
+      toast.error("Please enter your artist name to continue.");
       return;
     }
-    if (step === 2 && formData.genres.length === 0) {
-      toast.error("Please select at least one genre");
+    if (step === 1 && !primaryGenre) {
+      toast.error("Please select your primary genre.");
       return;
     }
-    
-    if (step < totalSteps) {
-      setStep(step + 1);
-    } else {
-      // Upload photo first if provided
-      let photoUrl: string | undefined;
-      if (photoFile) {
-        try {
-          const reader = new FileReader();
-          reader.onloadend = async () => {
-            const base64 = reader.result as string;
-            const result = await uploadPhoto.mutateAsync({
-              fileName: photoFile.name,
-              fileData: base64,
-              mimeType: photoFile.type,
-            });
-            photoUrl = result.url;
-            
-            // Then save profile with photo URL
-            updateProfile.mutate({
-              stageName: formData.displayName,
-              bio: formData.bio || undefined,
-              genres: formData.genres,
-              profilePhotoUrl: photoUrl,
-              socialLinks: {
-                instagram: formData.instagram || undefined,
-                twitter: formData.twitter || undefined,
-                youtube: formData.youtube || undefined,
-              },
-              onboardingCompleted: true,
-            });
-          };
-          reader.readAsDataURL(photoFile);
-        } catch (error) {
-          toast.error("Failed to upload photo");
-          return;
-        }
-      } else {
-        // Save profile without photo
-        updateProfile.mutate({
-          stageName: formData.displayName,
-          bio: formData.bio || undefined,
-          genres: formData.genres,
-          socialLinks: {
-            instagram: formData.instagram || undefined,
-            twitter: formData.twitter || undefined,
-            youtube: formData.youtube || undefined,
-          },
+    setStep((s) => Math.min(s + 1, TOTAL_STEPS));
+  };
+
+  const handleBack = () => setStep((s) => Math.max(s - 1, 1));
+
+  // ─── Final Submit ───────────────────────────────────────────────────────────
+
+  const handleFinish = async () => {
+    try {
+      // 1. Create or update the artist profile
+      if (existingProfile) {
+        await updateProfile.mutateAsync({
+          stageName: stageName.trim() || existingProfile.stageName,
+          genres: primaryGenre ? [primaryGenre] : existingProfile.genres ?? [],
+          location: geographicBase.trim() || existingProfile.location || undefined,
           onboardingCompleted: true,
         });
+      } else {
+        await createProfile.mutateAsync({
+          stageName: stageName.trim(),
+          genres: primaryGenre ? [primaryGenre] : [],
+          location: geographicBase.trim() || undefined,
+        });
+        await updateProfile.mutateAsync({ onboardingCompleted: true });
       }
+
+      // 2. Save the Toney v1.1 personalization profile
+      await saveOnboarding.mutateAsync({
+        careerStage,
+        primaryGenre: primaryGenre || undefined,
+        subGenre: subGenre.trim() || undefined,
+        teamStructure,
+        geographicBase: geographicBase.trim() || undefined,
+        activeGoals: activeGoals.trim() || undefined,
+        primaryIncomeSource: primaryIncomeSource || undefined,
+        prefersBriefResponses,
+        prefersDataHeavy,
+      });
+
+      toast.success("Setup complete — welcome to Boptone.");
+      setLocation("/dashboard");
+    } catch (err: any) {
+      toast.error(err?.message || "Something went wrong. Please try again.");
     }
   };
 
-  const handleBack = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
-  };
+  const isSubmitting =
+    createProfile.isPending || updateProfile.isPending || saveOnboarding.isPending;
 
-  const toggleGenre = (genre: string) => {
-    setFormData(prev => ({
-      ...prev,
-      genres: prev.genres.includes(genre)
-        ? prev.genres.filter(g => g !== genre)
-        : [...prev.genres, genre]
-    }));
-  };
+  // ─── Render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-[#f8f8f6] flex items-center justify-center p-4">
-      <Card className="rounded-lg border border-black w-full max-w-2xl bg-white shadow-sm hover:border-black transition-colors">
-        <CardHeader className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-2">
-            <span className="text-2xl font-bold">♪</span>
-            <h1 className="text-2xl font-bold text-black">Boptone</h1>
-          </div>
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 border border-black text-black text-sm font-medium">
-              <span className="font-bold">★</span>
-              Create Your Tone
-            </div>
-            <CardTitle className="text-3xl text-black">Build Your Artist Profile</CardTitle>
-            <CardDescription className="text-gray-600">
-              Let's set up your presence on Boptone
-            </CardDescription>
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>Step {step} of {totalSteps}</span>
-              <span>{Math.round(progress)}% complete</span>
-            </div>
-            <Progress value={progress} className="h-2" />
-          </div>
-        </CardHeader>
+    <div className="min-h-screen bg-[#f8f8f6] flex flex-col">
+      {/* Top bar */}
+      <div className="border-b border-black bg-white px-6 py-4 flex items-center justify-between">
+        <span className="text-xl font-bold tracking-tight">BoPTONE</span>
+        <span className="text-sm text-gray-500 font-medium">
+          Step {step} of {TOTAL_STEPS}
+        </span>
+      </div>
 
-        <CardContent className="space-y-6">
-          {/* Step 1: Basic Info + Photo */}
+      {/* Progress bar */}
+      <div className="h-1 bg-gray-200">
+        <div
+          className="h-1 bg-[#0cc0df] transition-all duration-500"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 flex items-start justify-center py-16 px-4">
+        <div className="w-full max-w-xl">
+
+          {/* ── Step 1: Identity ── */}
           {step === 1 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 border border-black rounded-lg">
-                <div className="h-12 w-12 rounded-lg bg-gray-100 border border-black flex items-center justify-center">
-                  <span className="text-2xl font-bold">U</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-black">Tell us about yourself</h3>
-                  <p className="text-sm text-gray-600">Basic profile information</p>
+            <div className="space-y-10">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-[#0cc0df] mb-3">Step 1 of 4</p>
+                <h1 className="text-5xl font-bold leading-tight mb-3">Who are you as an artist?</h1>
+                <p className="text-lg text-gray-600">
+                  This is how Toney, your AI advisor, will know you. Take 60 seconds — it makes every conversation sharper.
+                </p>
+              </div>
+
+              {/* Artist name */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">Artist name <span className="text-[#0cc0df]">*</span></Label>
+                <Input
+                  value={stageName}
+                  onChange={(e) => setStageName(e.target.value)}
+                  placeholder="The name your fans know you by"
+                  className="h-14 text-lg border-2 border-black rounded-lg focus-visible:ring-[#0cc0df]"
+                />
+              </div>
+
+              {/* Career stage */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Where are you in your career?</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {CAREER_STAGES.map((stage) => (
+                    <button
+                      key={stage.value}
+                      type="button"
+                      onClick={() => setCareerStage(stage.value)}
+                      className={`p-4 text-left rounded-lg border-2 transition-all ${
+                        careerStage === stage.value
+                          ? "border-[#0cc0df] bg-[#0cc0df]/10"
+                          : "border-black bg-white hover:bg-gray-50"
+                      }`}
+                    >
+                      <p className="font-bold text-sm">{stage.label}</p>
+                      <p className="text-xs text-gray-500 mt-1">{stage.desc}</p>
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              {/* Profile Photo Upload */}
-              <div className="flex flex-col items-center gap-4">
-                <div className="relative">
-                  {profilePhoto ? (
-                    <div className="relative">
-                      <img
-                        src={profilePhoto}
-                        alt="Profile preview"
-                        className="h-32 w-32 rounded-full object-cover border border-black"
-                      />
-                      <button
-                        onClick={handleRemovePhoto}
-                        className="absolute -top-2 -right-2 h-8 w-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors"
-                      >
-                        <span className="text-sm font-bold">×</span>
-                      </button>
-                    </div>
-                  ) : (
-                    <div
-                      onClick={() => fileInputRef.current?.click()}
-                      className="h-32 w-32 rounded-full border border-dashed border-black flex flex-col items-center justify-center cursor-pointer hover:border-black hover:bg-gray-50 transition-colors"
+              {/* Primary genre */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Primary genre <span className="text-[#0cc0df]">*</span></Label>
+                <div className="flex flex-wrap gap-2">
+                  {GENRES.map((g) => (
+                    <button
+                      key={g}
+                      type="button"
+                      onClick={() => setPrimaryGenre(g)}
+                      className={`px-4 py-2 rounded-full border-2 text-sm font-semibold transition-all ${
+                        primaryGenre === g
+                          ? "border-[#0cc0df] bg-[#0cc0df] text-black"
+                          : "border-black bg-white hover:bg-gray-50"
+                      }`}
                     >
-                      <span className="text-2xl font-bold text-gray-400 mb-1">+</span>
-                      <span className="text-xs text-gray-600 font-medium">Add Photo</span>
+                      {g}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Sub-genre */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">
+                  Sub-genre or style{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </Label>
+                <Input
+                  value={subGenre}
+                  onChange={(e) => setSubGenre(e.target.value)}
+                  placeholder="e.g. Trap soul, Bedroom pop, Nu-metal…"
+                  className="h-12 border-2 border-black rounded-lg focus-visible:ring-[#0cc0df]"
+                />
+              </div>
+
+              {/* Location */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">
+                  Where are you based?{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </Label>
+                <Input
+                  value={geographicBase}
+                  onChange={(e) => setGeographicBase(e.target.value)}
+                  placeholder="City, country — e.g. Atlanta, USA"
+                  className="h-12 border-2 border-black rounded-lg focus-visible:ring-[#0cc0df]"
+                />
+              </div>
+
+              {/* Team structure */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">How do you operate?</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {TEAM_STRUCTURES.map((t) => (
+                    <button
+                      key={t.value}
+                      type="button"
+                      onClick={() => setTeamStructure(t.value)}
+                      className={`p-4 text-left rounded-lg border-2 transition-all ${
+                        teamStructure === t.value
+                          ? "border-[#0cc0df] bg-[#0cc0df]/10"
+                          : "border-black bg-white hover:bg-gray-50"
+                      }`}
+                    >
+                      <p className="font-bold text-sm">{t.label}</p>
+                      <p className="text-xs text-gray-500 mt-1">{t.desc}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 2: Goals & Priorities ── */}
+          {step === 2 && (
+            <div className="space-y-10">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-[#0cc0df] mb-3">Step 2 of 4</p>
+                <h1 className="text-5xl font-bold leading-tight mb-3">What are you working toward?</h1>
+                <p className="text-lg text-gray-600">
+                  Toney tracks your goals across every conversation. The more specific you are, the more useful the advice.
+                </p>
+              </div>
+
+              {/* Active goals */}
+              <div className="space-y-2">
+                <Label className="text-base font-semibold">What are you focused on right now?</Label>
+                <p className="text-sm text-gray-500">Write it like you'd tell a trusted advisor. No format required.</p>
+                <Textarea
+                  value={activeGoals}
+                  onChange={(e) => setActiveGoals(e.target.value)}
+                  placeholder="e.g. I want to hit 10,000 monthly listeners by the end of the year. I'm also trying to land my first sync placement and build a merch line around my next album drop."
+                  className="min-h-[140px] border-2 border-black rounded-lg text-base focus-visible:ring-[#0cc0df] resize-none"
+                />
+              </div>
+
+              {/* Primary income source */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">
+                  Where does most of your music income come from today?{" "}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </Label>
+                <div className="flex flex-wrap gap-2">
+                  {INCOME_SOURCES.map((src) => (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => setPrimaryIncomeSource(src === primaryIncomeSource ? "" : src)}
+                      className={`px-4 py-2 rounded-full border-2 text-sm font-semibold transition-all ${
+                        primaryIncomeSource === src
+                          ? "border-[#0cc0df] bg-[#0cc0df] text-black"
+                          : "border-black bg-white hover:bg-gray-50"
+                      }`}
+                    >
+                      {src}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 3: Communication Style ── */}
+          {step === 3 && (
+            <div className="space-y-10">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-[#0cc0df] mb-3">Step 3 of 4</p>
+                <h1 className="text-5xl font-bold leading-tight mb-3">How do you like to receive information?</h1>
+                <p className="text-lg text-gray-600">
+                  Toney adjusts to how you think. These two settings shape every response you get.
+                </p>
+              </div>
+
+              {/* Brief vs detailed */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Response length</Label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setPrefersBriefResponses(true)}
+                    className={`p-6 text-left rounded-lg border-2 transition-all ${
+                      prefersBriefResponses
+                        ? "border-[#0cc0df] bg-[#0cc0df]/10"
+                        : "border-black bg-white hover:bg-gray-50"
+                    }`}
+                  >
+                    <p className="text-2xl mb-2">⚡</p>
+                    <p className="font-bold">Brief & direct</p>
+                    <p className="text-sm text-gray-500 mt-1">Bottom line first. I'll ask for more if I need it.</p>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPrefersBriefResponses(false)}
+                    className={`p-6 text-left rounded-lg border-2 transition-all ${
+                      !prefersBriefResponses
+                        ? "border-[#0cc0df] bg-[#0cc0df]/10"
+                        : "border-black bg-white hover:bg-gray-50"
+                    }`}
+                  >
+                    <p className="text-2xl mb-2">📖</p>
+                    <p className="font-bold">Full context</p>
+                    <p className="text-sm text-gray-500 mt-1">Give me the reasoning and the options, not just the answer.</p>
+                  </button>
+                </div>
+              </div>
+
+              {/* Data-heavy vs plain language */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Data style</Label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setPrefersDataHeavy(true)}
+                    className={`p-6 text-left rounded-lg border-2 transition-all ${
+                      prefersDataHeavy
+                        ? "border-[#0cc0df] bg-[#0cc0df]/10"
+                        : "border-black bg-white hover:bg-gray-50"
+                    }`}
+                  >
+                    <p className="text-2xl mb-2">📊</p>
+                    <p className="font-bold">Numbers & data</p>
+                    <p className="text-sm text-gray-500 mt-1">I'm comfortable with charts, percentages, and metrics.</p>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPrefersDataHeavy(false)}
+                    className={`p-6 text-left rounded-lg border-2 transition-all ${
+                      !prefersDataHeavy
+                        ? "border-[#0cc0df] bg-[#0cc0df]/10"
+                        : "border-black bg-white hover:bg-gray-50"
+                    }`}
+                  >
+                    <p className="text-2xl mb-2">💬</p>
+                    <p className="font-bold">Plain language</p>
+                    <p className="text-sm text-gray-500 mt-1">Translate the numbers into clear, simple takeaways.</p>
+                  </button>
+                </div>
+              </div>
+
+              <div className="border border-gray-200 rounded-lg p-5 bg-white">
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold text-gray-900">You can change this anytime.</span>{" "}
+                  Tell Toney "be more brief" or "give me more data" in any conversation and it will adjust immediately.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 4: Welcome ── */}
+          {step === 4 && (
+            <div className="space-y-10">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-[#0cc0df] mb-3">Step 4 of 4</p>
+                <h1 className="text-5xl font-bold leading-tight mb-3">
+                  Toney is ready<br />to work with you.
+                </h1>
+                <p className="text-lg text-gray-600">
+                  Your profile is set. Toney now knows your career stage, your goals, and how you like to communicate. Every conversation from here builds on this foundation.
+                </p>
+              </div>
+
+              {/* Summary card */}
+              <div className="border-2 border-black rounded-lg bg-white p-8 space-y-4">
+                <h2 className="text-xl font-bold">Know This Artist</h2>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Artist name</span>
+                    <span className="font-semibold">{stageName || user?.name || "—"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Career stage</span>
+                    <span className="font-semibold capitalize">{careerStage}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Genre</span>
+                    <span className="font-semibold">{[primaryGenre, subGenre].filter(Boolean).join(" · ") || "—"}</span>
+                  </div>
+                  {geographicBase && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500 font-medium">Based in</span>
+                      <span className="font-semibold">{geographicBase}</span>
                     </div>
                   )}
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoSelect}
-                    className="hidden"
-                  />
-                </div>
-                <p className="text-xs text-gray-600 text-center">
-                  Optional - Add a profile photo (max 5MB)
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="displayName" className="text-black font-medium">Artist Name *</Label>
-                  <Input
-                    id="displayName"
-                    placeholder="Your stage name or band name"
-                    value={formData.displayName}
-                    onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                    className="rounded-lg border border-black hover:border-black transition-colors"
-                    autoFocus
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="bio" className="text-black font-medium">Bio</Label>
-                  <Textarea
-                    id="bio"
-                    placeholder="Tell fans about your music and journey..."
-                    value={formData.bio}
-                    onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                    className="rounded-lg border border-black hover:border-black transition-colors"
-                    rows={4}
-                  />
-                  <p className="text-xs text-gray-600">
-                    This will appear on your public profile
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Step 2: Genre Selection */}
-          {step === 2 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 border border-black rounded-lg">
-                <div className="h-12 w-12 rounded-lg bg-gray-100 border border-black flex items-center justify-center">
-                  <span className="text-2xl font-bold">♪</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-black">Choose your genres</h3>
-                  <p className="text-sm text-gray-600">Select all that apply</p>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Team</span>
+                    <span className="font-semibold capitalize">{teamStructure.replace("_", " ")}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-medium">Response style</span>
+                    <span className="font-semibold">
+                      {prefersBriefResponses ? "Brief & direct" : "Full context"}{" "}
+                      · {prefersDataHeavy ? "Data-heavy" : "Plain language"}
+                    </span>
+                  </div>
+                  {activeGoals && (
+                    <div className="pt-2 border-t border-gray-100">
+                      <p className="text-gray-500 font-medium mb-1">Active goals</p>
+                      <p className="text-gray-700 text-xs leading-relaxed line-clamp-3">{activeGoals}</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {GENRES.map((genre) => (
-                  <Badge
-                    key={genre}
-                    variant={formData.genres.includes(genre) ? "default" : "outline"}
-                    className={`cursor-pointer justify-center py-3 text-sm rounded-lg transition-colors ${
-                      formData.genres.includes(genre)
-                        ? "bg-black text-white hover:bg-gray-800"
-                        : "bg-white text-black border border-black hover:border-black"
-                    }`}
-                    onClick={() => toggleGenre(genre)}
-                  >
-                    {formData.genres.includes(genre) && (
-                      <span className="mr-1 font-bold">✓</span>
-                    )}
-                    {genre}
-                  </Badge>
-                ))}
-              </div>
-
-              <p className="text-sm text-gray-600 text-center">
-                Selected: {formData.genres.length} genre{formData.genres.length !== 1 ? 's' : ''}
-              </p>
-            </div>
-          )}
-
-          {/* Step 3: Social Links */}
-          {step === 3 && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 border border-black rounded-lg">
-                <div className="h-12 w-12 rounded-lg bg-gray-100 border border-black flex items-center justify-center">
-                  <span className="text-2xl font-bold">↑</span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-black">Connect your socials</h3>
-                  <p className="text-sm text-gray-600">Optional - you can add these later</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="instagram" className="flex items-center gap-2 text-black font-medium">
-                    <span className="font-bold">IG</span>
-                    Instagram
-                  </Label>
-                  <Input
-                    id="instagram"
-                    placeholder="username"
-                    value={formData.instagram}
-                    onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                    className="rounded-lg border border-black hover:border-black transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="twitter" className="flex items-center gap-2 text-black font-medium">
-                    <span className="font-bold">X</span>
-                    Twitter/X
-                  </Label>
-                  <Input
-                    id="twitter"
-                    placeholder="username"
-                    value={formData.twitter}
-                    onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
-                    className="rounded-lg border border-black hover:border-black transition-colors"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="youtube" className="flex items-center gap-2 text-black font-medium">
-                    <span className="font-bold">YT</span>
-                    YouTube
-                  </Label>
-                  <Input
-                    id="youtube"
-                    placeholder="Channel URL"
-                    value={formData.youtube}
-                    onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
-                    className="rounded-lg border border-black hover:border-black transition-colors"
-                  />
-                </div>
-              </div>
-
-              <div className="p-4 bg-gray-100 rounded-lg border border-black">
-                <p className="text-sm text-center text-black">
-                  <strong>Almost done!</strong> Your Tone is ready to launch.
+              <div className="border border-gray-200 rounded-lg p-5 bg-white">
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold text-gray-900">What happens next:</span>{" "}
+                  Toney will use this profile in every conversation. As you use the platform, it learns your patterns, tracks your goals, and adjusts to how you work. The profile gets sharper over time — not just from what you tell it, but from what you do.
                 </p>
               </div>
             </div>
           )}
 
-          {/* Navigation Buttons */}
-          <div className="flex items-center justify-between pt-4">
-            <Button
-              variant="ghost"
-              onClick={handleBack}
-              disabled={step === 1}
-              className="rounded-lg"
-            >
-              <span className="mr-2">←</span>
-              Back
-            </Button>
+          {/* Navigation buttons */}
+          <div className="flex items-center justify-between mt-12 pt-8 border-t border-gray-200">
+            {step > 1 ? (
+              <Button
+                variant="outline"
+                onClick={handleBack}
+                className="rounded-full border-2 border-black px-8 h-12 font-semibold hover:bg-gray-50"
+                disabled={isSubmitting}
+              >
+                Back
+              </Button>
+            ) : (
+              <div />
+            )}
 
-            <Button
-              onClick={handleNext}
-              disabled={updateProfile.isPending || uploadPhoto.isPending}
-              className="rounded-lg bg-black hover:bg-gray-800 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-            >
-              {step === totalSteps ? (
-                <>
-                  {updateProfile.isPending || uploadPhoto.isPending ? "Creating..." : "Launch Your Tone"}
-                  <span className="ml-2">✓</span>
-                </>
-              ) : (
-                <>
-                  Next
-                  <span className="ml-2">→</span>
-                </>
-              )}
-            </Button>
+            {step < TOTAL_STEPS ? (
+              <Button
+                onClick={handleNext}
+                className="rounded-full bg-[#0cc0df] hover:bg-[#0aabca] text-black border-2 border-black px-10 h-12 font-bold shadow-[4px_4px_0px_0px_black] hover:shadow-[2px_2px_0px_0px_black] transition-all"
+              >
+                Continue
+              </Button>
+            ) : (
+              <Button
+                onClick={handleFinish}
+                disabled={isSubmitting}
+                className="rounded-full bg-black hover:bg-gray-900 text-white border-2 border-black px-10 h-12 font-bold shadow-[4px_4px_0px_0px_#0cc0df] hover:shadow-[2px_2px_0px_0px_#0cc0df] transition-all"
+              >
+                {isSubmitting ? "Saving…" : "Enter Boptone →"}
+              </Button>
+            )}
           </div>
-
-          {/* Skip Option */}
-          <div className="text-center">
-            <Button
-              variant="link"
-              onClick={() => setLocation("/dashboard")}
-              className="rounded-lg text-gray-600"
-            >
-              Skip for now
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }
