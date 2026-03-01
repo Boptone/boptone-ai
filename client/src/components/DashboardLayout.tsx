@@ -43,6 +43,7 @@ const menuItems = [
 ];
 const adminMenuItems = [
   { label: "Content Moderation", path: "/admin/content-moderation" },
+  { label: "IP Compliance", path: "/admin/compliance" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "sidebar-width";

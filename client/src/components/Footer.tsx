@@ -147,6 +147,16 @@ export default function Footer() {
                   Opt-Out Choices
                 </Link>
               </li>
+              <li>
+                <Link href="/dmca" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Copyright / DMCA
+                </Link>
+              </li>
+              <li>
+                <Link href="/dmca/counter-notice" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Counter-Notice
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
