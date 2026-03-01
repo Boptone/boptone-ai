@@ -103,6 +103,7 @@ const AdminRevenue = lazy(() => import("./pages/admin/AdminRevenue"));
 const ComplianceDashboard = lazy(() => import("./pages/admin/ComplianceDashboard"));
 const DmcaPage = lazy(() => import("./pages/Dmca"));
 const DmcaCounterNoticePage = lazy(() => import("./pages/DmcaCounterNotice"));
+const LtvDashboard = lazy(() => import("./pages/analytics/LtvDashboard"));
 const Playlists = lazy(() => import("./pages/Playlists"));
 const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
 const BopsUpload = lazy(() => import("./pages/BopsUpload"));
@@ -165,6 +166,7 @@ function Router() {
         <Route path="/admin/compliance" component={ComplianceDashboard} />
         <Route path="/dmca" component={DmcaPage} />
         <Route path="/dmca/counter-notice" component={DmcaCounterNoticePage} />
+        <Route path="/analytics/ltv" component={LtvDashboard} />
         <Route path="/analytics/reviews" component={ReviewAnalyticsDashboard} />
         <Route path="/product/:productId" component={ProductDetail} />
         <Route path="/store" component={MyStore} />

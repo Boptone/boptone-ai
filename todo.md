@@ -5405,3 +5405,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] 77 vitest tests passing (ticket ID format, SLA math, state machine, DMCA elements, etc.)
 - [x] Zero TypeScript errors
 - [x] Total test suite: 818 passing, 1 pre-existing failure (aiDetection live API call)
+
+### ANALYTICS-1 — Cohort-Based LTV Analytics ✅ (Mar 1, 2026)
+
+- [x] Add `cohort_snapshots` and `cohort_revenue_events` tables to drizzle schema
+- [x] Build `server/lib/cohortEngine.ts` — cohort computation logic (signup month bucketing, period revenue aggregation, retention rate calculation)
+- [x] Build `server/routers/cohortAnalytics.ts` — tRPC router with getCohortMatrix, getCohortSummary, getTopCohorts, getArtistLtv procedures
+- [x] Register cohortAnalytics router in server/routers.ts
+- [x] Build `client/src/pages/analytics/LtvDashboard.tsx` — cohort heatmap, retention curves, LTV distribution, summary KPIs
+- [x] Register /analytics/ltv route in App.tsx
+- [x] Add "LTV Analytics" link to analytics sidebar nav
+- [x] Write vitest tests for cohort engine (65 tests — all passing)
+- [x] Save checkpoint
+
+**Result:** 883 tests passing, 0 TypeScript errors, 1 pre-existing failure (aiDetection live API)
