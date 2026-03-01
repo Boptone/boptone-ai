@@ -1,12 +1,21 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { protectedProcedure, router } from "../_core/trpc";
-import { 
-  createCheckoutSession, 
+import {
+  createCheckoutSession,
   createProductCheckoutSession,
+  createProCheckoutSession,
   STRIPE_PUBLISHABLE_KEY,
+  STRIPE_PRICES,
+  PRO_PRICE_MONTHLY_CENTS,
+  PRO_PRICE_ANNUAL_CENTS,
   stripe,
 } from "../stripe";
-import { getUserSubscription, upsertSubscription, cancelSubscription as dbCancelSubscription } from "../db_stripe";
+import {
+  getUserSubscription,
+  upsertSubscription,
+  cancelSubscription as dbCancelSubscription,
+} from "../db_stripe";
 
 export const stripeRouter = router({
   /**
@@ -17,81 +26,170 @@ export const stripeRouter = router({
   }),
 
   /**
-   * Get user's current subscription
+   * Get user's current subscription with tier, status, and period info.
+   * This is the canonical query for tier-gated UI.
    */
-  getSubscription: protectedProcedure.query(async ({ ctx }) => {
-    const subscription = await getUserSubscription(ctx.user.id);
-    return subscription;
+  getSubscriptionStatus: protectedProcedure.query(async ({ ctx }) => {
+    const sub = await getUserSubscription(ctx.user.id);
+    if (!sub) {
+      return {
+        tier: "free" as const,
+        status: "active" as const,
+        billingCycle: null,
+        currentPeriodEnd: null,
+        cancelAtPeriodEnd: false,
+        stripeCustomerId: null,
+        stripeSubscriptionId: null,
+      };
+    }
+    return {
+      tier: (sub.tier || "free") as "free" | "pro" | "enterprise",
+      status: sub.status,
+      billingCycle: sub.billingCycle ?? null,
+      currentPeriodEnd: sub.currentPeriodEnd ?? null,
+      cancelAtPeriodEnd: sub.cancelAtPeriodEnd,
+      stripeCustomerId: sub.stripeCustomerId ?? null,
+      stripeSubscriptionId: sub.stripeSubscriptionId ?? null,
+    };
   }),
 
   /**
-   * Create checkout session for Pro subscription
+   * Legacy: get full subscription row
+   */
+  getSubscription: protectedProcedure.query(async ({ ctx }) => {
+    return getUserSubscription(ctx.user.id);
+  }),
+
+  /**
+   * Create a Stripe Checkout Session for the PRO tier.
+   * Supports monthly ($49/mo) and annual ($39/mo, billed $468/yr) billing.
+   * Opens in a new tab on the frontend.
+   */
+  createProCheckout: protectedProcedure
+    .input(
+      z.object({
+        billingCycle: z.enum(["monthly", "annual"]).default("monthly"),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!stripe) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Stripe is not configured. Please contact support.",
+        });
+      }
+
+      // Fetch existing Stripe customer ID to avoid creating duplicates
+      const existingSub = await getUserSubscription(ctx.user.id);
+
+      const origin = ctx.req.headers.origin || "https://boptoneos-ntbkjjza.manus.space";
+
+      const session = await createProCheckoutSession({
+        userId: ctx.user.id,
+        userEmail: ctx.user.email || "",
+        userName: ctx.user.name || undefined,
+        billingCycle: input.billingCycle,
+        existingCustomerId: existingSub?.stripeCustomerId ?? null,
+        successUrl: `${origin}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancelUrl: `${origin}/upgrade?canceled=1`,
+      });
+
+      // Upsert a pending subscription row so the webhook can update it
+      await upsertSubscription({
+        userId: ctx.user.id,
+        stripeCustomerId: session.customer as string,
+        tier: "free",
+        plan: "free",
+        billingCycle: input.billingCycle,
+        status: "incomplete",
+      });
+
+      return { url: session.url, sessionId: session.id };
+    }),
+
+  /**
+   * Legacy: create subscription checkout (kept for backward compatibility)
    */
   createSubscriptionCheckout: protectedProcedure
-    .input(z.object({
-      tier: z.enum(["pro", "enterprise"]),
-    }))
+    .input(z.object({ tier: z.enum(["pro", "enterprise"]) }))
     .mutation(async ({ ctx, input }) => {
-      // For now, use a fixed price ID - you'll need to create this in Stripe Dashboard
-      // Go to Stripe Dashboard → Products → Create Product → Add Price
-      const priceId = input.tier === "pro" 
-        ? "price_1QWfOqFFuByvgYTFqLPfJpWb" // Replace with your actual Stripe Price ID
-        : "price_enterprise"; // Replace with your actual Stripe Price ID
+      const priceId =
+        input.tier === "pro" ? STRIPE_PRICES.PRO_MONTHLY : STRIPE_PRICES.PRO_MONTHLY;
 
       const session = await createCheckoutSession({
         userId: ctx.user.id,
         userEmail: ctx.user.email || "",
         priceId,
-        successUrl: `${process.env.VITE_APP_URL || "http://localhost:3000"}/dashboard?payment=success`,
-        cancelUrl: `${process.env.VITE_APP_URL || "http://localhost:3000"}/pricing?payment=canceled`,
+        successUrl: `${ctx.req.headers.origin || ""}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancelUrl: `${ctx.req.headers.origin || ""}/upgrade?canceled=1`,
       });
 
       return { sessionId: session.id, url: session.url };
     }),
 
   /**
-   * Create checkout session for merchandise purchase
-   * 
-   * ENTERPRISE COMPLIANCE: Routes payment directly to artist via Stripe Connect
-   * with platform fee deducted automatically. Eliminates money transmitter licensing.
+   * Create a Stripe Billing Portal session so the user can manage their subscription.
+   */
+  createBillingPortal: protectedProcedure.mutation(async ({ ctx }) => {
+    if (!stripe) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Stripe is not configured.",
+      });
+    }
+
+    const sub = await getUserSubscription(ctx.user.id);
+    if (!sub?.stripeCustomerId) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "No billing account found. Please upgrade to PRO first.",
+      });
+    }
+
+    const origin = ctx.req.headers.origin || "https://boptoneos-ntbkjjza.manus.space";
+    const session = await stripe.billingPortal.sessions.create({
+      customer: sub.stripeCustomerId,
+      return_url: `${origin}/settings/billing`,
+    });
+
+    return { url: session.url };
+  }),
+
+  /**
+   * Create checkout session for merchandise purchase (BopShop).
    */
   createProductCheckout: protectedProcedure
-    .input(z.object({
-      productId: z.number(),
-      productName: z.string(),
-      amount: z.number(), // in cents
-      quantity: z.number().default(1),
-      artistId: z.number(), // Artist who owns the product
-    }))
+    .input(
+      z.object({
+        productId: z.number(),
+        productName: z.string(),
+        amount: z.number(),
+        quantity: z.number().default(1),
+        artistId: z.number(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
-      // Fetch artist's Stripe Connect account ID
       const { getDb } = await import("../db");
       const { users } = await import("../../drizzle/schema");
       const { eq } = await import("drizzle-orm");
-      
+
       const db = await getDb();
-      if (!db) throw new Error("Database unavailable");
-      
+      if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database unavailable" });
+
       const artist = await db.select().from(users).where(eq(users.id, input.artistId)).limit(1);
-      if (!artist || artist.length === 0) {
-        throw new Error("Artist not found");
-      }
-      
+      if (!artist.length) throw new TRPCError({ code: "NOT_FOUND", message: "Artist not found" });
+
       const artistData = artist[0];
-      
-      // Determine platform fee based on artist's subscription tier
-      // TODO: Fetch actual subscription tier from database
-      // For now, default to Free tier (12%)
-      const platformFeePercentage = 12; // 12% Free, 5% Pro, 2% Enterprise
-      
+      const platformFeePercentage = 12;
+
       const session = await createProductCheckoutSession({
         userId: ctx.user.id,
         userEmail: ctx.user.email || "",
         productName: input.productName,
         amount: input.amount,
         quantity: input.quantity,
-        successUrl: `${process.env.VITE_APP_URL || "http://localhost:3000"}/store?payment=success`,
-        cancelUrl: `${process.env.VITE_APP_URL || "http://localhost:3000"}/store?payment=canceled`,
+        successUrl: `${ctx.req.headers.origin || ""}/store?payment=success`,
+        cancelUrl: `${ctx.req.headers.origin || ""}/store?payment=canceled`,
         artistStripeAccountId: artistData.stripeConnectAccountId || undefined,
         platformFeePercentage: artistData.stripeConnectAccountId ? platformFeePercentage : undefined,
       });
@@ -100,42 +198,39 @@ export const stripeRouter = router({
     }),
 
   /**
-   * Cancel user's subscription
+   * Cancel user's subscription at period end.
    */
   cancelUserSubscription: protectedProcedure.mutation(async ({ ctx }) => {
+    if (!stripe) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Stripe not configured" });
+
     const subscription = await getUserSubscription(ctx.user.id);
-    
-    if (!subscription || !subscription.stripeSubscriptionId) {
-      throw new Error("No active subscription found");
+    if (!subscription?.stripeSubscriptionId) {
+      throw new TRPCError({ code: "NOT_FOUND", message: "No active subscription found" });
     }
 
-    // Cancel in Stripe
     await stripe.subscriptions.update(subscription.stripeSubscriptionId, {
       cancel_at_period_end: true,
     });
 
-    // Update in database
     await dbCancelSubscription(ctx.user.id);
-
     return { success: true };
   }),
 
   /**
-   * Reactivate a canceled subscription
+   * Reactivate a subscription that was set to cancel at period end.
    */
   reactivateSubscription: protectedProcedure.mutation(async ({ ctx }) => {
+    if (!stripe) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Stripe not configured" });
+
     const subscription = await getUserSubscription(ctx.user.id);
-    
-    if (!subscription || !subscription.stripeSubscriptionId) {
-      throw new Error("No subscription found");
+    if (!subscription?.stripeSubscriptionId) {
+      throw new TRPCError({ code: "NOT_FOUND", message: "No subscription found" });
     }
 
-    // Reactivate in Stripe
     await stripe.subscriptions.update(subscription.stripeSubscriptionId, {
       cancel_at_period_end: false,
     });
 
-    // Update in database
     await upsertSubscription({
       ...subscription,
       cancelAtPeriodEnd: false,
@@ -143,5 +238,20 @@ export const stripeRouter = router({
     });
 
     return { success: true };
+  }),
+
+  /**
+   * Expose PRO pricing for the frontend upgrade page.
+   */
+  getPricing: protectedProcedure.query(() => {
+    return {
+      monthly: { cents: PRO_PRICE_MONTHLY_CENTS, display: "$49" },
+      annual: {
+        cents: PRO_PRICE_ANNUAL_CENTS,
+        display: "$468",
+        perMonth: "$39",
+        savingsPercent: 20,
+      },
+    };
   }),
 });

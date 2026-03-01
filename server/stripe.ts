@@ -22,14 +22,105 @@ export const stripe = stripeInstance as Stripe;
 // Stripe publishable key for frontend
 export { STRIPE_PUBLISHABLE_KEY };
 
-// Price IDs for subscription tiers (you'll need to create these in Stripe Dashboard)
+// ─── Real Stripe Price IDs (created in Boptone test sandbox) ─────────────────
 export const STRIPE_PRICES = {
-  PRO_MONTHLY: 'price_pro_monthly', // Replace with actual Stripe Price ID
-  PRO_YEARLY: 'price_pro_yearly',   // Replace with actual Stripe Price ID
+  PRO_MONTHLY: 'price_1T5y5bEhtyzeQmgJiQnz2jna', // $49/mo
+  PRO_ANNUAL:  'price_1T5y5cEhtyzeQmgJWTPRfJUy',  // $468/yr ($39/mo)
+  // Legacy alias
+  PRO_YEARLY:  'price_1T5y5cEhtyzeQmgJWTPRfJUy',
 };
 
+export const STRIPE_PRODUCT_IDS = {
+  PRO: 'prod_U46IDf4tYDcfXt',
+};
+
+export const PRO_PRICE_MONTHLY_CENTS = 4900;  // $49
+export const PRO_PRICE_ANNUAL_CENTS  = 46800; // $468 ($39/mo)
+
 /**
- * Create a Stripe Checkout Session for Pro subscription
+ * Find or create a Stripe Customer for a Boptone user.
+ * Idempotent — reuses existing customer if stripeCustomerId is provided.
+ */
+export async function getOrCreateStripeCustomer(params: {
+  userId: number;
+  email: string;
+  name?: string;
+  existingCustomerId?: string | null;
+}): Promise<string> {
+  if (!stripe) throw new Error('Stripe not initialised');
+
+  if (params.existingCustomerId) {
+    try {
+      const customer = await stripe.customers.retrieve(params.existingCustomerId);
+      if (!('deleted' in customer)) return customer.id;
+    } catch {
+      // Fall through and create a new one
+    }
+  }
+
+  const customer = await stripe.customers.create({
+    email: params.email,
+    name: params.name,
+    metadata: { boptoneUserId: params.userId.toString() },
+  });
+
+  return customer.id;
+}
+
+/**
+ * Create a Stripe Checkout Session for a PRO subscription upgrade.
+ * Handles customer lookup/creation, billing cycle toggle, and metadata.
+ */
+export async function createProCheckoutSession(params: {
+  userId: number;
+  userEmail: string;
+  userName?: string;
+  billingCycle: 'monthly' | 'annual';
+  existingCustomerId?: string | null;
+  successUrl: string;
+  cancelUrl: string;
+}): Promise<Stripe.Checkout.Session> {
+  if (!stripe) throw new Error('Stripe not initialised');
+
+  const customerId = await getOrCreateStripeCustomer({
+    userId: params.userId,
+    email: params.userEmail,
+    name: params.userName,
+    existingCustomerId: params.existingCustomerId,
+  });
+
+  const priceId = params.billingCycle === 'annual'
+    ? STRIPE_PRICES.PRO_ANNUAL
+    : STRIPE_PRICES.PRO_MONTHLY;
+
+  const session = await stripe.checkout.sessions.create({
+    mode: 'subscription',
+    customer: customerId,
+    line_items: [{ price: priceId, quantity: 1 }],
+    success_url: params.successUrl,
+    cancel_url: params.cancelUrl,
+    allow_promotion_codes: true,
+    billing_address_collection: 'auto',
+    subscription_data: {
+      metadata: {
+        boptoneUserId: params.userId.toString(),
+        tier: 'pro',
+        billingCycle: params.billingCycle,
+      },
+    },
+    metadata: {
+      paymentType: 'pro_subscription',
+      boptoneUserId: params.userId.toString(),
+      tier: 'pro',
+      billingCycle: params.billingCycle,
+    },
+  });
+
+  return session;
+}
+
+/**
+ * Create a Stripe Checkout Session for Pro subscription (legacy / generic).
  */
 export async function createCheckoutSession(params: {
   userId: number;

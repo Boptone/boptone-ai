@@ -84,6 +84,9 @@ const WorkflowBuilderPage = lazy(() => import("./pages/WorkflowBuilderPage"));
 const WhyBoptone = lazy(() => import("./pages/WhyBoptone"));
 const Listen = lazy(() => import("./pages/Listen"));
 const PricingDashboard = lazy(() => import("./pages/PricingDashboard"));
+const Upgrade = lazy(() => import("./pages/Upgrade"));
+const UpgradeSuccess = lazy(() => import("./pages/UpgradeSuccess"));
+const BillingSettings = lazy(() => import("./pages/BillingSettings"));
 const Transparency = lazy(() => import("./pages/Transparency"));
 const CookieSettings = lazy(() => import("./pages/CookieSettings"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
@@ -210,6 +213,9 @@ function Router() {
         <Route path="/workflows/settings" component={WorkflowSettings} />
         <Route path="/listen/:trackId" component={Listen} />
         <Route path="/pricing-dashboard" component={PricingDashboard} />
+        <Route path="/upgrade/success" component={UpgradeSuccess} />
+        <Route path="/upgrade" component={Upgrade} />
+        <Route path="/settings/billing" component={BillingSettings} />
         <Route path="/transparency" component={Transparency} />
         <Route path={"/admin"} component={Admin} />
         <Route path={"/signup"} component={MultiStepSignup} />

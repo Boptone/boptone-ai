@@ -2,6 +2,8 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Zap, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 /**
  * WorkflowUpgradeGate
@@ -14,6 +16,18 @@ import { Zap, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
  */
 export default function WorkflowUpgradeGate() {
   const [, setLocation] = useLocation();
+
+  const createCheckout = trpc.stripe.createProCheckout.useMutation({
+    onSuccess: (data) => {
+      if (data.url) {
+        toast.info("Redirecting to secure checkout…");
+        window.open(data.url, "_blank");
+      }
+    },
+    onError: (err) => {
+      toast.error(err.message || "Could not start checkout. Please try again.");
+    },
+  });
 
   const proFeatures = [
     "Visual trigger-action workflow builder",
@@ -98,18 +112,19 @@ export default function WorkflowUpgradeGate() {
           <Button
             size="lg"
             className="rounded-full bg-black text-white hover:bg-gray-800 px-8 py-3 text-base font-semibold"
-            onClick={() => setLocation("/pricing")}
+            onClick={() => createCheckout.mutate({ billingCycle: "monthly" })}
+            disabled={createCheckout.isPending}
           >
-            Upgrade to PRO
-            <ArrowRight className="w-5 h-5 ml-2" />
+            {createCheckout.isPending ? "Opening checkout…" : "Upgrade to PRO"}
+            {!createCheckout.isPending && <ArrowRight className="w-5 h-5 ml-2" />}
           </Button>
           <Button
             size="lg"
             variant="outline"
             className="rounded-full border-2 border-black text-black hover:bg-gray-100 px-8 py-3 text-base font-semibold"
-            onClick={() => setLocation("/pricing")}
+            onClick={() => setLocation("/upgrade")}
           >
-            Compare Plans
+            See All Plans
           </Button>
         </div>
 

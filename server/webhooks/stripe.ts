@@ -129,6 +129,10 @@ async function handleCheckoutSessionCompleted(session: any) {
       const { handleWalletTopUp } = await import('../services/walletWebhook');
       await handleWalletTopUp(session);
       break;
+
+    case 'pro_subscription':
+      await handleProSubscriptionCheckout(session, db);
+      break;
     
     default:
       // Handle subscription checkout
@@ -146,6 +150,68 @@ async function handleCheckoutSessionCompleted(session: any) {
         }
       }
   }
+}
+
+/**
+ * Handle PRO subscription checkout completion.
+ * Sets tier=pro, records Stripe IDs, and stores billing period dates.
+ */
+async function handleProSubscriptionCheckout(session: any, db: any) {
+  const userId = parseInt(session.metadata?.boptoneUserId || '0');
+  const billingCycle = (session.metadata?.billingCycle || 'monthly') as 'monthly' | 'annual';
+
+  if (!userId) {
+    console.error('[Stripe Webhook] pro_subscription: missing boptoneUserId in metadata');
+    return;
+  }
+
+  // Retrieve the Stripe subscription to get period dates and price ID
+  let periodStart: Date | undefined;
+  let periodEnd: Date | undefined;
+  let stripePriceId: string | undefined;
+
+  if (session.subscription) {
+    try {
+      const stripeSub = await stripe.subscriptions.retrieve(session.subscription);
+      periodStart = new Date((stripeSub as any).current_period_start * 1000);
+      periodEnd = new Date((stripeSub as any).current_period_end * 1000);
+      stripePriceId = (stripeSub as any).items?.data?.[0]?.price?.id;
+    } catch (err: any) {
+      console.error('[Stripe Webhook] Failed to retrieve Stripe subscription:', err.message);
+    }
+  }
+
+  const updateData: Record<string, any> = {
+    tier: 'pro',
+    plan: 'pro',
+    billingCycle,
+    status: 'active',
+    stripeCustomerId: session.customer,
+    stripeSubscriptionId: session.subscription,
+    cancelAtPeriodEnd: false,
+    updatedAt: new Date(),
+    ...(periodStart && { currentPeriodStart: periodStart }),
+    ...(periodEnd && { currentPeriodEnd: periodEnd }),
+    ...(stripePriceId && { stripePriceId }),
+  };
+
+  // Upsert: update existing row or insert new one
+  const existing = await db
+    .select({ id: subscriptions.id })
+    .from(subscriptions)
+    .where(eq(subscriptions.userId, userId))
+    .limit(1);
+
+  if (existing.length > 0) {
+    await db
+      .update(subscriptions)
+      .set(updateData)
+      .where(eq(subscriptions.userId, userId));
+  } else {
+    await db.insert(subscriptions).values({ userId, ...updateData });
+  }
+
+  console.log(`[Stripe Webhook] PRO activated for user ${userId} (${billingCycle})`);
 }
 
 /**
@@ -624,7 +690,7 @@ async function handleSubscriptionUpdated(subscription: any) {
 }
 
 /**
- * Handle subscription deleted/cancelled
+ * Handle subscription deleted/cancelled — downgrade to free tier.
  */
 async function handleSubscriptionDeleted(subscription: any) {
   console.log('[Stripe Webhook] Subscription deleted:', subscription.id);
@@ -632,13 +698,16 @@ async function handleSubscriptionDeleted(subscription: any) {
   const db = await getDb();
   if (!db) return;
 
-  // Update subscription status to cancelled
   await db
     .update(subscriptions)
     .set({
+      tier: 'free',
+      plan: 'free',
       status: 'canceled',
+      cancelAtPeriodEnd: false,
+      updatedAt: new Date(),
     })
     .where(eq(subscriptions.stripeSubscriptionId, subscription.id));
 
-  console.log(`[Stripe Webhook] Cancelled subscription ${subscription.id}`);
+  console.log(`[Stripe Webhook] Subscription ${subscription.id} cancelled — user downgraded to free`);
 }

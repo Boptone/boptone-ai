@@ -5247,3 +5247,16 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Build ToneyOnboarding multi-step modal component (5 steps: genre, career stage, goals, communication style, preferences)
 - [ ] Wire onboarding trigger into DashboardLayout (auto-show on first login, skippable)
 - [ ] Write vitest tests for onboarding procedures
+
+## Stripe PRO Tier Upgrade (Checkout Integration)
+- [ ] Update server/stripe.ts with real Stripe price IDs (PRO monthly + annual)
+- [ ] Enhance createCheckoutSession with customer lookup/create, tier metadata, and billing_cycle
+- [ ] Upgrade webhook handler: set tier=pro + upsert subscription on checkout.session.completed
+- [ ] Upgrade webhook handler: downgrade tier=free on customer.subscription.deleted
+- [ ] Add createProCheckout tRPC mutation to stripe router (monthly/annual toggle)
+- [ ] Add getSubscriptionStatus tRPC query (tier, status, periodEnd, cancelAtPeriodEnd)
+- [x] Build /upgrade page with billing toggle, feature list, and Stripe redirect
+- [x] Build /upgrade/success page confirming PRO activation
+- [ ] Update WorkflowUpgradeGate CTA to call createProCheckout directly
+- [ ] Update DashboardLayout sidebar to show PRO badge when tier=pro
+- [ ] Write vitest tests for upgrade flow
