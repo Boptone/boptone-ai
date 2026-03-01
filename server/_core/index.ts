@@ -74,6 +74,7 @@ async function startServer() {
             "ws:",
           ],
           frameSrc: ["https://js.stripe.com", "https://hooks.stripe.com"],
+          frameAncestors: ["'self'", "https://*.manus.space", "https://*.manusvm.computer"],
           objectSrc: ["'none'"],
           upgradeInsecureRequests: process.env.NODE_ENV === "production" ? [] : null,
         },
@@ -83,8 +84,8 @@ async function startServer() {
         process.env.NODE_ENV === "production"
           ? { maxAge: 31536000, includeSubDomains: true, preload: true }
           : false,
-      // Prevent clickjacking
-      frameguard: { action: "deny" },
+      // Allow framing only from Manus preview pane (frame-ancestors in CSP takes precedence)
+      frameguard: false,
       // Prevent MIME sniffing
       noSniff: true,
       // Disable X-Powered-By
