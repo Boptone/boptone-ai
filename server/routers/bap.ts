@@ -77,6 +77,34 @@ export const bapRouter = router({
           types: z.array(z.enum(['lyrics', 'production', 'mastering', 'vocals', 'artwork'])).optional(),
         }).optional(),
         pricePerStream: z.number().min(1).max(5).default(1), // In cents: $0.01-$0.05
+
+        // Professional credits (DISTRO-CREDITS)
+        credits: z.object({
+          compositionCopyright: z.object({ year: z.number(), owner: z.string() }).optional(),
+          masterCopyright: z.object({ year: z.number(), owner: z.string() }).optional(),
+          label: z.string().optional(),
+          featuredArtists: z.array(z.object({ name: z.string(), role: z.string().optional() })).optional(),
+          producers: z.array(z.object({ name: z.string(), role: z.string().optional() })).optional(),
+          engineers: z.array(z.object({
+            name: z.string(),
+            role: z.enum(['recording', 'mixing', 'mastering', 'assistant', 'other']),
+          })).optional(),
+          additionalProducers: z.array(z.object({ name: z.string(), role: z.string().optional() })).optional(),
+          writers: z.array(z.object({ name: z.string(), ipi: z.string().optional(), pro: z.string().optional() })).optional(),
+          composers: z.array(z.object({ name: z.string(), ipi: z.string().optional() })).optional(),
+          classical: z.object({
+            conductor: z.string().optional(),
+            ensemble: z.string().optional(),
+            soloists: z.array(z.object({ name: z.string(), instrument: z.string() })).optional(),
+            workTitle: z.string().optional(),
+            movementNumber: z.number().optional(),
+            movementTitle: z.string().optional(),
+            catalogNumber: z.string().optional(),
+          }).optional(),
+          artDirector: z.string().optional(),
+          photographer: z.string().optional(),
+          notes: z.string().optional(),
+        }).optional(),
       }))
       .mutation(async ({ input, ctx }) => {
         // Get artist profile
@@ -151,6 +179,7 @@ export const bapRouter = router({
           })) : undefined,
           publishingData: input.publishingData,
           aiDisclosure: input.aiDisclosure,
+          credits: input.credits,
         });
         
         // Auto-publish for now (in Phase 3, this will wait for AI processing)
@@ -225,9 +254,69 @@ export const bapRouter = router({
           }
         }
         
+        // Run audio quality validation for client-side display (DISTRO-UQ1)
+        let audioQualityReport: any = null;
+        let coverArtReport: any = null;
+        try {
+          const { validateAudioForDistribution } = await import("../lib/audioValidator");
+          const audioValidation = await validateAudioForDistribution(audioBuffer, input.title + '.mp3', { skipLoudness: false });
+          const lr = audioValidation.loudnessReport;
+          const tp = audioValidation.technicalProfile;
+          audioQualityReport = {
+            qualityTier: audioValidation.qualityTier,
+            isDistributionReady: audioValidation.isDistributionReady,
+            summary: audioValidation.summary,
+            warnings: audioValidation.warnings.map((w: any) => ({ code: w.code, message: w.message, field: w.field })),
+            errors: audioValidation.errors.map((e: any) => ({ code: e.code, message: e.message, field: e.field })),
+            recommendations: audioValidation.recommendations,
+            loudness: lr ? {
+              integratedLufs: lr.integratedLufs,
+              truePeakDbtp: lr.truePeakDbtp,
+              loudnessRange: lr.loudnessRange,
+              isClipping: lr.isClipping,
+              spotifyReady: lr.spotifyReady,
+              appleReady: lr.appleReady,
+              youtubeReady: lr.youtubeReady,
+              amazonReady: lr.integratedLufs !== null ? Math.abs(lr.integratedLufs - (-14)) <= 3 : false,
+              tidalReady: lr.integratedLufs !== null ? Math.abs(lr.integratedLufs - (-14)) <= 3 : false,
+              deezerReady: lr.integratedLufs !== null ? Math.abs(lr.integratedLufs - (-15)) <= 3 : false,
+              recommendation: lr.recommendation,
+            } : null,
+            technicalProfile: tp ? {
+              format: tp.format, sampleRateHz: tp.sampleRateHz, bitDepth: tp.bitDepth,
+              channels: tp.channels, bitrateKbps: tp.bitrateKbps, durationSeconds: tp.durationSeconds,
+              isLossless: tp.isLossless, codec: tp.codec,
+            } : null,
+          };
+          // Update track with audio metrics
+          const audioMetricsPayload = {
+            qualityTier: audioValidation.qualityTier,
+            isDistributionReady: audioValidation.isDistributionReady,
+            sampleRateHz: tp?.sampleRateHz ?? null,
+            bitDepth: tp?.bitDepth ?? null,
+            channels: tp?.channels ?? null,
+            bitrateKbps: tp?.bitrateKbps ?? null,
+            isLossless: tp?.isLossless ?? false,
+            codec: tp?.codec ?? null,
+            integratedLufs: lr?.integratedLufs ?? null,
+            truePeakDbtp: lr?.truePeakDbtp ?? null,
+            loudnessRange: lr?.loudnessRange ?? null,
+            isClipping: lr?.isClipping ?? false,
+            spotifyReady: lr?.spotifyReady ?? false,
+            appleReady: lr?.appleReady ?? false,
+            youtubeReady: lr?.youtubeReady ?? false,
+            validatedAt: new Date().toISOString(),
+          };
+          await updateTrack(track.insertId as number, { audioMetrics: audioMetricsPayload } as any);
+        } catch (err) {
+          console.error("[BAP] Audio quality validation failed (non-blocking):", err);
+        }
+
         return {
           success: true,
           trackId: track.insertId,
+          audioQuality: audioQualityReport,
+          coverArt: coverArtReport,
         };
       }),
     

@@ -59,6 +59,34 @@ export const musicRouter = router({
         used: z.boolean(),
         types: z.array(z.enum(['lyrics', 'production', 'mastering', 'vocals', 'artwork'])).optional(),
       }).optional(),
+
+      // Professional credits (DISTRO-CREDITS)
+      credits: z.object({
+        compositionCopyright: z.object({ year: z.number(), owner: z.string() }).optional(),
+        masterCopyright: z.object({ year: z.number(), owner: z.string() }).optional(),
+        label: z.string().optional(),
+        featuredArtists: z.array(z.object({ name: z.string(), role: z.string().optional() })).optional(),
+        producers: z.array(z.object({ name: z.string(), role: z.string().optional() })).optional(),
+        engineers: z.array(z.object({
+          name: z.string(),
+          role: z.enum(['recording', 'mixing', 'mastering', 'assistant', 'other']),
+        })).optional(),
+        additionalProducers: z.array(z.object({ name: z.string(), role: z.string().optional() })).optional(),
+        writers: z.array(z.object({ name: z.string(), ipi: z.string().optional(), pro: z.string().optional() })).optional(),
+        composers: z.array(z.object({ name: z.string(), ipi: z.string().optional() })).optional(),
+        classical: z.object({
+          conductor: z.string().optional(),
+          ensemble: z.string().optional(),
+          soloists: z.array(z.object({ name: z.string(), instrument: z.string() })).optional(),
+          workTitle: z.string().optional(),
+          movementNumber: z.number().optional(),
+          movementTitle: z.string().optional(),
+          catalogNumber: z.string().optional(),
+        }).optional(),
+        artDirector: z.string().optional(),
+        photographer: z.string().optional(),
+        notes: z.string().optional(),
+      }).optional(),
     }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
@@ -192,6 +220,7 @@ export const musicRouter = router({
           songwriterSplits: input.songwriterSplits,
           publishingData: input.publishingData,
           aiDisclosure: input.aiDisclosure,
+          credits: input.credits,
           isExplicit: input.isExplicit,
           status: 'draft',
           audioMetrics: audioMetricsPayload,

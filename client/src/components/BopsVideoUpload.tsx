@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
+import { CreditsSection, type CreditsData } from "@/components/Upload/CreditsSection";
 
 // ---------------------------------------------------------------------------
 // Constants — must match server-side validation
@@ -232,6 +233,7 @@ export default function BopsVideoUpload({ onSuccess, onCancel }: BopsVideoUpload
   const [uploadProgress, setUploadProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [credits, setCredits] = useState<CreditsData>({});
 
   const createBop = trpc.bops.create.useMutation();
   const markActivationStep = trpc.activation.markStepComplete.useMutation();
@@ -541,6 +543,16 @@ export default function BopsVideoUpload({ onSuccess, onCancel }: BopsVideoUpload
                     {caption.length}/{CAPTION_MAX_LENGTH}
                   </p>
                 </div>
+              )}
+
+              {/* Professional Credits — optional for Bops (DISTRO-CREDITS) */}
+              {validation?.valid && !isUploading && (
+                <CreditsSection
+                  value={credits}
+                  onChange={setCredits}
+                  distributionMode={false}
+                  compact
+                />
               )}
 
               {/* Upload progress */}

@@ -16,6 +16,8 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RevenueCalculator } from "@/components/RevenueCalculator";
 import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
+import { CreditsSection, type CreditsData } from "@/components/Upload/CreditsSection";
+import { DspTitlePreview } from "@/components/Upload/DspTitlePreview";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -92,6 +94,7 @@ export default function Upload() {
 
   const [showValidation, setShowValidation] = useState(false);
   const [releaseQuality, setReleaseQuality] = useState<ReleaseQualityData | null>(null);
+  const [credits, setCredits] = useState<CreditsData>({});
 
   const markActivationStep = trpc.activation.markStepComplete.useMutation();
 
@@ -342,6 +345,7 @@ export default function Upload() {
           used: metadata.aiUsed,
           types: metadata.aiUsed ? metadata.aiTypes : undefined,
         },
+        credits: Object.keys(credits).length > 0 ? credits : undefined,
       });
 
       clearInterval(progressInterval);
@@ -523,15 +527,25 @@ export default function Upload() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Title *</Label>
-                    <Input
-                      id="title"
-                      value={metadata.title}
-                      onChange={(e) => setMetadata(prev => ({ ...prev, title: e.target.value }))}
-                      placeholder="Song title"
+                <div className="space-y-2">
+                  <Label htmlFor="title">Title *</Label>
+                  <Input
+                    id="title"
+                    value={metadata.title}
+                    onChange={(e) => setMetadata(prev => ({ ...prev, title: e.target.value }))}
+                    placeholder="Song title"
+                  />
+                  {/* Live DSP title formatting preview */}
+                  {metadata.title && (
+                    <DspTitlePreview
+                      input={{
+                        title: metadata.title,
+                        featuredArtists: credits.featuredArtists?.filter(a => a.name),
+                      }}
+                      className="mt-3"
                     />
-                  </div>
+                  )}
+                </div>
                   <div className="space-y-2">
                     <Label htmlFor="artist">Artist *</Label>
                     <Input
@@ -964,6 +978,14 @@ export default function Upload() {
                 )}
               </CardContent>
             </Card>
+
+            {/* Professional Credits Section (DISTRO-CREDITS) */}
+            <CreditsSection
+              value={credits}
+              onChange={setCredits}
+              distributionMode={false}
+              className="bg-card"
+            />
 
             {/* Unified Release Quality Score — shown after successful upload (DISTRO-UQ1) */}
             {releaseQuality && (

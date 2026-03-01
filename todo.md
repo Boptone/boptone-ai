@@ -5568,3 +5568,20 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Add "Distribution Readiness" indicator to track cards in MyMusic (compact badge)
 - [x] Write vitest tests for unified score calculation (33 tests)
 - [x] Save checkpoint
+
+### DISTRO-CREDITS — Professional Credits System (COMPLETE — Mar 1, 2026)
+
+**Goal:** Full industry-standard credits stack on every Boptone track — optional for streaming, required for DSP distribution.
+
+- [x] Extend `bapTracks` schema with structured `credits` JSON column (engineers, mixers, mastering, featured artists, label, © and ℗ holders, classical fields)
+- [x] Build `client/src/components/Upload/CreditsSection.tsx` — collapsible professional credits form with role dropdowns, multi-person fields, © and ℗ year/owner inputs, label field, featured artist list, `CreditsDisplay` read-only view
+- [x] Build `client/src/lib/dspTitleFormatter.ts` — DSP title formatting rules engine (Apple: proper case/no ALL CAPS/no marketing phrases; Amazon: feat. in parens/no brackets; Spotify: 14-day lead time advisory + excessive punctuation; Deezer formatter added)
+- [x] Build `client/src/components/Upload/DspTitlePreview.tsx` — live preview card showing how title renders on Apple Music, Spotify, Amazon Music, TIDAL, Deezer as user types
+- [x] Wire CreditsSection into `Upload.tsx` (audio track upload)
+- [x] Wire CreditsSection into `BopsVideoUpload.tsx` (Bops video upload, compact mode)
+- [x] Update `server/routers/bap.ts` uploadTrack — persist credits JSON to DB, audio quality validation runs post-upload
+- [x] Update `MyMusic.tsx` track detail sheet — show full CreditsDisplay panel
+- [x] Write vitest tests for dspTitleFormatter rules — 26 tests covering Apple/Amazon/Spotify/TIDAL/Deezer formatting
+- [x] TypeScript: 0 errors
+- [x] Total tests: 1099 passing (26 new)
+- [x] Save checkpoint

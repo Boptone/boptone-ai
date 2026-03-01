@@ -61,6 +61,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
+import { CreditsDisplay } from "@/components/Upload/CreditsSection";
 
 /**
  * WORLD-CLASS MUSIC UPLOAD & MANAGEMENT SYSTEM
@@ -914,6 +915,13 @@ export default function MyMusic() {
                     <p className="text-xs text-muted-foreground mt-1">Re-upload this track to generate a full quality score.</p>
                   </div>
                 )}
+                {/* Professional Credits (DISTRO-CREDITS) */}
+                {detailTrack.credits && Object.keys(detailTrack.credits as object).length > 0 && (
+                  <div className="mt-4 mb-4">
+                    <CreditsDisplay credits={detailTrack.credits as any} />
+                  </div>
+                )}
+
                 {/* Track metadata summary */}
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between py-1 border-b border-zinc-800">
