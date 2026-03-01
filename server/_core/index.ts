@@ -16,6 +16,7 @@ import { startVideoProcessorWorker } from "../workers/videoProcessor";
 import { startAutoPayoutScheduler } from "../workers/autoPayoutScheduler";
 import { startAccountDeletionWorker } from "../workers/accountDeletionWorker";
 import { startWorkflowCronRunner } from "../services/workflowCronRunner";
+import { startToneyAgentRunner } from "../agents/toneyAgentRunner";
 import { ENV } from "./env";
 import { COOKIE_NAME } from "@shared/const";
 
@@ -405,6 +406,12 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
     startWorkflowCronRunner().catch((err) => {
       console.warn("[WorkflowCron] Runner failed to start:", err instanceof Error ? err.message : err);
     });
+    // Start the Toney autonomous agent runner (monitors metrics, creates proactive insights every 6h)
+    try {
+      startToneyAgentRunner();
+    } catch (err) {
+      console.warn("[ToneyAgent] Runner failed to start:", err instanceof Error ? err.message : err);
+    }
   });
 }
 

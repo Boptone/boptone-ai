@@ -110,6 +110,7 @@ const ArtistPayout = lazy(() => import("./pages/ArtistPayout"));
 const ArtistSetup = lazy(() => import("./pages/ArtistSetup"));
 const ArtistSignup = lazy(() => import("./pages/ArtistSignup"));
 const BatchUpload = lazy(() => import("./pages/BatchUpload"));
+const ToneyInsights = lazy(() => import("./pages/ToneyInsights"));
 
 // Loading fallback component
 function PageLoader() {
@@ -207,6 +208,7 @@ function Router() {
         <Route path="/microloans" component={Microloans} />
         <Route path="/revenue" component={Money} />
         <Route path="/finance" component={Finance} />
+        <Route path="/toney-insights" component={ToneyInsights} />
         <Route path="/audience" component={Fans} />
         <Route path="/releases" component={MyMusic} />
         <Route path="/batch-upload" component={BatchUpload} />

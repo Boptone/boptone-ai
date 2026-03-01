@@ -5323,7 +5323,7 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 
 ### HIGH — Month 1
 
-- [ ] **[AI-1] Toney autonomous agent mode** — Build `server/agents/toneyAgent.ts` that reads `artist_toney_profiles`, monitors metrics, and proactively creates/executes workflow actions without being asked. (22/50 auditors, Dan Shipper)
+- [x] **[AI-1] Toney autonomous agent mode** — Build `server/agents/toneyAgent.ts` that reads `artist_toney_profiles`, monitors metrics, and proactively creates/executes workflow actions without being asked. (22/50 auditors, Dan Shipper)
 - [ ] **[ANALYTICS-1] Cohort-based LTV analytics** — Add `creator_cohort_analytics` table aggregating `subscriptions`, `payments`, `payouts`, `orders` by acquisition cohort (month/year of first login). The single metric that tells you if Boptone is a business. (19/50 auditors, Gagan Biyani)
 - [x] **[FINANCE-1] Real-time artist financial dashboard** — Unified `/finance` view showing gross earnings, platform fees, card processing fees, writer splits, loan repayments, and net payout in one place. Data exists across `transactions`, `payments`, `payouts`, `writer_earnings`, `loan_repayments`. (16/50 auditors, Patrick Collison)
 - [ ] **[AI-2] Predictive artist flywheel optimizer** — Use `streaming_metrics`, `pixel_events`, `flywheel_network_pool`, and `artist_toney_profiles` to predict each artist's optimal next growth action. Wire to `flywheel_boosts` and `flywheel_milestones`. (Ariel Michaeli)
@@ -5354,3 +5354,4 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] **[STRATEGY-2] Decentralization architecture review** — Evaluate incorporating blockchain/Web3 principles into BAP's core architecture to deliver on the trust and transparency promise. Aligns with the platform's stated strategic interest in decentralization. (Jack Dorsey, Nadia Asparouhova)
 - [ ] **[STRATEGY-3] Micro-loans credit risk framework** — Define explicit credit risk assessment methodology and regulatory compliance framework for `micro_loans` table before scaling. (Patrick Collison, Trae Stephens)
 - [x] **[FINANCE-1] Real-time artist financial dashboard** — Unified /finance view: gross earnings, platform fees, writer splits, loan repayments, net payout. Aggregates orders, bap_stream_payments, revenue_records, earnings_balance, writer_earnings, loan_repayments, payouts. (16/50 auditors, Patrick Collison)
+- [x] **[AI-1] Toney autonomous agent mode** — Build `server/agents/toneyAgent.ts` that reads `artist_toney_profiles`, monitors metrics, and proactively creates/executes workflow actions. Cron-driven, LLM-powered, surfaced in a dashboard panel. (22/50 auditors, Dan Shipper)

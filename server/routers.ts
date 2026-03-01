@@ -44,6 +44,7 @@ import { playlistRouter } from "./routers/playlist";
 import { analyticsRouter } from "./routers/analytics";
 import { fanWalletRouter } from "./routers/fanWallet";
 import { financeRouter } from "./routers/finance";
+import { toneyAgentRouter } from "./routers/toneyAgentRouter";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -775,6 +776,7 @@ export const appRouter = router({
   // Payout System (Withdrawals & Bank Accounts)
   payouts: payoutsRouter,
   finance: financeRouter,
+  toneyAgent: toneyAgentRouter,
 
   // Workflow Automation System (Pro/Enterprise)
   workflows: workflowsRouter,

@@ -37,6 +37,7 @@ const menuItems = [
   { label: "Store", path: "/store" },
   { label: "Revenue", path: "/revenue" },
   { label: "Finance", path: "/finance" },
+  { label: "Toney Insights", path: "/toney-insights" },
   { label: "Audience", path: "/audience" },
   { label: "Settings", path: "/profile-settings" },
 ];

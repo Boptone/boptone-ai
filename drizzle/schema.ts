@@ -4553,3 +4553,40 @@ export const toneyConversationTurns = mysqlTable("toney_conversation_turns", {
 
 export type ToneyConversationTurn = typeof toneyConversationTurns.$inferSelect;
 export type InsertToneyConversationTurn = typeof toneyConversationTurns.$inferInsert;
+
+// ─── Toney Autonomous Agent — Action Log ──────────────────────────────────────
+/**
+ * Persists every proactive action Toney takes on behalf of an artist.
+ * Used for the agent history panel, audit trail, and deduplication
+ * (prevents Toney from surfacing the same insight twice within a cooldown window).
+ */
+export const toneyAgentActions = mysqlTable("toney_agent_actions", {
+  id: int("id").autoincrement().primaryKey(),
+  artistProfileId: int("artist_profile_id").notNull(),
+  userId: int("user_id").notNull(),
+  category: mysqlEnum("category", [
+    "streaming_drop",
+    "streaming_spike",
+    "revenue_milestone",
+    "revenue_drop",
+    "fan_engagement_spike",
+    "release_gap",
+    "workflow_suggestion",
+    "goal_progress",
+    "earnings_available",
+    "superfan_detected",
+    "general",
+  ]).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  insight: text("insight").notNull(),
+  actionPayload: json("action_payload"),
+  autoExecuted: boolean("auto_executed").default(false).notNull(),
+  workflowId: int("workflow_id"),
+  dismissed: boolean("dismissed").default(false).notNull(),
+  priority: mysqlEnum("priority", ["low", "medium", "high", "critical"]).default("medium").notNull(),
+  snapshotAt: timestamp("snapshot_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+export type ToneyAgentAction = typeof toneyAgentActions.$inferSelect;
+export type InsertToneyAgentAction = typeof toneyAgentActions.$inferInsert;
