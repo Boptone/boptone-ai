@@ -5291,3 +5291,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Privacy: Update Stripe Connect section to include Bops payment stream
 - [x] Privacy: Update Last Updated date to February 28, 2026
 - [x] PrivacyAdditions2026: Update effective date and change log to February 28, 2026
+
+## Bops Content Policy (TOS Section 9.13)
+- [x] Section 9.13 Bops Video Content Policy added to Terms.tsx
+- [x] 9.13.1 Deepfake and Synthetic Media Prohibition (5 specific categories + consent exception)
+- [x] 9.13.2 Unauthorized Audio Samples and Music Copyright (sync license requirement, de minimis clause)
+- [x] 9.13.3 Additional Bops-Specific Prohibited Content (minors, trademarks, right of publicity)
+- [x] 9.13.4 Bops Tip Monetization Integrity (fraud prohibitions, 0% fee disclosure)
+- [x] 9.13.5 Enforcement and Takedown (5-tier escalating framework, reporting process)
+- [x] Table of Contents updated with 9.13 Bops Content Policy anchor link

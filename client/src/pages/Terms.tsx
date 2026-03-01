@@ -27,6 +27,7 @@ export default function Terms() {
               <a href="#subscription-plans" className="text-blue-600 hover:text-blue-800 hover:underline">6. Subscription Plans</a>
               <a href="#prohibited-activities" className="text-blue-600 hover:text-blue-800 hover:underline">7. Prohibited Activities</a>
               <a href="#intellectual-property" className="text-blue-600 hover:text-blue-800 hover:underline">8. Intellectual Property</a>
+              <a href="#bops-content-policy" className="text-blue-600 hover:text-blue-800 hover:underline">9.13 Bops Content Policy</a>
               <a href="#user-content" className="text-blue-600 hover:text-blue-800 hover:underline">9. User Content</a>
               <a href="#third-party-services" className="text-blue-600 hover:text-blue-800 hover:underline">10. Third-Party Services</a>
               <a href="#privacy" className="text-blue-600 hover:text-blue-800 hover:underline">11. Privacy & Data</a>
@@ -1239,6 +1240,99 @@ export default function Terms() {
                 </p>
               </section>
 
+              <section id="bops-content-policy" className="mb-10 scroll-mt-8">
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">9.13 Bops Video Content Policy (Core Commitment)</h3>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Bops is Boptone's short-form vertical video feature, enabling artists to share content, engage fans, and receive direct monetary tips. Because Bops involves video and audio content that can be easily manipulated, synthesized, or misappropriated, this section establishes specific content standards that apply to all Bops uploads in addition to the general Prohibited Activities in Section 7 and the AI-Generated Content Policy in Section 9.12.
+                </p>
+
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>9.13.1 Deepfake and Synthetic Media Prohibition</strong>
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  You may not upload, publish, or distribute through Bops any video or audio content that constitutes a "deepfake" or synthetic media, defined as content in which a real person's likeness, voice, face, or body has been digitally manipulated, replaced, or generated using artificial intelligence, machine learning, or similar technologies without that person's explicit, documented, and revocable consent. This prohibition applies regardless of whether the subject is a public figure, celebrity, fellow artist, or private individual.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Specifically prohibited under this section:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>Face-swap and lip-sync deepfakes:</strong> Videos in which another person's face or mouth movements have been replaced or synthetically generated to make them appear to say or do something they did not say or do</li>
+                  <li><strong>Voice cloning without consent:</strong> Audio or video in which another person's voice has been cloned, synthesized, or imitated using AI tools to produce speech, singing, or other vocalizations they did not perform</li>
+                  <li><strong>Non-consensual intimate deepfakes:</strong> Any synthetic or manipulated content that depicts a real person in a sexual, nude, or intimate context without their explicit written consent. Such content will result in immediate permanent account termination and referral to law enforcement where applicable</li>
+                  <li><strong>Synthetic impersonation:</strong> AI-generated video or audio designed to make it appear that a specific real person (including other artists, public figures, or Boptone staff) is endorsing a product, making a statement, or performing an action they did not endorse, make, or perform</li>
+                  <li><strong>Misleading synthetic news or commentary:</strong> Deepfake content designed to spread false information about real events, real people, or real organizations, regardless of whether it is labeled as satire</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Consent Exception:</strong> Deepfake or synthetic media content is permitted only where you can demonstrate, upon request, that you hold explicit written consent from every identifiable real person whose likeness or voice appears in the synthetic content. Consent must be specific to the content, revocable, and documented. Boptone may request proof of consent at any time and will remove content if consent cannot be verified within 72 hours of a request.
+                </p>
+
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>9.13.2 Unauthorized Audio Samples and Music Copyright</strong>
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  All audio contained in a Bops video &mdash; including background music, sound effects, vocal samples, and instrumental loops &mdash; must be either (a) original content you created and own, (b) licensed under a valid synchronization license that covers use in a publicly distributed video, (c) released under a Creative Commons or similar open license that permits commercial use, or (d) in the public domain. The following are explicitly prohibited:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>Unlicensed commercial recordings:</strong> Using any portion of a commercially released sound recording &mdash; regardless of length &mdash; without a valid master use license from the sound recording copyright owner (typically the record label or distributor)</li>
+                  <li><strong>Unlicensed musical compositions:</strong> Using any portion of a copyrighted musical composition &mdash; melody, lyrics, or arrangement &mdash; without a valid synchronization license from the music publisher or songwriter</li>
+                  <li><strong>Unauthorized samples:</strong> Incorporating any sample, loop, chop, or interpolation of another artist's recorded work without documented clearance from both the master recording owner and the composition copyright holder</li>
+                  <li><strong>"De minimis" defense is not a defense here:</strong> Boptone does not recognize the informal "de minimis" argument for unlicensed sampling. Any recognizable portion of a copyrighted work requires a license, consistent with the standard established in <em>Bridgeport Music, Inc. v. Dimension Films</em> (6th Cir. 2004) for sound recordings</li>
+                  <li><strong>AI-generated audio trained on unlicensed works:</strong> Audio generated by AI models that were trained on copyrighted recordings without license or consent, as further addressed in Section 9.12</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Sync License Requirement:</strong> Even if you hold a mechanical license (e.g., for a cover song distributed through BopAudio), a mechanical license does not grant synchronization rights. Bops videos require a separate synchronization license for any copyrighted musical composition used as background audio. If you are unsure whether your audio is properly licensed for video use, do not upload it to Bops.
+                </p>
+
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>9.13.3 Additional Bops-Specific Prohibited Content</strong>
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  In addition to the deepfake and audio sample prohibitions above, the following content is prohibited in all Bops videos:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>Unauthorized use of third-party trademarks or logos:</strong> Videos that prominently feature another brand's trademark, logo, or trade dress in a manner that implies sponsorship, endorsement, or affiliation without written authorization from the trademark owner</li>
+                  <li><strong>Unauthorized appearance of minors:</strong> Videos featuring identifiable minors without verifiable parental or guardian consent. If you upload a Bops video featuring a minor, you represent and warrant that you hold documented parental or guardian consent for that minor's appearance in publicly distributed video content</li>
+                  <li><strong>Content that violates right of publicity:</strong> Videos that commercially exploit another person's name, image, likeness, or voice without their consent, including using another artist's image to promote your own content or products</li>
+                  <li><strong>Violent or graphic content without contextual justification:</strong> Videos containing gratuitous violence, gore, or graphic imagery that serves no legitimate artistic, documentary, or educational purpose</li>
+                  <li><strong>Spam or artificially inflated engagement:</strong> Uploading duplicate or near-duplicate Bops videos to artificially inflate view counts, tip totals, or feed placement; using bots or coordinated inauthentic behavior to drive engagement on Bops content</li>
+                </ul>
+
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>9.13.4 Bops Tip Monetization Integrity</strong>
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Bops tip monetization (available to Pro tier subscribers) is intended to facilitate genuine fan-to-artist financial support. The following practices are prohibited and constitute fraud:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li>Tipping your own Bops videos using alternate accounts, family members' accounts, or any coordinated arrangement designed to simulate organic fan tipping</li>
+                  <li>Soliciting tips in exchange for off-platform goods, services, or access that constitute a commercial transaction (tips are gratuities, not purchases)</li>
+                  <li>Misrepresenting the nature of a Bops video to solicit tips under false pretenses (e.g., claiming a video is a live performance when it is pre-recorded and edited)</li>
+                  <li>Using Bops tip functionality to process payments for products or services that should be transacted through BopShop or another licensed payment channel</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Boptone charges a 0% platform fee on Bops tips. Standard Stripe payment processing fees apply. Fraudulent tip activity will result in immediate suspension of Bops monetization, forfeiture of fraudulently obtained tip balances, and potential permanent account termination.
+                </p>
+
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>9.13.5 Enforcement and Takedown</strong>
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Boptone enforces this Bops Content Policy through a combination of automated detection, user reporting, and human review. The following escalating enforcement framework applies:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>1st violation (non-deepfake):</strong> Content removal + written warning + 7-day period to appeal or provide documentation (license, consent, etc.)</li>
+                  <li><strong>2nd violation:</strong> Content removal + 30-day suspension of Bops upload and monetization privileges + written notice</li>
+                  <li><strong>3rd violation:</strong> Permanent revocation of Bops upload and monetization privileges. Account may remain active for other Boptone features at Boptone's discretion</li>
+                  <li><strong>Deepfake or non-consensual intimate content (any violation):</strong> Immediate permanent account termination, forfeiture of any pending balances, and referral to law enforcement where applicable. No warning is issued for this category</li>
+                  <li><strong>Fraudulent tipping (any violation):</strong> Immediate suspension of Bops monetization, forfeiture of fraudulently obtained balances, and review for permanent account termination</li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  To report a Bops video that violates this policy, contact <a href="mailto:hello@boptone.com" className="text-blue-600 hover:underline">hello@boptone.com</a> with the subject line "Bops Content Report" and include the video URL, the nature of the violation, and any supporting documentation. Boptone will review all reports within 5 business days and notify the reporting party of the outcome.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Nothing in this section limits Boptone's rights under Section 7 (Prohibited Activities), Section 9.12 (AI-Generated Content Policy), or applicable law, including the Digital Millennium Copyright Act (DMCA), applicable state right-of-publicity statutes, and the federal NO FAKES Act (if enacted).
+                </p>
+              </section>
               <section className="mb-10">
                 <h2 id="user-content" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">9. User Content Responsibilities</h2>
                 <p className="mb-5 text-gray-700 leading-relaxed">
