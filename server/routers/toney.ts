@@ -4,7 +4,7 @@ import { invokeLLM, Message } from "../_core/llm";
 import { aiOrchestrator } from "../aiOrchestrator";
 import { buildLocaleContext } from "../toneyLocale";
 import { detectCountryFromRequest } from "../services/privacyCompliance";
-import { getToneyProfileByUserId, buildKnowThisArtistBlock, saveToneyConversationTurn } from "../db_toney";
+import { getToneyProfileByUserId, buildKnowThisArtistBlock, saveToneyConversationTurn, upsertToneyProfile } from "../db_toney";
 
 /**
  * Toney Chatbot Router
@@ -284,5 +284,62 @@ Use this context to provide personalized responses.
       );
       
       return result;
+    }),
+
+  /**
+   * Get onboarding status — has the artist completed their Toney profile setup?
+   */
+  getOnboardingStatus: protectedProcedure
+    .query(async ({ ctx }) => {
+      const profile = await getToneyProfileByUserId(ctx.user.id);
+      return {
+        completed: !!profile,
+        profile: profile ? {
+          careerStage: profile.careerStage,
+          primaryGenre: profile.primaryGenre,
+          activeGoals: profile.activeGoals,
+          prefersBriefResponses: profile.prefersBriefResponses,
+          prefersDataHeavy: profile.prefersDataHeavy,
+        } : null,
+      };
+    }),
+
+  /**
+   * Save onboarding profile — called when artist completes the setup flow.
+   */
+  saveOnboardingProfile: protectedProcedure
+    .input(
+      z.object({
+        careerStage: z.enum(["emerging", "developing", "established", "legacy"]).optional(),
+        primaryGenre: z.string().max(100).optional(),
+        subGenre: z.string().max(100).optional(),
+        teamStructure: z.enum(["solo", "managed", "label_affiliated", "collective"]).optional(),
+        geographicBase: z.string().max(100).optional(),
+        activeGoals: z.string().optional(),
+        primaryIncomeSource: z.string().max(100).optional(),
+        prefersBriefResponses: z.boolean().optional(),
+        prefersDataHeavy: z.boolean().optional(),
+        communicationNotes: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { getArtistProfileByUserId } = await import("../db");
+      const artistProfile = await getArtistProfileByUserId(ctx.user.id);
+      const artistProfileId = artistProfile?.id ?? ctx.user.id;
+      await upsertToneyProfile({
+        userId: ctx.user.id,
+        artistProfileId,
+        careerStage: input.careerStage ?? "emerging",
+        primaryGenre: input.primaryGenre,
+        subGenre: input.subGenre,
+        teamStructure: input.teamStructure ?? "solo",
+        geographicBase: input.geographicBase,
+        activeGoals: input.activeGoals,
+        primaryIncomeSource: input.primaryIncomeSource,
+        prefersBriefResponses: input.prefersBriefResponses ?? false,
+        prefersDataHeavy: input.prefersDataHeavy ?? false,
+        communicationNotes: input.communicationNotes,
+      });
+      return { success: true };
     }),
 });

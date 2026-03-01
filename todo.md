@@ -5240,3 +5240,10 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Write 20 vitest tests for buildKnowThisArtistBlock (all passing)
 - [ ] Update toney-ai-spec skill with v1.1 implementation status
 - [ ] Build artist profile onboarding UI (let artists fill in goals, genre, preferences)
+
+## Toney Onboarding UI
+
+- [ ] Add getOnboardingStatus and saveOnboardingProfile tRPC procedures to toney router
+- [ ] Build ToneyOnboarding multi-step modal component (5 steps: genre, career stage, goals, communication style, preferences)
+- [ ] Wire onboarding trigger into DashboardLayout (auto-show on first login, skippable)
+- [ ] Write vitest tests for onboarding procedures

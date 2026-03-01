@@ -2604,7 +2604,7 @@ export const payouts = mysqlTable("payouts", {
   externalPayoutId: varchar("externalPayoutId", { length: 255 }), // Stripe payout ID, PayPal transaction ID, etc.
   
   // Failure handling
-  failureReason: text("failureReason"),
+  failureReason: text("failureReason").notNull().default(""),
   failureCode: varchar("failureCode", { length: 50 }),
   retryCount: int("retryCount").default(0).notNull(),
   

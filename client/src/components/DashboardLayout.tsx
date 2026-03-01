@@ -23,6 +23,8 @@ import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
 import { LogOut, PanelLeft } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
+import { trpc } from "@/lib/trpc";
+import ToneyOnboarding from "./ToneyOnboarding";
 import { useLocation } from "wouter";
 import { DashboardLayoutSkeleton } from './DashboardLayoutSkeleton';
 import { Button } from "./ui/button";
@@ -128,6 +130,21 @@ function DashboardLayoutContent({
 }: DashboardLayoutContentProps) {
   const { user, logout } = useAuth();
   const [location, setLocation] = useLocation();
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // Check if the artist has completed Toney onboarding
+  const { data: onboardingStatus } = trpc.toney.getOnboardingStatus.useQuery(undefined, {
+    enabled: !!user,
+    staleTime: Infinity, // Only check once per session
+  });
+
+  useEffect(() => {
+    if (onboardingStatus && !onboardingStatus.completed) {
+      // Small delay so the dashboard loads first, then the modal appears
+      const timer = setTimeout(() => setShowOnboarding(true), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [onboardingStatus]);
   const { state, toggleSidebar } = useSidebar();
   const isCollapsed = state === "collapsed";
   const [isResizing, setIsResizing] = useState(false);
@@ -173,6 +190,11 @@ function DashboardLayoutContent({
 
   return (
     <>
+      <ToneyOnboarding
+        open={showOnboarding}
+        onComplete={() => setShowOnboarding(false)}
+        onSkip={() => setShowOnboarding(false)}
+      />
       <div className="relative" ref={sidebarRef}>
         <Sidebar
           collapsible="icon"

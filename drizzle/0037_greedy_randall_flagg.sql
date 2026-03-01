@@ -1,0 +1,1 @@
+ALTER TABLE `payouts` MODIFY COLUMN `failureReason` text NOT NULL DEFAULT ('');

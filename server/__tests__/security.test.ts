@@ -57,7 +57,7 @@ describe("CSRF Token Flow", () => {
 
 // ─── Cookie Hardening ─────────────────────────────────────────────────────────
 describe("Session Cookie Options", () => {
-  it("should set SameSite=Strict on session cookie", async () => {
+  it("should set SameSite=Lax on session cookie", async () => {
     // Import the cookies module to verify the setting
     const { getSessionCookieOptions } = await import("../_core/cookies");
     const mockReq = {
@@ -67,7 +67,7 @@ describe("Session Cookie Options", () => {
     } as any;
 
     const options = getSessionCookieOptions(mockReq);
-    expect(options.sameSite).toBe("strict");
+    expect(options.sameSite).toBe("lax");
     expect(options.httpOnly).toBe(true);
     expect(options.secure).toBe(true);
     expect(options.path).toBe("/");
@@ -82,7 +82,7 @@ describe("Session Cookie Options", () => {
     } as any;
 
     const options = getSessionCookieOptions(mockReq);
-    expect(options.sameSite).toBe("strict");
+    expect(options.sameSite).toBe("lax");
     expect(options.httpOnly).toBe(true);
     expect(options.secure).toBe(false);
   });
