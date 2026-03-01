@@ -5276,3 +5276,18 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Wire first-login redirect: check onboardingCompleted in App.tsx or a useRequireOnboarding hook
 - [ ] Add a "complete your setup" banner on Dashboard for artists who skipped onboarding
 - [ ] Write vitest tests for the onboarding procedures
+
+## TOS & Privacy Policy Forensic Audit (Feb 28, 2026)
+- [x] Audit all 7-day git changes against TOS and Privacy Policy
+- [x] TOS: Add Bops (vertical video) as a named service feature
+- [x] TOS: Add Workflow Automation as a named service feature
+- [x] TOS: Add Toney AI Advisor as a named service feature with personalization disclosure
+- [x] TOS: Update Last Updated date to February 28, 2026
+- [x] Privacy: Add Toney AI Personalization Profile ("Know This Artist") data disclosure
+- [x] Privacy: Add Bops video content and metadata to User Content collection disclosure
+- [x] Privacy: Add Bops video tips to Financial and Payment Information collection
+- [x] Privacy: Add subscription tier status and Stripe customer ID to data collection disclosure
+- [x] Privacy: Add Stripe Customer Portal data sharing disclosure
+- [x] Privacy: Update Stripe Connect section to include Bops payment stream
+- [x] Privacy: Update Last Updated date to February 28, 2026
+- [x] PrivacyAdditions2026: Update effective date and change log to February 28, 2026

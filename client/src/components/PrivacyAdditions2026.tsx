@@ -214,10 +214,10 @@ export function PrivacyAdditions2026() {
         <h3 className="text-2xl font-bold mb-4">9. Updates to This Privacy Policy</h3>
         
         <p className="mb-4">
-          <strong>Effective Date: February 22, 2026</strong>
+          <strong>Effective Date: February 28, 2026</strong>
         </p>
         <p className="mb-4">
-          This Privacy Policy was last updated on February 21, 2026 to reflect new data collection and processing activities related to shipping integration, SEO/GEO optimization, and AI agent integration. We will notify you of material changes to this Privacy Policy by email or through a prominent notice on our Service.
+          This Privacy Policy was last updated on February 28, 2026 to reflect new data collection and processing activities related to: (1) shipping integration, SEO/GEO optimization, and AI agent integration (February 21, 2026); and (2) Toney AI personalization profiles ("Know This Artist"), Bops vertical video content and tip data, Stripe Customer Portal billing management, and subscription tier status data (February 28, 2026). We will notify you of material changes to this Privacy Policy by email or through a prominent notice on our Service.
         </p>
       </section>
     </>

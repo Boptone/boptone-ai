@@ -12,7 +12,7 @@ export default function Terms() {
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
           {/* Centered heading */}
           <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Terms of Service</h1>
-          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 22, 2026</p>
+          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 28, 2026</p>
           
           {/* Table of Contents */}
           <nav className="mb-12 p-6 bg-gray-50 rounded-lg border border-gray-200">
@@ -371,6 +371,9 @@ export default function Terms() {
                   <li><strong>Healthcare Integration:</strong> Access to artist-specific healthcare plans, mental health services, and wellness resources</li>
                   <li><strong>Tour Management:</strong> Tour planning, venue booking, budget management, and logistics coordination</li>
                   <li><strong>Creator Analytics:</strong> Comprehensive analytics dashboard tracking streaming, social media, revenue, and career growth metrics</li>
+                  <li><strong>Bops (Vertical Video):</strong> Short-form vertical video feed for artists to share content, engage fans, and receive direct monetary tips. Video upload and tip monetization require a Pro tier subscription. All users may view the Bops feed.</li>
+                  <li><strong>Workflow Automation:</strong> Automated workflows for fan engagement, content scheduling, and platform actions. Workflow Automation is a Pro tier feature. Workflows may execute automatically based on triggers including time schedules, fan activity, and platform events. You are responsible for ensuring that any automated actions comply with applicable law and platform policies.</li>
+                  <li><strong>Toney AI Advisor:</strong> An AI-powered career advisor that provides personalized guidance based on your artist profile. Personalized mode requires completion of the onboarding profile and a Pro tier subscription. General support mode is available to all users.</li>
                 </ul>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   The specific features and functionality available to you depend on your Subscription tier (Free, Pro, or Enterprise). We reserve the right to modify, suspend, or discontinue any part of the Service at any time, with or without notice. We may also impose limits on certain features or restrict access to parts of the Service without notice or liability.
@@ -386,10 +389,13 @@ export default function Terms() {
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">7.1 Subscription Tiers</h3>
                 <p className="mb-2">Boptone offers the following subscription tiers:</p>
                 <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
-                  <li><strong>Free ($0/month):</strong> Build your foundation with 10 tracks, 1GB storage, basic analytics, 3 e-commerce products, 12% platform fee</li>
-                  <li><strong>Pro ($49/month):</strong> Unlimited tracks, storage, and products, third-party distribution, advanced analytics, 5% platform fee</li>
-                  <li><strong>Enterprise ($149/month):</strong> All Pro features plus team accounts, API access, white-label embeds, dedicated support, 2% platform fee</li>
+                  <li><strong>Free ($0/month):</strong> Build your foundation with 10 tracks, 1GB storage, basic analytics, 3 e-commerce products, 12% platform fee. Includes access to Toney AI in general support mode and Bops vertical video feed (viewing only).</li>
+                  <li><strong>Pro ($49/month, or $39/month billed annually as $468/year):</strong> Unlimited tracks, storage, and products, third-party distribution, advanced analytics, 5% platform fee. Includes Workflow Automation (automated fan engagement, scheduling, and content workflows), Toney AI Personalization (full "Know This Artist" profile activation for personalized career advice), Bops video upload and fan tip monetization, instant payouts, and self-service subscription management via the Stripe Customer Portal at /settings/billing.</li>
+                  <li><strong>Enterprise ($149/month):</strong> All Pro features plus team accounts, API access, white-label embeds, dedicated support, 2% platform fee.</li>
                 </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Annual Pro subscriptions are billed as a single charge of $468 USD at the start of each annual period and save approximately 20% compared to the monthly rate. Annual subscriptions are non-refundable after the 14-day initial refund window described in Section 7.4, except as required by applicable law. You may manage, pause, or cancel your subscription at any time through the Stripe Customer Portal accessible at /settings/billing.
+                </p>
 
                 <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">7.2 Payment and Billing</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
@@ -452,6 +458,9 @@ export default function Terms() {
                 </p>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   <strong>Kick-in Fan Support Tips:</strong> Kick-in allows fans to send monetary tips directly to artists. Boptone charges zero platform fees for tips—only standard payment processing fees apply (typically 2.9% + $0.30 per transaction, set by our payment processor). Tips are considered gifts from fans to artists and are not refundable except as required by law. Tips are subject to velocity limits and compliance monitoring as described in Section 6.9.
+                </p>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  <strong>Bops Video Tips:</strong> Fans may also send monetary tips to artists directly from the Bops vertical video feed. Bops tips are processed through Stripe Checkout and are subject to the same zero-platform-fee policy as Kick-in tips. Only standard Stripe payment processing fees apply. Bops tips are non-refundable except as required by applicable law. This tip stream is separate from Kick-in and is available exclusively on the Bops platform. Pro tier subscription is required for artists to receive Bops tips.
                 </p>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   <strong>Payment Processing Provider:</strong> All payment processing is handled by Stripe, Inc., a third-party payment processor. Your use of Stripe's services is subject to their terms of service and privacy policy. We do not store your full credit card information on our servers. By using our payment services, you authorize Stripe to process payments on your behalf.
@@ -1290,9 +1299,17 @@ export default function Terms() {
               <section className="mb-10">
                 <h2 id="ai-features" className="text-3xl font-bold mb-5 text-gray-900 mt-12 first:mt-0 scroll-mt-8">12. AI-Powered Features and Chatbot</h2>
                 
-                <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">13.1 AI Chatbot Service</h3>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900 mt-6">13.1 Toney AI: General Support and Personalized Advisor</h3>
                 <p className="mb-5 text-gray-700 leading-relaxed">
-                  Boptone provides an AI-powered chatbot service ("AI Chat") that uses generative artificial intelligence to answer questions, provide information, and assist users with platform features. The AI Chat is available to all users, including those without accounts, and operates as an automated system.
+                  Boptone provides an AI-powered assistant named Toney that uses generative artificial intelligence to answer questions, provide platform guidance, and—for Pro tier subscribers—deliver personalized career advice. Toney operates in two modes:
+                </p>
+                <ul className="list-disc pl-7 space-y-3 mb-5 text-gray-700">
+                  <li><strong>General Support Mode (all users):</strong> Toney answers common questions about platform features, account settings, payment issues, and content uploads. This mode does not require a personalization profile.</li>
+                  <li><strong>Personalized Advisor Mode (Pro tier):</strong> Upon completing the artist onboarding flow, Pro subscribers activate the "Know This Artist" profile, which stores structured information about the artist including career stage, primary genre, primary income source, active goals, fan message style, and communication preferences. Toney uses this profile to provide context-aware, personalized career advice. The profile is stored in Boptone's database and is used exclusively to improve the quality of Toney's responses to that artist. You may update or delete your personalization profile at any time through Profile Settings. Deleting your profile reverts Toney to General Support Mode.
+                  </li>
+                </ul>
+                <p className="mb-5 text-gray-700 leading-relaxed">
+                  Toney is available to all users, including those without accounts (in General Support Mode), and operates as an automated system.
                 </p>
                 <p className="mb-5 text-gray-700 leading-relaxed">
                   By using the AI Chat, you acknowledge and agree that:
