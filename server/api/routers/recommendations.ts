@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { router, protectedProcedure, publicProcedure } from "../../_core/trpc";
 import { getDb } from "../../db";
-import { products, orderItems, orders, wishlists } from "../../../drizzle/schema";
-import { eq, desc, sql, and, inArray, notInArray } from "drizzle-orm";
+import { products, orderItems, orders, wishlists, productRatings } from "../../../drizzle/schema";
+import { eq, desc, sql, and, inArray, notInArray, avg } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { invokeLLM } from "../../_core/llm";
 
@@ -227,14 +227,16 @@ Respond with ONLY a JSON array of product IDs in order of relevance:
     }),
 
   /**
-   * [COMMERCE-2] Collaborative filter — "Customers who bought X also bought Y"
+   * [COMMERCE-2 + COMMERCE-2b] Collaborative filter — "Customers who bought X also bought Y"
    *
    * Algorithm:
    *   1. Find all orders that contain the target product.
    *   2. Collect all other products from those same orders.
-   *   3. Rank by co-purchase frequency (most frequently co-purchased first).
+   *   3. Rank by a composite score: co-purchase frequency × rating boost.
+   *      Rating boost = avg(product_ratings.rating) / 5.0 (defaults to 1.0 if no ratings).
+   *      Final score = coCount × ratingBoost
    *   4. Exclude the seed product itself and already-purchased products.
-   *   5. Fall back to category-matched products, then site-wide bestsellers.
+   *   5. Fall back to top-rated category-matched products, then site-wide bestsellers.
    *
    * This is a pure SQL implementation — no ML, no external service.
    */
@@ -272,11 +274,13 @@ Respond with ONLY a JSON array of product IDs in order of relevance:
           const coPurchased = await db
             .select({
               productId: orderItems.productId,
-              coCount: sql<number>`cast(count(*) as unsigned)`,
+              coCount: sql<number>`cast(count(${orderItems.id}) as unsigned)`,
+              avgRating: avg(productRatings.rating),
               product: products,
             })
             .from(orderItems)
             .innerJoin(products, eq(orderItems.productId, products.id))
+            .leftJoin(productRatings, eq(productRatings.productId, products.id))
             .where(
               and(
                 inArray(orderItems.orderId, orderIds),
@@ -285,11 +289,19 @@ Respond with ONLY a JSON array of product IDs in order of relevance:
               )
             )
             .groupBy(orderItems.productId)
-            .orderBy(desc(sql`count(*)`), desc(products.createdAt))
+            // Composite score: co-purchase count × rating boost (avg/5, default 1.0)
+            .orderBy(
+              desc(sql`cast(count(${orderItems.id}) as unsigned) * coalesce(avg(${productRatings.rating}) / 5.0, 1.0)`),
+              desc(products.createdAt)
+            )
             .limit(input.limit);
 
           if (coPurchased.length >= input.limit) {
-            const recs = coPurchased.map(r => ({ ...r.product, _coCount: r.coCount }));
+            const recs = coPurchased.map(r => ({
+              ...r.product,
+              _coCount: r.coCount,
+              _avgRating: r.avgRating ? Number(Number(r.avgRating).toFixed(1)) : null,
+            }));
             setCachedRecommendations(cacheKey, recs);
             return { products: recs, source: "collaborative" as const };
           }

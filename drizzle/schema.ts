@@ -4590,3 +4590,31 @@ export const toneyAgentActions = mysqlTable("toney_agent_actions", {
 });
 export type ToneyAgentAction = typeof toneyAgentActions.$inferSelect;
 export type InsertToneyAgentAction = typeof toneyAgentActions.$inferInsert;
+
+// ─── Product Ratings ──────────────────────────────────────────────────────────
+/**
+ * Lightweight standalone star ratings for BopShop products.
+ * Unlike productReviews (which require text), a product_rating is a single
+ * 1-5 star signal with an optional short note. One row per user per product —
+ * upsert semantics. Used as an explicit signal in the recommendation engine's
+ * collaborative filter to surface highly-rated products.
+ */
+export const productRatings = mysqlTable("product_ratings", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull().references(() => products.id, { onDelete: "cascade" }),
+  userId: int("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+  rating: int("rating").notNull(), // 1-5
+  note: varchar("note", { length: 280 }), // Optional short note (tweet-length)
+  // Source of the rating — helps distinguish quick ratings from full reviews
+  source: mysqlEnum("source", ["quick_rate", "post_purchase", "review_flow"]).default("quick_rate").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  // Enforce one rating per user per product
+  uniqueUserProduct: uniqueIndex("unique_user_product_rating").on(table.userId, table.productId),
+  productIdIdx: index("pr_product_id_idx").on(table.productId),
+  userIdIdx: index("pr_user_id_idx").on(table.userId),
+  ratingIdx: index("pr_rating_idx").on(table.rating),
+}));
+export type ProductRating = typeof productRatings.$inferSelect;
+export type InsertProductRating = typeof productRatings.$inferInsert;

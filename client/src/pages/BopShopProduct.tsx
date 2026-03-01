@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { CurrencySelector } from "@/components/CurrencySelector";
 import { useCurrency } from "@/contexts/CurrencyContext";
 import { ProductReviews } from "@/components/reviews/ProductReviews";
+import { ProductRatingWidget } from "@/components/ProductRatingWidget";
 import { generateProductReviewSchema } from "../../../server/reviewSchema";
 import { useBOPixel } from "@/hooks/useBOPixel";
 
@@ -296,8 +297,13 @@ export default function BopShopProduct() {
           </div>
         </div>
 
-        {/* Customer Reviews Section */}
+        {/* Product Ratings — explicit star ratings that improve recommendations */}
         <div className="mt-16">
+          <ProductRatingWidget productId={product.id} />
+        </div>
+
+        {/* Customer Reviews Section */}
+        <div className="mt-10">
           <ProductReviews productId={product.id} />
         </div>
 
