@@ -206,7 +206,7 @@ Questions? Contact us at support@boptone.com`
   },
 
   'abandoned-cart': {
-    subject: 'You left something behind...',
+    subject: '{{subject_line}}',
     html: `<!DOCTYPE html>
 <html>
 <head>
@@ -222,7 +222,7 @@ Questions? Contact us at support@boptone.com`
           <!-- Header -->
           <tr>
             <td style="background-color: #000000; padding: 30px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">Don't Miss Out!</h1>
+              <h1 style="color: #ffffff; margin: 0; font-size: 28px;">{{headline}}</h1>
             </td>
           </tr>
           
@@ -233,7 +233,7 @@ Questions? Contact us at support@boptone.com`
                 Hi {{customer_name}},
               </p>
               <p style="font-size: 16px; line-height: 1.6; color: #333333; margin: 0 0 20px 0;">
-                You left some amazing items in your cart! Complete your order now before they're gone.
+                {{intro_text}}
               </p>
               
               <!-- Items -->
@@ -273,7 +273,7 @@ Questions? Contact us at support@boptone.com`
               <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                 <tr>
                   <td align="center">
-                    <a href="{{checkout_url}}" style="display: inline-block; padding: 15px 40px; background-color: #000000; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px; font-weight: bold;">Complete Your Order</a>
+                    <a href="{{checkout_url}}" style="display: inline-block; padding: 15px 40px; background-color: #000000; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px; font-weight: bold;">{{cta_text}}</a>
                   </td>
                 </tr>
               </table>
@@ -288,11 +288,11 @@ Questions? Contact us at support@boptone.com`
   </table>
 </body>
 </html>`,
-    text: `Don't Miss Out!
+    text: `{{headline}}
 
 Hi {{customer_name}},
 
-You left some amazing items in your cart! Complete your order now before they're gone.
+{{intro_text}}
 
 Your Cart:
 {{#each items}}
@@ -302,7 +302,7 @@ Your Cart:
 
 Subtotal: {{subtotal}}
 
-Complete your order: {{checkout_url}}
+{{cta_text}}: {{checkout_url}}
 
 Questions? Contact us at support@boptone.com`
   },
@@ -833,6 +833,7 @@ export async function sendAbandonedCartEmail(params: {
   customerEmail: string;
   customerName?: string;
   userId?: number;
+  touchNumber?: number; // 1 = 1h, 2 = 24h, 3 = 72h
   items: Array<{
     name: string;
     artistName: string;
@@ -845,10 +846,39 @@ export async function sendAbandonedCartEmail(params: {
   checkoutUrl: string;
 }): Promise<void> {
   const template = getTemplate('abandoned-cart');
+
+  // Differentiated copy per touch
+  const firstName = params.customerName?.split(' ')[0] || 'there';
+  const touch = params.touchNumber ?? 1;
+  const touchConfig: Record<number, { subject: string; headline: string; intro: string; cta: string }> = {
+    1: {
+      subject: `You left something behind, ${firstName}`,
+      headline: 'You left something behind',
+      intro: 'You started checkout but did not finish. Your cart is saved and ready — complete your order now.',
+      cta: 'Complete Your Order',
+    },
+    2: {
+      subject: 'Still thinking it over?',
+      headline: 'Still thinking it over?',
+      intro: 'Your cart is still waiting. These items are popular — grab them before they sell out.',
+      cta: 'Return to Cart',
+    },
+    3: {
+      subject: 'Last chance — your cart expires soon',
+      headline: 'Last chance',
+      intro: 'Your cart expires in 24 hours. After that, these items may no longer be available at this price.',
+      cta: 'Claim Your Cart Now',
+    },
+  };
+  const tc = touchConfig[touch] ?? touchConfig[1];
   
   const templateData = {
     base_url: process.env.VITE_APP_URL || 'https://boptone.com',
     customer_name: params.customerName || 'there',
+    subject_line: tc.subject,
+    headline: tc.headline,
+    intro_text: tc.intro,
+    cta_text: tc.cta,
     items: params.items.map(item => ({
       ...item,
       formatted_price: formatCurrency(item.price, params.currency),
@@ -860,7 +890,7 @@ export async function sendAbandonedCartEmail(params: {
 
   const html = template.html(templateData);
   const text = template.text(templateData);
-  const subject = template.subject(templateData);
+  const subject = tc.subject;
 
   // Log email
   const logId = await logEmail({

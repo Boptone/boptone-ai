@@ -6,6 +6,7 @@ import { eq } from "drizzle-orm";
 import { calculateFees } from "../stripe";
 import { getEarningsBalance, updateEarningsBalance } from "../db";
 import { fireWorkflowEvent } from "../workflowEngine";
+import { cancelAbandonedCartRecovery } from "../services/abandonedCartService";
 
 /**
  * Stripe Webhook Handler
@@ -111,6 +112,12 @@ async function handleCheckoutSessionCompleted(session: any) {
   switch (paymentType) {
     case 'bopshop':
       await handleBopShopPayment(session, db);
+      // Cancel any pending abandoned cart recovery jobs for this user
+      if (userId) {
+        cancelAbandonedCartRecovery(userId).catch(err =>
+          console.error('[Stripe Webhook] Failed to cancel abandoned cart recovery:', err)
+        );
+      }
       break;
     
     case 'bap_stream':

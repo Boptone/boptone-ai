@@ -3,9 +3,10 @@ import { TRPCError } from "@trpc/server";
 import { eq, and, isNull } from "drizzle-orm";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { cartItems, products, productVariants } from "../../drizzle/schema";
+import { cartItems, products, productVariants, artistProfiles } from "../../drizzle/schema";
 import Stripe from "stripe";
 import { ENV } from "../_core/env";
+import { scheduleAbandonedCartRecovery } from "../services/abandonedCartService";
 
 const stripe = new Stripe(ENV.stripeSecretKey, {
   apiVersion: "2025-09-30.clover",
@@ -91,6 +92,30 @@ export const checkoutRouter = router({
       },
       allow_promotion_codes: true,
     });
+
+    // Schedule 3-touch abandoned cart recovery (fire-and-forget)
+    // Runs after Stripe session creation so it never blocks checkout
+    scheduleAbandonedCartRecovery({
+      userId: ctx.user.id,
+      sessionId: session.id,
+      cartSnapshot: {
+        items: items.map(item => ({
+          productId: item.productId,
+          variantId: item.variantId ?? undefined,
+          name: item.variant ? `${item.product!.name} - ${item.variant.name}` : item.product!.name,
+          imageUrl: item.product?.images?.[0]?.url ?? undefined,
+          price: item.variant?.price ?? item.product!.price,
+          quantity: item.quantity,
+        })),
+        subtotal: items.reduce((sum, item) => {
+          const price = item.variant?.price ?? item.product!.price;
+          return sum + price * item.quantity;
+        }, 0),
+        currency: 'usd',
+      },
+      userAgent: ctx.req.headers['user-agent'] ?? undefined,
+      ipAddress: (ctx.req.headers['x-forwarded-for'] as string)?.split(',')[0] ?? ctx.req.socket.remoteAddress ?? undefined,
+    }).catch(err => console.error('[Checkout] Failed to schedule abandoned cart recovery:', err));
 
     return {
       sessionId: session.id,

@@ -4,6 +4,7 @@ import { eq, and, isNull } from "drizzle-orm";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
 import { cartItems, products, productVariants } from "../../drizzle/schema";
+import { getCartRecoveryData, cancelAbandonedCartRecovery } from "../services/abandonedCartService";
 
 export const cartRouter = router({
   /**
@@ -157,7 +158,8 @@ export const cartRouter = router({
     }),
 
   /**
-   * Clear entire cart (soft delete all items)
+   * Clear entire cart (soft delete all items).
+   * Also cancels any pending abandoned cart recovery jobs.
    */
   clear: protectedProcedure.mutation(async ({ ctx }) => {
     const db = await getDb();
@@ -171,6 +173,56 @@ export const cartRouter = router({
         isNull(cartItems.deletedAt)
       ));
 
+    // Cancel pending abandoned cart recovery jobs when user manually clears cart
+    cancelAbandonedCartRecovery(ctx.user.id).catch(err =>
+      console.error('[Cart] Failed to cancel abandoned cart recovery on clear:', err)
+    );
+
     return { success: true };
   }),
+
+  /**
+   * Recover cart from abandoned cart recovery token.
+   * Validates the JWT token, restores cart items from the snapshot,
+   * and cancels remaining recovery emails.
+   */
+  recover: protectedProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const recovery = await getCartRecoveryData(input.token);
+      if (!recovery) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Recovery link is invalid or has expired.' });
+      }
+      // Only allow the original user to recover their own cart
+      if (recovery.userId !== ctx.user.id) {
+        throw new TRPCError({ code: 'FORBIDDEN', message: 'This recovery link belongs to a different account.' });
+      }
+      const db = await getDb();
+      if (!db) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Database unavailable' });
+
+      // Clear existing cart first to avoid duplicates
+      await db
+        .update(cartItems)
+        .set({ deletedAt: new Date() })
+        .where(and(eq(cartItems.userId, ctx.user.id), isNull(cartItems.deletedAt)));
+
+      // Re-insert items from snapshot
+      const snapshot = recovery.snapshot;
+      if (snapshot.items && snapshot.items.length > 0) {
+        await db.insert(cartItems).values(
+          snapshot.items.map((item: any) => ({
+            userId: ctx.user.id,
+            productId: item.productId,
+            variantId: item.variantId ?? null,
+            quantity: item.quantity,
+            priceAtAdd: item.priceAtAdd ?? 0,
+          }))
+        );
+      }
+
+      // Cancel remaining recovery jobs now that cart is restored
+      cancelAbandonedCartRecovery(ctx.user.id).catch(() => {});
+
+      return { success: true, itemCount: snapshot.items?.length ?? 0 };
+    }),
 });

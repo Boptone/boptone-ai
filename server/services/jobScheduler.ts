@@ -261,14 +261,32 @@ async function handleOrderConfirmation(payload: any) {
 }
 
 /**
- * Handle abandoned cart email (24 hours after checkout started)
+ * Handle abandoned cart email — supports touch 1 (1h), 2 (24h), 3 (72h)
  */
 async function handleAbandonedCart(payload: any) {
+  // Check if cart has been recovered before sending
+  const db = await getDb();
+  if (db && payload.cartEventId) {
+    const { cartEvents } = await import('../../drizzle/schema');
+    const { eq } = await import('drizzle-orm');
+    const events = await db
+      .select({ eventType: cartEvents.eventType })
+      .from(cartEvents)
+      .where(eq(cartEvents.sessionId, payload.sessionId || ''))
+      .limit(10);
+    const recovered = events.some(e => e.eventType === 'checkout_completed');
+    if (recovered) {
+      console.log(`[AbandonedCart] Session ${payload.sessionId} already recovered — skipping touch ${payload.touchNumber ?? 1}`);
+      return;
+    }
+  }
+
   await sendAbandonedCartEmail({
     cartEventId: payload.cartEventId,
     customerEmail: payload.customerEmail,
     customerName: payload.customerName,
     userId: payload.userId,
+    touchNumber: payload.touchNumber ?? 1,
     items: payload.items.map((item: any) => ({
       ...item,
       artistName: item.artistName || 'Unknown Artist',

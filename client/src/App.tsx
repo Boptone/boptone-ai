@@ -31,6 +31,7 @@ const BopShopLanding = lazy(() => import("./pages/BopShopLanding"));
 const BopShopBrowse = lazy(() => import("./pages/BopShopBrowse"));
 const BopShopProduct = lazy(() => import("./pages/BopShopProduct"));
 const Cart = lazy(() => import("./pages/Cart"));
+const CartRecover = lazy(() => import("./pages/CartRecover"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const CheckoutSuccess = lazy(() => import("./pages/CheckoutSuccess"));
 const About = lazy(() => import("./pages/About"));
@@ -145,6 +146,7 @@ function Router() {
         <Route path="/shop/browse" component={BopShopBrowse} />
         <Route path="/shop/:slug" component={BopShopProduct} />
         <Route path="/cart" component={Cart} />
+        <Route path="/cart/recover/:token" component={CartRecover} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/checkout/success" component={CheckoutSuccess} />
           <Route path="/wishlist" component={Wishlist} />
