@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Link, useLocation } from "wouter";
-import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Zap } from "lucide-react";
+import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Zap, Sparkles } from "lucide-react";
 import { toastSuccess, toastError } from "@/lib/toast";
 
 /**
@@ -24,6 +24,13 @@ export default function Cart() {
   const { data: recommendations } = trpc.recommendations.getForEmptyCart.useQuery(
     { limit: 4 },
     { enabled: isAuthenticated && (!cartItems || cartItems.length === 0) }
+  );
+
+  // [COMMERCE-2] Cart-level collaborative filter — "Customers also bought"
+  const cartProductIds = cartItems?.map((i) => i.productId).filter((id): id is number => typeof id === 'number') ?? [];
+  const { data: cartRecs } = trpc.recommendations.getForCartItems.useQuery(
+    { productIds: cartProductIds, limit: 4 },
+    { enabled: cartProductIds.length > 0 }
   );
 
   // Update cart item
@@ -311,6 +318,21 @@ export default function Cart() {
                   Secure checkout powered by Stripe
                 </p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* [COMMERCE-2] Cart-level collaborative recommendations */}
+        {!isEmpty && cartRecs && cartRecs.products.length > 0 && (
+          <div className="mt-16 pb-12">
+            <div className="flex items-center gap-3 mb-8">
+              <Sparkles className="w-6 h-6 text-[#0cc0df]" />
+              <h2 className="text-3xl font-bold text-gray-900">Customers also bought</h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {cartRecs.products.map((rec: any) => (
+                <RecommendationCard key={rec.id} product={rec} />
+              ))}
             </div>
           </div>
         )}

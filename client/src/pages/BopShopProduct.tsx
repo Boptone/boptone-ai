@@ -4,7 +4,7 @@ import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
-import { ArrowLeft, ShoppingCart, Minus, Plus, Package, Ruler, Weight } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Minus, Plus, Package, Ruler, Weight, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { CurrencySelector } from "@/components/CurrencySelector";
 import { useCurrency } from "@/contexts/CurrencyContext";
@@ -300,6 +300,81 @@ export default function BopShopProduct() {
         <div className="mt-16">
           <ProductReviews productId={product.id} />
         </div>
+
+        {/* Collaborative Recommendations */}
+        <AlsoBoughtSection productId={product.id} />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * [COMMERCE-2] "Customers also bought" — collaborative filter
+ * Queries trpc.recommendations.getAlsoBought which runs a pure-SQL
+ * co-purchase frequency ranking on order_items.
+ */
+function AlsoBoughtSection({ productId }: { productId: number }) {
+  const [, setLocation] = useLocation();
+  const utils = trpc.useUtils();
+
+  const { data, isLoading } = trpc.recommendations.getAlsoBought.useQuery(
+    { productId, limit: 4 },
+    { enabled: !!productId }
+  );
+
+  const addToCart = trpc.cart.add.useMutation({
+    onSuccess: () => {
+      utils.cart.count.invalidate();
+      toast.success("Added to cart!");
+    },
+    onError: (err) => toast.error(err.message || "Failed to add to cart"),
+  });
+
+  if (isLoading || !data || data.products.length === 0) return null;
+
+  return (
+    <div className="mt-16 pb-12">
+      <div className="flex items-center gap-3 mb-8">
+        <Sparkles className="w-6 h-6 text-[#0cc0df]" />
+        <h2 className="text-3xl font-bold text-gray-900">Customers also bought</h2>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {data.products.map((rec: any) => (
+          <div
+            key={rec.id}
+            className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-[#0cc0df] hover:shadow-[4px_4px_0px_#81e6fe] transition-all cursor-pointer"
+            onClick={() => setLocation(`/shop/${rec.slug}`)}
+          >
+            <div className="aspect-square bg-gray-50 overflow-hidden">
+              {rec.primaryImageUrl ? (
+                <img
+                  src={rec.primaryImageUrl}
+                  alt={rec.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <Package className="w-12 h-12 text-gray-300" />
+                </div>
+              )}
+            </div>
+            <div className="p-3">
+              <p className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">{rec.name}</p>
+              <p className="text-[#0cc0df] font-bold text-sm mb-2">
+                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(rec.price / 100)}
+              </p>
+              <button
+                className="w-full text-xs font-semibold bg-black text-white rounded-lg py-1.5 hover:bg-gray-800 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart.mutate({ productId: rec.id, quantity: 1, priceAtAdd: rec.price });
+                }}
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

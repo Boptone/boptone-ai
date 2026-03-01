@@ -66,7 +66,10 @@ export default function CartRecover() {
           <Button
             className="w-full bg-[#0cc0df] hover:bg-[#0aa8c4] text-white font-semibold py-3 rounded-xl"
             onClick={() => {
-              window.location.href = getLoginUrl(`/cart/recover/${token}`);
+              // getLoginUrl() returns the OAuth login URL; append returnTo so the
+              // OAuth callback can redirect back to the recovery page after sign-in.
+              const returnPath = encodeURIComponent(`/cart/recover/${token}`);
+              window.location.href = `${getLoginUrl()}?returnTo=${returnPath}`;
             }}
           >
             Sign In to Continue

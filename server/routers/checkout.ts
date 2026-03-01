@@ -93,26 +93,11 @@ export const checkoutRouter = router({
       allow_promotion_codes: true,
     });
 
-    // Schedule 3-touch abandoned cart recovery (fire-and-forget)
-    // Runs after Stripe session creation so it never blocks checkout
+    // Schedule 3-touch abandoned cart recovery (fire-and-forget).
+    // scheduleAbandonedCartRecovery builds the cart snapshot internally from the DB.
     scheduleAbandonedCartRecovery({
       userId: ctx.user.id,
       sessionId: session.id,
-      cartSnapshot: {
-        items: items.map(item => ({
-          productId: item.productId,
-          variantId: item.variantId ?? undefined,
-          name: item.variant ? `${item.product!.name} - ${item.variant.name}` : item.product!.name,
-          imageUrl: item.product?.images?.[0]?.url ?? undefined,
-          price: item.variant?.price ?? item.product!.price,
-          quantity: item.quantity,
-        })),
-        subtotal: items.reduce((sum, item) => {
-          const price = item.variant?.price ?? item.product!.price;
-          return sum + price * item.quantity;
-        }, 0),
-        currency: 'usd',
-      },
       userAgent: ctx.req.headers['user-agent'] ?? undefined,
       ipAddress: (ctx.req.headers['x-forwarded-for'] as string)?.split(',')[0] ?? ctx.req.socket.remoteAddress ?? undefined,
     }).catch(err => console.error('[Checkout] Failed to schedule abandoned cart recovery:', err));

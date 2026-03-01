@@ -29,7 +29,7 @@ import { ENV } from "../_core/env";
 // Recovery token helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
-const RECOVERY_SECRET = ENV.jwtSecret || "boptone-cart-recovery-secret";
+const RECOVERY_SECRET = ENV.cookieSecret || "boptone-cart-recovery-secret";
 
 /**
  * Generate a signed recovery token for a given userId + cartEventId.

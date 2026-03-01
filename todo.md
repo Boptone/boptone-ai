@@ -5310,12 +5310,13 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ### CRITICAL — Week 1 (Non-Negotiables)
 
 - [x] **[INFRA-1] Cron runner / background job scheduler** — Wire `node-cron` or `BullMQ` into `server/index.ts` to execute `scheduled_jobs`, `workflow_executions`, and `workflow_triggers` tables. Unlocks the entire PRO tier workflow automation value proposition. (31/50 auditors)
-- [x] **[COMMERCE-1] Abandoned cart recovery service** — Build `server/routers/cartRecovery.ts` with 3-touch email sequence (1hr, 24hr, 72hr) using `cart_items` + `scheduled_jobs` tables. (28/50 auditors)
+- [x] **[COMMERCE-1] Abandoned cart recovery service** — 3-touch email sequence (1hr, 24hr, 72hr), HMAC recovery tokens, cart.recover tRPC procedure, /cart/recover/:token page. (28/50 auditors)
+- [x] **[COMMERCE-2] BopShop recommendation engine** — SQL collaborative filter on order_items ("users who bought X also bought Y"). Surfaces on product page and cart page. (24/50 auditors)
 - [ ] **[MARKETING-1] Surface healthcare plans feature on landing page** — Move `healthcare_plans` feature into the hero section or above-the-fold on Landing.tsx. No other creator platform offers this. It is the single most defensible retention moat in the codebase. (10/50 auditors, Lulu Cheng Meservey)
 
 ### HIGH — Week 2
 
-- [ ] **[COMMERCE-2] BopShop recommendation engine** — SQL-based collaborative filter on `order_items` ("users who bought X also bought Y"). No ML required. Increases average order value immediately. (24/50 auditors)
+- [x] **[COMMERCE-2] BopShop recommendation engine** — SQL-based collaborative filter on `order_items` ("users who bought X also bought Y"). No ML required. Increases average order value immediately. (24/50 auditors)
 - [ ] **[GROWTH-1] A/B testing infrastructure** — Add `experiments` table to schema and `experimentAssignment` function to tRPC context. Enables systematic testing of checkout flow, upgrade gate, tip prompt. (17/50 auditors, Peep Laja)
 - [ ] **[GROWTH-2] Superfan identification dashboard** — Build `/superfans` page surfacing `flywheel_super_fans` data to artists with one-tap "send personal thank you" action. Creates viral artist acquisition loop. (14/50 auditors, Andrew Chen)
 - [ ] **[INFRA-2] Separate read/write paths for high-frequency event tables** — Configure TiDB read replica for `pixel_events`, `bops_views`, `streaming_metrics`, `bops_likes`. Never share connection pool with financial tables. (Patrick Collison, Guillermo Rauch)
