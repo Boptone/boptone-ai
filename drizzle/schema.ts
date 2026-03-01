@@ -1136,6 +1136,68 @@ export const bapTracks = mysqlTable("bap_tracks", {
 export type BapTrack = typeof bapTracks.$inferSelect;
 export type InsertBapTrack = typeof bapTracks.$inferInsert;
 
+// ============================================================================
+// DISTRO-A3: AUDIO TRANSCODE JOBS
+// ============================================================================
+
+/**
+ * Transcode Jobs — tracks DSP-specific format variants generated from lossless masters.
+ * One row per (trackId, format) pair. Created on upload, updated by the background worker.
+ *
+ * Formats:
+ *   aac_256      — AAC 256 kbps (Apple Music, iTunes)
+ *   ogg_vorbis   — Ogg Vorbis 320 kbps (Spotify)
+ *   flac_16      — FLAC 16-bit / 44.1 kHz (Tidal, Amazon HD)
+ *   mp3_320      — MP3 320 kbps (fallback / universal)
+ *   wav_24_96    — WAV 24-bit / 96 kHz (Boptone native premium)
+ */
+export const transcodeJobs = mysqlTable("transcode_jobs", {
+  id: int("id").autoincrement().primaryKey(),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+
+  // Which DSP format this job produces
+  format: mysqlEnum("format", [
+    "aac_256",
+    "ogg_vorbis",
+    "flac_16",
+    "mp3_320",
+    "wav_24_96",
+  ]).notNull(),
+
+  // Job lifecycle
+  status: mysqlEnum("status", [
+    "queued",
+    "processing",
+    "done",
+    "error",
+    "skipped",   // Source file already in this format / lossless-only
+  ]).default("queued").notNull(),
+
+  // Output location (populated on success)
+  s3Key: varchar("s3Key", { length: 512 }),
+  s3Url: text("s3Url"),
+  fileSizeBytes: int("fileSizeBytes"),
+
+  // Retry / error tracking
+  attempts: int("attempts").default(0).notNull(),
+  maxAttempts: int("maxAttempts").default(3).notNull(),
+  errorMessage: text("errorMessage"),
+
+  // Timing
+  startedAt: timestamp("startedAt"),
+  completedAt: timestamp("completedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  trackIdIdx: index("transcode_track_id_idx").on(table.trackId),
+  statusIdx: index("transcode_status_idx").on(table.status),
+  formatIdx: index("transcode_format_idx").on(table.format),
+  trackFormatIdx: index("transcode_track_format_idx").on(table.trackId, table.format),
+}));
+
+export type TranscodeJob = typeof transcodeJobs.$inferSelect;
+export type InsertTranscodeJob = typeof transcodeJobs.$inferInsert;
+
 /**
  * BAP Albums - Collections of tracks
  */

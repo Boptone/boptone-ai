@@ -5585,3 +5585,23 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] TypeScript: 0 errors
 - [x] Total tests: 1099 passing (26 new)
 - [x] Save checkpoint
+
+### DISTRO-A3 — Audio Transcoding Pipeline (COMPLETE — Mar 1, 2026)
+
+**Goal:** Server-side FFmpeg transcoder that generates DSP-specific format variants from lossless masters on upload. Variants stored in S3, tracked in DB, status surfaced in UI.
+
+- [x] Install ffmpeg and fluent-ffmpeg + types in sandbox and as npm dep
+- [x] Extend schema: `transcodeJobs` table (trackId, format, status, s3Key, s3Url, errorMessage, startedAt, completedAt)
+- [x] Push schema migration (direct SQL — transcode_jobs table created)
+- [x] Build `server/lib/audioTranscoder.ts` — FFmpeg wrapper producing: AAC 256kbps (Apple), Ogg Vorbis 320kbps (Spotify), FLAC 16-bit (Tidal), MP3 320kbps (fallback), WAV 24-bit/96kHz (Boptone native)
+- [x] Build `server/lib/transcodeQueue.ts` — in-process job queue with concurrency limit (2 parallel jobs), retry logic (3 attempts), 15s poll interval
+- [x] Add `server/db/transcodeJobs.ts` — DB helpers (createJob, updateJobStatus, getJobsByTrack, getPendingJobs)
+- [x] Wire transcode trigger into `server/routers/bap.ts` uploadTrack — enqueue all 5 format jobs after successful S3 upload
+- [x] Add `bap.tracks.transcodeStatus` tRPC query — returns all transcode jobs for a given trackId with summary
+- [x] Build `client/src/components/TranscodeStatus.tsx` — per-format progress badges (queued/processing/done/error/skipped) with animated spinner, file size, download links, auto-poll
+- [x] Wire TranscodeStatus into MyMusic.tsx track detail sheet
+- [x] Wire startTranscodeWorker into server/_core/index.ts boot sequence
+- [x] Write vitest tests — 20 tests covering format configs, codec/ext/option correctness, worker lifecycle, cleanup safety
+- [x] TypeScript: 0 errors
+- [x] Total tests: 1119 passing (20 new)
+- [x] Save checkpoint

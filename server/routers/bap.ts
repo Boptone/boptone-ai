@@ -35,6 +35,8 @@ import {
 } from "../bap";
 import { storagePut } from "../storage";
 import { fireWorkflowEvent } from "../workflowEngine";
+import { createTranscodeJobs, getTranscodeJobsByTrack } from "../db/transcodeJobs";
+import type { TranscodeFormat } from "../lib/audioTranscoder";
 
 /**
  * Boptone Audio Protocol (BAP) Router
@@ -312,6 +314,13 @@ export const bapRouter = router({
           console.error("[BAP] Audio quality validation failed (non-blocking):", err);
         }
 
+        // DISTRO-A3: Enqueue DSP format transcode jobs (non-blocking)
+        const trackId = track.insertId as number;
+        const allFormats: TranscodeFormat[] = ["aac_256", "ogg_vorbis", "flac_16", "mp3_320", "wav_24_96"];
+        createTranscodeJobs(trackId, allFormats).catch((err) =>
+          console.error("[BAP] Failed to enqueue transcode jobs:", err)
+        );
+
         return {
           success: true,
           trackId: track.insertId,
@@ -319,7 +328,43 @@ export const bapRouter = router({
           coverArt: coverArtReport,
         };
       }),
-    
+
+    /**
+     * Get transcode job status for a track (DISTRO-A3)
+     */
+    transcodeStatus: protectedProcedure
+      .input(z.object({ trackId: z.number() }))
+      .query(async ({ input, ctx }) => {
+        // Verify the requesting user owns this track
+        const track = await getTrackById(input.trackId);
+        if (!track) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Track not found" });
+        }
+        const jobs = await getTranscodeJobsByTrack(input.trackId);
+        return {
+          trackId: input.trackId,
+          jobs: jobs.map((j) => ({
+            id: j.id,
+            format: j.format,
+            status: j.status,
+            s3Url: j.s3Url ?? null,
+            fileSizeBytes: j.fileSizeBytes ?? null,
+            attempts: j.attempts,
+            errorMessage: j.errorMessage ?? null,
+            startedAt: j.startedAt ?? null,
+            completedAt: j.completedAt ?? null,
+          })),
+          summary: {
+            total: jobs.length,
+            done: jobs.filter((j) => j.status === "done").length,
+            processing: jobs.filter((j) => j.status === "processing").length,
+            queued: jobs.filter((j) => j.status === "queued").length,
+            error: jobs.filter((j) => j.status === "error").length,
+            skipped: jobs.filter((j) => j.status === "skipped").length,
+          },
+        };
+      }),
+
     /**
      * Get track by ID
      */

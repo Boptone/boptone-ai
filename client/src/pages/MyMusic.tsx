@@ -62,6 +62,7 @@ import {
 } from "@/components/ui/sheet";
 import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
 import { CreditsDisplay } from "@/components/Upload/CreditsSection";
+import { TranscodeStatus } from "@/components/TranscodeStatus";
 
 /**
  * WORLD-CLASS MUSIC UPLOAD & MANAGEMENT SYSTEM
@@ -921,6 +922,11 @@ export default function MyMusic() {
                     <CreditsDisplay credits={detailTrack.credits as any} />
                   </div>
                 )}
+
+                {/* DSP Format Variants (DISTRO-A3) */}
+                <div className="mt-4 mb-4 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4">
+                  <TranscodeStatus trackId={detailTrack.id} autoRefresh={true} />
+                </div>
 
                 {/* Track metadata summary */}
                 <div className="space-y-2 text-sm">
