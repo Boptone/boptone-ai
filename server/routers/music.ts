@@ -11,10 +11,10 @@ import { eq, and, desc, asc, like, or, sql } from "drizzle-orm";
 import { storagePut } from "../storage";
 import { 
   extractAudioMetadata, 
-  validateAudioFile, 
   generateTrackFileKey,
   generateArtworkFileKey 
 } from "../audioMetadata";
+import { validateAudioForDistribution, validateAudioFile, validateCoverArt } from "../lib/audioValidator";
 import { TRPCError } from "@trpc/server";
 
 export const musicRouter = router({
@@ -78,10 +78,19 @@ export const musicRouter = router({
         // Decode audio file from base64
         const audioBuffer = Buffer.from(input.audioFileBase64, 'base64');
         
-        // Validate audio file
-        const validation = validateAudioFile(audioBuffer, input.audioFileName);
-        if (!validation.isValid) {
-          throw new TRPCError({ code: "BAD_REQUEST", message: validation.error });
+        // Enterprise audio validation — DSP distribution quality gate (DISTRO-A1)
+        const audioValidation = await validateAudioForDistribution(
+          audioBuffer,
+          input.audioFileName,
+          { skipLoudness: false }
+        );
+        
+        // Block upload on hard errors (corrupt file, wrong format, clipping, etc.)
+        if (!audioValidation.isUploadable) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: audioValidation.errors[0]?.message ?? "Audio file failed quality validation.",
+          });
         }
         
         // Extract audio metadata
@@ -95,15 +104,25 @@ export const musicRouter = router({
           `audio/${metadata.format}`
         );
         
-        // Upload artwork if provided
+        // Upload artwork if provided — validate cover art first (DISTRO-A1)
         let artworkUrl: string | undefined;
         if (input.artworkFileBase64 && input.artworkFileName) {
           const artworkBuffer = Buffer.from(input.artworkFileBase64, 'base64');
+          
+          const artValidation = validateCoverArt(artworkBuffer, input.artworkFileName);
+          if (!artValidation.isValid) {
+            throw new TRPCError({
+              code: "BAD_REQUEST",
+              message: `Cover art rejected: ${artValidation.errors[0]}`,
+            });
+          }
+          
           const artworkFileKey = generateArtworkFileKey(profile.id, input.artworkFileName);
+          const mimeType = input.artworkFileName.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
           const artworkUploadResult = await storagePut(
             artworkFileKey,
             artworkBuffer,
-            'image/jpeg' // Assume JPEG, could be enhanced to detect actual type
+            mimeType
           );
           artworkUrl = artworkUploadResult.url;
         }
@@ -146,6 +165,27 @@ export const musicRouter = router({
           success: true,
           trackId: track.insertId,
           message: "Track uploaded successfully",
+          // Quality report returned to client for display in upload UI
+          audioQuality: {
+            qualityTier: audioValidation.qualityTier,
+            isDistributionReady: audioValidation.isDistributionReady,
+            summary: audioValidation.summary,
+            warnings: audioValidation.warnings.map(w => w.message),
+            recommendations: audioValidation.recommendations,
+            loudness: audioValidation.loudnessReport ? {
+              integratedLufs: audioValidation.loudnessReport.integratedLufs,
+              truePeakDbtp: audioValidation.loudnessReport.truePeakDbtp,
+              isClipping: audioValidation.loudnessReport.isClipping,
+            } : null,
+            technicalProfile: audioValidation.technicalProfile ? {
+              format: audioValidation.technicalProfile.format,
+              sampleRateHz: audioValidation.technicalProfile.sampleRateHz,
+              bitDepth: audioValidation.technicalProfile.bitDepth,
+              channels: audioValidation.technicalProfile.channels,
+              durationSeconds: audioValidation.technicalProfile.durationSeconds,
+              isLossless: audioValidation.technicalProfile.isLossless,
+            } : null,
+          },
         };
       } catch (error) {
         console.error('[Music] Upload failed:', error);

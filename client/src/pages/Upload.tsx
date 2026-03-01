@@ -15,6 +15,7 @@ import { useLocation } from "wouter";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RevenueCalculator } from "@/components/RevenueCalculator";
+import { AudioQualityReport, type AudioQualityReportData } from "@/components/AudioQualityReport";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -90,17 +91,26 @@ export default function Upload() {
   });
 
   const [showValidation, setShowValidation] = useState(false);
+  const [qualityReport, setQualityReport] = useState<AudioQualityReportData | null>(null);
 
   const markActivationStep = trpc.activation.markStepComplete.useMutation();
 
   const uploadTrackMutation = trpc.bap.tracks.upload.useMutation({
-    onSuccess: () => {
-      toast.success("Track published to BAP!", {
-        description: "Your music is now live and available to fans worldwide."
-      });
+    onSuccess: (data: any) => {
+      // Store quality report for display before navigating away
+      if (data?.audioQuality) {
+        setQualityReport(data.audioQuality as AudioQualityReportData);
+      }
+      const tierMsg = data?.audioQuality?.qualityTier === 'distribution_ready'
+        ? 'Your track meets all DSP distribution requirements.'
+        : data?.audioQuality?.qualityTier === 'boptone_only'
+        ? 'Uploaded to Boptone. Review the quality report to prepare for DSP distribution.'
+        : 'Track uploaded successfully.';
+      toast.success("Track published to BAP!", { description: tierMsg });
       // Fire activation step: first track uploaded
       markActivationStep.mutate({ stepKey: "upload_first_track" });
-      setLocation("/music");
+      // Delay navigation so artist can see quality report
+      setTimeout(() => setLocation("/music"), 4000);
     },
     onError: (error: any) => {
       toast.error("Upload failed", {
@@ -947,6 +957,14 @@ export default function Upload() {
                 )}
               </CardContent>
             </Card>
+
+            {/* Audio Quality Report — shown after successful upload */}
+            {qualityReport && (
+              <AudioQualityReport
+                report={qualityReport}
+                className="border-black"
+              />
+            )}
 
             {/* Publish Button */}
             <Card className="border border-black">
