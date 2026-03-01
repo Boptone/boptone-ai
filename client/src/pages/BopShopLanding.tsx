@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
-import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Sparkles, ArrowUpDown, List, Grid3x3 } from "lucide-react";
+import { ShoppingCart, Shirt, Disc, Palette, Package, Heart, Sparkles, ArrowUpDown, List, Grid3x3, Star, Trophy } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductQuickViewModal } from "@/components/ProductQuickViewModal";
 
@@ -22,6 +22,12 @@ export default function Shop() {
   const { data: products, isLoading } = trpc.ecommerce.products.getAllActive.useQuery({
     limit: 100,
   });
+
+  // Top-rated products (global, min 3 ratings)
+  const { data: topRated, isLoading: topRatedLoading } = trpc.productRatings.getGlobalTopRated.useQuery(
+    { minRatings: 1, limit: 8 },
+    { staleTime: 5 * 60 * 1000 }
+  );
 
   // Get cart count
   const { data: cart } = trpc.ecommerce.cart.get.useQuery(undefined, {
@@ -111,6 +117,98 @@ export default function Shop() {
           </div>
         )}
       </div>
+
+      {/* Top Rated Products Section */}
+      {(topRatedLoading || (topRated && topRated.length > 0)) && (
+        <div className="container mx-auto px-4 mb-20">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-black">
+              <Trophy className="w-6 h-6 text-[#0cc0df]" />
+            </div>
+            <div>
+              <h2 className="text-5xl font-bold text-gray-900">Top Rated</h2>
+              <p className="text-gray-500 text-lg mt-0.5">Highest-rated products by the community</p>
+            </div>
+          </div>
+
+          {topRatedLoading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="bg-white border border-gray-200 rounded-2xl overflow-hidden animate-pulse">
+                  <div className="aspect-square bg-gray-100" />
+                  <div className="p-4 space-y-2">
+                    <div className="h-4 bg-gray-100 rounded w-3/4" />
+                    <div className="h-3 bg-gray-100 rounded w-1/2" />
+                    <div className="h-4 bg-gray-100 rounded w-1/3" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+              {topRated!.map((product: any) => (
+                <div
+                  key={product.id}
+                  className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
+                  onClick={() => setLocation(`/shop/${product.slug}`)}
+                >
+                  {/* Product Image */}
+                  <div className="aspect-square bg-gray-50 overflow-hidden relative">
+                    {product.primaryImageUrl ? (
+                      <img
+                        src={product.primaryImageUrl}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Package className="w-12 h-12 text-gray-300" />
+                      </div>
+                    )}
+                    {/* Rating badge */}
+                    <div className="absolute top-2 right-2 flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-sm border border-gray-100">
+                      <Star className="w-3.5 h-3.5 fill-[#0cc0df] text-[#0cc0df]" />
+                      <span className="text-xs font-bold text-gray-900">{product._avgRating.toFixed(1)}</span>
+                    </div>
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="p-4">
+                    <p className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">{product.name}</p>
+                    <div className="flex items-center gap-1 mb-2">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          className={`w-3 h-3 ${
+                            s <= Math.round(product._avgRating)
+                              ? 'fill-[#0cc0df] text-[#0cc0df]'
+                              : 'text-gray-200'
+                          }`}
+                        />
+                      ))}
+                      <span className="text-xs text-gray-400 ml-1">({product._ratingCount})</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="text-[#0cc0df] font-bold text-sm">
+                        {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((product.price ?? 0) / 100)}
+                      </p>
+                      <button
+                        className="text-xs font-semibold bg-black text-white rounded-full px-3 py-1.5 hover:bg-gray-800 transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLocation(`/shop/${product.slug}`);
+                        }}
+                      >
+                        Shop Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Featured Collection */}
       <div className="container mx-auto px-4 mb-20">

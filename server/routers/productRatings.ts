@@ -184,7 +184,46 @@ export const productRatingsRouter = router({
     }),
 
   /**
-   * Get top-rated products for a given artist.
+   * Global top-rated products across all artists.
+   * Used by the BopShop landing page "Top Rated" section.
+   * Only surfaces products with at least `minRatings` ratings to avoid
+   * single-rating outliers dominating the list.
+   */
+  getGlobalTopRated: publicProcedure
+    .input(
+      z.object({
+        minRatings: z.number().int().min(1).default(3),
+        limit: z.number().int().min(1).max(20).default(8),
+      })
+    )
+    .query(async ({ input }) => {
+      const db = await getDb();
+      if (!db) return [];
+
+      const rows = await db
+        .select({
+          productId: productRatings.productId,
+          avgRating: avg(productRatings.rating),
+          ratingCount: count(productRatings.id),
+          product: products,
+        })
+        .from(productRatings)
+        .innerJoin(products, eq(productRatings.productId, products.id))
+        .where(eq(products.status, "active"))
+        .groupBy(productRatings.productId)
+        .having(sql`count(${productRatings.id}) >= ${input.minRatings}`)
+        .orderBy(desc(avg(productRatings.rating)), desc(count(productRatings.id)))
+        .limit(input.limit);
+
+      return rows.map((r) => ({
+        ...r.product,
+        _avgRating: Number(Number(r.avgRating).toFixed(1)),
+        _ratingCount: Number(r.ratingCount),
+      }));
+    }),
+
+  /**
+   * Top-rated products for a specific artist.
    * Used by the recommendation engine as a quality signal.
    */
   getTopRatedForArtist: publicProcedure

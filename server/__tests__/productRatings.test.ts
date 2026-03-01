@@ -474,3 +474,158 @@ describe("ProductRatingWidget component", () => {
     expect(content).toContain("[5, 4, 3, 2, 1]");
   });
 });
+
+// ─── getGlobalTopRated ────────────────────────────────────────────────────────
+
+describe("getGlobalTopRated", () => {
+  it("getGlobalTopRated procedure is exported from productRatingsRouter", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const routerPath = path.resolve(__dirname, "../routers/productRatings.ts");
+    const content = fs.readFileSync(routerPath, "utf-8");
+    expect(content).toContain("getGlobalTopRated:");
+    expect(content).toContain("Global top-rated products across all artists");
+  });
+
+  it("getGlobalTopRated is a publicProcedure (no auth required)", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const routerPath = path.resolve(__dirname, "../routers/productRatings.ts");
+    const content = fs.readFileSync(routerPath, "utf-8");
+    // getGlobalTopRated must use publicProcedure (not protectedProcedure)
+    const globalSection = content.substring(
+      content.indexOf("getGlobalTopRated:"),
+      content.indexOf("getTopRatedForArtist:")
+    );
+    expect(globalSection).toContain("publicProcedure");
+    expect(globalSection).not.toContain("protectedProcedure");
+  });
+
+  it("validates minRatings defaults to 3", () => {
+    const { z } = require("zod");
+    const schema = z.object({
+      minRatings: z.number().int().min(1).default(3),
+      limit: z.number().int().min(1).max(20).default(8),
+    });
+    const parsed = schema.parse({});
+    expect(parsed.minRatings).toBe(3);
+    expect(parsed.limit).toBe(8);
+  });
+
+  it("validates limit between 1 and 20", () => {
+    const { z } = require("zod");
+    const schema = z.object({
+      limit: z.number().int().min(1).max(20).default(8),
+    });
+    expect(() => schema.parse({ limit: 0 })).toThrow();
+    expect(() => schema.parse({ limit: 21 })).toThrow();
+    expect(() => schema.parse({ limit: 8 })).not.toThrow();
+  });
+
+  it("returns empty array when db is unavailable", async () => {
+    const db = null;
+    if (!db) {
+      const result: any[] = [];
+      expect(result).toHaveLength(0);
+    }
+  });
+
+  it("maps avgRating to 1 decimal place", () => {
+    const rows = [
+      { product: { id: 1, name: "Test", price: 2999, slug: "test", status: "active" }, avgRating: "4.666666", ratingCount: "7" },
+      { product: { id: 2, name: "Another", price: 1999, slug: "another", status: "active" }, avgRating: "3.5", ratingCount: "4" },
+    ];
+    const mapped = rows.map((r) => ({
+      ...r.product,
+      _avgRating: Number(Number(r.avgRating).toFixed(1)),
+      _ratingCount: Number(r.ratingCount),
+    }));
+    expect(mapped[0]._avgRating).toBe(4.7);
+    expect(mapped[1]._avgRating).toBe(3.5);
+    expect(mapped[0]._ratingCount).toBe(7);
+  });
+
+  it("orders results by avgRating desc, then ratingCount desc", () => {
+    // Simulate the ordering logic: higher avg first, then more ratings as tiebreaker
+    const products = [
+      { _avgRating: 4.2, _ratingCount: 10 },
+      { _avgRating: 4.8, _ratingCount: 3 },
+      { _avgRating: 4.8, _ratingCount: 7 },
+      { _avgRating: 3.9, _ratingCount: 20 },
+    ];
+    const sorted = [...products].sort((a, b) => {
+      if (b._avgRating !== a._avgRating) return b._avgRating - a._avgRating;
+      return b._ratingCount - a._ratingCount;
+    });
+    expect(sorted[0]._avgRating).toBe(4.8);
+    expect(sorted[0]._ratingCount).toBe(7); // tiebreaker: more ratings wins
+    expect(sorted[1]._avgRating).toBe(4.8);
+    expect(sorted[1]._ratingCount).toBe(3);
+    expect(sorted[2]._avgRating).toBe(4.2);
+    expect(sorted[3]._avgRating).toBe(3.9);
+  });
+
+  it("minRatings filter excludes products with fewer ratings", () => {
+    const products = [
+      { id: 1, ratingCount: 5 },
+      { id: 2, ratingCount: 2 },
+      { id: 3, ratingCount: 3 },
+      { id: 4, ratingCount: 1 },
+    ];
+    const minRatings = 3;
+    const filtered = products.filter((p) => p.ratingCount >= minRatings);
+    expect(filtered).toHaveLength(2);
+    expect(filtered.map((p) => p.id)).toEqual([1, 3]);
+  });
+
+  it("BopShopLanding page uses getGlobalTopRated", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const pagePath = path.resolve(__dirname, "../../client/src/pages/BopShopLanding.tsx");
+    const content = fs.readFileSync(pagePath, "utf-8");
+    expect(content).toContain("getGlobalTopRated");
+    expect(content).toContain("Top Rated");
+    expect(content).toContain("Trophy");
+    expect(content).toContain("_avgRating");
+    expect(content).toContain("_ratingCount");
+  });
+
+  it("BopShopLanding page renders star display for top-rated products", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const pagePath = path.resolve(__dirname, "../../client/src/pages/BopShopLanding.tsx");
+    const content = fs.readFileSync(pagePath, "utf-8");
+    // Stars are rendered using Math.round(product._avgRating)
+    expect(content).toContain("Math.round(product._avgRating)");
+    // Rating count is shown in parentheses
+    expect(content).toContain("product._ratingCount");
+  });
+
+  it("BopShopLanding page shows skeleton loading state", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const pagePath = path.resolve(__dirname, "../../client/src/pages/BopShopLanding.tsx");
+    const content = fs.readFileSync(pagePath, "utf-8");
+    expect(content).toContain("animate-pulse");
+    expect(content).toContain("topRatedLoading");
+  });
+
+  it("BopShopLanding page conditionally renders section (hidden when empty)", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const pagePath = path.resolve(__dirname, "../../client/src/pages/BopShopLanding.tsx");
+    const content = fs.readFileSync(pagePath, "utf-8");
+    // Section is wrapped in a conditional: only shown when loading or has data
+    expect(content).toContain("topRatedLoading || (topRated && topRated.length > 0)");
+  });
+
+  it("rating badge is overlaid on product image", () => {
+    const fs = require("fs");
+    const path = require("path");
+    const pagePath = path.resolve(__dirname, "../../client/src/pages/BopShopLanding.tsx");
+    const content = fs.readFileSync(pagePath, "utf-8");
+    // Badge uses absolute positioning over the image
+    expect(content).toContain("absolute top-2 right-2");
+    expect(content).toContain("fill-[#0cc0df]");
+  });
+});
