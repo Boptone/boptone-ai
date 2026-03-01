@@ -15,6 +15,7 @@ import { startJobScheduler } from "../services/jobScheduler";
 import { startVideoProcessorWorker } from "../workers/videoProcessor";
 import { startAutoPayoutScheduler } from "../workers/autoPayoutScheduler";
 import { startAccountDeletionWorker } from "../workers/accountDeletionWorker";
+import { startWorkflowCronRunner } from "../services/workflowCronRunner";
 import { ENV } from "./env";
 import { COOKIE_NAME } from "@shared/const";
 
@@ -400,6 +401,10 @@ ${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}${url.changefreq 
     } catch (err) {
       console.warn("[AccountDeletion] Worker failed to start (Redis may not be available):", err instanceof Error ? err.message : err);
     }
+    // Start the workflow schedule cron runner (PRO tier — executes schedule-triggered automations)
+    startWorkflowCronRunner().catch((err) => {
+      console.warn("[WorkflowCron] Runner failed to start:", err instanceof Error ? err.message : err);
+    });
   });
 }
 

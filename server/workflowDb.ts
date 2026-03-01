@@ -1,4 +1,4 @@
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 import { getDb } from "./db";
 import {
   workflows,
@@ -252,4 +252,50 @@ export async function deleteWorkflowTrigger(id: number) {
   if (!db) throw new Error("Database not available");
   
   await db.delete(workflowTriggers).where(eq(workflowTriggers.id, id));
+}
+
+/**
+ * Fetch all active schedule triggers across all active workflows.
+ * Used by the cron runner to register schedules at startup and on refresh.
+ */
+export async function getActiveScheduleTriggers() {
+  const db = await getDb();
+  if (!db) return [];
+
+  const rows = await db
+    .select({
+      triggerId: workflowTriggers.id,
+      workflowId: workflowTriggers.workflowId,
+      config: workflowTriggers.config,
+      workflowStatus: workflows.status,
+      artistId: workflows.artistId,
+    })
+    .from(workflowTriggers)
+    .innerJoin(workflows, eq(workflowTriggers.workflowId, workflows.id))
+    .where(
+      and(
+        eq(workflowTriggers.type, "schedule"),
+        eq(workflowTriggers.isActive, true),
+        eq(workflows.status, "active")
+      )
+    );
+
+  return rows;
+}
+
+/**
+ * Increment triggerCount and update lastTriggeredAt for a trigger row.
+ * Called by the cron runner after each successful fire.
+ */
+export async function recordTriggerFired(triggerId: number) {
+  const db = await getDb();
+  if (!db) return;
+
+  await db
+    .update(workflowTriggers)
+    .set({
+      triggerCount: sql`${workflowTriggers.triggerCount} + 1`,
+      lastTriggeredAt: new Date(),
+    })
+    .where(eq(workflowTriggers.id, triggerId));
 }

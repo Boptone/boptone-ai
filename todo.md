@@ -5309,7 +5309,7 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 
 ### CRITICAL — Week 1 (Non-Negotiables)
 
-- [ ] **[INFRA-1] Cron runner / background job scheduler** — Wire `node-cron` or `BullMQ` into `server/index.ts` to execute `scheduled_jobs`, `workflow_executions`, and `workflow_triggers` tables. Unlocks the entire PRO tier workflow automation value proposition. (31/50 auditors)
+- [x] **[INFRA-1] Cron runner / background job scheduler** — Wire `node-cron` or `BullMQ` into `server/index.ts` to execute `scheduled_jobs`, `workflow_executions`, and `workflow_triggers` tables. Unlocks the entire PRO tier workflow automation value proposition. (31/50 auditors)
 - [ ] **[COMMERCE-1] Abandoned cart recovery service** — Build `server/routers/cartRecovery.ts` with 3-touch email sequence (1hr, 24hr, 72hr) using `cart_items` + `scheduled_jobs` tables. (28/50 auditors)
 - [ ] **[MARKETING-1] Surface healthcare plans feature on landing page** — Move `healthcare_plans` feature into the hero section or above-the-fold on Landing.tsx. No other creator platform offers this. It is the single most defensible retention moat in the codebase. (10/50 auditors, Lulu Cheng Meservey)
 
