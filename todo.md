@@ -1,5 +1,5 @@
 # Boptone TODO
-**Last Updated:** February 21, 2026
+**Last Updated:** March 1, 2026
 **Status:** 70% Complete - Production Ready
 
 ---
@@ -5239,27 +5239,26 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Persist conversation turns after each exchange in toney.ts
 - [x] Write 20 vitest tests for buildKnowThisArtistBlock (all passing)
 - [ ] Update toney-ai-spec skill with v1.1 implementation status
-- [ ] Build artist profile onboarding UI (let artists fill in goals, genre, preferences)
+- [x] Build artist profile onboarding UI (let artists fill in goals, genre, preferences) — completed via /onboarding wizard
 
 ## Toney Onboarding UI
-
-- [ ] Add getOnboardingStatus and saveOnboardingProfile tRPC procedures to toney router
-- [ ] Build ToneyOnboarding multi-step modal component (5 steps: genre, career stage, goals, communication style, preferences)
-- [ ] Wire onboarding trigger into DashboardLayout (auto-show on first login, skippable)
-- [ ] Write vitest tests for onboarding procedures
+- [x] Add getOnboardingStatus and saveOnboardingProfile tRPC procedures to toney router
+- [x] Build ToneyOnboarding multi-step modal component (5 steps: genre, career stage, goals, communication style, preferences)
+- [x] Wire onboarding trigger into DashboardLayout (auto-show on first login, skippable)
+- [x] Write vitest tests for onboarding procedures
 
 ## Stripe PRO Tier Upgrade (Checkout Integration)
-- [ ] Update server/stripe.ts with real Stripe price IDs (PRO monthly + annual)
-- [ ] Enhance createCheckoutSession with customer lookup/create, tier metadata, and billing_cycle
-- [ ] Upgrade webhook handler: set tier=pro + upsert subscription on checkout.session.completed
-- [ ] Upgrade webhook handler: downgrade tier=free on customer.subscription.deleted
-- [ ] Add createProCheckout tRPC mutation to stripe router (monthly/annual toggle)
-- [ ] Add getSubscriptionStatus tRPC query (tier, status, periodEnd, cancelAtPeriodEnd)
+- [x] Update server/stripe.ts with real Stripe price IDs (PRO monthly + annual)
+- [x] Enhance createCheckoutSession with customer lookup/create, tier metadata, and billing_cycle
+- [x] Upgrade webhook handler: set tier=pro + upsert subscription on checkout.session.completed
+- [x] Upgrade webhook handler: downgrade tier=free on customer.subscription.deleted
+- [x] Add createProCheckout tRPC mutation to stripe router (monthly/annual toggle)
+- [x] Add getSubscriptionStatus tRPC query (tier, status, periodEnd, cancelAtPeriodEnd)
 - [x] Build /upgrade page with billing toggle, feature list, and Stripe redirect
 - [x] Build /upgrade/success page confirming PRO activation
-- [ ] Update WorkflowUpgradeGate CTA to call createProCheckout directly
+- [x] Update WorkflowUpgradeGate CTA to call createProCheckout directly
 - [ ] Update DashboardLayout sidebar to show PRO badge when tier=pro
-- [ ] Write vitest tests for upgrade flow
+- [x] Write 17 vitest tests for upgrade flow (all passing)
 
 ## Billing Navigation Surfacing
 - [x] Add Billing link to desktop profile button (convert to dropdown with Profile + Billing + Sign Out)
@@ -5268,14 +5267,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Add Billing link to ProfileSettings page as a settings nav item
 
 ## Artist Onboarding Flow (Toney v1.1)
-- [ ] Rewrite Onboarding.tsx as a 4-step wizard collecting all Toney v1.1 fields
-- [ ] Step 1: Identity (stage name, career stage, primary genre, sub-genre, location/city, team structure)
-- [ ] Step 2: Goals & Priorities (active goals free-text, primary income source)
-- [ ] Step 3: Communication Style (brief vs detailed preference, data-heavy vs plain language)
-- [ ] Step 4: Welcome + Toney intro (save profile, mark onboardingCompleted=true, redirect to dashboard)
-- [ ] Wire first-login redirect: check onboardingCompleted in App.tsx or a useRequireOnboarding hook
-- [ ] Add a "complete your setup" banner on Dashboard for artists who skipped onboarding
-- [ ] Write vitest tests for the onboarding procedures
+- [x] Rewrite Onboarding.tsx as a 5-step wizard collecting all Toney v1.1 fields
+- [x] Step 1: Identity (stage name, career stage, primary genre, sub-genre, location/city, team structure)
+- [x] Step 2: Goals & Priorities (active goals free-text, primary income source)
+- [x] Step 3: Communication Style (brief vs detailed preference, data-heavy vs plain language)
+- [x] Step 4: Fan Relationship (fan message style, communication preferences)
+- [x] Step 5: Welcome + Toney intro (save profile, mark onboardingCompleted=true, redirect to dashboard)
+- [x] Wire first-login redirect: DashboardLayout redirects to /onboarding 800ms after login when profile incomplete
+- [x] Add "Activate Toney" banner on Dashboard for artists who skipped onboarding
+- [x] 422 vitest tests passing (no regressions from onboarding changes)
 
 ## TOS & Privacy Policy Forensic Audit (Feb 28, 2026)
 - [x] Audit all 7-day git changes against TOS and Privacy Policy
