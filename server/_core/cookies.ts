@@ -42,11 +42,11 @@ export function getSessionCookieOptions(
   return {
     httpOnly: true,
     path: "/",
-    // SameSite 'strict' prevents the session cookie from being sent on any cross-site
-    // request, including top-level navigations. This is the strongest CSRF protection.
-    // Note: users will be logged out when arriving from external links (e.g. email),
-    // but this is the correct trade-off for a creator OS with sensitive data.
-    sameSite: "strict",
+    // SameSite 'lax' allows the session cookie to be sent on top-level navigations
+    // and iframe loads (e.g. the Manus preview pane), while still blocking cross-site
+    // POST requests (CSRF protection). This is the standard setting used by most
+    // production platforms (GitHub, Vercel, Stripe).
+    sameSite: "lax",
     secure: isSecureRequest(req),
   };
 }
