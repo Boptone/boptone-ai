@@ -18,8 +18,12 @@ import {
   FileText,
   DollarSign,
   Zap,
-  Video
+  Video,
+  CreditCard,
+  Settings,
+  LogOut
 } from "lucide-react";
+import { useLocation } from "wouter";
 import { SearchAIOverlay } from "@/components/SearchAIOverlay";
 
 /**
@@ -35,9 +39,19 @@ import { SearchAIOverlay } from "@/components/SearchAIOverlay";
  */
 export function Navigation() {
   const { isAuthenticated } = useAuth();
+  const [, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOverlayOpen, setSearchOverlayOpen] = useState(false);
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
+  const logoutMutation = trpc.auth.logout.useMutation({
+    onSuccess: () => {
+      setProfileDropdownOpen(false);
+      setLocation("/");
+      window.location.reload();
+    },
+  });
   
   // Fetch artist profile to get avatar
   const { data: artistProfile } = trpc.artistProfile.getMyProfile.useQuery(undefined, {
@@ -339,16 +353,21 @@ export function Navigation() {
                   </Button>
                 </Link>
 
-                {/* Profile with Avatar */}
-                <Link href="/profile-settings">
-                  <Button 
-                    variant="outline" 
+                {/* Profile Dropdown */}
+                <div
+                  className="relative"
+                  onMouseEnter={() => setProfileDropdownOpen(true)}
+                  onMouseLeave={() => setProfileDropdownOpen(false)}
+                >
+                  <Button
+                    variant="outline"
                     className="rounded-full border border-black bg-white hover:bg-gray-100 text-black font-medium text-base px-5 py-2 h-11 flex items-center gap-2 transition-colors"
+                    onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
                   >
                     {artistProfile?.avatarUrl ? (
-                      <img 
-                        src={artistProfile.avatarUrl} 
-                        alt="Profile" 
+                      <img
+                        src={artistProfile.avatarUrl}
+                        alt="Profile"
                         className="w-6 h-6 rounded-full object-cover"
                       />
                     ) : (
@@ -356,7 +375,41 @@ export function Navigation() {
                     )}
                     Profile
                   </Button>
-                </Link>
+
+                  {profileDropdownOpen && (
+                    <div className="absolute right-0 top-full pt-2 z-50">
+                      <div className="w-52 bg-white border border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] py-2">
+                        <Link href="/profile-settings">
+                          <a
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                            onClick={() => setProfileDropdownOpen(false)}
+                          >
+                            <Settings className="w-4 h-4 text-gray-500" />
+                            Profile Settings
+                          </a>
+                        </Link>
+                        <Link href="/settings/billing">
+                          <a
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                            onClick={() => setProfileDropdownOpen(false)}
+                          >
+                            <CreditCard className="w-4 h-4 text-gray-500" />
+                            Billing
+                          </a>
+                        </Link>
+                        <div className="border-t border-gray-100 my-1" />
+                        <button
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+                          onClick={() => logoutMutation.mutate()}
+                          disabled={logoutMutation.isPending}
+                        >
+                          <LogOut className="w-4 h-4 text-gray-500" />
+                          {logoutMutation.isPending ? "Signing out…" : "Sign Out"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <>
@@ -528,7 +581,18 @@ export function Navigation() {
                       ) : (
                         <User className="w-4 h-4" />
                       )}
-                      Profile
+                      Profile Settings
+                    </Button>
+                  </Link>
+
+                  <Link href="/settings/billing">
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-base font-medium py-3 px-4 hover:bg-gray-100 transition-colors flex items-center gap-2"
+                      onClick={closeMobileMenu}
+                    >
+                      <CreditCard className="w-4 h-4 text-gray-500" />
+                      Billing
                     </Button>
                   </Link>
                 </>

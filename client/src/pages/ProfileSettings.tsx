@@ -182,7 +182,7 @@ export default function ProfileSettings() {
     <div className="min-h-screen bg-[#f8f8f6] py-12">
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
-        <div className="mb-12 flex items-start gap-8">
+        <div className="mb-8 flex items-start gap-8">
           <UserAvatar size="lg" />
           <div className="flex-1">
             <h1 className="text-6xl lg:text-7xl font-bold tracking-tight leading-none mb-4 text-black">
@@ -192,6 +192,29 @@ export default function ProfileSettings() {
               Customize the look and feel of your public artist profile
             </p>
           </div>
+        </div>
+
+        {/* Settings Navigation */}
+        <div className="flex items-center gap-2 mb-10 border-b-2 border-black pb-4">
+          <span className="text-sm font-bold uppercase tracking-widest text-gray-400 mr-2">Settings</span>
+          <button
+            className="px-5 py-2 rounded-full border-2 border-black bg-black text-white text-sm font-semibold"
+            aria-current="page"
+          >
+            Profile
+          </button>
+          <button
+            onClick={() => setLocation("/settings/billing")}
+            className="px-5 py-2 rounded-full border-2 border-black bg-white text-black text-sm font-semibold hover:bg-gray-100 transition-colors flex items-center gap-1.5"
+          >
+            Billing
+          </button>
+          <button
+            onClick={() => setLocation("/settings/payouts")}
+            className="px-5 py-2 rounded-full border-2 border-black bg-white text-black text-sm font-semibold hover:bg-gray-100 transition-colors"
+          >
+            Payouts
+          </button>
         </div>
 
         <div className="grid gap-8">

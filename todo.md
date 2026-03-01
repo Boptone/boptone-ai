@@ -5260,3 +5260,9 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] Update WorkflowUpgradeGate CTA to call createProCheckout directly
 - [ ] Update DashboardLayout sidebar to show PRO badge when tier=pro
 - [ ] Write vitest tests for upgrade flow
+
+## Billing Navigation Surfacing
+- [x] Add Billing link to desktop profile button (convert to dropdown with Profile + Billing + Sign Out)
+- [x] Add Billing link to mobile menu authenticated section
+- [x] Add Billing link to Dashboard quick actions
+- [x] Add Billing link to ProfileSettings page as a settings nav item

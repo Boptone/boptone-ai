@@ -98,6 +98,7 @@ export default function Dashboard() {
     { label: "View Analytics", href: "/analytics" },
     { label: "Discover BopMusic", href: "/music" },
     { label: "Edit Profile", href: "/profile-settings" },
+    { label: "Manage Billing", href: "/settings/billing" },
   ];
 
   const goals = [
