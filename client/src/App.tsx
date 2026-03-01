@@ -100,6 +100,9 @@ const AdminOverview = lazy(() => import("./pages/admin/AdminOverview"));
 const AdminOrders = lazy(() => import("./pages/admin/AdminOrders"));
 const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
 const AdminRevenue = lazy(() => import("./pages/admin/AdminRevenue"));
+const ComplianceDashboard = lazy(() => import("./pages/admin/ComplianceDashboard"));
+const DmcaPage = lazy(() => import("./pages/Dmca"));
+const DmcaCounterNoticePage = lazy(() => import("./pages/DmcaCounterNotice"));
 const Playlists = lazy(() => import("./pages/Playlists"));
 const PlaylistDetail = lazy(() => import("./pages/PlaylistDetail"));
 const BopsUpload = lazy(() => import("./pages/BopsUpload"));
@@ -159,6 +162,9 @@ function Router() {
         <Route path="/admin/revenue" component={AdminRevenue} />
         <Route path="/admin/reviews" component={ReviewModeration} />
         <Route path="/admin/content-moderation" component={AdminModeration} />
+        <Route path="/admin/compliance" component={ComplianceDashboard} />
+        <Route path="/dmca" component={DmcaPage} />
+        <Route path="/dmca/counter-notice" component={DmcaCounterNoticePage} />
         <Route path="/analytics/reviews" component={ReviewAnalyticsDashboard} />
         <Route path="/product/:productId" component={ProductDetail} />
         <Route path="/store" component={MyStore} />

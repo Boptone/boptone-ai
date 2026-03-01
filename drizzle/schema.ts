@@ -4649,3 +4649,585 @@ export const artistActivationSteps = mysqlTable("artist_activation_steps", {
 
 export type ArtistActivationStep = typeof artistActivationSteps.$inferSelect;
 export type InsertArtistActivationStep = typeof artistActivationSteps.$inferInsert;
+
+// ============================================================================
+// GLOBAL IP TAKEDOWN SYSTEM (COMPLIANCE-1)
+// Enterprise-grade, multi-jurisdiction copyright enforcement
+//
+// Architecture:
+//   takedownNotices      — Core notice record (DMCA + EU DSA + UK + CA + AU)
+//   takedownEvidence     — Supporting files, screenshots, URLs per notice
+//   takedownActions      — Immutable audit log of every action taken
+//   counterNotices       — Artist responses disputing a takedown
+//   takedownAppeals      — Second-level appeals after counter-notice resolution
+//   trustedFlaggers      — Elevated-status claimants (labels, PROs, DSA trusted flaggers)
+//   fingerprintScans     — Pre-upload audio fingerprint scan results (ACRCloud/AudD)
+//   repeatInfringers     — Strike ledger per user across all content types
+//   jurisdictionRules    — Per-jurisdiction SLA and handling configuration
+//
+// Lifecycle:
+//   SUBMITTED → INTAKE_VALIDATION → AUTO_SCAN → TRIAGE → ACTION_TAKEN
+//   → NOTIFIED → COUNTER_NOTICE_WINDOW → [COUNTER_NOTICE | RESOLVED]
+//   → APPEAL → FINAL_RESOLUTION
+//
+// Jurisdiction coverage:
+//   US   — DMCA 17 U.S.C. § 512 (designated agent, repeat infringer policy)
+//   EU   — DSA Article 16 (notice & action, trusted flaggers, redress)
+//   UK   — CDPA 1988 + E-Commerce Regulations 2002
+//   CA   — Canada Copyright Act notice-and-notice (ss. 41.25-41.26)
+//   AU   — Australia Copyright Act 1968 safe harbor
+//   WW   — WIPO-aligned global default
+// ============================================================================
+
+/**
+ * Takedown Notices
+ * Core table for all IP infringement notices across all jurisdictions.
+ * Covers DMCA § 512(c)(3) required elements + EU DSA Article 16 elements.
+ */
+export const takedownNotices = mysqlTable("takedown_notices", {
+  id: int("id").autoincrement().primaryKey(),
+
+  // ── Ticket identifier ────────────────────────────────────────────────────
+  ticketId: varchar("ticketId", { length: 32 }).notNull().unique(), // e.g. "TDN-2026-000042"
+
+  // ── Jurisdiction & framework ─────────────────────────────────────────────
+  jurisdiction: mysqlEnum("jurisdiction", ["US", "EU", "UK", "CA", "AU", "WW"]).default("US").notNull(),
+  legalFramework: mysqlEnum("legalFramework", [
+    "DMCA_512",       // US DMCA 17 U.S.C. § 512
+    "DSA_ART16",      // EU Digital Services Act Article 16
+    "CDPA_1988",      // UK Copyright, Designs and Patents Act 1988
+    "CA_NOTICE",      // Canada notice-and-notice regime
+    "AU_COPYRIGHT",   // Australia Copyright Act 1968
+    "WIPO_GLOBAL",    // WIPO-aligned global default
+  ]).default("DMCA_512").notNull(),
+
+  // ── Content type targeted ────────────────────────────────────────────────
+  contentType: mysqlEnum("contentType", [
+    "track",          // Audio track upload
+    "bop",            // Bops vertical video
+    "product",        // BopShop product design
+    "profile",        // Artist profile (name, image)
+    "other",
+  ]).notNull(),
+
+  // ── Infringing content location ──────────────────────────────────────────
+  infringingContentUrl: varchar("infringingContentUrl", { length: 1000 }).notNull(), // Exact URL per § 512(c)(3)(iii)
+  infringingContentId: int("infringingContentId"),   // Internal entity ID (trackId, bopId, productId)
+  additionalUrls: json("additionalUrls").$type<string[]>(), // Multiple URLs if representative list
+
+  // ── Claimant information (§ 512(c)(3)(iv)) ───────────────────────────────
+  claimantName: varchar("claimantName", { length: 255 }).notNull(),
+  claimantEmail: varchar("claimantEmail", { length: 320 }).notNull(),
+  claimantPhone: varchar("claimantPhone", { length: 50 }),
+  claimantAddress: text("claimantAddress"),
+  claimantCompany: varchar("claimantCompany", { length: 255 }),
+  claimantWebsite: varchar("claimantWebsite", { length: 500 }),
+  claimantIsRightsHolder: boolean("claimantIsRightsHolder").default(true).notNull(), // True = owner; False = authorized agent
+  authorizedAgentFor: varchar("authorizedAgentFor", { length: 255 }), // If agent, who they represent
+
+  // ── Copyrighted work identification (§ 512(c)(3)(ii)) ────────────────────
+  copyrightedWorkTitle: varchar("copyrightedWorkTitle", { length: 500 }).notNull(),
+  copyrightedWorkDescription: text("copyrightedWorkDescription").notNull(),
+  copyrightedWorkUrl: varchar("copyrightedWorkUrl", { length: 1000 }), // Original work URL
+  copyrightRegistrationNumber: varchar("copyrightRegistrationNumber", { length: 100 }), // e.g. "PA 2-345-678"
+  isrc: varchar("isrc", { length: 20 }), // International Standard Recording Code
+  upc: varchar("upc", { length: 20 }),   // Universal Product Code
+
+  // ── Infringement description ─────────────────────────────────────────────
+  infringementDescription: text("infringementDescription").notNull(),
+  infringementType: mysqlEnum("infringementType", [
+    "reproduction",       // Direct copy
+    "distribution",       // Unauthorized distribution
+    "public_performance", // Public performance without license
+    "derivative_work",    // Unauthorized derivative
+    "synchronization",    // Sync without license
+    "cover_song",         // Cover without mechanical license
+    "sampling",           // Uncleared sample
+    "trademark",          // Trademark infringement
+    "other",
+  ]).notNull(),
+
+  // ── Statutory declarations (§ 512(c)(3)(v)(vi)) ──────────────────────────
+  goodFaithStatement: boolean("goodFaithStatement").notNull(), // "I have a good faith belief..."
+  accuracyStatement: boolean("accuracyStatement").notNull(),   // "Information is accurate..."
+  perjuryStatement: boolean("perjuryStatement").notNull(),     // "Under penalty of perjury..."
+  electronicSignature: varchar("electronicSignature", { length: 500 }).notNull(), // Full legal name as e-signature
+
+  // ── Trusted flagger ──────────────────────────────────────────────────────
+  trustedFlaggerId: int("trustedFlaggerId").references(() => trustedFlaggers.id),
+  isTrustedFlagger: boolean("isTrustedFlagger").default(false).notNull(),
+
+  // ── Lifecycle status ─────────────────────────────────────────────────────
+  status: mysqlEnum("status", [
+    "submitted",              // Just received, not yet validated
+    "intake_validation",      // Checking required fields
+    "invalid",                // Missing required elements, rejected
+    "auto_scan_pending",      // Queued for automated content scan
+    "triage",                 // Awaiting human review
+    "action_taken",           // Content removed/disabled
+    "notified",               // Artist notified of takedown
+    "counter_notice_window",  // 10-14 business day window open
+    "counter_notice_received",// Artist filed counter-notice
+    "reinstated",             // Content restored after counter-notice
+    "appeal_pending",         // Under second-level appeal
+    "resolved_upheld",        // Takedown upheld, content stays down
+    "resolved_reversed",      // Takedown reversed, content restored
+    "withdrawn",              // Claimant withdrew notice
+    "forwarded",              // CA: forwarded to subscriber (notice-and-notice)
+  ]).default("submitted").notNull(),
+
+  // ── Priority & SLA ───────────────────────────────────────────────────────
+  priority: mysqlEnum("priority", ["low", "normal", "high", "urgent"]).default("normal").notNull(),
+  slaDeadline: timestamp("slaDeadline"), // Calculated based on jurisdiction + priority
+  counterNoticeDeadline: timestamp("counterNoticeDeadline"), // 10-14 business days after action
+
+  // ── Action taken ─────────────────────────────────────────────────────────
+  actionType: mysqlEnum("actionType", [
+    "content_removed",    // Content deleted
+    "content_disabled",   // Content hidden/geo-blocked
+    "geo_blocked",        // Restricted to specific jurisdictions
+    "account_suspended",  // Artist account suspended
+    "notice_forwarded",   // CA: forwarded to subscriber
+    "no_action",          // Determined not infringing
+  ]),
+  actionTakenAt: timestamp("actionTakenAt"),
+  actionTakenBy: int("actionTakenBy").references(() => users.id),
+  actionNotes: text("actionNotes"),
+
+  // ── Automation metadata ──────────────────────────────────────────────────
+  autoProcessed: boolean("autoProcessed").default(false).notNull(),
+  fingerprintScanId: int("fingerprintScanId"), // Link to fingerprintScans if auto-detected
+  aiConfidenceScore: decimal("aiConfidenceScore", { precision: 5, scale: 2 }), // 0-100
+
+  // ── Claimant communications ──────────────────────────────────────────────
+  receiptSentAt: timestamp("receiptSentAt"),     // DSA Art.16(4): confirmation of receipt
+  decisionSentAt: timestamp("decisionSentAt"),   // DSA Art.16(5): decision notification
+  claimantNotifiedOfCounterAt: timestamp("claimantNotifiedOfCounterAt"),
+
+  // ── Assigned reviewer ────────────────────────────────────────────────────
+  assignedTo: int("assignedTo").references(() => users.id),
+  reviewStartedAt: timestamp("reviewStartedAt"),
+  reviewCompletedAt: timestamp("reviewCompletedAt"),
+
+  // ── IP metadata ─────────────────────────────────────────────────────────
+  submitterIp: varchar("submitterIp", { length: 45 }),
+  submitterUserAgent: text("submitterUserAgent"),
+
+  // ── Timestamps ───────────────────────────────────────────────────────────
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  ticketIdIdx: index("tn_ticket_id_idx").on(table.ticketId),
+  statusIdx: index("tn_status_idx").on(table.status),
+  jurisdictionIdx: index("tn_jurisdiction_idx").on(table.jurisdiction),
+  claimantEmailIdx: index("tn_claimant_email_idx").on(table.claimantEmail),
+  contentTypeIdx: index("tn_content_type_idx").on(table.contentType),
+  priorityStatusIdx: index("tn_priority_status_idx").on(table.priority, table.status),
+  slaDeadlineIdx: index("tn_sla_deadline_idx").on(table.slaDeadline),
+  createdAtIdx: index("tn_created_at_idx").on(table.createdAt),
+  trustedFlaggerIdx: index("tn_trusted_flagger_idx").on(table.trustedFlaggerId),
+  assignedToIdx: index("tn_assigned_to_idx").on(table.assignedTo),
+}));
+
+export type TakedownNotice = typeof takedownNotices.$inferSelect;
+export type InsertTakedownNotice = typeof takedownNotices.$inferInsert;
+
+/**
+ * Takedown Evidence
+ * Supporting files, screenshots, and URLs attached to a notice.
+ */
+export const takedownEvidence = mysqlTable("takedown_evidence", {
+  id: int("id").autoincrement().primaryKey(),
+  noticeId: int("noticeId").notNull().references(() => takedownNotices.id, { onDelete: "cascade" }),
+
+  evidenceType: mysqlEnum("evidenceType", [
+    "screenshot",
+    "audio_file",
+    "video_file",
+    "document",
+    "url",
+    "fingerprint_report",
+    "registration_certificate",
+    "other",
+  ]).notNull(),
+
+  fileUrl: varchar("fileUrl", { length: 1000 }),
+  fileKey: varchar("fileKey", { length: 500 }),
+  fileName: varchar("fileName", { length: 255 }),
+  fileMimeType: varchar("fileMimeType", { length: 100 }),
+  fileSizeBytes: int("fileSizeBytes"),
+  description: text("description"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  noticeIdIdx: index("te_notice_id_idx").on(table.noticeId),
+}));
+
+export type TakedownEvidence = typeof takedownEvidence.$inferSelect;
+export type InsertTakedownEvidence = typeof takedownEvidence.$inferInsert;
+
+/**
+ * Takedown Actions
+ * Immutable audit log — every state change, decision, and communication.
+ * Append-only: never update or delete rows.
+ */
+export const takedownActions = mysqlTable("takedown_actions", {
+  id: int("id").autoincrement().primaryKey(),
+  noticeId: int("noticeId").notNull().references(() => takedownNotices.id, { onDelete: "cascade" }),
+
+  actionType: mysqlEnum("actionType", [
+    // Lifecycle transitions
+    "notice_received",
+    "intake_validated",
+    "intake_rejected",
+    "auto_scan_started",
+    "auto_scan_completed",
+    "triage_assigned",
+    "review_started",
+    // Content actions
+    "content_removed",
+    "content_disabled",
+    "content_geo_blocked",
+    "content_reinstated",
+    // Account actions
+    "account_suspended",
+    "account_reinstated",
+    "strike_issued",
+    // Communications
+    "receipt_sent_to_claimant",
+    "takedown_notice_sent_to_artist",
+    "counter_notice_window_opened",
+    "claimant_notified_of_counter",
+    "decision_sent_to_claimant",
+    // Counter-notice & appeal
+    "counter_notice_received",
+    "appeal_received",
+    "appeal_decision_made",
+    // Resolution
+    "notice_withdrawn",
+    "notice_resolved",
+    "notice_forwarded",       // CA notice-and-notice
+    // Admin
+    "admin_note_added",
+    "priority_changed",
+    "reassigned",
+  ]).notNull(),
+
+  performedBy: int("performedBy").references(() => users.id), // null = automated
+  isAutomated: boolean("isAutomated").default(false).notNull(),
+  notes: text("notes"),
+  metadata: json("metadata").$type<Record<string, any>>(), // Flexible additional data
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  noticeIdIdx: index("ta_notice_id_idx").on(table.noticeId),
+  actionTypeIdx: index("ta_action_type_idx").on(table.actionType),
+  createdAtIdx: index("ta_created_at_idx").on(table.createdAt),
+  performedByIdx: index("ta_performed_by_idx").on(table.performedBy),
+}));
+
+export type TakedownAction = typeof takedownActions.$inferSelect;
+export type InsertTakedownAction = typeof takedownActions.$inferInsert;
+
+/**
+ * Counter Notices
+ * Artist responses disputing a takedown (§ 512(g)(3) elements).
+ */
+export const counterNotices = mysqlTable("counter_notices", {
+  id: int("id").autoincrement().primaryKey(),
+  noticeId: int("noticeId").notNull().unique().references(() => takedownNotices.id, { onDelete: "cascade" }),
+  artistUserId: int("artistUserId").notNull().references(() => users.id),
+
+  // ── § 512(g)(3) required elements ────────────────────────────────────────
+  identificationOfRemovedContent: text("identificationOfRemovedContent").notNull(),
+  goodFaithBelief: text("goodFaithBelief").notNull(), // "I believe the material was removed by mistake or misidentification"
+  consentToJurisdiction: boolean("consentToJurisdiction").notNull(), // Consent to federal court
+  consentToServiceOfProcess: boolean("consentToServiceOfProcess").notNull(),
+  electronicSignature: varchar("electronicSignature", { length: 500 }).notNull(),
+  artistAddress: text("artistAddress"), // Required for service of process
+
+  // ── Additional context ───────────────────────────────────────────────────
+  fairUseJustification: text("fairUseJustification"), // Fair use / fair dealing argument
+  licenseEvidence: text("licenseEvidence"),           // License or permission evidence
+  originalWorkEvidence: text("originalWorkEvidence"), // Proof of original authorship
+
+  // ── Status ───────────────────────────────────────────────────────────────
+  status: mysqlEnum("status", [
+    "submitted",
+    "claimant_notified",
+    "waiting_period",       // 10-14 business day window
+    "content_reinstated",   // Claimant did not file suit
+    "lawsuit_filed",        // Claimant filed suit, content stays down
+    "withdrawn",
+  ]).default("submitted").notNull(),
+
+  reinstateAfter: timestamp("reinstateAfter"), // 10-14 business days from submission
+  reinstatedAt: timestamp("reinstatedAt"),
+  claimantNotifiedAt: timestamp("claimantNotifiedAt"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  noticeIdIdx: index("cn_notice_id_idx").on(table.noticeId),
+  artistUserIdIdx: index("cn_artist_user_id_idx").on(table.artistUserId),
+  statusIdx: index("cn_status_idx").on(table.status),
+  reinstateAfterIdx: index("cn_reinstate_after_idx").on(table.reinstateAfter),
+}));
+
+export type CounterNotice = typeof counterNotices.$inferSelect;
+export type InsertCounterNotice = typeof counterNotices.$inferInsert;
+
+/**
+ * Takedown Appeals
+ * Second-level appeals after a counter-notice has been resolved.
+ */
+export const takedownAppeals = mysqlTable("takedown_appeals", {
+  id: int("id").autoincrement().primaryKey(),
+  noticeId: int("noticeId").notNull().references(() => takedownNotices.id, { onDelete: "cascade" }),
+  filedBy: int("filedBy").notNull().references(() => users.id), // Artist or claimant
+
+  appealType: mysqlEnum("appealType", ["artist_appeal", "claimant_appeal"]).notNull(),
+  appealReason: text("appealReason").notNull(),
+  supportingEvidence: text("supportingEvidence"),
+  requestedOutcome: text("requestedOutcome"),
+
+  status: mysqlEnum("status", [
+    "submitted",
+    "under_review",
+    "approved",   // Appeal granted
+    "denied",     // Appeal denied
+    "escalated",  // Escalated to legal team
+  ]).default("submitted").notNull(),
+
+  reviewedBy: int("reviewedBy").references(() => users.id),
+  reviewNotes: text("reviewNotes"),
+  reviewedAt: timestamp("reviewedAt"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  noticeIdIdx: index("tapp_notice_id_idx").on(table.noticeId),
+  filedByIdx: index("tapp_filed_by_idx").on(table.filedBy),
+  statusIdx: index("tapp_status_idx").on(table.status),
+}));
+
+export type TakedownAppeal = typeof takedownAppeals.$inferSelect;
+export type InsertTakedownAppeal = typeof takedownAppeals.$inferInsert;
+
+/**
+ * Trusted Flaggers
+ * Elevated-status claimants (record labels, PROs, DSA Article 22 trusted flaggers).
+ * Notices from trusted flaggers receive expedited processing.
+ */
+export const trustedFlaggers = mysqlTable("trusted_flaggers", {
+  id: int("id").autoincrement().primaryKey(),
+
+  organizationName: varchar("organizationName", { length: 255 }).notNull(),
+  organizationType: mysqlEnum("organizationType", [
+    "record_label",
+    "pro",              // Performance Rights Organization (ASCAP, BMI, SESAC)
+    "publisher",
+    "distributor",
+    "law_firm",
+    "dsa_trusted_flagger", // EU DSA Article 22 certified
+    "government",
+    "other",
+  ]).notNull(),
+
+  contactEmail: varchar("contactEmail", { length: 320 }).notNull().unique(),
+  contactName: varchar("contactName", { length: 255 }),
+  website: varchar("website", { length: 500 }),
+
+  // DSA Article 22 certification
+  dsaCertified: boolean("dsaCertified").default(false).notNull(),
+  dsaCertificationDate: timestamp("dsaCertificationDate"),
+  dsaCertificationBody: varchar("dsaCertificationBody", { length: 255 }),
+
+  // Trust level determines SLA priority
+  trustLevel: mysqlEnum("trustLevel", ["standard", "elevated", "premium"]).default("standard").notNull(),
+
+  isActive: boolean("isActive").default(true).notNull(),
+  verifiedAt: timestamp("verifiedAt"),
+  verifiedBy: int("verifiedBy").references(() => users.id),
+  notes: text("notes"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  contactEmailIdx: index("tf_contact_email_idx").on(table.contactEmail),
+  orgTypeIdx: index("tf_org_type_idx").on(table.organizationType),
+  trustLevelIdx: index("tf_trust_level_idx").on(table.trustLevel),
+  isActiveIdx: index("tf_is_active_idx").on(table.isActive),
+}));
+
+export type TrustedFlagger = typeof trustedFlaggers.$inferSelect;
+export type InsertTrustedFlagger = typeof trustedFlaggers.$inferInsert;
+
+/**
+ * Fingerprint Scans
+ * Pre-upload audio fingerprint scan results via ACRCloud/AudD.
+ * Enables proactive copyright detection before content goes live.
+ */
+export const fingerprintScans = mysqlTable("fingerprint_scans", {
+  id: int("id").autoincrement().primaryKey(),
+
+  // ── Content reference ────────────────────────────────────────────────────
+  contentType: mysqlEnum("contentType", ["track", "bop", "product"]).notNull(),
+  contentId: int("contentId"),         // ID after creation (null if pre-creation scan)
+  contentUrl: varchar("contentUrl", { length: 1000 }), // S3 URL scanned
+  uploadedByUserId: int("uploadedByUserId").references(() => users.id),
+
+  // ── Scan provider ────────────────────────────────────────────────────────
+  provider: mysqlEnum("provider", ["acrcloud", "audd", "audible_magic", "internal"]).notNull(),
+  providerRequestId: varchar("providerRequestId", { length: 255 }), // Provider's job/request ID
+
+  // ── Scan result ──────────────────────────────────────────────────────────
+  scanStatus: mysqlEnum("scanStatus", [
+    "pending",
+    "scanning",
+    "clean",          // No match found
+    "match_found",    // Copyrighted content detected
+    "partial_match",  // Possible match, needs review
+    "error",          // Scan failed
+  ]).default("pending").notNull(),
+
+  // Match details (populated when match_found or partial_match)
+  matchedTitle: varchar("matchedTitle", { length: 500 }),
+  matchedArtist: varchar("matchedArtist", { length: 500 }),
+  matchedAlbum: varchar("matchedAlbum", { length: 500 }),
+  matchedIsrc: varchar("matchedIsrc", { length: 20 }),
+  matchedUpc: varchar("matchedUpc", { length: 20 }),
+  matchConfidence: decimal("matchConfidence", { precision: 5, scale: 2 }), // 0-100
+  matchedDurationMs: int("matchedDurationMs"),
+  matchedOffsetMs: int("matchedOffsetMs"), // Where in the upload the match starts
+
+  // Rights data from provider
+  rightsHolder: varchar("rightsHolder", { length: 500 }),
+  licenseStatus: mysqlEnum("licenseStatus", [
+    "unknown",
+    "licensed",       // Platform has license
+    "unlicensed",     // No license, block upload
+    "restricted",     // Geo-restricted
+    "public_domain",  // Public domain
+  ]).default("unknown"),
+
+  // Raw provider response for audit
+  providerResponse: json("providerResponse").$type<Record<string, any>>(),
+
+  // ── Action taken based on scan ───────────────────────────────────────────
+  actionTaken: mysqlEnum("actionTaken", [
+    "none",
+    "upload_blocked",     // Prevented from publishing
+    "upload_flagged",     // Published but flagged for review
+    "notice_auto_filed",  // Auto-generated takedown notice
+  ]).default("none").notNull(),
+
+  scannedAt: timestamp("scannedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  contentTypeIdIdx: index("fs_content_type_id_idx").on(table.contentType, table.contentId),
+  scanStatusIdx: index("fs_scan_status_idx").on(table.scanStatus),
+  uploadedByIdx: index("fs_uploaded_by_idx").on(table.uploadedByUserId),
+  providerIdx: index("fs_provider_idx").on(table.provider),
+  matchedIsrcIdx: index("fs_matched_isrc_idx").on(table.matchedIsrc),
+}));
+
+export type FingerprintScan = typeof fingerprintScans.$inferSelect;
+export type InsertFingerprintScan = typeof fingerprintScans.$inferInsert;
+
+/**
+ * Repeat Infringers
+ * Strike ledger per user across all content types.
+ * Required for DMCA § 512 safe harbor compliance.
+ * Three strikes = account termination in appropriate circumstances.
+ */
+export const repeatInfringers = mysqlTable("repeat_infringers", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().references(() => users.id),
+
+  // Strike details
+  strikeNumber: int("strikeNumber").notNull(), // 1, 2, 3+
+  noticeId: int("noticeId").references(() => takedownNotices.id),
+  contentType: mysqlEnum("contentType", ["track", "bop", "product", "profile", "other"]).notNull(),
+  contentId: int("contentId"),
+  contentUrl: varchar("contentUrl", { length: 1000 }),
+
+  // Infringement details
+  infringementType: varchar("infringementType", { length: 100 }).notNull(),
+  claimantName: varchar("claimantName", { length: 255 }),
+
+  // Strike status
+  strikeStatus: mysqlEnum("strikeStatus", [
+    "active",
+    "expired",    // Strikes may expire after 12-24 months
+    "reversed",   // Overturned on appeal
+    "pardoned",   // Admin override
+  ]).default("active").notNull(),
+
+  // Account action
+  accountAction: mysqlEnum("accountAction", [
+    "warning",
+    "content_removed",
+    "upload_restricted",  // Temporarily blocked from uploading
+    "account_suspended",
+    "account_terminated",
+  ]),
+
+  issuedBy: int("issuedBy").references(() => users.id),
+  expiresAt: timestamp("expiresAt"), // When this strike expires
+  notes: text("notes"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("ri_user_id_idx").on(table.userId),
+  strikeStatusIdx: index("ri_strike_status_idx").on(table.strikeStatus),
+  userStrikeIdx: index("ri_user_strike_idx").on(table.userId, table.strikeStatus), // Count active strikes
+  noticeIdIdx: index("ri_notice_id_idx").on(table.noticeId),
+  expiresAtIdx: index("ri_expires_at_idx").on(table.expiresAt),
+}));
+
+export type RepeatInfringer = typeof repeatInfringers.$inferSelect;
+export type InsertRepeatInfringer = typeof repeatInfringers.$inferInsert;
+
+/**
+ * Jurisdiction Rules
+ * Per-jurisdiction configuration for SLA, handling, and compliance requirements.
+ */
+export const jurisdictionRules = mysqlTable("jurisdiction_rules", {
+  id: int("id").autoincrement().primaryKey(),
+  jurisdiction: mysqlEnum("jurisdiction", ["US", "EU", "UK", "CA", "AU", "WW"]).notNull().unique(),
+
+  // SLA configuration (in hours)
+  receiptConfirmationSlaHours: int("receiptConfirmationSlaHours").default(24).notNull(),   // DSA: "without undue delay"
+  triageSlaHours: int("triageSlaHours").default(48).notNull(),
+  actionSlaHours: int("actionSlaHours").default(72).notNull(),
+  decisionNotificationSlaHours: int("decisionNotificationSlaHours").default(24).notNull(),
+
+  // Counter-notice window (in business days)
+  counterNoticeWindowDays: int("counterNoticeWindowDays").default(10).notNull(),   // DMCA: 10-14
+  counterNoticeWindowMaxDays: int("counterNoticeWindowMaxDays").default(14).notNull(),
+
+  // Handling rules
+  requiresContentRemoval: boolean("requiresContentRemoval").default(true).notNull(),   // US/EU: yes; CA: no (forward only)
+  requiresForwarding: boolean("requiresForwarding").default(false).notNull(),          // CA: yes
+  requiresRedressInfo: boolean("requiresRedressInfo").default(false).notNull(),        // EU DSA: yes
+  requiresAutomationDisclosure: boolean("requiresAutomationDisclosure").default(false).notNull(), // EU DSA: yes
+  requiresTrustedFlaggerSupport: boolean("requiresTrustedFlaggerSupport").default(false).notNull(), // EU DSA: yes
+
+  // Legal references
+  legalCitation: varchar("legalCitation", { length: 500 }), // e.g. "17 U.S.C. § 512"
+  designatedAgentRequired: boolean("designatedAgentRequired").default(false).notNull(), // US: yes
+  designatedAgentInfo: text("designatedAgentInfo"), // Published agent details
+
+  isActive: boolean("isActive").default(true).notNull(),
+  lastReviewedAt: timestamp("lastReviewedAt"),
+  lastReviewedBy: int("lastReviewedBy").references(() => users.id),
+  notes: text("notes"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type JurisdictionRule = typeof jurisdictionRules.$inferSelect;
+export type InsertJurisdictionRule = typeof jurisdictionRules.$inferInsert;

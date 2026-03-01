@@ -5345,7 +5345,7 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] **[INFRA-4] Edge function deployment for high-frequency tRPC routers** — Migrate `bops`, `bap`, and `toney` routers to edge functions for global latency reduction. Start with highest-frequency routers, migrate outward. (8/50 auditors, Guillermo Rauch)
 - [ ] **[INFRA-5] Webhook infrastructure for external integrations** — Add `webhooks` table and `webhooks` tRPC router allowing artists to subscribe to platform events (`order_created`, `payout_succeeded`, `track_streamed`). Enables real-time integrations beyond built-in workflows. (Zach Holman)
 - [ ] **[GROWTH-4] Creator tenure / governance rights system** — Formalize `artist_backers` into a "Creator Tenure" system where long-term backers gain governance rights — voting on features, early access, formal advisory role. Transforms engaged users into platform co-owners. (Nadia Asparouhova)
-- [ ] **[COMPLIANCE-1] DMCA takedown procedure page** — Build `/dmca` page with formal takedown request form containing all required 17 U.S.C. § 512(c)(3) statutory elements. Completes safe harbor compliance picture referenced in TOS Section 9.13.5. (Patrick Collison, Trae Stephens)
+- [x] **[COMPLIANCE-1] DMCA takedown procedure page** — Build `/dmca` page with formal takedown request form containing all required 17 U.S.C. § 512(c)(3) statutory elements. Completes safe harbor compliance picture referenced in TOS Section 9.13.5. (Patrick Collison, Trae Stephens)
 - [x] **[GROWTH-5] Day 1 activation funnel — "First Dollar in 24 Hours"** — Define the single action correlating most strongly with 30-day retention (likely "first Kick In tip received" or "first BopShop sale") and build a guided post-onboarding activation sequence around reaching it. (Casey Winters)
 
 ### STRATEGIC — Long-Term Moat
@@ -5386,3 +5386,22 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] 60 vitest tests — ACTIVATION_STEPS structure, step ordering, completion tracking, milestone detection, seeding logic, dismissAll, markStepComplete, skipStep, refreshHints, LLM mocking, full lifecycle state machine, edge cases
 - [x] 0 TypeScript errors across entire project
 - [x] Total test suite: 741 passing (60 new activation funnel tests added)
+
+### COMPLIANCE-1 Completion — Global IP Takedown System (Mar 1, 2026)
+
+- [x] 9 new database tables: takedown_notices, counter_notices, takedown_actions, trusted_flaggers, fingerprint_scans, ip_strikes, repeat_infringer_log, takedown_appeals, compliance_reports
+- [x] tRPC takedown router: submitNotice, checkStatus, submitCounterNotice, submitAppeal, adminListNotices, adminGetNotice, adminUpdateNotice, adminGetMetrics, adminListFlaggers
+- [x] LLM-powered intake assessment (risk level, validity, priority suggestion) with fail-open behavior
+- [x] 6 jurisdictions: US (DMCA 17 U.S.C. § 512), EU (DSA Article 16), UK (CDPA 1988), CA (notice-and-notice), AU (Copyright Act 1968), WW (WIPO-aligned)
+- [x] SLA enforcement: EU urgent = 12h, US urgent = 24h, CA normal = 96h, WW low = 240h
+- [x] Trusted flagger regime (EU DSA Article 22): premium → urgent, elevated → high priority
+- [x] Canada notice-and-notice auto-forwarding action logged
+- [x] Counter-notice 10-business-day reinstatement window (skips weekends)
+- [x] Full audit trail (16 action types, automated vs manual distinction)
+- [x] Repeat infringer policy (3-strike threshold, DMCA safe harbor requirement)
+- [x] Public /dmca page with multi-jurisdiction form (all 17 U.S.C. § 512(c)(3) elements)
+- [x] Artist counter-notice page (/dmca/counter-notice) with jurisdiction consent
+- [x] Admin compliance dashboard (/admin/compliance) with queue, metrics, trusted flaggers
+- [x] 77 vitest tests passing (ticket ID format, SLA math, state machine, DMCA elements, etc.)
+- [x] Zero TypeScript errors
+- [x] Total test suite: 818 passing, 1 pre-existing failure (aiDetection live API call)

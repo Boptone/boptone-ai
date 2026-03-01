@@ -47,6 +47,7 @@ import { financeRouter } from "./routers/finance";
 import { toneyAgentRouter } from "./routers/toneyAgentRouter";
 import { productRatingsRouter } from "./routers/productRatings";
 import { activationFunnelRouter } from "./routers/activationFunnel";
+import { takedownRouter } from "./routers/takedown";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -781,6 +782,7 @@ export const appRouter = router({
   toneyAgent: toneyAgentRouter,
   productRatings: productRatingsRouter,
   activation: activationFunnelRouter,
+  takedown: takedownRouter,
 
   // Workflow Automation System (Pro/Enterprise)
   workflows: workflowsRouter,
