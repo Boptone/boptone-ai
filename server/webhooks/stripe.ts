@@ -2,11 +2,13 @@ import { Request, Response } from "express";
 import { stripe } from "../stripe";
 import { getDb } from "../db";
 import { bapPayments, subscriptions, orders, orderItems, tips, transactions, bapStreamPayments, products, users, payouts } from "../../drizzle/schema";
-import { eq } from "drizzle-orm";
+import type { Product } from "../../drizzle/schema";
+import { eq, inArray } from "drizzle-orm";
 import { calculateFees } from "../stripe";
 import { getEarningsBalance, updateEarningsBalance } from "../db";
 import { fireWorkflowEvent } from "../workflowEngine";
 import { cancelAbandonedCartRecovery } from "../services/abandonedCartService";
+import { distributeRevenue } from "../services/revenueSplitEngine";
 
 /**
  * Stripe Webhook Handler
@@ -61,13 +63,11 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         await handleTransferCreated(eventData);
         break;
 
-      // @ts-expect-error Stripe SDK types don't include transfer.paid/failed but they are real events
       case 'transfer.paid':
         await handleTransferPaid(eventData);
         break;
 
       case 'transfer.reversed':
-      // @ts-expect-error Stripe SDK types don't include transfer.failed but it is a real event
       case 'transfer.failed':
         await handleTransferFailed(eventData);
         break;
@@ -222,144 +222,195 @@ async function handleProSubscriptionCheckout(session: any, db: any) {
 }
 
 /**
- * Handle BopShop merch purchase
+ * Handle BopShop merch purchase.
+ * Supports both:
+ *   - Single-product checkout (legacy): metadata has artistId + productId + quantity
+ *   - Multi-item cart checkout: metadata has paymentType=bopshop + cartItems JSON
  */
 async function handleBopShopPayment(session: any, db: any) {
   const userId = parseInt(session.metadata?.userId || '0');
-  const artistId = parseInt(session.metadata?.artistId || '0');
-  const productId = parseInt(session.metadata?.productId || '0');
-  const quantity = parseInt(session.metadata?.quantity || '1');
+  const customerName = session.metadata?.customerName || session.customer_details?.name || 'Guest';
+  const customerEmail = session.metadata?.customerEmail || session.customer_email || '';
 
-  if (!userId || !artistId || !productId) {
-    console.error('[Stripe Webhook] Missing required metadata for BopShop payment');
+  if (!userId) {
+    console.error('[Stripe Webhook] Missing userId for BopShop payment');
     return;
   }
 
-  // Get product details
-  const [product] = await db
+  // ── Determine cart items ──────────────────────────────────────────────────
+  // New cart checkout embeds a compact JSON array in metadata.cartItems:
+  //   [{p: productId, v: variantId|null, q: quantity, u: unitPrice, a: artistId}]
+  // Legacy single-product checkout uses metadata.productId + artistId + quantity.
+  let cartEntries: Array<{ p: number; v: number | null; q: number; u: number; a: number }> = [];
+
+  if (session.metadata?.cartItems) {
+    try {
+      cartEntries = JSON.parse(session.metadata.cartItems);
+    } catch {
+      console.error('[Stripe Webhook] Failed to parse cartItems metadata');
+    }
+  }
+
+  if (cartEntries.length === 0) {
+    // Fall back to legacy single-product metadata
+    const productId = parseInt(session.metadata?.productId || '0');
+    const artistId = parseInt(session.metadata?.artistId || '0');
+    const quantity = parseInt(session.metadata?.quantity || '1');
+    if (!productId || !artistId) {
+      console.error('[Stripe Webhook] Missing required metadata for BopShop payment (no cartItems, no productId)');
+      return;
+    }
+    cartEntries = [{ p: productId, v: null, q: quantity, u: 0, a: artistId }];
+  }
+
+  // ── Fetch all referenced products in one query ────────────────────────────
+  const productIdSet = new Set<number>(cartEntries.map(e => e.p));
+  const productIds = Array.from(productIdSet);
+  const productRows: Product[] = await db
     .select()
     .from(products)
-    .where(eq(products.id, productId))
-    .limit(1);
+    .where(inArray(products.id, productIds));
+  const productMap = new Map<number, Product>(productRows.map((p) => [p.id, p]));
 
-  if (!product) {
-    console.error(`[Stripe Webhook] Product ${productId} not found`);
-    return;
+  // ── Group cart entries by artistId (one order per artist) ─────────────────
+  // BopShop products can belong to different artists; create a separate order per artist.
+  type CartEntry = { p: number; v: number | null; q: number; u: number; a: number };
+  const byArtist = new Map<number, CartEntry[]>();
+  for (const entry of cartEntries) {
+    const product = productMap.get(entry.p);
+    const artistId = entry.a || product?.artistId;
+    if (!artistId) {
+      console.warn(`[Stripe Webhook] No artistId for product ${entry.p}, skipping`);
+      continue;
+    }
+    if (!byArtist.has(artistId)) byArtist.set(artistId, []);
+    byArtist.get(artistId)!.push({ ...entry, a: artistId });
   }
 
-  const totalAmount = product.price * quantity;
+  const totalAmount = session.amount_total || 0;
   const fees = calculateFees({ amount: totalAmount, paymentType: 'bopshop' });
 
-  // Generate order number
-  const orderNumber = `BOP-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+  // ── Create one order per artist ───────────────────────────────────────────
+  const byArtistEntries = Array.from(byArtist.entries());
+  for (const [artistId, entries] of byArtistEntries) {
+    const orderSubtotal = entries.reduce((sum, e) => {
+      const product = productMap.get(e.p);
+      const unitPrice = e.u || product?.price || 0;
+      return sum + unitPrice * e.q;
+    }, 0);
 
-  // Create order
-  const [order] = await db
-    .insert(orders)
-    .values({
-      orderNumber,
-      customerId: userId,
-      artistId,
-      subtotal: totalAmount,
-      total: totalAmount,
-      currency: session.currency?.toUpperCase() || 'USD',
-      paymentStatus: 'paid',
-      paymentMethod: 'stripe',
-      paymentIntentId: session.payment_intent,
-      paidAt: new Date(),
-      customerEmail: session.customer_email || '',
-    });
+    const orderNumber = `BOP-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-  // Create order item
-  await db
-    .insert(orderItems)
-    .values({
-      orderId: order.id,
-      productId,
-      productName: product.name,
-      productType: product.type,
-      quantity,
-      pricePerUnit: product.price,
-      subtotal: totalAmount,
-      total: totalAmount,
-      fulfillmentStatus: product.type === 'digital' ? 'fulfilled' : 'unfulfilled',
-      digitalFileUrl: product.digitalFileUrl || null,
-    });
+    // Build shipping address from Stripe session if available
+    const shipping = session.shipping_details?.address;
+    const shippingAddress = shipping ? {
+      name: session.shipping_details?.name || customerName,
+      line1: shipping.line1 || '',
+      line2: shipping.line2 || undefined,
+      city: shipping.city || '',
+      state: shipping.state || '',
+      zip: shipping.postal_code || '',
+      country: shipping.country || 'US',
+    } : undefined;
 
-  // Create transaction record
-  await db
-    .insert(transactions)
-    .values({
+    const orderInsertResult = await db
+      .insert(orders)
+      .values({
+        orderNumber,
+        customerId: userId,
+        artistId,
+        subtotal: orderSubtotal,
+        total: orderSubtotal,
+        currency: session.currency?.toUpperCase() || 'USD',
+        paymentStatus: 'paid',
+        paymentMethod: 'stripe',
+        paymentIntentId: session.payment_intent,
+        paidAt: new Date(),
+        customerName,
+        customerEmail,
+        ...(shippingAddress && { shippingAddress }),
+      });
+    const orderId = Number(orderInsertResult[0].insertId);
+
+    // Create order items
+    for (const entry of entries) {
+      const product = productMap.get(entry.p);
+      if (!product) {
+        console.warn(`[Stripe Webhook] Product ${entry.p} not found, skipping order item`);
+        continue;
+      }
+      const unitPrice = entry.u || product.price;
+      const lineTotal = unitPrice * entry.q;
+
+      await db.insert(orderItems).values({
+        orderId,
+        productId: entry.p,
+        variantId: entry.v || null,
+        productName: product.name,
+        productType: product.type,
+        quantity: entry.q,
+        pricePerUnit: unitPrice,
+        subtotal: lineTotal,
+        total: lineTotal,
+        fulfillmentStatus: product.type === 'digital' ? 'fulfilled' : 'unfulfilled',
+        digitalFileUrl: product.digitalFileUrl || null,
+      });
+
+      // Update inventory
+      if (product.trackInventory) {
+        await db
+          .update(products)
+          .set({ inventoryQuantity: Math.max(0, (product.inventoryQuantity ?? 0) - entry.q) })
+          .where(eq(products.id, entry.p));
+      }
+    }
+
+    // Create transaction record for this artist's portion
+    const artistFees = calculateFees({ amount: orderSubtotal, paymentType: 'bopshop' });
+    await db.insert(transactions).values({
       type: 'payment',
-      amount: totalAmount,
+      amount: orderSubtotal,
       currency: session.currency?.toUpperCase() || 'USD',
       status: 'completed',
       stripePaymentIntentId: session.payment_intent,
       fromUserId: userId,
       toUserId: null,
-      orderId: order.id,
-      platformFee: fees.platformFee,
-      processingFee: fees.stripeFee,
-      netAmount: fees.artistReceives,
+      orderId,
+      platformFee: artistFees.platformFee,
+      processingFee: artistFees.stripeFee,
+      netAmount: artistFees.artistReceives,
     });
 
-  // Update product inventory
-  if (product.trackInventory) {
-    await db
-      .update(products)
-      .set({
-        inventoryQuantity: product.inventoryQuantity - quantity,
-      })
-      .where(eq(products.id, productId));
+    // Update artist earnings balance
+    try {
+      const balance = await getEarningsBalance(artistId);
+      if (balance) {
+        await updateEarningsBalance(artistId, {
+          totalEarnings: balance.totalEarnings + artistFees.artistReceives,
+          availableBalance: balance.availableBalance + artistFees.artistReceives,
+        });
+      }
+    } catch (err) {
+      console.error(`[Stripe Webhook] Failed to update earnings balance for artist ${artistId}:`, err);
+    }
+
+    // Fire workflow event
+    const firstEntry = entries[0];
+    const firstProduct = productMap.get(firstEntry?.p);
+    fireWorkflowEvent('bopshop_sale', artistId, {
+      orderId,
+      orderNumber,
+      productId: firstEntry?.p,
+      productName: firstProduct?.name,
+      amount: orderSubtotal,
+      buyerId: userId,
+      itemCount: entries.length,
+    }).catch((err: any) => console.error('[Workflow] bopshop_sale event error:', err));
+
+    console.log(`[Stripe Webhook] BopShop order ${orderNumber} created for artist ${artistId} — ${entries.length} item(s), $${(orderSubtotal / 100).toFixed(2)}`);
   }
 
-  // Track purchase in BOPixel (invisible to artist)
-  try {
-    // Send tracking event to BOPixel endpoint
-    const trackingPayload = {
-      eventId: `purchase-${order.id}-${Date.now()}`,
-      pixelUserId: session.client_reference_id || `user-${userId}`,
-      sessionId: session.id,
-      artistId: artistId.toString(),
-      eventType: 'purchase',
-      eventName: 'Purchase Completed',
-      pageUrl: session.success_url || '',
-      pageTitle: 'Checkout Success',
-      referrer: null,
-      deviceType: 'unknown',
-      browser: 'unknown',
-      os: 'unknown',
-      userAgent: '',
-      customData: {
-        orderId: order.id,
-        orderNumber,
-        productId,
-        productName: product.name,
-        quantity
-      },
-      revenue: totalAmount / 100, // Convert cents to dollars
-      currency: session.currency?.toUpperCase() || 'USD',
-      productId,
-      timestamp: new Date().toISOString()
-    };
-    
-    // Note: In production, this would be sent via internal API call
-    // For now, we'll log it for tracking purposes
-    console.log('[BOPixel] Purchase tracked:', trackingPayload);
-  } catch (error) {
-    console.error('[BOPixel] Failed to track purchase:', error);
-  }
-  
-  // Fire workflow event for bopshop_sale triggers (non-blocking)
-  fireWorkflowEvent("bopshop_sale", artistId, {
-    orderId: order.id,
-    orderNumber,
-    productId,
-    productName: product.name,
-    amount: totalAmount,
-    buyerId: userId,
-  }).catch((err) => console.error("[Workflow] bopshop_sale event error:", err));
-  console.log(`[Stripe Webhook] BopShop order ${orderNumber} created for user ${userId}`);
+  console.log(`[Stripe Webhook] BopShop payment processed for user ${userId} — ${byArtistEntries.length} artist order(s)`);
 }
 
 /**
@@ -410,6 +461,20 @@ async function handleBopAudioPayment(session: any, db: any) {
       processingFee: fees.stripeFee,
       netAmount: fees.artistReceives,
     });
+
+  // ── Distribute revenue to songwriter splits ──────────────────────────────
+  distributeRevenue({
+    trackId,
+    totalAmount,
+    type: 'stream',
+    fromUserId: userId,
+  }).then(result => {
+    if (!result.success) {
+      console.error(`[Stripe Webhook] Revenue split failed for track ${trackId}:`, result.error);
+    } else {
+      console.log(`[Stripe Webhook] Revenue split: $${(result.artistNetAmount / 100).toFixed(2)} distributed across ${result.distributions.length} writer(s)`);
+    }
+  }).catch(err => console.error('[Stripe Webhook] distributeRevenue error:', err));
 
   console.log(`[Stripe Webhook] BopAudio payment for ${streamCount} stream(s) of track ${trackId}`);
 }
@@ -468,6 +533,19 @@ async function handleKickinPayment(session: any, db: any) {
       stripePaymentIntentId: session.payment_intent,
     });
 
+  // ── Update artist earnings balance directly (tips are artist-level, no track split) ──
+  try {
+    const balance = await getEarningsBalance(artistId);
+    if (balance) {
+      await updateEarningsBalance(artistId, {
+        totalEarnings: balance.totalEarnings + fees.artistReceives,
+        availableBalance: balance.availableBalance + fees.artistReceives,
+      });
+    }
+  } catch (err) {
+    console.error(`[Stripe Webhook] Failed to update earnings balance for artist ${artistId} (tip):`, err);
+  }
+
   console.log(`[Stripe Webhook] Kick-in tip of $${(totalAmount / 100).toFixed(2)} from user ${userId} to artist ${artistId}`);
 }
 
@@ -508,6 +586,15 @@ async function handleBopsTipPayment(session: any, db: any) {
       netAmount: fees.artistReceives,
     });
     console.log(`[Stripe Webhook] Bops tip of $${(amountCents / 100).toFixed(2)} recorded for artist ${artistId}`);
+
+    // Update artist earnings balance
+    const balance = await getEarningsBalance(artistId);
+    if (balance) {
+      await updateEarningsBalance(artistId, {
+        totalEarnings: balance.totalEarnings + fees.artistReceives,
+        availableBalance: balance.availableBalance + fees.artistReceives,
+      });
+    }
   } catch (err: any) {
     // Graceful fallback — log but don't fail the webhook
     console.error('[Stripe Webhook] Failed to insert bops tip:', err.message);

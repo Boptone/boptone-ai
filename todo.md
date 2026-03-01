@@ -5357,3 +5357,12 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] **[AI-1] Toney autonomous agent mode** — Build `server/agents/toneyAgent.ts` that reads `artist_toney_profiles`, monitors metrics, and proactively creates/executes workflow actions. Cron-driven, LLM-powered, surfaced in a dashboard panel. (22/50 auditors, Dan Shipper)
 - [x] **[COMMERCE-2b] Product ratings for recommendation engine** — Explicit 1-5 star ratings on BopShop products. Schema: `product_ratings` table. tRPC: `rateProduct`, `getMyRating`, `getProductRatingStats`. Collaborative filter weighted by rating signal. Star widget UI on product page.
 - [x] **[COMMERCE-2c] Top Rated Products section on BopShop** — Surface highly-rated items in a dedicated section on the main BopShop page using productRatings data. Global top-rated tRPC procedure, star display, rating count, and "Shop Now" CTA.
+
+---
+
+## 🚀 Tier 1 Revenue-Blocking Fixes (March 1, 2026)
+
+- [x] **[TIER-1a] Stripe webhook → multi-item cart order records** — `checkout.session.completed` now creates one order per artist from compact `cartItems` metadata. Handles single-product and multi-item cart flows. `paymentType: 'bopshop'` embedded in session metadata.
+- [x] **[TIER-1b] Stripe Connect onboarding** — Already fully built (`stripeConnectRouter` + `PayoutSettings.tsx`). Verified complete.
+- [x] **[TIER-1c] Payout request interface** — Already fully built (`payoutsRouter.requestPayout` with instant/standard logic). Verified complete.
+- [x] **[TIER-1d] Revenue split auto-calculation** — `distributeRevenue` wired into `handleBopAudioPayment` (streams). Artist-level earnings balance updated directly for Kick In and Bops tips (no trackId required).

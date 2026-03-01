@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, and, isNull } from "drizzle-orm";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { cartItems, products, productVariants, artistProfiles } from "../../drizzle/schema";
+import { cartItems, products, productVariants } from "../../drizzle/schema";
 import Stripe from "stripe";
 import { ENV } from "../_core/env";
 import { scheduleAbandonedCartRecovery } from "../services/abandonedCartService";
@@ -14,7 +14,9 @@ const stripe = new Stripe(ENV.stripeSecretKey, {
 
 export const checkoutRouter = router({
   /**
-   * Create Stripe checkout session from cart
+   * Create Stripe checkout session from cart.
+   * Embeds paymentType + compact cart snapshot in session metadata so the
+   * checkout.session.completed webhook can create a full order record.
    */
   createSession: protectedProcedure.mutation(async ({ ctx }) => {
     const db = await getDb();
@@ -49,7 +51,7 @@ export const checkoutRouter = router({
       }
 
       const price = item.variant?.price || item.product.price;
-      const name = item.variant 
+      const name = item.variant
         ? `${item.product.name} - ${item.variant.name}`
         : item.product.name;
 
@@ -60,7 +62,7 @@ export const checkoutRouter = router({
             name,
             description: item.product.description || undefined,
             images: item.product.images && item.product.images.length > 0
-              ? [item.product.images[0].url] 
+              ? [item.product.images[0].url]
               : undefined,
             metadata: {
               productId: item.product.id.toString(),
@@ -72,6 +74,22 @@ export const checkoutRouter = router({
         quantity: item.quantity,
       };
     });
+
+    // Serialize cart items for webhook order creation.
+    // Compact format to stay within Stripe's 500-char metadata value limit.
+    // Fields: p=productId, v=variantId, q=quantity, u=unitPrice(cents), a=artistId
+    const cartMeta = items.map(item => ({
+      p: item.productId,
+      v: item.variantId ?? null,
+      q: item.quantity,
+      u: item.variant?.price ?? item.product!.price,
+      a: item.product!.artistId,
+    }));
+    const cartMetaStr = JSON.stringify(cartMeta);
+    // Gracefully truncate if cart is enormous (>10 items at long IDs)
+    const safeCartMeta = cartMetaStr.length <= 500
+      ? cartMetaStr
+      : JSON.stringify(cartMeta.slice(0, 10));
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
@@ -86,6 +104,8 @@ export const checkoutRouter = router({
         userId: ctx.user.id.toString(),
         customerEmail: ctx.user.email || "",
         customerName: ctx.user.name || "",
+        paymentType: "bopshop",      // ← tells webhook to create order records
+        cartItems: safeCartMeta,     // ← compact cart snapshot for order line items
       },
       shipping_address_collection: {
         allowed_countries: ["US", "CA", "GB", "AU"], // Expand as needed
@@ -94,7 +114,6 @@ export const checkoutRouter = router({
     });
 
     // Schedule 3-touch abandoned cart recovery (fire-and-forget).
-    // scheduleAbandonedCartRecovery builds the cart snapshot internally from the DB.
     scheduleAbandonedCartRecovery({
       userId: ctx.user.id,
       sessionId: session.id,
