@@ -161,7 +161,7 @@ export default function Landing() {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl">
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-6 leading-[1.1] sm:leading-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-6 leading-[0.9]">
               <span className={`inline-block transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
                 {rotatingWords[verbIndex]}
               </span>
