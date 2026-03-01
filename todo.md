@@ -5419,3 +5419,112 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** 883 tests passing, 0 TypeScript errors, 1 pre-existing failure (aiDetection live API)
+
+---
+
+## BopMusic DSP Distribution System — Full Build Roadmap
+### Source: 100-Expert Strategic Review, March 1 2026
+### Reference: docs/DISTRIBUTION_STRATEGY_REPORT.md
+### Goal: Make Boptone a full TuneCore/DistroKid replacement — artists distribute globally without needing any third-party distributor
+
+---
+
+### DISTRO-FOUNDATION — Identifiers & Standards (No Legal Prerequisites)
+
+- [ ] **[DISTRO-F1] ISRC generation engine** — Build `server/lib/isrcGenerator.ts` that auto-generates valid ISRC codes (format: `[CountryCode][RegistrantCode][Year][7-digit designation]`) for every track on upload. Store in `tracks.isrc`. Increment designation counter atomically. Display ISRC on track detail page.
+- [ ] **[DISTRO-F2] UPC/EAN barcode generation** — Build `server/lib/upcGenerator.ts` that generates valid UPC-A (12-digit) and EAN-13 barcodes for album/EP releases. Store in `releases.upc`. Display barcode visual on release detail page.
+- [ ] **[DISTRO-F3] ISWC metadata field** — Add `iswc` field to the tracks table (format: T-XXXXXXXXX-X). Surface in upload form as optional field for songwriters who know their ISWC. Required for accurate MLC/CMO matching.
+- [ ] **[DISTRO-F4] Songwriter metadata normalization** — Extend track upload form to capture: songwriter name(s), songwriter IPI/CAE number, publisher name, publisher IPI, composition title (if different from recording title), language of lyrics. Store in `trackWriters` table. This is the data the MLC uses to match mechanical royalties.
+- [ ] **[DISTRO-F5] Release metadata schema** — Add a `releases` table: title, type (single/EP/album), UPC, release date, label name, catalog number, copyright year, copyright owner, production year, production owner, genre (primary + secondary), subgenre, language, explicit flag, territory restrictions (JSON). This is the album-level container DDEX requires.
+- [ ] **[DISTRO-F6] Contributor roles schema** — Add `releaseContributors` table: release_id, contributor_name, contributor_role (enum: MainArtist, FeaturedArtist, Remixer, Producer, Composer, Lyricist, MixEngineer, MasteringEngineer, Conductor, Orchestra, etc.), ISNI number (optional). Required for Apple Music detailed credits and YouTube Content ID.
+- [ ] **[DISTRO-F7] Territory deal configuration** — Add `distributionTerritories` table: distribution_id, territory_code (ISO 3166-1 alpha-2), deal_type (stream/download/both), price_tier, start_date, end_date. Enables geo-restriction for compliance with local content regulations (China, Russia, MENA markets).
+
+---
+
+### DISTRO-AUDIO — Content Quality Gate (Build Before Any DSP Delivery)
+
+- [ ] **[DISTRO-A1] Audio format validator** — Build `server/lib/audioValidator.ts` using `music-metadata` npm package. On every track upload: validate file format (WAV/FLAC/AIFF/MP3), sample rate (minimum 44.1kHz), bit depth (minimum 16-bit), duration (minimum 30 seconds, maximum 10 hours), file size (maximum 2GB), channel count (mono/stereo/multi). Reject uploads that fail with specific error messages. This is the gate before any DSP delivery.
+- [ ] **[DISTRO-A2] Audio loudness analysis** — Integrate FFmpeg (already available server-side) to measure integrated loudness (LUFS), true peak (dBTP), and dynamic range (LRA) for every uploaded track. Store in `tracks.audioMetrics` JSON field. Flag tracks that exceed DSP loudness limits (Spotify: -14 LUFS, Apple: -16 LUFS, YouTube: -14 LUFS). Show loudness meter on track detail page.
+- [ ] **[DISTRO-A3] Audio transcoding pipeline** — Build `server/lib/audioTranscoder.ts` using FFmpeg. For each track approved for distribution, generate: AAC 256kbps (Apple Music, Amazon), Ogg Vorbis 320kbps (Spotify), FLAC 16-bit/44.1kHz (Tidal HiFi), MP3 320kbps (Amazon, general fallback). Store transcoded files in S3 at `transcoded/{trackId}/{format}/`. Process asynchronously via delivery queue.
+- [ ] **[DISTRO-A4] ACRCloud fingerprinting integration** — Integrate ACRCloud API into the upload pipeline. Before any track is approved for DSP delivery: scan against ACRCloud's database of 100M+ recordings. If match found: flag as potential copyright conflict, block delivery, notify artist with match details. Add `tracks.fingerprintStatus` field (pending/clear/flagged/blocked).
+- [ ] **[DISTRO-A5] Cover art validator** — Validate artwork on upload: minimum 3000×3000px, maximum 6000×6000px, square aspect ratio (1:1), RGB color space (not CMYK), JPEG or PNG format, maximum 30MB. Reject non-compliant artwork with specific error. Required by Apple Music, Spotify, and all major DSPs.
+- [ ] **[DISTRO-A6] Dolby Atmos / Spatial Audio support** — Add support for `.atmos` and `.ec3` Dolby Atmos master file uploads. Store alongside standard stereo master in S3. Deliver to Apple Music and Tidal when Spatial Audio variant is available. Show "Spatial Audio" badge on tracks that have Atmos masters. Premium differentiator — most indie distributors do not support this.
+
+---
+
+### DISTRO-DDEX — Delivery Protocol Engine
+
+- [ ] **[DISTRO-D1] DDEX ERN 4.1 encoder** — Build `server/lib/ddexEncoder.ts` that generates valid DDEX ERN 4.1 XML from a release object. Must produce: `NewReleaseMessage` with `MessageHeader`, `ResourceList` (SoundRecording + Image), `ReleaseList` (Album + TrackRelease), `DealList` (per-territory streaming and/or download deals). Validate output against DDEX ERN 4.1 XSD schema. Core protocol for Spotify, Apple Music, Tidal, Amazon, Deezer, and most other DSPs.
+- [ ] **[DISTRO-D2] DDEX ERN validator** — Build a validation layer that checks generated ERN XML against the official DDEX XSD schema before delivery. Log validation errors with field-level detail. Never deliver invalid DDEX to a DSP — a single malformed message can result in account suspension.
+- [ ] **[DISTRO-D3] DDEX takedown message encoder** — Build `server/lib/ddexTakedown.ts` that generates `PurgeReleaseMessage` DDEX XML for takedown requests. Triggered when an artist removes a release from distribution or when the compliance system flags a rights violation.
+- [ ] **[DISTRO-D4] DDEX update message encoder** — Build `server/lib/ddexUpdate.ts` that generates `UpdateReleaseMessage` DDEX XML for metadata corrections (artist name changes, title corrections, ISRC updates). DSPs require formal update messages — you cannot simply re-deliver the original ERN.
+
+---
+
+### DISTRO-DELIVERY — DSP Delivery Clients
+
+- [ ] **[DISTRO-DL1] Delivery queue system** — Build `server/lib/deliveryQueue.ts` using a database-backed job queue (add `deliveryJobs` table: release_id, platform_id, status, attempts, next_retry, error_log, created_at, completed_at). Process jobs asynchronously. Retry failed deliveries with exponential backoff (1h, 4h, 24h, 72h). Alert admin after 3 failed attempts. Backbone of the entire delivery system.
+- [ ] **[DISTRO-DL2] White-label infrastructure integration (Revelator or FUGA)** — Integrate with Revelator Pro API or FUGA API as the primary delivery mechanism. These providers have existing approved relationships with all major DSPs. Revelator API: REST-based, accepts release metadata + audio file URLs, handles DDEX encoding and SFTP delivery internally. FUGA: similar REST API with preferred partner status at Apple, Spotify, Amazon. Fastest path to live tracks on DSPs.
+- [ ] **[DISTRO-DL3] Delivery status webhook handler** — Build `server/webhooks/distributionStatus.ts` to receive delivery status callbacks from the white-label provider. Update `trackDistributions.status` in real-time. Notify artist when their track goes live on each platform. Show per-platform live status on the artist's distribution dashboard.
+- [ ] **[DISTRO-DL4] DSP platform registry** — Populate the `distributionPlatforms` table with all 30+ target DSPs: Spotify, Apple Music, YouTube Music, Amazon Music, Tidal, Deezer, SoundCloud, Pandora, iHeartRadio, TikTok Music Library, Instagram/Facebook (Meta), Boomplay, JioSaavn, Anghami, Melon, Line Music, NetEase (via aggregator), QQ Music/Kugou/Kuwo (via China aggregator), Napster, 7digital, Beatport, Traxsource, Bandcamp, Audiomack, Claro Música, Zvuk, Yandex Music. Include: logo, slug, territory coverage, DDEX version supported, audio format requirements, typical go-live SLA.
+- [ ] **[DISTRO-DL5] China market delivery (via aggregator)** — Integrate with Believe Digital or a China-approved aggregator for QQ Music, Kugou, and Kuwo delivery. Chinese platforms require: Chinese character metadata support (UTF-8), content compliance screening, separate territory deal configuration. Build a China-specific delivery flow that routes through the aggregator.
+- [ ] **[DISTRO-DL6] TikTok Music Library priority delivery** — Build a dedicated TikTok delivery flow: deliver via DDEX ERN to TikTok's ingestion endpoint, support TikTok-specific metadata (mood tags, energy level, BPM), track TikTok viral metrics (video uses, reach) in the analytics dashboard. Make TikTok a default-on platform in the distribution flow. Highest-impact discovery channel for emerging artists.
+
+---
+
+### DISTRO-ROYALTIES — Revenue Tracking & Payout Infrastructure
+
+- [ ] **[DISTRO-R1] DSP royalty ingestion** — Build `server/lib/royaltyIngestion.ts` to parse and ingest royalty reports from DSPs (via white-label provider). DSP royalty reports arrive as CSV or DDEX RDR XML files, typically monthly with 2–3 month lag. Parse reports, match to `trackDistributions` records by ISRC, store in `distributionRevenue` table. Handle currency conversion (store in USD cents, record original currency).
+- [ ] **[DISTRO-R2] Real-time streaming counter** — Build a streaming counter that aggregates BAP (Boptone's own platform) streams in real-time and DSP streams from royalty reports. Display on artist dashboard: total streams (all platforms), streams by platform (bar chart), streams by territory (world map), streams over time (line chart). Transparency layer that differentiates Boptone from DistroKid.
+- [ ] **[DISTRO-R3] Revenue split calculator** — Build `server/lib/revenueSplitCalculator.ts` that calculates per-stream payouts: gross DSP revenue → subtract platform fee (DSP's cut, typically 30%) → subtract Boptone distribution fee (based on artist's pricing tier) → calculate writer splits (from `trackWriters` table) → calculate featured artist splits → net artist payout. Store calculation breakdown in `distributionRevenue` table for full transparency.
+- [ ] **[DISTRO-R4] SoundExchange royalty tracking** — Add SoundExchange as a separate revenue source in the royalty system. SoundExchange collects digital performance royalties for non-interactive streaming (internet radio, satellite radio). Build a SoundExchange registration helper that guides artists through registration at soundexchange.com. Track SoundExchange earnings separately from interactive streaming royalties.
+- [ ] **[DISTRO-R5] Neighboring rights tracking** — Add a neighboring rights revenue category to the royalty system. Neighboring rights are performance royalties paid to recording artists (not songwriters) when their recordings are played on radio or in public spaces internationally. Build a neighboring rights collection helper that connects artists with Songtrust or a similar collection service.
+- [ ] **[DISTRO-R6] Royalty dashboard** — Build `client/src/pages/distribution/RoyaltyDashboard.tsx` with: total earnings (all sources), earnings by platform, earnings by territory, earnings by time period, pending vs. paid breakdown, next payment date, payment history. Artist's financial command center for their global distribution.
+
+---
+
+### DISTRO-UX — Artist-Facing Distribution Interface
+
+- [ ] **[DISTRO-UX1] Distribution wizard** — Build `client/src/pages/distribution/DistributionWizard.tsx` — a multi-step flow for submitting a release for global distribution: Step 1: Release type (single/EP/album) + basic metadata. Step 2: Track upload(s) with audio quality validation. Step 3: Artwork upload with validation. Step 4: Songwriter/contributor credits. Step 5: Platform selection (checkboxes for all 30+ DSPs, grouped by region). Step 6: Territory configuration (worldwide vs. custom). Step 7: Release date scheduling. Step 8: Review & submit. Replace the existing `BatchUploadDialog` checkbox approach.
+- [ ] **[DISTRO-UX2] Distribution status dashboard** — Build `client/src/pages/distribution/DistributionStatus.tsx` showing: all active releases, per-platform live status with DSP logos, go-live date per platform, stream counts per platform, earnings per platform, takedown controls.
+- [ ] **[DISTRO-UX3] Release scheduling** — Allow artists to set a future release date (minimum 7 days out recommended for DSP processing). Show countdown timer to release date. Send notification when release goes live on each platform. Support pre-save/pre-add links (Spotify pre-save, Apple Music pre-add) — generate shareable pre-release links that convert to stream links on release day.
+- [ ] **[DISTRO-UX4] Platform-specific deep links** — After a track goes live, generate and store direct deep links for each platform: `spotify:track:XXXXX`, `https://music.apple.com/album/XXXXX`, etc. Display as clickable platform badges on the artist's public profile and track pages. Allow artists to share their music across all platforms from a single Boptone link.
+- [ ] **[DISTRO-UX5] Smart link / link-in-bio generator** — Build `client/src/pages/distribution/SmartLink.tsx` — a page at `boptone.com/[artist-slug]/listen` that shows all platforms where a release is available with one-click deep links. Auto-generated when a release goes live. Customizable with artist branding. Replaces the need for Linktree, Songwhip, or similar tools.
+- [ ] **[DISTRO-UX6] Distribution analytics** — Extend the existing analytics dashboard with distribution-specific metrics: streams by platform (Spotify vs. Apple vs. TikTok vs. others), streams by territory (world map), playlist adds (when available from DSP data), save rate (saves/streams ratio), listener demographics by platform. Surface BAP vs. DSP streaming comparison to show artists the value of Boptone's own platform.
+
+---
+
+### DISTRO-CONTENT — Content Moderation & Compliance
+
+- [ ] **[DISTRO-CM1] Pre-delivery content screening pipeline** — Build `server/lib/contentScreening.ts` that runs every track through: (1) ACRCloud fingerprint check, (2) AI-generated content detection (already built), (3) explicit content flagging, (4) metadata completeness check, (5) audio quality gate. Only tracks that pass all 5 checks are eligible for DSP delivery. Store screening results in `tracks.screeningStatus` and `tracks.screeningReport` JSON.
+- [ ] **[DISTRO-CM2] Cover song detection & licensing** — Detect when an artist is uploading a cover song (ACRCloud will identify the original recording). For cover songs: require artist to confirm it is a cover, display mechanical license requirement notice, integrate with a mechanical licensing service. Block cover songs from distribution until mechanical license is confirmed.
+- [ ] **[DISTRO-CM3] Sample clearance workflow** — When ACRCloud detects a sample in an uploaded track: notify artist of the detected sample, require artist to confirm they have cleared the sample or that it is royalty-free, block distribution until confirmation. Log all sample clearance confirmations for legal protection.
+- [ ] **[DISTRO-CM4] Geo-restriction engine** — Build `server/lib/geoRestriction.ts` that applies territory-specific content restrictions before delivery. Some content cannot be delivered to China (political content), Russia (sanctions-related), or certain MENA markets (explicit content). Apply restrictions automatically based on content flags and territory deal configuration.
+
+---
+
+### DISTRO-VIDEO — Music Video Distribution
+
+- [ ] **[DISTRO-V1] Music video upload support** — Extend the upload system to accept video files (MP4, MOV, AVI). Validate: minimum 1080p resolution, H.264 or H.265 codec, AAC audio, -14 LUFS audio loudness, aspect ratio (16:9 standard, 9:16 for vertical/Shorts). Store video files in S3 at `videos/{artistId}/{releaseId}/`.
+- [ ] **[DISTRO-V2] YouTube / Vevo delivery** — Build YouTube music video delivery flow: generate YouTube-compatible metadata XML, deliver via YouTube Content ID partner API (requires YouTube partner agreement), track YouTube video performance (views, revenue) in the analytics dashboard. Build the delivery flow to be Vevo-ready when the agreement is in place.
+- [ ] **[DISTRO-V3] Short-form video delivery** — Build delivery flow for YouTube Shorts, Instagram Reels, and TikTok video content. These are separate from music audio delivery and require platform-specific metadata and format requirements. Short-form video is the highest-impact discovery channel for new artists in 2025–2026.
+
+---
+
+### DISTRO-ADMIN — Internal Operations Dashboard
+
+- [ ] **[DISTRO-AD1] Distribution operations dashboard** — Build `client/src/pages/admin/DistributionOps.tsx` for Boptone staff: queue of pending deliveries, delivery success/failure rates by platform, SLA monitoring (time from submission to live), content screening queue (tracks flagged for manual review), royalty ingestion status (last report received per platform), platform health status (is each DSP accepting deliveries?).
+- [ ] **[DISTRO-AD2] Manual review queue** — Build a manual review workflow for tracks flagged by the content screening pipeline. Admin can: approve (clear for delivery), reject (with reason sent to artist), request more information from artist. All decisions logged with timestamp and reviewer ID.
+- [ ] **[DISTRO-AD3] DSP relationship tracker** — Build a simple CRM-style tracker for DSP partnership status: direct vs. white-label delivery, contact name at each DSP, partnership tier, royalty rate, last communication date, next renewal date. Internal tool for managing the journey from white-label to direct DSP relationships.
+
+---
+
+### DISTRO-FUTURE — Blockchain & Decentralization Layer (36-Month Horizon)
+
+- [ ] **[DISTRO-BL1] Blockchain royalty ledger architecture** — Design the Layer 2 Ethereum (Polygon or Arbitrum) architecture for immutable stream records. Each track gets an on-chain token representing its rights. When a stream occurs on BAP, an on-chain micro-payment is triggered automatically. Trust and transparency layer that no other distributor has built. Architecture design document first — implementation follows.
+- [ ] **[DISTRO-BL2] Smart contract royalty splits** — Build Solidity smart contracts that encode writer splits, featured artist splits, and Boptone's distribution fee on-chain. When a royalty payment arrives, the smart contract automatically distributes to all parties without manual calculation. Eliminates royalty disputes and payment delays.
+- [ ] **[DISTRO-BL3] NFT-based ownership certificates** — Issue NFT ownership certificates for master recordings distributed through Boptone. The NFT is a cryptographic proof of ownership that cannot be altered or disputed. This is the "data ownership" and "master recording ownership" pillar of Music Business 2.0.
+
+---
+*All items above are buildable without legal prerequisites or DSP partnership agreements.*
+*Legal/licensing items (entertainment attorney, DDEX membership, ISRC registrant code, GS1 UPC, Merlin Network, IFPI) are tracked separately in docs/DISTRIBUTION_STRATEGY_REPORT.md and will be revisited when Boptone is ready to go live.*
