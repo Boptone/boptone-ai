@@ -63,12 +63,12 @@ export async function handleStripeWebhook(req: Request, res: Response) {
         await handleTransferCreated(eventData);
         break;
 
-      case 'transfer.paid':
+      case 'transfer.paid' as string:
         await handleTransferPaid(eventData);
         break;
 
       case 'transfer.reversed':
-      case 'transfer.failed':
+      case 'transfer.failed' as string:
         await handleTransferFailed(eventData);
         break;
 

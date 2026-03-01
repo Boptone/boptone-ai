@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation, Link } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -20,10 +20,17 @@ export default function CheckoutSuccess() {
   
   // Clear cart after successful checkout
   const utils = trpc.useUtils();
+  const markActivationStep = trpc.activation.markStepComplete.useMutation();
+  const activationFired = useRef(false);
   useEffect(() => {
     if (session && session.status === "paid") {
       utils.cart.list.invalidate();
       utils.cart.count.invalidate();
+      // Fire activation step: first BopShop purchase (once per session)
+      if (!activationFired.current) {
+        activationFired.current = true;
+        markActivationStep.mutate({ stepKey: "make_first_sale" });
+      }
     }
   }, [session, utils]);
   

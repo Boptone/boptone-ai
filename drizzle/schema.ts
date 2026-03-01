@@ -4618,3 +4618,34 @@ export const productRatings = mysqlTable("product_ratings", {
 }));
 export type ProductRating = typeof productRatings.$inferSelect;
 export type InsertProductRating = typeof productRatings.$inferInsert;
+
+// ============================================================================
+// ARTIST ACTIVATION FUNNEL
+// ============================================================================
+/**
+ * Tracks the 7-step activation funnel for each artist.
+ * One row per artist per step. Steps are seeded on first login after
+ * onboarding completes and personalized via LLM using the artist's Toney profile.
+ * Self-dismisses from the dashboard widget once all steps are completed/skipped.
+ */
+export const artistActivationSteps = mysqlTable("artist_activation_steps", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+  stepKey: varchar("stepKey", { length: 64 }).notNull(),
+  stepTitle: varchar("stepTitle", { length: 255 }).notNull(),
+  stepDescription: text("stepDescription"),
+  stepOrder: int("stepOrder").notNull().default(0),
+  status: mysqlEnum("status", ["pending", "in_progress", "completed", "skipped"]).notNull().default("pending"),
+  personalizedHint: text("personalizedHint"),
+  ctaLabel: varchar("ctaLabel", { length: 128 }),
+  ctaPath: varchar("ctaPath", { length: 255 }),
+  completedAt: timestamp("completedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  uniqueArtistStep: uniqueIndex("unique_artist_activation_step").on(table.artistId, table.stepKey),
+  artistIdIdx: index("activation_artistId_idx").on(table.artistId),
+}));
+
+export type ArtistActivationStep = typeof artistActivationSteps.$inferSelect;
+export type InsertArtistActivationStep = typeof artistActivationSteps.$inferInsert;

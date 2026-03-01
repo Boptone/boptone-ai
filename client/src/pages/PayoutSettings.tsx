@@ -26,6 +26,7 @@ export default function PayoutSettings() {
   const createAccountMutation = trpc.stripeConnect.createConnectAccount.useMutation();
   const createOnboardingLinkMutation = trpc.stripeConnect.createOnboardingLink.useMutation();
   const createDashboardLinkMutation = trpc.stripeConnect.createDashboardLink.useMutation();
+  const markActivationStep = trpc.activation.markStepComplete.useMutation();
 
   // Handle return from Stripe onboarding
   useEffect(() => {
@@ -35,6 +36,8 @@ export default function PayoutSettings() {
 
     if (success === 'true') {
       toast.success("Payout setup complete! You can now receive payments.");
+      // Fire activation step: payout account connected
+      markActivationStep.mutate({ stepKey: "connect_payout_account" });
       refetch();
       // Clean URL
       setLocation('/settings/payouts');

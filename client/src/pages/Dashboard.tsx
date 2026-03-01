@@ -13,6 +13,7 @@ import { EarningsWidget } from "@/components/EarningsWidget";
 import { AIRecommendations } from "@/components/AIRecommendations";
 import { UserAvatar } from "@/components/UserAvatar";
 import { useRequireArtist } from "@/hooks/useRequireArtist";
+import { ActivationFunnelWidget } from "@/components/ActivationFunnelWidget";
 
 export default function Dashboard() {
   useRequireArtist(); // Enforce artist authentication
@@ -253,6 +254,9 @@ export default function Dashboard() {
               </Button>
             </div>
           )}
+          {/* Activation Funnel Widget — GROWTH-5: guides new artists to first revenue action */}
+          <ActivationFunnelWidget />
+
           {/* Quick Actions - BAP Protocol design */}
           <div className="border border-black bg-white p-12 rounded-lg shadow-[4px_4px_0px_0px_black]">
             <h2 className="text-4xl font-bold mb-3">Quick Actions</h2>

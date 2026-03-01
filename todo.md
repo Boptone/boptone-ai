@@ -5346,7 +5346,7 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] **[INFRA-5] Webhook infrastructure for external integrations** — Add `webhooks` table and `webhooks` tRPC router allowing artists to subscribe to platform events (`order_created`, `payout_succeeded`, `track_streamed`). Enables real-time integrations beyond built-in workflows. (Zach Holman)
 - [ ] **[GROWTH-4] Creator tenure / governance rights system** — Formalize `artist_backers` into a "Creator Tenure" system where long-term backers gain governance rights — voting on features, early access, formal advisory role. Transforms engaged users into platform co-owners. (Nadia Asparouhova)
 - [ ] **[COMPLIANCE-1] DMCA takedown procedure page** — Build `/dmca` page with formal takedown request form containing all required 17 U.S.C. § 512(c)(3) statutory elements. Completes safe harbor compliance picture referenced in TOS Section 9.13.5. (Patrick Collison, Trae Stephens)
-- [ ] **[GROWTH-5] Day 1 activation funnel — "First Dollar in 24 Hours"** — Define the single action correlating most strongly with 30-day retention (likely "first Kick In tip received" or "first BopShop sale") and build a guided post-onboarding activation sequence around reaching it. (Casey Winters)
+- [x] **[GROWTH-5] Day 1 activation funnel — "First Dollar in 24 Hours"** — Define the single action correlating most strongly with 30-day retention (likely "first Kick In tip received" or "first BopShop sale") and build a guided post-onboarding activation sequence around reaching it. (Casey Winters)
 
 ### STRATEGIC — Long-Term Moat
 
@@ -5366,3 +5366,23 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] **[TIER-1b] Stripe Connect onboarding** — Already fully built (`stripeConnectRouter` + `PayoutSettings.tsx`). Verified complete.
 - [x] **[TIER-1c] Payout request interface** — Already fully built (`payoutsRouter.requestPayout` with instant/standard logic). Verified complete.
 - [x] **[TIER-1d] Revenue split auto-calculation** — `distributeRevenue` wired into `handleBopAudioPayment` (streams). Artist-level earnings balance updated directly for Kick In and Bops tips (no trackId required).
+
+---
+
+## 🚀 GROWTH-5: Artist Activation Funnel (March 1, 2026)
+
+- [x] **[GROWTH-5] Artist activation funnel** — LLM-personalized post-signup onboarding sequence. Tracks completion of 7 milestones (profile, upload, BopShop, Kick In, BAP stream, payout setup, first fan). Self-dismisses on completion. Dashboard widget + full /onboarding page. (Casey Winters research, strongest 30-day retention predictor)
+
+### GROWTH-5 Completion Details (March 1, 2026)
+
+- [x] `artist_activation_steps` DB table — unique per artist+stepKey, status enum (pending/in_progress/completed/skipped), personalizedHint, ctaLabel, ctaPath
+- [x] `activationFunnelRouter` — 5 tRPC procedures: getSteps (idempotent seed), markStepComplete, skipStep, dismissAll, refreshHints
+- [x] LLM-personalized hints — Toney profile context injected, JSON schema structured output, graceful fallback
+- [x] `ActivationFunnelWidget.tsx` — dashboard widget with progress bar, step cards, Toney hints, milestone celebration, self-dismisses on allComplete
+- [x] Wired `markStepComplete` into Upload.tsx (upload_first_track)
+- [x] Wired `markStepComplete` into BopsVideoUpload.tsx (post_first_bop)
+- [x] Wired `markStepComplete` into PayoutSettings.tsx (connect_payout_account)
+- [x] Wired `markStepComplete` into CheckoutSuccess.tsx (make_first_sale)
+- [x] 60 vitest tests — ACTIVATION_STEPS structure, step ordering, completion tracking, milestone detection, seeding logic, dismissAll, markStepComplete, skipStep, refreshHints, LLM mocking, full lifecycle state machine, edge cases
+- [x] 0 TypeScript errors across entire project
+- [x] Total test suite: 741 passing (60 new activation funnel tests added)

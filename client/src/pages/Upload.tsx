@@ -91,11 +91,15 @@ export default function Upload() {
 
   const [showValidation, setShowValidation] = useState(false);
 
+  const markActivationStep = trpc.activation.markStepComplete.useMutation();
+
   const uploadTrackMutation = trpc.bap.tracks.upload.useMutation({
     onSuccess: () => {
       toast.success("Track published to BAP!", {
         description: "Your music is now live and available to fans worldwide."
       });
+      // Fire activation step: first track uploaded
+      markActivationStep.mutate({ stepKey: "upload_first_track" });
       setLocation("/music");
     },
     onError: (error: any) => {

@@ -234,6 +234,7 @@ export default function BopsVideoUpload({ onSuccess, onCancel }: BopsVideoUpload
   const [isDragging, setIsDragging] = useState(false);
 
   const createBop = trpc.bops.create.useMutation();
+  const markActivationStep = trpc.activation.markStepComplete.useMutation();
 
   // ---------------------------------------------------------------------------
   // File selection handler
@@ -315,6 +316,8 @@ export default function BopsVideoUpload({ onSuccess, onCancel }: BopsVideoUpload
 
       setStage("success");
       toast.success("Bop uploaded! It will be live once reviewed.");
+      // Fire activation step: first Bop posted
+      markActivationStep.mutate({ stepKey: "post_first_bop" });
       onSuccess?.(result.id);
     } catch (err) {
       setStage("error");
