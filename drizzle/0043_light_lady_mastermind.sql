@@ -1,0 +1,1 @@
+ALTER TABLE `bap_tracks` ADD `audioMetrics` json;

@@ -1045,6 +1045,30 @@ export const bapTracks = mysqlTable("bap_tracks", {
   platformFee: int("platformFee").default(5).notNull(), // Percentage (5% for streaming, 10% for DSP)
   totalEarnings: int("totalEarnings").default(0).notNull(), // In cents
   
+  // Audio quality metrics — populated by DISTRO-A1/A2 validator on upload
+  audioMetrics: json("audioMetrics").$type<{
+    qualityTier: 'distribution_ready' | 'boptone_only' | 'rejected';
+    isDistributionReady: boolean;
+    sampleRateHz: number | null;
+    bitDepth: number | null;
+    channels: number | null;
+    bitrateKbps: number | null;
+    isLossless: boolean;
+    codec: string | null;
+    integratedLufs: number | null;
+    truePeakDbtp: number | null;
+    loudnessRange: number | null;
+    isClipping: boolean;
+    spotifyReady: boolean;
+    appleReady: boolean;
+    youtubeReady: boolean;
+    amazonReady: boolean;
+    tidalReady: boolean;
+    deezerReady: boolean;
+    loudnessRecommendation: string | null;
+    validatedAt: string;
+  }>(),
+
   // Status
   status: mysqlEnum("status", ["draft", "processing", "live", "archived"]).default("draft").notNull(),
   isExplicit: boolean("isExplicit").default(false).notNull(),
@@ -1058,7 +1082,7 @@ export const bapTracks = mysqlTable("bap_tracks", {
   artistIdIdx: index("artist_id_idx").on(table.artistId),
   statusIdx: index("status_idx").on(table.status),
   releasedAtIdx: index("released_at_idx").on(table.releasedAt),
-  deletedAtIdx: index("deleted_at_idx").on(table.deletedAt), // Index for filtering soft-deleted records
+  deletedAtIdx: index("deleted_at_idx").on(table.deletedAt),
 }));
 
 export type BapTrack = typeof bapTracks.$inferSelect;

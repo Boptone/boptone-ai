@@ -274,6 +274,13 @@
       "when": 1772400349141,
       "tag": "0042_free_maggott",
       "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "5",
+      "when": 1772404366301,
+      "tag": "0043_light_lady_mastermind",
+      "breakpoints": true
     }
   ]
 }

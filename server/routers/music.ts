@@ -138,6 +138,35 @@ export const musicRouter = router({
           }
         }
         
+        // Build audioMetrics payload from full validation result (DISTRO-A2)
+        const lr = audioValidation.loudnessReport;
+        const tp = audioValidation.technicalProfile;
+        const audioMetricsPayload = {
+          qualityTier: audioValidation.qualityTier,
+          isDistributionReady: audioValidation.isDistributionReady,
+          sampleRateHz: tp?.sampleRateHz ?? null,
+          bitDepth: tp?.bitDepth ?? null,
+          channels: tp?.channels ?? null,
+          bitrateKbps: tp?.bitrateKbps ?? null,
+          isLossless: tp?.isLossless ?? false,
+          codec: tp?.codec ?? null,
+          integratedLufs: lr?.integratedLufs ?? null,
+          truePeakDbtp: lr?.truePeakDbtp ?? null,
+          loudnessRange: lr?.loudnessRange ?? null,
+          isClipping: lr?.isClipping ?? false,
+          spotifyReady: lr?.spotifyReady ?? false,
+          appleReady: lr?.appleReady ?? false,
+          youtubeReady: lr?.youtubeReady ?? false,
+          amazonReady: lr?.integratedLufs !== null && lr?.integratedLufs !== undefined
+            ? Math.abs(lr.integratedLufs - (-14)) <= 3 : false,
+          tidalReady: lr?.integratedLufs !== null && lr?.integratedLufs !== undefined
+            ? Math.abs(lr.integratedLufs - (-14)) <= 3 : false,
+          deezerReady: lr?.integratedLufs !== null && lr?.integratedLufs !== undefined
+            ? Math.abs(lr.integratedLufs - (-15)) <= 3 : false,
+          loudnessRecommendation: lr?.recommendation ?? null,
+          validatedAt: new Date().toISOString(),
+        };
+
         // Insert track into database
         const [track] = await db.insert(bapTracks).values({
           artistId: profile.id,
@@ -158,32 +187,44 @@ export const musicRouter = router({
           publishingData: input.publishingData,
           aiDisclosure: input.aiDisclosure,
           isExplicit: input.isExplicit,
-          status: 'draft', // Start as draft
+          status: 'draft',
+          audioMetrics: audioMetricsPayload,
         });
         
         return {
           success: true,
           trackId: track.insertId,
           message: "Track uploaded successfully",
-          // Quality report returned to client for display in upload UI
+          // Full quality report for client-side display (AudioQualityReport + LoudnessMeter)
           audioQuality: {
             qualityTier: audioValidation.qualityTier,
             isDistributionReady: audioValidation.isDistributionReady,
             summary: audioValidation.summary,
-            warnings: audioValidation.warnings.map(w => w.message),
+            warnings: audioValidation.warnings.map(w => ({ code: w.code, message: w.message, field: w.field })),
+            errors: audioValidation.errors.map(e => ({ code: e.code, message: e.message, field: e.field })),
             recommendations: audioValidation.recommendations,
             loudness: audioValidation.loudnessReport ? {
               integratedLufs: audioValidation.loudnessReport.integratedLufs,
               truePeakDbtp: audioValidation.loudnessReport.truePeakDbtp,
+              loudnessRange: audioValidation.loudnessReport.loudnessRange,
               isClipping: audioValidation.loudnessReport.isClipping,
+              spotifyReady: audioValidation.loudnessReport.spotifyReady,
+              appleReady: audioValidation.loudnessReport.appleReady,
+              youtubeReady: audioValidation.loudnessReport.youtubeReady,
+              amazonReady: audioMetricsPayload.amazonReady,
+              tidalReady: audioMetricsPayload.tidalReady,
+              deezerReady: audioMetricsPayload.deezerReady,
+              recommendation: audioValidation.loudnessReport.recommendation,
             } : null,
             technicalProfile: audioValidation.technicalProfile ? {
               format: audioValidation.technicalProfile.format,
               sampleRateHz: audioValidation.technicalProfile.sampleRateHz,
               bitDepth: audioValidation.technicalProfile.bitDepth,
               channels: audioValidation.technicalProfile.channels,
+              bitrateKbps: audioValidation.technicalProfile.bitrateKbps,
               durationSeconds: audioValidation.technicalProfile.durationSeconds,
               isLossless: audioValidation.technicalProfile.isLossless,
+              codec: audioValidation.technicalProfile.codec,
             } : null,
           },
         };

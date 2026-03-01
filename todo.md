@@ -5444,7 +5444,7 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ### DISTRO-AUDIO — Content Quality Gate (Build Before Any DSP Delivery)
 
 - [x] **[DISTRO-A1] Audio format validator** — Build `server/lib/audioValidator.ts` using `music-metadata` npm package. On every track upload: validate file format (WAV/FLAC/AIFF/MP3), sample rate (minimum 44.1kHz), bit depth (minimum 16-bit), duration (minimum 30 seconds, maximum 10 hours), file size (maximum 2GB), channel count (mono/stereo/multi). Reject uploads that fail with specific error messages. This is the gate before any DSP delivery.
-- [ ] **[DISTRO-A2] Audio loudness analysis** — Integrate FFmpeg (already available server-side) to measure integrated loudness (LUFS), true peak (dBTP), and dynamic range (LRA) for every uploaded track. Store in `tracks.audioMetrics` JSON field. Flag tracks that exceed DSP loudness limits (Spotify: -14 LUFS, Apple: -16 LUFS, YouTube: -14 LUFS). Show loudness meter on track detail page.
+- [x] **[DISTRO-A2] Audio loudness analysis** — Integrate FFmpeg (already available server-side) to measure integrated loudness (LUFS), true peak (dBTP), and dynamic range (LRA) for every uploaded track. Store in `tracks.audioMetrics` JSON field. Flag tracks that exceed DSP loudness limits (Spotify: -14 LUFS, Apple: -16 LUFS, YouTube: -14 LUFS). Show loudness meter on track detail page.
 - [ ] **[DISTRO-A3] Audio transcoding pipeline** — Build `server/lib/audioTranscoder.ts` using FFmpeg. For each track approved for distribution, generate: AAC 256kbps (Apple Music, Amazon), Ogg Vorbis 320kbps (Spotify), FLAC 16-bit/44.1kHz (Tidal HiFi), MP3 320kbps (Amazon, general fallback). Store transcoded files in S3 at `transcoded/{trackId}/{format}/`. Process asynchronously via delivery queue.
 - [ ] **[DISTRO-A4] ACRCloud fingerprinting integration** — Integrate ACRCloud API into the upload pipeline. Before any track is approved for DSP delivery: scan against ACRCloud's database of 100M+ recordings. If match found: flag as potential copyright conflict, block delivery, notify artist with match details. Add `tracks.fingerprintStatus` field (pending/clear/flagged/blocked).
 - [ ] **[DISTRO-A5] Cover art validator** — Validate artwork on upload: minimum 3000×3000px, maximum 6000×6000px, square aspect ratio (1:1), RGB color space (not CMYK), JPEG or PNG format, maximum 30MB. Reject non-compliant artwork with specific error. Required by Apple Music, Spotify, and all major DSPs.
@@ -5528,3 +5528,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 ---
 *All items above are buildable without legal prerequisites or DSP partnership agreements.*
 *Legal/licensing items (entertainment attorney, DDEX membership, ISRC registrant code, GS1 UPC, Merlin Network, IFPI) are tracked separately in docs/DISTRIBUTION_STRATEGY_REPORT.md and will be revisited when Boptone is ready to go live.*
+
+### DISTRO-A2 — Audio Loudness Analysis (In Progress — Mar 1, 2026)
+
+- [x] Add `audioMetrics` JSON column to `bapTracks` table in drizzle schema
+- [x] Run SQL migration to add the column to the live database
+- [x] Update `server/lib/audioValidator.ts` to export loudness measurement as standalone function
+- [x] Update `server/routers/music.ts` uploadTrack procedure to persist loudness data to `audioMetrics`
+- [x] Build `client/src/components/LoudnessMeter.tsx` — per-DSP loudness meter with LUFS/dBTP/LRA visualization
+- [x] Wire LoudnessMeter into `Upload.tsx` success state (alongside AudioQualityReport)
+- [x] Wire LoudnessMeter into track detail page / MyMusic track card (Sheet drawer with full metadata)
+- [x] Write vitest tests for loudness persistence and meter data shape (48 tests — all passing)
+- [x] Save checkpoint
+
+**Result:** 976 tests passing, 0 TypeScript errors, 1 pre-existing failure (aiDetection live API)

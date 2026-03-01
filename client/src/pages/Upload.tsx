@@ -16,6 +16,7 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RevenueCalculator } from "@/components/RevenueCalculator";
 import { AudioQualityReport, type AudioQualityReportData } from "@/components/AudioQualityReport";
+import { LoudnessMeter } from "@/components/LoudnessMeter";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -963,6 +964,14 @@ export default function Upload() {
               <AudioQualityReport
                 report={qualityReport}
                 className="border-black"
+              />
+            )}
+
+            {/* Loudness Meter — shown when loudness data is available (DISTRO-A2) */}
+            {qualityReport?.loudness && (
+              <LoudnessMeter
+                loudness={qualityReport.loudness as any}
+                className="mt-2"
               />
             )}
 

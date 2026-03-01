@@ -54,6 +54,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { LoudnessMeter } from "@/components/LoudnessMeter";
 
 /**
  * WORLD-CLASS MUSIC UPLOAD & MANAGEMENT SYSTEM
@@ -108,6 +115,10 @@ export default function MyMusic() {
   
   // Audio player state
   const [nowPlaying, setNowPlaying] = useState<any | null>(null);
+
+  // Track detail sheet state
+  const [detailSheetOpen, setDetailSheetOpen] = useState(false);
+  const [detailTrack, setDetailTrack] = useState<any | null>(null);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const artworkInputRef = useRef<HTMLInputElement>(null);
@@ -820,7 +831,7 @@ export default function MyMusic() {
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => { setDetailTrack(track); setDetailSheetOpen(true); }}>
                           <Eye className="h-4 w-4 mr-2" />
                           View Details
                         </DropdownMenuItem>
@@ -840,6 +851,65 @@ export default function MyMusic() {
           </CardContent>
         </Card>
         
+        {/* Track Detail Sheet — Loudness & Metadata */}
+        <Sheet open={detailSheetOpen} onOpenChange={setDetailSheetOpen}>
+          <SheetContent side="right" className="w-full sm:max-w-lg overflow-y-auto">
+            {detailTrack && (
+              <>
+                <SheetHeader className="mb-4">
+                  <SheetTitle className="flex items-center gap-3">
+                    {detailTrack.artworkUrl && (
+                      <img src={detailTrack.artworkUrl} alt={detailTrack.title} className="h-10 w-10 rounded object-cover" />
+                    )}
+                    <span className="truncate">{detailTrack.title}</span>
+                  </SheetTitle>
+                </SheetHeader>
+
+                {/* Loudness Meter */}
+                {detailTrack.audioMetrics ? (
+                  <LoudnessMeter
+                    loudness={detailTrack.audioMetrics}
+                    className="mb-4"
+                  />
+                ) : (
+                  <div className="mb-4 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4 text-center">
+                    <p className="text-sm text-muted-foreground">No loudness data available.</p>
+                    <p className="text-xs text-muted-foreground mt-1">Re-upload this track to generate a loudness analysis.</p>
+                  </div>
+                )}
+
+                {/* Track metadata summary */}
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                    <span className="text-muted-foreground">Artist</span>
+                    <span className="font-medium">{detailTrack.artist || '—'}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                    <span className="text-muted-foreground">Genre</span>
+                    <span className="font-medium">{detailTrack.genre || '—'}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                    <span className="text-muted-foreground">Duration</span>
+                    <span className="font-medium">{formatDuration(detailTrack.duration)}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                    <span className="text-muted-foreground">File size</span>
+                    <span className="font-medium">{detailTrack.fileSize ? formatFileSize(detailTrack.fileSize) : '—'}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                    <span className="text-muted-foreground">ISRC</span>
+                    <span className="font-mono text-xs">{detailTrack.isrcCode || '—'}</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-muted-foreground">Status</span>
+                    <Badge variant={detailTrack.status === 'live' ? 'default' : 'secondary'}>{detailTrack.status}</Badge>
+                  </div>
+                </div>
+              </>
+            )}
+          </SheetContent>
+        </Sheet>
+
         {/* Audio Player */}
         {nowPlaying && (
           <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-background/95 backdrop-blur-sm border-t">
