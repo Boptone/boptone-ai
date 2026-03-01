@@ -15,9 +15,7 @@ import { useLocation } from "wouter";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RevenueCalculator } from "@/components/RevenueCalculator";
-import { AudioQualityReport, type AudioQualityReportData } from "@/components/AudioQualityReport";
-import { LoudnessMeter } from "@/components/LoudnessMeter";
-import { CoverArtReport, type CoverArtReportData } from "@/components/CoverArtReport";
+import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -93,24 +91,27 @@ export default function Upload() {
   });
 
   const [showValidation, setShowValidation] = useState(false);
-  const [qualityReport, setQualityReport] = useState<AudioQualityReportData | null>(null);
-  const [coverArtReport, setCoverArtReport] = useState<CoverArtReportData | null>(null);
+  const [releaseQuality, setReleaseQuality] = useState<ReleaseQualityData | null>(null);
 
   const markActivationStep = trpc.activation.markStepComplete.useMutation();
 
   const uploadTrackMutation = trpc.bap.tracks.upload.useMutation({
     onSuccess: (data: any) => {
-      // Store quality report for display before navigating away
-      if (data?.audioQuality) {
-        setQualityReport(data.audioQuality as AudioQualityReportData);
+      // Build unified release quality data for the ReleaseQualityScore card
+      if (data?.audioQuality || data?.coverArt) {
+        setReleaseQuality({
+          audioQuality: data?.audioQuality ?? undefined,
+          loudness: data?.audioQuality?.loudness ?? undefined,
+          coverArt: data?.coverArt ?? undefined,
+        } as ReleaseQualityData);
       }
-      if (data?.coverArt) {
-        setCoverArtReport(data.coverArt as CoverArtReportData);
-      }
-      const tierMsg = data?.audioQuality?.qualityTier === 'distribution_ready'
+      const tier = data?.audioQuality?.qualityTier;
+      const tierMsg = tier === 'boptone_premium'
+        ? 'Hi-res lossless quality — perfect for Boptone, mobile, car audio, and all DSPs.'
+        : tier === 'distribution_ready'
         ? 'Your track meets all DSP distribution requirements.'
-        : data?.audioQuality?.qualityTier === 'boptone_only'
-        ? 'Uploaded to Boptone. Review the quality report to prepare for DSP distribution.'
+        : tier === 'boptone_only'
+        ? 'Uploaded to Boptone. Review the quality score to prepare for DSP distribution.'
         : 'Track uploaded successfully.';
       toast.success("Track published to BAP!", { description: tierMsg });
       // Fire activation step: first track uploaded
@@ -964,26 +965,12 @@ export default function Upload() {
               </CardContent>
             </Card>
 
-            {/* Audio Quality Report — shown after successful upload */}
-            {qualityReport && (
-              <AudioQualityReport
-                report={qualityReport}
-                className="border-black"
-              />
-            )}
-
-             {/* Loudness Meter — shown when loudness data is available (DISTRO-A2) */}
-            {qualityReport?.loudness && (
-              <LoudnessMeter
-                loudness={qualityReport.loudness as any}
-                className="mt-2"
-              />
-            )}
-            {/* Cover Art Report — shown after successful upload when artwork was provided (DISTRO-A5) */}
-            {coverArtReport && (
-              <CoverArtReport
-                report={coverArtReport}
-                className="mt-2"
+            {/* Unified Release Quality Score — shown after successful upload (DISTRO-UQ1) */}
+            {releaseQuality && (
+              <ReleaseQualityScore
+                data={releaseQuality}
+                trackTitle={metadata.title || undefined}
+                defaultExpanded={false}
               />
             )}
             {/* Publish Button */}

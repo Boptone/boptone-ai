@@ -60,8 +60,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { LoudnessMeter } from "@/components/LoudnessMeter";
-import { CoverArtReport, type CoverArtReportData } from "@/components/CoverArtReport";
+import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
 
 /**
  * WORLD-CLASS MUSIC UPLOAD & MANAGEMENT SYSTEM
@@ -866,25 +865,54 @@ export default function MyMusic() {
                   </SheetTitle>
                 </SheetHeader>
 
-                {/* Loudness Meter */}
+                {/* Unified Release Quality Score (DISTRO-UQ1) */}
                 {detailTrack.audioMetrics ? (
-                  <LoudnessMeter
-                    loudness={detailTrack.audioMetrics}
-                    className="mb-4"
+                  <ReleaseQualityScore
+                    data={(() => {
+                      const m = detailTrack.audioMetrics as any;
+                      // Reconstruct AudioQualityReportData from the flat audioMetrics blob
+                      const audioQuality = {
+                        qualityTier: m.qualityTier ?? 'boptone_only',
+                        isDistributionReady: m.isDistributionReady ?? false,
+                        summary: m.summary ?? '',
+                        warnings: m.warnings ?? [],
+                        recommendations: m.recommendations ?? [],
+                        loudness: null,
+                        technicalProfile: (m.sampleRateHz || m.bitDepth || m.codec) ? {
+                          format: m.codec ?? null,
+                          sampleRateHz: m.sampleRateHz ?? 0,
+                          bitDepth: m.bitDepth ?? null,
+                          channels: m.channels ?? null,
+                          bitrateKbps: m.bitrateKbps ?? null,
+                          durationSeconds: null,
+                          isLossless: m.isLossless ?? false,
+                          codec: m.codec ?? null,
+                        } : null,
+                      };
+                      // Reconstruct LoudnessData from the flat audioMetrics blob
+                      const loudness = (m.integratedLufs !== undefined || m.truePeakDbtp !== undefined) ? {
+                        integratedLufs: m.integratedLufs ?? null,
+                        truePeakDbtp: m.truePeakDbtp ?? null,
+                        loudnessRange: m.loudnessRange ?? null,
+                        isClipping: m.isClipping ?? false,
+                        spotifyReady: m.spotifyReady ?? false,
+                        appleReady: m.appleReady ?? false,
+                        youtubeReady: m.youtubeReady ?? false,
+                        amazonReady: m.amazonReady ?? false,
+                        tidalReady: m.tidalReady ?? false,
+                        deezerReady: m.deezerReady ?? false,
+                        recommendation: m.loudnessRecommendation ?? null,
+                      } : null;
+                      return { audioQuality, loudness, coverArt: m.coverArtReport ?? undefined } as ReleaseQualityData;
+                    })()}
+                    trackTitle={detailTrack.title}
+                    defaultExpanded={true}
                   />
                 ) : (
                   <div className="mb-4 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4 text-center">
-                    <p className="text-sm text-muted-foreground">No loudness data available.</p>
-                    <p className="text-xs text-muted-foreground mt-1">Re-upload this track to generate a loudness analysis.</p>
+                    <p className="text-sm text-muted-foreground">No quality data available.</p>
+                    <p className="text-xs text-muted-foreground mt-1">Re-upload this track to generate a full quality score.</p>
                   </div>
-                )}
-
-                {/* Cover Art Report (DISTRO-A5) */}
-                {detailTrack.audioMetrics && (detailTrack.audioMetrics as any).coverArtReport && (
-                  <CoverArtReport
-                    report={(detailTrack.audioMetrics as any).coverArtReport as CoverArtReportData}
-                    className="mb-4"
-                  />
                 )}
                 {/* Track metadata summary */}
                 <div className="space-y-2 text-sm">

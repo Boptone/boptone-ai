@@ -5556,3 +5556,15 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** 1040 tests passing, 0 TypeScript errors, 1 pre-existing failure (aiDetection live API)
+
+### DISTRO-UQ1 — Unified Release Quality Score (COMPLETE — Mar 1, 2026)
+
+- [x] Update `server/lib/coverArtValidator.ts` — raise Boptone native standard to 4000×4000 minimum (car display / mobile retina), keep DSP minimum at 3000×3000
+- [x] Update `server/lib/audioValidator.ts` — add Boptone native quality tier above DSP standard (24-bit/96kHz preferred for native streaming)
+- [x] Build `client/src/components/ReleaseQualityScore.tsx` — unified score card wrapping AudioQualityReport, LoudnessMeter, CoverArtReport into a single 0–100 score with tier badge
+- [x] Update `server/routers/music.ts` — return unified `qualityScore` (0–100) and `qualityTier` in uploadTrack response
+- [x] Replace three separate report components in `Upload.tsx` with single `ReleaseQualityScore` card
+- [x] Replace three separate report components in `MyMusic.tsx` track detail sheet with single `ReleaseQualityScore` card
+- [x] Add "Distribution Readiness" indicator to track cards in MyMusic (compact badge)
+- [x] Write vitest tests for unified score calculation (33 tests)
+- [x] Save checkpoint

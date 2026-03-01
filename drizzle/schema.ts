@@ -1047,7 +1047,7 @@ export const bapTracks = mysqlTable("bap_tracks", {
   
   // Audio quality metrics — populated by DISTRO-A1/A2 validator on upload
   audioMetrics: json("audioMetrics").$type<{
-    qualityTier: 'distribution_ready' | 'boptone_only' | 'rejected';
+    qualityTier: 'boptone_premium' | 'distribution_ready' | 'boptone_only' | 'rejected';
     isDistributionReady: boolean;
     sampleRateHz: number | null;
     bitDepth: number | null;

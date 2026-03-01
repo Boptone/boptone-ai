@@ -40,6 +40,7 @@ const execAsync = promisify(exec);
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type AudioQualityTier =
+  | "boptone_premium"      // Exceeds DSP requirements — 24-bit/96kHz+ hi-res lossless
   | "distribution_ready"   // Meets all DSP requirements — ready for global delivery
   | "boptone_only"         // Good enough for BAP streaming, not for DSP distribution
   | "rejected";            // Does not meet minimum standards — upload blocked
@@ -568,9 +569,19 @@ function buildResult(
   const isUploadable = errors.length === 0;
   const isDistributionReady = errors.length === 0 && warnings.length === 0;
 
+  // Check if audio meets Boptone's native premium standard (24-bit / 96kHz+)
+  const meetsBoptoneNative =
+    isDistributionReady &&
+    technicalProfile !== null &&
+    technicalProfile.isLossless &&
+    (technicalProfile.bitDepth ?? 0) >= 24 &&
+    technicalProfile.sampleRateHz >= 96000;
+
   let qualityTier: AudioQualityTier;
   if (!isUploadable) {
     qualityTier = "rejected";
+  } else if (meetsBoptoneNative) {
+    qualityTier = "boptone_premium"; // Hi-res lossless — best for native Boptone streaming
   } else if (!isDistributionReady) {
     qualityTier = "boptone_only";
   } else {
@@ -607,6 +618,9 @@ function buildSummary(
     ? `${profile.format} · ${profile.sampleRateHz.toLocaleString()} Hz · ${profile.bitDepth ? `${profile.bitDepth}-bit · ` : ""}${profile.channelLayout} · ${profile.durationSeconds > 0 ? `${Math.floor(profile.durationSeconds / 60)}:${String(Math.round(profile.durationSeconds % 60)).padStart(2, "0")}` : "unknown duration"}`
     : "";
 
+  if (tier === "boptone_premium") {
+    return `Boptone Premium quality. ${profileStr ? `${profileStr}. ` : ""}Hi-res lossless audio — sounds perfect on mobile, car audio, and all streaming platforms. Distribution ready.`;
+  }
   if (tier === "distribution_ready") {
     return `Distribution ready. ${profileStr ? `${profileStr}. ` : ""}This track meets all DSP requirements and is eligible for global distribution.`;
   }

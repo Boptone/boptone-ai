@@ -29,7 +29,8 @@ export interface CoverArtIssue {
 }
 
 export type CoverArtQualityTier =
-  | "distribution_ready"   // Passes all DSP requirements
+  | "boptone_premium"      // Exceeds DSP requirements — perfect for mobile/car display (4000×4000+)
+  | "distribution_ready"   // Passes all DSP requirements (3000×3000+)
   | "boptone_only"         // Acceptable for BAP streaming, not for DSP delivery
   | "rejected";            // Fails basic requirements, must be replaced
 
@@ -152,6 +153,8 @@ const LIMITS = {
   absoluteMinHeight: 1400,
   recommendedMinWidth: 3000,    // Recommended for all major DSPs
   recommendedMinHeight: 3000,
+  boptoneNativeMinWidth: 4000,  // Boptone native standard — mobile retina + car display
+  boptoneNativeMinHeight: 4000, // Covers 4x pixel density on car head units and OLED phones
   absoluteMaxFileSizeMb: 50,    // Apple Music's limit (most permissive)
   strictMaxFileSizeMb: 10,      // YouTube Music's limit (most restrictive)
   allowedFormats: ["jpeg", "jpg", "png"] as string[],
@@ -386,13 +389,20 @@ export async function validateCoverArtFile(
     .filter(d => ["Spotify", "Apple Music", "Tidal HiFi", "Deezer"].includes(d.name))
     .every(d => d.ready);
 
+  // Check if artwork meets Boptone's native premium standard (4000×4000+)
+  const meetsBoptoneNative =
+    width !== null &&
+    height !== null &&
+    width >= LIMITS.boptoneNativeMinWidth &&
+    height >= LIMITS.boptoneNativeMinHeight;
+
   let qualityTier: CoverArtQualityTier;
   if (hasErrors) {
     qualityTier = "rejected";
-  } else if (allDspsReady) {
+  } else if (meetsBoptoneNative && (allDspsReady || majorDspsReady)) {
+    qualityTier = "boptone_premium"; // Exceeds DSP requirements — perfect for mobile/car
+  } else if (allDspsReady || (majorDspsReady && !hasErrors)) {
     qualityTier = "distribution_ready";
-  } else if (majorDspsReady && !hasErrors) {
-    qualityTier = "distribution_ready"; // Minor DSP issues only
   } else {
     qualityTier = "boptone_only";
   }
