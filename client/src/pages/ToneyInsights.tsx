@@ -185,7 +185,7 @@ export default function ToneyInsights() {
   const utils = trpc.useUtils();
 
   const { data: stats } = trpc.toneyAgent.getStats.useQuery();
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading } =
     trpc.toneyAgent.getActions.useQuery({
       limit: 20,
       offset: 0,
