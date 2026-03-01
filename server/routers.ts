@@ -43,6 +43,7 @@ import { postPurchaseAutomationRouter } from "./routers/postPurchaseAutomation";
 import { playlistRouter } from "./routers/playlist";
 import { analyticsRouter } from "./routers/analytics";
 import { fanWalletRouter } from "./routers/fanWallet";
+import { financeRouter } from "./routers/finance";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -773,6 +774,7 @@ export const appRouter = router({
 
   // Payout System (Withdrawals & Bank Accounts)
   payouts: payoutsRouter,
+  finance: financeRouter,
 
   // Workflow Automation System (Pro/Enterprise)
   workflows: workflowsRouter,

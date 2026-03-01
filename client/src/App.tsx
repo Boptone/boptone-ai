@@ -62,6 +62,7 @@ const Earnings = lazy(() => import("./pages/Earnings"));
 const ToneRewards = lazy(() => import("./pages/ToneRewards"));
 const Microloans = lazy(() => import("./pages/Microloans"));
 const Money = lazy(() => import("./pages/Money"));
+const Finance = lazy(() => import("./pages/Finance"));
 const Fans = lazy(() => import("./pages/Fans"));
 const MyMusic = lazy(() => import("./pages/MyMusic"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -205,6 +206,7 @@ function Router() {
         <Route path="/tone-rewards" component={ToneRewards} />
         <Route path="/microloans" component={Microloans} />
         <Route path="/revenue" component={Money} />
+        <Route path="/finance" component={Finance} />
         <Route path="/audience" component={Fans} />
         <Route path="/releases" component={MyMusic} />
         <Route path="/batch-upload" component={BatchUpload} />

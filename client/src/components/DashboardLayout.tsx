@@ -36,6 +36,7 @@ const menuItems = [
   { label: "Splits", path: "/splits" },
   { label: "Store", path: "/store" },
   { label: "Revenue", path: "/revenue" },
+  { label: "Finance", path: "/finance" },
   { label: "Audience", path: "/audience" },
   { label: "Settings", path: "/profile-settings" },
 ];
