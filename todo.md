@@ -5300,3 +5300,55 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] 9.13.4 Bops Tip Monetization Integrity (fraud prohibitions, 0% fee disclosure)
 - [x] 9.13.5 Enforcement and Takedown (5-tier escalating framework, reporting process)
 - [x] Table of Contents updated with 9.13 Bops Content Policy anchor link
+
+---
+
+## 50-Leader Audit Enhancements (March 1, 2026)
+> Source: docs/50-leader-audit-2026-03-01.md
+> Priority order follows the audit's ranked priority matrix (citation frequency × revenue impact × complexity)
+
+### CRITICAL — Week 1 (Non-Negotiables)
+
+- [ ] **[INFRA-1] Cron runner / background job scheduler** — Wire `node-cron` or `BullMQ` into `server/index.ts` to execute `scheduled_jobs`, `workflow_executions`, and `workflow_triggers` tables. Unlocks the entire PRO tier workflow automation value proposition. (31/50 auditors)
+- [ ] **[COMMERCE-1] Abandoned cart recovery service** — Build `server/routers/cartRecovery.ts` with 3-touch email sequence (1hr, 24hr, 72hr) using `cart_items` + `scheduled_jobs` tables. (28/50 auditors)
+- [ ] **[MARKETING-1] Surface healthcare plans feature on landing page** — Move `healthcare_plans` feature into the hero section or above-the-fold on Landing.tsx. No other creator platform offers this. It is the single most defensible retention moat in the codebase. (10/50 auditors, Lulu Cheng Meservey)
+
+### HIGH — Week 2
+
+- [ ] **[COMMERCE-2] BopShop recommendation engine** — SQL-based collaborative filter on `order_items` ("users who bought X also bought Y"). No ML required. Increases average order value immediately. (24/50 auditors)
+- [ ] **[GROWTH-1] A/B testing infrastructure** — Add `experiments` table to schema and `experimentAssignment` function to tRPC context. Enables systematic testing of checkout flow, upgrade gate, tip prompt. (17/50 auditors, Peep Laja)
+- [ ] **[GROWTH-2] Superfan identification dashboard** — Build `/superfans` page surfacing `flywheel_super_fans` data to artists with one-tap "send personal thank you" action. Creates viral artist acquisition loop. (14/50 auditors, Andrew Chen)
+- [ ] **[INFRA-2] Separate read/write paths for high-frequency event tables** — Configure TiDB read replica for `pixel_events`, `bops_views`, `streaming_metrics`, `bops_likes`. Never share connection pool with financial tables. (Patrick Collison, Guillermo Rauch)
+
+### HIGH — Month 1
+
+- [ ] **[AI-1] Toney autonomous agent mode** — Build `server/agents/toneyAgent.ts` that reads `artist_toney_profiles`, monitors metrics, and proactively creates/executes workflow actions without being asked. (22/50 auditors, Dan Shipper)
+- [ ] **[ANALYTICS-1] Cohort-based LTV analytics** — Add `creator_cohort_analytics` table aggregating `subscriptions`, `payments`, `payouts`, `orders` by acquisition cohort (month/year of first login). The single metric that tells you if Boptone is a business. (19/50 auditors, Gagan Biyani)
+- [ ] **[FINANCE-1] Real-time artist financial dashboard** — Unified `/finance` view showing gross earnings, platform fees, card processing fees, writer splits, loan repayments, and net payout in one place. Data exists across `transactions`, `payments`, `payouts`, `writer_earnings`, `loan_repayments`. (16/50 auditors, Patrick Collison)
+- [ ] **[AI-2] Predictive artist flywheel optimizer** — Use `streaming_metrics`, `pixel_events`, `flywheel_network_pool`, and `artist_toney_profiles` to predict each artist's optimal next growth action. Wire to `flywheel_boosts` and `flywheel_milestones`. (Ariel Michaeli)
+- [ ] **[AI-3] AI-powered post-purchase upsell via `postPurchaseAutomation`** — Connect `postPurchaseAutomation` router to `artist_toney_profiles` + `invokeLLM` for personalized next-product recommendations after every BopShop purchase. (Gagan Biyani)
+- [ ] **[GROWTH-3] SEO/AEO content engine** — Connect `invokeLLM` to `aeo_pages` with artist profile data to auto-generate SEO-optimized artist pages. Drives organic discovery at zero marginal cost. (Rand Fishkin)
+- [ ] **[TRANSPARENCY-1] Open Metrics API** — Read-only `openMetrics` tRPC router exposing aggregated, anonymized platform metrics publicly (total artist earnings, total streams, total tips distributed). Becomes a compounding marketing asset. (9/50 auditors, Nadia Asparouhova)
+
+### HIGH — Month 2
+
+- [ ] **[INFRA-3] Event sourcing for financial tables** — Add `financial_events` table as an immutable append-only log of state transitions for `payments`, `payouts`, `transactions`, `micro_loans`. Provides complete audit trail and simplifies reconciliation. (Patrick Collison)
+- [ ] **[COMMERCE-3] Artist backers / investor revenue share surface** — Build a dedicated UI for `artist_backers` and `investor_revenue_share` tables. Fractional fan investment in artists is the most durable retention mechanism in the creator economy. (11/50 auditors, Shaan Puri)
+- [ ] **[FINANCE-2] Boptone Finance unified dashboard** — Surface `micro_loans`, `artist_backers`, `investor_revenue_share`, `writer_earnings`, `fan_wallets`, and projected cash flow in one "Boptone Finance" dashboard. The complete artist financial stack no other platform has. (Jack Conte)
+- [ ] **[MONETIZATION-1] Boptone Boost paid promotion layer** — Design and implement an optional paid promotion layer on top of the 0% tip infrastructure. Artists pay to amplify tip prompts to fans. Boptone earns from promotion, not transactions. Transition plan for 2027 fee strategy. (14/50 auditors, Shaan Puri)
+
+### MEDIUM — Quarter 2
+
+- [ ] **[GOVERNANCE-1] BAP governance layer** — Add `bap_governance_proposals` table and `bapGovernance` tRPC router for artist proposals and voting on BAP protocol parameters (micropayment splits, data standards). Transforms BAP from corporate feature to community-governed protocol. (12/50 auditors, Nadia Asparouhova)
+- [ ] **[B2B-1] Writer splits enterprise offering ("Boptone for Teams")** — Package `writer_profiles`, `writer_earnings`, `writer_invitations`, `writer_payouts` as a B2B product targeting music publishers and production studios. Enterprise LTV dramatically higher than individual artist subscriptions. (8/50 auditors, Ev Williams)
+- [ ] **[INFRA-4] Edge function deployment for high-frequency tRPC routers** — Migrate `bops`, `bap`, and `toney` routers to edge functions for global latency reduction. Start with highest-frequency routers, migrate outward. (8/50 auditors, Guillermo Rauch)
+- [ ] **[INFRA-5] Webhook infrastructure for external integrations** — Add `webhooks` table and `webhooks` tRPC router allowing artists to subscribe to platform events (`order_created`, `payout_succeeded`, `track_streamed`). Enables real-time integrations beyond built-in workflows. (Zach Holman)
+- [ ] **[GROWTH-4] Creator tenure / governance rights system** — Formalize `artist_backers` into a "Creator Tenure" system where long-term backers gain governance rights — voting on features, early access, formal advisory role. Transforms engaged users into platform co-owners. (Nadia Asparouhova)
+- [ ] **[COMPLIANCE-1] DMCA takedown procedure page** — Build `/dmca` page with formal takedown request form containing all required 17 U.S.C. § 512(c)(3) statutory elements. Completes safe harbor compliance picture referenced in TOS Section 9.13.5. (Patrick Collison, Trae Stephens)
+- [ ] **[GROWTH-5] Day 1 activation funnel — "First Dollar in 24 Hours"** — Define the single action correlating most strongly with 30-day retention (likely "first Kick In tip received" or "first BopShop sale") and build a guided post-onboarding activation sequence around reaching it. (Casey Winters)
+
+### STRATEGIC — Long-Term Moat
+
+- [ ] **[STRATEGY-1] BAP as the flagship feature — depth before breadth** — Establish BAP (decentralized streaming with transparent micropayments) as the single flagship feature that creates an irreversible habit. Every other feature should be positioned as an extension of BAP's core value. (Li Jin, Jack Conte)
+- [ ] **[STRATEGY-2] Decentralization architecture review** — Evaluate incorporating blockchain/Web3 principles into BAP's core architecture to deliver on the trust and transparency promise. Aligns with the platform's stated strategic interest in decentralization. (Jack Dorsey, Nadia Asparouhova)
+- [ ] **[STRATEGY-3] Micro-loans credit risk framework** — Define explicit credit risk assessment methodology and regulatory compliance framework for `micro_loans` table before scaling. (Patrick Collison, Trae Stephens)
