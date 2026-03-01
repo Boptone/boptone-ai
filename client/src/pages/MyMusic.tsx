@@ -61,6 +61,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { LoudnessMeter } from "@/components/LoudnessMeter";
+import { CoverArtReport, type CoverArtReportData } from "@/components/CoverArtReport";
 
 /**
  * WORLD-CLASS MUSIC UPLOAD & MANAGEMENT SYSTEM
@@ -878,6 +879,13 @@ export default function MyMusic() {
                   </div>
                 )}
 
+                {/* Cover Art Report (DISTRO-A5) */}
+                {detailTrack.audioMetrics && (detailTrack.audioMetrics as any).coverArtReport && (
+                  <CoverArtReport
+                    report={(detailTrack.audioMetrics as any).coverArtReport as CoverArtReportData}
+                    className="mb-4"
+                  />
+                )}
                 {/* Track metadata summary */}
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between py-1 border-b border-zinc-800">

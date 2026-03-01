@@ -17,6 +17,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { RevenueCalculator } from "@/components/RevenueCalculator";
 import { AudioQualityReport, type AudioQualityReportData } from "@/components/AudioQualityReport";
 import { LoudnessMeter } from "@/components/LoudnessMeter";
+import { CoverArtReport, type CoverArtReportData } from "@/components/CoverArtReport";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -93,6 +94,7 @@ export default function Upload() {
 
   const [showValidation, setShowValidation] = useState(false);
   const [qualityReport, setQualityReport] = useState<AudioQualityReportData | null>(null);
+  const [coverArtReport, setCoverArtReport] = useState<CoverArtReportData | null>(null);
 
   const markActivationStep = trpc.activation.markStepComplete.useMutation();
 
@@ -101,6 +103,9 @@ export default function Upload() {
       // Store quality report for display before navigating away
       if (data?.audioQuality) {
         setQualityReport(data.audioQuality as AudioQualityReportData);
+      }
+      if (data?.coverArt) {
+        setCoverArtReport(data.coverArt as CoverArtReportData);
       }
       const tierMsg = data?.audioQuality?.qualityTier === 'distribution_ready'
         ? 'Your track meets all DSP distribution requirements.'
@@ -967,14 +972,20 @@ export default function Upload() {
               />
             )}
 
-            {/* Loudness Meter — shown when loudness data is available (DISTRO-A2) */}
+             {/* Loudness Meter — shown when loudness data is available (DISTRO-A2) */}
             {qualityReport?.loudness && (
               <LoudnessMeter
                 loudness={qualityReport.loudness as any}
                 className="mt-2"
               />
             )}
-
+            {/* Cover Art Report — shown after successful upload when artwork was provided (DISTRO-A5) */}
+            {coverArtReport && (
+              <CoverArtReport
+                report={coverArtReport}
+                className="mt-2"
+              />
+            )}
             {/* Publish Button */}
             <Card className="border border-black">
               <CardContent className="pt-6">

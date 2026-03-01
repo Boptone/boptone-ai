@@ -15,6 +15,7 @@ import {
   generateArtworkFileKey 
 } from "../audioMetadata";
 import { validateAudioForDistribution, validateAudioFile, validateCoverArt } from "../lib/audioValidator";
+import { validateCoverArtFile } from "../lib/coverArtValidator";
 import { TRPCError } from "@trpc/server";
 
 export const musicRouter = router({
@@ -104,16 +105,21 @@ export const musicRouter = router({
           `audio/${metadata.format}`
         );
         
-        // Upload artwork if provided — validate cover art first (DISTRO-A1)
+        // Upload artwork if provided — enterprise cover art validator (DISTRO-A5)
         let artworkUrl: string | undefined;
+        let coverArtReport: Awaited<ReturnType<typeof validateCoverArtFile>> | null = null;
         if (input.artworkFileBase64 && input.artworkFileName) {
           const artworkBuffer = Buffer.from(input.artworkFileBase64, 'base64');
           
-          const artValidation = validateCoverArt(artworkBuffer, input.artworkFileName);
-          if (!artValidation.isValid) {
+          // Run enterprise cover art validation (DISTRO-A5)
+          coverArtReport = await validateCoverArtFile(artworkBuffer, artworkBuffer.length);
+          
+          // Hard-reject only on critical errors (wrong format, CMYK, not square, too small)
+          if (coverArtReport.qualityTier === 'rejected') {
+            const firstError = coverArtReport.issues[0];
             throw new TRPCError({
               code: "BAD_REQUEST",
-              message: `Cover art rejected: ${artValidation.errors[0]}`,
+              message: `Cover art rejected: ${firstError?.message ?? 'Does not meet DSP requirements'}`,
             });
           }
           
@@ -227,6 +233,21 @@ export const musicRouter = router({
               codec: audioValidation.technicalProfile.codec,
             } : null,
           },
+          // Cover art compliance report (DISTRO-A5)
+          coverArt: coverArtReport ? {
+            qualityTier: coverArtReport.qualityTier,
+            isDistributionReady: coverArtReport.isDistributionReady,
+            width: coverArtReport.width,
+            height: coverArtReport.height,
+            format: coverArtReport.format,
+            colorSpace: coverArtReport.colorSpace,
+            fileSizeBytes: coverArtReport.fileSizeBytes,
+            hasAlphaChannel: coverArtReport.hasAlphaChannel,
+            issues: coverArtReport.issues.map(i => ({ code: i.code, severity: i.severity, message: i.message, affectedDsps: i.affectedDsps })),
+            warnings: coverArtReport.warnings.map(w => ({ code: w.code, severity: w.severity, message: w.message, affectedDsps: w.affectedDsps })),
+            dspCompliance: coverArtReport.dspCompliance,
+            recommendation: coverArtReport.recommendation,
+          } : null,
         };
       } catch (error) {
         console.error('[Music] Upload failed:', error);

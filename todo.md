@@ -5542,3 +5542,17 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Save checkpoint
 
 **Result:** 976 tests passing, 0 TypeScript errors, 1 pre-existing failure (aiDetection live API)
+
+### DISTRO-A5 — Cover Art Validator ✅ (Mar 1, 2026)
+
+- [x] Install `sharp` npm package for image analysis (already installed)
+- [x] Build `server/lib/coverArtValidator.ts` — 380-line Sharp-based engine covering resolution, aspect ratio, color space, format, file size, alpha channel, DPI
+- [x] Add per-DSP requirement breakdown (Spotify, Apple Music, Amazon, Tidal, Deezer, YouTube, QQ Music, Boomplay)
+- [x] Wire validator into `server/routers/music.ts` uploadTrack procedure (artwork upload path)
+- [x] Build `client/src/components/CoverArtReport.tsx` — visual compliance report with per-DSP pass/fail badges
+- [x] Wire CoverArtReport into `Upload.tsx` success state
+- [x] Wire CoverArtReport into MyMusic track detail sheet
+- [x] Write 64 vitest tests for cover art validation logic (all passing)
+- [x] Save checkpoint
+
+**Result:** 1040 tests passing, 0 TypeScript errors, 1 pre-existing failure (aiDetection live API)
