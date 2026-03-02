@@ -64,6 +64,7 @@ import {
 import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
 import { CreditsDisplay } from "@/components/Upload/CreditsSection";
 import { TranscodeStatus } from "@/components/TranscodeStatus";
+import { ArtworkSimulator } from "@/components/ArtworkSimulator";
 
 /**
  * WORLD-CLASS MUSIC UPLOAD & MANAGEMENT SYSTEM
@@ -933,6 +934,18 @@ export default function MyMusic() {
                 <div className="mt-4 mb-4 rounded-lg border border-zinc-700 bg-zinc-900/50 p-4">
                   <TranscodeStatus trackId={detailTrack.id} autoRefresh={true} />
                 </div>
+
+                {/* Artwork Display Simulator (BOP-MUSIC-ART) */}
+                {detailTrack.artworkUrl && (
+                  <div className="mt-4 mb-4">
+                    <ArtworkSimulator
+                      imageUrl={detailTrack.artworkUrl}
+                      trackTitle={detailTrack.title}
+                      artistName={detailTrack.artistName || ""}
+                      compact
+                    />
+                  </div>
+                )}
 
                 {/* Track metadata summary */}
                 <div className="space-y-2 text-sm">

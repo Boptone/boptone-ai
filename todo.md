@@ -5627,3 +5627,20 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] TypeScript: 0 errors
 - [x] Total tests: 1152 passing (33 new)
 - [x] Save checkpoint
+
+### BOP-MUSIC-ART — Artwork Display Simulator (COMPLETE — Mar 1, 2026)
+
+**Goal:** Show artists exactly how their cover art renders across every real-world display context before publishing to Bop Music or distributing to DSPs.
+
+- [x] Build `client/src/components/ArtworkSimulator/ArtworkSimulator.tsx` — 6 display contexts, drag-and-drop upload, zoom controls, quality report panel
+- [x] Build `client/src/components/ArtworkSimulator/artworkQualityAnalyzer.ts` — canvas-based in-browser analyzer (resolution, aspect ratio, color depth, legibility, compression)
+- [x] Build `client/src/components/ArtworkSimulator/DeviceFrame.tsx` — CSS device mockups: car dash, iPhone, Android, Apple Watch, MacBook, Bluetooth speaker
+- [x] Build device contexts: Car Head Unit (64/128/240px), Lock Screen (300/60px), Now Playing (1000/500px), Smartwatch (40/44px), Desktop (300/64px), Speaker (80px)
+- [x] Build quality analysis panel — resolution score, aspect ratio check, color depth, legibility, compression artifact detection, overall 0–100 score
+- [x] Wire into `Upload.tsx` — appears inline after artwork upload, compact mode, uses track title from form
+- [x] Wire into `MyMusic.tsx` track detail sheet — shows when artworkUrl is present
+- [x] Add standalone route `/artwork-simulator` via `ArtworkSimulatorPage.tsx`
+- [x] Write vitest tests — 28 tests covering display context config, resolution scoring, aspect ratio scoring, overall score weighting, critical size identification
+- [x] TypeScript: 0 errors
+- [x] Total tests: 1180 passing (28 new)
+- [x] Save checkpoint and push to GitHub

@@ -18,6 +18,7 @@ import { RevenueCalculator } from "@/components/RevenueCalculator";
 import ReleaseQualityScore, { type ReleaseQualityData } from "@/components/ReleaseQualityScore";
 import { CreditsSection, type CreditsData } from "@/components/Upload/CreditsSection";
 import { DspTitlePreview } from "@/components/Upload/DspTitlePreview";
+import { ArtworkSimulator } from "@/components/ArtworkSimulator";
 
 // Validation helper functions
 const validateISRC = (isrc: string): boolean => {
@@ -934,7 +935,7 @@ export default function Upload() {
                 {!artworkFile ? (
                   <div className="flex items-center gap-4">
                     <div className="w-32 h-32 bg-gray-100 border border-black flex items-center justify-center">
-                      <div className="text-4xl text-gray-300">🖼</div>
+                      <div className="w-8 h-8 border-2 border-gray-300 rounded" />
                     </div>
                     <div className="flex-1">
                       <Input
@@ -955,25 +956,34 @@ export default function Upload() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={URL.createObjectURL(artworkFile)}
-                      alt="Artwork preview"
-                      className="w-32 h-32 object-cover border border-black"
-                    />
-                    <div className="flex-1">
-                      <p className="font-medium">{artworkFile.name}</p>
-                      <p className="text-sm text-gray-600">
-                        {(artworkFile.size / 1024).toFixed(2)} KB
-                      </p>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={URL.createObjectURL(artworkFile)}
+                        alt="Artwork preview"
+                        className="w-32 h-32 object-cover border border-black rounded"
+                      />
+                      <div className="flex-1">
+                        <p className="font-medium">{artworkFile.name}</p>
+                        <p className="text-sm text-gray-600">
+                          {(artworkFile.size / 1024).toFixed(2)} KB
+                        </p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setArtworkFile(null)}
+                      >
+                        Remove
+                      </Button>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setArtworkFile(null)}
-                    >
-                      Remove
-                    </Button>
+                    {/* Display Simulator — shows how artwork renders on all devices */}
+                    <ArtworkSimulator
+                      imageUrl={URL.createObjectURL(artworkFile)}
+                      trackTitle={metadata.title || "Track Title"}
+                      artistName=""
+                      compact
+                    />
                   </div>
                 )}
               </CardContent>
