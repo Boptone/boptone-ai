@@ -382,7 +382,7 @@ export async function getReleases(artistId: number, status?: string) {
     conditions.push(eq(releases.status, status as any));
   }
   
-  return await db.select().from(releases).where(and(...conditions)).orderBy(desc(releases.releaseDate));
+  return await db.select().from(releases).where(and(...conditions)).orderBy(desc(releases.globalReleaseDate));
 }
 
 export async function updateRelease(id: number, updates: Partial<InsertRelease>) {

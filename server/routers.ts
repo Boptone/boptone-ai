@@ -50,6 +50,7 @@ import { activationFunnelRouter } from "./routers/activationFunnel";
 import { takedownRouter } from "./routers/takedown";
 import { cohortAnalyticsRouter } from "./routers/cohortAnalytics";
 import { distributionRouter } from "./routers/distribution";
+import { releasesRouter } from "./routers/releases";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -397,63 +398,6 @@ const loansRouter = router({
 // Products router moved to ecommerceRouter below
 
 // ============================================================================
-// RELEASES / DISTRIBUTION ROUTER
-// ============================================================================
-
-const releasesRouter = router({
-  // Create release
-  create: protectedProcedure
-    .input(z.object({
-      title: z.string().min(1).max(255),
-      releaseType: z.enum(["single", "ep", "album", "compilation"]),
-      releaseDate: z.date(),
-      platforms: z.array(z.string()).optional(),
-      artworkUrl: z.string().optional(),
-      totalTracks: z.number().int().optional(),
-      metadata: z.object({
-        genre: z.string().optional(),
-        label: z.string().optional(),
-        copyrightYear: z.number().optional(),
-      }).optional(),
-    }))
-    .mutation(async ({ ctx, input }) => {
-      const profile = await db.getArtistProfileByUserId(ctx.user.id);
-      if (!profile) throw new Error("Artist profile not found");
-      
-      return await db.createRelease({
-        artistId: profile.id,
-        ...input,
-      });
-    }),
-
-  // Get releases
-  getAll: protectedProcedure
-    .input(z.object({
-      status: z.string().optional(),
-    }))
-    .query(async ({ ctx, input }) => {
-      const profile = await db.getArtistProfileByUserId(ctx.user.id);
-      if (!profile) return [];
-      
-      return await db.getReleases(profile.id, input.status);
-    }),
-
-  // Update release
-  update: protectedProcedure
-    .input(z.object({
-      id: z.number().int(),
-      status: z.enum(["draft", "scheduled", "released", "cancelled"]).optional(),
-      upcCode: z.string().optional(),
-      isrcCodes: z.array(z.string()).optional(),
-    }))
-    .mutation(async ({ input }) => {
-      const { id, ...updates } = input;
-      await db.updateRelease(id, updates);
-      return { success: true };
-    }),
-});
-
-// ============================================================================
 // IP PROTECTION ROUTER
 // ============================================================================
 
@@ -741,7 +685,6 @@ export const appRouter = router({
   shipping: shippingRouter,
   sitemap: sitemapRouter,
   pod: podRouter,
-  releases: releasesRouter,
   stripe: stripeRouter,
   ipProtection: ipProtectionRouter,
   tours: toursRouter,
@@ -787,6 +730,7 @@ export const appRouter = router({
   takedown: takedownRouter,
   cohortAnalytics: cohortAnalyticsRouter,
   distribution: distributionRouter,
+  releases: releasesRouter,
 
   // Workflow Automation System (Pro/Enterprise)
   workflows: workflowsRouter,

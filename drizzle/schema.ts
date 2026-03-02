@@ -707,32 +707,140 @@ export type InsertReviewReminderLog = typeof reviewReminderLog.$inferInsert;
 // DISTRIBUTION RELEASES
 // ============================================================================
 
+/**
+ * Releases — DDEX ERN 4.1 Album-Level Container
+ * Groups tracks, artwork, credits, and territory deals into a single authoritative
+ * record that can be delivered to DSPs via DDEX ERN XML packages.
+ *
+ * DDEX ERN 4.1 fields: ReleaseId (UPC/EAN/GRID), ReleaseType, ReferenceTitle,
+ * DisplayArtist, PLine, CLine, LabelName, Genre, ParentalWarningType,
+ * OriginalReleaseDate, GlobalReleaseDate, ResourceList, DealList.
+ */
 export const releases = mysqlTable("releases", {
   id: int("id").autoincrement().primaryKey(),
-  artistId: int("artistId").notNull().references(() => artistProfiles.id),
-  title: varchar("title", { length: 255 }).notNull(),
-  releaseType: mysqlEnum("releaseType", ["single", "ep", "album", "compilation"]).notNull(),
-  releaseDate: timestamp("releaseDate").notNull(),
-  platforms: json("platforms").$type<string[]>(), // ["spotify", "apple_music", etc.]
-  upcCode: varchar("upcCode", { length: 20 }),
-  isrcCodes: json("isrcCodes").$type<string[]>(), // Array of ISRC codes for tracks
-  artworkUrl: text("artworkUrl"),
-  status: mysqlEnum("status", ["draft", "scheduled", "released", "cancelled"]).default("draft").notNull(),
-  totalTracks: int("totalTracks"),
-  metadata: json("metadata").$type<{
-    genre?: string;
-    label?: string;
-    copyrightYear?: number;
-    [key: string]: unknown;
-  }>(),
+  artistId: int("artistId").notNull().references(() => users.id),
+
+  // Title
+  title: varchar("title", { length: 500 }).notNull(),
+  titleLanguage: varchar("titleLanguage", { length: 10 }).notNull().default("en"),
+  subtitle: varchar("subtitle", { length: 500 }),
+
+  // Release classification
+  releaseType: mysqlEnum("releaseType", [
+    "album", "single", "ep", "compilation", "soundtrack",
+    "mixtape", "live", "remix", "ringtone", "other",
+  ]).notNull().default("single"),
+  status: mysqlEnum("status", [
+    "draft", "ready", "submitted", "distributed", "takedown",
+  ]).notNull().default("draft"),
+
+  // Identifiers (DDEX ReleaseId)
+  upc: varchar("upc", { length: 20 }),
+  ean: varchar("ean", { length: 20 }),
+  grid: varchar("grid", { length: 30 }),
+  proprietaryId: varchar("proprietaryId", { length: 100 }),
+
+  // Copyright (DDEX PLine + CLine)
+  pLineYear: int("pLineYear"),
+  pLineOwner: varchar("pLineOwner", { length: 500 }),
+  cLineYear: int("cLineYear"),
+  cLineOwner: varchar("cLineOwner", { length: 500 }),
+
+  // Label & genre
+  labelName: varchar("labelName", { length: 500 }),
+  primaryGenre: varchar("primaryGenre", { length: 100 }),
+  secondaryGenre: varchar("secondaryGenre", { length: 100 }),
+
+  // Parental advisory
+  parentalWarning: mysqlEnum("parentalWarning", [
+    "NotExplicit", "Explicit", "ExplicitContentEdited",
+  ]).notNull().default("NotExplicit"),
+
+  // Dates (ISO 8601 YYYY-MM-DD stored as varchar for DSP compatibility)
+  originalReleaseDate: varchar("originalReleaseDate", { length: 10 }),
+  globalReleaseDate: varchar("globalReleaseDate", { length: 10 }),
+  preSaveDate: varchar("preSaveDate", { length: 10 }),
+  boptonePremiereDays: int("boptonePremiereDays").notNull().default(0),
+
+  // Display artist (DDEX DisplayArtist)
+  displayArtistName: varchar("displayArtistName", { length: 500 }),
+  displayArtistRole: mysqlEnum("displayArtistRole", [
+    "MainArtist", "FeaturedArtist", "Remixer", "Composer",
+    "Conductor", "Orchestra", "Ensemble", "Actor", "Dancer",
+    "DJ", "Narrator", "Unknown",
+  ]).notNull().default("MainArtist"),
+  featuredArtists: text("featuredArtists"), // JSON: [{ name, role, isni }]
+
+  // Artwork
+  artworkUrl: varchar("artworkUrl", { length: 2048 }),
+  artworkS3Key: varchar("artworkS3Key", { length: 1024 }),
+
+  // Metadata
+  description: text("description"),
+  notes: text("notes"),
+
+  // DDEX delivery tracking
+  ddexDeliveryId: varchar("ddexDeliveryId", { length: 100 }),
+  ddexLastDeliveredAt: timestamp("ddexLastDeliveredAt"),
+
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
-  artistIdIdx: index("artist_id_idx").on(table.artistId),
+  artistIdx: index("releases_artist_idx").on(table.artistId),
+  statusIdx: index("releases_status_idx").on(table.status),
+  upcIdx: index("releases_upc_idx").on(table.upc),
 }));
 
 export type Release = typeof releases.$inferSelect;
 export type InsertRelease = typeof releases.$inferInsert;
+
+/**
+ * Release Tracks — DDEX ERN ResourceList
+ * Junction table linking a release to its tracks with disc/sequence ordering.
+ */
+export const releaseTracks = mysqlTable("releaseTracks", {
+  id: int("id").autoincrement().primaryKey(),
+  releaseId: int("releaseId").notNull().references(() => releases.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  discNumber: int("discNumber").notNull().default(1),
+  sequenceNumber: int("sequenceNumber").notNull().default(1),
+  isBonus: int("isBonus").notNull().default(0),
+  isHidden: int("isHidden").notNull().default(0),
+  addedAt: timestamp("addedAt").defaultNow().notNull(),
+}, (table) => ({
+  releaseIdx: index("release_tracks_release_idx").on(table.releaseId),
+  trackIdx: index("release_tracks_track_idx").on(table.trackId),
+  uniqueReleaseTrack: uniqueIndex("uq_release_track_join").on(table.releaseId, table.trackId),
+}));
+
+export type ReleaseTrack = typeof releaseTracks.$inferSelect;
+export type InsertReleaseTrack = typeof releaseTracks.$inferInsert;
+
+/**
+ * Release Territory Deals — DDEX ERN DealList
+ * Per-territory pricing and rights configuration.
+ */
+export const releaseTerritoryDeals = mysqlTable("releaseTerritoryDeals", {
+  id: int("id").autoincrement().primaryKey(),
+  releaseId: int("releaseId").notNull().references(() => releases.id),
+  territory: varchar("territory", { length: 10 }).notNull().default("worldwide"),
+  pricingTier: mysqlEnum("pricingTier", ["free", "standard", "premium"]).notNull().default("standard"),
+  streamingRights: int("streamingRights").notNull().default(1),
+  downloadRights: int("downloadRights").notNull().default(0),
+  syncRights: int("syncRights").notNull().default(0),
+  startDate: varchar("startDate", { length: 10 }),
+  endDate: varchar("endDate", { length: 10 }),
+  priceOverride: varchar("priceOverride", { length: 20 }),
+  currency: varchar("currency", { length: 3 }).notNull().default("USD"),
+  notes: varchar("notes", { length: 500 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  releaseIdx: index("territory_deals_release_idx").on(table.releaseId),
+  uniqueReleaseTerr: uniqueIndex("uq_release_territory_deal").on(table.releaseId, table.territory),
+}));
+
+export type ReleaseTerritoryDeal = typeof releaseTerritoryDeals.$inferSelect;
+export type InsertReleaseTerritoryDeal = typeof releaseTerritoryDeals.$inferInsert;
 
 // ============================================================================
 // IP PROTECTION / INFRINGEMENT DETECTION
@@ -5437,6 +5545,7 @@ export const cohortRevenueEvents = mysqlTable("cohort_revenue_events", {
   amountCents: bigint("amountCents", { mode: "number" }).notNull(), // gross USD cents
   platformFeeCents: bigint("platformFeeCents", { mode: "number" }).notNull().default(0),
   netAmountCents: bigint("netAmountCents", { mode: "number" }).notNull(), // after platform fee
+
   sourceTable: varchar("sourceTable", { length: 64 }).notNull(), // e.g. "orders", "bap_stream_payments"
   sourceId: varchar("sourceId", { length: 64 }).notNull(),       // PK in source table (string for flexibility)
   eventDate: timestamp("eventDate").notNull(),                   // when the revenue was earned
@@ -5451,12 +5560,13 @@ export const cohortRevenueEvents = mysqlTable("cohort_revenue_events", {
 export type CohortRevenueEvent = typeof cohortRevenueEvents.$inferSelect;
 export type InsertCohortRevenueEvent = typeof cohortRevenueEvents.$inferInsert;
 
+
 // ============================================================================
-// DISTRIBUTION WIZARD — DISTRO-UX1
+// DISTRIBUTION WIZARD SUBMISSIONS
 // ============================================================================
 
 /**
- * Distribution Submission
+ * Distribution Submissions
  * A single wizard session that groups tracks, DSPs, territories, pricing, and
  * release date into one submission record. Each submission maps to one or more
  * trackDistributions rows when submitted.
@@ -5464,7 +5574,6 @@ export type InsertCohortRevenueEvent = typeof cohortRevenueEvents.$inferInsert;
 export const distributionSubmissions = mysqlTable("distribution_submissions", {
   id: int("id").autoincrement().primaryKey(),
   artistId: int("artistId").notNull().references(() => artistProfiles.id),
-
   // Wizard state
   status: mysqlEnum("status", [
     "draft",        // Wizard in progress, not submitted
@@ -5476,48 +5585,35 @@ export const distributionSubmissions = mysqlTable("distribution_submissions", {
     "cancelled",    // Artist cancelled
     "takedown",     // Taken down post-live
   ]).default("draft").notNull(),
-
   // Step 1 — Track selection (array of bapTrack IDs)
   trackIds: json("trackIds").$type<number[]>().notNull().default([]),
-
   // Step 2 — DSP selection (array of platform slugs)
   selectedDsps: json("selectedDsps").$type<string[]>().notNull().default([]),
-
   // Step 3 — Territory selection
   territories: json("territories").$type<{
     mode: "worldwide" | "regions" | "custom";
-    regions?: string[];       // e.g. ["north_america", "europe", "asia_pacific"]
-    countries?: string[];     // ISO 3166-1 alpha-2 codes for custom mode
+    regions?: string[];
+    countries?: string[];
     excludedCountries?: string[];
   }>().notNull().default({ mode: "worldwide" }),
-
   // Step 4 — Pricing tier
   pricingTier: mysqlEnum("pricingTier", [
-    "free",         // Free streaming only
-    "standard",     // Standard per-stream rate
-    "premium",      // Premium pricing — higher per-stream, limited DSPs
+    "free",
+    "standard",
+    "premium",
   ]).default("standard").notNull(),
-
-  // Boptone revenue share % based on artist subscription tier (stored at submission time)
   boptoneSharePercent: decimal("boptoneSharePercent", { precision: 5, scale: 2 }).default("10.00").notNull(),
-
   // Step 5 — Release scheduling
-  releaseDate: timestamp("releaseDate"), // null = release immediately on approval
+  releaseDate: timestamp("releaseDate"),
   preSaveEnabled: boolean("preSaveEnabled").default(false).notNull(),
-  exclusiveWindowDays: int("exclusiveWindowDays").default(0).notNull(), // 0 = no Boptone-exclusive window
-
+  exclusiveWindowDays: int("exclusiveWindowDays").default(0).notNull(),
   // Identifiers
-  upc: varchar("upc", { length: 20 }),   // Universal Product Code (for album releases)
-  isrc: varchar("isrc", { length: 20 }),  // ISRC override (if different from track's own ISRC)
-
-  // Review / submission notes
+  upc: varchar("upc", { length: 20 }),
+  isrc: varchar("isrc", { length: 20 }),
   artistNotes: text("artistNotes"),
-
-  // Submission timestamps
   submittedAt: timestamp("submittedAt"),
   processedAt: timestamp("processedAt"),
   liveAt: timestamp("liveAt"),
-
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 }, (table) => ({
@@ -5537,7 +5633,7 @@ export const distributionSubmissionTracks = mysqlTable("distribution_submission_
   id: int("id").autoincrement().primaryKey(),
   submissionId: int("submissionId").notNull().references(() => distributionSubmissions.id),
   trackId: int("trackId").notNull().references(() => bapTracks.id),
-  trackOrder: int("trackOrder").default(1).notNull(), // Track number within the release
+  trackOrder: int("trackOrder").default(1).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 }, (table) => ({
   submissionTrackIdx: index("dist_sub_track_idx").on(table.submissionId, table.trackId),

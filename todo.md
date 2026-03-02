@@ -5435,7 +5435,7 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [ ] **[DISTRO-F2] UPC/EAN barcode generation** — Build `server/lib/upcGenerator.ts` that generates valid UPC-A (12-digit) and EAN-13 barcodes for album/EP releases. Store in `releases.upc`. Display barcode visual on release detail page.
 - [ ] **[DISTRO-F3] ISWC metadata field** — Add `iswc` field to the tracks table (format: T-XXXXXXXXX-X). Surface in upload form as optional field for songwriters who know their ISWC. Required for accurate MLC/CMO matching.
 - [ ] **[DISTRO-F4] Songwriter metadata normalization** — Extend track upload form to capture: songwriter name(s), songwriter IPI/CAE number, publisher name, publisher IPI, composition title (if different from recording title), language of lyrics. Store in `trackWriters` table. This is the data the MLC uses to match mechanical royalties.
-- [ ] **[DISTRO-F5] Release metadata schema** — Add a `releases` table: title, type (single/EP/album), UPC, release date, label name, catalog number, copyright year, copyright owner, production year, production owner, genre (primary + secondary), subgenre, language, explicit flag, territory restrictions (JSON). This is the album-level container DDEX requires.
+- [x] **[DISTRO-F5] Release metadata schema** — Add a `releases` table: title, type (single/EP/album), UPC, release date, label name, catalog number, copyright year, copyright owner, production year, production owner, genre (primary + secondary), subgenre, language, explicit flag, territory restrictions (JSON). This is the album-level container DDEX requires.
 - [ ] **[DISTRO-F6] Contributor roles schema** — Add `releaseContributors` table: release_id, contributor_name, contributor_role (enum: MainArtist, FeaturedArtist, Remixer, Producer, Composer, Lyricist, MixEngineer, MasteringEngineer, Conductor, Orchestra, etc.), ISNI number (optional). Required for Apple Music detailed credits and YouTube Content ID.
 - [ ] **[DISTRO-F7] Territory deal configuration** — Add `distributionTerritories` table: distribution_id, territory_code (ISO 3166-1 alpha-2), deal_type (stream/download/both), price_tier, start_date, end_date. Enables geo-restriction for compliance with local content regulations (China, Russia, MENA markets).
 
@@ -5643,4 +5643,40 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Write vitest tests — 28 tests covering display context config, resolution scoring, aspect ratio scoring, overall score weighting, critical size identification
 - [x] TypeScript: 0 errors
 - [x] Total tests: 1180 passing (28 new)
+- [x] Save checkpoint and push to GitHub
+
+### DISTRO-F5 — Release Metadata Schema / DDEX ERN Foundation (In Progress — Mar 1, 2026)
+
+**Goal:** Album-level `releases` container table that DDEX ERN 4.1 requires. Ties tracks, artwork, credits, territory deals, and distribution submissions into a single authoritative release record. Directly unblocks the DDEX encoder (DISTRO-D1).
+
+**DDEX ERN 4.1 required fields covered:**
+- ReleaseId (UPC/EAN, ProprietaryId, GRID)
+- ReleaseType (Album, Single, EP, Compilation, Soundtrack, Ringtone, etc.)
+- ReferenceTitle + DisplayTitle (with language code)
+- DisplayArtist (with ArtistRole: MainArtist, FeaturedArtist, etc.)
+- PLine (℗ master copyright year + owner)
+- CLine (© composition copyright year + owner)
+- LabelName
+- Genre (primary + secondary)
+- ParentalWarningType (NotExplicit, Explicit, ExplicitContentEdited)
+- OriginalReleaseDate + GlobalReleaseDate
+- TerritoryCode list (worldwide or specific ISO 3166-1 alpha-2)
+- ResourceList (track references with sequence numbers)
+- DealList (territory + pricing + streaming/download rights)
+
+- [x] Design schema: `releases` table with all DDEX ERN 4.1 required fields
+- [x] Design schema: `releaseTracks` join table (releaseId, trackId, sequenceNumber, discNumber, isBonus)
+- [x] Design schema: `releaseTerritoryDeals` table (releaseId, territory, pricingTier, streamingRights, downloadRights, startDate, endDate)
+- [x] Push schema migration via direct SQL
+- [x] Update `drizzle/schema.ts` to reflect new tables
+- [x] Build `server/db/releases.ts` — CRUD helpers (create, update, publish, getById, getByArtist, addTrack, removeTrack, setTerritoryDeals)
+- [x] Build `server/routers/releases.ts` — tRPC procedures (create, update, publish, getById, getMyReleases, addTrack, removeTrack, setTerritoryDeals, getDdexReadiness)
+- [x] Register releases router in `server/routers.ts`
+- [x] Build `client/src/pages/ReleaseManager.tsx` — Release Manager dashboard (list view, create/edit, track assignment, territory deals)
+- [ ] Build `client/src/pages/ReleaseEditor.tsx` — full release metadata editor (all DDEX fields, track sequencer, territory deal builder)
+- [ ] Wire releases into Distribution Wizard (StepReview shows release summary)
+- [x] Add "Create Release" entry to artist dashboard sidebar nav
+- [x] Register /releases route in App.tsx
+- [x] Write vitest tests for release validation logic (UPC format, DDEX field completeness, territory deal validation)
+- [x] TypeScript: 0 errors
 - [x] Save checkpoint and push to GitHub
