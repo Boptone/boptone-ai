@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE releaseTerritoryDeals \n  ADD COLUMN IF NOT EXISTS masterRightsConfirmed INT NOT NULL DEFAULT 0,\n  ADD COLUMN IF NOT EXISTS publishingHandledBy ENUM('self','pro','publisher','label') NOT NULL DEFAULT 'self';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2SKEMaxYovcAzrR.root --database nTbKjjzazhRpeJn9kKuXdQ --execute ALTER TABLE releaseTerritoryDeals \n  ADD COLUMN IF NOT EXISTS masterRightsConfirmed INT NOT NULL DEFAULT 0,\n  ADD COLUMN IF NOT EXISTS publishingHandledBy ENUM('self','pro','publisher','label') NOT NULL DEFAULT 'self';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 722
+}

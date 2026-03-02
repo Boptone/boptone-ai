@@ -4,14 +4,16 @@
  * Covers releases, releaseTracks, and releaseTerritoryDeals tables.
  */
 
-import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import {
   InsertRelease,
   InsertReleaseTerritoryDeal,
   InsertReleaseTrack,
+  InsertRightsAttestation,
   releases,
   releaseTerritoryDeals,
   releaseTracks,
+  rightsAttestations,
 } from "../../drizzle/schema";
 import { getDb } from "../db";
 
@@ -153,8 +155,28 @@ export async function setTerritoryDeal(data: InsertReleaseTerritoryDeal) {
         priceOverride: data.priceOverride ?? null,
         currency: data.currency ?? "USD",
         notes: data.notes ?? null,
+        masterRightsConfirmed: data.masterRightsConfirmed ?? 0,
+        publishingHandledBy: data.publishingHandledBy ?? "self",
       },
     });
+}
+
+export async function confirmTerritoryRights(
+  releaseId: number,
+  territory: string,
+  publishingHandledBy: "self" | "pro" | "publisher" | "label" = "self"
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(releaseTerritoryDeals)
+    .set({ masterRightsConfirmed: 1, publishingHandledBy })
+    .where(
+      and(
+        eq(releaseTerritoryDeals.releaseId, releaseId),
+        eq(releaseTerritoryDeals.territory, territory)
+      )
+    );
 }
 
 export async function removeTerritoryDeal(releaseId: number, territory: string) {
@@ -183,6 +205,43 @@ export async function replaceAllTerritoryDeals(
 }
 
 // ---------------------------------------------------------------------------
+// Rights Attestations — append-only audit log
+// ---------------------------------------------------------------------------
+
+/**
+ * Record an immutable rights attestation.
+ * Called once per distribution submission. Never updated or deleted.
+ */
+export async function createRightsAttestation(data: InsertRightsAttestation) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [result] = await db.insert(rightsAttestations).values(data);
+  return { id: (result as any).insertId as number };
+}
+
+export async function getRightsAttestationsByRelease(releaseId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db
+    .select()
+    .from(rightsAttestations)
+    .where(eq(rightsAttestations.releaseId, releaseId))
+    .orderBy(desc(rightsAttestations.attestedAt));
+}
+
+export async function getLatestRightsAttestation(releaseId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const rows = await db
+    .select()
+    .from(rightsAttestations)
+    .where(eq(rightsAttestations.releaseId, releaseId))
+    .orderBy(desc(rightsAttestations.attestedAt))
+    .limit(1);
+  return rows[0] ?? undefined;
+}
+
+// ---------------------------------------------------------------------------
 // DDEX metadata helper — assembles the full release record for the encoder
 // ---------------------------------------------------------------------------
 
@@ -191,5 +250,6 @@ export async function getReleaseWithFullMetadata(releaseId: number) {
   if (!release) return undefined;
   const tracks = await getTracksByRelease(releaseId);
   const deals = await getTerritoryDealsByRelease(releaseId);
-  return { release, tracks, deals };
+  const latestAttestation = await getLatestRightsAttestation(releaseId);
+  return { release, tracks, deals, latestAttestation };
 }

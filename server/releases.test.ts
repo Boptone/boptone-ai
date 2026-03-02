@@ -24,8 +24,11 @@ function makeBundle(overrides: Partial<{
   labelName: string | null;
   primaryGenre: string | null;
   globalReleaseDate: string | null;
+  rightsType: string | null;
   trackCount: number;
   dealCount: number;
+  allRightsConfirmed: boolean;
+  hasAttestation: boolean;
 }> = {}) {
   const defaults = {
     title: "Midnight Sessions",
@@ -38,8 +41,11 @@ function makeBundle(overrides: Partial<{
     labelName: "Boptone Records",
     primaryGenre: "Hip-Hop",
     globalReleaseDate: "2025-06-01",
+    rightsType: "independent" as string | null,
     trackCount: 10,
     dealCount: 1,
+    allRightsConfirmed: true,
+    hasAttestation: true,
   };
   const merged = { ...defaults, ...overrides };
   return {
@@ -54,9 +60,18 @@ function makeBundle(overrides: Partial<{
       labelName: merged.labelName,
       primaryGenre: merged.primaryGenre,
       globalReleaseDate: merged.globalReleaseDate,
+      rightsType: merged.rightsType,
     },
     tracks: Array.from({ length: merged.trackCount }, (_, i) => ({ id: i + 1 })),
-    deals: Array.from({ length: merged.dealCount }, (_, i) => ({ id: i + 1 })),
+    deals: Array.from({ length: merged.dealCount }, (_, i) => ({
+      id: i + 1,
+      territory: `T${i}`,
+      masterRightsConfirmed: merged.allRightsConfirmed ? 1 : 0,
+      publishingHandledBy: "self" as const,
+    })),
+    latestAttestation: merged.hasAttestation
+      ? { attestedAt: new Date("2025-06-01T12:00:00Z") }
+      : null,
   };
 }
 
@@ -242,5 +257,108 @@ describe("DDEX ERN 4.1 required field coverage", () => {
     expect(errors.some(e => e.includes("date"))).toBe(false);
     // But is a warning
     expect(warnings.some(w => w.includes("date"))).toBe(true);
+  });
+});
+
+// ── DISTRO-RIGHTS: Territory rights declaration tests ─────────────────────────
+
+describe("DISTRO-RIGHTS: validateReleaseForPublish — rights gating", () => {
+  it("passes when all territories have rights confirmed and attestation exists", () => {
+    const errors = validateReleaseForPublish(makeBundle({
+      dealCount: 3,
+      allRightsConfirmed: true,
+      hasAttestation: true,
+    }));
+    expect(errors).toHaveLength(0);
+  });
+
+  it("blocks submission when any territory lacks rights confirmation", () => {
+    const errors = validateReleaseForPublish(makeBundle({
+      dealCount: 2,
+      allRightsConfirmed: false,
+      hasAttestation: true,
+    }));
+    expect(errors.some(e => e.toLowerCase().includes("rights not confirmed"))).toBe(true);
+  });
+
+  it("blocks submission when no rights attestation exists", () => {
+    const errors = validateReleaseForPublish(makeBundle({
+      allRightsConfirmed: true,
+      hasAttestation: false,
+    }));
+    expect(errors.some(e => e.toLowerCase().includes("rights declaration"))).toBe(true);
+  });
+
+  it("blocks submission when both rights unconfirmed AND no attestation", () => {
+    const errors = validateReleaseForPublish(makeBundle({
+      dealCount: 2,
+      allRightsConfirmed: false,
+      hasAttestation: false,
+    }));
+    // Both errors should appear
+    expect(errors.some(e => e.toLowerCase().includes("rights not confirmed"))).toBe(true);
+    expect(errors.some(e => e.toLowerCase().includes("rights declaration"))).toBe(true);
+    expect(errors.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("identifies the specific unconfirmed territories in the error message", () => {
+    const bundle = makeBundle({ dealCount: 0, allRightsConfirmed: true, hasAttestation: true });
+    // Manually inject a mix of confirmed/unconfirmed deals
+    bundle.deals = [
+      { id: 1, territory: "US", masterRightsConfirmed: 1, publishingHandledBy: "self" },
+      { id: 2, territory: "GB", masterRightsConfirmed: 0, publishingHandledBy: "self" },
+      { id: 3, territory: "DE", masterRightsConfirmed: 0, publishingHandledBy: "self" },
+    ];
+    const errors = validateReleaseForPublish(bundle);
+    const rightsError = errors.find(e => e.includes("rights not confirmed"));
+    expect(rightsError).toBeDefined();
+    expect(rightsError).toContain("GB");
+    expect(rightsError).toContain("DE");
+    expect(rightsError).not.toContain("US");
+  });
+
+  it("split-rights scenario: US/CA confirmed, UK/DE not added — passes", () => {
+    const bundle = makeBundle({ dealCount: 0, allRightsConfirmed: true, hasAttestation: true });
+    // Only US and CA in the deal list — UK/DE label territory not added
+    bundle.deals = [
+      { id: 1, territory: "US", masterRightsConfirmed: 1, publishingHandledBy: "self" },
+      { id: 2, territory: "CA", masterRightsConfirmed: 1, publishingHandledBy: "self" },
+    ];
+    const errors = validateReleaseForPublish(bundle);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("split-rights scenario: artist accidentally adds UK (label territory) — blocked", () => {
+    const bundle = makeBundle({ dealCount: 0, allRightsConfirmed: true, hasAttestation: true });
+    bundle.deals = [
+      { id: 1, territory: "US", masterRightsConfirmed: 1, publishingHandledBy: "self" },
+      { id: 2, territory: "CA", masterRightsConfirmed: 1, publishingHandledBy: "self" },
+      // Artist forgot to uncheck UK — rights unconfirmed blocks delivery
+      { id: 3, territory: "GB", masterRightsConfirmed: 0, publishingHandledBy: "label" },
+    ];
+    const errors = validateReleaseForPublish(bundle);
+    expect(errors.some(e => e.includes("GB"))).toBe(true);
+  });
+
+  it("attestation-only check: existing attestation satisfies the requirement", () => {
+    const errors = validateReleaseForPublish(makeBundle({
+      allRightsConfirmed: true,
+      hasAttestation: true,
+    }));
+    expect(errors.some(e => e.toLowerCase().includes("rights declaration"))).toBe(false);
+  });
+
+  it("rights gating does not interfere with other DDEX validation errors", () => {
+    const errors = validateReleaseForPublish(makeBundle({
+      title: null,
+      artworkUrl: null,
+      allRightsConfirmed: false,
+      hasAttestation: false,
+    }));
+    // Should have title error, artwork error, rights errors
+    expect(errors.some(e => e.includes("title"))).toBe(true);
+    expect(errors.some(e => e.toLowerCase().includes("artwork"))).toBe(true);
+    expect(errors.some(e => e.toLowerCase().includes("rights"))).toBe(true);
+    expect(errors.length).toBeGreaterThanOrEqual(4);
   });
 });

@@ -5680,3 +5680,27 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] Write vitest tests for release validation logic (UPC format, DDEX field completeness, territory deal validation)
 - [x] TypeScript: 0 errors
 - [x] Save checkpoint and push to GitHub
+
+---
+
+### DISTRO-RIGHTS — Territory Rights Declaration & Legal Liability Protection (Mar 1, 2026)
+
+**Goal:** Protect Boptone from liability when artists distribute content in territories where they do not hold rights. Implement a territory-scoped rights declaration system with an immutable audit trail, per-territory rights confirmation, and a legally precise attestation that replaces naive global "I own this" checkboxes.
+
+**Why this matters:** Artists routinely have split-rights situations (e.g., label controls UK/EU masters, artist is independent in US/CA/AU). Without territory-level rights gating, Boptone could be held liable as a contributory infringer for delivering content to territories the artist has no right to distribute in.
+
+- [x] **Schema: `rightsType` enum on `releases`** — `independent | label_authorized | split_rights`. Determines which rights declaration UI is shown.
+- [x] **Schema: `masterRightsConfirmed` boolean on `releaseTerritoryDeals`** — Per-territory confirmation that artist holds/is authorized to distribute master recording.
+- [x] **Schema: `publishingHandledBy` enum on `releaseTerritoryDeals`** — `self | pro | publisher | label`. Clarifies publishing rights chain per territory.
+- [x] **Schema: `rightsAttestations` table** — Immutable audit log: releaseId, userId, ipAddress, userAgent, attestationText (full legal copy), attestedAt timestamp. One row per submission. Never deletable.
+- [x] **Push schema migration** — `pnpm db:push`
+- [x] **DB helpers** — `createRightsAttestation()`, `getRightsAttestationsByRelease()`, `confirmTerritoryRights()`
+- [x] **Router: `releases.attestRights` procedure** — Accepts attestation payload, records IP + user agent + full legal text, returns attestation ID. Called on distribution submission.
+- [x] **Router: `releases.getDdexReadiness` update** — Gate on: (1) all territory deals have `masterRightsConfirmed = true`, (2) at least one rights attestation exists for the release.
+- [x] **UI: `RightsDeclaration` component** — Rights type selector (independent/label_authorized/split_rights), per-territory rights toggle matrix, legal attestation checkbox with full legal copy, IP-logged submission.
+- [x] **UI: Wire into Distribution Wizard Step 2 (territories)** — Show rights confirmation toggle per territory row. Block "Next" if any territory lacks rights confirmation.
+- [x] **UI: Wire attestation into Distribution Wizard Step 5 (review/submit)** — Show full legal attestation text, require explicit checkbox before enabling Submit. Record attestation on submit.
+- [x] **UI: Split-rights helper text** — Explain the scenario clearly: "Have a label deal in some territories? Only add the territories where YOU hold distribution rights."
+- [x] **Vitest tests** — Rights validation, attestation creation, DDEX readiness gating with/without rights confirmation (34 tests passing, 9 new DISTRO-RIGHTS tests)
+- [x] **TypeScript: 0 errors**
+- [x] **Save checkpoint and push to GitHub**

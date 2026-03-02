@@ -779,6 +779,15 @@ export const releases = mysqlTable("releases", {
   description: text("description"),
   notes: text("notes"),
 
+  // Rights declaration (DISTRO-RIGHTS)
+  // Determines how the artist holds distribution rights for this release.
+  // 'independent'      = artist owns masters outright, no label involvement
+  // 'label_authorized' = label owns masters but has authorized artist to distribute
+  // 'split_rights'     = rights vary by territory (e.g. label controls UK/EU, artist controls US/CA/AU)
+  rightsType: mysqlEnum("rightsType", [
+    "independent", "label_authorized", "split_rights",
+  ]).notNull().default("independent"),
+
   // DDEX delivery tracking
   ddexDeliveryId: varchar("ddexDeliveryId", { length: 100 }),
   ddexLastDeliveredAt: timestamp("ddexLastDeliveredAt"),
@@ -833,6 +842,16 @@ export const releaseTerritoryDeals = mysqlTable("releaseTerritoryDeals", {
   priceOverride: varchar("priceOverride", { length: 20 }),
   currency: varchar("currency", { length: 3 }).notNull().default("USD"),
   notes: varchar("notes", { length: 500 }),
+
+  // Rights confirmation per territory (DISTRO-RIGHTS)
+  // Artist must explicitly confirm they hold/are authorized to distribute
+  // the master recording in this specific territory before delivery.
+  masterRightsConfirmed: int("masterRightsConfirmed").notNull().default(0), // 0=unconfirmed, 1=confirmed
+  // How publishing/composition rights are handled in this territory
+  publishingHandledBy: mysqlEnum("publishingHandledBy", [
+    "self", "pro", "publisher", "label",
+  ]).notNull().default("self"),
+
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 }, (table) => ({
   releaseIdx: index("territory_deals_release_idx").on(table.releaseId),
@@ -841,6 +860,53 @@ export const releaseTerritoryDeals = mysqlTable("releaseTerritoryDeals", {
 
 export type ReleaseTerritoryDeal = typeof releaseTerritoryDeals.$inferSelect;
 export type InsertReleaseTerritoryDeal = typeof releaseTerritoryDeals.$inferInsert;
+
+/**
+ * Rights Attestations — Immutable legal audit trail (DISTRO-RIGHTS)
+ *
+ * Every time an artist submits a release for distribution, a row is inserted
+ * here capturing the FULL text of the legal attestation they agreed to,
+ * their IP address, user agent, and timestamp.
+ *
+ * This table is NEVER updated or deleted — it is an append-only audit log.
+ * In the event of a rights dispute, Boptone can produce this record as
+ * evidence that the artist explicitly declared their rights before delivery.
+ */
+export const rightsAttestations = mysqlTable("rightsAttestations", {
+  id: int("id").autoincrement().primaryKey(),
+  releaseId: int("releaseId").notNull().references(() => releases.id),
+  userId: int("userId").notNull().references(() => users.id),
+
+  // Snapshot of rights type at time of attestation
+  rightsType: mysqlEnum("rightsType", [
+    "independent", "label_authorized", "split_rights",
+  ]).notNull(),
+
+  // Territories covered by this attestation (JSON array of territory codes)
+  // e.g. ["US", "CA", "AU"] or ["WW"] for worldwide
+  territoriesCovered: text("territoriesCovered").notNull(), // JSON string[]
+
+  // The FULL verbatim legal text the artist agreed to — stored so the exact
+  // wording is preserved even if the platform's copy changes in future.
+  attestationText: text("attestationText").notNull(),
+
+  // Network identity at time of attestation
+  ipAddress: varchar("ipAddress", { length: 45 }).notNull(), // supports IPv6
+  userAgent: varchar("userAgent", { length: 500 }).notNull(),
+
+  // Attestation version — increment when legal copy changes materially
+  attestationVersion: varchar("attestationVersion", { length: 20 }).notNull().default("1.0"),
+
+  // Immutable timestamp — never updated
+  attestedAt: timestamp("attestedAt").defaultNow().notNull(),
+}, (table) => ({
+  releaseIdx: index("rights_att_release_idx").on(table.releaseId),
+  userIdx: index("rights_att_user_idx").on(table.userId),
+  attestedAtIdx: index("rights_att_time_idx").on(table.attestedAt),
+}));
+
+export type RightsAttestation = typeof rightsAttestations.$inferSelect;
+export type InsertRightsAttestation = typeof rightsAttestations.$inferInsert;
 
 // ============================================================================
 // IP PROTECTION / INFRINGEMENT DETECTION

@@ -10,9 +10,12 @@ import { protectedProcedure, router } from "../_core/trpc";
 import * as db from "../db";
 import {
   addTrackToRelease,
+  confirmTerritoryRights,
   createRelease,
+  createRightsAttestation,
   deleteRelease,
   getReleaseById,
+  getRightsAttestationsByRelease,
   getReleasesByArtist,
   getReleaseWithFullMetadata,
   getTracksByRelease,
@@ -40,9 +43,13 @@ const releaseStatusEnum = z.enum([
 
 const pricingTierEnum = z.enum(["free", "standard", "premium"]);
 
+const rightsTypeEnum = z.enum(["independent", "label_authorized", "split_rights"]);
+const publishingHandledByEnum = z.enum(["self", "pro", "publisher", "label"]);
+
 const createReleaseInput = z.object({
   title: z.string().min(1).max(500),
   releaseType: releaseTypeEnum.default("album"),
+  rightsType: rightsTypeEnum.default("independent"),
   artworkUrl: z.string().url().optional(),
   artworkS3Key: z.string().optional(),
   globalReleaseDate: z.string().optional(), // ISO date string
@@ -79,6 +86,8 @@ const territoryDealInput = z.object({
   priceOverride: z.string().optional(),
   currency: z.string().max(3).default("USD"),
   notes: z.string().optional(),
+  masterRightsConfirmed: z.boolean().default(false),
+  publishingHandledBy: publishingHandledByEnum.default("self"),
 });
 
 // ============================================================================
@@ -97,6 +106,7 @@ export const releasesRouter = router({
         artistId: profile.id,
         title: input.title,
         releaseType: input.releaseType,
+        rightsType: input.rightsType,
         artworkUrl: input.artworkUrl ?? undefined,
         artworkS3Key: input.artworkS3Key ?? undefined,
         globalReleaseDate: input.globalReleaseDate ?? undefined,
@@ -243,6 +253,8 @@ export const releasesRouter = router({
         syncRights: input.syncRights ? 1 : 0,
         startDate: input.startDate ?? undefined,
         endDate: input.endDate ?? undefined,
+        masterRightsConfirmed: input.masterRightsConfirmed ? 1 : 0,
+        publishingHandledBy: input.publishingHandledBy,
       });
       return { success: true };
     }),
@@ -264,9 +276,65 @@ export const releasesRouter = router({
           syncRights: d.syncRights ? 1 : 0,
           startDate: d.startDate ?? undefined,
           endDate: d.endDate ?? undefined,
+          masterRightsConfirmed: d.masterRightsConfirmed ? 1 : 0,
+          publishingHandledBy: d.publishingHandledBy,
         }))
       );
       return { success: true };
+    }),
+
+  // ── Confirm rights for a single territory ──────────────────────────────────────────
+  confirmTerritoryRights: protectedProcedure
+    .input(z.object({
+      releaseId: z.number().int().positive(),
+      territory: z.string().min(2).max(10),
+      publishingHandledBy: publishingHandledByEnum.default("self"),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await assertOwnsRelease(ctx.user.id, input.releaseId);
+      await confirmTerritoryRights(input.releaseId, input.territory, input.publishingHandledBy);
+      return { success: true };
+    }),
+
+  // ── Record a legal rights attestation (called on distribution submission) ──────
+  attestRights: protectedProcedure
+    .input(z.object({
+      releaseId: z.number().int().positive(),
+      rightsType: rightsTypeEnum,
+      territoriesCovered: z.array(z.string()).min(1),
+      // The frontend sends the full attestation text it displayed to the user
+      attestationText: z.string().min(100),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      await assertOwnsRelease(ctx.user.id, input.releaseId);
+
+      // Capture IP and user agent from the request for the audit trail
+      const ipAddress =
+        (ctx.req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
+        ctx.req.socket?.remoteAddress ||
+        "unknown";
+      const userAgent = (ctx.req.headers["user-agent"] as string) || "unknown";
+
+      const { id } = await createRightsAttestation({
+        releaseId: input.releaseId,
+        userId: ctx.user.id,
+        rightsType: input.rightsType,
+        territoriesCovered: JSON.stringify(input.territoriesCovered),
+        attestationText: input.attestationText,
+        ipAddress: ipAddress.slice(0, 45),
+        userAgent: userAgent.slice(0, 500),
+        attestationVersion: "1.0",
+      });
+
+      return { attestationId: id };
+    }),
+
+  // ── Get rights attestation history for a release ────────────────────────────
+  getRightsHistory: protectedProcedure
+    .input(z.object({ id: z.number().int().positive() }))
+    .query(async ({ ctx, input }) => {
+      await assertOwnsRelease(ctx.user.id, input.id);
+      return await getRightsAttestationsByRelease(input.id);
     }),
 
   // ── DDEX readiness check ──────────────────────────────────────────────────
@@ -278,12 +346,19 @@ export const releasesRouter = router({
       if (!bundle) throw new TRPCError({ code: "NOT_FOUND" });
       const errors = validateReleaseForPublish(bundle);
       const warnings = getPublishWarnings(bundle);
+      const unconfirmedTerritories = bundle.deals
+        .filter((d) => !d.masterRightsConfirmed)
+        .map((d) => d.territory ?? "unknown");
       return {
         ready: errors.length === 0,
         errors,
         warnings,
         trackCount: bundle.tracks.length,
         dealCount: bundle.deals.length,
+        rightsType: bundle.release.rightsType,
+        unconfirmedTerritories,
+        hasRightsAttestation: !!bundle.latestAttestation,
+        lastAttestedAt: bundle.latestAttestation?.attestedAt ?? null,
       };
     }),
 });
@@ -301,20 +376,49 @@ async function assertOwnsRelease(userId: number, releaseId: number) {
   return release;
 }
 
-/** Minimum DDEX ERN 4.1 requirements */
+/** Minimum DDEX ERN 4.1 requirements + DISTRO-RIGHTS territory rights gating */
 export function validateReleaseForPublish(bundle: {
-  release: { title: string | null; upc: string | null; pLineYear: number | null; pLineOwner: string | null; cLineYear: number | null; cLineOwner: string | null; artworkUrl: string | null };
+  release: {
+    title: string | null;
+    upc: string | null;
+    pLineYear: number | null;
+    pLineOwner: string | null;
+    cLineYear: number | null;
+    cLineOwner: string | null;
+    artworkUrl: string | null;
+    rightsType?: string | null;
+  };
   tracks: unknown[];
-  deals: unknown[];
+  deals: Array<{ masterRightsConfirmed?: number | null; territory?: string }>;
+  latestAttestation?: { attestedAt: Date | null } | null;
 }): string[] {
   const errors: string[] = [];
   const r = bundle.release;
   if (!r.title) errors.push("Release title is required");
   if (!r.artworkUrl) errors.push("Cover artwork is required");
-  if (!r.cLineYear || !r.cLineOwner) errors.push("Composition copyright (© year and holder) is required");
-  if (!r.pLineYear || !r.pLineOwner) errors.push("Master copyright (℗ year and holder) is required");
+  if (!r.cLineYear || !r.cLineOwner) errors.push("Composition copyright (\u00a9 year and holder) is required");
+  if (!r.pLineYear || !r.pLineOwner) errors.push("Master copyright (\u2117 year and holder) is required");
   if (bundle.tracks.length === 0) errors.push("At least one track must be added to the release");
   if (bundle.deals.length === 0) errors.push("At least one territory deal must be configured");
+
+  // DISTRO-RIGHTS: Every territory deal must have master rights confirmed
+  const unconfirmedTerritories = bundle.deals
+    .filter((d) => !d.masterRightsConfirmed)
+    .map((d) => d.territory ?? "unknown");
+  if (unconfirmedTerritories.length > 0) {
+    errors.push(
+      `Master recording rights not confirmed for: ${unconfirmedTerritories.join(", ")}. ` +
+      `You must confirm you hold distribution rights in each territory before delivery.`
+    );
+  }
+
+  // DISTRO-RIGHTS: A signed rights attestation must exist for this release
+  if (!bundle.latestAttestation) {
+    errors.push(
+      "Rights declaration not completed. You must agree to the Boptone Distribution Rights Declaration before this release can be submitted."
+    );
+  }
+
   return errors;
 }
 
