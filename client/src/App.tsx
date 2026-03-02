@@ -226,7 +226,7 @@ function Router() {
         <Route path="/finance" component={Finance} />
         <Route path="/toney-insights" component={ToneyInsights} />
         <Route path="/audience" component={Fans} />
-        <Route path="/releases" component={MyMusic} />
+        <Route path="/releases/manager" component={ReleaseManager} />
         <Route path="/batch-upload" component={BatchUpload} />
         <Route path="/settings/payouts" component={PayoutSettings} />
         <Route path="/payouts/history" component={PayoutHistory} />

@@ -47,7 +47,8 @@ import {
   Image as ImageIcon,
   DollarSign,
   Users,
-  Clock
+  Clock,
+  Disc3
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -345,6 +346,15 @@ export default function MyMusic() {
           </div>
           
           <div className="flex gap-2">
+            <Button
+              size="lg"
+              variant="outline"
+              className="gap-2"
+              onClick={() => navigate("/releases/manager")}
+            >
+              <Disc3 className="h-5 w-5" />
+              Release Manager
+            </Button>
             <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
               <DialogTrigger asChild>
                 <Button size="lg" variant="outline" className="gap-2">
