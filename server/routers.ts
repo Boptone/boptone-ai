@@ -49,6 +49,7 @@ import { productRatingsRouter } from "./routers/productRatings";
 import { activationFunnelRouter } from "./routers/activationFunnel";
 import { takedownRouter } from "./routers/takedown";
 import { cohortAnalyticsRouter } from "./routers/cohortAnalytics";
+import { distributionRouter } from "./routers/distribution";
 import { autoPopulateSEO } from "./seoAutoPopulate";
 
 // ============================================================================
@@ -785,6 +786,7 @@ export const appRouter = router({
   activation: activationFunnelRouter,
   takedown: takedownRouter,
   cohortAnalytics: cohortAnalyticsRouter,
+  distribution: distributionRouter,
 
   // Workflow Automation System (Pro/Enterprise)
   workflows: workflowsRouter,

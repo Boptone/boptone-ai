@@ -115,6 +115,8 @@ const ArtistSetup = lazy(() => import("./pages/ArtistSetup"));
 const ArtistSignup = lazy(() => import("./pages/ArtistSignup"));
 const BatchUpload = lazy(() => import("./pages/BatchUpload"));
 const ToneyInsights = lazy(() => import("./pages/ToneyInsights"));
+const DistributionWizard = lazy(() => import("./pages/DistributionWizard"));
+const Distribution = lazy(() => import("./pages/Distribution"));
 
 // Loading fallback component
 function PageLoader() {
@@ -148,6 +150,8 @@ function Router() {
         <Route path={"/splits"} component={SplitsDashboard} />
         <Route path="/onboarding" component={Onboarding} />
         <Route path={"/@:username"} component={ArtistProfile} />
+        <Route path={"/distribution"} component={Distribution} />
+        <Route path={"/distribution/wizard"} component={DistributionWizard} />
         <Route path="/shop" component={BopShopLanding} />
         <Route path="/shop/browse" component={BopShopBrowse} />
         <Route path="/shop/:slug" component={BopShopProduct} />

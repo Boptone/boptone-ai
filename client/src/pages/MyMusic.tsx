@@ -24,6 +24,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
+import { useLocation } from "wouter";
 import AudioPlayer from "@/components/AudioPlayer";
 import BatchUploadDialog from "@/components/BatchUploadDialog";
 import { toast } from "sonner";
@@ -80,6 +81,7 @@ import { TranscodeStatus } from "@/components/TranscodeStatus";
 export default function MyMusic() {
   useRequireArtist(); // Enforce artist authentication
   const { user } = useAuth();
+  const [, navigate] = useLocation();
   
   // Upload state
   const [isUploading, setIsUploading] = useState(false);
@@ -836,6 +838,10 @@ export default function MyMusic() {
                         <DropdownMenuItem onClick={() => { setDetailTrack(track); setDetailSheetOpen(true); }}>
                           <Eye className="h-4 w-4 mr-2" />
                           View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate(`/distribution/wizard?tracks=${track.id}`)}>
+                          <TrendingUp className="h-4 w-4 mr-2" />
+                          Distribute
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-destructive"

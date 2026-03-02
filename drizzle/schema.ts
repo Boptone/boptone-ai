@@ -5450,3 +5450,98 @@ export const cohortRevenueEvents = mysqlTable("cohort_revenue_events", {
 
 export type CohortRevenueEvent = typeof cohortRevenueEvents.$inferSelect;
 export type InsertCohortRevenueEvent = typeof cohortRevenueEvents.$inferInsert;
+
+// ============================================================================
+// DISTRIBUTION WIZARD — DISTRO-UX1
+// ============================================================================
+
+/**
+ * Distribution Submission
+ * A single wizard session that groups tracks, DSPs, territories, pricing, and
+ * release date into one submission record. Each submission maps to one or more
+ * trackDistributions rows when submitted.
+ */
+export const distributionSubmissions = mysqlTable("distribution_submissions", {
+  id: int("id").autoincrement().primaryKey(),
+  artistId: int("artistId").notNull().references(() => artistProfiles.id),
+
+  // Wizard state
+  status: mysqlEnum("status", [
+    "draft",        // Wizard in progress, not submitted
+    "submitted",    // Submitted, awaiting processing
+    "processing",   // Being sent to DSPs
+    "live",         // All selected DSPs confirmed live
+    "partial",      // Some DSPs live, some failed
+    "failed",       // All DSPs failed
+    "cancelled",    // Artist cancelled
+    "takedown",     // Taken down post-live
+  ]).default("draft").notNull(),
+
+  // Step 1 — Track selection (array of bapTrack IDs)
+  trackIds: json("trackIds").$type<number[]>().notNull().default([]),
+
+  // Step 2 — DSP selection (array of platform slugs)
+  selectedDsps: json("selectedDsps").$type<string[]>().notNull().default([]),
+
+  // Step 3 — Territory selection
+  territories: json("territories").$type<{
+    mode: "worldwide" | "regions" | "custom";
+    regions?: string[];       // e.g. ["north_america", "europe", "asia_pacific"]
+    countries?: string[];     // ISO 3166-1 alpha-2 codes for custom mode
+    excludedCountries?: string[];
+  }>().notNull().default({ mode: "worldwide" }),
+
+  // Step 4 — Pricing tier
+  pricingTier: mysqlEnum("pricingTier", [
+    "free",         // Free streaming only
+    "standard",     // Standard per-stream rate
+    "premium",      // Premium pricing — higher per-stream, limited DSPs
+  ]).default("standard").notNull(),
+
+  // Boptone revenue share % based on artist subscription tier (stored at submission time)
+  boptoneSharePercent: decimal("boptoneSharePercent", { precision: 5, scale: 2 }).default("10.00").notNull(),
+
+  // Step 5 — Release scheduling
+  releaseDate: timestamp("releaseDate"), // null = release immediately on approval
+  preSaveEnabled: boolean("preSaveEnabled").default(false).notNull(),
+  exclusiveWindowDays: int("exclusiveWindowDays").default(0).notNull(), // 0 = no Boptone-exclusive window
+
+  // Identifiers
+  upc: varchar("upc", { length: 20 }),   // Universal Product Code (for album releases)
+  isrc: varchar("isrc", { length: 20 }),  // ISRC override (if different from track's own ISRC)
+
+  // Review / submission notes
+  artistNotes: text("artistNotes"),
+
+  // Submission timestamps
+  submittedAt: timestamp("submittedAt"),
+  processedAt: timestamp("processedAt"),
+  liveAt: timestamp("liveAt"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  artistIdIdx: index("dist_sub_artist_idx").on(table.artistId),
+  statusIdx: index("dist_sub_status_idx").on(table.status),
+  releaseDateIdx: index("dist_sub_release_date_idx").on(table.releaseDate),
+}));
+
+export type DistributionSubmission = typeof distributionSubmissions.$inferSelect;
+export type InsertDistributionSubmission = typeof distributionSubmissions.$inferInsert;
+
+/**
+ * Distribution Submission Track
+ * Junction table linking a submission to its tracks (for multi-track / album releases)
+ */
+export const distributionSubmissionTracks = mysqlTable("distribution_submission_tracks", {
+  id: int("id").autoincrement().primaryKey(),
+  submissionId: int("submissionId").notNull().references(() => distributionSubmissions.id),
+  trackId: int("trackId").notNull().references(() => bapTracks.id),
+  trackOrder: int("trackOrder").default(1).notNull(), // Track number within the release
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  submissionTrackIdx: index("dist_sub_track_idx").on(table.submissionId, table.trackId),
+}));
+
+export type DistributionSubmissionTrack = typeof distributionSubmissionTracks.$inferSelect;
+export type InsertDistributionSubmissionTrack = typeof distributionSubmissionTracks.$inferInsert;

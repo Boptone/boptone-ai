@@ -5605,3 +5605,25 @@ Transform Boptone into a unified platform more powerful and user-friendly than A
 - [x] TypeScript: 0 errors
 - [x] Total tests: 1119 passing (20 new)
 - [x] Save checkpoint
+
+### DISTRO-UX1 — Distribution Wizard (COMPLETE — Mar 1, 2026)
+
+**Goal:** Multi-step release submission flow — DSP selection, territory selection, pricing tiers, release date scheduling, and submission review. Makes Boptone a credible TuneCore/DistroKid competitor.
+
+- [x] Extend schema: `distributionSubmissions` + `distributionSubmissionTracks` tables (direct SQL migration)
+- [x] Build `server/db/distribution.ts` — create, update, submit, getById, getByArtist, getDraft, delete helpers
+- [x] Build `server/routers/distribution.ts` — 9 tRPC procedures + exported pure logic helpers
+- [x] Export validateTerritories, validateSubmissionForSubmit, getSubmissionSummary for testing
+- [x] Build `client/src/components/Wizard/StepDspSelection.tsx` — DSP grid with Boptone always-included, lead time warnings
+- [x] Build `client/src/components/Wizard/StepTerritories.tsx` — worldwide/regions/custom modes with country search
+- [x] Build `client/src/components/Wizard/StepPricing.tsx` — 3-tier pricing cards with revenue share calculator
+- [x] Build `client/src/components/Wizard/StepSchedule.tsx` — immediate/scheduled release, pre-save toggle, Boptone exclusive window
+- [x] Build `client/src/components/Wizard/StepReview.tsx` — full submission summary with edit shortcuts
+- [x] Build `client/src/pages/DistributionWizard.tsx` — 5-step orchestrator with progress bar, draft persistence
+- [x] Build `client/src/pages/Distribution.tsx` — dashboard with per-submission status, per-DSP delivery status, stat cards
+- [x] Add Distribute menu item to MyMusic.tsx track dropdown (navigates to /distribution/wizard?tracks=ID)
+- [x] Register /distribution and /distribution/wizard routes in App.tsx
+- [x] Write vitest tests — 33 tests covering DSP catalog, pricing tiers, territory validation, submission validation, summary helpers
+- [x] TypeScript: 0 errors
+- [x] Total tests: 1152 passing (33 new)
+- [x] Save checkpoint
