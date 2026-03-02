@@ -376,6 +376,262 @@ export function TOSAdditions2026() {
           AI AGENTS IS AT YOUR OWN RISK.
         </p>
       </section>
+
+      {/* Section 23: Distribution Services and DDEX Delivery */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6">23. Distribution Services and DDEX Delivery</h2>
+
+        <h3 className="text-2xl font-semibold mb-4">23.1 Overview of Distribution Services</h3>
+        <p className="mb-6">
+          Boptone provides music distribution services that enable artists to deliver audio recordings, associated metadata, and
+          artwork to digital service providers ("DSPs"), including but not limited to streaming platforms, download stores, and
+          other digital music retailers (collectively, "Distribution Services"). Distribution Services are governed by the DDEX
+          Entertainment ID Registry ("DDEX") Electronic Release Notification ("ERN") standard, version 4.1 or later, which
+          defines the technical and metadata requirements for digital music delivery. By using Distribution Services, you agree
+          to be bound by the terms of this Section 23 in addition to all other provisions of these Terms.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">23.2 Release Metadata Requirements</h3>
+        <p className="mb-4">
+          To deliver a release through Boptone's Distribution Services, you must provide accurate and complete metadata as
+          required by the DDEX ERN 4.1 standard. Required metadata includes, without limitation:
+        </p>
+        <ul className="list-disc pl-7 space-y-3 mb-6 text-gray-700">
+          <li><strong>Release title</strong> and subtitle (if applicable)</li>
+          <li><strong>Universal Product Code (UPC) or European Article Number (EAN)</strong> barcode identifying the release</li>
+          <li><strong>International Standard Recording Code (ISRC)</strong> for each track</li>
+          <li><strong>Composition copyright line</strong> ("&copy; Year Owner") identifying the copyright holder of the underlying musical composition</li>
+          <li><strong>Master recording copyright line</strong> ("&#8471; Year Owner") identifying the copyright holder of the sound recording</li>
+          <li><strong>Display artist name</strong> and all contributing artist credits</li>
+          <li><strong>Primary genre</strong> and subgenre classifications</li>
+          <li><strong>Cover artwork</strong> meeting DSP minimum resolution and format requirements</li>
+          <li><strong>Global release date</strong> in ISO 8601 format (YYYY-MM-DD)</li>
+          <li><strong>Territory deals</strong> specifying the territories, pricing tiers, streaming rights, and download rights for each market</li>
+        </ul>
+        <p className="mb-6">
+          You represent and warrant that all metadata you provide is accurate, complete, and does not infringe any third-party
+          rights. Boptone is not responsible for DSP rejection, delayed delivery, or incorrect catalog presentation resulting
+          from inaccurate or incomplete metadata provided by you. You agree to indemnify, defend, and hold harmless Boptone
+          from any claims, damages, or losses arising from metadata errors or omissions.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">23.3 DDEX ERN Delivery and DSP Acceptance</h3>
+        <p className="mb-6">
+          Boptone transmits release packages to DSPs in DDEX ERN 4.1 format. Delivery timelines are estimates and are subject
+          to DSP ingestion queues, technical review processes, and editorial approval requirements that are outside Boptone's
+          control. Boptone does not guarantee that any DSP will accept, publish, or make available any release. DSPs retain
+          sole discretion to reject, remove, or restrict releases that violate their content policies, metadata requirements,
+          or terms of service. Boptone is not liable for DSP rejection, removal, or restriction of your release.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">23.4 Royalty Collection and Reporting</h3>
+        <p className="mb-6">
+          Boptone collects royalties from DSPs on your behalf and remits them to you in accordance with your subscription plan
+          and the revenue share terms set forth in Section 6 of these Terms. Royalty reporting is based on data provided by
+          DSPs, which may be delayed, estimated, or subject to adjustment. Boptone is not responsible for inaccuracies in
+          royalty data provided by DSPs. You acknowledge that streaming royalty rates are set by DSPs and applicable law and
+          are subject to change without notice. Boptone does not guarantee any minimum royalty rate or revenue level.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">23.5 Release Takedown and Modification</h3>
+        <p className="mb-6">
+          You may request removal of a release from one or more DSPs through your Boptone dashboard. Takedown requests are
+          processed within commercially reasonable timeframes, but Boptone cannot guarantee the timing of removal by individual
+          DSPs. Releases may continue to be available on DSPs for up to 30 days following a takedown request due to DSP
+          processing delays. Boptone is not liable for royalties earned or content accessed during this processing period.
+          Metadata corrections to live releases are subject to DSP re-ingestion timelines and are not guaranteed to propagate
+          to all DSPs simultaneously.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">23.6 Prohibited Content for Distribution</h3>
+        <p className="mb-4">
+          The following content may not be distributed through Boptone's Distribution Services:
+        </p>
+        <ul className="list-disc pl-7 space-y-3 mb-6 text-gray-700">
+          <li>Content that infringes the copyright, trademark, or other intellectual property rights of any third party</li>
+          <li>Content containing unlicensed samples, interpolations, or derivative works without the required clearances</li>
+          <li>Content that you do not have the legal right to distribute in the specified territories</li>
+          <li>Content that violates any applicable law, regulation, or DSP content policy</li>
+          <li>Content that is defamatory, obscene, or otherwise objectionable under applicable law</li>
+          <li>AI-generated content that does not comply with Section 9.12 of these Terms</li>
+          <li>White noise, sound effects, or non-musical content submitted as music releases</li>
+          <li>Duplicate releases intended to game streaming algorithms or inflate play counts</li>
+        </ul>
+        <p className="mb-6">
+          Submission of prohibited content may result in immediate removal from all DSPs, account suspension, forfeiture of
+          pending royalties, and legal action. You agree to indemnify Boptone for all costs, damages, and liabilities arising
+          from your submission of prohibited content.
+        </p>
+      </section>
+
+      {/* Section 24: Territory Rights Declaration and Indemnification */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6">24. Territory Rights Declaration and Indemnification</h2>
+
+        <h3 className="text-2xl font-semibold mb-4">24.1 Purpose and Scope</h3>
+        <p className="mb-6">
+          This Section 24 governs the territory-specific rights declaration system ("Rights Declaration System") implemented
+          by Boptone to protect both artists and Boptone from liability arising from the distribution of music in territories
+          where the distributing party does not hold the necessary rights. The Rights Declaration System is a mandatory
+          prerequisite to the submission of any release through Boptone's Distribution Services. By completing the Rights
+          Declaration process, you make legally binding representations and warranties to Boptone regarding your authority
+          to distribute your music in each territory you select.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.2 Split-Rights Scenarios</h3>
+        <p className="mb-6">
+          Boptone expressly recognizes that rights to distribute a sound recording may be territorially divided. A common
+          example is an artist who has entered into a recording agreement with a label that controls exclusive distribution
+          rights in certain territories (such as the United Kingdom, European Union, or Japan) while the artist retains
+          independent distribution rights in other territories (such as the United States, Canada, and Australia). In such
+          split-rights scenarios, the artist may only distribute through Boptone in the territories where the artist holds
+          or controls the relevant distribution rights. Distributing in label-controlled territories without authorization
+          constitutes copyright infringement and a material breach of these Terms.
+        </p>
+        <p className="mb-6">
+          <strong>It is your sole responsibility</strong> to identify and correctly configure the territories in which you
+          hold distribution rights. Boptone does not verify the accuracy of your rights declarations against any external
+          database, label agreement, or legal instrument. The Rights Declaration System is a self-certification mechanism
+          that places full legal responsibility on you.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.3 Rights Type Classification</h3>
+        <p className="mb-4">
+          When creating a release, you must classify your rights situation using one of the following categories:
+        </p>
+        <ul className="list-disc pl-7 space-y-3 mb-6 text-gray-700">
+          <li>
+            <strong>Independent:</strong> You own or control the master recording rights in all territories you have selected.
+            You have no active recording agreement, distribution agreement, or other contractual arrangement that restricts
+            your right to distribute the release in any of the selected territories.
+          </li>
+          <li>
+            <strong>Label Authorized:</strong> You are distributing under the explicit written authorization of a record label
+            or rights holder that controls the master recording rights. You have obtained all necessary permissions and your
+            distribution through Boptone is expressly permitted by your agreement with the label or rights holder.
+          </li>
+          <li>
+            <strong>Split Rights:</strong> Your distribution rights are territorially divided. You hold or control independent
+            distribution rights in some territories but not others. You have configured your territory deals to include only
+            those territories where you hold the necessary rights, and you have excluded all territories controlled by a label
+            or other rights holder.
+          </li>
+        </ul>
+        <p className="mb-6">
+          Selecting an incorrect rights type classification is a material misrepresentation and a breach of these Terms.
+          Boptone reserves the right to audit rights type classifications and to remove releases where the classification
+          appears inconsistent with publicly available information.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.4 Per-Territory Master Rights Confirmation</h3>
+        <p className="mb-6">
+          For each territory included in your release's territory deals, you must affirmatively confirm that you hold or
+          are authorized to exercise master recording distribution rights in that territory. This per-territory confirmation
+          is a condition precedent to the delivery of your release to DSPs operating in that territory. Boptone's DDEX
+          readiness validator will block submission of any release where one or more territory deals lack master rights
+          confirmation. You acknowledge that this confirmation is a legally binding representation and that providing a
+          false confirmation constitutes fraud.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.5 Rights Attestation</h3>
+        <p className="mb-6">
+          Prior to submitting any release for distribution, you must complete a Rights Attestation by affirmatively
+          checking the attestation checkbox presented in the Distribution Wizard. By completing the Rights Attestation,
+          you represent, warrant, and agree as follows:
+        </p>
+        <ol className="list-decimal pl-7 space-y-3 mb-6 text-gray-700">
+          <li>
+            You have the full legal right, power, and authority to distribute the release in each territory you have
+            selected, and your distribution of the release in those territories does not and will not infringe the
+            rights of any third party, including any record label, distributor, or other rights holder.
+          </li>
+          <li>
+            You have reviewed and correctly configured your territory deals to exclude all territories in which a
+            third party holds exclusive or controlling distribution rights to the release.
+          </li>
+          <li>
+            You understand that distributing a release in a territory where a third party holds exclusive rights
+            constitutes copyright infringement and may expose you to civil liability, including statutory damages
+            of up to $150,000 per work under 17 U.S.C. &sect; 504(c)(2) for willful infringement.
+          </li>
+          <li>
+            You agree to indemnify, defend, and hold harmless Boptone, its officers, directors, employees, agents,
+            licensees, and successors from and against any and all claims, demands, actions, damages, losses,
+            liabilities, judgments, settlements, costs, and expenses (including reasonable attorneys' fees and court
+            costs) arising from or related to: (a) any inaccuracy in your rights type classification or per-territory
+            rights confirmation; (b) any distribution of the release in a territory where you do not hold the
+            necessary rights; (c) any breach of any recording agreement, distribution agreement, or other contractual
+            arrangement arising from your use of Boptone's Distribution Services; or (d) any claim by a record label,
+            distributor, or other rights holder that your distribution of the release infringes their rights.
+          </li>
+          <li>
+            You acknowledge that Boptone does not verify your rights declarations and that Boptone's role is limited
+            to transmitting your release to DSPs based on your representations. Boptone is not a party to any
+            recording agreement or distribution agreement you may have with a third party.
+          </li>
+        </ol>
+
+        <h3 className="text-2xl font-semibold mb-4">24.6 Attestation Audit Log</h3>
+        <p className="mb-6">
+          Boptone maintains an immutable, append-only audit log of all Rights Attestations ("Attestation Log"). Each
+          entry in the Attestation Log records: the release identifier; your user account identifier; the full text of
+          the attestation as presented to you at the time of submission; the date and time of attestation (UTC); your
+          IP address at the time of attestation; and your browser user agent string. The Attestation Log is retained
+          for a minimum of seven (7) years following the date of attestation, regardless of whether your account
+          remains active. Attestation Log records may be produced in legal proceedings, regulatory investigations, or
+          dispute resolution processes as evidence of your representations. You acknowledge that the Attestation Log
+          constitutes an accurate record of your representations and that you may not challenge the authenticity of
+          Attestation Log records.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.7 Consequences of Rights Violations</h3>
+        <p className="mb-6">
+          If Boptone receives a credible claim from a record label, distributor, or other rights holder that a release
+          distributed through Boptone infringes their rights in one or more territories, Boptone may, in its sole
+          discretion and without prior notice to you: (a) immediately remove the release from all affected DSPs;
+          (b) suspend your account pending investigation; (c) withhold pending royalty payments as security for
+          potential indemnification claims; (d) disclose your identity and Attestation Log records to the claimant
+          as required by law or to defend against legal claims; and (e) terminate your account and permanently
+          bar you from using Distribution Services. Boptone's exercise of these remedies does not limit any other
+          rights or remedies available to Boptone or to the claimant under applicable law.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.8 No Liability for Artist Rights Violations</h3>
+        <p className="mb-6 font-semibold uppercase">
+          TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, BOPTONE SHALL NOT BE LIABLE FOR ANY DAMAGES, LOSSES,
+          CLAIMS, OR LIABILITIES ARISING FROM THE DISTRIBUTION OF A RELEASE IN A TERRITORY WHERE THE DISTRIBUTING
+          ARTIST DOES NOT HOLD THE NECESSARY RIGHTS. BOPTONE'S ROLE IS LIMITED TO TRANSMITTING RELEASES TO DSPS
+          BASED ON ARTIST REPRESENTATIONS. BOPTONE DOES NOT INDEPENDENTLY VERIFY RIGHTS DECLARATIONS AND EXPRESSLY
+          DISCLAIMS ALL LIABILITY FOR ARTIST RIGHTS VIOLATIONS. THE ARTIST'S INDEMNIFICATION OBLIGATIONS UNDER
+          SECTION 24.5(4) ARE THE SOLE REMEDY AVAILABLE TO BOPTONE IN CONNECTION WITH ARTIST RIGHTS VIOLATIONS
+          AND SHALL SURVIVE TERMINATION OF THESE TERMS AND THE ARTIST'S ACCOUNT.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.9 Publishing Rights</h3>
+        <p className="mb-6">
+          Distribution through Boptone covers master recording (sound recording) rights only. Publishing rights
+          (the rights to the underlying musical composition, including melody and lyrics) are governed separately
+          by mechanical licensing, synchronization licensing, and performance rights organization ("PRO") agreements.
+          Boptone does not administer publishing rights on your behalf unless expressly agreed in a separate written
+          agreement. You are solely responsible for ensuring that all necessary mechanical licenses, synchronization
+          licenses, and PRO registrations are in place for each territory in which you distribute your release.
+          For cover songs, you must obtain a valid mechanical license before distribution. For original compositions,
+          you should register your works with your applicable PRO (ASCAP, BMI, SESAC, SOCAN, PRS, GEMA, etc.) to
+          ensure collection of performance royalties.
+        </p>
+
+        <h3 className="text-2xl font-semibold mb-4">24.10 Interaction with DDEX Readiness Validator</h3>
+        <p className="mb-6">
+          Boptone's DDEX Readiness Validator enforces the following mandatory conditions before any release may be
+          submitted for distribution: (a) all required DDEX ERN 4.1 metadata fields must be complete and valid;
+          (b) at least one track must be assigned to the release; (c) at least one territory deal must be configured;
+          (d) master rights must be confirmed for every territory deal; and (e) a Rights Attestation must have been
+          completed for the release. A release that fails any of these conditions will be blocked from submission
+          and will display specific error messages identifying the unmet conditions. The DDEX Readiness Validator
+          is a technical safeguard, not a legal review. Passing the validator does not constitute Boptone's
+          endorsement of your rights claims or a waiver of any of Boptone's rights under these Terms.
+        </p>
+      </section>
     </>
   );
 }

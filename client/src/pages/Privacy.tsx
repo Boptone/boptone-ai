@@ -15,7 +15,7 @@ export default function Privacy() {
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-sm p-8 sm:p-12 md:p-16">
           {/* Centered heading */}
           <h1 className="text-4xl sm:text-5xl font-bold text-center mb-3 text-gray-900">Privacy Policy</h1>
-          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: February 28, 2026</p>
+          <p className="text-center text-base italic text-gray-600 mb-8">Last Updated: March 1, 2026</p>
           
           {/* Table of Contents */}
           <nav className="mb-12 p-6 bg-gray-50 rounded-lg border border-gray-200">

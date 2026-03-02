@@ -209,15 +209,166 @@ export function PrivacyAdditions2026() {
         </p>
       </section>
 
-      {/* Section 9: Updates to This Privacy Policy */}
+      {/* Section 9.1: Distribution Services Data */}
       <section className="mb-12">
-        <h3 className="text-2xl font-bold mb-4">9. Updates to This Privacy Policy</h3>
-        
+        <h3 className="text-2xl font-bold mb-4">9.1 Distribution Services Data</h3>
+
+        <h4 className="text-xl font-semibold mb-3 mt-6">Release Metadata</h4>
         <p className="mb-4">
-          <strong>Effective Date: February 28, 2026</strong>
+          When you create a release for distribution through Boptone's Distribution Services, we collect and store the
+          following release metadata: release title, subtitle, release type (single, EP, album, compilation), primary and
+          secondary genres, display artist name, label name, Universal Product Code (UPC) or European Article Number (EAN),
+          global release date, original release date, parental advisory classification, P-Line (master recording copyright
+          year and owner), C-Line (composition copyright year and owner), language of the release, and any additional
+          metadata required by the DDEX ERN 4.1 standard for delivery to digital service providers ("DSPs").
         </p>
         <p className="mb-4">
-          This Privacy Policy was last updated on February 28, 2026 to reflect new data collection and processing activities related to: (1) shipping integration, SEO/GEO optimization, and AI agent integration (February 21, 2026); and (2) Toney AI personalization profiles ("Know This Artist"), Bops vertical video content and tip data, Stripe Customer Portal billing management, and subscription tier status data (February 28, 2026). We will notify you of material changes to this Privacy Policy by email or through a prominent notice on our Service.
+          We transmit this metadata to DSPs as part of the DDEX ERN 4.1 delivery package. DSPs may store, process, and
+          display this metadata in accordance with their own privacy policies. Boptone is not responsible for how DSPs
+          handle release metadata once it has been delivered.
+        </p>
+
+        <h4 className="text-xl font-semibold mb-3 mt-6">Territory Deal Data</h4>
+        <p className="mb-4">
+          For each release, we collect territory deal data specifying the markets in which you authorize distribution.
+          Territory deal data includes: territory code (ISO 3166-1 alpha-2 country code or "Worldwide"), pricing tier,
+          streaming rights flag, download rights flag, deal start date, deal end date (if applicable), master rights
+          confirmation status, and publishing handling method (self-published, PRO-registered, or publisher-administered).
+          This data is used to configure DSP delivery packages and to enforce your distribution authorization in each market.
+        </p>
+
+        <h4 className="text-xl font-semibold mb-3 mt-6">Rights Attestation Data</h4>
+        <p className="mb-4">
+          When you submit a release for distribution, you are required to complete a Rights Attestation confirming that
+          you hold the necessary rights to distribute the release in each territory you have selected. We collect and
+          permanently retain the following Rights Attestation data in an immutable audit log:
+        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li><strong>Release identifier</strong> and user account identifier</li>
+          <li><strong>Full text of the attestation</strong> as presented to you at the time of submission</li>
+          <li><strong>Date and time of attestation</strong> (Coordinated Universal Time)</li>
+          <li><strong>IP address</strong> from which the attestation was submitted</li>
+          <li><strong>Browser user agent string</strong> identifying the browser and operating system used</li>
+          <li><strong>Rights type classification</strong> (Independent, Label Authorized, or Split Rights) selected by you</li>
+          <li><strong>Territory confirmation records</strong> for each territory deal confirmed at the time of attestation</li>
+        </ul>
+        <p className="mb-4">
+          <strong>Legal basis for collection:</strong> Rights Attestation data is collected pursuant to Boptone's legitimate
+          legal interests in maintaining an auditable record of artist representations for the purpose of defending against
+          third-party intellectual property claims, complying with applicable law, and enforcing the indemnification
+          obligations set forth in Section 24.5 of our Terms of Service. This data is not used for marketing, advertising,
+          or any purpose other than legal compliance and dispute resolution.
+        </p>
+        <p className="mb-4">
+          <strong>Retention period:</strong> Rights Attestation records are retained for a minimum of seven (7) years
+          following the date of attestation, regardless of whether your account remains active or has been deleted. This
+          retention period reflects the applicable statute of limitations for copyright infringement claims under 17 U.S.C.
+          &sect; 507(b) and equivalent statutes in other jurisdictions. Rights Attestation records cannot be deleted through
+          standard account deletion requests because they constitute legally required records.
+        </p>
+        <p className="mb-4">
+          <strong>Disclosure:</strong> Rights Attestation records, including your IP address and the full attestation text,
+          may be disclosed to: (a) record labels, distributors, or other rights holders who assert a credible claim that
+          your distribution infringes their rights; (b) law enforcement or regulatory authorities pursuant to a valid legal
+          process; (c) courts or arbitral tribunals in connection with legal proceedings; or (d) Boptone's legal counsel
+          for the purpose of defending against or prosecuting legal claims. We will notify you of any such disclosure
+          unless prohibited by law.
+        </p>
+
+        <h4 className="text-xl font-semibold mb-3 mt-6">DSP Delivery Logs</h4>
+        <p className="mb-4">
+          We maintain logs of all DDEX ERN delivery transactions, including delivery timestamps, DSP identifiers, delivery
+          status, and any error messages returned by DSPs. These logs are retained for five (5) years for audit and
+          dispute resolution purposes.
+        </p>
+      </section>
+
+      {/* Section 9.2: Distribution Data Use */}
+      <section className="mb-12">
+        <h3 className="text-2xl font-bold mb-4">9.2 How We Use Distribution Data</h3>
+        <p className="mb-4">We use distribution data for the following purposes:</p>
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li>Generating DDEX ERN 4.1 compliant release packages for delivery to DSPs</li>
+          <li>Enforcing territory-specific distribution rights and blocking delivery to unauthorized territories</li>
+          <li>Collecting and remitting royalties from DSPs to artists</li>
+          <li>Providing release analytics and streaming performance data</li>
+          <li>Maintaining an auditable record of artist rights declarations for legal compliance</li>
+          <li>Responding to third-party intellectual property claims and legal proceedings</li>
+          <li>Improving our distribution platform and DSP integrations</li>
+        </ul>
+        <p className="mb-4">
+          We do not use release metadata or Rights Attestation data for advertising, marketing profiling, or sale to
+          third parties. Release metadata transmitted to DSPs is used solely for the purpose of making your music
+          available on those platforms.
+        </p>
+      </section>
+
+      {/* Section 9.3: Distribution Data Sharing */}
+      <section className="mb-12">
+        <h3 className="text-2xl font-bold mb-4">9.3 How We Share Distribution Data</h3>
+        <p className="mb-4">
+          We share distribution data with the following categories of recipients:
+        </p>
+        <ul className="list-disc pl-6 mb-4 space-y-2">
+          <li>
+            <strong>Digital Service Providers (DSPs):</strong> We transmit your release metadata, audio files, and
+            artwork to DSPs as part of the DDEX ERN delivery process. Each DSP processes this data in accordance with
+            its own terms of service and privacy policy.
+          </li>
+          <li>
+            <strong>DDEX Registry:</strong> We may register your ISRC codes and UPC/EAN barcodes with the DDEX
+            Entertainment ID Registry and other industry identifier registries to ensure global uniqueness and
+            facilitate royalty tracking.
+          </li>
+          <li>
+            <strong>Rights Claimants:</strong> In the event of a credible intellectual property claim, we may disclose
+            your identity, Rights Attestation records, and release metadata to the claimant as described in Section 9.1
+            above.
+          </li>
+          <li>
+            <strong>Legal and Regulatory Authorities:</strong> We may disclose distribution data to law enforcement,
+            regulatory authorities, or courts pursuant to a valid legal process.
+          </li>
+        </ul>
+      </section>
+
+      {/* Section 9.4: Distribution Data Rights */}
+      <section className="mb-12">
+        <h3 className="text-2xl font-bold mb-4">9.4 Your Rights Regarding Distribution Data</h3>
+        <p className="mb-4">
+          You may access, correct, or delete your release metadata and territory deal data through your Boptone dashboard
+          at any time. Deleting a release from Boptone initiates a takedown request to all DSPs where the release is
+          live; however, DSP processing timelines mean the release may remain available for up to 30 days after deletion.
+        </p>
+        <p className="mb-4">
+          <strong>Rights Attestation records are exempt from deletion requests</strong> because they constitute legally
+          required audit records. You may request a copy of your Rights Attestation records by contacting us at
+          <a href="mailto:hello@boptone.com" className="text-blue-600 underline ml-1">hello@boptone.com</a>.
+          We will provide a copy within 30 days of your request.
+        </p>
+        <p className="mb-4">
+          GDPR data subjects have the right to object to processing of Rights Attestation data on grounds of legitimate
+          interests. However, Boptone will generally be able to demonstrate compelling legitimate grounds for retaining
+          this data (specifically, the need to defend against intellectual property claims and comply with applicable law)
+          that override the data subject's interests in deletion.
+        </p>
+      </section>
+
+      {/* Section 10: Updates to This Privacy Policy */}
+      <section className="mb-12">
+        <h3 className="text-2xl font-bold mb-4">10. Updates to This Privacy Policy</h3>
+        
+        <p className="mb-4">
+          <strong>Effective Date: March 1, 2026</strong>
+        </p>
+        <p className="mb-4">
+          This Privacy Policy was last updated on March 1, 2026 to reflect new data collection and processing activities
+          related to: (1) shipping integration, SEO/GEO optimization, and AI agent integration (February 21, 2026);
+          (2) Toney AI personalization profiles, Bops vertical video content and tip data, Stripe Customer Portal billing
+          management, and subscription tier status data (February 28, 2026); and (3) Distribution Services including
+          release metadata, territory deal data, Rights Attestation audit logs, and DDEX ERN delivery logging (March 1,
+          2026). We will notify you of material changes to this Privacy Policy by email or through a prominent notice
+          on our Service.
         </p>
       </section>
     </>
